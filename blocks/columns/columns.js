@@ -8,7 +8,7 @@ export default function decorate(block) {
       const pic = col.querySelector('picture');
       if (pic) {
         const picWrapper = pic.closest('div');
-        console.log(picWrapper);
+        console.log(picWrapper, "");
         if (picWrapper && picWrapper.children.length === 1) {
           // picture is only content in column
           picWrapper.classList.add('columns-img-col');
