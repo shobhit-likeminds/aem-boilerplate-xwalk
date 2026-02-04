@@ -216,7 +216,7 @@
     ]
   },
   {
-    "id": "sample_component",
+    "id": "sample-component",
     "fields": [
       {
         "component": "reference",
