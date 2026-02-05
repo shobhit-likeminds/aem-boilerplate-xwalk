@@ -51,7 +51,8 @@
         "cards",
         "columns",
         "fragment",
-        "sample-component"
+        "sample-component",
+        "mainBanner"
       ]
     }
   ]
