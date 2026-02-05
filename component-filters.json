@@ -20,6 +20,12 @@
     ]
   },
   {
+    "id": "mainBanner",
+    "components": [
+      "slide"
+    ]
+  },
+  {
     "id": "cards",
     "components": [
       "card"

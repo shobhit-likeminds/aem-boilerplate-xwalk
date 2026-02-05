@@ -142,6 +142,46 @@
     ]
   },
   {
+    "id": "slide",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Image",
+        "name": "image",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Caption",
+        "name": "caption",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "mainBanner",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Header Image",
+        "name": "headerImage",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Logo",
+        "name": "logo",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Title",
+        "name": "title",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "card",
     "fields": [
       {
