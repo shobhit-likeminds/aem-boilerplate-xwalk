@@ -1,0 +1,54 @@
+.banner-section {
+  /* No direct styles for .banner-section in the provided CSS, ensuring explicit definition if needed */
+}
+
+.banner-section__wrapper {
+  padding-inline: 0.046875rem; /* Equivalent to 0.75px assuming 16px base */
+  position: relative;
+}
+
+.banner-section__image {
+  border-radius: 0.5rem; /* Equivalent to 8px assuming 16px base */
+  object-position: center center;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.banner-section__cta-wrapper {
+  bottom: 1.875rem; /* Equivalent to 30px assuming 16px base */
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+}
+
+@media (min-width: 540px) {
+  .banner-section__cta-wrapper .banner-cta__button-text {
+    width: 50% !important;
+  }
+}
+
+.banner-cta__button {
+  text-align: center;
+}
+
+.banner-cta__button-text {
+  color: #fff;
+  display: inline-block;
+  font-family: Barlow;
+  font-size: 1rem; /* Equivalent to 16px assuming 16px base */
+  font-weight: 600;
+  line-height: normal;
+  background-color: #aa1f30;
+  width: 75%;
+  padding: 1rem; /* Equivalent to 16px assuming 16px base */
+  border-radius: 50rem; /* Equivalent to 800px assuming 16px base */
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.banner-cta__popup {
+  display: none;
+}

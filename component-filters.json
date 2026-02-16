@@ -17,7 +17,15 @@
       "columns",
       "fragment",
       "sample-component",
-      "mainBanner"
+      "mainBanner",
+      "header",
+      "footerBrandSection",
+      "stickyNavigation",
+      "carousel",
+      "banner",
+      "featureCards",
+      "latestBlogsArticleListing",
+      "spaceadderContainer"
     ]
   },
   {
@@ -27,9 +35,21 @@
     ]
   },
   {
+    "id": "banner",
+    "components": [
+      "banner"
+    ]
+  },
+  {
     "id": "cards",
     "components": [
       "card"
+    ]
+  },
+  {
+    "id": "carousel",
+    "components": [
+      "carouselSlide"
     ]
   },
   {
@@ -45,6 +65,59 @@
       "image",
       "button",
       "title"
+    ]
+  },
+  {
+    "id": "featureCards",
+    "components": [
+      "card",
+      "bolteSitareCard"
+    ]
+  },
+  {
+    "id": "footerBrandSection",
+    "components": [
+      "footerNavColumn",
+      "footerSocialLink"
+    ]
+  },
+  {
+    "id": "footerNavColumn",
+    "components": [
+      "footerNavLink"
+    ]
+  },
+  {
+    "id": "header",
+    "components": [
+      "headerMenuItem"
+    ]
+  },
+  {
+    "id": "footerLinks",
+    "components": [
+      "footerLink"
+    ]
+  },
+  {
+    "id": "footerSocialLinks",
+    "components": [
+      "footerSocialLink"
+    ]
+  },
+  {
+    "id": "latestBlogsArticleListing",
+    "components": [
+      "blogCard"
+    ]
+  },
+  {
+    "id": "spaceadderContainer"
+  },
+  {
+    "id": "stickyNavigation",
+    "components": [
+      "navigationItem"
     ]
   }
 ]

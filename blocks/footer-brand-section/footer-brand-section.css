@@ -1,0 +1,197 @@
+.footer-brand-section {
+  padding-bottom: 6rem; /* Equivalent to 96px assuming 16px base */
+  padding-top: 11.0625rem; /* Equivalent to 177px assuming 16px base */
+  position: relative;
+}
+.footer-brand-section .footer-brand-wrapper--primary {
+  background-color: rgba(0, 0, 0, 0); /* Fallback for inline style */
+  background-position: 50% center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding: 0 max(min(3.75rem, 16vw), 1rem) 1rem; /* Equivalent to 0px max(min(60px, 16vw), 16px) 16px assuming 16px base */
+}
+.footer-brand-section .footer-brand-container {
+  padding: 0; /* Equivalent to 0px */
+  width: 100%;
+}
+.footer-brand-section .footer-brand-primary-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 2rem 7.5rem; /* Equivalent to 32px 120px assuming 16px base */
+}
+.footer-brand-section .footer-brand-left-section .footer-brand-logo-link {
+  height: 3.9375rem; /* Equivalent to 63px assuming 16px base */
+  min-width: 3.375rem; /* Equivalent to 54px assuming 16px base */
+}
+.footer-brand-section .footer-brand-left-section .footer-brand-secondary-logo {
+  max-height: 100%;
+  min-width: 4.375rem; /* Equivalent to 70px assuming 16px base */
+  width: 4.375rem; /* Equivalent to 70px assuming 16px base */
+}
+.footer-brand-section .footer-brand-right-section {
+  width: 100%;
+}
+.footer-brand-section .footer-brand-navbar {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+.footer-brand-section .footer-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 2.25rem; /* Equivalent to 36px assuming 16px base */
+  list-style: none;
+  padding: 0; /* Equivalent to 0px */
+}
+.footer-brand-section .footer-list-item {
+  width: 100%;
+}
+.footer-brand-section .footer-list-item-link {
+  color: #fff;
+  cursor: pointer;
+  font-family: Barlow;
+  font-size: 0.75rem; /* Equivalent to 12px assuming 16px base */
+  font-weight: 600;
+  line-height: 1.5; /* Equivalent to 18px assuming 16px base */
+  text-decoration: none;
+  white-space: normal;
+}
+.footer-brand-section .footer-list-item-link:hover {
+  text-decoration: underline;
+}
+.footer-brand-section .footer-brand-navbar-left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2.25rem; /* Equivalent to 36px assuming 16px base */
+  padding-right: 2rem; /* Equivalent to 32px assuming 16px base */
+  width: 100%;
+}
+.footer-brand-section .footer-brand-navbar-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2.25rem; /* Equivalent to 36px assuming 16px base */
+  padding-left: 2rem; /* Equivalent to 32px assuming 16px base */
+  width: 100%;
+}
+.footer-brand-section .footer-brand-wrapper--secondary {
+  background-color: rgba(0, 0, 0, 0); /* Fallback for inline style */
+  padding: 1rem 1.5rem; /* Equivalent to 16px 24px assuming 16px base */
+}
+.footer-brand-section .footer-brand-secondary-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  row-gap: 1.5rem; /* Equivalent to 24px assuming 16px base */
+}
+.footer-brand-section .footer-brand-right-section .footer-social-media-title {
+  color: #fff;
+  font-family: Barlow;
+  font-size: 1.5rem; /* Equivalent to 24px assuming 16px base */
+  font-weight: 700;
+  line-height: 2rem; /* Equivalent to 32px assuming 16px base */
+  padding-bottom: 1.25rem; /* Equivalent to 20px assuming 16px base */
+  text-align: center;
+}
+.footer-brand-section .footer-brand-right-list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem; /* Equivalent to 16px assuming 16px base */
+  list-style: none;
+  max-width: 100%;
+  padding: 0 36px; /* Equivalent to 0px 57.6px assuming 16px base */
+}
+.footer-brand-section .footer-brand-right-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  border-color: rgb(246, 187, 0);
+}
+.footer-brand-section .footer-brand-right-link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 2.6875rem; /* Equivalent to 43px assuming 16px base */
+  width: 2.6875rem; /* Equivalent to 43px assuming 16px base */
+  transition: transform 0.2s linear; /* Equivalent to transform 0.2s linear */
+}
+.footer-brand-section .footer-brand-right-link:hover {
+  transform: scale(1.3334); /* Equivalent to scale(1.3334) */
+}
+.footer-brand-section .footer-brand-social-icon {
+  object-fit: contain;
+  width: 100%;
+  height: 100%;
+}
+.footer-brand-section .footer-brand-left-list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem; /* Equivalent to 8px assuming 16px base */
+  list-style: none;
+  padding: 0; /* Equivalent to 0px */
+}
+.footer-brand-section .footer-brand-left-item {
+  border-right: 0.125rem solid rgba(255, 255, 255, 0.302); /* Equivalent to 2px solid rgba(255, 255, 255, 0.302) */
+  padding: 0 1.5rem; /* Equivalent to 0px 24px assuming 16px base */
+}
+.footer-brand-section .footer-brand-left-item:first-child {
+  padding-left: 0; /* Equivalent to 0px */
+}
+.footer-brand-section .footer-brand-left-item:last-child {
+  border: 0; /* Equivalent to 0px */
+  padding-right: 0; /* Equivalent to 0px */
+}
+.footer-brand-section .footer-brand-left-link {
+  color: #fff;
+  display: inline-block;
+  font-family: Barlow;
+  font-size: 1.25rem; /* Equivalent to 20px assuming 16px base */
+  line-height: 1.5; /* Equivalent to 30px assuming 16px base */
+  text-decoration: none;
+}
+.footer-brand-section .footer-brand-left-link:hover {
+  text-decoration: underline;
+}
+.footer-brand-section .footer-brand-left-copyright {
+  display: inline-block;
+  font-size: 0.75rem; /* Equivalent to 12px assuming 16px base */
+  line-height: 1.5; /* Equivalent to 18px assuming 16px base */
+  text-align: center;
+}
+.footer-brand-section .footer-brand-left-text {
+  color: #fff;
+}
+@media (max-width: 440px) {
+  .footer-brand-section {
+    padding-top: 9rem; /* Equivalent to 144px assuming 16px base */
+  }
+}
+@media (min-width: 768px) {
+  .footer-brand-section .footer-brand-primary-content {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .footer-brand-section .footer-brand-navbar-left {
+    border-right: 1px solid rgba(255, 255, 255, 0.302);
+  }
+  .footer-brand-section .footer-brand-navbar-right {
+    padding-left: 2rem; /* Equivalent to 32px assuming 16px base */
+  }
+  .footer-brand-section .footer-brand-secondary-content {
+    flex-direction: row;
+  }
+  .footer-brand-section .footer-brand-right-section {
+    padding-bottom: 0; /* Equivalent to 0px */
+  }
+  .footer-brand-section .footer-brand-left-section {
+    padding-top: 0; /* Equivalent to 0px */
+  }
+}

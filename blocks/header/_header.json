@@ -1,0 +1,185 @@
+{
+  "definitions": [
+    {
+      "title": "Header",
+      "id": "header",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "header",
+              "model": "header",
+              "name": "Header"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Header Menu Item",
+      "id": "headerMenuItem",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "headerMenuItem",
+              "name": "Header Menu Item"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Footer Link",
+      "id": "footerLink",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "footerLink",
+              "name": "Footer Link"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Footer Social Link",
+      "id": "footerSocialLink",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "footerSocialLink",
+              "name": "Footer Social Link"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "header",
+      "fields": [
+        {
+          "component": "text",
+          "label": "App Name",
+          "name": "appName",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Main Logo Image",
+          "name": "mainLogo",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Main Logo Link",
+          "name": "mainLogoLink",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Login Button Label",
+          "name": "loginButtonLabel",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Login Button Link",
+          "name": "loginButtonLink",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "headerMenuItem",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Label",
+          "name": "label",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Link",
+          "name": "link",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Icon",
+          "name": "icon",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "footerLink",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Label",
+          "name": "label",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Link",
+          "name": "link",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "footerSocialLink",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Platform",
+          "name": "platform",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Link",
+          "name": "link",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Icon",
+          "name": "icon",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "header",
+      "components": [
+        "headerMenuItem"
+      ]
+    },
+    {
+      "id": "footerLinks",
+      "components": [
+        "footerLink"
+      ]
+    },
+    {
+      "id": "footerSocialLinks",
+      "components": [
+        "footerSocialLink"
+      ]
+    }
+  ]
+}
