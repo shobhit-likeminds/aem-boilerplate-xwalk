@@ -25,7 +25,13 @@
       "banner",
       "featureCards",
       "latestBlogsArticleListing",
-      "spaceadderContainer"
+      "spaceadderContainer",
+      "headerSection",
+      "textComponent",
+      "latestBlogs",
+      "spaceAdder",
+      "footerBrand",
+      "stickyNavigationBottomNav"
     ]
   },
   {
@@ -70,6 +76,12 @@
   {
     "id": "featureCards",
     "components": [
+      "featureCard"
+    ]
+  },
+  {
+    "id": "featureCards",
+    "components": [
       "card",
       "bolteSitareCard"
     ]
@@ -85,6 +97,21 @@
     "id": "footerNavColumn",
     "components": [
       "footerNavLink"
+    ]
+  },
+  {
+    "id": "footerBrand",
+    "components": [
+      "footerNavList",
+      "footerSocialLink"
+    ]
+  },
+  {
+    "id": "headerSection",
+    "components": [
+      "sidebarMenuItem",
+      "footerLink",
+      "footerSocialLink"
     ]
   },
   {
@@ -106,18 +133,39 @@
     ]
   },
   {
+    "id": "latestBlogs",
+    "components": [
+      "blogCard"
+    ]
+  },
+  {
     "id": "latestBlogsArticleListing",
     "components": [
       "blogCard"
     ]
   },
   {
+    "id": "space-adder"
+  },
+  {
     "id": "spaceadderContainer"
+  },
+  {
+    "id": "stickyNavigationBottomNav",
+    "components": [
+      "navigationItem"
+    ]
   },
   {
     "id": "stickyNavigation",
     "components": [
       "navigationItem"
+    ]
+  },
+  {
+    "id": "textComponent",
+    "components": [
+      "textComponent"
     ]
   }
 ]

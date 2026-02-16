@@ -38,7 +38,7 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Image/Video",
+          "label": "Image",
           "name": "image",
           "valueType": "string"
         },
@@ -49,15 +49,27 @@
           "valueType": "string"
         },
         {
-          "component": "richtext",
-          "label": "CTA Text",
-          "name": "ctaText",
+          "component": "text",
+          "label": "Video Title",
+          "name": "videoTitle",
           "valueType": "string"
         },
         {
           "component": "text",
+          "label": "Image Alt Text",
+          "name": "imageAlt",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-tag",
           "label": "CTA Link",
           "name": "ctaLink",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "CTA Label",
+          "name": "ctaLabel",
           "valueType": "string"
         }
       ]

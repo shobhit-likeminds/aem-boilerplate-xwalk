@@ -60,7 +60,13 @@
         "banner",
         "featureCards",
         "latestBlogsArticleListing",
-        "spaceadderContainer"
+        "spaceadderContainer",
+        "headerSection",
+        "textComponent",
+        "latestBlogs",
+        "spaceAdder",
+        "footerBrand",
+        "stickyNavigationBottomNav"
       ]
     }
   ]

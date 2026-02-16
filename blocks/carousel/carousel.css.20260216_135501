@@ -1,0 +1,229 @@
+.carousel-position-relative {
+  position: relative;
+}
+.carousel-swiper {
+  display: block;
+  list-style: none;
+  margin-left: auto;
+  margin-right: auto;
+  overflow: hidden;
+  padding: 0;
+  position: relative;
+  z-index: 1;
+}
+.carousel-swiper-wrapper {
+  box-sizing: content-box;
+  display: flex;
+  height: 100%;
+  position: relative;
+  transition-property: transform, -webkit-transform;
+  transition-timing-function: initial;
+  width: 100%;
+  z-index: 1;
+}
+.carousel-swiper-slide {
+  display: block;
+  flex-shrink: 0;
+  height: 100%;
+  position: relative;
+  transition-property: transform, -webkit-transform;
+  width: 100%;
+  /* Equivalent to 508px assuming 16px base */
+  width: 31.75rem;
+}
+.carousel-cmp-carousel__actions {
+  display: none;
+}
+.carousel-swiper-container {
+  background-color: transparent;
+  height: 0;
+}
+.carousel-primary-swiper__buttonNext {
+  height: 2.8125rem; /* Equivalent to 45px assuming 16px base */
+  margin-top: 0;
+  right: 7.5rem; /* Equivalent to 120px assuming 16px base */
+  top: 50%;
+  transform: translateY(-50%);
+  width: 2.8125rem; /* Equivalent to 45px assuming 16px base */
+  position: absolute;
+  cursor: pointer;
+  background-color: transparent;
+}
+@media (max-width: 575.98px) {
+  .carousel-primary-swiper__buttonNext {
+    display: none;
+  }
+}
+@media (min-width: 1200px) {
+  .carousel-primary-swiper__buttonNext {
+    top: calc(50% - 1.25rem); /* Equivalent to calc(50% - 20px) assuming 16px base */
+  }
+}
+.carousel-primary-swiper__buttonPrev {
+  height: 2.8125rem; /* Equivalent to 45px assuming 16px base */
+  left: 7.5rem; /* Equivalent to 120px assuming 16px base */
+  margin-top: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 2.8125rem; /* Equivalent to 45px assuming 16px base */
+  position: absolute;
+  cursor: pointer;
+  background-color: transparent;
+}
+@media (min-width: 1200px) {
+  .carousel-primary-swiper__buttonPrev {
+    top: calc(50% - 1.25rem); /* Equivalent to calc(50% - 20px) assuming 16px base */
+  }
+}
+.carousel-swiper-pagination {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem !important; /* Equivalent to 16px assuming 16px base */
+  position: relative !important;
+}
+.carousel-swiper-pagination-bullet {
+  background-color: #414141;
+  height: 0.323125rem; /* Equivalent to 5.17px assuming 16px base */
+  opacity: 1 !important;
+  width: 0.323125rem; /* Equivalent to 5.17px assuming 16px base */
+}
+.carousel-swiper-pagination-bullet-active {
+  background-color: #aa1f30;
+  border-radius: 50%;
+  height: 0.29375rem; /* Equivalent to 4.7px assuming 16px base */
+  position: relative;
+  width: 0.29375rem; /* Equivalent to 4.7px assuming 16px base */
+  z-index: 2;
+}
+.carousel-swiper-pagination-bullet-active::before {
+  border: 0.05rem solid #aa1f30; /* Equivalent to 0.8px assuming 16px base */
+  border-radius: 50%;
+  content: "";
+  height: 0.539375rem; /* Equivalent to 8.63px assuming 16px base */
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 0.539375rem; /* Equivalent to 8.63px assuming 16px base */
+}
+.carousel-banner-section__wrapper {
+  padding-inline: 0.046875rem; /* Equivalent to 0.75px assuming 16px base */
+}
+.carousel-banner-section__wrapper .carousel-boing__banner--cta {
+  bottom: 1.875rem; /* Equivalent to 30px assuming 16px base */
+}
+@media (min-width: 540px) {
+  .carousel-banner-section__wrapper .carousel-cmp-button__text {
+    width: 50% !important;
+  }
+}
+.carousel-video-wrapper .carousel-banner-video {
+  border-radius: 0.5rem; /* Equivalent to 8px assuming 16px base */
+}
+.carousel-video-wrapper .carousel-video-icon {
+  display: none;
+  height: 3rem; /* Equivalent to 48px assuming 16px base */
+  width: 3rem; /* Equivalent to 48px assuming 16px base */
+}
+.carousel-video-wrapper .carousel-mute-icon {
+  bottom: 0.8125rem; /* Equivalent to 13px assuming 16px base */
+  display: none;
+  right: 0.6875rem; /* Equivalent to 11px assuming 16px base */
+}
+.carousel-video-wrapper .carousel-video-icon-volume {
+  height: 1.5rem; /* Equivalent to 24px assuming 16px base */
+  width: 1.5rem; /* Equivalent to 24px assuming 16px base */
+}
+.carousel-text-center {
+  text-align: center;
+}
+.carousel-cmp-button__text {
+  text-align: center;
+}
+.carousel-primary-btn {
+  color: #fff;
+  display: inline-block;
+  font-family: Barlow;
+  font-size: 1rem; /* Equivalent to 16px assuming 16px base */
+  font-weight: 600;
+  line-height: normal;
+  background-color: #aa1f30;
+}
+.carousel-w-75 {
+  width: 75% !important;
+}
+.carousel-p-5 {
+  padding: 1rem !important; /* Equivalent to 16px assuming 16px base */
+}
+.carousel-rounded-pill {
+  border-radius: 50rem !important;
+}
+.carousel-d-inline-flex {
+  display: inline-flex !important;
+}
+.carousel-justify-content-center {
+  justify-content: center !important;
+}
+.carousel-align-items-center {
+  align-items: center !important;
+}
+.carousel-pop-up {
+  display: none;
+}
+.carousel-w-100 {
+  width: 100% !important;
+}
+.carousel-h-100 {
+  height: 100% !important;
+}
+.carousel-object-fit-cover {
+  object-fit: cover !important;
+}
+.carousel-banner-media {
+  border-radius: 0.5rem; /* Equivalent to 8px assuming 16px base */
+  object-position: center center;
+}
+.carousel-banner-image {
+  border-radius: 0.5rem; /* Equivalent to 8px assuming 16px base */
+  object-position: center center;
+}
+.carousel-d-none {
+  display: none !important;
+}
+.carousel-d-block {
+  display: block !important;
+}
+.carousel-z-0 {
+  z-index: 0 !important;
+}
+.carousel-z-2 {
+  z-index: 2 !important;
+}
+.carousel-start-0 {
+  left: 0 !important;
+}
+.carousel-top-0 {
+  top: 0 !important;
+}
+.carousel-start-50 {
+  left: 50% !important;
+}
+.carousel-translate-middle-x {
+  transform: translateX(-50%) !important;
+}
+.carousel-bg-transparent {
+  background-color: transparent !important;
+}
+.carousel-cursor-pointer {
+  cursor: pointer;
+}
+.carousel-mb-md-8 {
+  margin-bottom: 1.75rem !important; /* Equivalent to 28px assuming 16px base */
+}
+.carousel-mb-10 {
+  margin-bottom: 2.25rem !important; /* Equivalent to 36px assuming 16px base */
+}
+.carousel-mt-6 {
+  margin-top: 1.25rem !important; /* Equivalent to 20px assuming 16px base */
+}
