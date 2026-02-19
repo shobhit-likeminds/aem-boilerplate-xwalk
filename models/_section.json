@@ -71,7 +71,10 @@
         "verticalPaddingSection",
         "howShift",
         "rsCards",
-        "footer"
+        "footer",
+        "siteHeader",
+        "contact",
+        "contactContent"
       ]
     }
   ]

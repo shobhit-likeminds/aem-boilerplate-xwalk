@@ -325,6 +325,77 @@
     ]
   },
   {
+    "id": "contactContent",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Image",
+        "name": "image",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Intro Text",
+        "name": "introText",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "fields": [
+          {
+            "component": "text",
+            "label": "First Name",
+            "name": "firstName",
+            "valueType": "string"
+          },
+          {
+            "component": "text",
+            "label": "Last Name",
+            "name": "lastName",
+            "valueType": "string"
+          },
+          {
+            "component": "text",
+            "label": "Email",
+            "name": "email",
+            "valueType": "string"
+          },
+          {
+            "component": "richtext",
+            "label": "Comment or Message",
+            "name": "commentOrMessage",
+            "valueType": "string"
+          },
+          {
+            "component": "text",
+            "label": "Phone",
+            "name": "phone",
+            "valueType": "string"
+          }
+        ],
+        "label": "Form",
+        "name": "form"
+      },
+      {
+        "component": "richtext",
+        "label": "Outro Text",
+        "name": "outroText",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "contact",
+    "fields": [
+      {
+        "component": "richtext",
+        "label": "Title Post Title",
+        "name": "titlePostTitle",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "featureCard",
     "fields": [
       {
@@ -605,129 +676,21 @@
     "id": "footer",
     "fields": [
       {
-        "component": "reference",
-        "itemType": "footerLogo",
-        "label": "Footer Logos",
-        "name": "logos",
-        "valueType": "array"
-      },
-      {
-        "component": "reference",
-        "itemType": "footerLink",
-        "label": "Footer Links",
-        "name": "links",
-        "valueType": "array"
-      },
-      {
-        "component": "reference",
-        "itemType": "footerSocialLink",
-        "label": "Footer Social Links",
-        "name": "socialLinks",
-        "valueType": "array"
-      },
-      {
-        "component": "reference",
-        "itemType": "footerSecondaryLink",
-        "label": "Footer Secondary Links",
-        "name": "secondaryLinks",
-        "valueType": "array"
-      },
-      {
-        "component": "text",
-        "label": "Copyright",
-        "name": "copyright",
+        "component": "richtext",
+        "label": "Copyright Text",
+        "name": "copyrightText",
         "valueType": "string"
       },
       {
-        "component": "text",
-        "label": "Grievance Officer Name",
-        "name": "grievanceOfficerName",
+        "component": "aem-tag",
+        "label": "Copyright Link",
+        "name": "copyrightLink",
         "valueType": "string"
       },
       {
-        "component": "text",
-        "label": "Grievance Officer Contact",
-        "name": "grievanceOfficerContact",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Grievance Officer Timings",
-        "name": "grievanceOfficerTimings",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
-    "id": "footerLogo",
-    "fields": [
-      {
-        "component": "reference",
-        "label": "Logo Image",
-        "name": "image",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Alt Text",
-        "name": "altText",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Logo Link",
-        "name": "link",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
-    "id": "footerLink",
-    "fields": [
-      {
-        "component": "text",
-        "label": "Link Text",
-        "name": "text",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Link URL",
-        "name": "href",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
-    "id": "footerSocialLink",
-    "fields": [
-      {
-        "component": "reference",
-        "label": "Social Icon Image",
-        "name": "icon",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Social Link URL",
-        "name": "href",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
-    "id": "footerSecondaryLink",
-    "fields": [
-      {
-        "component": "text",
-        "label": "Secondary Link Text",
-        "name": "text",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Secondary Link URL",
-        "name": "href",
+        "component": "aem-tag",
+        "label": "Privacy Policy Link",
+        "name": "privacyPolicyLink",
         "valueType": "string"
       }
     ]
@@ -1140,6 +1103,46 @@
         "value": "",
         "label": "Text",
         "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "primaryMenuItem",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Label",
+        "name": "label",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "URL",
+        "name": "url",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "siteHeader",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Logo Image",
+        "name": "logo",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Logo Alt Text",
+        "name": "logoAlt",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "itemType": "primaryMenuItem",
+        "label": "Primary Menu",
+        "name": "primaryMenu"
       }
     ]
   },

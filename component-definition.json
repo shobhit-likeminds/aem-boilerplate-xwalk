@@ -237,6 +237,38 @@
           }
         },
         {
+          "title": "Contact-Content",
+          "id": "contactContent",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "contactContent",
+                  "model": "contactContent",
+                  "name": "Contact-Content"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Contact",
+          "id": "contact",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "contact",
+                  "model": "contact",
+                  "name": "Contact"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Feature-Cards",
           "id": "featureCards",
           "plugins": {
@@ -431,66 +463,6 @@
                   "filter": "footer",
                   "model": "footer",
                   "name": "Footer"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Footer Logo",
-          "id": "footerLogo",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block/item",
-                "template": {
-                  "model": "footerLogo",
-                  "name": "Footer Logo"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Footer Link",
-          "id": "footerLink",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block/item",
-                "template": {
-                  "model": "footerLink",
-                  "name": "Footer Link"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Footer Social Link",
-          "id": "footerSocialLink",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block/item",
-                "template": {
-                  "model": "footerSocialLink",
-                  "name": "Footer Social Link"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Footer Secondary Link",
-          "id": "footerSecondaryLink",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block/item",
-                "template": {
-                  "model": "footerSecondaryLink",
-                  "name": "Footer Secondary Link"
                 }
               }
             }
@@ -768,6 +740,37 @@
                   "name": "Sample Component",
                   "filter": "sample-component",
                   "model": "sample-component"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Site-Header",
+          "id": "siteHeader",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "siteHeader",
+                  "model": "siteHeader",
+                  "name": "Site-Header"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Primary-Menu-Item",
+          "id": "primaryMenuItem",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "primaryMenuItem",
+                  "name": "Primary-Menu-Item"
                 }
               }
             }

@@ -1,339 +1,46 @@
-.footer-section {
-  background-color: #4e2600;
-  padding: 55px 100px;
+.footer-site-footer {
+  margin-top: 3rem; /* Equivalent to 48px assuming 16px base */
 }
-.footer-section .cmp-form-text input {
-  background-color: transparent;
-  border: 1px solid #fcf1e4;
-  color: #fcf1e4;
-  border-radius: 28px;
-  font-size: 16px; /* Equivalent to 16px assuming 16px base */
-  padding: 1.1rem 1.75rem; /* Equivalent to 17.6px 28px assuming 16px base */
-  width: 93%;
-  text-align: left;
+
+.footer-design-credit {
+  position: absolute;
+  z-index: 2;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  clear: both;
+  padding: 1.5rem; /* Equivalent to 24px assuming 16px base */
+  background: #000;
+  color: #fff;
+  text-align: center;
 }
-.footer-section .cmp-form-text input:focus-visible {
-  outline: 0;
+
+.footer-copyright-text {
+  color: #fff;
+  font-family: "Lato", sans-serif;
+  font-size: 1rem; /* Equivalent to 16px assuming 16px base */
+  line-height: 1.5; /* Equivalent to 24px assuming 16px base */
+  font-weight: 400;
 }
-.footer-section .button-link a {
-  background-color: #ffedd6;
+
+.footer-design-credit a {
+  font-weight: 900;
+  color: #fff;
   text-decoration: none;
-  color: #223935;
-  padding: 16px 44px;
-  border-radius: 28px;
-  font-weight: 700;
+  transition: color 0.2s;
+  font-family: "Lato", sans-serif;
+  font-size: 1rem; /* Equivalent to 16px assuming 16px base */
+  line-height: 1.5; /* Equivalent to 24px assuming 16px base */
 }
-.subscribenow .button-link {
-  margin-top: 35px;
-  margin-left: 5px;
-}
-.subscribenow h3 {
-  font-size: 20px; /* Equivalent to 20px assuming 16px base */
-  margin-left: 5px;
-  color: #fcf1e4;
-  padding-bottom: 15px;
-  font-weight: 400 !important;
-  font-family: "Urbanist";
-}
-.footer-section .button-link a:hover,
-.footer-section .button-link a:focus {
-  background-color: #f8d765;
-  transition: 0.3s all ease;
-}
-.subscribenow .container {
-  padding: 0;
-}
-.footer-link-left .list-3-list ul,
-.footer-link-right ul {
-  display: grid;
-  list-style: none;
-  padding-left: 0;
-}
-.footer-link-left .contact-details .contact-details__title,
-.footer-link-left .contact-details__description {
+
+.footer-design-credit a:link,
+.footer-design-credit a:visited {
   color: #fff;
 }
-.footer-link-left .contact-details__description {
-  font-size: 1rem; /* Equivalent to 16px assuming 16px base */
-}
-@media (max-width: 768px) {
-  .footer-link-left .contact-details {
-    display: flex;
-    flex-wrap: wrap;
-  }
-  .footer-link-left .contact-details .contact-details__title {
-    font-size: 14px; /* Equivalent to 14px assuming 16px base */
-  }
-}
-.footer-link-left .list-4-list ul {
-  display: grid;
-  list-style: none;
-  padding-left: 0;
-}
-.footer-link-left .footer-lists-container {
-  display: flex;
-  flex-wrap: wrap;
-}
-.footer-link-left .list-4-list {
-  flex: 1;
-  padding-right: 20px;
-}
-.footer-section-row {
-  justify-content: space-between;
-}
-.footer-link-left .list-3-list ul li {
-  padding-right: 48px;
-  cursor: pointer;
-  color: #fcf1e4;
-}
-.footer-link-left .list-4-list ul li {
-  padding-right: 10px;
-  padding-bottom: 10px;
-  cursor: pointer;
-  color: #fcf1e4;
-}
-.footer-link-left .list-3-list {
-  flex: 1;
-  padding-left: 20px;
-}
-.footer-section form input::placeholder,
-.footer-section p {
-  color: #fcf1e4;
-}
-.footer-section p {
-  font-size: 20px; /* Equivalent to 20px assuming 16px base */
-}
-.footer-link-left li a {
-  padding-right: 48px;
-  color: #fceed9;
-}
-.footer-page-links-wrapper .list-1-list ul,
-.footer-page-links-wrapper .list-2-list ul {
-  list-style: none;
-  color: #fcf1e4;
-  padding-left: 0;
-}
-.footer-page-links-wrapper .list-2-list ul li {
-  padding-left: 56px;
-  border-left: 2px solid #fcf1e4;
-  white-space: nowrap;
-}
-.footer-link-right img {
-  padding-left: 48px;
-}
-.footer-link,
-.itc-talk-left-wrapper span {
-  color: #fceed9;
-  font-size: 16px; /* Equivalent to 16px assuming 16px base */
-}
-.footer-section .footer-logos {
-  display: flex;
-  align-items: center;
-}
-.footer-section .footer-itc-logo {
-  padding: 30px 0;
-}
-.footer-section .footer-fssai-logo {
-  padding: 0 0 0 30px;
-}
-.footer-section .footer-fssai-logo img {
-  max-width: 230px;
-}
-.footer-section .footer-itc-logo img {
-  width: 180px;
-}
-.itc-talk-left-wrapper button {
-  margin-top: 45px;
-}
-.footer-link:hover {
-  color: #fceed9;
-}
-.footer-section a {
-  color: #fceed9;
-  white-space: nowrap;
-}
-.footer-page-links-wrapper li {
-  padding-bottom: 30px;
-  cursor: pointer;
-}
-.footer-link-right .footer-link {
-  padding-top: 20px;
-}
-.footer-link-right {
-  margin-top: -63px;
-}
-.logo-image img {
-  width: 56px;
-}
-.footer-page-links-wrapper .list-2-list ul li:last-child {
-  padding-bottom: 0;
-}
-.footer-section-secondary {
-  background-color: #401e08;
-  padding: 20px 100px;
-}
-.footer-section-secondary .footer-secondary-container {
-  display: flex;
-  list-style: none;
-  gap: 18px;
-  margin: 0;
-  padding: 0;
-}
-.footer-section-secondary .footer-secondary-container .footer-secondary-lists .footer-links {
-  font-size: 16px; /* Equivalent to 16px assuming 16px base */
-  font-weight: 700;
-  line-height: 1.5;
-}
-@media (max-width: 1200px) {
-  .footer-logo-img {
-    max-width: 77px;
-  }
-  .footer-section ul li {
-    font-size: 12px; /* Equivalent to 12px assuming 16px base */
-  }
-  .footer-section {
-    padding: 32px 30px;
-  }
-  .footer-itc-logo {
-    margin-left: 15px;
-  }
-  .footer-page-links-wrapper li {
-    padding-bottom: 12px;
-    cursor: pointer;
-  }
-  .footer-section .footer-itc-logo {
-    padding: 0;
-  }
-  .footer-section .button-link a {
-    padding: 10px 30px;
-  }
-  .footer-section .list-1-list ul li {
-    padding-right: 20px;
-  }
-  .footer-section .list-2-list ul li {
-    padding-left: 20px;
-  }
-  .footer-link-right {
-    padding-right: 56px;
-    margin-top: 0;
-  }
-  .footer-link-right .footer-link {
-    padding-top: 0;
-  }
-  .footer-link-right img {
-    padding-left: 25px;
-  }
-  .footer-link {
-    font-size: 12px; /* Equivalent to 12px assuming 16px base */
-  }
-}
-@media (max-width: 767.98px) {
-  .btn-subscribe,
-  .footer-section form .form-control {
-    width: 100%;
-    font-size: 20px; /* Equivalent to 20px assuming 16px base */
-    max-width: none;
-  }
-  .footer-link-left li a {
-    padding-right: 17px;
-    white-space: nowrap;
-  }
-  .footer-section {
-    padding: 16px 31px;
-    position: relative;
-  }
-  .footer-section .form-group {
-    padding-top: 25px;
-  }
-  .footer-link-right {
-    margin-top: 0;
-    padding-right: 0;
-    padding-left: 0;
-    align-items: center !important;
-  }
-  .footer-link-right img:first-child {
-    padding-left: 10px;
-    padding-right: 10px;
-  }
-  .footer-link-left {
-    display: flex;
-    justify-content: center;
-  }
-  .subscribenow .button-link {
-    margin-left: 0;
-  }
-  .footer-page-links-wrapper {
-    padding-bottom: 30px;
-    padding-top: 40px !important;
-  }
-  .footer-link-right .footer-link {
-    padding-top: 10px;
-  }
-  .footer-link-left .list-3-list ul li {
-    padding: 0 9px !important;
-  }
-  .footer-link-left .list-4-list ul li {
-    padding: 0 9px !important;
-  }
-  .footer-section .button-link {
-    font-size: 20px; /* Equivalent to 20px assuming 16px base */
-  }
-  .footer-section .list-1-list ul li {
-    padding-right: 52px;
-  }
-  .footer-section .list-2-list ul li {
-    padding-left: 50px;
-  }
-  .footer-page-links-wrapper li {
-    padding-bottom: 30px;
-  }
-  .subscribenow h3 {
-    padding-top: 25px;
-    font-size: 16px; /* Equivalent to 16px assuming 16px base */
-    margin-left: 0;
-    padding-bottom: 0;
-    margin-bottom: 0;
-  }
-  .footer-page-links-wrapper ul li {
-    font-size: 13px; /* Equivalent to 13px assuming 16px base */
-  }
-  .footer-section .button-link a {
-    padding: 9px 44px;
-  }
-  .footer-section .cmp-form-text input {
-    padding: 0.7rem 1.75rem; /* Equivalent to 11.2px 28px assuming 16px base */
-    width: 100%;
-  }
-  .subscribenow {
-    display: block !important;
-    width: 100%;
-  }
-  .subscribenow .button-link a {
-    display: block;
-    text-align: center;
-  }
-  .logo-image img {
-    width: 37px;
-  }
-  .footer-itc-logo img {
-    width: 105px !important;
-  }
-  .footer-section .footer-fssai-logo {
-    padding: 0 0 0 20px;
-  }
-}
-.footer-itc-logo .cmp-image__image {
-  width: auto;
-  height: auto;
-}
-@media (max-width: 375px) {
-  .footer-link-left .footer-lists-container {
-    flex-wrap: wrap;
-  }
-  .footer-link-left .list-4-list,
-  .footer-link-left .list-3-list {
-    flex: 1 1 100%;
-    padding: 0 10px;
-    max-width: calc(50% - 20px);
-  }
+
+.footer-design-credit a:hover,
+.footer-design-credit a:active,
+.footer-design-credit a:focus {
+  color: #FFC270;
+  text-decoration: underline;
 }

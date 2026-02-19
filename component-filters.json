@@ -36,7 +36,10 @@
       "verticalPaddingSection",
       "howShift",
       "rsCards",
-      "footer"
+      "footer",
+      "siteHeader",
+      "contact",
+      "contactContent"
     ]
   },
   {
@@ -85,6 +88,18 @@
     ]
   },
   {
+    "id": "contactContent",
+    "components": [
+      "contactContent"
+    ]
+  },
+  {
+    "id": "contact",
+    "components": [
+      "contact"
+    ]
+  },
+  {
     "id": "featureCards",
     "components": [
       "featureCard"
@@ -120,10 +135,7 @@
   {
     "id": "footer",
     "components": [
-      "footerLogo",
-      "footerLink",
-      "footerSocialLink",
-      "footerSecondaryLink"
+      "footer"
     ]
   },
   {
@@ -163,6 +175,12 @@
     "id": "rsCards",
     "components": [
       "rsCard"
+    ]
+  },
+  {
+    "id": "siteHeader",
+    "components": [
+      "primaryMenuItem"
     ]
   },
   {
