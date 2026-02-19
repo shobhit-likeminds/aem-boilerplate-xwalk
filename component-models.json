@@ -388,77 +388,40 @@
     "id": "contactForm",
     "fields": [
       {
-        "component": "reference",
-        "label": "Image",
-        "name": "image",
+        "component": "container",
+        "fields": [
+          {
+            "component": "text",
+            "label": "First",
+            "name": "first",
+            "valueType": "string"
+          },
+          {
+            "component": "text",
+            "label": "Last",
+            "name": "last",
+            "valueType": "string"
+          }
+        ],
+        "label": "Name",
+        "name": "name"
+      },
+      {
+        "component": "text",
+        "label": "Email",
+        "name": "email",
         "valueType": "string"
       },
       {
         "component": "richtext",
-        "label": "Description",
-        "name": "description",
+        "label": "Comment or Message",
+        "name": "commentOrMessage",
         "valueType": "string"
-      },
-      {
-        "component": "container",
-        "fields": [
-          {
-            "component": "container",
-            "fields": [
-              {
-                "component": "text",
-                "label": "First Name",
-                "name": "firstName",
-                "valueType": "string"
-              },
-              {
-                "component": "text",
-                "label": "Last Name",
-                "name": "lastName",
-                "valueType": "string"
-              }
-            ],
-            "label": "Name",
-            "name": "name"
-          },
-          {
-            "component": "text",
-            "label": "Email",
-            "name": "email",
-            "valueType": "string"
-          },
-          {
-            "component": "richtext",
-            "label": "Comment or Message",
-            "name": "message",
-            "valueType": "string"
-          }
-        ],
-        "label": "Form Fields",
-        "name": "formFields"
       },
       {
         "component": "text",
         "label": "Message",
-        "name": "hiddenMessage",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "reCAPTCHA Response",
-        "name": "recaptchaResponse",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "reCAPTCHA Hidden",
-        "name": "recaptchaHidden",
-        "valueType": "string"
-      },
-      {
-        "component": "richtext",
-        "label": "Closing Text",
-        "name": "closingText",
+        "name": "message",
         "valueType": "string"
       }
     ]
@@ -467,9 +430,51 @@
     "id": "contact",
     "fields": [
       {
+        "component": "reference",
+        "label": "Avatar Image",
+        "name": "avatar",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Headline",
+        "name": "headline",
+        "valueType": "string"
+      },
+      {
         "component": "richtext",
-        "label": "Title Post Title",
-        "name": "titlePostTitle",
+        "label": "Intro Text",
+        "name": "intro",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "First Name",
+        "name": "firstName",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Last Name",
+        "name": "lastName",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Email",
+        "name": "email",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Comment or Message",
+        "name": "message",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Footer Text",
+        "name": "footer",
         "valueType": "string"
       }
     ]
@@ -887,82 +892,26 @@
     "fields": [
       {
         "component": "reference",
-        "label": "Logo 1",
-        "name": "logo1",
+        "label": "Logo",
+        "name": "logo",
         "valueType": "string"
       },
       {
         "component": "reference",
-        "label": "Logo 2",
-        "name": "logo2",
+        "label": "Close Menu Icon",
+        "name": "closeMenuIcon",
         "valueType": "string"
-      },
-      {
-        "component": "container",
-        "items": {
-          "component": "navigationLink"
-        },
-        "label": "Navigation Links",
-        "name": "navigationLinks"
       },
       {
         "component": "reference",
-        "label": "Current Country Flag",
-        "name": "countryFlag",
+        "label": "Toggle Menu Icon",
+        "name": "toggleMenuIcon",
         "valueType": "string"
       },
       {
-        "component": "text",
-        "label": "Current Country Code",
-        "name": "countryCode",
-        "valueType": "string"
-      },
-      {
-        "component": "container",
-        "items": {
-          "component": "countryOption"
-        },
-        "label": "Country Options",
-        "name": "countryOptions"
-      }
-    ]
-  },
-  {
-    "id": "navigationLink",
-    "fields": [
-      {
-        "component": "text",
-        "label": "Label",
-        "name": "label",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Link",
-        "name": "href",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
-    "id": "countryOption",
-    "fields": [
-      {
-        "component": "reference",
-        "label": "Country Flag",
-        "name": "flag",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Country Name",
-        "name": "name",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Country URL",
-        "name": "url",
+        "component": "richtext",
+        "label": "Primary Menu",
+        "name": "menuPrimary",
         "valueType": "string"
       }
     ]

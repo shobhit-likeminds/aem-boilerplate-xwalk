@@ -1,0 +1,24 @@
+.title-post-title {
+  font-family: "Lato", sans-serif;
+  color: #121212;
+  font-size: 3.188rem; /* Equivalent to 51px assuming 16px base */
+  line-height: 1.06; /* Equivalent to 54px */
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  margin-bottom: 0;
+  text-align: center;
+}
+
+@media all and (min-width: 43.75em) {
+  .title-post-title {
+    font-size: 2.375rem; /* Equivalent to 38px assuming 16px base */
+    line-height: 1.105; /* Equivalent to 42px */
+  }
+}
+
+@media all and (min-width: 56.25em) {
+  .title-post-title {
+    font-size: 3.188rem; /* Equivalent to 51px assuming 16px base */
+    line-height: 1.06; /* Equivalent to 54px */
+  }
+}

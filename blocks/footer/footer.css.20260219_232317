@@ -9,7 +9,7 @@
   left: 0;
   width: 100%;
   clear: both;
-  padding: 1.5em; /* Equivalent to 24px assuming 16px base */
+  padding: 1.5rem; /* Equivalent to 24px assuming 16px base */
   background: #000;
   color: #fff;
   text-align: center;
@@ -25,23 +25,22 @@
 
 .footer-design-credit a {
   font-weight: 900;
-  color: white; /* Explicitly set color for links */
-  text-decoration: none; /* Explicitly remove underline */
+  color: #fff;
+  text-decoration: none;
+  transition: color 0.2s;
   font-family: "Lato", sans-serif;
   font-size: 1rem; /* Equivalent to 16px assuming 16px base */
   line-height: 1.5; /* Equivalent to 24px assuming 16px base */
+}
+
+.footer-design-credit a:link,
+.footer-design-credit a:visited {
+  color: #fff;
 }
 
 .footer-design-credit a:hover,
 .footer-design-credit a:active,
 .footer-design-credit a:focus {
   color: #FFC270;
-  text-decoration: underline; /* Add underline on hover/focus */
-}
-
-.footer-copyright-link:link,
-.footer-copyright-link:visited,
-.footer-privacy-link:link,
-.footer-privacy-link:visited {
-  color: white;
+  text-decoration: underline;
 }

@@ -157,8 +157,7 @@
   {
     "id": "header",
     "components": [
-      "navigationLink",
-      "countryOption"
+      "header"
     ]
   },
   {

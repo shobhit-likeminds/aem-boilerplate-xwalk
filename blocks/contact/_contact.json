@@ -22,9 +22,51 @@
       "id": "contact",
       "fields": [
         {
+          "component": "reference",
+          "label": "Avatar Image",
+          "name": "avatar",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Headline",
+          "name": "headline",
+          "valueType": "string"
+        },
+        {
           "component": "richtext",
-          "label": "Title Post Title",
-          "name": "titlePostTitle",
+          "label": "Intro Text",
+          "name": "intro",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "First Name",
+          "name": "firstName",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Last Name",
+          "name": "lastName",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Email",
+          "name": "email",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Comment or Message",
+          "name": "message",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Footer Text",
+          "name": "footer",
           "valueType": "string"
         }
       ]

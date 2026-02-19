@@ -577,36 +577,6 @@
           }
         },
         {
-          "title": "Navigation Link",
-          "id": "navigationLink",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block/item",
-                "template": {
-                  "model": "navigationLink",
-                  "name": "Navigation Link"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Country Option",
-          "id": "countryOption",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block/item",
-                "template": {
-                  "model": "countryOption",
-                  "name": "Country Option"
-                }
-              }
-            }
-          }
-        },
-        {
           "title": "Hero",
           "id": "hero",
           "plugins": {

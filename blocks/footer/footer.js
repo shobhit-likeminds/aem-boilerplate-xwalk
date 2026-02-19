@@ -2,67 +2,71 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const footerDesignCredit = document.createElement('div');
-  footerDesignCredit.classList.add('footer-design-credit');
+  // The block itself is the footer element in the source HTML.
+  // Add the classes and role from the source HTML to the block.
+  block.classList.add('footer-site-footer');
+  block.setAttribute('role', 'contentinfo');
 
-  const footerCopyrightText = document.createElement('span');
-  footerCopyrightText.classList.add('footer-copyright-text');
-
-  // Assuming the block has only one row for the footer content
-  if (block.children.length > 0) {
-    const row = block.children[0];
-    moveInstrumentation(row, footerDesignCredit);
-    const cells = [...row.children];
-
-    let copyrightTextContent = '';
-    let copyrightLinkHref = '';
-    let copyrightLinkText = '';
-    let privacyPolicyLinkHref = '';
-    let privacyPolicyLinkText = '';
-
-    // Extract content from cells based on their content type
-    cells.forEach((cell) => {
-      const link = cell.querySelector('a');
-      if (link) {
-        // Check if it's the copyright link or privacy policy link
-        // This assumes specific text content or a unique identifier in the future
-        // For now, we'll try to infer based on typical footer structure
-        if (link.href.includes('practicetestautomation.com') && !link.href.includes('privacy-policy')) {
-          copyrightLinkHref = link.href;
-          copyrightLinkText = link.textContent.trim();
-        } else if (link.href.includes('privacy-policy')) {
-          privacyPolicyLinkHref = link.href;
-          privacyPolicyLinkText = link.textContent.trim();
-        }
-      } else {
-        // This cell likely contains the copyright text part
-        copyrightTextContent = cell.textContent.trim();
-      }
-    });
-
-    // Reconstruct the span content
-    const copyrightYearText = copyrightTextContent.split('© Copyright')[1]?.split('All rights reserved')[0]?.trim() || '';
-    footerCopyrightText.textContent = `© Copyright ${copyrightYearText} `;
-
-    const copyrightLink = document.createElement('a');
-    copyrightLink.classList.add('footer-copyright-link');
-    copyrightLink.href = copyrightLinkHref;
-    copyrightLink.textContent = copyrightLinkText;
-    footerCopyrightText.append(copyrightLink);
-
-    footerCopyrightText.append(document.createTextNode(' All rights reserved | '));
-
-    const privacyPolicyLink = document.createElement('a');
-    privacyPolicyLink.classList.add('footer-privacy-policy-link');
-    privacyPolicyLink.href = privacyPolicyLinkHref;
-    privacyPolicyLink.textContent = privacyPolicyLinkText;
-    footerCopyrightText.append(privacyPolicyLink);
+  // Assuming there's only one row for the footer content
+  const row = block.children[0];
+  if (!row) {
+    // No content provided, return early
+    return;
   }
 
-  footerDesignCredit.append(footerCopyrightText);
+  // Extract content from cells based on the Block JSON definition order
+  const copyrightTextCell = row.children[0];
+  const copyrightLinkCell = row.children[1];
+  const privacyPolicyLinkCell = row.children[2];
 
+  // Create the main wrapper div
+  const designCreditDiv = document.createElement('div');
+  designCreditDiv.classList.add('footer-design-credit');
+  moveInstrumentation(row, designCreditDiv);
+
+  // Create the span for copyright text and links
+  const copyrightSpan = document.createElement('span');
+  copyrightSpan.classList.add('footer-copyright-text');
+
+  // Append the copyright text
+  if (copyrightTextCell) {
+    // The copyrightText field is rich text, so it might contain HTML. Append its children.
+    while (copyrightTextCell.firstChild) {
+      copyrightSpan.append(copyrightTextCell.firstChild);
+    }
+  }
+
+  // Append the copyright link
+  if (copyrightLinkCell) {
+    const sourceCopyrightLink = copyrightLinkCell.querySelector('a');
+    if (sourceCopyrightLink) {
+      const copyrightLink = document.createElement('a');
+      copyrightLink.classList.add('footer-copyright-link');
+      copyrightLink.href = sourceCopyrightLink.href;
+      copyrightLink.textContent = sourceCopyrightLink.textContent;
+      moveInstrumentation(sourceCopyrightLink, copyrightLink);
+      copyrightSpan.append(copyrightLink);
+    }
+  }
+
+  // Append separator and privacy policy link
+  if (privacyPolicyLinkCell) {
+    copyrightSpan.append(document.createTextNode(' | ')); // Add separator text
+    const sourcePrivacyLink = privacyPolicyLinkCell.querySelector('a');
+    if (sourcePrivacyLink) {
+      const privacyLink = document.createElement('a');
+      privacyLink.classList.add('footer-privacy-link');
+      privacyLink.href = sourcePrivacyLink.href;
+      privacyLink.textContent = sourcePrivacyLink.textContent;
+      moveInstrumentation(sourcePrivacyLink, privacyLink);
+      copyrightSpan.append(privacyLink);
+    }
+  }
+
+  // Append the span to the design credit div
+  designCreditDiv.append(copyrightSpan);
+
+  // Clear the block and append the new structure
   block.textContent = '';
-  block.classList.add('footer-site-footer'); // Add the class from the source HTML
-  block.setAttribute('role', 'contentinfo'); // Add the role from the source HTML
-  block.append(footerDesignCredit);
+  block.append(designCreditDiv);
 }

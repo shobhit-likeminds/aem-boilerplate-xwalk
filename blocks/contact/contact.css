@@ -1,24 +1,459 @@
-.title-post-title {
+.main-content-container {
+  margin: 1.5em 0 0;
+  padding: 0 3.125%;
+  min-height: calc(100vh - 200px);
   font-family: "Lato", sans-serif;
-  color: #121212;
-  font-size: 3.188rem; /* Equivalent to 51px assuming 16px base */
-  line-height: 1.06; /* Equivalent to 54px */
+  color: #1a1a1a;
+  line-height: 1.5;
+  font-size: 1rem; /* Equivalent to 16px assuming 16px base */
+}
+.main-content-loop-container {
+  margin-bottom: 4.5em;
+  font-family: "Lato", sans-serif;
+  color: #1a1a1a;
+  line-height: 1.5;
+  font-size: 1rem; /* Equivalent to 16px assuming 16px base */
+}
+.main-content-loop-container::after {
+  content: ".";
+  display: block;
+  clear: both;
+  visibility: hidden;
+  line-height: 0;
+  height: 0;
+}
+.main-content-post-entry {
+  margin: 1.5em auto 3em;
+  padding: 0 3.125%;
+  max-width: 900px;
+  font-family: "Lato", sans-serif;
+  color: #1a1a1a;
+  line-height: 1.5;
+  font-size: 1rem; /* Equivalent to 16px assuming 16px base */
+}
+.main-content-post-header {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto 1.5em;
+  font-family: "Lato", sans-serif;
+  color: #1a1a1a;
+  line-height: 1.5;
+  font-size: 1rem; /* Equivalent to 16px assuming 16px base */
+}
+.main-content-post-title {
+  font-family: "Lato", sans-serif;
+  margin: 0 0 24px 0;
+  padding: 0;
   font-weight: 900;
+  font-size: 1.75em; /* Equivalent to 28px assuming 16px base */
+  line-height: 1.143; /* Equivalent to 1.143 * 28px = 32px */
   letter-spacing: -0.02em;
   margin-bottom: 0;
-  text-align: center;
+  color: #121212;
 }
-
 @media all and (min-width: 43.75em) {
-  .title-post-title {
-    font-size: 2.375rem; /* Equivalent to 38px assuming 16px base */
-    line-height: 1.105; /* Equivalent to 42px */
+  .main-content-post-title {
+    font-size: 2.375em; /* Equivalent to 38px assuming 16px base */
+    line-height: 1.105; /* Equivalent to 1.105 * 38px = 42px */
   }
 }
-
 @media all and (min-width: 56.25em) {
-  .title-post-title {
-    font-size: 3.188rem; /* Equivalent to 51px assuming 16px base */
-    line-height: 1.06; /* Equivalent to 54px */
+  .main-content-post-title {
+    font-size: 3.188em; /* Equivalent to 51px assuming 16px base */
+    line-height: 1.06; /* Equivalent to 1.06 * 51px = 54px */
+  }
+}
+.main-content-post-content {
+  padding: 0 12px;
+  font-family: "Lato", sans-serif;
+  color: #1a1a1a;
+  line-height: 1.5;
+  font-size: 1rem; /* Equivalent to 16px assuming 16px base */
+}
+.main-content-post-content::after {
+  content: ".";
+  display: block;
+  clear: both;
+  visibility: hidden;
+  line-height: 0;
+  height: 0;
+}
+@media all and (min-width: 43.75em) {
+  .main-content-post-content {
+    font-size: 1.125em; /* Equivalent to 18px assuming 16px base */
+    line-height: 1.555; /* Equivalent to 1.555 * 18px = 28px */
+    margin-top: 0;
+  }
+}
+.main-content-wp-block-image {
+  box-sizing: border-box;
+  height: auto;
+  max-width: 100%;
+  vertical-align: bottom;
+  font-family: "Lato", sans-serif;
+  color: #1a1a1a;
+  line-height: 1.5;
+  font-size: 1rem; /* Equivalent to 16px assuming 16px base */
+}
+.main-content-aligncenter {
+  text-align: center;
+  margin: 1.5em auto;
+  display: block;
+  font-family: "Lato", sans-serif;
+  color: #1a1a1a;
+  line-height: 1.5;
+  font-size: 1rem; /* Equivalent to 16px assuming 16px base */
+}
+.main-content-aligncenter.main-content-is-resized {
+  font-size: 1.125em; /* Equivalent to 18px assuming 16px base */
+}
+.main-content-wp-image-91 {
+  max-width: 100%;
+  height: auto;
+  box-sizing: border-box;
+  vertical-align: bottom;
+  font-family: "Lato", sans-serif;
+  color: #1a1a1a;
+  line-height: 1.5;
+  font-size: 1rem; /* Equivalent to 16px assuming 16px base */
+}
+.main-content-post-content p {
+  margin: 1.5em 0;
+  font-family: "Lato", sans-serif;
+  color: #1a1a1a;
+  line-height: 1.5;
+  font-size: 1rem; /* Equivalent to 16px assuming 16px base */
+}
+@media all and (min-width: 43.75em) {
+  .main-content-post-content p {
+    font-size: 1.125em; /* Equivalent to 18px assuming 16px base */
+    line-height: 1.555; /* Equivalent to 1.555 * 18px = 28px */
+  }
+}
+.main-content-wpforms-container {
+  margin: 24px auto;
+  font-family: "Lato", sans-serif;
+  color: #1a1a1a;
+  line-height: 1.5;
+  font-size: 1rem; /* Equivalent to 16px assuming 16px base */
+}
+.main-content-wpforms-container-full, .main-content-wpforms-container-full .main-content-wpforms-form * {
+  background: none;
+  border: 0 none;
+  border-radius: 0;
+  float: none;
+  font-size: 100%;
+  height: auto;
+  letter-spacing: normal;
+  list-style: none;
+  outline: none;
+  position: static;
+  text-decoration: none;
+  text-indent: 0;
+  text-shadow: none;
+  text-transform: none;
+  width: auto;
+  visibility: visible;
+  overflow: visible;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  box-shadow: none;
+}
+.main-content-wpforms-container-full {
+  margin-left: auto;
+  margin-right: auto;
+}
+.main-content-wpforms-form {
+  font-family: "Lato", sans-serif;
+  color: #1a1a1a;
+  line-height: 1.5;
+  font-size: 1rem; /* Equivalent to 16px assuming 16px base */
+}
+.main-content-wpforms-error-noscript {
+  color: #990000;
+  font-family: "Lato", sans-serif;
+  line-height: 1.5;
+  font-size: 1rem; /* Equivalent to 16px assuming 16px base */
+}
+.main-content-wpforms-field-container {
+  font-family: "Lato", sans-serif;
+  color: #1a1a1a;
+  line-height: 1.5;
+  font-size: 1rem; /* Equivalent to 16px assuming 16px base */
+}
+.main-content-wpforms-field {
+  padding: 10px 0;
+  clear: both;
+  font-family: "Lato", sans-serif;
+  color: #1a1a1a;
+  line-height: 1.5;
+  font-size: 1rem; /* Equivalent to 16px assuming 16px base */
+}
+.main-content-wpforms-field-name {
+  font-family: "Lato", sans-serif;
+  color: #1a1a1a;
+  line-height: 1.5;
+  font-size: 1rem; /* Equivalent to 16px assuming 16px base */
+}
+.main-content-wpforms-field-label {
+  display: block;
+  font-weight: 700;
+  font-size: 1rem; /* Equivalent to 16px assuming 16px base */
+  float: none;
+  line-height: 1.3;
+  margin: 0 0 4px 0;
+  padding: 0;
+  word-break: break-word;
+  word-wrap: break-word;
+  color: #121212;
+}
+.main-content-wpforms-required-label {
+  color: #ff0000;
+  font-weight: 400;
+  font-family: "Lato", sans-serif;
+  line-height: 1.3;
+  font-size: 1rem; /* Equivalent to 16px assuming 16px base */
+}
+.main-content-wpforms-field-row {
+  margin-bottom: 8px;
+  position: relative;
+  font-family: "Lato", sans-serif;
+  color: #1a1a1a;
+  line-height: 1.5;
+  font-size: 1rem; /* Equivalent to 16px assuming 16px base */
+}
+.main-content-wpforms-field-row::before {
+  content: " ";
+  display: table;
+}
+.main-content-wpforms-field-row::after {
+  clear: both;
+  content: " ";
+  display: table;
+}
+.main-content-wpforms-field-medium {
+  max-width: 60%;
+  font-family: "Lato", sans-serif;
+  color: #1a1a1a;
+  line-height: 1.5;
+  font-size: 1rem; /* Equivalent to 16px assuming 16px base */
+}
+.main-content-wpforms-field-row-block {
+  display: block;
+  font-family: "Lato", sans-serif;
+  color: #1a1a1a;
+  line-height: 1.5;
+  font-size: 1rem; /* Equivalent to 16px assuming 16px base */
+}
+.main-content-wpforms-first {
+  clear: both !important;
+  margin-left: 0 !important;
+  float: left;
+  font-family: "Lato", sans-serif;
+  color: #1a1a1a;
+  line-height: 1.5;
+  font-size: 1rem; /* Equivalent to 16px assuming 16px base */
+}
+.main-content-wpforms-one-half {
+  width: calc(50% - 10px);
+  float: left;
+  font-family: "Lato", sans-serif;
+  color: #1a1a1a;
+  line-height: 1.5;
+  font-size: 1rem; /* Equivalent to 16px assuming 16px base */
+}
+.main-content-wpforms-field-name-first {
+  font-family: "Lato", sans-serif;
+  color: #1a1a1a;
+  line-height: 1.5;
+  font-size: 1rem; /* Equivalent to 16px assuming 16px base */
+}
+.main-content-wpforms-field-required {
+  background-color: #fff;
+  box-sizing: border-box;
+  border-radius: 2px;
+  color: #333;
+  display: block;
+  float: none;
+  font-size: 1rem; /* Equivalent to 16px assuming 16px base */
+  font-family: inherit;
+  border: 1px solid #ccc;
+  padding: 6px 10px;
+  height: 38px;
+  width: 100%;
+  line-height: 1.3;
+  -webkit-appearance: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.main-content-wpforms-field-required:focus {
+  outline: none;
+  border: 1px solid #999;
+  box-shadow: none;
+}
+.main-content-wpforms-field-sublabel {
+  display: block;
+  font-size: 0.8125rem; /* Equivalent to 13px assuming 16px base */
+  float: none;
+  font-weight: 400;
+  line-height: 1.3;
+  margin: 4px 0 0;
+  padding: 0;
+  font-family: "Lato", sans-serif;
+  color: #1a1a1a;
+}
+.main-content-after {
+  font-family: "Lato", sans-serif;
+  color: #1a1a1a;
+  line-height: 1.3;
+  font-size: 0.8125rem; /* Equivalent to 13px assuming 16px base */
+}
+.main-content-wpforms-field-row-block.main-content-wpforms-one-half {
+  margin-left: 20px;
+}
+.main-content-wpforms-field-name-last {
+  font-family: "Lato", sans-serif;
+  color: #1a1a1a;
+  line-height: 1.5;
+  font-size: 1rem; /* Equivalent to 16px assuming 16px base */
+}
+.main-content-wpforms-field-email {
+  font-family: "Lato", sans-serif;
+  color: #1a1a1a;
+  line-height: 1.5;
+  font-size: 1rem; /* Equivalent to 16px assuming 16px base */
+}
+.main-content-wpforms-field-textarea {
+  font-family: "Lato", sans-serif;
+  color: #1a1a1a;
+  line-height: 1.5;
+  font-size: 1rem; /* Equivalent to 16px assuming 16px base */
+}
+.main-content-wpforms-field-medium.main-content-wpforms-field-required {
+  height: 120px;
+  min-height: 38px;
+  resize: vertical;
+}
+.main-content-wpforms-field-hp {
+  display: none !important;
+  position: absolute !important;
+  left: -9000px !important;
+  font-family: "Lato", sans-serif;
+  color: #1a1a1a;
+  line-height: 1.5;
+  font-size: 1rem; /* Equivalent to 16px assuming 16px base */
+}
+.main-content-wpforms-recaptcha-container {
+  padding: 10px 0 20px 0;
+  clear: both;
+  position: static;
+  font-family: "Lato", sans-serif;
+  color: #1a1a1a;
+  line-height: 1.5;
+  font-size: 1rem; /* Equivalent to 16px assuming 16px base */
+}
+.main-content-wpforms-is-recaptcha {
+  font-family: "Lato", sans-serif;
+  color: #1a1a1a;
+  line-height: 1.5;
+  font-size: 1rem; /* Equivalent to 16px assuming 16px base */
+}
+.main-content-wpforms-is-recaptcha-type-v2 {
+  font-family: "Lato", sans-serif;
+  color: #1a1a1a;
+  line-height: 1.5;
+  font-size: 1rem; /* Equivalent to 16px assuming 16px base */
+}
+.main-content-g-recaptcha {
+  line-height: 0;
+  font-size: 0;
+  font-family: "Lato", sans-serif;
+  color: #1a1a1a;
+}
+.main-content-recaptcha-wrapper {
+  width: 304px;
+  height: 78px;
+  font-family: "Lato", sans-serif;
+  color: #1a1a1a;
+  line-height: 1.5;
+  font-size: 1rem; /* Equivalent to 16px assuming 16px base */
+}
+.main-content-g-recaptcha-response {
+  width: 250px;
+  height: 40px;
+  border: 1px solid #c1c1c1;
+  margin: 10px 25px;
+  padding: 0;
+  resize: none;
+  display: none;
+  font-family: "Lato", sans-serif;
+  color: #1a1a1a;
+  line-height: 1.5;
+  font-size: 1rem; /* Equivalent to 16px assuming 16px base */
+}
+.main-content-wpforms-recaptcha-hidden {
+  position: absolute !important;
+  clip: rect(0, 0, 0, 0) !important;
+  height: 1px !important;
+  width: 1px !important;
+  border: 0 !important;
+  overflow: hidden !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  background-color: #fff;
+  box-sizing: border-box;
+  border-radius: 2px;
+  color: #333;
+  display: block;
+  float: none;
+  font-size: 1rem; /* Equivalent to 16px assuming 16px base */
+  font-family: inherit;
+  border: 1px solid #ccc;
+  line-height: 1.3;
+  -webkit-appearance: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.main-content-wpforms-recaptcha-hidden:focus {
+  outline: none;
+  border: 1px solid #999;
+  box-shadow: none;
+}
+.main-content-wpforms-submit-container {
+  padding: 10px 0 0 0;
+  clear: both;
+  position: relative;
+  font-family: "Lato", sans-serif;
+  color: #1a1a1a;
+  line-height: 1.5;
+  font-size: 1rem; /* Equivalent to 16px assuming 16px base */
+}
+.main-content-wpforms-submit {
+  background-color: #eee;
+  border: 1px solid #ddd;
+  color: #333;
+  font-size: 1rem; /* Equivalent to 16px assuming 16px base */
+  font-family: inherit;
+  padding: 10px 15px;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  outline: none;
+  border-radius: 4px;
+  -webkit-appearance: none;
+  transition: background 0.2s;
+}
+.main-content-wpforms-submit:hover {
+  cursor: pointer;
+  background: #ddd;
+  border: 1px solid #ccc;
+}
+.main-content-wpforms-submit:active,
+.main-content-wpforms-submit:focus {
+  background: #ddd;
+  border: 1px solid #ccc;
+}
+
+@media all and (max-width: 600px) {
+  .main-content-wpforms-field-medium {
+    max-width: 100%;
   }
 }
