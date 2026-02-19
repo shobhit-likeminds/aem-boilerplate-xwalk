@@ -17,15 +17,15 @@
       }
     },
     {
-      "title": "Menu-Item",
-      "id": "menuItem",
+      "title": "Primary-Menu-Item",
+      "id": "primaryMenuItem",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "menuItem",
-              "name": "Menu-Item"
+              "model": "primaryMenuItem",
+              "name": "Primary-Menu-Item"
             }
           }
         }
@@ -34,7 +34,7 @@
   ],
   "models": [
     {
-      "id": "menuItem",
+      "id": "primaryMenuItem",
       "fields": [
         {
           "component": "text",
@@ -55,7 +55,7 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Logo",
+          "label": "Logo Image",
           "name": "logo",
           "valueType": "string"
         },
@@ -66,26 +66,10 @@
           "valueType": "string"
         },
         {
-          "component": "reference",
-          "label": "Close Menu Icon",
-          "name": "closeMenuIcon",
-          "valueType": "string"
-        },
-        {
-          "component": "reference",
-          "label": "Toggle Menu Icon",
-          "name": "toggleMenuIcon",
-          "valueType": "string"
-        },
-        {
           "component": "container",
-          "items": [
-            {
-              "component": "menuItem"
-            }
-          ],
-          "label": "Menu Items",
-          "name": "menuItems"
+          "itemType": "primaryMenuItem",
+          "label": "Primary Menu",
+          "name": "primaryMenu"
         }
       ]
     }
@@ -94,7 +78,7 @@
     {
       "id": "siteHeader",
       "components": [
-        "menuItem"
+        "primaryMenuItem"
       ]
     }
   ]

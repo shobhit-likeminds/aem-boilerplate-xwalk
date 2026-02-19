@@ -74,7 +74,9 @@
         "footer",
         "siteHeader",
         "contact",
-        "contactContent"
+        "contactContent",
+        "contactForm",
+        "siteFooter"
       ]
     }
   ]

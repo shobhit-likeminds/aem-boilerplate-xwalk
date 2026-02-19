@@ -39,7 +39,9 @@
       "footer",
       "siteHeader",
       "contact",
-      "contactContent"
+      "contactContent",
+      "contactForm",
+      "siteFooter"
     ]
   },
   {
@@ -91,6 +93,12 @@
     "id": "contactContent",
     "components": [
       "contactContent"
+    ]
+  },
+  {
+    "id": "contactForm",
+    "components": [
+      "contactForm"
     ]
   },
   {
@@ -178,9 +186,12 @@
     ]
   },
   {
+    "id": "siteFooter"
+  },
+  {
     "id": "siteHeader",
     "components": [
-      "primaryMenuItem"
+      "menuItem"
     ]
   },
   {

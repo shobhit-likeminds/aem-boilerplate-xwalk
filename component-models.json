@@ -385,6 +385,85 @@
     ]
   },
   {
+    "id": "contactForm",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Image",
+        "name": "image",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Description",
+        "name": "description",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "fields": [
+          {
+            "component": "container",
+            "fields": [
+              {
+                "component": "text",
+                "label": "First Name",
+                "name": "firstName",
+                "valueType": "string"
+              },
+              {
+                "component": "text",
+                "label": "Last Name",
+                "name": "lastName",
+                "valueType": "string"
+              }
+            ],
+            "label": "Name",
+            "name": "name"
+          },
+          {
+            "component": "text",
+            "label": "Email",
+            "name": "email",
+            "valueType": "string"
+          },
+          {
+            "component": "richtext",
+            "label": "Comment or Message",
+            "name": "message",
+            "valueType": "string"
+          }
+        ],
+        "label": "Form Fields",
+        "name": "formFields"
+      },
+      {
+        "component": "text",
+        "label": "Message",
+        "name": "hiddenMessage",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "reCAPTCHA Response",
+        "name": "recaptchaResponse",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "reCAPTCHA Hidden",
+        "name": "recaptchaHidden",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Closing Text",
+        "name": "closingText",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "contact",
     "fields": [
       {
@@ -1107,7 +1186,18 @@
     ]
   },
   {
-    "id": "primaryMenuItem",
+    "id": "siteFooter",
+    "fields": [
+      {
+        "component": "richtext",
+        "label": "Footer Copyright Text",
+        "name": "footerCopyrightText",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "menuItem",
     "fields": [
       {
         "component": "text",
@@ -1128,7 +1218,7 @@
     "fields": [
       {
         "component": "reference",
-        "label": "Logo Image",
+        "label": "Logo",
         "name": "logo",
         "valueType": "string"
       },
@@ -1139,10 +1229,26 @@
         "valueType": "string"
       },
       {
+        "component": "reference",
+        "label": "Close Menu Icon",
+        "name": "closeMenuIcon",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Toggle Menu Icon",
+        "name": "toggleMenuIcon",
+        "valueType": "string"
+      },
+      {
         "component": "container",
-        "itemType": "primaryMenuItem",
-        "label": "Primary Menu",
-        "name": "primaryMenu"
+        "items": [
+          {
+            "component": "menuItem"
+          }
+        ],
+        "label": "Menu Items",
+        "name": "menuItems"
       }
     ]
   },
