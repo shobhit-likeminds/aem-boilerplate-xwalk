@@ -1,31 +1,31 @@
 {
   "definitions": [
     {
-      "title": "Carousel",
-      "id": "carousel",
+      "title": "RS-Cards",
+      "id": "rsCards",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block",
             "template": {
-              "filter": "carousel",
-              "model": "carousel",
-              "name": "Carousel"
+              "filter": "rsCards",
+              "model": "rsCards",
+              "name": "RS-Cards"
             }
           }
         }
       }
     },
     {
-      "title": "Carousel Item",
-      "id": "carouselItem",
+      "title": "RS-Card",
+      "id": "rsCard",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "carouselItem",
-              "name": "Carousel Item"
+              "model": "rsCard",
+              "name": "RS-Card"
             }
           }
         }
@@ -34,18 +34,12 @@
   ],
   "models": [
     {
-      "id": "carouselItem",
+      "id": "rsCard",
       "fields": [
         {
           "component": "reference",
           "label": "Image",
           "name": "image",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Image Alt Text",
-          "name": "alt",
           "valueType": "string"
         },
         {
@@ -65,9 +59,9 @@
   ],
   "filters": [
     {
-      "id": "carousel",
+      "id": "rsCards",
       "components": [
-        "carouselItem"
+        "rsCard"
       ]
     }
   ]

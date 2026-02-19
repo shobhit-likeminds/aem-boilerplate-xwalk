@@ -2,196 +2,104 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const carouselContainer = document.createElement('div');
-  carouselContainer.className = 'carousel-container';
+  const section = document.createElement('section');
+  section.className = 'shiftclub-section shiftclub-mx-md-0 shiftclub-mx-4';
+  moveInstrumentation(block, section); // Transfer instrumentation to the new section
 
-  const swiper = document.createElement('div');
-  swiper.className = 'swiper carousel-primary-swiper';
-  // Transfer attributes from the outer block if they exist, or set defaults
-  swiper.setAttribute('role', 'group');
-  swiper.setAttribute('aria-live', 'polite');
-  swiper.setAttribute('aria-roledescription', 'carousel');
-  swiper.setAttribute('data-is-autoplay', block.dataset.isAutoplay || 'true');
-  swiper.setAttribute('data-delay', block.dataset.delay || '5000');
-  swiper.setAttribute('data-autopause-disabled', block.dataset.autopauseDisabled || 'true');
-  swiper.setAttribute('data-is-loop', block.dataset.isLoop || 'false');
-  swiper.setAttribute('data-placeholder-text', block.dataset.placeholderText || 'false');
+  const container = document.createElement('div');
+  container.className = 'container';
 
-  const swiperWrapper = document.createElement('div');
-  swiperWrapper.className = 'swiper-wrapper carousel-primary-swiper-wrapper carousel-z-0';
+  const carouselDiv = document.createElement('div');
+  carouselDiv.id = 'shiftclub-carousel';
+  carouselDiv.className = 'carousel slide shiftclub-carousel';
+  carouselDiv.setAttribute('data-ride', 'carousel');
 
-  [...block.children].forEach((row) => {
-    const swiperSlide = document.createElement('div');
-    moveInstrumentation(row, swiperSlide);
-    swiperSlide.className = 'swiper-slide carousel-primary-swiper-slide';
-    swiperSlide.setAttribute('role', 'tabpanel');
-    swiperSlide.setAttribute('aria-roledescription', 'slide');
+  const carouselShift = document.createElement('div');
+  carouselShift.className = 'shiftclub-carousel-shift';
 
-    const carouselBanner = document.createElement('div');
-    carouselBanner.className = 'carousel-banner';
+  const carouselInner = document.createElement('div');
+  carouselInner.className = 'carousel-inner';
 
-    const carouselBannerSection = document.createElement('section');
-    carouselBannerSection.className = 'carousel-banner-section';
+  const carouselIndicators = document.createElement('ol');
+  carouselIndicators.className = 'carousel-indicators';
 
-    const carouselBannerSectionWrapper = document.createElement('div');
-    carouselBannerSectionWrapper.className = 'carousel-position-relative carousel-boing carousel-banner-section__wrapper';
+  [...block.children].forEach((row, index) => {
+    // Extract content from the row
+    const imageCell = row.children[0];
+    const altCell = row.children[1];
+    const titleCell = row.children[2];
+    const descriptionCell = row.children[3];
 
-    const cells = [...row.children];
+    const imgElement = imageCell.querySelector('img');
+    const altText = altCell.textContent.trim();
+    const titleText = titleCell.textContent.trim();
+    const descriptionHTML = descriptionCell.innerHTML.trim();
 
-    // Check for video first, as per the first slide structure
-    const videoCell = cells[1]; // Assuming video is in the second cell based on JSON
-    const imageCell = cells[0]; // Assuming image is in the first cell based on JSON
-    const ctaTextCell = cells[2]; // Assuming CTA text is in the third cell
-    const ctaLinkCell = cells[3]; // Assuming CTA link is in the fourth cell
+    // Create carousel indicator
+    const indicatorLi = document.createElement('li');
+    indicatorLi.setAttribute('data-target', '#shiftclub-carousel');
+    indicatorLi.setAttribute('data-slide-to', index.toString());
+    if (index === 0) {
+      indicatorLi.classList.add('active');
+    }
+    carouselIndicators.append(indicatorLi);
 
-    const videoSource = videoCell?.querySelector('a[href$=".mp4"], a[href$=".webm"]');
-    const image = imageCell?.querySelector('img');
-    const ctaText = ctaTextCell?.textContent.trim();
-    const ctaLink = ctaLinkCell?.querySelector('a');
+    // Create carousel item
+    const carouselItem = document.createElement('div');
+    carouselItem.className = 'carousel-item';
+    if (index === 0) {
+      carouselItem.classList.add('active');
+    }
+    moveInstrumentation(row, carouselItem); // Transfer instrumentation to the new carousel item
 
-    if (videoSource) {
-      const videoWrapper = document.createElement('div');
-      videoWrapper.className = 'carousel-video-wrapper';
+    const itemContentWrapper = document.createElement('div');
+    itemContentWrapper.className = 'd-md-flex d-block';
 
-      const videoElement = document.createElement('video');
-      videoElement.className = 'carousel-w-100 carousel-object-fit-cover carousel-banner-media carousel-banner-video';
-      videoElement.setAttribute('title', 'Video');
-      videoElement.setAttribute('aria-label', 'Video');
-      videoElement.setAttribute('data-is-autoplay', 'true');
-      videoElement.setAttribute('playsinline', '');
-      videoElement.setAttribute('preload', 'metadata');
-      videoElement.setAttribute('fetchpriority', 'high');
-      videoElement.setAttribute('loop', 'false');
-      videoElement.setAttribute('muted', 'true');
-      videoElement.setAttribute('autoplay', 'true');
-
-      const sourceElement = document.createElement('source');
-      sourceElement.src = videoSource.href;
-      sourceElement.type = `video/${videoSource.href.split('.').pop()}`;
-      videoElement.append(sourceElement);
-
-      // Add play/pause and mute/unmute buttons structure (simplified for brevity)
-      const controlsWrapper = document.createElement('div');
-      controlsWrapper.className = 'carousel-position-absolute carousel-w-100 carousel-h-100 carousel-start-0 carousel-top-0 carousel-d-flex carousel-justify-content-center carousel-align-items-center carousel-cursor-pointer';
-      // ... add play/pause buttons here ...
-
-      const muteIconWrapper = document.createElement('div');
-      muteIconWrapper.className = 'carousel-position-absolute carousel-z-2 carousel-d-flex carousel-justify-content-center carousel-align-items-center carousel-cursor-pointer carousel-mute-icon';
-      // ... add mute/unmute buttons here ...
-
-      videoWrapper.append(videoElement, controlsWrapper, muteIconWrapper);
-      carouselBannerSectionWrapper.append(videoWrapper);
-    } else if (image) {
-      const optimizedPic = createOptimizedPicture(image.src, image.alt, true, [{ width: '2000' }]);
-      moveInstrumentation(image, optimizedPic.querySelector('img'));
-      optimizedPic.querySelector('img').className = 'carousel-w-100 carousel-h-100 carousel-object-fit-cover carousel-banner-media carousel-banner-image';
-      optimizedPic.querySelector('img').setAttribute('loading', 'eager');
-      optimizedPic.querySelector('img').setAttribute('fetchpriority', 'high');
-      optimizedPic.querySelector('img').setAttribute('decoding', 'async');
-      carouselBannerSectionWrapper.append(optimizedPic);
+    if (imgElement) {
+      const optimizedPic = createOptimizedPicture(imgElement.src, altText);
+      optimizedPic.querySelector('img').classList.add('shiftclub-carousel__img', 'd-block', 'w-md-50', 'w-100');
+      moveInstrumentation(imgElement, optimizedPic.querySelector('img')); // Transfer instrumentation to the optimized picture's img
+      itemContentWrapper.append(optimizedPic);
     }
 
-    if (ctaText || ctaLink) {
-      const ctaWrapper = document.createElement('div');
-      ctaWrapper.className = 'carousel-position-absolute carousel-start-50 carousel-translate-middle-x carousel-w-100 carousel-boing__banner--cta';
+    const rightWrapper = document.createElement('div');
+    rightWrapper.className = 'w-md-50 w-100 shiftclub-right-wrapper read-more';
 
-      const bannerCta = document.createElement('div');
-      bannerCta.className = 'carousel-banner-cta';
+    const titleH2 = document.createElement('h2');
+    titleH2.className = 'shiftclub-carousel-inner__title';
+    titleH2.textContent = titleText;
+    rightWrapper.append(titleH2);
 
-      const textCenter = document.createElement('div');
-      textCenter.className = 'carousel-text-center';
+    const descriptionP = document.createElement('p');
+    descriptionP.className = 'shiftclub-carousel-inner__description';
+    descriptionP.innerHTML = descriptionHTML;
+    rightWrapper.append(descriptionP);
 
-      if (ctaLink) {
-        const newLink = document.createElement('a');
-        newLink.id = `cta-${Math.random().toString(36).substring(2, 11)}`; // Generate a random ID
-        newLink.className = 'carousel-cmp-button carousel-analytics_cta_click carousel-text-center carousel-cta-layout';
-        newLink.setAttribute('data-link-region', 'CTA');
-        newLink.setAttribute('data-is-internal', 'true');
-        newLink.setAttribute('data-enable-gating', 'false');
-        newLink.href = ctaLink.href;
-        if (ctaLink.target) newLink.target = ctaLink.target;
-
-        const span = document.createElement('span');
-        span.className = 'carousel-cmp-button__text carousel-primary-btn carousel-w-75 carousel-p-5 carousel-rounded-pill carousel-d-inline-flex carousel-justify-content-center carousel-align-items-center carousel-famlf-cta-btn';
-        span.textContent = ctaText || ctaLink.textContent.trim();
-        newLink.append(span);
-        textCenter.append(newLink);
-      }
-
-      // Add pop-up structure if needed (from HTML, but not in JSON fields)
-      const popUp = document.createElement('div');
-      popUp.className = 'carousel-pop-up carousel-d-none';
-      popUp.innerHTML = '<input type="hidden" class="carousel-popup-message">' +
-                        '<input type="hidden" class="carousel-proceed-button-label">' +
-                        '<input type="hidden" class="carousel-cancel-button-label">' +
-                        '<input type="hidden" class="carousel-background-color">';
-      textCenter.append(popUp);
-
-      bannerCta.append(textCenter);
-      ctaWrapper.append(bannerCta);
-      carouselBannerSectionWrapper.append(ctaWrapper);
-    }
-
-    carouselBannerSection.append(carouselBannerSectionWrapper);
-    carouselBanner.append(carouselBannerSection);
-    swiperSlide.append(carouselBanner);
-    swiperWrapper.append(swiperSlide);
+    itemContentWrapper.append(rightWrapper);
+    carouselItem.append(itemContentWrapper);
+    carouselInner.append(carouselItem);
   });
 
-  swiper.append(swiperWrapper);
+  // Add navigation buttons
+  const prevButton = document.createElement('button');
+  prevButton.className = 'carousel-control-prev';
+  prevButton.type = 'button';
+  prevButton.setAttribute('data-target', '#shiftclub-carousel');
+  prevButton.setAttribute('data-slide', 'prev');
+  prevButton.innerHTML = '<span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="sr-only">Previous</span>';
 
-  // Add navigation and pagination elements (simplified, as they are static)
-  const actionsDiv = document.createElement('div');
-  actionsDiv.className = 'carousel-cmp-carousel__actions';
-  // ... add previous, next, pause, play buttons here ...
-  actionsDiv.innerHTML = `
-    <button class="carousel-cmp-carousel__action carousel-cmp-carousel__action--previous" type="button" aria-label="Previous" data-cmp-hook-carousel="previous">
-      <span class="carousel-cmp-carousel__action-icon"></span>
-      <span class="carousel-cmp-carousel__action-text">Previous</span>
-    </button>
-    <button class="carousel-cmp-carousel__action carousel-cmp-carousel__action--next" type="button" aria-label="Next" data-cmp-hook-carousel="next">
-      <span class="carousel-cmp-carousel__action-icon"></span>
-      <span class="carousel-cmp-carousel__action-text">Next</span>
-    </button>
-    <button class="carousel-cmp-carousel__action carousel-cmp-carousel__action--pause" type="button" aria-label="Pause" data-cmp-hook-carousel="pause">
-      <span class="carousel-cmp-carousel__action-icon"></span>
-      <span class="carousel-cmp-carousel__action-text">Pause</span>
-    </button>
-    <button class="carousel-cmp-carousel__action carousel-cmp-carousel__action--play carousel-cmp-carousel__action--disabled" type="button" aria-label="Play" data-cmp-hook-carousel="play" disabled="">
-      <span class="carousel-cmp-carousel__action-icon"></span>
-      <span class="carousel-cmp-carousel__action-text">Play</span>
-    </button>
-  `;
-  swiper.append(actionsDiv);
+  const nextButton = document.createElement('button');
+  nextButton.className = 'carousel-control-next';
+  nextButton.type = 'button';
+  nextButton.setAttribute('data-target', '#shiftclub-carousel');
+  nextButton.setAttribute('data-slide', 'next');
+  nextButton.innerHTML = '<span class="carousel-control-next-icon" aria-hidden="true"></span><span class="sr-only">Next</span>';
 
-  const swiperNavContainer = document.createElement('div');
-  swiperNavContainer.className = 'carousel-swiper-container';
-  swiperNavContainer.innerHTML = `
-    <div>
-      <button class="carousel-primary-swiper__buttonNext carousel-position-absolute carousel-top-50 carousel-swiper-buttonBg carousel-d-none carousel-d-sm-block carousel-cursor-pointer carousel-analytics_cta_click carousel-disabled" disabled="">
-        /content/dam/aemigrate/uploaded-folder/image/1771228781797.svg+xml
-      </button>
-    </div>
-    <div>
-      <button class="carousel-primary-swiper__buttonPrev carousel-position-absolute carousel-top-50 carousel-swiper-buttonBg carousel-d-none carousel-d-sm-block carousel-cursor-pointer carousel-analytics_cta_click">
-        /content/dam/aemigrate/uploaded-folder/image/1771228781822.svg+xml
-      </button>
-    </div>
-  `;
-  swiper.append(swiperNavContainer);
-
-  const swiperPagination = document.createElement('div');
-  swiperPagination.className = 'carousel-swiper-pagination carousel-primary-swiper-pagination carousel-pagination-set carousel-mb-md-8 carousel-mb-10 carousel-mt-6 carousel-position-absolute carousel-swiper-pagination-clickable carousel-swiper-pagination-bullets carousel-swiper-pagination-horizontal';
-  swiperPagination.innerHTML = '<span class="swiper-pagination-bullet"></span><span class="swiper-pagination-bullet swiper-pagination-bullet-active"></span>';
-  swiper.append(swiperPagination);
-
-  carouselContainer.append(swiper);
+  carouselShift.append(carouselIndicators, carouselInner, prevButton, nextButton);
+  carouselDiv.append(carouselShift);
+  container.append(carouselDiv);
+  section.append(container);
 
   block.textContent = '';
-  block.append(carouselContainer);
-
-  // Initialize Swiper (assuming Swiper library is loaded elsewhere)
-  // This part would typically be handled in a separate client-side script
-  // or by a generic Swiper initializer if the block is a Swiper instance.
-  // For this decorate function, we only build the DOM structure.
+  block.append(section);
 }

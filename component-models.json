@@ -182,6 +182,47 @@
     ]
   },
   {
+    "id": "bannerItem",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Desktop Image",
+        "name": "desktopImage",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Mobile Image",
+        "name": "mobileImage",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Description",
+        "name": "description",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "CTA Text",
+        "name": "ctaText",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "CTA Link",
+        "name": "ctaLink",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "banner",
     "fields": [
       {
@@ -236,30 +277,30 @@
     ]
   },
   {
-    "id": "carouselSlide",
+    "id": "carouselItem",
     "fields": [
       {
         "component": "reference",
-        "label": "Image/Video",
+        "label": "Image",
         "name": "image",
         "valueType": "string"
       },
       {
-        "component": "reference",
-        "label": "Video",
-        "name": "video",
-        "valueType": "string"
-      },
-      {
-        "component": "richtext",
-        "label": "CTA Text",
-        "name": "ctaText",
+        "component": "text",
+        "label": "Image Alt Text",
+        "name": "alt",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "CTA Link",
-        "name": "ctaLink",
+        "label": "Title",
+        "name": "title",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Description",
+        "name": "description",
         "valueType": "string"
       }
     ]
@@ -561,6 +602,137 @@
     ]
   },
   {
+    "id": "footer",
+    "fields": [
+      {
+        "component": "reference",
+        "itemType": "footerLogo",
+        "label": "Footer Logos",
+        "name": "logos",
+        "valueType": "array"
+      },
+      {
+        "component": "reference",
+        "itemType": "footerLink",
+        "label": "Footer Links",
+        "name": "links",
+        "valueType": "array"
+      },
+      {
+        "component": "reference",
+        "itemType": "footerSocialLink",
+        "label": "Footer Social Links",
+        "name": "socialLinks",
+        "valueType": "array"
+      },
+      {
+        "component": "reference",
+        "itemType": "footerSecondaryLink",
+        "label": "Footer Secondary Links",
+        "name": "secondaryLinks",
+        "valueType": "array"
+      },
+      {
+        "component": "text",
+        "label": "Copyright",
+        "name": "copyright",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Grievance Officer Name",
+        "name": "grievanceOfficerName",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Grievance Officer Contact",
+        "name": "grievanceOfficerContact",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Grievance Officer Timings",
+        "name": "grievanceOfficerTimings",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "footerLogo",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Logo Image",
+        "name": "image",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Alt Text",
+        "name": "altText",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Logo Link",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "footerLink",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Link Text",
+        "name": "text",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Link URL",
+        "name": "href",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "footerSocialLink",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Social Icon Image",
+        "name": "icon",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Social Link URL",
+        "name": "href",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "footerSecondaryLink",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Secondary Link Text",
+        "name": "text",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Secondary Link URL",
+        "name": "href",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "fragment",
     "fields": [
       {
@@ -672,62 +844,49 @@
     "id": "header",
     "fields": [
       {
+        "component": "reference",
+        "label": "Logo 1",
+        "name": "logo1",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Logo 2",
+        "name": "logo2",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "items": {
+          "component": "navigationLink"
+        },
+        "label": "Navigation Links",
+        "name": "navigationLinks"
+      },
+      {
+        "component": "reference",
+        "label": "Current Country Flag",
+        "name": "countryFlag",
+        "valueType": "string"
+      },
+      {
         "component": "text",
-        "label": "App Name",
-        "name": "appName",
+        "label": "Current Country Code",
+        "name": "countryCode",
         "valueType": "string"
       },
       {
-        "component": "reference",
-        "label": "Main Logo Image",
-        "name": "mainLogo",
-        "valueType": "string"
-      },
-      {
-        "component": "reference",
-        "label": "Main Logo Link",
-        "name": "mainLogoLink",
-        "valueType": "string"
-      },
-      {
-        "component": "reference",
-        "label": "Login Button Label",
-        "name": "loginButtonLabel",
-        "valueType": "string"
-      },
-      {
-        "component": "reference",
-        "label": "Login Button Link",
-        "name": "loginButtonLink",
-        "valueType": "string"
+        "component": "container",
+        "items": {
+          "component": "countryOption"
+        },
+        "label": "Country Options",
+        "name": "countryOptions"
       }
     ]
   },
   {
-    "id": "headerMenuItem",
-    "fields": [
-      {
-        "component": "reference",
-        "label": "Label",
-        "name": "label",
-        "valueType": "string"
-      },
-      {
-        "component": "reference",
-        "label": "Link",
-        "name": "link",
-        "valueType": "string"
-      },
-      {
-        "component": "reference",
-        "label": "Icon",
-        "name": "icon",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
-    "id": "footerLink",
+    "id": "navigationLink",
     "fields": [
       {
         "component": "text",
@@ -736,32 +895,32 @@
         "valueType": "string"
       },
       {
-        "component": "reference",
+        "component": "text",
         "label": "Link",
-        "name": "link",
+        "name": "href",
         "valueType": "string"
       }
     ]
   },
   {
-    "id": "footerSocialLink",
+    "id": "countryOption",
     "fields": [
       {
         "component": "reference",
-        "label": "Platform",
-        "name": "platform",
+        "label": "Country Flag",
+        "name": "flag",
         "valueType": "string"
       },
       {
-        "component": "reference",
-        "label": "Link",
-        "name": "link",
+        "component": "text",
+        "label": "Country Name",
+        "name": "name",
         "valueType": "string"
       },
       {
-        "component": "reference",
-        "label": "Icon",
-        "name": "icon",
+        "component": "text",
+        "label": "Country URL",
+        "name": "url",
         "valueType": "string"
       }
     ]
@@ -788,6 +947,76 @@
         "name": "text",
         "value": "",
         "label": "Text",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "howShift",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Main Image",
+        "name": "mainImage",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Subheading",
+        "name": "subheading",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Description",
+        "name": "description",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "CTA Link",
+        "name": "ctaLink",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "CTA Text",
+        "name": "ctaText",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "whyShiftItem",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Image",
+        "name": "image",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Alt Text",
+        "name": "altText",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Label",
+        "name": "label",
         "valueType": "string"
       }
     ]
@@ -868,6 +1097,29 @@
         "component": "text",
         "label": "Title",
         "name": "title",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "rsCard",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Image",
+        "name": "image",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Title",
+        "name": "title",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Description",
+        "name": "description",
         "valueType": "string"
       }
     ]
@@ -959,10 +1211,25 @@
     "fields": [
       {
         "component": "richtext",
-        "label": "Title",
-        "name": "title",
+        "label": "Heading 1",
+        "name": "heading1",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Heading 2",
+        "name": "heading2",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Heading 3",
+        "name": "heading3",
         "valueType": "string"
       }
     ]
+  },
+  {
+    "id": "verticalPaddingSection"
   }
 ]

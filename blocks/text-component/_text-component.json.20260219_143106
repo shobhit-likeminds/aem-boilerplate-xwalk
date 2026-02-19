@@ -23,20 +23,8 @@
       "fields": [
         {
           "component": "richtext",
-          "label": "Heading 1",
-          "name": "heading1",
-          "valueType": "string"
-        },
-        {
-          "component": "richtext",
-          "label": "Heading 2",
-          "name": "heading2",
-          "valueType": "string"
-        },
-        {
-          "component": "richtext",
-          "label": "Heading 3",
-          "name": "heading3",
+          "label": "Title",
+          "name": "title",
           "valueType": "string"
         }
       ]

@@ -1,42 +1,22 @@
 .text-component {
-  padding-bottom: 1rem; /* Equivalent to 16px assuming 16px base */
-  font-family: Barlow; /* Fallback for Barlow */
-  font-size: 1.5rem; /* Equivalent to 24px assuming 16px base */
-  font-weight: 700;
-  line-height: 1.75rem; /* Equivalent to 28px assuming 16px base */
-}
-.text-component-title {
-  color: #161616;
-  font-size: 1.5rem; /* Equivalent to 24px assuming 16px base */
-  font-weight: 700;
-  line-height: normal;
+  margin-top: 1.25rem; /* Equivalent to 20px assuming 16px base */
+  color: #4f250a; /* Koi theme color */
   text-align: center;
 }
-.text-component-highlight {
-  color: #aa1f30;
+.text-component-heading {
+  font-family: 'Paytone One';
+  font-size: 2.5rem; /* Equivalent to 40px assuming 16px base */
+  font-weight: 500;
+  line-height: 1.2;
+  margin-bottom: 0.5rem;
+  color: #4f250a; /* Koi theme color */
 }
-.text-component-light-title {
-  color: #fff;
-}
-.text-component-heading-3 {
-  color: #161616;
-  font-size: 1.25rem; /* Equivalent to 20px assuming 16px base */
-  font-weight: 600;
-  line-height: normal;
-}
-.text-component-light-heading-3 {
-  color: #fff;
-}
-.text-component-paragraph {
-  color: #414141;
-  font-size: 1rem; /* Equivalent to 16px assuming 16px base */
-  font-weight: 400;
-  line-height: normal;
-  margin-top: 0.25rem; /* Equivalent to 4px assuming 16px base */
-}
-.text-component-light-subtitle {
-  color: #fff;
-}
-.text-component-dark-subtitle {
-  color: #030303;
+@media (max-width: 48rem) { /* Equivalent to 768px */
+  .text-component {
+    width: 100% !important;
+    margin: 0 !important;
+  }
+  .text-component-heading {
+    font-size: 1.675rem; /* Equivalent to 26.8px assuming 16px base */
+  }
 }

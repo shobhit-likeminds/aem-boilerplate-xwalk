@@ -31,13 +31,24 @@
       "latestBlogs",
       "spaceAdder",
       "footerBrand",
-      "stickyNavigationBottomNav"
+      "stickyNavigationBottomNav",
+      "bannerCarousel",
+      "verticalPaddingSection",
+      "howShift",
+      "rsCards",
+      "footer"
     ]
   },
   {
     "id": "mainBanner",
     "components": [
       "slide"
+    ]
+  },
+  {
+    "id": "bannerCarousel",
+    "components": [
+      "bannerItem"
     ]
   },
   {
@@ -55,7 +66,7 @@
   {
     "id": "carousel",
     "components": [
-      "carouselSlide"
+      "carouselItem"
     ]
   },
   {
@@ -107,6 +118,15 @@
     ]
   },
   {
+    "id": "footer",
+    "components": [
+      "footerLogo",
+      "footerLink",
+      "footerSocialLink",
+      "footerSecondaryLink"
+    ]
+  },
+  {
     "id": "headerSection",
     "components": [
       "sidebarMenuItem",
@@ -117,19 +137,14 @@
   {
     "id": "header",
     "components": [
-      "headerMenuItem"
+      "navigationLink",
+      "countryOption"
     ]
   },
   {
-    "id": "footerLinks",
+    "id": "howShift",
     "components": [
-      "footerLink"
-    ]
-  },
-  {
-    "id": "footerSocialLinks",
-    "components": [
-      "footerSocialLink"
+      "whyShiftItem"
     ]
   },
   {
@@ -142,6 +157,12 @@
     "id": "latestBlogsArticleListing",
     "components": [
       "blogCard"
+    ]
+  },
+  {
+    "id": "rsCards",
+    "components": [
+      "rsCard"
     ]
   },
   {
@@ -167,5 +188,8 @@
     "components": [
       "textComponent"
     ]
+  },
+  {
+    "id": "verticalPaddingSection"
   }
 ]

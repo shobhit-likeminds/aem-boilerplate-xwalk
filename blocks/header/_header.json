@@ -17,45 +17,30 @@
       }
     },
     {
-      "title": "Header Menu Item",
-      "id": "headerMenuItem",
+      "title": "Navigation Link",
+      "id": "navigationLink",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "headerMenuItem",
-              "name": "Header Menu Item"
+              "model": "navigationLink",
+              "name": "Navigation Link"
             }
           }
         }
       }
     },
     {
-      "title": "Footer Link",
-      "id": "footerLink",
+      "title": "Country Option",
+      "id": "countryOption",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "footerLink",
-              "name": "Footer Link"
-            }
-          }
-        }
-      }
-    },
-    {
-      "title": "Footer Social Link",
-      "id": "footerSocialLink",
-      "plugins": {
-        "xwalk": {
-          "page": {
-            "resourceType": "core/franklin/components/block/v1/block/item",
-            "template": {
-              "model": "footerSocialLink",
-              "name": "Footer Social Link"
+              "model": "countryOption",
+              "name": "Country Option"
             }
           }
         }
@@ -67,62 +52,49 @@
       "id": "header",
       "fields": [
         {
+          "component": "reference",
+          "label": "Logo 1",
+          "name": "logo1",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Logo 2",
+          "name": "logo2",
+          "valueType": "string"
+        },
+        {
+          "component": "container",
+          "items": {
+            "component": "navigationLink"
+          },
+          "label": "Navigation Links",
+          "name": "navigationLinks"
+        },
+        {
+          "component": "reference",
+          "label": "Current Country Flag",
+          "name": "countryFlag",
+          "valueType": "string"
+        },
+        {
           "component": "text",
-          "label": "App Name",
-          "name": "appName",
+          "label": "Current Country Code",
+          "name": "countryCode",
           "valueType": "string"
         },
         {
-          "component": "reference",
-          "label": "Main Logo Image",
-          "name": "mainLogo",
-          "valueType": "string"
-        },
-        {
-          "component": "reference",
-          "label": "Main Logo Link",
-          "name": "mainLogoLink",
-          "valueType": "string"
-        },
-        {
-          "component": "reference",
-          "label": "Login Button Label",
-          "name": "loginButtonLabel",
-          "valueType": "string"
-        },
-        {
-          "component": "reference",
-          "label": "Login Button Link",
-          "name": "loginButtonLink",
-          "valueType": "string"
+          "component": "container",
+          "items": {
+            "component": "countryOption"
+          },
+          "label": "Country Options",
+          "name": "countryOptions"
         }
       ]
     },
     {
-      "id": "headerMenuItem",
-      "fields": [
-        {
-          "component": "reference",
-          "label": "Label",
-          "name": "label",
-          "valueType": "string"
-        },
-        {
-          "component": "reference",
-          "label": "Link",
-          "name": "link",
-          "valueType": "string"
-        },
-        {
-          "component": "reference",
-          "label": "Icon",
-          "name": "icon",
-          "valueType": "string"
-        }
-      ]
-    },
-    {
-      "id": "footerLink",
+      "id": "navigationLink",
       "fields": [
         {
           "component": "text",
@@ -131,32 +103,32 @@
           "valueType": "string"
         },
         {
-          "component": "reference",
+          "component": "text",
           "label": "Link",
-          "name": "link",
+          "name": "href",
           "valueType": "string"
         }
       ]
     },
     {
-      "id": "footerSocialLink",
+      "id": "countryOption",
       "fields": [
         {
           "component": "reference",
-          "label": "Platform",
-          "name": "platform",
+          "label": "Country Flag",
+          "name": "flag",
           "valueType": "string"
         },
         {
-          "component": "reference",
-          "label": "Link",
-          "name": "link",
+          "component": "text",
+          "label": "Country Name",
+          "name": "name",
           "valueType": "string"
         },
         {
-          "component": "reference",
-          "label": "Icon",
-          "name": "icon",
+          "component": "text",
+          "label": "Country URL",
+          "name": "url",
           "valueType": "string"
         }
       ]
@@ -166,19 +138,8 @@
     {
       "id": "header",
       "components": [
-        "headerMenuItem"
-      ]
-    },
-    {
-      "id": "footerLinks",
-      "components": [
-        "footerLink"
-      ]
-    },
-    {
-      "id": "footerSocialLinks",
-      "components": [
-        "footerSocialLink"
+        "navigationLink",
+        "countryOption"
       ]
     }
   ]
