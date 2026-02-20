@@ -1,0 +1,35 @@
+.text-component {
+  color: #4f250a; /* Equivalent to rgb(79, 37, 10) */
+  text-align: center;
+  /* Assuming 16px base for rem calculations */
+  margin-top: 1.25rem; /* Equivalent to 20px assuming 16px base */
+}
+.text-component-heading {
+  font-family: 'Paytone One';
+  font-size: 2.5rem; /* Equivalent to 40px assuming 16px base */
+  font-weight: 500;
+  line-height: 1.2; /* Equivalent to 48px assuming 16px base */
+  color: #4f250a; /* Equivalent to rgb(79, 37, 10) */
+  margin-bottom: 0.5rem; /* Equivalent to 8px assuming 16px base */
+}
+@media (max-width: 768px) {
+  .text-component {
+    width: 100% !important;
+    margin: 0 !important;
+  }
+  .text-component-heading {
+    font-size: 1.675rem; /* Equivalent to 26.8px assuming 16px base */
+  }
+  .text-component h2 {
+    font-size: 1.375rem; /* Equivalent to 22px assuming 16px base */
+  }
+  .text-component h3 {
+    font-size: 1.125rem; /* Equivalent to 18px assuming 16px base */
+  }
+  .text-component h4 {
+    font-size: 1rem; /* Equivalent to 16px assuming 16px base */
+  }
+  .text-component p {
+    font-size: 0.875rem; /* Equivalent to 14px assuming 16px base */
+  }
+}

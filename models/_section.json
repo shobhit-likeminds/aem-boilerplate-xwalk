@@ -76,7 +76,11 @@
         "contact",
         "contactContent",
         "contactForm",
-        "siteFooter"
+        "siteFooter",
+        "spaceadderSection",
+        "clubCarousel",
+        "howshiftSection",
+        "footerSection"
       ]
     }
   ]

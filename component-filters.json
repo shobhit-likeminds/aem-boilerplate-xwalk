@@ -41,7 +41,11 @@
       "contact",
       "contactContent",
       "contactForm",
-      "siteFooter"
+      "siteFooter",
+      "spaceadderSection",
+      "clubCarousel",
+      "howshiftSection",
+      "footerSection"
     ]
   },
   {
@@ -53,7 +57,7 @@
   {
     "id": "bannerCarousel",
     "components": [
-      "bannerItem"
+      "banner"
     ]
   },
   {
@@ -70,6 +74,12 @@
   },
   {
     "id": "carousel",
+    "components": [
+      "carouselItem"
+    ]
+  },
+  {
+    "id": "clubCarousel",
     "components": [
       "carouselItem"
     ]
@@ -141,6 +151,14 @@
     ]
   },
   {
+    "id": "footerSection",
+    "components": [
+      "footerLink",
+      "footerSocialIcon",
+      "footerSecondaryLink"
+    ]
+  },
+  {
     "id": "footer",
     "components": [
       "footer"
@@ -164,6 +182,12 @@
     "id": "howShift",
     "components": [
       "whyShiftItem"
+    ]
+  },
+  {
+    "id": "howshiftSection",
+    "components": [
+      "howshiftItem"
     ]
   },
   {
@@ -200,6 +224,9 @@
     "id": "spaceadderContainer"
   },
   {
+    "id": "spaceadderSection"
+  },
+  {
     "id": "stickyNavigationBottomNav",
     "components": [
       "navigationItem"
@@ -215,6 +242,12 @@
     "id": "textComponent",
     "components": [
       "textComponent"
+    ]
+  },
+  {
+    "id": "text",
+    "components": [
+      "text"
     ]
   },
   {

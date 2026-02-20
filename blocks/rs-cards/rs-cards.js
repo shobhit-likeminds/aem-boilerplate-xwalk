@@ -5,72 +5,60 @@ export default function decorate(block) {
   const rscardsContainer = document.createElement('div');
   rscardsContainer.classList.add('rscards-container');
 
-  const rowDiv = document.createElement('div');
-  rowDiv.classList.add('row');
-  rscardsContainer.append(rowDiv);
+  const rscardsRow = document.createElement('div');
+  rscardsRow.classList.add('rscards-row');
+  rscardsContainer.append(rscardsRow);
 
   [...block.children].forEach((row) => {
-    const colDiv = document.createElement('div');
-    moveInstrumentation(row, colDiv);
-    colDiv.classList.add('col-xl-4', 'col-lg-6', 'pb-md-0', 'pb-4', 'row-gap-4', 'rscards-koi-rscard-padding');
+    // Each row from block.children represents one card
+    const cardCol = document.createElement('div');
+    moveInstrumentation(row, cardCol);
+    cardCol.classList.add('rscards-col-xl-4', 'rscards-col-lg-6', 'rscards-pb-md-0', 'rscards-pb-4', 'rscards-row-gap-4', 'rscards-koi-rscard-padding');
 
-    const cardDiv = document.createElement('div');
-    cardDiv.classList.add('rscards-card', 'rscards-rs-card');
-    colDiv.append(cardDiv);
+    const rscardsCard = document.createElement('div');
+    rscardsCard.classList.add('rscards-card');
+    cardCol.append(rscardsCard);
 
     const cells = [...row.children];
 
-    // Image
-    const imgCell = cells[0]; // Assuming the first cell contains the image
-    if (imgCell) {
-      const img = imgCell.querySelector('img');
+    // Cell 0: Image
+    const imageCell = cells[0];
+    if (imageCell) {
+      const img = imageCell.querySelector('img');
       if (img) {
-        const optimizedPic = createOptimizedPicture(img.src, img.alt);
+        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
         moveInstrumentation(img, optimizedPic.querySelector('img'));
-        // The HTML has two images, one with display: none and one with display: block.
-        // We'll use the one that is currently displayed (or the second one if both are present).
-        const displayedImg = imgCell.querySelector('img[style*="display: block"]') || imgCell.querySelector('img:not([style*="display: none"])');
-        if (displayedImg) {
-          const optimizedDisplayedPic = createOptimizedPicture(displayedImg.src, displayedImg.alt);
-          moveInstrumentation(displayedImg, optimizedDisplayedPic.querySelector('img'));
-          optimizedDisplayedPic.querySelector('img').classList.add('w-100', 'rscards-kitchens-image');
-          optimizedDisplayedPic.querySelector('img').setAttribute('loading', 'lazy');
-          cardDiv.append(optimizedDisplayedPic);
-        }
+        optimizedPic.querySelector('img').classList.add('rscards-w-100', 'rscards-kitchens-image');
+        rscardsCard.append(optimizedPic);
       }
     }
 
-    const cardBody = document.createElement('div');
-    cardBody.classList.add('rscards-card-body');
-    cardDiv.append(cardBody);
+    // Card Body for Headline and Description
+    const rscardsCardBody = document.createElement('div');
+    rscardsCardBody.classList.add('rscards-card-body');
 
-    // Title (h5 with class rscards-blog-card-title)
-    const titleCell = cells[1]; // Assuming the second cell contains the title
-    if (titleCell) {
-      const titleElement = titleCell.querySelector('h5.rscards-blog-card-title');
-      if (titleElement) {
-        const newTitle = document.createElement('h5');
-        newTitle.classList.add('rscards-blog-card-title');
-        newTitle.textContent = titleElement.textContent;
-        cardBody.append(newTitle);
-      }
+    // Cell 1: Headline
+    const headlineCell = cells[1];
+    if (headlineCell) {
+      const h5BlogTitle = document.createElement('h5');
+      h5BlogTitle.classList.add('rscards-blog-card-title');
+      h5BlogTitle.textContent = headlineCell.textContent.trim();
+      rscardsCardBody.append(h5BlogTitle);
     }
 
-    // Description (h5 with class rscards-card-title containing a p tag)
-    const descriptionCell = cells[2]; // Assuming the third cell contains the description
+    // Cell 2: Description
+    const descriptionCell = cells[2];
     if (descriptionCell) {
-      const descriptionElement = descriptionCell.querySelector('h5.rscards-card-title p');
-      if (descriptionElement) {
-        const newDescriptionH5 = document.createElement('h5');
-        newDescriptionH5.classList.add('rscards-card-title');
-        const newDescriptionP = document.createElement('p');
-        newDescriptionP.innerHTML = descriptionElement.innerHTML; // Keep inner HTML for rich text
-        newDescriptionH5.append(newDescriptionP);
-        cardBody.append(newDescriptionH5);
-      }
+      const h5CardTitle = document.createElement('h5');
+      h5CardTitle.classList.add('rscards-card-title');
+      const pDesc = document.createElement('p');
+      pDesc.textContent = descriptionCell.textContent.trim();
+      h5CardTitle.append(pDesc);
+      rscardsCardBody.append(h5CardTitle);
     }
 
-    rowDiv.append(colDiv);
+    rscardsCard.append(rscardsCardBody);
+    rscardsRow.append(cardCol);
   });
 
   block.textContent = '';

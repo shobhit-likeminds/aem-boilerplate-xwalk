@@ -44,8 +44,8 @@
         },
         {
           "component": "text",
-          "label": "Headline",
-          "name": "headline",
+          "label": "Title",
+          "name": "title",
           "valueType": "string"
         },
         {

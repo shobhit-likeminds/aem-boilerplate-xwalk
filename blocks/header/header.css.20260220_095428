@@ -1,0 +1,186 @@
+.header-site-header {
+  font-family: "Lato", sans-serif;
+  color: #121212;
+  box-sizing: border-box;
+}
+
+.header-top,
+.header-middle {
+  margin: 0 3.125%;
+}
+
+.header-top {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #ebebeb;
+}
+
+.header-title-container {
+  text-align: center;
+  margin: 0.75em 0;
+}
+
+.header-site-title a {
+  display: inline-block;
+  font-weight: 900;
+  color: #1a1a1a; /* Equivalent to rgb(26, 26, 26) */
+  text-decoration: none;
+}
+.header-site-title a:link,
+.header-site-title a:visited {
+  color: #1a1a1a; /* Equivalent to rgb(26, 26, 26) */
+}
+.header-site-title a:hover,
+.header-site-title a:active,
+.header-site-title a:focus {
+  color: #1a1a1a; /* Equivalent to rgb(26, 26, 26) */
+  text-decoration: underline;
+}
+
+.header-custom-logo {
+  max-width: 100%;
+  height: auto;
+  vertical-align: middle;
+}
+
+.header-toggle-container {
+  position: relative;
+  background: #000;
+}
+
+.header-toggle-navigation {
+  display: block;
+  background: #000;
+  border: none;
+  width: 100%;
+  padding: 12px 0;
+  border-radius: 0;
+  cursor: pointer;
+}
+.header-toggle-navigation:focus {
+  outline: none;
+}
+.header-toggle-navigation svg {
+  display: block;
+  margin: 0 auto;
+}
+
+.header-mobile-menu-container {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  visibility: hidden;
+  opacity: 0;
+  z-index: 19;
+  overflow: scroll;
+  -webkit-overflow-scrolling: touch;
+  padding: 1.5em;
+  background: rgba(0, 0, 0, 0.93);
+  transform: scale(0.95);
+  transition: transform 0.2s, visibility 0.2s, opacity 0.2s;
+}
+.header-mobile-menu-container.open {
+  visibility: visible;
+  opacity: 1;
+  transform: scale(1);
+}
+
+.header-close-mobile-menu {
+  text-align: center;
+  margin: -7px 0 14px;
+}
+.header-close-mobile-menu button {
+  background: none;
+  border: none;
+  margin: 0;
+  padding: 7px 8px;
+  cursor: pointer;
+}
+.header-close-mobile-menu button:focus {
+  outline: none;
+}
+
+.header-menu-primary-container {
+  /* Styles for the primary menu container */
+}
+
+.header-menu-primary-items {
+  list-style: none;
+  margin: 0;
+  text-align: center;
+  padding: 0; /* Explicitly set padding to 0 */
+}
+
+.header-menu-primary-items .header-menu-item {
+  margin-bottom: 0.75em; /* Equivalent to 12px assuming 16px base */
+}
+
+.header-menu-primary-items .header-menu-item a {
+  color: white;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.03em; /* Equivalent to 0.48px assuming 16px base */
+  display: inline-block;
+  padding: 0.75em; /* Equivalent to 12px assuming 16px base */
+}
+.header-menu-primary-items .header-menu-item a:link,
+.header-menu-primary-items .header-menu-item a:visited {
+  color: white;
+}
+.header-menu-primary-items .header-menu-item a:hover,
+.header-menu-primary-items .header-menu-item a:active,
+.header-menu-primary-items .header-menu-item a:focus {
+  color: white;
+  text-decoration: underline;
+}
+
+.header-menu-primary-items .header-current-menu-item > a,
+.header-menu-primary-items .header-current_page_item > a {
+  color: #ffc270; /* Equivalent to rgb(255, 194, 112) */
+}
+
+@media all and (min-width: 50em) {
+  .header-middle {
+    display: flex;
+  }
+  .header-title-container {
+    flex-grow: 1;
+    text-align: left;
+    margin: 0.75em 3em 0.75em 0; /* Equivalent to 12px 48px 12px 0px assuming 16px base */
+  }
+  .header-toggle-navigation {
+    display: none;
+  }
+  .header-mobile-menu-container {
+    position: relative;
+    top: auto;
+    right: auto;
+    bottom: auto;
+    left: auto;
+    visibility: visible;
+    opacity: 1;
+    overflow: visible;
+    background: #000;
+    padding: 0 1.5em; /* Equivalent to 0px 24px assuming 16px base */
+    transform: none;
+  }
+  .header-mobile-menu-container::after {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    background: #000;
+    top: 0;
+    right: -999px;
+    bottom: 0;
+    left: -999px;
+  }
+  .header-close-mobile-menu {
+    display: none;
+  }
+  .header-menu-primary-items .header-menu-item {
+    display: inline-block;
+    margin: 0;
+  }
+}

@@ -1,0 +1,120 @@
+.club-section-main {
+  background-color: #fcf1e4; /* Equivalent to var(--color-light) */
+  padding-bottom: 50px; /* Adjusted from 100px to 50px based on media query */
+}
+.club-section-main .club-section-container {
+  max-width: 1470px; /* Equivalent to 1470px */
+  width: 100%;
+  padding: 0;
+  margin: 0 auto;
+}
+.club-section-main .club-section-shift {
+  max-width: 1069px;
+  margin: 0 auto;
+  border-radius: 45px;
+  position: relative;
+  margin-top: 0; /* Adjusted from -40px based on media query */
+}
+.club-section-main .club-section-carousel-img {
+  height: 434px;
+  object-fit: cover;
+}
+.club-section-main .club-section-right-wrapper {
+  padding: 40px 45px 56px 46px;
+  min-height: 434px;
+  height: auto;
+  overflow-y: visible;
+  justify-content: center;
+  gap: 0.625rem; /* Equivalent to 10px assuming 16px base */
+  background: linear-gradient(0deg, #f8d765 0%, #f8d765 100%); /* Equivalent to linear-gradient(0deg, var(--color-yellow) 0%, var(--color-yellow) 100%) */
+  display: flex;
+  flex-direction: column;
+  align-items: baseline;
+}
+.club-section-main .club-section-right-wrapper .club-section-carousel-title {
+  font-size: 28px;
+  font-family: "Paytone One";
+  color: #2d2119; /* Equivalent to var(--bg-dark) */
+}
+.club-section-main .club-section-right-wrapper .club-section-carousel-description {
+  font-size: 16px; /* Adjusted from 20px based on media query */
+  color: #2d2119; /* Equivalent to var(--bg-dark) */
+}
+.club-section-main .carousel-control-prev,
+.club-section-main .carousel-control-next {
+  background: #fff; /* Equivalent to #fff */
+  border-radius: 50%;
+  width: 46px; /* Adjusted from 40px */
+  height: 46px; /* Adjusted from 40px */
+  text-align: center;
+  line-height: 20px;
+  top: 45%; /* Adjusted from inherit to 45% */
+  opacity: 1;
+  left: -17px; /* Adjusted from 66px */
+  z-index: 9;
+}
+.club-section-main .carousel-control-next {
+  right: -17px !important;
+  left: unset !important;
+}
+.club-section-main .carousel-control-prev-icon {
+  background-image: url("clientlib-rightshift/resources/icons/next-icon.svg");
+  transform: rotate(180deg);
+}
+.club-section-main .carousel-control-next-icon {
+  background-image: url("clientlib-rightshift/resources/icons/next-icon.svg");
+}
+.club-section-main .carousel-indicators {
+  bottom: -35px !important; /* Adjusted from -50px */
+  left: 0; /* Adjusted from -50% */
+  justify-content: center; /* Adjusted from default */
+}
+.club-section-main .carousel-indicators li {
+  border: 1px solid #2d2119; /* Equivalent to var(--bg-dark) */
+  width: 7px !important; /* Adjusted from 12px */
+  height: 7px !important; /* Adjusted from 12px */
+}
+.club-section-main .carousel-indicators .active {
+  background-color: #fcf1e4; /* Equivalent to var(--color-light) */
+}
+@media (max-width: 990px) {
+  .club-section-main .club-section-right-wrapper .club-section-carousel-title {
+    font-size: 3.43vw !important;
+  }
+  .club-section-main .club-section-right-wrapper .club-section-carousel-description {
+    font-size: 14px;
+  }
+}
+@media (max-width: 768px) {
+  .club-section-main {
+    margin-top: 0 !important;
+  }
+  .club-section-main .club-section-right-wrapper {
+    min-height: 350px;
+    padding: 10px 12px 22px 10px !important;
+    text-align: center;
+  }
+  .club-section-main .club-section-right-wrapper .club-section-carousel-title {
+    font-size: 22px !important;
+  }
+  .club-section-main .club-section-right-wrapper .club-section-carousel-description {
+    font-size: 14px !important;
+    line-height: 20px;
+  }
+  .club-section-main .club-section-carousel .carousel-inner .carousel-item {
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-height: unset;
+  }
+  .club-section-main .club-section-carousel button.carousel-control-next,
+  .club-section-main .club-section-carousel button.carousel-control-prev {
+    display: none;
+  }
+  .club-section-main .club-section-carousel-img {
+    max-height: 281px !important;
+  }
+  .club-section-main .club-section-shift {
+    margin-top: 0;
+  }
+}
