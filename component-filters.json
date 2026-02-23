@@ -15,55 +15,7 @@
       "hero",
       "cards",
       "columns",
-      "fragment",
-      "sample-component",
-      "mainBanner",
-      "header",
-      "footerBrandSection",
-      "stickyNavigation",
-      "carousel",
-      "banner",
-      "featureCards",
-      "latestBlogsArticleListing",
-      "spaceadderContainer",
-      "headerSection",
-      "textComponent",
-      "latestBlogs",
-      "spaceAdder",
-      "footerBrand",
-      "stickyNavigationBottomNav",
-      "bannerCarousel",
-      "verticalPaddingSection",
-      "howShift",
-      "rsCards",
-      "footer",
-      "siteHeader",
-      "contact",
-      "contactContent",
-      "contactForm",
-      "siteFooter",
-      "spaceadderSection",
-      "clubCarousel",
-      "howshiftSection",
-      "footerSection"
-    ]
-  },
-  {
-    "id": "mainBanner",
-    "components": [
-      "slide"
-    ]
-  },
-  {
-    "id": "bannerCarousel",
-    "components": [
-      "banner"
-    ]
-  },
-  {
-    "id": "banner",
-    "components": [
-      "banner"
+      "fragment"
     ]
   },
   {
@@ -74,12 +26,6 @@
   },
   {
     "id": "carousel",
-    "components": [
-      "carouselItem"
-    ]
-  },
-  {
-    "id": "clubCarousel",
     "components": [
       "carouselItem"
     ]
@@ -100,76 +46,9 @@
     ]
   },
   {
-    "id": "contactContent",
-    "components": [
-      "contactContent"
-    ]
-  },
-  {
-    "id": "contactForm",
-    "components": [
-      "contactForm"
-    ]
-  },
-  {
-    "id": "contact",
-    "components": [
-      "contact"
-    ]
-  },
-  {
-    "id": "featureCards",
-    "components": [
-      "featureCard"
-    ]
-  },
-  {
-    "id": "featureCards",
-    "components": [
-      "card",
-      "bolteSitareCard"
-    ]
-  },
-  {
-    "id": "footerBrandSection",
-    "components": [
-      "footerNavColumn",
-      "footerSocialLink"
-    ]
-  },
-  {
-    "id": "footerNavColumn",
-    "components": [
-      "footerNavLink"
-    ]
-  },
-  {
-    "id": "footerBrand",
-    "components": [
-      "footerNavList",
-      "footerSocialLink"
-    ]
-  },
-  {
-    "id": "footerSection",
-    "components": [
-      "footerLink",
-      "footerSocialIcon",
-      "footerSecondaryLink"
-    ]
-  },
-  {
     "id": "footer",
     "components": [
       "footer"
-    ]
-  },
-  {
-    "id": "headerSection",
-    "components": [
-      "sidebarMenuItem",
-      "footerLink",
-      "footerSocialLink"
     ]
   },
   {
@@ -177,80 +56,5 @@
     "components": [
       "header"
     ]
-  },
-  {
-    "id": "howShift",
-    "components": [
-      "whyShiftItem"
-    ]
-  },
-  {
-    "id": "howshiftSection",
-    "components": [
-      "howshiftItem"
-    ]
-  },
-  {
-    "id": "latestBlogs",
-    "components": [
-      "blogCard"
-    ]
-  },
-  {
-    "id": "latestBlogsArticleListing",
-    "components": [
-      "blogCard"
-    ]
-  },
-  {
-    "id": "rsCards",
-    "components": [
-      "rsCard"
-    ]
-  },
-  {
-    "id": "siteFooter"
-  },
-  {
-    "id": "siteHeader",
-    "components": [
-      "menuItem"
-    ]
-  },
-  {
-    "id": "space-adder"
-  },
-  {
-    "id": "spaceadderContainer"
-  },
-  {
-    "id": "spaceadderSection"
-  },
-  {
-    "id": "stickyNavigationBottomNav",
-    "components": [
-      "navigationItem"
-    ]
-  },
-  {
-    "id": "stickyNavigation",
-    "components": [
-      "navigationItem"
-    ]
-  },
-  {
-    "id": "textComponent",
-    "components": [
-      "textComponent"
-    ]
-  },
-  {
-    "id": "text",
-    "components": [
-      "text"
-    ]
-  },
-  {
-    "id": "verticalPaddingSection"
   }
 ]
