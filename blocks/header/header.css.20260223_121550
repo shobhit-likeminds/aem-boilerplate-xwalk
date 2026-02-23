@@ -1,0 +1,326 @@
+.header-itc-header-section {
+  position: fixed;
+  width: 100%;
+  background-color: #ffffff;
+  z-index: 9999;
+  top: 0;
+  left: 0;
+}
+.header-itc-header-section .header-navbar {
+  height: 92px;
+}
+.header-itc-header-section .header-navbar-nav .header-nav-link,
+.header-itc-header-icon-list .header-nav-link {
+  color: #2d2119;
+  font-size: 1rem; /* Equivalent to 16px assuming 16px base */
+}
+.header-itc-header-section .header-navbar-toggler {
+  border: 0;
+}
+.header-itc-header-icon-list a span {
+  font-size: 0.625rem; /* Equivalent to 10px assuming 16px base */
+}
+.header-itc-header-section .header-cmp-navigation__group {
+  display: flex;
+  list-style-type: none;
+  padding-left: 0;
+  margin-bottom: 0;
+}
+.header-itc-header-section .header-cmp-navigation__item {
+  padding-right: 1.375rem; /* Equivalent to 22px assuming 16px base */
+  font-size: 1rem; /* Equivalent to 16px assuming 16px base */
+}
+.header-itc-header-section .header-cmp-navigation__item-link {
+  color: #533012;
+  text-decoration: none;
+  padding-bottom: 0.3125rem; /* Equivalent to 5px assuming 16px base */
+}
+.header-itc-header-section .header-cmp-navigation__item--active .header-cmp-navigation__item-link,
+.header-itc-header-section .header-cmp-navigation__item-link:hover {
+  color: #4f250a;
+  border-bottom: 2px solid #4f250a;
+  transition: all 0.3s ease;
+}
+.header-itc-header-section .header-navbar-collapse {
+  justify-content: space-between !important;
+}
+.header-header-logo-div {
+  display: flex;
+  flex-direction: row;
+  gap: 1.25rem; /* Equivalent to 20px assuming 16px base */
+  align-items: center;
+}
+.header-header-logo-div .header-itc-logo-image {
+  width: auto;
+  height: 3.9375rem; /* Equivalent to 63px assuming 16px base */
+  object-fit: contain;
+  padding-left: 0;
+  border-right: 1px solid #2d2119;
+  padding-right: 1.25rem; /* Equivalent to 20px assuming 16px base */
+}
+.header-search-icon {
+  background: none;
+  color: black;
+  padding: 0.125rem 0.3125rem; /* Equivalent to 2px 5px assuming 16px base */
+  border-radius: 5px;
+  cursor: pointer;
+  gap: 0.25rem; /* Equivalent to 4px assuming 16px base */
+  font-size: 0.875rem; /* Equivalent to 14px assuming 16px base */
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+}
+.header-search-icon:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+.header-header-country-flag {
+  width: 1.1875rem; /* Equivalent to 19px assuming 16px base */
+  height: 1.1875rem; /* Equivalent to 19px assuming 16px base */
+  border-radius: 50%;
+  object-fit: cover;
+}
+.header-dropdown-icon {
+  vertical-align: middle;
+  border-style: none;
+}
+.header-search-block {
+  position: relative;
+  max-width: 300px;
+  right: -60px;
+  top: unset;
+  transform: unset;
+}
+.header-search-box {
+  border: 1px solid #000000;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 0.9375rem; /* Equivalent to 15px assuming 16px base */
+  justify-content: space-between;
+  padding: 0.625rem; /* Equivalent to 10px assuming 16px base */
+}
+.header-search-container {
+  display: flex;
+  align-items: center;
+  border: 1px solid #cccccc;
+  padding: 0.3125rem; /* Equivalent to 5px assuming 16px base */
+  border-radius: 5px;
+  width: 100%;
+}
+.header-search-container.header-hidden {
+  display: none;
+}
+.header-search-box #searchInput {
+  border: 0;
+  outline: 0;
+  padding: 0.3125rem; /* Equivalent to 5px assuming 16px base */
+  flex: 1;
+}
+.header-search-box button {
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+.header-search-results {
+  border: 1px solid #cccccc;
+  padding: 0.625rem; /* Equivalent to 10px assuming 16px base */
+  background: #ffffff;
+  border-radius: 5px;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1000;
+  width: calc(100% + 50px);
+  max-height: 380px;
+  overflow-y: auto;
+}
+.header-search-results.header-hidden {
+  display: none;
+}
+.header-search-results .header-resultList {
+  text-align: left;
+  font-size: 0.9375rem; /* Equivalent to 15px assuming 16px base */
+  font-family: Urbanist;
+  font-weight: 500;
+  line-height: 1.875rem; /* Equivalent to 30px assuming 16px base */
+  text-transform: lowercase;
+}
+.header-search-results ul {
+  list-style: none;
+  padding-left: 0;
+}
+.header-search-results li {
+  margin-bottom: 0.625rem; /* Equivalent to 10px assuming 16px base */
+}
+.header-search-results a {
+  text-decoration: none;
+  color: #000000;
+}
+.header-search-results #viewAllButton {
+  background-color: green;
+  color: white;
+  padding: 0.625rem; /* Equivalent to 10px assuming 16px base */
+  border: 0;
+  cursor: pointer;
+  width: 100%;
+  text-align: center;
+  margin-top: 0.625rem; /* Equivalent to 10px assuming 16px base */
+  border-radius: 5px;
+}
+.header-modal {
+  z-index: 10000;
+}
+.header-modal.header-show {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+.header-modal-dialog {
+  max-width: 500px;
+  margin: 1.75rem auto;
+}
+.header-modal-content {
+  background-color: #faf6f2;
+  pointer-events: none !important;
+}
+.header-modal-header {
+  border-bottom: 0;
+  text-align: center;
+  padding: 1rem;
+}
+.header-modal-header .header-w-100 {
+  width: 100%;
+}
+.header-modal-title {
+  font-size: 1.875rem; /* Equivalent to 30px assuming 16px base */
+  font-family: inherit;
+  font-weight: bold;
+  color: #4f250a;
+  line-height: 1;
+}
+.header-experience-text {
+  font-family: Cataneo;
+  font-size: 2.8125rem; /* Equivalent to 45px assuming 16px base */
+  font-weight: normal;
+  color: #eeb144;
+  margin-bottom: 0;
+  font-style: italic;
+}
+.header-modal-body {
+  padding-top: 0 !important;
+  padding-bottom: 1.625rem !important; /* Equivalent to 26px assuming 16px base */
+}
+.header-country-options {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.header-country-options:hover {
+  cursor: pointer;
+}
+.header-country-option {
+  pointer-events: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 1rem; /* Equivalent to 0 16px assuming 16px base */
+}
+.header-country-option .header-country-name {
+  color: #282828;
+  font-size: 1rem; /* Equivalent to 16px assuming 16px base */
+  font-weight: bold;
+  text-align: center;
+  line-height: 1cm;
+  margin-bottom: 0;
+}
+@media (max-width: 1400px) {
+  .header-itc-header-section .header-logo img {
+    padding-left: 40px;
+  }
+}
+@media (max-width: 1200px) {
+  .header-itc-header-section .header-navbar {
+    height: 78px;
+  }
+  .header-itc-header-section .header-navbar-collapse {
+    position: absolute;
+    background: #fff7e3;
+    min-width: 300px;
+    width: 89%;
+    z-index: 1;
+    padding: 0.625rem; /* Equivalent to 10px assuming 16px base */
+    top: 66px;
+    height: 100vh;
+  }
+  .header-itc-header-section .header-cmp-navigation__item--active .header-cmp-navigation__item-link,
+  .header-itc-header-section .header-cmp-navigation__item-link:hover {
+    border-bottom: 2px solid #f8f9fa;
+  }
+  .header-itc-header-section .header-navbar-collapse .header-nav-item {
+    background: #6c3003;
+    border-radius: 1.6rem; /* Equivalent to 25.6px assuming 16px base */
+  }
+  .header-itc-header-section .header-navbar-collapse .header-nav-item .header-cmp-navigation__item-link {
+    color: #ffffff;
+    font-size: 1rem !important; /* Equivalent to 16px assuming 16px base */
+    font-weight: 700;
+  }
+  .header-itc-header-section .header-navbar-collapse .header-nav-item .header-cmp-navigation__item {
+    padding: 0.625rem 0 !important; /* Equivalent to 10px 0px assuming 16px base */
+  }
+  .header-itc-header-section .header-navbar-collapse .header-nav-item .header-cmp-navigation__group {
+    padding: 0.625rem 0 1.25rem 1.25rem; /* Equivalent to 10px 0px 20px 20px assuming 16px base */
+  }
+  .header-itc-header-section .header-navbar-toggler .header-navbar-toggler-icon {
+    max-width: 1.375rem; /* Equivalent to 22px assuming 16px base */
+    background: url("/content/dam/kitchens-of-india/placeholders/vector-four.svg") no-repeat;
+  }
+  .header-itc-header-section .header-navbar-toggler.header-collapsed .header-navbar-toggler-icon {
+    background: url("/content/dam/kitchens-of-india/placeholders/menu.svg") no-repeat;
+    max-width: 1.375rem; /* Equivalent to 22px assuming 16px base */
+  }
+  .header-itc-header-section .header-cmp-navigation__group {
+    display: block;
+  }
+  .header-itc-header-section .header-cmp-navigation__item-link,
+  .header-itc-header-icon-list .header-nav-link {
+    font-size: 2vw;
+  }
+  .header-header-logo-div .header-cmp-image__image {
+    width: 4.8125rem; /* Equivalent to 77px assuming 16px base */
+    height: 2.9375rem; /* Equivalent to 47px assuming 16px base */
+  }
+  .header-header-logo-div {
+    padding-left: 0;
+  }
+}
+@media (max-width: 991px) {
+  .header-itc-header-icon-list .header-nav-link span {
+    font-size: 0.5rem; /* Equivalent to 8px assuming 16px base */
+  }
+  .header-itc-header-section .header-cmp-navigation__item-link {
+    padding: 0;
+  }
+  .header-itc-header-section .header-cmp-navigation__item-link img {
+    max-width: 2.0625rem; /* Equivalent to 33px assuming 16px base */
+  }
+  body {
+    padding-top: 4.875rem !important; /* Equivalent to 78px assuming 16px base */
+  }
+}
+@media (max-width: 767.98px) {
+  .header-header-logo-div {
+    gap: 0.625rem; /* Equivalent to 10px assuming 16px base */
+  }
+  .header-header-logo-div .header-itc-logo-image {
+    height: 2.9375rem; /* Equivalent to 47px assuming 16px base */
+    width: 3.75rem; /* Equivalent to 60px assuming 16px base */
+    padding-right: 0;
+  }
+  .header-header-logo-div .header-cmp-image__image {
+    padding-top: 0;
+  }
+}
+@media (max-width: 375px) {
+  .header-header-logo-div .header-itc-logo-image {
+    height: 2.3125rem; /* Equivalent to 37px assuming 16px base */
+  }
+}

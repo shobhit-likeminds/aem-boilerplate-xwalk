@@ -1,0 +1,26 @@
+.text-align-center {
+  text-align: center;
+}
+.text-koi-theme {
+  color: #4f250a;
+}
+.text-align-center.text-koi-theme {
+  margin-top: 1.25rem; /* Equivalent to 20px assuming 16px base */
+}
+.text-align-center.text-koi-theme h1 {
+  font-family: "Paytone One";
+  font-size: 2.5rem; /* Equivalent to 40px assuming 16px base */
+  font-weight: 500;
+  line-height: 1.2;
+  color: #4f250a;
+  margin-bottom: 0.5rem; /* Equivalent to 8px assuming 16px base */
+}
+@media (max-width: 48rem) { /* Equivalent to 768px */
+  .text-align-center.text-koi-theme {
+    width: 100% !important;
+    margin: 0 !important;
+  }
+  .text-align-center.text-koi-theme h1 {
+    font-size: 1.675rem; /* Equivalent to 26.8px assuming 16px base */
+  }
+}

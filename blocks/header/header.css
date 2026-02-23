@@ -1,24 +1,97 @@
 .header-itc-header-section {
   position: fixed;
   width: 100%;
-  background-color: #ffffff;
+  background-color: #fff;
   z-index: 9999;
   top: 0;
   left: 0;
 }
 .header-itc-header-section .header-navbar {
-  height: 92px;
+  height: 5.75rem; /* Equivalent to 92px assuming 16px base */
 }
-.header-itc-header-section .header-navbar-nav .header-nav-link,
-.header-itc-header-icon-list .header-nav-link {
-  color: #2d2119;
-  font-size: 1rem; /* Equivalent to 16px assuming 16px base */
+.header-itc-header-section .header-navbar-expand-xl {
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+}
+.header-itc-header-section .header-navbar-light {
+  background-color: #f8f9fa !important;
+}
+.header-itc-header-section .header-px-xl-5 {
+  padding-left: 3rem !important; /* Equivalent to 48px assuming 16px base */
+  padding-right: 3rem !important; /* Equivalent to 48px assuming 16px base */
+}
+.header-itc-header-section .header-d-flex {
+  display: flex !important;
+}
+.header-itc-header-section .header-justify-content-between {
+  justify-content: space-between !important;
+}
+.header-itc-header-section .header-align-items-center {
+  align-items: center !important;
 }
 .header-itc-header-section .header-navbar-toggler {
   border: 0;
+  padding: 0.25rem 0.75rem; /* Equivalent to 4px 12px assuming 16px base */
+  font-size: 1.25rem; /* Equivalent to 20px assuming 16px base */
+  line-height: 1;
+  background-color: transparent;
+  border-radius: 0.25rem; /* Equivalent to 4px assuming 16px base */
 }
-.header-itc-header-icon-list a span {
-  font-size: 0.625rem; /* Equivalent to 10px assuming 16px base */
+.header-itc-header-section .header-navbar-toggler-icon {
+  display: inline-block;
+  width: 1.5em; /* Equivalent to 24px assuming 16px base */
+  height: 1.5em; /* Equivalent to 24px assuming 16px base */
+  vertical-align: middle;
+  content: "";
+  background: 50% center/100% 100% no-repeat;
+}
+.header-itc-header-section .header-collapsed .header-navbar-toggler-icon {
+  background: url("/content/dam/kitchens-of-india/placeholders/menu.svg") no-repeat;
+  max-width: 1.375rem; /* Equivalent to 22px assuming 16px base */
+}
+.header-itc-header-section .header-d-xl-none {
+  display: none !important;
+}
+.header-itc-header-section .header-logo {
+  padding-left: 0;
+}
+.header-itc-header-section .header-header-logo-div {
+  display: flex;
+  flex-direction: row;
+  gap: 1.25rem; /* Equivalent to 20px assuming 16px base */
+  align-items: center;
+}
+.header-itc-header-section .header-header-logo-div .header-checkLogoLink {
+  padding-top: 0.875rem; /* Equivalent to 14px assuming 16px base */
+}
+.header-itc-header-section .header-itc-logo-image {
+  width: auto;
+  height: 3.9375rem; /* Equivalent to 63px assuming 16px base */
+  object-fit: contain;
+  padding-left: 0;
+  border-right: 0.0625rem solid #2d2119; /* Equivalent to 1px solid #2d2119 assuming 16px base */
+  padding-right: 1.25rem; /* Equivalent to 20px assuming 16px base */
+}
+.header-itc-header-section .header-cmp-image__image {
+  padding-left: 0;
+}
+.header-itc-header-section .header-cmp-image__link {
+  padding-top: 0.875rem; /* Equivalent to 14px assuming 16px base */
+}
+.header-itc-header-section .header-cmp-link__screen-reader-only {
+  display: none;
+}
+.header-itc-header-section .header-collapse {
+  display: flex !important;
+  flex-basis: auto;
+  flex-grow: 1;
+  align-items: center;
+}
+.header-itc-header-section .header-justify-content-center {
+  justify-content: center !important;
+}
+.header-itc-header-section .header-nav-item {
+  display: list-item;
 }
 .header-itc-header-section .header-cmp-navigation__group {
   display: flex;
@@ -38,289 +111,282 @@
 .header-itc-header-section .header-cmp-navigation__item--active .header-cmp-navigation__item-link,
 .header-itc-header-section .header-cmp-navigation__item-link:hover {
   color: #4f250a;
-  border-bottom: 2px solid #4f250a;
+  border-bottom: 0.125rem solid #4f250a; /* Equivalent to 2px solid #4f250a assuming 16px base */
   transition: all 0.3s ease;
 }
-.header-itc-header-section .header-navbar-collapse {
-  justify-content: space-between !important;
+.header-itc-header-section .header-header-section {
+  width: fit-content;
 }
-.header-header-logo-div {
-  display: flex;
-  flex-direction: row;
-  gap: 1.25rem; /* Equivalent to 20px assuming 16px base */
-  align-items: center;
-}
-.header-header-logo-div .header-itc-logo-image {
-  width: auto;
-  height: 3.9375rem; /* Equivalent to 63px assuming 16px base */
-  object-fit: contain;
-  padding-left: 0;
-  border-right: 1px solid #2d2119;
-  padding-right: 1.25rem; /* Equivalent to 20px assuming 16px base */
-}
-.header-search-icon {
+.header-itc-header-section .header-search-icon {
   background: none;
   color: black;
   padding: 0.125rem 0.3125rem; /* Equivalent to 2px 5px assuming 16px base */
-  border-radius: 5px;
+  border-radius: 0.3125rem; /* Equivalent to 5px assuming 16px base */
   cursor: pointer;
   gap: 0.25rem; /* Equivalent to 4px assuming 16px base */
   font-size: 0.875rem; /* Equivalent to 14px assuming 16px base */
   font-weight: bold;
-  display: flex;
-  align-items: center;
 }
-.header-search-icon:hover {
+.header-itc-header-section .header-search-icon:hover {
   background: rgba(255, 255, 255, 0.1);
 }
-.header-header-country-flag {
+.header-itc-header-section .header-country-code {
+  display: block;
+  font-size: 0.875rem; /* Equivalent to 14px assuming 16px base */
+  font-weight: 700;
+  line-height: 1.3125rem; /* Equivalent to 21px assuming 16px base */
+}
+.header-itc-header-section .header-header-country-flag {
   width: 1.1875rem; /* Equivalent to 19px assuming 16px base */
   height: 1.1875rem; /* Equivalent to 19px assuming 16px base */
   border-radius: 50%;
   object-fit: cover;
 }
-.header-dropdown-icon {
+.header-itc-header-section .header-dropdown-icon {
   vertical-align: middle;
   border-style: none;
 }
-.header-search-block {
+.header-itc-header-icon-list {
+  display: flex;
+  align-items: center;
+}
+.header-itc-header-icon-list .header-nav-item {
+  display: none;
+}
+.header-itc-header-icon-list .header-search-block {
+  max-width: 18.75rem; /* Equivalent to 300px assuming 16px base */
   position: relative;
-  max-width: 300px;
-  right: -60px;
+  right: -3.75rem; /* Equivalent to -60px assuming 16px base */
   top: unset;
   transform: unset;
 }
-.header-search-box {
-  border: 1px solid #000000;
-  background: #ffffff;
+.header-itc-header-icon-list .header-search-box {
+  border: 0.0625rem solid #000; /* Equivalent to 1px solid #000 assuming 16px base */
+  background: #FFF;
   display: flex;
   align-items: center;
   gap: 0.9375rem; /* Equivalent to 15px assuming 16px base */
   justify-content: space-between;
+  padding: 0.9375rem; /* Equivalent to 15px assuming 16px base */
+}
+.header-itc-header-icon-list .header-search-results {
+  border: 0.0625rem solid #ccc; /* Equivalent to 1px solid #ccc assuming 16px base */
   padding: 0.625rem; /* Equivalent to 10px assuming 16px base */
-}
-.header-search-container {
-  display: flex;
-  align-items: center;
-  border: 1px solid #cccccc;
-  padding: 0.3125rem; /* Equivalent to 5px assuming 16px base */
-  border-radius: 5px;
-  width: 100%;
-}
-.header-search-container.header-hidden {
-  display: none;
-}
-.header-search-box #searchInput {
-  border: 0;
-  outline: 0;
-  padding: 0.3125rem; /* Equivalent to 5px assuming 16px base */
-  flex: 1;
-}
-.header-search-box button {
-  background: none;
-  border: 0;
-  cursor: pointer;
-}
-.header-search-results {
-  border: 1px solid #cccccc;
-  padding: 0.625rem; /* Equivalent to 10px assuming 16px base */
-  background: #ffffff;
-  border-radius: 5px;
+  background: #fff;
+  border-radius: 0.3125rem; /* Equivalent to 5px assuming 16px base */
   position: absolute;
   top: 100%;
   left: 0;
   z-index: 1000;
-  width: calc(100% + 50px);
-  max-height: 380px;
+  width: calc(100% + 3.125rem); /* Equivalent to calc(100% + 50px) assuming 16px base */
+  max-height: 23.75rem; /* Equivalent to 380px assuming 16px base */
   overflow-y: auto;
 }
-.header-search-results.header-hidden {
+.header-itc-header-icon-list .header-hidden {
   display: none;
 }
-.header-search-results .header-resultList {
+.header-itc-header-icon-list .header-resultList {
   text-align: left;
-  font-size: 0.9375rem; /* Equivalent to 15px assuming 16px base */
-  font-family: Urbanist;
-  font-weight: 500;
-  line-height: 1.875rem; /* Equivalent to 30px assuming 16px base */
-  text-transform: lowercase;
 }
-.header-search-results ul {
+.header-itc-header-icon-list .header-products {
   list-style: none;
   padding-left: 0;
 }
-.header-search-results li {
+.header-itc-header-icon-list .header-products li {
   margin-bottom: 0.625rem; /* Equivalent to 10px assuming 16px base */
 }
-.header-search-results a {
-  text-decoration: none;
-  color: #000000;
-}
-.header-search-results #viewAllButton {
-  background-color: green;
-  color: white;
-  padding: 0.625rem; /* Equivalent to 10px assuming 16px base */
-  border: 0;
-  cursor: pointer;
-  width: 100%;
-  text-align: center;
-  margin-top: 0.625rem; /* Equivalent to 10px assuming 16px base */
-  border-radius: 5px;
-}
-.header-modal {
+.header-itc-country-selector {
   z-index: 10000;
 }
-.header-modal.header-show {
+.header-itc-country-selector.header-show {
   background-color: rgba(0, 0, 0, 0.4);
 }
-.header-modal-dialog {
-  max-width: 500px;
-  margin: 1.75rem auto;
+.header-itc-country-selector .header-modal-dialog {
+  max-width: 31.25rem; /* Equivalent to 500px assuming 16px base */
+  margin: 1.75rem auto; /* Equivalent to 28px auto assuming 16px base */
 }
-.header-modal-content {
-  background-color: #faf6f2;
+.header-itc-country-selector .header-modal-content {
   pointer-events: none !important;
+  background-color: #faf6f2;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  border: 0.0625rem solid rgba(0, 0, 0, 0.2); /* Equivalent to 1px solid rgba(0, 0, 0, 0.2) assuming 16px base */
+  border-radius: 0.3rem; /* Equivalent to 4.8px assuming 16px base */
+  outline: 0;
 }
-.header-modal-header {
+.header-itc-country-selector .header-modal-header {
   border-bottom: 0;
   text-align: center;
-  padding: 1rem;
+  padding: 1rem; /* Equivalent to 16px assuming 16px base */
 }
-.header-modal-header .header-w-100 {
-  width: 100%;
-}
-.header-modal-title {
+.header-itc-country-selector .header-modal-title {
   font-size: 1.875rem; /* Equivalent to 30px assuming 16px base */
   font-family: inherit;
   font-weight: bold;
   color: #4f250a;
   line-height: 1;
 }
-.header-experience-text {
-  font-family: Cataneo;
+.header-itc-country-selector .header-experience-text {
+  font-family: "Cataneo";
   font-size: 2.8125rem; /* Equivalent to 45px assuming 16px base */
   font-weight: normal;
   color: #eeb144;
   margin-bottom: 0;
   font-style: italic;
 }
-.header-modal-body {
+.header-itc-country-selector .header-modal-body {
   padding-top: 0 !important;
   padding-bottom: 1.625rem !important; /* Equivalent to 26px assuming 16px base */
 }
-.header-country-options {
+.header-itc-country-selector .header-country-options {
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.header-country-options:hover {
-  cursor: pointer;
-}
-.header-country-option {
+.header-itc-country-selector .header-country-option {
   pointer-events: auto;
+  margin-left: 0.9375rem; /* Equivalent to 15px assuming 16px base */
+  margin-right: 0.9375rem; /* Equivalent to 15px assuming 16px base */
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 0 1rem; /* Equivalent to 0 16px assuming 16px base */
 }
-.header-country-option .header-country-name {
+.header-itc-country-selector .header-country-option .header-country-flag {
+  width: 5.125rem; /* Equivalent to 82px assuming 16px base */
+  height: 5.125rem; /* Equivalent to 82px assuming 16px base */
+}
+.header-itc-country-selector .header-country-option .header-country-name {
   color: #282828;
   font-size: 1rem; /* Equivalent to 16px assuming 16px base */
   font-weight: bold;
   text-align: center;
-  line-height: 1cm;
+  line-height: 37.7953px; /* Equivalent to 37.7953px assuming 16px base */
   margin-bottom: 0;
 }
+.header-itc-country-selector .header-country-options:hover {
+  cursor: pointer;
+}
+
 @media (max-width: 1400px) {
   .header-itc-header-section .header-logo img {
-    padding-left: 40px;
+    padding-left: 2.5rem; /* Equivalent to 40px assuming 16px base */
   }
 }
 @media (max-width: 1200px) {
   .header-itc-header-section .header-navbar {
-    height: 78px;
+    height: 4.875rem; /* Equivalent to 78px assuming 16px base */
   }
-  .header-itc-header-section .header-navbar-collapse {
-    position: absolute;
-    background: #fff7e3;
-    min-width: 300px;
-    width: 89%;
-    z-index: 1;
-    padding: 0.625rem; /* Equivalent to 10px assuming 16px base */
-    top: 66px;
-    height: 100vh;
-  }
-  .header-itc-header-section .header-cmp-navigation__item--active .header-cmp-navigation__item-link,
-  .header-itc-header-section .header-cmp-navigation__item-link:hover {
-    border-bottom: 2px solid #f8f9fa;
-  }
-  .header-itc-header-section .header-navbar-collapse .header-nav-item {
-    background: #6c3003;
-    border-radius: 1.6rem; /* Equivalent to 25.6px assuming 16px base */
-  }
-  .header-itc-header-section .header-navbar-collapse .header-nav-item .header-cmp-navigation__item-link {
-    color: #ffffff;
-    font-size: 1rem !important; /* Equivalent to 16px assuming 16px base */
-    font-weight: 700;
-  }
-  .header-itc-header-section .header-navbar-collapse .header-nav-item .header-cmp-navigation__item {
-    padding: 0.625rem 0 !important; /* Equivalent to 10px 0px assuming 16px base */
-  }
-  .header-itc-header-section .header-navbar-collapse .header-nav-item .header-cmp-navigation__group {
-    padding: 0.625rem 0 1.25rem 1.25rem; /* Equivalent to 10px 0px 20px 20px assuming 16px base */
-  }
-  .header-itc-header-section .header-navbar-toggler .header-navbar-toggler-icon {
+  .header-itc-header-section .header-navbar-toggler-icon {
     max-width: 1.375rem; /* Equivalent to 22px assuming 16px base */
     background: url("/content/dam/kitchens-of-india/placeholders/vector-four.svg") no-repeat;
   }
-  .header-itc-header-section .header-navbar-toggler.header-collapsed .header-navbar-toggler-icon {
+  .header-itc-header-section .header-collapsed .header-navbar-toggler-icon {
     background: url("/content/dam/kitchens-of-india/placeholders/menu.svg") no-repeat;
     max-width: 1.375rem; /* Equivalent to 22px assuming 16px base */
   }
-  .header-itc-header-section .header-cmp-navigation__group {
-    display: block;
+  .header-itc-header-section .header-navbar-expand-xl {
+    font-size: unset;
+    line-height: unset;
   }
-  .header-itc-header-section .header-cmp-navigation__item-link,
-  .header-itc-header-icon-list .header-nav-link {
-    font-size: 2vw;
+  .header-itc-header-section .header-header-logo-div {
+    gap: 0.625rem; /* Equivalent to 10px assuming 16px base */
   }
-  .header-header-logo-div .header-cmp-image__image {
-    width: 4.8125rem; /* Equivalent to 77px assuming 16px base */
+  .header-itc-header-section .header-itc-logo-image {
     height: 2.9375rem; /* Equivalent to 47px assuming 16px base */
   }
-  .header-header-logo-div {
+  .header-itc-header-section .header-cmp-image__link {
+    padding-top: 0;
+  }
+  .header-itc-header-section .header-logo img {
     padding-left: 0;
+  }
+  .header-itc-header-section .header-collapse {
+    position: absolute;
+    background: #fff7e3;
+    min-width: 18.75rem; /* Equivalent to 300px assuming 16px base */
+    width: 89%;
+    z-index: 1;
+    padding: 0.625rem; /* Equivalent to 10px assuming 16px base */
+    top: 4.125rem; /* Equivalent to 66px assuming 16px base */
+    height: 100vh;
+  }
+  .header-itc-header-section .header-cmp-navigation__item {
+    border-bottom: 0.125rem solid #f8f9fa;
+  }
+  .header-itc-header-section .header-nav-item {
+    background: #6c3003;
+    border-radius: 1.6rem; /* Equivalent to 25.6px assuming 16px base */
+  }
+  .header-itc-header-section .header-nav-item .header-cmp-navigation__item-link {
+    color: #fff;
+    font-weight: 700;
+    font-size: 1rem !important; /* Equivalent to 16px assuming 16px base */
+  }
+  .header-itc-header-section .header-nav-item .header-cmp-navigation__item {
+    padding: 0.625rem 0 !important; /* Equivalent to 10px 0px assuming 16px base */
+  }
+  .header-itc-header-section .header-cmp-navigation__group {
+    padding: 0.625rem 0 1.25rem 1.25rem; /* Equivalent to 10px 0px 20px 20px assuming 16px base */
+  }
+  .header-itc-header-icon-list {
+    text-align: right;
+  }
+  .header-itc-header-icon-list .header-search-block {
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .header-itc-header-icon-list .header-search-box {
+    padding: 0.625rem; /* Equivalent to 10px assuming 16px base */
+  }
+  .header-itc-header-icon-list .header-search-results {
+    left: 0;
+    width: 100%;
   }
 }
 @media (max-width: 991px) {
-  .header-itc-header-icon-list .header-nav-link span {
+  .header-itc-header-section .header-itc-logo-image {
+    width: 3.75rem; /* Equivalent to 60px assuming 16px base */
+    padding-right: 0;
+  }
+  .header-itc-header-section .header-header-logo-div {
+    gap: 0.625rem; /* Equivalent to 10px assuming 16px base */
+  }
+  .header-itc-header-section .header-navbar-toggler-icon {
+    max-width: 1.1875rem; /* Equivalent to 19px assuming 16px base */
+  }
+  .header-itc-header-icon-list .header-d-block {
     font-size: 0.5rem; /* Equivalent to 8px assuming 16px base */
   }
   .header-itc-header-section .header-cmp-navigation__item-link {
     padding: 0;
-  }
-  .header-itc-header-section .header-cmp-navigation__item-link img {
-    max-width: 2.0625rem; /* Equivalent to 33px assuming 16px base */
   }
   body {
     padding-top: 4.875rem !important; /* Equivalent to 78px assuming 16px base */
   }
 }
 @media (max-width: 767.98px) {
-  .header-header-logo-div {
+  .header-itc-header-section .header-header-logo-div {
     gap: 0.625rem; /* Equivalent to 10px assuming 16px base */
   }
-  .header-header-logo-div .header-itc-logo-image {
-    height: 2.9375rem; /* Equivalent to 47px assuming 16px base */
+  .header-itc-header-section .header-itc-logo-image {
     width: 3.75rem; /* Equivalent to 60px assuming 16px base */
     padding-right: 0;
   }
-  .header-header-logo-div .header-cmp-image__image {
+  .header-itc-header-section .header-cmp-image__link {
     padding-top: 0;
   }
-}
-@media (max-width: 375px) {
-  .header-header-logo-div .header-itc-logo-image {
-    height: 2.3125rem; /* Equivalent to 37px assuming 16px base */
+  .header-itc-header-section .header-navbar-toggler-icon {
+    max-width: 1.375rem; /* Equivalent to 22px assuming 16px base */
+  }
+  .header-itc-header-icon-list .header-d-block {
+    font-size: 0.5rem; /* Equivalent to 8px assuming 16px base */
+  }
+  .header-itc-header-section .header-cmp-navigation__item-link {
+    padding: 0;
+  }
+  body {
+    padding-top: 4.875rem !important; /* Equivalent to 78px assuming 16px base */
   }
 }

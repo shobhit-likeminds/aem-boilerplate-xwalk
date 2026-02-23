@@ -1,0 +1,120 @@
+.howshift-section {
+  background-color: #ffedd6;
+  display: flex;
+  flex-direction: row;
+  /* Tablet and Mobile styles */
+  /* Mobile styles */
+}
+.howshift-section .howshift-left-image-div {
+  width: 100%;
+}
+.howshift-section .howshift-left-image-div img {
+  width: 100%;
+  height: 100%;
+}
+.howshift-section .howshift-container-read-more {
+  padding: 22px 30px;
+}
+.howshift-section .howshift-container-read-more .howshift-read-more-text {
+  text-align: center;
+  max-width: 450px;
+  margin: 0 auto;
+}
+.howshift-section .howshift-container-read-more .howshift-read-more-text h2 {
+  text-align: center;
+  font-size: 2rem; /* Equivalent to 32px assuming 16px base */
+  font-weight: 500;
+  line-height: 1.2;
+  margin-bottom: 0.5rem; /* Equivalent to 8px assuming 16px base */
+  margin-top: 0;
+  color: #4f250a; /* Explicit color */
+  font-family: "Paytone One"; /* Explicit font-family */
+}
+.howshift-section .howshift-container-read-more .howshift-read-more-text p {
+  text-align: center;
+  margin-top: 16px; /* Equivalent to 1rem assuming 16px base */
+  font-size: 1rem; /* Equivalent to 16px assuming 16px base */
+  font-weight: 400;
+  line-height: 1.5; /* Equivalent to 24px assuming 16px base */
+  margin-bottom: 1rem; /* Equivalent to 16px assuming 16px base */
+  color: #4f250a; /* Explicit color */
+  font-family: "Urbanist"; /* Explicit font-family */
+}
+.howshift-section .howshift-container-read-more .howshift-button {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px; /* Equivalent to 2.5rem assuming 16px base */
+}
+.howshift-section .howshift-container-read-more .howshift-button .howshift-cmp-button {
+  background-color: #2d2119 !important;
+  padding: 15px 66px;
+  color: #fcf1e4;
+  border: transparent;
+  border-radius: 28px;
+  font-weight: 700;
+}
+.howshift-section .howshift-container-read-more .howshift-button .howshift-cmp-button .howshift-cmp-button__text {
+  font-size: 24px; /* Equivalent to 1.5rem assuming 16px base */
+  font-family: "Urbanist"; /* Explicit font-family */
+  line-height: 1.5; /* Equivalent to 24px assuming 16px base */
+  color: #fcf1e4; /* Explicit color */
+  font-weight: 700;
+}
+.howshift-section .howshift-heading {
+  color: #4f250a;
+  padding-bottom: 0.5rem !important;
+  font-size: 25px; /* Equivalent to 1.5625rem assuming 16px base */
+  font-family: "Paytone One"; /* Explicit font-family */
+  font-weight: 400;
+}
+.howshift-section .howshift-health-goal-wrapper {
+  background-color: #2d2119;
+}
+.howshift-section .howshift-image-label {
+  text-decoration: none;
+  color: #000;
+  font-weight: 500;
+  font-size: 16px; /* Equivalent to 1rem assuming 16px base */
+  font-family: "Urbanist"; /* Explicit font-family */
+}
+@media (max-width: 767.98px) {
+  .howshift-section {
+    flex-direction: column;
+    text-align: center;
+    margin: 0.5rem 1.5rem;
+  }
+  .howshift-section .howshift-container-read-more {
+    padding: 22px 30px;
+  }
+  .howshift-section .howshift-container-read-more .howshift-button {
+    justify-content: center;
+    margin: 0;
+  }
+  .howshift-section .howshift-heading {
+    font-size: 1.5rem; /* Equivalent to 24px assuming 16px base */
+    padding: 0 !important;
+  }
+  .howshift-section .howshift-read-more-text h2 {
+    font-size: 1.5rem; /* Equivalent to 24px assuming 16px base */
+  }
+  .howshift-section .howshift-read-more-text p {
+    font-size: 4.24vw !important;
+  }
+  .howshift-section .howshift-health-goal-wrapper img {
+    width: 83px;
+  }
+  .howshift-section .howshift-image-label {
+    font-size: 15px !important;
+    line-height: 20px !important;
+    margin: 0;
+  }
+  .howshift-section .howshift-button .howshift-cmp-button {
+    padding: 15px 36px !important;
+    font-size: 18px; /* Equivalent to 1.125rem assuming 16px base */
+  }
+}
+@media (max-width: 390px) {
+  .howshift-section .howshift-heading {
+    padding: 0px !important;
+  }
+}

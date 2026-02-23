@@ -15,6 +15,36 @@
           }
         }
       }
+    },
+    {
+      "title": "Navigation Link",
+      "id": "navigationLink",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "navigationLink",
+              "name": "Navigation Link"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Country Option",
+      "id": "countryOption",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "countryOption",
+              "name": "Country Option"
+            }
+          }
+        }
+      }
     }
   ],
   "models": [
@@ -23,40 +53,40 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Logo Image",
-          "name": "logoImage",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Logo Alt Text",
-          "name": "logoAlt",
+          "label": "ITC Logo Image",
+          "name": "itcLogoImage",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Logo Link",
-          "name": "logoLink",
+          "label": "ITC Logo Link",
+          "name": "itcLogoLink",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Kitchens of India Logo Image",
+          "name": "koilogoImage",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Kitchens of India Logo Link",
+          "name": "koilogoLink",
           "valueType": "string"
         },
         {
           "component": "container",
           "fields": [
             {
-              "component": "text",
-              "label": "Label",
-              "name": "label",
-              "valueType": "string"
-            },
-            {
               "component": "reference",
-              "label": "Href",
-              "name": "href",
+              "label": "Navigation Link",
+              "name": "navigationLink",
               "valueType": "string"
             }
           ],
           "label": "Navigation Links",
-          "name": "navLinks"
+          "name": "navigationLinks"
         },
         {
           "component": "text",
@@ -66,20 +96,14 @@
         },
         {
           "component": "reference",
-          "label": "Country Flag",
-          "name": "countryFlag",
+          "label": "Country Flag Image",
+          "name": "countryFlagImage",
           "valueType": "string"
         },
         {
-          "component": "richtext",
-          "label": "Modal Title",
-          "name": "modalTitle",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Modal Experience Text",
-          "name": "modalExperienceText",
+          "component": "reference",
+          "label": "Dropdown Icon Image",
+          "name": "dropdownIconImage",
           "valueType": "string"
         },
         {
@@ -87,25 +111,59 @@
           "fields": [
             {
               "component": "reference",
-              "label": "Flag",
-              "name": "flag",
-              "valueType": "string"
-            },
-            {
-              "component": "text",
-              "label": "Country Name",
-              "name": "countryName",
-              "valueType": "string"
-            },
-            {
-              "component": "reference",
-              "label": "Country URL",
-              "name": "countryUrl",
+              "label": "Country Option",
+              "name": "countryOption",
               "valueType": "string"
             }
           ],
           "label": "Country Options",
           "name": "countryOptions"
+        },
+        {
+          "component": "reference",
+          "label": "Search Icon Image",
+          "name": "searchIconImage",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "navigationLink",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Label",
+          "name": "label",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "URL",
+          "name": "url",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "countryOption",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Country Flag",
+          "name": "countryFlag",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Country Name",
+          "name": "countryName",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Country URL",
+          "name": "countryUrl",
+          "valueType": "string"
         }
       ]
     }
@@ -114,7 +172,8 @@
     {
       "id": "header",
       "components": [
-        "header"
+        "navigationLink",
+        "countryOption"
       ]
     }
   ]

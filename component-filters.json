@@ -15,7 +15,20 @@
       "hero",
       "cards",
       "columns",
-      "fragment"
+      "fragment",
+      "header",
+      "bannerCarousel",
+      "spaceadderVerticalPaddingSection",
+      "clubSectionCarousel",
+      "howshiftSection",
+      "rsCards",
+      "footer"
+    ]
+  },
+  {
+    "id": "bannerCarousel",
+    "components": [
+      "bannerCarouselItem"
     ]
   },
   {
@@ -28,6 +41,12 @@
     "id": "carousel",
     "components": [
       "carouselItem"
+    ]
+  },
+  {
+    "id": "club-section-carousel",
+    "components": [
+      "carouselSlide"
     ]
   },
   {
@@ -48,13 +67,37 @@
   {
     "id": "footer",
     "components": [
-      "footer"
+      "footerLink",
+      "socialIcon",
+      "footerSecondaryLink"
     ]
   },
   {
     "id": "header",
     "components": [
-      "header"
+      "navigationLink",
+      "countryOption"
+    ]
+  },
+  {
+    "id": "howshiftSection",
+    "components": [
+      "howshiftItem"
+    ]
+  },
+  {
+    "id": "rsCards",
+    "components": [
+      "card"
+    ]
+  },
+  {
+    "id": "spaceadder-vertical-padding-section"
+  },
+  {
+    "id": "text",
+    "components": [
+      "text"
     ]
   }
 ]

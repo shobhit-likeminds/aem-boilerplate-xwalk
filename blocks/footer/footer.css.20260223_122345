@@ -1,0 +1,47 @@
+.footer-site-footer {
+  margin-top: 3rem; /* Equivalent to 48px assuming 16px base */
+}
+
+.footer-design-credit {
+  position: absolute;
+  z-index: 2;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  clear: both;
+  padding: 1.5em; /* Equivalent to 24px assuming 16px base */
+  background: #000;
+  color: #fff;
+  text-align: center;
+}
+
+.footer-copyright-text {
+  color: #fff;
+  font-family: "Lato", sans-serif;
+  font-size: 1rem; /* Equivalent to 16px assuming 16px base */
+  line-height: 1.5; /* Equivalent to 24px assuming 16px base */
+  font-weight: 400;
+}
+
+.footer-design-credit a {
+  font-weight: 900;
+  color: white; /* Explicitly set color for links */
+  text-decoration: none; /* Explicitly remove underline */
+  font-family: "Lato", sans-serif;
+  font-size: 1rem; /* Equivalent to 16px assuming 16px base */
+  line-height: 1.5; /* Equivalent to 24px assuming 16px base */
+}
+
+.footer-design-credit a:hover,
+.footer-design-credit a:active,
+.footer-design-credit a:focus {
+  color: #FFC270;
+  text-decoration: underline; /* Add underline on hover/focus */
+}
+
+.footer-copyright-link:link,
+.footer-copyright-link:visited,
+.footer-privacy-link:link,
+.footer-privacy-link:visited {
+  color: white;
+}
