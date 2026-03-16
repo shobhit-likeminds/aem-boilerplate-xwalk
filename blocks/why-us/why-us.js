@@ -3,20 +3,18 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
   const wrapper = document.createElement('div');
-  wrapper.classList.add('footer-container');
+  wrapper.classList.add('why-us-rs-cards');
 
   [...block.children].forEach((row) => {
     const item = document.createElement('div');
     moveInstrumentation(row, item);
-    item.classList.add('footer-row');
+    item.classList.add('why-us-col-xl-4', 'why-us-col-lg-6', 'why-us-pb-md-0', 'why-us-pb-4', 'why-us-row-gap-4', 'why-us-koi-rscard-padding');
     while (row.firstElementChild) item.append(row.firstElementChild);
     [...item.children].forEach((div) => {
-      if (div.children.length === 1 && div.querySelector('picture')) {
-        div.className = 'footer-col-logo';
-      } else if (div.querySelector('a')) {
-        div.classList.add('footer-col-links', 'footer-col-left', 'footer-col-right');
+      if (div.querySelector('img')) {
+        div.classList.add('why-us-w-100', 'why-us-rightshift-image', 'why-us-kitchens-image');
       } else {
-        div.classList.add('footer-col-links', 'footer-col-left', 'footer-col-right');
+        div.className = 'why-us-card-body';
       }
     });
     wrapper.append(item);

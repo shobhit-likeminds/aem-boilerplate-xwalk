@@ -1,0 +1,74 @@
+{
+  "definitions": [
+    {
+      "title": "Reason-Cards",
+      "id": "reasonCards",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "reasonCards",
+              "model": "reasonCards",
+              "name": "Reason-Cards"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Reason-Card",
+      "id": "reasonCard",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "reasonCard",
+              "name": "Reason-Card"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "reasonCard",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Image",
+          "name": "image",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Image Alt",
+          "name": "imageAlt",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Title",
+          "name": "title",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Description",
+          "name": "description",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "reasonCards",
+      "components": [
+        "reasonCard"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,103 @@
+.delightful-delicacies-section {
+  background: #FFEDD6;
+  display: flex;
+  flex-direction: row;
+  /* Tablet and Mobile styles */
+  /* Tablet and Mobile styles */
+  /* Tablet and Mobile styles */
+}
+.delightful-delicacies-section .delightful-delicacies-left-image-div {
+  width: 100%;
+}
+.delightful-delicacies-section .delightful-delicacies-left-image-div img {
+  width: 100%;
+  height: 100%;
+}
+.delightful-delicacies-section .delightful-delicacies-container {
+  padding: 22px 30px;
+}
+.delightful-delicacies-section .delightful-delicacies-container .delightful-delicacies-read-more-text {
+  text-align: center;
+  max-width: 450px;
+  margin: 0 auto;
+}
+.delightful-delicacies-section .delightful-delicacies-container .delightful-delicacies-how-shift-button {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+}
+.delightful-delicacies-section .delightful-delicacies-container .delightful-delicacies-how-shift-button a {
+  background-color: #2d2119 !important;
+  padding: 15px 66px;
+  color: #fcf1e4;
+  border: transparent;
+  font-weight: 700;
+  border-radius: 28px;
+}
+@media (max-width: 767.98px) {
+  .delightful-delicacies-section {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+.delightful-delicacies-section .delightful-delicacies-health-goal-wrapper {
+  background-color: #2d2119;
+}
+.delightful-delicacies-section .delightful-delicacies-heading {
+  padding-bottom: 0.5rem !important;
+  color: #4f250a;
+}
+.delightful-delicacies-section p {
+  margin: 0 auto;
+}
+@media (max-width: 767.98px) {
+  .delightful-delicacies-section .delightful-delicacies-health-goal-wrapper img {
+    width: 83px;
+  }
+  .delightful-delicacies-section .delightful-delicacies-heading,
+  .delightful-delicacies-section .delightful-delicacies-read-more-text h2 {
+    font-size: 1.5rem;
+  }
+}
+@media (max-width: 390px) {
+  .delightful-delicacies-section .delightful-delicacies-heading {
+    padding: 0 !important;
+  }
+}
+.delightful-delicacies-section {
+  margin: 1rem 3rem;
+}
+@media (max-width: 768px) {
+  .delightful-delicacies-section {
+    margin: 0.5rem 1.5rem;
+  }
+}
+.delightful-delicacies-section .delightful-delicacies-container .delightful-delicacies-how-shift-button {
+  justify-content: start;
+  margin-left: 2.5rem;
+}
+@media (max-width: 767.98px) {
+  .delightful-delicacies-section .delightful-delicacies-container .delightful-delicacies-how-shift-button {
+    justify-content: center;
+    margin: 0;
+  }
+}
+.delightful-delicacies-section .delightful-delicacies-why-shift-wrapper {
+  max-width: 700px;
+  margin: 0 auto;
+}
+.delightful-delicacies-section .delightful-delicacies-why-shift-wrapper .delightful-delicacies-image-label {
+  text-decoration: none;
+  color: #000;
+  font-weight: 500;
+  font-size: 16px;
+}
+.delightful-delicacies-section .delightful-delicacies-why-shift-wrapper .delightful-delicacies-health-goal-wrapper {
+  margin: 0 auto;
+}
+.delightful-delicacies-section .delightful-delicacies-read-more-button {
+  text-align: center;
+  display: block;
+  color: #098040 !important;
+  font-size: 4.36vw !important;
+}

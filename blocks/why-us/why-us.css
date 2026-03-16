@@ -1,0 +1,179 @@
+.why-us-text {
+  text-align: center;
+  color: #4f250a;
+}
+.why-us-text.aem-GridColumn--default--none {
+  display: block;
+  float: left;
+  clear: none !important;
+}
+.why-us-text.aem-GridColumn--phone--none {
+  display: block;
+  float: left;
+  clear: none !important;
+}
+.why-us-text.aem-GridColumn--phone--7 {
+  float: left;
+  clear: none;
+  width: 58.33333333%;
+}
+.why-us-text.aem-GridColumn--default--8 {
+  float: left;
+  clear: none;
+  width: 66.66666667%;
+}
+.why-us-text.aem-GridColumn--offset--phone--2 {
+  margin-left: 16.66666667%;
+}
+.why-us-text.aem-GridColumn--offset--default--2 {
+  margin-left: 16.66666667%;
+}
+.why-us-text .why-us-cmp-text {
+  margin-top: 1.25rem; /* Equivalent to 20px assuming 16px base */
+}
+.why-us-text .why-us-cmp-text h1 {
+  font-size: 2.5rem; /* Equivalent to 40px assuming 16px base */
+  font-weight: 500;
+  line-height: 1.2; /* Equivalent to 48px assuming 16px base */
+  font-family: "Paytone One";
+  margin-bottom: 0.5rem; /* Equivalent to 8px assuming 16px base */
+}
+.why-us-text .why-us-cmp-text h1:nth-of-type(2) {
+  margin-bottom: 0.5rem; /* Equivalent to 8px assuming 16px base */
+}
+.why-us-text .why-us-cmp-text h1:nth-of-type(3) {
+  margin-bottom: 0.5rem; /* Equivalent to 8px assuming 16px base */
+}
+@media (max-width: 48rem /* 768px */) {
+  .why-us-text {
+    width: 100% !important;
+    margin: 0 !important;
+    padding-left: 1.375rem; /* Equivalent to 22px assuming 16px base */
+    padding-right: 1.375rem; /* Equivalent to 22px assuming 16px base */
+  }
+  .why-us-text .why-us-cmp-text h1 {
+    font-size: 1.675rem; /* Equivalent to 26.8px assuming 16px base */
+  }
+}
+.why-us-container {
+  width: 100%;
+  padding: 0;
+  margin: 0 auto;
+}
+.why-us-container.aem-GridColumn {
+  float: left;
+  clear: none;
+  width: 100%;
+}
+.why-us-container .why-us-rs-cards {
+  margin: 0 3rem 1.25rem; /* Equivalent to 0 48px 20px assuming 16px base */
+}
+.why-us-container .why-us-rs-cards .why-us-row {
+  margin-left: 0;
+  margin-right: 0;
+}
+.why-us-container .why-us-rs-cards .why-us-row .why-us-col-xl-4 {
+  flex: 0 0 33.333333%;
+  max-width: 33.333333%;
+}
+.why-us-container .why-us-rs-cards .why-us-row .why-us-col-lg-6 {
+  flex: 0 0 50%;
+  max-width: 50%;
+}
+.why-us-container .why-us-rs-cards .why-us-row .why-us-pb-md-0 {
+  padding-bottom: 0 !important;
+}
+.why-us-container .why-us-rs-cards .why-us-row .why-us-pb-4 {
+  padding-bottom: 1.5rem !important; /* Equivalent to 24px assuming 16px base */
+}
+.why-us-container .why-us-rs-cards .why-us-row .why-us-row-gap-4 {
+  margin-bottom: 1rem; /* Equivalent to 16px assuming 16px base */
+}
+.why-us-container .why-us-rs-cards .why-us-row .why-us-koi-rscard-padding {
+  padding-left: 0;
+  padding-right: 0;
+}
+.why-us-container .why-us-rs-cards .why-us-row .why-us-card {
+  height: 100%;
+  border-radius: 2.5rem; /* Equivalent to 40px assuming 16px base */
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border: 0.0625rem solid rgba(0, 0, 0, 0.125); /* Equivalent to 1px solid rgba(0,0,0,.125) assuming 16px base */
+}
+.why-us-container .why-us-rs-cards .why-us-row .why-us-card .why-us-w-100 {
+  width: 100% !important;
+}
+.why-us-container .why-us-rs-cards .why-us-row .why-us-card .why-us-rightshift-image {
+  display: none;
+}
+.why-us-container .why-us-rs-cards .why-us-row .why-us-card .why-us-kitchens-image {
+  display: block;
+  object-fit: fill !important;
+  border-bottom-left-radius: 2.5rem; /* Equivalent to 40px assuming 16px base */
+  border-bottom-right-radius: 2.5rem; /* Equivalent to 40px assuming 16px base */
+}
+.why-us-container .why-us-rs-cards .why-us-row .why-us-card .why-us-card-body {
+  position: absolute;
+  padding: 1.5rem 2.1875rem 1.5625rem !important; /* Equivalent to 24px 35px 25px assuming 16px base */
+  bottom: 0;
+  border-bottom-left-radius: 2.5rem; /* Equivalent to 40px assuming 16px base */
+  border-bottom-right-radius: 2.5rem; /* Equivalent to 40px assuming 16px base */
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0) 100%);
+  color: #fff;
+  flex: 1 1 auto;
+  min-height: 0.0625rem; /* Equivalent to 1px assuming 16px base */
+  word-wrap: break-word;
+}
+.why-us-container .why-us-rs-cards .why-us-row .why-us-card .why-us-card-body .why-us-blog-card-title {
+  font-size: 1.375rem; /* Equivalent to 22px assuming 16px base */
+  font-family: "Paytone One";
+  font-weight: 500;
+  line-height: 1.65rem; /* Equivalent to 26.4px assuming 16px base */
+  margin-bottom: 0.5rem; /* Equivalent to 8px assuming 16px base */
+  display: block;
+}
+.why-us-container .why-us-rs-cards .why-us-row .why-us-card .why-us-card-body .why-us-card-title {
+  font-size: 1rem; /* Equivalent to 16px assuming 16px base */
+  font-family: "Paytone One";
+  font-weight: 500;
+  line-height: 1.2rem; /* Equivalent to 19.2px assuming 16px base */
+  margin-bottom: 0.75rem; /* Equivalent to 12px assuming 16px base */
+}
+.why-us-container .why-us-rs-cards .why-us-row .why-us-card .why-us-card-body .why-us-card-title p {
+  font-size: 1rem; /* Equivalent to 16px assuming 16px base */
+  font-weight: 400;
+  line-height: 1.2rem; /* Equivalent to 19.2px assuming 16px base */
+  margin-top: 0;
+  margin-bottom: 1rem; /* Equivalent to 16px assuming 16px base */
+  color: #fff;
+}
+.why-us-container .why-us-rs-cards .why-us-row .why-us-card .why-us-card-body #why-us-explore-btn-hide-id {
+  display: none;
+}
+.why-us-container .why-us-tab-para {
+  text-align: center;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 50.4375rem; /* Equivalent to 807px assuming 16px base */
+}
+@media (max-width: 48rem /* 768px */) {
+  .why-us-container .why-us-rs-cards .why-us-row .why-us-koi-rscard-padding {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .why-us-container .why-us-rs-cards .why-us-row .why-us-card {
+    width: 80%;
+    justify-self: center;
+  }
+  .why-us-container .why-us-rs-cards .why-us-row .why-us-card .why-us-card-body .why-us-blog-card-title {
+    font-size: 1.625rem; /* Equivalent to 26px assuming 16px base */
+  }
+  .why-us-container .why-us-rs-cards .why-us-row .why-us-card .why-us-card-body .why-us-card-title p {
+    font-size: 1rem; /* Equivalent to 16px assuming 16px base */
+  }
+}

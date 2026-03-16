@@ -3,20 +3,18 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
   const wrapper = document.createElement('div');
-  wrapper.classList.add('footer-container');
+  wrapper.classList.add('shiftclub-carousel-inner');
 
   [...block.children].forEach((row) => {
     const item = document.createElement('div');
     moveInstrumentation(row, item);
-    item.classList.add('footer-row');
+    item.classList.add('shiftclub-carousel-item');
     while (row.firstElementChild) item.append(row.firstElementChild);
     [...item.children].forEach((div) => {
-      if (div.children.length === 1 && div.querySelector('picture')) {
-        div.className = 'footer-col-logo';
-      } else if (div.querySelector('a')) {
-        div.classList.add('footer-col-links', 'footer-col-left', 'footer-col-right');
+      if (div.querySelector('img')) {
+        div.classList.add('shiftclub-carousel__img', 'd-block', 'w-md-50', 'w-100');
       } else {
-        div.classList.add('footer-col-links', 'footer-col-left', 'footer-col-right');
+        div.classList.add('shiftclub-club-right-wrapper', 'read-more');
       }
     });
     wrapper.append(item);

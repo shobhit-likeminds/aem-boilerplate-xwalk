@@ -3,20 +3,18 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
   const wrapper = document.createElement('div');
-  wrapper.classList.add('footer-container');
+  wrapper.classList.add('reason-cards');
 
   [...block.children].forEach((row) => {
     const item = document.createElement('div');
     moveInstrumentation(row, item);
-    item.classList.add('footer-row');
+    item.classList.add('reason-cards-col-xl-4', 'reason-cards-col-lg-6', 'reason-cards-pb-md-0', 'reason-cards-pb-4', 'reason-cards-row-gap-4', 'reason-cards-koi-rscard-padding');
     while (row.firstElementChild) item.append(row.firstElementChild);
     [...item.children].forEach((div) => {
-      if (div.children.length === 1 && div.querySelector('picture')) {
-        div.className = 'footer-col-logo';
-      } else if (div.querySelector('a')) {
-        div.classList.add('footer-col-links', 'footer-col-left', 'footer-col-right');
+      if (div.querySelector('img')) {
+        div.classList.add('reason-cards-image', 'reason-cards-kitchens-image');
       } else {
-        div.classList.add('footer-col-links', 'footer-col-left', 'footer-col-right');
+        div.className = 'reason-cards-card-body';
       }
     });
     wrapper.append(item);

@@ -1,0 +1,416 @@
+.header-section {
+  position: fixed;
+  width: 100%;
+  background-color: #fff;
+  z-index: 9999;
+  top: 0;
+  left: 0;
+}
+.header-section .header-navbar ul:first-child {
+  display: flex;
+  list-style-type: none;
+}
+.header-section a {
+  color: #533012; /* Explicitly set color based on computed value */
+  text-decoration: none;
+  padding-bottom: 5px;
+}
+.header-section .header-navbar {
+  height: 92px;
+}
+.header-section ul li {
+  padding-right: 22px;
+  font-size: 1rem; /* Equivalent to 16px assuming 16px base */
+}
+.header-section ul {
+  margin-bottom: 0;
+}
+.header-section .header-navbar-nav a.nav-link,
+.header-section .header-icon-list a.nav-link {
+  color: #2d2119; /* Explicitly set color based on computed value */
+  font-size: 1rem; /* Equivalent to 16px assuming 16px base */
+}
+.header-section .header-icon-list a span {
+  font-size: 0.625rem; /* Equivalent to 10px assuming 16px base */
+}
+.header-section .navbar-toggler {
+  border: 0;
+}
+.header-section a:hover {
+  text-decoration: none !important;
+}
+.header-section .cmp-navigation__item {
+  display: list-item;
+}
+.header-section .header-navbar-collapse {
+  justify-content: space-between !important;
+}
+@media (max-width: 1438px) {
+  .header-section a,
+  .header-section .header-icon-list a {
+    font-size: 1vw;
+  }
+  .header-section .header-logo-image img {
+    max-width: 77px;
+  }
+}
+@media (max-width: 1400px) {
+  .header-section .header-logo-image-wrapper img {
+    padding-left: 40px;
+  }
+}
+@media (max-width: 1200px) {
+  .header-section #navbarSupportedContent {
+    position: absolute;
+    background: #fff7e3; /* Explicitly set background-color based on computed value */
+    min-width: 300px;
+    width: 89%;
+    z-index: 1;
+    padding: 10px;
+    top: 66px;
+    height: 100vh;
+  }
+  .header-section .header-navbar {
+    height: 78px;
+  }
+  .header-section li.active a,
+  .header-section li:hover a,
+  .header-section .cmp-navigation__item--active a {
+    border-bottom: 2px solid #f8f9fa; /* Explicitly set border-color based on computed value */
+  }
+  .header-section #navbarSupportedContent .nav-item {
+    background: #6c3003; /* Explicitly set background-color based on computed value */
+    border-radius: 1.6rem; /* Equivalent to 25.6px assuming 16px base */
+  }
+  .header-section #navbarSupportedContent .nav-item li a {
+    color: #fff; /* Explicitly set color based on computed value */
+    font-size: 1rem !important; /* Equivalent to 16px assuming 16px base */
+    font-weight: 700;
+  }
+  .header-section #navbarSupportedContent .nav-item li {
+    padding: 10px 0 !important;
+  }
+  .header-section #navbarSupportedContent .nav-item ul {
+    padding: 10px 0 20px 20px;
+  }
+  .header-section .navbar-toggler .navbar-toggler-icon {
+    max-width: 19px;
+    background: url("../../../content/dam/itc-rightshift/images/toggle-cross.svg") no-repeat;
+  }
+  .header-section .navbar-toggler.collapsed .navbar-toggler-icon {
+    background: url("../../../content/dam/itc-rightshift/images/toggle.svg") no-repeat;
+    max-width: 19px;
+  }
+  .header-section .navbar-toggler {
+    font-size: unset;
+    line-height: unset;
+  }
+  .header-section .navbar-toggler .navbar-toggler-icon {
+    max-width: 22px;
+    background: url("../../../content/dam/kitchens-of-india/placeholders/vector-four.svg") no-repeat;
+  }
+  .header-section .navbar-toggler.collapsed .navbar-toggler-icon {
+    background: url("../../../content/dam/kitchens-of-india/placeholders/menu.svg") no-repeat;
+    max-width: 22px;
+  }
+  .header-section nav ul:first-child {
+    display: block;
+  }
+  .header-section a,
+  .header-section .header-icon-list a {
+    font-size: 2vw;
+  }
+  .header-section .header-logo-image-wrapper img {
+    width: 77px;
+    height: 47px;
+  }
+  .header-section .header-logo-image-wrapper img {
+    padding-left: 0;
+  }
+}
+@media (max-width: 991px) {
+  .header-icon-list a span {
+    font-size: 0.5rem; /* Equivalent to 8px assuming 16px base */
+  }
+  .header-section a {
+    padding: 0;
+  }
+  .header-section li a img {
+    max-width: 33px;
+  }
+  body {
+    padding-top: 78px !important;
+  }
+}
+.header-nav-item {
+  display: flex;
+  align-items: center;
+}
+#searchIcon {
+  cursor: pointer;
+}
+.header-search-container {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc; /* Explicitly set border-color based on computed value */
+  padding: 5px;
+  border-radius: 5px;
+  width: 100%;
+}
+.header-search-container.hidden {
+  display: none;
+}
+#searchInput {
+  border: 0;
+  outline: 0;
+  padding: 5px;
+  flex: 1;
+}
+.header-search-container button {
+  background: 0 center;
+  border: 0;
+  cursor: pointer;
+}
+.header-search-results {
+  border: 1px solid #ccc; /* Explicitly set border-color based on computed value */
+  padding: 10px;
+  background: #fff; /* Explicitly set background-color based on computed value */
+  border-radius: 5px;
+  position: absolute;
+  top: 100%;
+  left: 15px;
+  z-index: 1000;
+  width: calc(100% - 30px);
+  max-height: 380px;
+  overflow-y: auto;
+}
+.header-search-results.hidden {
+  display: none;
+}
+.header-search-results h3 {
+  margin-top: 0;
+}
+.header-search-results ul {
+  list-style: none;
+  padding-left: 0;
+}
+.header-search-results li {
+  margin-bottom: 10px;
+}
+.header-search-results a {
+  text-decoration: none;
+  color: #000; /* Explicitly set color based on computed value */
+}
+#viewAllButton {
+  background-color: green; /* Explicitly set background-color based on computed value */
+  color: white; /* Explicitly set color based on computed value */
+  padding: 10px;
+  border: 0;
+  cursor: pointer;
+  width: 100%;
+  text-align: center;
+  margin-top: 10px;
+  border-radius: 5px;
+}
+.hidden {
+  display: none;
+}
+#suggestionlist li {
+  margin-bottom: 10px;
+}
+#searchResults ul li {
+  margin-bottom: 10px;
+}
+.header-result-title {
+  color: #000; /* Explicitly set color based on computed value */
+  font-family: Urbanist;
+  font-size: 0.9375rem; /* Equivalent to 15px assuming 16px base */
+  text-align: left;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.875rem; /* Equivalent to 30px assuming 16px base */
+  text-transform: lowercase;
+}
+.header-result-line {
+  border-bottom: 1px solid #ccc; /* Explicitly set border-color based on computed value */
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+.header-section .header-navbar {
+  position: relative;
+}
+.header-search-block {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  width: 100%;
+}
+.header-result-list {
+  text-align: left;
+}
+.header-search-box {
+  border: 1px solid #000; /* Explicitly set border-color based on computed value */
+  background: #fff; /* Explicitly set background-color based on computed value */
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  justify-content: space-between;
+  padding: 15px;
+}
+@media (min-width: 768px) {
+  .header-search-results {
+    width: calc(100%);
+    left: 0;
+  }
+  .header-icon-list {
+    text-align: right;
+  }
+  .header-search-block {
+    max-width: 300px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .header-search-box {
+    padding: 10px;
+  }
+}
+@media (min-width: 1200px) {
+  .header-search-results {
+    width: calc(100% + 50px);
+    left: 0;
+  }
+  .header-icon-list {
+    display: flex;
+    align-items: center;
+  }
+  .header-icon-list .nav-item {
+    display: none;
+  }
+  .header-search-block {
+    max-width: 300px;
+    position: relative;
+    right: -60px;
+    top: unset;
+    transform: unset;
+  }
+}
+.header-section .header-logo-div {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  align-items: center;
+}
+@media (max-width: 767.98px) {
+  .header-section .header-logo-div {
+    gap: 10px;
+  }
+}
+.header-section .header-logo-div a {
+  padding-top: 14px;
+}
+@media (max-width: 767.98px) {
+  .header-section .header-logo-div a {
+    padding-top: 0;
+  }
+}
+.header-section .header-logo-div .header-itc-logo-image {
+  width: auto;
+  height: 63px;
+  object-fit: contain;
+  padding-left: 0;
+  border-right: 1px solid #2d2119; /* Explicitly set border-color based on computed value */
+  padding-right: 20px;
+}
+@media (max-width: 1200px) {
+  .header-section .header-logo-div .header-itc-logo-image {
+    height: 47px;
+  }
+}
+@media (max-width: 767.98px) {
+  .header-section .header-logo-div .header-itc-logo-image {
+    width: 60px;
+    padding-right: 0;
+  }
+}
+.header-section .header-logo-div .cmp-image__image {
+  padding-left: 0;
+}
+.header-section .header-header-section {
+  width: fit-content;
+}
+@media (max-width: 1200px) {
+  .header-section .header-header-section {
+    padding-left: 13px;
+    padding-top: 10px;
+  }
+}
+.header-search-icon {
+  background: 0 center;
+  color: black; /* Explicitly set color based on computed value */
+  padding: 2px 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  gap: 4px;
+  font-size: 0.875rem; /* Equivalent to 14px assuming 16px base */
+  font-weight: bold;
+}
+.header-search-icon:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+.header-country-flag {
+  width: 19px;
+  height: 19px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.header-dropdown-icon {
+  vertical-align: middle;
+  border-style: none;
+}
+.header-modal-country-selector {
+  z-index: 10000;
+}
+.header-modal-country-selector.show {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+.header-modal-title {
+  font-size: 1.875rem; /* Equivalent to 30px assuming 16px base */
+  font-family: inherit;
+  font-weight: bold;
+  color: #4f250a; /* Explicitly set color based on computed value */
+  line-height: 1;
+}
+.header-experience-text {
+  font-family: Cataneo;
+  font-size: 2.8125rem; /* Equivalent to 45px assuming 16px base */
+  font-weight: normal;
+  color: #eeb144; /* Explicitly set color based on computed value */
+  margin-bottom: 0;
+  font-style: italic;
+}
+.header-modal-country-selector .modal-content {
+  pointer-events: none !important;
+}
+.header-modal-body {
+  padding-top: 0 !important;
+  padding-bottom: 26px !important;
+}
+.header-modal-body .header-country-option {
+  pointer-events: auto;
+}
+.header-modal-body .header-country-name {
+  color: #282828; /* Explicitly set color based on computed value */
+  font-size: 1rem; /* Equivalent to 16px assuming 16px base */
+  font-weight: bold;
+  text-align: center;
+  line-height: 1cm;
+}
+.header-modal-body .header-country-name {
+  margin-bottom: 0;
+}
+.header-modal-body .modal-content {
+  background-color: #faf6f2; /* Explicitly set background-color based on computed value */
+}
+.header-country-options:hover {
+  cursor: pointer;
+}

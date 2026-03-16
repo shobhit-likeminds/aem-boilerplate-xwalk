@@ -15,13 +15,33 @@
       "hero",
       "cards",
       "columns",
-      "fragment"
+      "fragment",
+      "headerSection",
+      "bannerCarousel",
+      "spaceAdderVerticalPadding",
+      "carousel",
+      "delightfulDelicacies",
+      "whyUs",
+      "reasonCards",
+      "footer"
+    ]
+  },
+  {
+    "id": "bannerCarousel",
+    "components": [
+      "bannerSlide"
     ]
   },
   {
     "id": "cards",
     "components": [
       "card"
+    ]
+  },
+  {
+    "id": "carousel",
+    "components": [
+      "carouselItem"
     ]
   },
   {
@@ -37,6 +57,43 @@
       "image",
       "button",
       "title"
+    ]
+  },
+  {
+    "id": "delightfulDelicacies",
+    "components": [
+      "category"
+    ]
+  },
+  {
+    "id": "footer",
+    "components": [
+      "logo",
+      "footerLink",
+      "footerSocialLink",
+      "footerSecondaryLink"
+    ]
+  },
+  {
+    "id": "headerSection",
+    "components": [
+      "navigationItem",
+      "countryOption"
+    ]
+  },
+  {
+    "id": "reasonCards",
+    "components": [
+      "reasonCard"
+    ]
+  },
+  {
+    "id": "spaceAdderVerticalPadding"
+  },
+  {
+    "id": "whyUs",
+    "components": [
+      "whyUsCard"
     ]
   }
 ]
