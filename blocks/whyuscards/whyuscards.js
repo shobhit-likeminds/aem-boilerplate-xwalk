@@ -3,19 +3,18 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
   const wrapper = document.createElement('div');
-  wrapper.classList.add('footer-section-row');
+  wrapper.classList.add('whyuscards-rs-cards');
 
   [...block.children].forEach((row) => {
     const item = document.createElement('div');
     moveInstrumentation(row, item);
+    item.classList.add('whyuscards-col-xl-4', 'whyuscards-col-lg-6', 'whyuscards-pb-md-0', 'whyuscards-pb-4', 'whyuscards-row-gap-4', 'whyuscards-koi-rscard-padding');
     while (row.firstElementChild) item.append(row.firstElementChild);
     [...item.children].forEach((div) => {
-      if (div.children.length === 1 && div.querySelector('picture')) {
-        div.classList.add('footer-logo-image', 'logo-image', 'fssai-logo-image');
-      } else if (div.querySelector('a')) {
-        div.classList.add('cmp-list__item-link', 'footer-links');
+      if (div.querySelector('img')) {
+        div.classList.add('whyuscards-w-100', 'whyuscards-kitchens-image');
       } else {
-        div.classList.add('footer-section-col-left', 'footer-logos', 'footer-itc-logo', 'footer-fssai-logo', 'footer-page-links-wrapper', 'list-one-list', 'list-two-list', 'footer-link-left-wrapper', 'footer-lists-container', 'list-four-list', 'list-three-list', 'contact-details', 'footer-link-right-wrapper', 'contact-details-title', 'contact-details-description', 'contact-details-description-mb-0', 'footer-link');
+        div.className = 'whyuscards-card-body';
       }
     });
     wrapper.append(item);

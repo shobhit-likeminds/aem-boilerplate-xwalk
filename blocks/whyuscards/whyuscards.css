@@ -1,0 +1,151 @@
+.whyuscards-rs-cards {
+  /* Assuming 16px base for rem calculations */
+  margin: 0 3rem 1.25rem; /* Equivalent to 0 48px 20px */
+}
+.whyuscards-rs-cards .whyuscards-row {
+  margin-left: 0;
+  margin-right: 0;
+}
+.whyuscards-rs-cards .whyuscards-row .whyuscards-row-gap-4 {
+  /* Assuming 16px base for rem calculations */
+  margin-bottom: 1rem; /* Equivalent to 16px */
+}
+.whyuscards-col-xl-4 {
+  flex: 0 0 33.333333%;
+  max-width: 33.333333%;
+  position: relative;
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+}
+.whyuscards-col-lg-6 {
+  flex: 0 0 50%;
+  max-width: 50%;
+  position: relative;
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+}
+.whyuscards-pb-md-0 {
+  padding-bottom: 0 !important;
+}
+.whyuscards-pb-4 {
+  /* Assuming 16px base for rem calculations */
+  padding-bottom: 1.5rem !important; /* Equivalent to 24px */
+}
+.whyuscards-koi-rscard-padding {
+  padding-left: 0;
+  padding-right: 0;
+}
+.whyuscards-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 0.25rem;
+  height: 100%;
+  border-radius: 40px;
+}
+.whyuscards-rs-card {
+  min-height: 460px;
+}
+.whyuscards-w-100 {
+  width: 100% !important;
+}
+.whyuscards-kitchens-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: fill !important;
+  border-bottom-left-radius: 40px;
+  border-bottom-right-radius: 40px;
+  border-top-left-radius: 40px;
+  border-top-right-radius: 40px;
+}
+.whyuscards-card-body {
+  flex: 1 1 auto;
+  min-height: 1px;
+  padding: 1.25rem;
+  position: absolute;
+  bottom: 0;
+  border-bottom-left-radius: 40px;
+  border-bottom-right-radius: 40px;
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0) 100%);
+  color: #fff;
+  padding: 24px 35px 25px !important;
+}
+.whyuscards-blog-card-title {
+  /* Assuming 16px base for rem calculations */
+  font-size: 1.375rem; /* Equivalent to 22px */
+  margin-bottom: 0.75rem;
+  font-weight: 500;
+  line-height: 1.2;
+  font-family: 'Paytone One';
+  display: block;
+}
+.whyuscards-card-title {
+  /* Assuming 16px base for rem calculations */
+  font-size: 1rem; /* Equivalent to 16px */
+  margin-bottom: 0.75rem;
+  font-weight: 500;
+  line-height: 1.2;
+  font-family: 'Paytone One';
+}
+.whyuscards-card-title p {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
+  font-family: 'Urbanist';
+}
+.whyuscards-tab-para {
+  text-align: center;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 807px;
+}
+
+@media (max-width: 768px) {
+  .whyuscards-koi-rscard-padding {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .whyuscards-rs-card {
+    width: 80%;
+    justify-self: center;
+  }
+  .whyuscards-blog-card-title {
+    /* Assuming 16px base for rem calculations */
+    font-size: 1.625rem; /* Equivalent to 26px */
+  }
+  .whyuscards-card-title p {
+    font-size: 16px;
+  }
+}
+@media (min-width: 768px) {
+  .whyuscards-rs-cards {
+    margin: 0 3rem 1.25rem;
+  }
+  .whyuscards-rs-cards .whyuscards-row .whyuscards-row-gap-4 {
+    /* Assuming 16px base for rem calculations */
+    margin-bottom: 1rem; /* Equivalent to 16px */
+  }
+}
+@media (min-width: 992px) {
+  .whyuscards-col-lg-6 {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+}
+@media (min-width: 1200px) {
+  .whyuscards-col-xl-4 {
+    flex: 0 0 33.333333%;
+    max-width: 33.333333%;
+  }
+}

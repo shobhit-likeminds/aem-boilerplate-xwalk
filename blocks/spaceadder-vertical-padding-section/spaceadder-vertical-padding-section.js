@@ -1,19 +1,18 @@
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const wrapper = document.createElement('div');
-  wrapper.classList.add('whyus-text-align-center', 'whyus-koi-theme', 'whyus-pm-left-right');
+  const section = document.createElement('section');
+  section.classList.add('spaceadder-vertical-padding-section', 'spaceadder-padding-80');
 
   [...block.children].forEach((row) => {
     const item = document.createElement('div');
     moveInstrumentation(row, item);
-    item.classList.add('whyus-cmp-text');
     while (row.firstElementChild) item.append(row.firstElementChild);
     [...item.children].forEach((div) => {
     });
-    wrapper.append(item);
+    section.append(item);
   });
 
   block.textContent = '';
-  block.append(wrapper);
+  block.append(section);
 }

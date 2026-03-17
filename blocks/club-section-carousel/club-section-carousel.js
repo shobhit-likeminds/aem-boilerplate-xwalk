@@ -2,21 +2,21 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const wrapper = document.createElement('header');
-  wrapper.classList.add('header-itc-header-section');
+  const wrapper = document.createElement('div');
+  wrapper.classList.add('clubsection-carousel', 'carousel', 'slide', 'clubsection-itc-club-carousel');
+  wrapper.setAttribute('id', 'clubsection-carousel');
+  wrapper.setAttribute('data-ride', 'carousel');
 
   [...block.children].forEach((row) => {
     const item = document.createElement('div');
     moveInstrumentation(row, item);
-    item.classList.add('header-container');
+    item.classList.add('clubsection-carousel-item', 'carousel-item');
     while (row.firstElementChild) item.append(row.firstElementChild);
     [...item.children].forEach((div) => {
       if (div.children.length === 1 && div.querySelector('picture')) {
-        div.classList.add('header-logo', 'header-image');
-      } else if (div.querySelector('a')) {
-        div.className = 'header-nav-link';
+        div.className = 'clubsection-carousel__img';
       } else {
-        div.classList.add('header-navbar', 'header-navbar-expand-xl', 'header-navbar-light', 'header-bg-light', 'header-px-xl-5', 'header-d-flex', 'header-justify-content-between', 'header-align-items-center', 'header-collapse', 'header-navbar-collapse', 'header-justify-content-center', 'header-header-section', 'header-d-flex', 'header-align-items-center', 'header-justify-content-end', 'header-itc-header-icon-list', 'header-modal', 'header-fade', 'header-itc-country-selector', 'header-show');
+        div.classList.add('clubsection-w-md-50', 'w-100', 'clubsection-itc-club-right-wrapper', 'clubsection-read-more');
       }
     });
     wrapper.append(item);

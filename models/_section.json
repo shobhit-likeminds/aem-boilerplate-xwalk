@@ -58,7 +58,14 @@
         "delightfulDelicacies",
         "whyUs",
         "reasonCards",
-        "footer"
+        "footer",
+        "header",
+        "countrySelectorModal",
+        "heroCarousel",
+        "spaceadderVerticalPaddingSection",
+        "clubSectionCarousel",
+        "delicaciesHowShift",
+        "whyUsCards"
       ]
     }
   ]

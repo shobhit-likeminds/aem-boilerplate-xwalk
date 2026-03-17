@@ -23,7 +23,14 @@
       "delightfulDelicacies",
       "whyUs",
       "reasonCards",
-      "footer"
+      "footer",
+      "header",
+      "countrySelectorModal",
+      "heroCarousel",
+      "spaceadderVerticalPaddingSection",
+      "clubSectionCarousel",
+      "delicaciesHowShift",
+      "whyUsCards"
     ]
   },
   {
@@ -45,6 +52,12 @@
     ]
   },
   {
+    "id": "clubSectionCarousel",
+    "components": [
+      "carouselItem"
+    ]
+  },
+  {
     "id": "columns",
     "components": [
       "column"
@@ -60,6 +73,18 @@
     ]
   },
   {
+    "id": "countrySelectorModal",
+    "components": [
+      "countryOption"
+    ]
+  },
+  {
+    "id": "delicaciesHowShift",
+    "components": [
+      "delicacyCategory"
+    ]
+  },
+  {
     "id": "delightfulDelicacies",
     "components": [
       "category"
@@ -68,7 +93,6 @@
   {
     "id": "footer",
     "components": [
-      "logo",
       "footerLink",
       "footerSocialLink",
       "footerSecondaryLink"
@@ -82,6 +106,19 @@
     ]
   },
   {
+    "id": "header",
+    "components": [
+      "navigationItem",
+      "countryOption"
+    ]
+  },
+  {
+    "id": "heroCarousel",
+    "components": [
+      "heroCarouselItem"
+    ]
+  },
+  {
     "id": "reasonCards",
     "components": [
       "reasonCard"
@@ -91,7 +128,16 @@
     "id": "spaceAdderVerticalPadding"
   },
   {
+    "id": "spaceadder-vertical-padding-section"
+  },
+  {
     "id": "whyUs",
+    "components": [
+      "whyUs"
+    ]
+  },
+  {
+    "id": "whyUsCards",
     "components": [
       "whyUsCard"
     ]

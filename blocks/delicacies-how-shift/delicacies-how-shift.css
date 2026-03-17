@@ -1,0 +1,99 @@
+.delicacies-itc-how-shift {
+  background-color: #ffedd6;
+  display: flex;
+  flex-direction: row;
+  margin: 1rem 3rem;
+}
+.delicacies-itc-how-shift .delicacies-left-image-div {
+  width: 100%;
+}
+.delicacies-itc-how-shift .delicacies-left-image-div img {
+  width: 100%;
+  height: 100%;
+}
+.delicacies-itc-how-shift .delicacies-container-read-more {
+  padding: 22px 30px;
+}
+.delicacies-itc-how-shift .delicacies-container-read-more .delicacies-read-more-text {
+  text-align: center;
+  max-width: 450px;
+  margin: 0 auto;
+}
+.delicacies-itc-how-shift .delicacies-container-read-more .delicacies-button-how-shift-button {
+  display: flex;
+  justify-content: start;
+  margin-top: 40px;
+  margin-left: 2.5rem;
+}
+.delicacies-itc-how-shift .delicacies-container-read-more .delicacies-button-how-shift-button a {
+  background-color: #2d2119 !important;
+  padding: 15px 66px;
+  color: #fcf1e4;
+  border: transparent;
+  font-weight: 700;
+  border-radius: 28px;
+  font-size: 24px;
+}
+.delicacies-itc-how-shift .delicacies-itc-health-goal-wrapper {
+  background-color: #2d2119;
+}
+.delicacies-itc-how-shift h1 {
+  padding-bottom: 0.5rem !important;
+  color: #4f250a;
+  font-size: 25px;
+  font-family: "Paytone One";
+  font-weight: 400;
+  line-height: 30px;
+}
+.delicacies-itc-how-shift p {
+  margin: 0 auto;
+  color: #2d2119;
+  font-size: 16px; 
+  line-height: 24px;
+  font-weight: 400;
+}
+.delicacies-itc-how-shift .delicacies-why-shift-wrapper .delicacies-image-label {
+  text-decoration: none;
+  color: #000;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+}
+.delicacies-itc-how-shift .delicacies-cmp-link__screen-reader-only {
+  display: none;
+}
+
+@media (max-width: 767.98px) {
+  .delicacies-itc-how-shift {
+    flex-direction: column;
+    text-align: center;
+    margin: 0.5rem 1.5rem;
+  }
+  .delicacies-itc-how-shift .delicacies-container-read-more .delicacies-button-how-shift-button {
+    justify-content: center;
+    margin: 0;
+  }
+  .delicacies-itc-how-shift h1 {
+    font-size: 1.5rem;
+    padding: 0 !important;
+    line-height: normal;
+  }
+  .delicacies-itc-how-shift .delicacies-itc-health-goal-wrapper img {
+    width: 83px;
+  }
+  .delicacies-itc-how-shift .delicacies-why-shift-wrapper .delicacies-image-label {
+    font-size: 15px !important;
+    line-height: 20px !important;
+    margin: 0;
+  }
+  .delicacies-itc-how-shift p {
+    font-size: 4.24vw !important;
+  }
+  .delicacies-itc-how-shift .delicacies-button-how-shift-button a {
+    padding: 15px 36px !important;
+    font-weight: 700 !important;
+  }
+  .delicacies-itc-how-shift .delicacies-button-how-shift-button {
+    margin-top: 15px;
+  }
+}

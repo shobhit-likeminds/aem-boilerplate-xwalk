@@ -15,28 +15,43 @@
           }
         }
       }
+    },
+    {
+      "title": "Why-Us-Card",
+      "id": "whyUsCard",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "whyUsCard",
+              "name": "Why-Us-Card"
+            }
+          }
+        }
+      }
     }
   ],
   "models": [
     {
-      "id": "whyUs",
+      "id": "whyUsCard",
       "fields": [
         {
-          "component": "richtext",
-          "label": "Heading 1",
-          "name": "heading1",
+          "component": "reference",
+          "label": "Image",
+          "name": "image",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Title",
+          "name": "title",
           "valueType": "string"
         },
         {
           "component": "richtext",
-          "label": "Heading 2",
-          "name": "heading2",
-          "valueType": "string"
-        },
-        {
-          "component": "richtext",
-          "label": "Heading 3",
-          "name": "heading3",
+          "label": "Description",
+          "name": "description",
           "valueType": "string"
         }
       ]
@@ -46,7 +61,7 @@
     {
       "id": "whyUs",
       "components": [
-        "whyUs"
+        "whyUsCard"
       ]
     }
   ]

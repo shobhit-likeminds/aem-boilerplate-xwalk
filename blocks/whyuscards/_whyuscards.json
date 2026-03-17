@@ -1,0 +1,68 @@
+{
+  "definitions": [
+    {
+      "title": "WhyUsCards",
+      "id": "whyUsCards",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "whyUsCards",
+              "model": "whyUsCards",
+              "name": "WhyUsCards"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "WhyUsCard",
+      "id": "whyUsCard",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "whyUsCard",
+              "name": "WhyUsCard"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "whyUsCard",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Image",
+          "name": "image",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Title",
+          "name": "title",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Description",
+          "name": "description",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "whyUsCards",
+      "components": [
+        "whyUsCard"
+      ]
+    }
+  ]
+}
