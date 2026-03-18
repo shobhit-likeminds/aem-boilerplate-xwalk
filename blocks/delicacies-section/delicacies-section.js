@@ -107,9 +107,8 @@ export default function decorate(block) {
     const linkEl = item.link || document.createElement('a');
     linkEl.classList.add('makerightshift-text-center', 'makerightshift-d-block', 'makerightshift-text-capitalize', 'makerightshift-pt-2', 'makerightshift-image-label');
     if (item.link) {
-      // If link already exists, move its children
+      // linkEl IS item.link — just transfer instrumentation, children already in place
       moveInstrumentation(item.link, linkEl);
-      while (item.link.firstChild) linkEl.append(item.link.firstChild);
     } else if (item.label) {
       // If no link, but label exists, append label content
       moveInstrumentation(item.label, linkEl);
