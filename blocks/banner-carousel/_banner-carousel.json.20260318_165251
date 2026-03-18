@@ -62,14 +62,14 @@
         },
         {
           "component": "text",
-          "label": "Button Text",
-          "name": "buttonText",
+          "label": "CTA Label",
+          "name": "ctaLabel",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Button URL",
-          "name": "buttonUrl",
+          "label": "CTA URL",
+          "name": "ctaUrl",
           "valueType": "string"
         }
       ]

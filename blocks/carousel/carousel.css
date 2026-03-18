@@ -1,233 +1,242 @@
 .shiftclub-section {
-  padding-bottom: 0rem; /* Equivalent to 0px */
-  background-color: #fcf1e4;
+    background-color: #fcf1e4; /* Assuming --color-light is #fcf1e4 */
+    padding-bottom: 50px; /* Equivalent to 50px assuming 16px base */
 }
-.shiftclub-section.mx-md-0.mx-4 {
-  margin-left: 1.5rem; /* Equivalent to 24px */
-  margin-right: 1.5rem; /* Equivalent to 24px */
+.shiftclub-mx-md-0 {
+    margin-left: 0; /* Equivalent to 0px assuming 16px base */
+    margin-right: 0; /* Equivalent to 0px assuming 16px base */
 }
-@media (min-width: 768px) {
-  .shiftclub-section.mx-md-0.mx-4 {
-    margin-left: 0rem; /* Equivalent to 0px */
-    margin-right: 0rem; /* Equivalent to 0px */
-  }
+.shiftclub-mx-4 {
+    margin-left: 1.5rem; /* Equivalent to 24px assuming 16px base */
+    margin-right: 1.5rem; /* Equivalent to 24px assuming 16px base */
 }
 .shiftclub-container {
-  max-width: 1470px; /* Equivalent to 1470px */
-  width: 100%;
-  padding: 0;
-  margin: 0 auto;
+    max-width: 1470px; /* Equivalent to 1470px assuming 16px base */
+    width: 100%;
+    padding: 0; /* Equivalent to 0px assuming 16px base */
+    margin: 0 auto;
 }
 .shiftclub-carousel {
-  position: relative;
-  max-width: 1069px; /* Equivalent to 1069px */
-  margin: -40px auto 0; /* Equivalent to -40px auto 0px */
-  border-radius: 45px;
+    position: relative;
+    max-width: 1069px; /* Equivalent to 1069px assuming 16px base */
+    margin: 0 auto; /* Equivalent to 0px assuming 16px base */
+    border-radius: 45px; /* Equivalent to 45px assuming 16px base */
 }
-@media (max-width: 1300px) {
-  .shiftclub-carousel {
-    margin-top: -8px; /* Equivalent to -8px */
-  }
-}
-.shiftclub-carousel-shift {
-  max-width: 1069px; /* Equivalent to 1069px */
-  margin: 0 auto;
-  border-radius: 45px;
-  position: relative;
+.shiftclub-itc-carousel-shift {
+    max-width: 1069px; /* Equivalent to 1069px assuming 16px base */
+    margin: 0 auto; /* Equivalent to 0px assuming 16px base */
+    border-radius: 45px; /* Equivalent to 45px assuming 16px base */
+    position: relative;
 }
 .shiftclub-carousel-inner {
-  position: relative;
-  width: 100%;
-  overflow: hidden;
-  max-height: 413px; /* Equivalent to 413px */
-  border-radius: 45px;
-}
-.shiftclub-carousel-inner::after {
-  display: block;
-  clear: both;
-  content: "";
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    max-height: 413px; /* Equivalent to 413px assuming 16px base */
+    border-bottom-left-radius: 45px; /* Equivalent to 45px assuming 16px base */
+    border-bottom-right-radius: 45px; /* Equivalent to 45px assuming 16px base */
+    border-top-left-radius: 45px; /* Equivalent to 45px assuming 16px base */
+    border-top-right-radius: 45px; /* Equivalent to 45px assuming 16px base */
 }
 .shiftclub-carousel-indicators {
-  position: absolute;
-  right: 0;
-  bottom: -50px; /* Equivalent to -50px */
-  left: -50%;
-  z-index: 15;
-  display: flex;
-  justify-content: center;
-  padding-left: 0;
-  margin-right: 15%;
-  margin-left: 15%;
-  list-style: none;
-}
-@media (max-width: 767.98px) {
-  .shiftclub-carousel-indicators {
-    bottom: -35px; /* Equivalent to -35px */
-  }
-}
-@media (max-width: 767.98px) {
-  .shiftclub-carousel-indicators {
+    position: absolute;
+    right: 0;
+    bottom: 0; /* Equivalent to 0px assuming 16px base */
     left: 0;
-  }
+    z-index: 15;
+    display: flex;
+    justify-content: center;
+    padding-left: 0; /* Equivalent to 0px assuming 16px base */
+    margin-right: 15%;
+    margin-left: 15%;
+    list-style: none;
+    left: 0; /* Equivalent to 0px assuming 16px base */
+    justify-content: center;
 }
 .shiftclub-carousel-indicators li {
-  box-sizing: content-box;
-  flex: 0 1 auto;
-  width: 12px; /* Equivalent to 12px */
-  height: 12px; /* Equivalent to 12px */
-  margin-right: 5px; /* Equivalent to 5px */
-  margin-left: 3px; /* Equivalent to 3px */
-  text-indent: -999px;
-  cursor: pointer;
-  background-color: transparent;
-  background-clip: padding-box;
-  border: 1px solid #fcf1e4;
-  border-radius: 50%;
-  opacity: 0.5;
-  transition: opacity 0.6s ease;
-}
-@media (max-width: 767.98px) {
-  .shiftclub-carousel-indicators li {
-    width: 7px; /* Equivalent to 7px */
-    height: 7px; /* Equivalent to 7px */
-  }
+    box-sizing: content-box;
+    flex: 0 1 auto;
+    width: 12px; /* Equivalent to 12px assuming 16px base */
+    height: 12px; /* Equivalent to 12px assuming 16px base */
+    margin-right: 5px; /* Equivalent to 5px assuming 16px base */
+    margin-left: 3px; /* Equivalent to 3px assuming 16px base */
+    text-indent: -999px;
+    cursor: pointer;
+    background-color: transparent;
+    border: 1px solid #fcf1e4; /* Assuming --color-light is #fcf1e4 */
+    border-radius: 50%;
+    width: 7px; /* Equivalent to 7px assuming 16px base */
+    height: 7px; /* Equivalent to 7px assuming 16px base */
 }
 .shiftclub-carousel-indicators .active {
-  background-color: #fcf1e4;
-  opacity: 1;
+    background-color: #4f250a; /* Assuming --koi-theme is #4f250a */
 }
 .shiftclub-carousel-item {
-  position: relative;
-  display: none;
-  float: left;
-  width: 100%;
-  margin-right: -100%;
-  backface-visibility: hidden;
-  transition: transform 0.6s ease-in-out;
-  max-height: 413px; /* Equivalent to 413px */
-  object-fit: cover;
-}
-.shiftclub-carousel-item.active {
-  display: block;
-}
-@media (max-width: 767.98px) {
-  .shiftclub-carousel-item {
+    position: relative;
+    display: none;
+    float: left;
+    width: 100%;
+    margin-right: -100%;
+    backface-visibility: hidden;
+    transition: transform 0.6s ease-in-out;
+    max-height: 413px; /* Equivalent to 413px assuming 16px base */
+    object-fit: cover;
     flex-direction: column;
     align-items: center;
-    width: 100%;
-    max-height: unset;
-  }
+}
+.shiftclub-carousel-item.active {
+    display: block;
+}
+.shiftclub-d-md-flex {
+    display: flex;
+}
+.shiftclub-d-block {
+    display: block;
 }
 .shiftclub-carousel__img {
-  display: block;
-  width: 100%;
-  height: 434px; /* Equivalent to 434px */
-  object-fit: cover;
+    display: block;
+    width: 100%;
+    height: 434px; /* Equivalent to 434px assuming 16px base */
+    object-fit: cover;
 }
-@media (min-width: 768px) {
-  .shiftclub-carousel__img {
+.shiftclub-w-md-50 {
     width: 50%;
-  }
 }
-@media (max-width: 767.98px) {
-  .shiftclub-carousel__img {
-    max-height: 281px; /* Equivalent to 281px */
-  }
+.shiftclub-w-100 {
+    width: 100%;
 }
-.shiftclub-club-right-wrapper {
-  padding: 24px 45px 56px 46px; /* Equivalent to 24px 45px 56px 46px */
-  min-height: 434px; /* Equivalent to 434px */
-  height: auto;
-  overflow-y: visible;
-  display: flex;
-  flex-direction: column;
-  align-items: baseline;
-  justify-content: space-evenly;
-  background: linear-gradient(0deg, #f8d765 0%, #f8d765 100%);
-}
-@media (min-width: 768px) {
-  .shiftclub-club-right-wrapper {
-    width: 50%;
-  }
-}
-@media (max-width: 768px) {
-  .shiftclub-club-right-wrapper {
-    min-height: 350px; /* Equivalent to 350px */
-    height: auto;
-    padding: 10px 12px 22px 10px; /* Equivalent to 10px 12px 22px 10px */
-  }
+.shiftclub-itc-club-right-wrapper {
+    background: linear-gradient(0deg, #f8d765 0%, #f8d765 100%);
+    padding: 40px 45px 56px 46px; /* Equivalent to 40px 45px 56px 46px assuming 16px base */
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+    overflow-y: auto;
+    height: 434px; /* Equivalent to 434px assuming 16px base */
+    justify-content: space-evenly;
 }
 .shiftclub-carousel-inner__title {
-  font-size: 28px; /* Equivalent to 28px */
-  font-family: "Paytone One";
-  font-weight: 500;
-  line-height: 1.2; /* Equivalent to 33.6px */
-  color: #2d2119;
-  margin-bottom: 0.5rem; /* Equivalent to 8px */
-}
-@media (max-width: 768px) {
-  .shiftclub-carousel-inner__title {
-    font-size: 22px; /* Equivalent to 22px */
-  }
+    font-size: 1.75rem; /* Equivalent to 28px assuming 16px base */
+    font-family: 'Paytone One';
+    font-weight: 500;
+    line-height: 1.2;
+    margin-bottom: 0.5rem; /* Equivalent to 8px assuming 16px base */
+    color: #2d2119; /* Assuming --bg-dark is #2d2119 */
 }
 .shiftclub-carousel-inner__description {
-  font-size: 16px; /* Equivalent to 16px */
-  font-weight: 400;
-  line-height: 1.5; /* Equivalent to 24px */
-  color: #2d2119;
-  margin-bottom: 1rem; /* Equivalent to 16px */
-}
-@media (max-width: 767.98px) {
-  .shiftclub-carousel-inner__description {
-    font-size: 14px; /* Equivalent to 14px */
-    line-height: 20px; /* Equivalent to 20px */
-  }
+    font-size: 1rem; /* Equivalent to 16px assuming 16px base */
+    line-height: 1.5; /* Equivalent to 24px assuming 16px base */
+    margin-bottom: 1rem; /* Equivalent to 16px assuming 16px base */
+    color: #2d2119; /* Assuming --bg-dark is #2d2119 */
 }
 .shiftclub-carousel-control-prev,
 .shiftclub-carousel-control-next {
-  position: absolute;
-  top: 45%;
-  bottom: 0;
-  z-index: 1;
-  display: block;
-  align-items: center;
-  justify-content: center;
-  width: 46px; /* Equivalent to 46px */
-  height: 46px; /* Equivalent to 46px */
-  padding: 0;
-  color: #fff;
-  text-align: center;
-  background: #fff;
-  border: 0;
-  border-radius: 50px;
-  opacity: 1;
-  transition: opacity 0.15s ease;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    z-index: 1;
+    display: block; /* Changed from flex to block for consistency with other styles */
+    align-items: center;
+    justify-content: center;
+    width: 46px; /* Equivalent to 46px assuming 16px base */
+    height: 46px; /* Equivalent to 46px assuming 16px base */
+    padding: 0;
+    color: #fff;
+    text-align: center;
+    background: #fff;
+    border: 0;
+    opacity: 1;
+    transition: opacity 0.15s ease;
+    border-radius: 50px; /* Equivalent to 50px assuming 16px base */
+    top: 45%;
 }
 .shiftclub-carousel-control-prev {
-  left: -17px; /* Equivalent to -17px */
+    left: -17px; /* Equivalent to -17px assuming 16px base */
 }
 .shiftclub-carousel-control-next {
-  right: -17px; /* Equivalent to -17px */
-  left: unset;
-}
-.shiftclub-carousel-control-prev-icon,
-.shiftclub-carousel-control-next-icon {
-  display: inline-block;
-  width: 34px; /* Equivalent to 34px */
-  height: 34px; /* Equivalent to 34px */
-  background-image: url("/etc.clientlibs/itc-rightshift/clientlibs/clientlib-rightshift/resources/icons/next-icon.svg");
-  background-repeat: no-repeat;
-  background-position: 50% 50%;
-  background-size: 100% 100%;
+    right: -17px; /* Equivalent to -17px assuming 16px base */
+    left: unset; /* Equivalent to unset assuming 16px base */
 }
 .shiftclub-carousel-control-prev-icon {
-  transform: rotate(180deg);
-  top: 2px; /* Equivalent to 2px */
-  left: -3px; /* Equivalent to -3px */
-  position: relative;
+    display: inline-block;
+    width: 34px; /* Equivalent to 34px assuming 16px base */
+    height: 34px; /* Equivalent to 34px assuming 16px base */
+    background-image: url('clientlib-rightshift/resources/icons/next-icon.svg');
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    background-size: 100% 100%;
+    transform: rotate(180deg);
+    position: relative;
+    top: 2px; /* Equivalent to 2px assuming 16px base */
+    left: -3px; /* Equivalent to -3px assuming 16px base */
 }
 .shiftclub-carousel-control-next-icon {
-  top: 4px; /* Equivalent to 4px */
-  left: 3px; /* Equivalent to 3px */
-  position: relative;
+    display: inline-block;
+    width: 34px; /* Equivalent to 34px assuming 16px base */
+    height: 34px; /* Equivalent to 34px assuming 16px base */
+    background-image: url('clientlib-rightshift/resources/icons/next-icon.svg');
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    background-size: 100% 100%;
+    position: relative;
+    top: 4px; /* Equivalent to 4px assuming 16px base */
+    left: 3px; /* Equivalent to 3px assuming 16px base */
+}
+.shiftclub-sr-only {
+    position: absolute;
+    width: 1px; /* Equivalent to 1px assuming 16px base */
+    height: 1px; /* Equivalent to 1px assuming 16px base */
+    padding: 0;
+    margin: -1px; /* Equivalent to -1px assuming 16px base */
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+@media (max-width: 990px) {
+    .shiftclub-itc-club-right-wrapper h2 {
+        font-size: 1.5rem; /* Equivalent to 24px assuming 16px base */
+    }
+    .shiftclub-itc-club-right-wrapper p {
+        font-size: 0.875rem; /* Equivalent to 14px assuming 16px base */
+    }
+}
+
+@media (max-width: 767.98px) {
+    .shiftclub-mx-4 {
+        margin-left: 0;
+        margin-right: 0;
+    }
+    .shiftclub-itc-club-right-wrapper {
+        padding: 10px 12px 22px 10px; /* Equivalent to 10px 12px 22px 10px assuming 16px base */
+        min-height: 350px; /* Equivalent to 350px assuming 16px base */
+        height: auto;
+    }
+    .shiftclub-carousel-item {
+        flex-direction: column;
+        align-items: center;
+        max-height: unset;
+    }
+    .shiftclub-carousel__img {
+        max-height: 281px; /* Equivalent to 281px assuming 16px base */
+        object-fit: cover;
+    }
+    .shiftclub-itc-club-right-wrapper h2 {
+        font-size: 1.375rem; /* Equivalent to 22px assuming 16px base */
+    }
+    .shiftclub-itc-club-right-wrapper p {
+        font-size: 0.875rem; /* Equivalent to 14px assuming 16px base */
+        line-height: 1.25rem; /* Equivalent to 20px assuming 16px base */
+    }
+    .shiftclub-carousel-indicators {
+        bottom: 0; /* Equivalent to 0px assuming 16px base */
+        left: 0; /* Equivalent to 0px assuming 16px base */
+        margin-left: 0; /* Equivalent to 0px assuming 16px base */
+        margin-right: 0; /* Equivalent to 0px assuming 16px base */
+    }
+    .shiftclub-section {
+        padding-top: 1.5625rem; /* Equivalent to 25px assuming 16px base */
+        padding-bottom: 1.5625rem; /* Equivalent to 25px assuming 16px base */
+    }
 }

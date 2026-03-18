@@ -283,6 +283,37 @@
           }
         },
         {
+          "title": "Delicacies-Section",
+          "id": "delicaciesSection",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "delicaciesSection",
+                  "model": "delicaciesSection",
+                  "name": "Delicacies-Section"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Delicacy-Item",
+          "id": "delicacyItem",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "delicacyItem",
+                  "name": "Delicacy-Item"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Delightful-Delicacies",
           "id": "delightfulDelicacies",
           "plugins": {
@@ -345,22 +376,22 @@
           }
         },
         {
-          "title": "Footer Social Link",
-          "id": "footerSocialLink",
+          "title": "Social Icon",
+          "id": "socialIcon",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "footerSocialLink",
-                  "name": "Footer Social Link"
+                  "model": "socialIcon",
+                  "name": "Social Icon"
                 }
               }
             }
           }
         },
         {
-          "title": "Footer Secondary Link",
+          "title": "Secondary Footer Link",
           "id": "footerSecondaryLink",
           "plugins": {
             "xwalk": {
@@ -368,7 +399,7 @@
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
                   "model": "footerSecondaryLink",
-                  "name": "Footer Secondary Link"
+                  "name": "Secondary Footer Link"
                 }
               }
             }
@@ -452,15 +483,15 @@
           }
         },
         {
-          "title": "Navigation Item",
-          "id": "navigationItem",
+          "title": "Navigation Link",
+          "id": "navigationLink",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "navigationItem",
-                  "name": "Navigation Item"
+                  "model": "navigationLink",
+                  "name": "Navigation Link"
                 }
               }
             }
@@ -559,6 +590,37 @@
           }
         },
         {
+          "title": "RS-Cards",
+          "id": "rsCards",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "rsCards",
+                  "model": "rsCards",
+                  "name": "RS-Cards"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "RS-Card",
+          "id": "rsCard",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "rsCard",
+                  "name": "RS-Card"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Space-Adder-VerticalPadding",
           "id": "spaceAdderVerticalPadding",
           "plugins": {
@@ -585,6 +647,38 @@
                   "filter": "spaceadderVerticalPaddingSection",
                   "model": "spaceadderVerticalPaddingSection",
                   "name": "Spaceadder-Vertical-Padding-Section"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Text",
+          "id": "text",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "text",
+                  "model": "text",
+                  "name": "Text"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Vertical Padding Section",
+          "id": "verticalPaddingSection",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "verticalPaddingSection",
+                  "model": "verticalPaddingSection",
+                  "name": "Vertical Padding Section"
                 }
               }
             }

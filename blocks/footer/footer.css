@@ -1,21 +1,21 @@
 .footer-section {
-  background-color: #4e2600;
+  background-color: #4e2600; /* Original: var(--dark-green) */
   padding: 55px 100px;
 }
 .footer-section .cmp-form-text input {
   background-color: transparent;
-  border: 1px solid #fcf1e4;
-  color: #fcf1e4;
+  border: 1px solid #fcf1e4; /* Original: var(--color-light) */
+  color: #fcf1e4; /* Original: var(--color-light) */
   border-radius: 28px;
-  font-size: 16px; /* Equivalent to 16px assuming 16px base */
-  padding: 1.1rem 1.75rem;
+  font-size: 1rem; /* Equivalent to 16px assuming 16px base */
+  padding: 1.1rem 1.75rem; /* Equivalent to 17.6px 28px assuming 16px base */
   width: 93%;
   text-align: left;
 }
 .footer-section .cmp-form-text input:focus-visible {
   outline: 0;
 }
-.footer-section .button-link {
+.footer-section .footer-button a {
   background-color: #ffedd6;
   text-decoration: none;
   color: #223935;
@@ -23,125 +23,117 @@
   border-radius: 28px;
   font-weight: 700;
 }
-.footer-section .button-link:hover,
-.footer-section .button-link:focus {
-  background-color: #f8d765;
-  transition: all 0.3s ease;
-}
-.footer-section .subscribenow-button {
+.subscribenow .footer-button {
   margin-top: 35px;
   margin-left: 5px;
 }
-.footer-section .subscribenow-heading {
-  font-size: 20px; /* Equivalent to 20px assuming 16px base */
+.subscribenow h3 {
+  font-size: 1.25rem; /* Equivalent to 20px assuming 16px base */
   margin-left: 5px;
-  color: #fcf1e4;
+  color: #fcf1e4; /* Original: var(--color-light) */
   padding-bottom: 15px;
   font-weight: 400 !important;
-  font-family: "Urbanist";
+  font-family: 'Urbanist';
 }
-.footer-section .subscribenow-container {
+.footer-section .footer-button a:hover,
+.footer-section .footer-button a:focus {
+  background-color: #f8d765; /* Original: var(--color-yellow) */
+  transition: 0.3s all ease;
+}
+.subscribenow .footer-container {
   padding: 0;
 }
-.footer-section .footer-link-left-wrapper .list-three-list ul,
-.footer-section .footer-link-right-wrapper ul {
+.footer-col-left-links .footer-list-three ul,
+.footer-col-right-links ul {
   display: grid;
   list-style: none;
   padding-left: 0;
 }
-.footer-section .footer-link-left-wrapper .contact-details .contact-details-title,
-.footer-section .footer-link-left-wrapper .contact-details .contact-details-description {
+.footer-col-left-links .footer-contact-details .footer-contact-details__title,
+.footer-contact-details__description {
   color: #fff;
 }
-.footer-section .footer-link-left-wrapper .contact-details-description {
+.footer-col-left-links .footer-contact-details__description {
   font-size: 1rem; /* Equivalent to 16px assuming 16px base */
 }
 @media (max-width: 768px) {
-  .footer-section .footer-link-left-wrapper .contact-details-description {
-    font-size: 14px; /* Equivalent to 14px assuming 16px base */
-  }
-}
-@media (max-width: 768px) {
-  .footer-section .footer-link-left-wrapper .contact-details {
+  .kitchens-of-india .footer-col-left-links .footer-contact-details {
     display: flex;
     flex-wrap: wrap;
   }
-}
-@media (max-width: 768px) {
-  .footer-section .footer-link-left-wrapper .contact-details .contact-details-title {
-    font-size: 14px; /* Equivalent to 14px assuming 16px base */
+  .kitchens-of-india .footer-col-left-links .footer-contact-details .footer-contact-details__title {
+    font-size: 0.875rem; /* Equivalent to 14px assuming 16px base */
   }
 }
-.footer-section .footer-link-left-wrapper .list-four-list ul {
+.footer-col-left-links .footer-list-four ul {
   display: grid;
   list-style: none;
   padding-left: 0;
 }
-.footer-section .footer-link-left-wrapper .footer-lists-container {
+.footer-col-left-links .footer-lists-container {
   display: flex;
   flex-wrap: wrap;
 }
-.footer-section .footer-link-left-wrapper .list-four-list {
+.footer-col-left-links .footer-list-four {
   flex: 1;
   padding-right: 20px;
 }
-.footer-section .footer-link-left-wrapper .list-four-list {
+.kitchens-of-india .footer-col-left-links .footer-list-four {
   padding-right: 0;
 }
-.footer-section .footer-link-right-wrapper div:first-child {
+.footer-col-right-links div:first-child {
   display: flex;
 }
-.footer-section .footer-section-row {
+.footer-section .footer-row {
   justify-content: space-between;
 }
-.footer-section .footer-link-left-wrapper .list-three-list ul li {
+.footer-col-left-links .footer-list-three ul li {
   padding-right: 48px;
   cursor: pointer;
-  color: #fcf1e4;
+  color: #fcf1e4; /* Original: var(--color-light) */
 }
-.footer-section .footer-link-left-wrapper .list-four-list ul li {
+.footer-col-left-links .footer-list-four ul li {
   padding-right: 10px;
   padding-bottom: 10px;
   cursor: pointer;
-  color: #fcf1e4;
+  color: #fcf1e4; /* Original: var(--color-light) */
 }
-.footer-section .footer-link-left-wrapper .list-three-list {
+.footer-col-left-links .footer-list-three {
   flex: 1;
   padding-left: 20px;
 }
-.footer-section .footer-link-left-wrapper .list-three-list {
+.kitchens-of-india .footer-col-left-links .footer-list-three {
   padding-left: 0;
 }
 .footer-section form input::placeholder,
-.footer-section .footer-paragraph {
-  color: #fcf1e4;
+.footer-section p {
+  color: #fcf1e4; /* Original: var(--color-light) */
 }
-.footer-section .footer-paragraph {
-  font-size: 20px; /* Equivalent to 20px assuming 16px base */
+.footer-section p {
+  font-size: 1.25rem; /* Equivalent to 20px assuming 16px base */
 }
-.footer-section .footer-link-left-wrapper li a {
+.footer-col-left-links li a {
   padding-right: 48px;
   color: #fceed9;
-  white-space: nowrap;
 }
-.footer-section .footer-page-links-wrapper .list-one-list ul,
-.footer-section .footer-page-links-wrapper .list-two-list ul {
+.footer-page-links-wrapper .footer-list-one ul,
+.footer-page-links-wrapper .footer-list-two ul {
   list-style: none;
-  color: #fcf1e4;
+  color: #fcf1e4; /* Original: var(--color-light) */
   padding-left: 0;
 }
-.footer-section .footer-page-links-wrapper .list-two-list ul li {
+.footer-page-links-wrapper .footer-list-two ul li {
   padding-left: 56px;
-  border-left: 2px solid #fcf1e4;
+  border-left: 2px solid #fcf1e4; /* Original: var(--color-light) */
   white-space: nowrap;
 }
-.footer-section .footer-link-right-wrapper img {
+.footer-col-right-links img {
   padding-left: 48px;
 }
-.footer-section .footer-link-text,
-.footer-section .itc-talk-left-wrapper span {
+.footer-link,
+.footer-talk-left-wrapper span {
   color: #fceed9;
-  font-size: 16px; /* Equivalent to 16px assuming 16px base */
+  font-size: 1rem; /* Equivalent to 16px assuming 16px base */
 }
 .footer-section .footer-logos {
   display: flex;
@@ -159,54 +151,63 @@
 .footer-section .footer-itc-logo img {
   width: 180px;
 }
-.footer-section .itc-talk-left-wrapper button {
+.footer-talk-left-wrapper button {
   margin-top: 45px;
 }
-.footer-section .footer-link-text:hover {
+.footer-link:hover {
   color: #fceed9;
 }
-.footer-section .footer-section-link {
+.footer-section a {
   color: #fceed9;
   white-space: nowrap;
 }
-.footer-section .footer-page-links-wrapper li {
+.footer-page-links-wrapper li {
   padding-bottom: 30px;
   cursor: pointer;
 }
-.footer-section .footer-link-right-wrapper .footer-link-text {
+.footer-col-right-links span.footer-link {
   padding-top: 20px;
 }
-.footer-section .footer-link-right-wrapper {
+.footer-col-right-links {
   margin-top: -63px;
 }
-.footer-section .footer-logo-image img {
+.footer-logo-image img {
   width: 56px;
 }
-.footer-section .footer-page-links-wrapper .list-two-list ul li:last-child {
+.footer-page-links-wrapper .footer-list-two ul li:last-child {
   padding-bottom: 0;
 }
-.footer-secondary-section {
-  background-color: #401e08;
+#whatsappIcon {
+  position: fixed;
+  z-index: 999;
+  width: 60px;
+  height: 60px;
+  bottom: 80px;
+  right: 15px;
+  transition: bottom 0.3s ease-in-out;
+}
+.footer-section-secondary {
+  background-color: #401e08; /* Original: var(--bg-dark) */
   padding: 20px 100px;
 }
-.footer-secondary-section .footer-secondary-container {
+.footer-section-secondary .footer-secondary-container {
   display: flex;
   list-style: none;
   gap: 18px;
   margin: 0;
   padding: 0;
 }
-.footer-secondary-section .footer-secondary-container .footer-secondary-lists .footer-links {
-  font-size: 16px; /* Equivalent to 16px assuming 16px base */
+.footer-section-secondary .footer-secondary-container .footer-secondary-lists .footer-links {
+  font-size: 1rem; /* Equivalent to 16px assuming 16px base */
   font-weight: 700;
   line-height: 1.5;
 }
 @media (max-width: 1200px) {
-  .footer-section .footer-logo-img {
+  .footer-logo-img {
     max-width: 77px;
   }
   .footer-section ul li {
-    font-size: 12px; /* Equivalent to 12px assuming 16px base */
+    font-size: 0.75rem; /* Equivalent to 12px assuming 16px base */
   }
   .footer-section {
     padding: 32px 30px;
@@ -214,44 +215,44 @@
   .footer-itc-logo {
     margin-left: 15px;
   }
-  .footer-section .footer-page-links-wrapper li {
+  .footer-page-links-wrapper li {
     padding-bottom: 12px;
     cursor: pointer;
   }
   .footer-section .footer-itc-logo {
     padding: 0;
   }
-  .footer-section .button-link {
+  .footer-section .footer-button a {
     padding: 10px 30px;
   }
-  .footer-section .list-one-list ul li {
+  .footer-section .footer-list-one ul li {
     padding-right: 20px;
   }
-  .footer-section .list-two-list ul li {
+  .footer-section .footer-list-two ul li {
     padding-left: 20px;
   }
-  .footer-section .footer-link-right-wrapper {
+  .footer-col-right-links {
     padding-right: 56px;
     margin-top: 0;
   }
-  .footer-section .footer-link-right-wrapper .footer-link-text {
+  .footer-col-right-links span.footer-link {
     padding-top: 0;
   }
-  .footer-section .footer-link-right-wrapper img {
+  .footer-col-right-links img {
     padding-left: 25px;
   }
-  .footer-section .footer-link-text {
-    font-size: 12px; /* Equivalent to 12px assuming 16px base */
+  .footer-link {
+    font-size: 0.75rem; /* Equivalent to 12px assuming 16px base */
   }
 }
 @media (max-width: 767.98px) {
-  .footer-section .btn-subscribe,
-  .footer-section .cmp-form-text input {
+  .footer-subscribe-button,
+  .footer-section form .footer-form-control {
     width: 100%;
-    font-size: 20px; /* Equivalent to 20px assuming 16px base */
+    font-size: 1.25rem; /* Equivalent to 20px assuming 16px base */
     max-width: none;
   }
-  .footer-section .footer-link-left-wrapper li a {
+  .footer-col-left-links li a {
     padding-right: 17px;
     white-space: nowrap;
   }
@@ -259,99 +260,99 @@
     padding: 16px 31px;
     position: relative;
   }
-  .footer-section .form-group {
+  .footer-section .footer-form-group {
     padding-top: 25px;
   }
-  .footer-section .footer-link-right-wrapper {
+  .footer-col-right-links {
     margin-top: 0;
     padding-right: 0;
     padding-left: 0;
     align-items: center !important;
   }
-  .footer-section .footer-link-right-wrapper img:first-child {
+  .footer-col-right-links img:first-child {
     padding-left: 10px;
     padding-right: 10px;
   }
-  .footer-section .footer-link-left-wrapper {
+  .footer-col-left-links {
     display: flex;
     justify-content: center;
   }
-  .footer-section .footer-link-left-wrapper {
+  .kitchens-of-india .footer-col-left-links {
     margin-bottom: 16px;
   }
-  .footer-section .subscribenow-button {
+  .subscribenow .footer-button {
     margin-left: 0;
   }
-  .footer-section .footer-page-links-wrapper {
+  .footer-page-links-wrapper {
     padding-bottom: 30px;
     padding-top: 40px !important;
   }
-  .footer-section .footer-link-right-wrapper .footer-link-text {
+  .footer-col-right-links span.footer-link {
     padding-top: 10px;
   }
-  .footer-section .footer-link-left-wrapper .list-three-list ul li {
+  .footer-col-left-links .footer-list-three ul li {
     padding: 0 9px !important;
   }
-  .footer-section .footer-link-left-wrapper .list-four-list ul li {
+  .footer-col-left-links .footer-list-four ul li {
     padding: 0 9px !important;
   }
-  .footer-section .button-link {
-    font-size: 20px; /* Equivalent to 20px assuming 16px base */
+  .footer-section .footer-button {
+    font-size: 1.25rem; /* Equivalent to 20px assuming 16px base */
   }
-  .footer-section .list-one-list ul li {
+  .footer-section .footer-list-one ul li {
     padding-right: 52px;
   }
-  .footer-section .list-two-list ul li {
+  .footer-section .footer-list-two ul li {
     padding-left: 50px;
   }
-  .footer-section .footer-page-links-wrapper li {
+  .footer-page-links-wrapper li {
     padding-bottom: 30px;
   }
-  .footer-section .subscribenow-heading {
+  .subscribenow h3 {
     padding-top: 25px;
-    font-size: 16px; /* Equivalent to 16px assuming 16px base */
+    font-size: 1rem; /* Equivalent to 16px assuming 16px base */
     margin-left: 0;
     padding-bottom: 0;
     margin-bottom: 0;
   }
-  .footer-section .footer-page-links-wrapper ul li {
-    font-size: 13px; /* Equivalent to 13px assuming 16px base */
+  .footer-page-links-wrapper ul li {
+    font-size: 0.8125rem; /* Equivalent to 13px assuming 16px base */
   }
-  .footer-section .button-link {
+  .footer-section .footer-button a {
     padding: 9px 44px;
   }
   .footer-section .cmp-form-text input {
     padding: 0.7rem 1.75rem;
     width: 100%;
   }
-  .footer-section .subscribenow-section {
+  .subscribenow {
     display: block !important;
     width: 100%;
   }
-  .footer-section .subscribenow-button-link {
+  .subscribenow .footer-button a {
     display: block;
     text-align: center;
   }
-  .footer-section .itc-logo-image img {
+  .footer-logo-image img {
     width: 37px;
   }
-  .footer-section .footer-itc-logo img {
+  .footer-itc-logo img {
     width: 105px !important;
   }
   .footer-section .footer-fssai-logo {
     padding: 0 0 0 20px;
   }
 }
-.footer-section .footer-itc-logo .cmp-image__image {
+.footer-itc-logo .cmp-image__image {
   width: auto;
   height: auto;
 }
 @media (max-width: 375px) {
-  .footer-section .footer-link-left-wrapper .footer-lists-container {
+  .footer-col-left-links .footer-lists-container {
     flex-wrap: wrap;
   }
-  .footer-section .footer-link-left-wrapper .list-four-list,
-  .footer-section .footer-link-left-wrapper .list-three-list {
+  .footer-col-left-links .footer-list-four,
+  .footer-col-left-links .footer-list-three {
     flex: 1 1 100%;
     padding: 0 10px;
     max-width: calc(50% - 20px);

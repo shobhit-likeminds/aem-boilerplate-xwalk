@@ -1,0 +1,9 @@
+.spaceadder-vertical-padding-section {
+  padding-top: 5rem; /* Equivalent to 80px assuming 16px base */
+}
+
+@media (max-width: 48rem) { /* Equivalent to 768px assuming 16px base */
+  .spaceadder-vertical-padding-section {
+    padding-top: 2.5rem; /* Equivalent to 40px assuming 16px base */
+  }
+}

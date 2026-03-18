@@ -30,7 +30,10 @@
       "spaceadderVerticalPaddingSection",
       "clubSectionCarousel",
       "delicaciesHowShift",
-      "whyUsCards"
+      "whyUsCards",
+      "verticalPaddingSection",
+      "delicaciesSection",
+      "rsCards"
     ]
   },
   {
@@ -85,6 +88,12 @@
     ]
   },
   {
+    "id": "delicaciesSection",
+    "components": [
+      "delicacyItem"
+    ]
+  },
+  {
     "id": "delightfulDelicacies",
     "components": [
       "category"
@@ -94,7 +103,7 @@
     "id": "footer",
     "components": [
       "footerLink",
-      "footerSocialLink",
+      "socialIcon",
       "footerSecondaryLink"
     ]
   },
@@ -108,7 +117,7 @@
   {
     "id": "header",
     "components": [
-      "navigationItem",
+      "navigationLink",
       "countryOption"
     ]
   },
@@ -125,10 +134,25 @@
     ]
   },
   {
+    "id": "rsCards",
+    "components": [
+      "rsCard"
+    ]
+  },
+  {
     "id": "spaceAdderVerticalPadding"
   },
   {
     "id": "spaceadder-vertical-padding-section"
+  },
+  {
+    "id": "text",
+    "components": [
+      "text"
+    ]
+  },
+  {
+    "id": "verticalPaddingSection"
   },
   {
     "id": "whyUs",

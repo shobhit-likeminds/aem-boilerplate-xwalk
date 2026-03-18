@@ -17,15 +17,15 @@
       }
     },
     {
-      "title": "Navigation Link",
-      "id": "navigationLink",
+      "title": "Navigation Item",
+      "id": "navigationItem",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "navigationLink",
-              "name": "Navigation Link"
+              "model": "navigationItem",
+              "name": "Navigation Item"
             }
           }
         }
@@ -59,64 +59,32 @@
         },
         {
           "component": "reference",
-          "label": "Logo Link 1",
-          "name": "logoLink1",
-          "valueType": "string"
-        },
-        {
-          "component": "reference",
-          "label": "Logo Link 2",
-          "name": "logoLink2",
+          "label": "Logo Link",
+          "name": "logoLink",
           "valueType": "string"
         },
         {
           "component": "container",
-          "fields": [
-            {
-              "component": "reference",
-              "label": "Navigation Link",
-              "name": "navigationLink",
-              "valueType": "string"
-            }
-          ],
-          "label": "Navigation Links",
-          "name": "navigationLinks"
-        },
-        {
-          "component": "text",
-          "label": "Country Code",
-          "name": "countryCode",
-          "valueType": "string"
+          "itemType": "navigationItem",
+          "label": "Navigation",
+          "name": "navigation"
         },
         {
           "component": "reference",
-          "label": "Country Flag",
-          "name": "countryFlag",
-          "valueType": "string"
-        },
-        {
-          "component": "reference",
-          "label": "Dropdown Icon",
-          "name": "dropdownIcon",
+          "label": "Search Icon",
+          "name": "searchIcon",
           "valueType": "string"
         },
         {
           "component": "container",
-          "fields": [
-            {
-              "component": "reference",
-              "label": "Country Option",
-              "name": "countryOption",
-              "valueType": "string"
-            }
-          ],
+          "itemType": "countryOption",
           "label": "Country Options",
           "name": "countryOptions"
         }
       ]
     },
     {
-      "id": "navigationLink",
+      "id": "navigationItem",
       "fields": [
         {
           "component": "text",
@@ -126,8 +94,8 @@
         },
         {
           "component": "reference",
-          "label": "URL",
-          "name": "url",
+          "label": "Link",
+          "name": "link",
           "valueType": "string"
         }
       ]
@@ -138,19 +106,13 @@
         {
           "component": "reference",
           "label": "Flag Image",
-          "name": "flagImage",
+          "name": "flag",
           "valueType": "string"
         },
         {
           "component": "text",
           "label": "Country Name",
-          "name": "countryName",
-          "valueType": "string"
-        },
-        {
-          "component": "reference",
-          "label": "Country URL",
-          "name": "countryUrl",
+          "name": "name",
           "valueType": "string"
         }
       ]
@@ -160,7 +122,7 @@
     {
       "id": "header",
       "components": [
-        "navigationLink",
+        "navigationItem",
         "countryOption"
       ]
     }

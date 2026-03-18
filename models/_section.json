@@ -65,7 +65,10 @@
         "spaceadderVerticalPaddingSection",
         "clubSectionCarousel",
         "delicaciesHowShift",
-        "whyUsCards"
+        "whyUsCards",
+        "verticalPaddingSection",
+        "delicaciesSection",
+        "rsCards"
       ]
     }
   ]
