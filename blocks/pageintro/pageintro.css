@@ -1,0 +1,94 @@
+.pageintro-container {
+  background-color: #cf1919;
+  display: flex; /* Equivalent to display: flex; for desktop */
+}
+.pageintro-image {
+  width: 40%; /* Equivalent to width: 40%; for desktop */
+}
+.pageintro-image img {
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.pageintro-content {
+  position: relative;
+  color: #fff;
+  width: 100%;
+  max-width: 1800px;
+  padding: 30px; /* Equivalent to 30px */
+  margin: 0 auto;
+}
+.pageintro-content-with-image {
+  max-width: none;
+  margin: auto;
+  width: 60%; /* Equivalent to width: 60%; for desktop */
+  padding: 70px 6vw; /* Equivalent to 70px 6vw */
+}
+.pageintro-inner {
+  position: relative;
+  z-index: 1;
+}
+.pageintro-title {
+  font-family: 'BioRhyme', sans-serif;
+  font-size: 3.36rem; /* Equivalent to 53.76px assuming 16px base */
+  line-height: 1.25; /* Equivalent to 67.2px */
+  font-weight: 800;
+  text-transform: uppercase;
+  margin-top: -0.2em;
+  margin-bottom: 20px; /* Equivalent to 20px */
+  color: inherit;
+}
+.pageintro-description p {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.44rem; /* Equivalent to 23.04px assuming 16px base */
+  line-height: 1.5; /* Equivalent to 34.56px */
+  font-weight: 500;
+  margin-bottom: 0.5em;
+  color: #fff;
+}
+.pageintro-description p:last-of-type {
+  margin-bottom: 0;
+}
+
+@media (max-width: 1439px) {
+  .pageintro-content-with-image {
+    padding: 30px; /* Equivalent to 30px */
+    width: 50%;
+  }
+  .pageintro-image {
+    width: 50%;
+  }
+  .pageintro-title {
+    font-size: 2.8rem; /* Equivalent to 44.8px assuming 16px base */
+    line-height: 1.25;
+    margin-bottom: 15px; /* Equivalent to 15px */
+  }
+  .pageintro-description p {
+    font-size: 1.0625rem; /* Equivalent to 17px assuming 16px base */
+    line-height: 1.5;
+  }
+}
+
+@media (max-width: 991px) {
+  .pageintro-container {
+    flex-direction: column;
+  }
+  .pageintro-image,
+  .pageintro-content-with-image {
+    width: 100%;
+  }
+  .pageintro-content {
+    padding: 30px; /* Equivalent to 30px */
+  }
+  .pageintro-title {
+    font-size: 1.5rem; /* Equivalent to 24px assuming 16px base */
+    line-height: 1.25;
+    margin-bottom: 15px; /* Equivalent to 15px */
+  }
+  .pageintro-description p {
+    font-size: 1rem; /* Equivalent to 16px assuming 16px base */
+    line-height: 1.5;
+  }
+}

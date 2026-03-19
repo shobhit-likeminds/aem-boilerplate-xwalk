@@ -36,7 +36,9 @@
       "rsCards",
       "howShift",
       "cardsRsCards",
-      "cardsRow"
+      "cardsRow",
+      "pageintro",
+      "productsList"
     ]
   },
   {
@@ -117,8 +119,9 @@
   {
     "id": "footer",
     "components": [
-      "footerLink",
-      "socialIcon"
+      "footerMenuItem",
+      "footerSocialIcon",
+      "footerBrandItem"
     ]
   },
   {
@@ -131,8 +134,9 @@
   {
     "id": "header",
     "components": [
-      "navigationLink",
-      "countryOption"
+      "phone",
+      "social",
+      "menu"
     ]
   },
   {
@@ -145,6 +149,18 @@
     "id": "howShift",
     "components": [
       "howShiftItem"
+    ]
+  },
+  {
+    "id": "pageintro",
+    "components": [
+      "pageintro"
+    ]
+  },
+  {
+    "id": "productsList",
+    "components": [
+      "product"
     ]
   },
   {

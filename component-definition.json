@@ -423,30 +423,45 @@
           }
         },
         {
-          "title": "Footer Link",
-          "id": "footerLink",
+          "title": "FooterMenuItem",
+          "id": "footerMenuItem",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "footerLink",
-                  "name": "Footer Link"
+                  "model": "footerMenuItem",
+                  "name": "FooterMenuItem"
                 }
               }
             }
           }
         },
         {
-          "title": "Social Icon",
-          "id": "socialIcon",
+          "title": "FooterSocialIcon",
+          "id": "footerSocialIcon",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "socialIcon",
-                  "name": "Social Icon"
+                  "model": "footerSocialIcon",
+                  "name": "FooterSocialIcon"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "FooterBrandItem",
+          "id": "footerBrandItem",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "footerBrandItem",
+                  "name": "FooterBrandItem"
                 }
               }
             }
@@ -530,30 +545,45 @@
           }
         },
         {
-          "title": "Navigation Link",
-          "id": "navigationLink",
+          "title": "Phone",
+          "id": "phone",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "navigationLink",
-                  "name": "Navigation Link"
+                  "model": "phone",
+                  "name": "Phone"
                 }
               }
             }
           }
         },
         {
-          "title": "Country Option",
-          "id": "countryOption",
+          "title": "Social",
+          "id": "social",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "countryOption",
-                  "name": "Country Option"
+                  "model": "social",
+                  "name": "Social"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Menu",
+          "id": "menu",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "menu",
+                  "name": "Menu"
                 }
               }
             }
@@ -631,6 +661,53 @@
                 "template": {
                   "model": "howShiftItem",
                   "name": "How-Shift-Item"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Pageintro",
+          "id": "pageintro",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "pageintro",
+                  "model": "pageintro",
+                  "name": "Pageintro"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Products-List",
+          "id": "productsList",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "productsList",
+                  "model": "productsList",
+                  "name": "Products-List"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Product",
+          "id": "product",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "product",
+                  "name": "Product"
                 }
               }
             }

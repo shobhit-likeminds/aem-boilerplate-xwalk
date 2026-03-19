@@ -17,30 +17,45 @@
       }
     },
     {
-      "title": "Footer Link",
-      "id": "footerLink",
+      "title": "FooterMenuItem",
+      "id": "footerMenuItem",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "footerLink",
-              "name": "Footer Link"
+              "model": "footerMenuItem",
+              "name": "FooterMenuItem"
             }
           }
         }
       }
     },
     {
-      "title": "Social Icon",
-      "id": "socialIcon",
+      "title": "FooterSocialIcon",
+      "id": "footerSocialIcon",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "socialIcon",
-              "name": "Social Icon"
+              "model": "footerSocialIcon",
+              "name": "FooterSocialIcon"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "FooterBrandItem",
+      "id": "footerBrandItem",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "footerBrandItem",
+              "name": "FooterBrandItem"
             }
           }
         }
@@ -53,64 +68,42 @@
       "fields": [
         {
           "component": "reference",
-          "label": "ITC Logo",
-          "name": "itcLogo",
+          "label": "Brand Image",
+          "name": "brandImage",
           "valueType": "string"
         },
         {
-          "component": "reference",
-          "label": "FSSAI Logo",
-          "name": "fssaiLogo",
-          "valueType": "string"
-        },
-        {
-          "component": "reference",
-          "label": "ITC Logo Link",
-          "name": "itcLogoLink",
+          "component": "text",
+          "label": "Brand Link",
+          "name": "brandLink",
           "valueType": "string"
         },
         {
           "component": "container",
-          "items": {
-            "type": "footerLink"
-          },
-          "label": "Footer Links",
-          "name": "footerLinks"
+          "components": [
+            "footerMenuItem"
+          ],
+          "label": "Footer Menu",
+          "name": "footerMenu"
         },
         {
           "component": "container",
-          "items": {
-            "type": "socialIcon"
-          },
-          "label": "Social Icons",
-          "name": "socialIcons"
+          "components": [
+            "footerSocialIcon"
+          ],
+          "label": "Footer Social Icons",
+          "name": "footerSocialIcons"
         },
         {
-          "component": "text",
-          "label": "Grievance Officer Title",
-          "name": "grievanceOfficerTitle",
-          "valueType": "string"
+          "component": "container",
+          "components": [
+            "footerBrandItem"
+          ],
+          "label": "Footer Brands",
+          "name": "footerBrands"
         },
         {
-          "component": "text",
-          "label": "Grievance Officer Name",
-          "name": "grievanceOfficerName",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Grievance Officer Contact",
-          "name": "grievanceOfficerContact",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Grievance Officer Hours",
-          "name": "grievanceOfficerHours",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
+          "component": "richtext",
           "label": "Copyright",
           "name": "copyright",
           "valueType": "string"
@@ -118,7 +111,7 @@
       ]
     },
     {
-      "id": "footerLink",
+      "id": "footerMenuItem",
       "fields": [
         {
           "component": "text",
@@ -128,25 +121,48 @@
         },
         {
           "component": "text",
-          "label": "URL",
-          "name": "url",
+          "label": "Link",
+          "name": "link",
           "valueType": "string"
         }
       ]
     },
     {
-      "id": "socialIcon",
+      "id": "footerSocialIcon",
       "fields": [
         {
           "component": "reference",
           "label": "Icon Image",
-          "name": "icon",
+          "name": "iconImage",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "URL",
-          "name": "url",
+          "label": "Icon Link",
+          "name": "iconLink",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Icon Alt",
+          "name": "iconAlt",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "footerBrandItem",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Label",
+          "name": "label",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Link",
+          "name": "link",
           "valueType": "string"
         }
       ]
@@ -156,8 +172,9 @@
     {
       "id": "footer",
       "components": [
-        "footerLink",
-        "socialIcon"
+        "footerMenuItem",
+        "footerSocialIcon",
+        "footerBrandItem"
       ]
     }
   ]
