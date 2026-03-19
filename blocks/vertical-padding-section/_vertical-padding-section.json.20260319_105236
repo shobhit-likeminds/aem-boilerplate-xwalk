@@ -1,7 +1,7 @@
 {
   "definitions": [
     {
-      "title": "Vertical-Padding-Section",
+      "title": "Vertical Padding Section",
       "id": "verticalPaddingSection",
       "plugins": {
         "xwalk": {
@@ -10,7 +10,7 @@
             "template": {
               "filter": "verticalPaddingSection",
               "model": "verticalPaddingSection",
-              "name": "Vertical-Padding-Section"
+              "name": "Vertical Padding Section"
             }
           }
         }

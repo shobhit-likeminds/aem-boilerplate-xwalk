@@ -2,225 +2,216 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
+  const children = [...block.children];
+
   const footerSection = document.createElement('footer');
   footerSection.classList.add('footer-section');
-
-  const footerContainer = document.createElement('div');
-  footerContainer.classList.add('footer-container');
-  footerSection.append(footerContainer);
-
+  const container = document.createElement('div');
+  container.classList.add('container');
   const footerRow = document.createElement('div');
   footerRow.classList.add('footer-row');
-  footerContainer.append(footerRow);
 
-  const footerColLeft = document.createElement('div');
-  footerColLeft.classList.add('footer-col-left');
-  footerRow.append(footerColLeft);
+  // Footer Logos
+  const footerColumnLeft = document.createElement('div');
+  footerColumnLeft.classList.add('footer-column-left');
+  const footerLogosDiv = document.createElement('div');
+  footerLogosDiv.classList.add('footer-logos');
+  const logosContainer = children[0];
+  moveInstrumentation(logosContainer, footerLogosDiv);
+  [...logosContainer.children].forEach((logoRow) => {
+    const logoImageCell = logoRow.querySelector('div:has(picture)');
+    const logoLinkCell = logoRow.querySelector('div:has(a)');
+    const logoAltTextCell = logoRow.querySelector('div:not(:has(picture)):not(:has(a))');
 
-  const footerLogos = document.createElement('div');
-  footerLogos.classList.add('footer-logos');
-  footerColLeft.append(footerLogos);
+    if (logoImageCell && logoLinkCell) {
+      const logoDiv = document.createElement('div');
+      logoDiv.classList.add('footer-itc-logo'); // Assuming first is ITC, others FSSAI or similar
+      const logoImageDiv = document.createElement('div');
+      logoImageDiv.classList.add('logo-image');
 
-  const itcLogoDiv = document.createElement('div');
-  itcLogoDiv.classList.add('footer-itc-logo');
-  footerLogos.append(itcLogoDiv);
+      const link = logoLinkCell.querySelector('a');
+      const picture = logoImageCell.querySelector('picture');
+      const img = picture ? picture.querySelector('img') : null;
 
-  const itcLogoImageDiv = document.createElement('div');
-  itcLogoImageDiv.classList.add('logo-image');
-  itcLogoDiv.append(itcLogoImageDiv);
+      if (link && img) {
+        const logoLink = document.createElement('a');
+        logoLink.href = link.href;
+        logoLink.target = '_self'; // Default target, adjust if needed from original HTML
+        logoLink.classList.add('cmp-image__link'); // Apply class from original HTML
 
-  const fssaiLogoDiv = document.createElement('div');
-  fssaiLogoDiv.classList.add('footer-fssai-logo');
-  footerLogos.append(fssaiLogoDiv);
+        const optimizedPic = createOptimizedPicture(img.src, logoAltTextCell ? logoAltTextCell.textContent.trim() : img.alt, false, [{ width: '93' }]);
+        moveInstrumentation(img, optimizedPic.querySelector('img'));
+        logoLink.append(optimizedPic);
+        logoImageDiv.append(logoLink);
+      } else if (img) {
+        const optimizedPic = createOptimizedPicture(img.src, logoAltTextCell ? logoAltTextCell.textContent.trim() : img.alt, false, [{ width: '93' }]);
+        moveInstrumentation(img, optimizedPic.querySelector('img'));
+        logoImageDiv.append(optimizedPic);
+      } else if (logoImageCell.textContent.trim()) {
+        logoImageDiv.innerHTML = logoImageCell.innerHTML;
+      }
+      logoDiv.append(logoImageDiv);
+      footerLogosDiv.append(logoDiv);
+    }
+  });
+  footerColumnLeft.append(footerLogosDiv);
+  footerRow.append(footerColumnLeft);
 
-  const fssaiLogoImageDiv = document.createElement('div');
-  fssaiLogoImageDiv.classList.add('fssai-logo-image');
-  fssaiLogoDiv.append(fssaiLogoImageDiv);
+  // Footer Links
+  const footerColumnLinksWrapper = document.createElement('div');
+  footerColumnLinksWrapper.classList.add('footer-column-links-wrapper');
+  const footerLinksContainer = children[1];
+  moveInstrumentation(footerLinksContainer, footerColumnLinksWrapper);
 
-  const footerColCenter = document.createElement('div');
-  footerColCenter.classList.add('footer-col-center', 'footer-page-links-wrapper');
-  footerRow.append(footerColCenter);
+  const listOneList = document.createElement('div');
+  listOneList.classList.add('list-one-list');
+  const ulLinks = document.createElement('ul');
+  ulLinks.classList.add('cmp-list');
 
-  const footerListOne = document.createElement('div');
-  footerListOne.classList.add('footer-list-one');
-  footerColCenter.append(footerListOne);
+  [...footerLinksContainer.children].forEach((linkRow) => {
+    const linkCell = linkRow.querySelector('div:has(a)');
+    const textCell = linkRow.querySelector('div:not(:has(a))');
 
-  const footerListTwo = document.createElement('div');
-  footerListTwo.classList.add('footer-list-two');
-  footerColCenter.append(footerListTwo);
+    if (linkCell && textCell) {
+      const li = document.createElement('li');
+      moveInstrumentation(linkRow, li);
+      li.classList.add('cmp-list__item');
+      const link = linkCell.querySelector('a');
+      if (link) {
+        const a = document.createElement('a');
+        a.href = link.href;
+        a.classList.add('cmp-list__item-link');
+        a.innerHTML = `<span class="cmp-list__item-title">${textCell.textContent.trim()}</span>`;
+        li.append(a);
+      }
+      ulLinks.append(li);
+    }
+  });
+  listOneList.append(ulLinks);
+  footerColumnLinksWrapper.append(listOneList);
+  footerRow.append(footerColumnLinksWrapper);
 
-  const footerColLeftLinks = document.createElement('div');
-  footerColLeftLinks.classList.add('footer-col-left-links');
-  footerRow.append(footerColLeftLinks);
+  // Grievance Officer and Secondary Links
+  const footerColumnLinkLeft = document.createElement('div');
+  footerColumnLinkLeft.classList.add('footer-column-link-left');
 
-  const footerListsContainer = document.createElement('div');
-  footerListsContainer.classList.add('footer-lists-container');
-  footerColLeftLinks.append(footerListsContainer);
+  const contactDetails = document.createElement('div');
+  contactDetails.classList.add('contact-details');
 
-  const footerListFour = document.createElement('div');
-  footerListFour.classList.add('footer-list-four');
-  footerListsContainer.append(footerListFour);
-  const ulFour = document.createElement('ul');
-  footerListFour.append(ulFour);
+  const grievanceOfficerTitle = children[5];
+  if (grievanceOfficerTitle && grievanceOfficerTitle.textContent.trim()) {
+    const h5 = document.createElement('h5');
+    moveInstrumentation(grievanceOfficerTitle, h5);
+    h5.classList.add('contact-details__title-footer');
+    h5.innerHTML = grievanceOfficerTitle.innerHTML;
+    contactDetails.append(h5);
+  }
 
-  const footerListThree = document.createElement('div');
-  footerListThree.classList.add('footer-list-three');
-  footerListsContainer.append(footerListThree);
-  const ulThree = document.createElement('ul');
-  ulThree.classList.add('cmp-list');
-  footerListThree.append(ulThree);
+  const grievanceOfficerName = children[6];
+  if (grievanceOfficerName && grievanceOfficerName.textContent.trim()) {
+    const p = document.createElement('p');
+    moveInstrumentation(grievanceOfficerName, p);
+    p.classList.add('contact-details__description-footer');
+    p.innerHTML = `Name: ${grievanceOfficerName.textContent.trim()}`;
+    contactDetails.append(p);
+  }
 
-  const footerContactDetails = document.createElement('div');
-  footerContactDetails.classList.add('footer-contact-details');
-  footerColLeftLinks.append(footerContactDetails);
+  const grievanceOfficerContact = children[7];
+  if (grievanceOfficerContact && grievanceOfficerContact.textContent.trim()) {
+    const p = document.createElement('p');
+    moveInstrumentation(grievanceOfficerContact, p);
+    p.classList.add('contact-details__description-footer');
+    p.innerHTML = `Contact Info: ${grievanceOfficerContact.textContent.trim()}`;
+    contactDetails.append(p);
+  }
 
-  const footerColRightLinks = document.createElement('div');
-  footerColRightLinks.classList.add('footer-col-right-links');
-  footerRow.append(footerColRightLinks);
+  const grievanceOfficerTiming = children[8];
+  if (grievanceOfficerTiming && grievanceOfficerTiming.textContent.trim()) {
+    const p = document.createElement('p');
+    moveInstrumentation(grievanceOfficerTiming, p);
+    p.classList.add('contact-details__description-footer');
+    p.innerHTML = `(${grievanceOfficerTiming.textContent.trim()})`;
+    contactDetails.append(p);
+  }
+  footerColumnLinkLeft.append(contactDetails);
+  footerRow.append(footerColumnLinkLeft);
 
-  const socialIconsContainer = document.createElement('div');
-  footerColRightLinks.append(socialIconsContainer);
+  // Social Links and Copyright
+  const footerColumnLinkRight = document.createElement('div');
+  footerColumnLinkRight.classList.add('footer-column-link-right');
 
-  const socialIconsUlOne = document.createElement('ul');
-  socialIconsUlOne.classList.add('footer-social-icons');
-  socialIconsContainer.append(socialIconsUlOne);
+  const socialLinksContainer = children[2];
+  moveInstrumentation(socialLinksContainer, footerColumnLinkRight);
+  [...socialLinksContainer.children].forEach((socialLinkRow) => {
+    const linkCell = socialLinkRow.querySelector('div:has(a)');
+    const iconCell = socialLinkRow.querySelector('div:has(picture)');
 
-  const socialIconsUlTwo = document.createElement('ul');
-  socialIconsUlTwo.classList.add('footer-social-icons');
-  socialIconsContainer.append(socialIconsUlTwo);
+    if (linkCell && iconCell) {
+      const ul = document.createElement('ul');
+      ul.classList.add('footer-list-unstyled');
+      const li = document.createElement('li');
+      moveInstrumentation(socialLinkRow, li);
+      const link = linkCell.querySelector('a');
+      const picture = iconCell.querySelector('picture');
+      const img = picture ? picture.querySelector('img') : null;
 
-  const copyrightSpan = document.createElement('span');
-  copyrightSpan.classList.add('footer-link');
-  footerColRightLinks.append(copyrightSpan);
-
-  const footerSectionSecondary = document.createElement('footer');
-  footerSectionSecondary.classList.add('footer-section-secondary');
-
-  const footerSecondaryUl = document.createElement('ul');
-  footerSecondaryUl.classList.add('footer-secondary-container');
-  footerSectionSecondary.append(footerSecondaryUl);
-
-  [...block.children].forEach((row, rowIndex) => {
-    if (rowIndex === 0) { // Main Footer Content
-      [...row.children].forEach((cell, cellIndex) => {
-        if (cellIndex === 0) { // ITC Logo
-          const picture = cell.querySelector('picture');
-          if (picture) {
-            const img = picture.querySelector('img');
-            const link = document.createElement('a');
-            link.href = 'https://www.kitchensofindia.com/';
-            link.classList.add('cmp-image__link');
-            moveInstrumentation(cell, link);
-            link.append(picture);
-            itcLogoImageDiv.append(link);
-          }
-        } else if (cellIndex === 1) { // FSSAI Logo
-          const picture = cell.querySelector('picture');
-          if (picture) {
-            moveInstrumentation(cell, picture);
-            fssaiLogoImageDiv.append(picture);
-          }
-        }
-      });
-    } else if (rowIndex === 1) { // Footer Links (List One & Two)
-      [...row.children].forEach((cell, cellIndex) => {
-        const ul = cell.querySelector('ul');
-        if (ul) {
-          if (cellIndex === 0) {
-            moveInstrumentation(cell, ul);
-            footerListOne.append(ul);
-          } else if (cellIndex === 1) {
-            moveInstrumentation(cell, ul);
-            footerListTwo.append(ul);
-          }
-        }
-      });
-    } else if (rowIndex === 2) { // Additional Footer Links and Grievance Officer
-      [...row.children].forEach((cell, cellIndex) => {
-        if (cellIndex === 0) { // Footer Links (List Four)
-          const ul = cell.querySelector('ul');
-          if (ul) {
-            moveInstrumentation(cell, ul);
-            ulFour.replaceWith(ul);
-          }
-        } else if (cellIndex === 1) { // Footer Links (List Three)
-          const ul = cell.querySelector('ul');
-          if (ul) {
-            moveInstrumentation(cell, ul);
-            ulThree.replaceWith(ul);
-          }
-        } else if (cellIndex === 2) { // Grievance Officer Title
-          const h5 = document.createElement('h5');
-          h5.classList.add('footer-contact-details__title');
-          moveInstrumentation(cell, h5);
-          h5.textContent = cell.textContent;
-          footerContactDetails.append(h5);
-        } else if (cellIndex === 3) { // Grievance Officer Name
-          const p = document.createElement('p');
-          p.classList.add('footer-contact-details__description');
-          moveInstrumentation(cell, p);
-          p.textContent = cell.textContent;
-          footerContactDetails.append(p);
-        } else if (cellIndex === 4) { // Grievance Officer Contact Info
-          const p = document.createElement('p');
-          p.classList.add('footer-contact-details__description');
-          moveInstrumentation(cell, p);
-          p.textContent = cell.textContent;
-          footerContactDetails.append(p);
-        } else if (cellIndex === 5) { // Grievance Officer Timings
-          const p = document.createElement('p');
-          p.classList.add('footer-contact-details__description');
-          moveInstrumentation(cell, p);
-          p.textContent = cell.textContent;
-          footerContactDetails.append(p);
-        }
-      });
-    } else if (rowIndex === 3) { // Social Icons and Copyright
-      [...row.children].forEach((cell, cellIndex) => {
-        if (cellIndex === 0) { // Social Icon 1
-          const li = document.createElement('li');
-          const link = cell.querySelector('a');
-          if (link) {
-            link.id = 'socialIcons';
-            moveInstrumentation(cell, li);
-            li.append(link);
-            socialIconsUlOne.append(li);
-          }
-        } else if (cellIndex === 1) { // Social Icon 2
-          const li = document.createElement('li');
-          const link = cell.querySelector('a');
-          if (link) {
-            link.id = 'socialIcons';
-            moveInstrumentation(cell, li);
-            li.append(link);
-            socialIconsUlTwo.append(li);
-          }
-        } else if (cellIndex === 2) { // Copyright
-          moveInstrumentation(cell, copyrightSpan);
-          copyrightSpan.textContent = cell.textContent;
-        }
-      });
-    } else if (rowIndex === 4) { // Secondary Footer Links
-      [...row.children].forEach((cell) => {
-        const li = document.createElement('li');
-        li.classList.add('footer-secondary-lists');
-        const link = cell.querySelector('a');
-        if (link) {
-          link.classList.add('footer-links');
-          moveInstrumentation(cell, li);
-          li.append(link);
-          footerSecondaryUl.append(li);
-        }
-      });
+      if (link && img) {
+        const a = document.createElement('a');
+        a.id = 'socialIcons';
+        a.href = link.href;
+        a.target = '_blank';
+        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '30' }]);
+        moveInstrumentation(img, optimizedPic.querySelector('img'));
+        a.append(optimizedPic);
+        a.innerHTML += '<span class="cmp-link__screen-reader-only">opens in a new tab</span>';
+        li.append(a);
+      }
+      ul.append(li);
+      footerColumnLinkRight.append(ul);
     }
   });
 
-  block.textContent = '';
-  block.append(footerSection, footerSectionSecondary);
+  const copyrightRow = children[4];
+  if (copyrightRow && copyrightRow.textContent.trim()) {
+    const span = document.createElement('span');
+    moveInstrumentation(copyrightRow, span);
+    span.classList.add('footer-link');
+    span.innerHTML = copyrightRow.textContent.trim();
+    footerColumnLinkRight.append(span);
+  }
+  footerRow.append(footerColumnLinkRight);
 
-  block.querySelectorAll('picture > img').forEach((img) => {
-    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-    moveInstrumentation(img, optimizedPic.querySelector('img'));
-    img.closest('picture').replaceWith(optimizedPic);
+  container.append(footerRow);
+  footerSection.append(container);
+  block.append(footerSection);
+
+  // Secondary Footer Section
+  const footerSectionSecondary = document.createElement('footer');
+  footerSectionSecondary.classList.add('footer-section-secondary');
+  const ulSecondary = document.createElement('ul');
+  ulSecondary.classList.add('footer-secondary-container');
+
+  const secondaryLinksContainer = children[3];
+  moveInstrumentation(secondaryLinksContainer, ulSecondary);
+  [...secondaryLinksContainer.children].forEach((secondaryLinkRow) => {
+    const linkCell = secondaryLinkRow.querySelector('div:has(a)');
+    if (linkCell) {
+      const li = document.createElement('li');
+      moveInstrumentation(secondaryLinkRow, li);
+      li.classList.add('footer-secondary-lists');
+      const link = linkCell.querySelector('a');
+      if (link) {
+        const a = document.createElement('a');
+        a.href = link.href;
+        a.target = '_blank';
+        a.classList.add('footer-links');
+        a.innerHTML = link.textContent.trim();
+        a.innerHTML += '<span class="cmp-link__screen-reader-only">opens in a new tab</span>';
+        li.append(a);
+      }
+      ulSecondary.append(li);
+    }
   });
+  footerSectionSecondary.append(ulSecondary);
+  block.append(footerSectionSecondary);
 }

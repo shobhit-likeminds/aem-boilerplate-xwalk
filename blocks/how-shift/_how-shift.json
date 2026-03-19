@@ -1,0 +1,127 @@
+{
+  "definitions": [
+    {
+      "title": "How-Shift",
+      "id": "howShift",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "howShift",
+              "model": "howShift",
+              "name": "How-Shift"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "How-Shift-Item",
+      "id": "howShiftItem",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "howShiftItem",
+              "name": "How-Shift-Item"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "howShiftItem",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Image",
+          "name": "image",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Alt Text",
+          "name": "altText",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Link",
+          "name": "link",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Label",
+          "name": "label",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "howShift",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Left Image",
+          "name": "leftImage",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Left Image Alt",
+          "name": "leftImageAlt",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Heading",
+          "name": "heading",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Subheading",
+          "name": "subheading",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Description",
+          "name": "description",
+          "valueType": "string"
+        },
+        {
+          "component": "container",
+          "fieldSet": "howShiftItem",
+          "label": "Items",
+          "name": "items"
+        },
+        {
+          "component": "text",
+          "label": "Button Text",
+          "name": "buttonText",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Button Link",
+          "name": "buttonLink",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "howShift",
+      "components": [
+        "howShiftItem"
+      ]
+    }
+  ]
+}

@@ -68,7 +68,9 @@
         "whyUsCards",
         "verticalPaddingSection",
         "delicaciesSection",
-        "rsCards"
+        "rsCards",
+        "howShift",
+        "cardsRsCards"
       ]
     }
   ]
