@@ -17,15 +17,15 @@
       }
     },
     {
-      "title": "Category-Item",
-      "id": "categoryItem",
+      "title": "Category",
+      "id": "category",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "categoryItem",
-              "name": "Category-Item"
+              "model": "category",
+              "name": "Category"
             }
           }
         }
@@ -34,57 +34,7 @@
   ],
   "models": [
     {
-      "id": "delightfulDelicacies",
-      "fields": [
-        {
-          "component": "reference",
-          "label": "Main Image",
-          "name": "mainImage",
-          "valueType": "string"
-        },
-        {
-          "component": "richtext",
-          "label": "Heading",
-          "name": "heading",
-          "valueType": "string"
-        },
-        {
-          "component": "richtext",
-          "label": "Subheading",
-          "name": "subheading",
-          "valueType": "string"
-        },
-        {
-          "component": "richtext",
-          "label": "Description",
-          "name": "description",
-          "valueType": "string"
-        },
-        {
-          "component": "container",
-          "item": {
-            "type": "categoryItem"
-          },
-          "label": "Categories",
-          "name": "categories",
-          "valueType": "array"
-        },
-        {
-          "component": "reference",
-          "label": "Button URL",
-          "name": "buttonUrl",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Button Label",
-          "name": "buttonLabel",
-          "valueType": "string"
-        }
-      ]
-    },
-    {
-      "id": "categoryItem",
+      "id": "category",
       "fields": [
         {
           "component": "reference",
@@ -105,13 +55,54 @@
           "valueType": "string"
         }
       ]
+    },
+    {
+      "id": "delightfulDelicacies",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Main Image",
+          "name": "mainImage",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Heading",
+          "name": "heading",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Subheading",
+          "name": "subheading",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Description",
+          "name": "description",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Button Link",
+          "name": "buttonLink",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Button Text",
+          "name": "buttonText",
+          "valueType": "string"
+        }
+      ]
     }
   ],
   "filters": [
     {
       "id": "delightfulDelicacies",
       "components": [
-        "categoryItem"
+        "category"
       ]
     }
   ]

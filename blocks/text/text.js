@@ -2,22 +2,29 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  // The text component directly uses the content of the block.
-  // The block itself is the container for the text.
-  // We need to apply the class 'text-component' to the block element.
+  const contentRow = block.children[0];
+  const contentCell = contentRow.children[0];
+
+  moveInstrumentation(contentRow, block);
+  moveInstrumentation(contentCell, block);
+
+  // Apply classes from original HTML to the block itself
   block.classList.add('text-component');
 
-  // No complex DOM restructuring is needed for a simple text block.
-  // The content (h1 tags in this case) is already directly inside the block.
-  // We just ensure any existing instrumentation is moved if we were to replace
-  // the block's content, but in this case, we are just decorating the block itself.
+  // Move all content from the cell directly into the block
+  while (contentCell.firstChild) {
+    const child = contentCell.firstChild;
+    // Apply heading class if it's an h1
+    if (child.tagName === 'H1') {
+      child.classList.add('text-component-heading');
+    }
+    block.append(child);
+  }
 
-  // If there were specific cells, we would iterate through them.
-  // For a simple text block, the content is usually just directly within the block.
-  // The provided HTML shows h1 tags directly under the div.
-  // No further processing of children or cells is explicitly needed based on the HTML.
+  // Remove the original row and cell
+  contentRow.remove();
 
-  // If there were images within the text, we would optimize them.
+  // Image optimization (if any images were present in the richtext)
   block.querySelectorAll('picture > img').forEach((img) => {
     const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
     moveInstrumentation(img, optimizedPic.querySelector('img'));

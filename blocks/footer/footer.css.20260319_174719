@@ -32,8 +32,8 @@
   margin-left: 5px;
   color: #fcf1e4;
   padding-bottom: 15px;
-  font-weight: 400;
-  font-family: Urbanist;
+  font-weight: 400 !important;
+  font-family: "Urbanist";
 }
 .footer-section .button a:hover,
 .footer-section .button a:focus {
@@ -43,66 +43,69 @@
 .subscribenow .container {
   padding: 0;
 }
-.footer-section .footer-column-right .list-three ul,
-.footer-section .footer-column-right-align ul {
+.footer-column-link-left .list-three-list ul,
+.footer-column-link-right ul {
   display: grid;
   list-style: none;
   padding-left: 0;
 }
-.footer-section .footer-column-right .contact-details .contact-details__title,
-.footer-section .footer-column-right .contact-details__description {
+.footer-column-link-left .contact-details .contact-details__title-footer,
+.footer-column-link-left .contact-details__description-footer {
   color: #fff;
 }
-.footer-section .footer-column-right .contact-details__description {
+.footer-column-link-left .contact-details__description-footer {
   font-size: 1rem; /* Equivalent to 16px assuming 16px base */
 }
 @media (max-width: 768px) {
-  .footer-section .footer-column-right .contact-details {
+  .footer-column-link-left .contact-details {
     display: flex;
     flex-wrap: wrap;
   }
-  .footer-section .footer-column-right .contact-details .contact-details__title {
+  .footer-column-link-left .contact-details .contact-details__title-footer {
+    font-size: 0.875rem; /* Equivalent to 14px assuming 16px base */
+  }
+  .footer-column-link-left .contact-details__description-footer {
     font-size: 0.875rem; /* Equivalent to 14px assuming 16px base */
   }
 }
-.footer-section .footer-column-right .list-four ul {
+.footer-column-link-left .list-four-list ul {
   display: grid;
   list-style: none;
   padding-left: 0;
 }
-.footer-section .footer-column-right .footer-lists-container {
+.footer-column-link-left .footer-lists-container {
   display: flex;
   flex-wrap: wrap;
 }
-.footer-section .footer-column-right .list-four {
+.footer-column-link-left .list-four-list {
   flex: 1;
   padding-right: 20px;
 }
-.footer-section .footer-column-right {
+.footer-column-link-left .list-four-list {
   padding-right: 0;
 }
-.footer-section .footer-column-right-align div:first-child {
+.footer-column-link-right div:first-child {
   display: flex;
 }
 .footer-section .footer-row {
   justify-content: space-between;
 }
-.footer-section .footer-column-right .list-three ul li {
+.footer-column-link-left .list-three-list ul li {
   padding-right: 48px;
   cursor: pointer;
   color: #fcf1e4;
 }
-.footer-section .footer-column-right .list-four ul li {
+.footer-column-link-left .list-four-list ul li {
   padding-right: 10px;
   padding-bottom: 10px;
   cursor: pointer;
   color: #fcf1e4;
 }
-.footer-section .footer-column-right .list-three {
+.footer-column-link-left .list-three-list {
   flex: 1;
   padding-left: 20px;
 }
-.footer-section .footer-column-right {
+.footer-column-link-left .list-three-list {
   padding-left: 0;
 }
 .footer-section form input::placeholder,
@@ -112,26 +115,26 @@
 .footer-section p {
   font-size: 1.25rem; /* Equivalent to 20px assuming 16px base */
 }
-.footer-section .footer-column-right li a {
+.footer-column-link-left li a {
   padding-right: 48px;
   color: #fceed9;
+  white-space: nowrap;
 }
-.footer-page-links-wrapper .list-one ul,
-.footer-page-links-wrapper .list-two ul {
+.footer-column-links-wrapper .list-one-list ul,
+.footer-column-links-wrapper .list-two-list ul {
   list-style: none;
   color: #fcf1e4;
   padding-left: 0;
 }
-.footer-page-links-wrapper .list-two ul li {
+.footer-column-links-wrapper .list-two-list ul li {
   padding-left: 56px;
   border-left: 2px solid #fcf1e4;
   white-space: nowrap;
 }
-.footer-section .footer-column-right-align img {
+.footer-column-link-right img {
   padding-left: 48px;
 }
-.footer-link,
-.itc-talk-left-wrapper span {
+.footer-link {
   color: #fceed9;
   font-size: 1rem; /* Equivalent to 16px assuming 16px base */
 }
@@ -151,9 +154,6 @@
 .footer-section .footer-itc-logo img {
   width: 180px;
 }
-.itc-talk-left-wrapper button {
-  margin-top: 45px;
-}
 .footer-link:hover {
   color: #fceed9;
 }
@@ -161,20 +161,20 @@
   color: #fceed9;
   white-space: nowrap;
 }
-.footer-page-links-wrapper li {
+.footer-column-links-wrapper li {
   padding-bottom: 30px;
   cursor: pointer;
 }
-.footer-section .footer-column-right-align .footer-link {
+.footer-column-link-right .footer-link {
   padding-top: 20px;
 }
-.footer-section .footer-column-right-align {
+.footer-column-link-right {
   margin-top: -63px;
 }
-.footer-section .logo-image img {
+.logo-image img {
   width: 56px;
 }
-.footer-page-links-wrapper .list-two ul li:last-child {
+.footer-column-links-wrapper .list-two-list ul li:last-child {
   padding-bottom: 0;
 }
 .footer-section-secondary {
@@ -194,9 +194,6 @@
   line-height: 1.5;
 }
 @media (max-width: 1200px) {
-  .footer-logo-img {
-    max-width: 77px;
-  }
   .footer-section ul li {
     font-size: 0.75rem; /* Equivalent to 12px assuming 16px base */
   }
@@ -206,7 +203,7 @@
   .footer-itc-logo {
     margin-left: 15px;
   }
-  .footer-page-links-wrapper li {
+  .footer-column-links-wrapper li {
     padding-bottom: 12px;
     cursor: pointer;
   }
@@ -216,20 +213,20 @@
   .footer-section .button a {
     padding: 10px 30px;
   }
-  .footer-section .list-one ul li {
+  .footer-section .list-one-list ul li {
     padding-right: 20px;
   }
-  .footer-section .list-two ul li {
+  .footer-section .list-two-list ul li {
     padding-left: 20px;
   }
-  .footer-section .footer-column-right-align {
+  .footer-column-link-right {
     padding-right: 56px;
     margin-top: 0;
   }
-  .footer-section .footer-column-right-align .footer-link {
+  .footer-column-link-right .footer-link {
     padding-top: 0;
   }
-  .footer-section .footer-column-right-align img {
+  .footer-column-link-right img {
     padding-left: 25px;
   }
   .footer-link {
@@ -237,13 +234,13 @@
   }
 }
 @media (max-width: 767.98px) {
-  .btn-subscribe,
-  .footer-section form .cmp-form-text input {
+  .subscribenow .button,
+  .footer-section form .form-control {
     width: 100%;
     font-size: 1.25rem; /* Equivalent to 20px assuming 16px base */
     max-width: none;
   }
-  .footer-section .footer-column-right li a {
+  .footer-column-link-left li a {
     padding-right: 17px;
     white-space: nowrap;
   }
@@ -254,49 +251,49 @@
   .footer-section .form-group {
     padding-top: 25px;
   }
-  .footer-section .footer-column-right-align {
+  .footer-column-link-right {
     margin-top: 0;
     padding-right: 0;
     padding-left: 0;
     align-items: center !important;
   }
-  .footer-section .footer-column-right-align img:first-child {
+  .footer-column-link-right img:first-child {
     padding-left: 10px;
     padding-right: 10px;
   }
-  .footer-section .footer-column-right {
+  .footer-column-link-left {
     display: flex;
     justify-content: center;
   }
-  .footer-section .footer-column-right {
+  .footer-column-link-left {
     margin-bottom: 16px;
   }
   .subscribenow .button {
     margin-left: 0;
   }
-  .footer-page-links-wrapper {
+  .footer-column-links-wrapper {
     padding-bottom: 30px;
     padding-top: 40px !important;
   }
-  .footer-section .footer-column-right-align .footer-link {
+  .footer-column-link-right .footer-link {
     padding-top: 10px;
   }
-  .footer-section .footer-column-right .list-three ul li {
+  .footer-column-link-left .list-three-list ul li {
     padding: 0 9px !important;
   }
-  .footer-section .footer-column-right .list-four ul li {
+  .footer-column-link-left .list-four-list ul li {
     padding: 0 9px !important;
   }
   .footer-section .button {
     font-size: 1.25rem; /* Equivalent to 20px assuming 16px base */
   }
-  .footer-section .list-one ul li {
+  .footer-section .list-one-list ul li {
     padding-right: 52px;
   }
-  .footer-section .list-two ul li {
+  .footer-section .list-two-list ul li {
     padding-left: 50px;
   }
-  .footer-page-links-wrapper li {
+  .footer-column-links-wrapper li {
     padding-bottom: 30px;
   }
   .subscribenow h3 {
@@ -306,7 +303,7 @@
     padding-bottom: 0;
     margin-bottom: 0;
   }
-  .footer-page-links-wrapper ul li {
+  .footer-column-links-wrapper ul li {
     font-size: 0.8125rem; /* Equivalent to 13px assuming 16px base */
   }
   .footer-section .button a {
@@ -324,7 +321,7 @@
     display: block;
     text-align: center;
   }
-  .footer-section .logo-image img {
+  .logo-image img {
     width: 37px;
   }
   .footer-itc-logo img {
@@ -339,11 +336,11 @@
   height: auto;
 }
 @media (max-width: 375px) {
-  .footer-section .footer-column-right .footer-lists-container {
+  .footer-column-link-left .footer-lists-container {
     flex-wrap: wrap;
   }
-  .footer-section .footer-column-right .list-four,
-  .footer-section .footer-column-right .list-three {
+  .footer-column-link-left .list-four-list,
+  .footer-column-link-left .list-three-list {
     flex: 1 1 100%;
     padding: 0 10px;
     max-width: calc(50% - 20px);

@@ -1,86 +1,73 @@
 .banner-section {
   position: relative;
 }
-.banner-section .banner-carousel-heading,
-.banner-section .banner-carousel-heading h2 {
-  font-size: 2.7vw; /* Equivalent to 43.2px assuming 16px base */
-  font-family: "Paytone One";
-  font-weight: 400;
-  padding-bottom: 0.625rem; /* Equivalent to 10px assuming 16px base */
-  color: #3c2904;
+.banner-section .banner-carousel .carousel-inner {
+  height: 100%;
 }
-.banner-section .banner-btn-start-now {
-  margin-top: 0;
-  padding: 0.625rem 4.1875rem; /* Equivalent to 10px 67px assuming 16px base */
-  font-size: 1.5rem; /* Equivalent to 24px assuming 16px base */
-  font-weight: 700;
-  border-radius: 1.75rem; /* Equivalent to 28px assuming 16px base */
-  background-color: #6c3003;
-  color: #fcf1e4;
-  border: none;
-}
-.banner-section .banner-btn-start-now:hover,
-.banner-section .banner-btn-start-now:focus,
-.banner-section .banner-btn-start-now:active {
-  opacity: 0.6;
-  border-color: unset !important;
-  text-decoration: none !important;
-  box-shadow: none !important;
-  background-color: #437d5e;
+.banner-section .banner-carousel .carousel-inner {
+  height: calc(100vh - 94px);
+  max-height: 500px;
 }
 .banner-section .banner-content-wrapper {
-  transform: translate(5.625rem, 10%); /* Equivalent to 90px assuming 16px base */
   top: 0;
+  transform: translate(90px, 10%);
   left: 0;
   bottom: 0;
-  color: #fcf1e4;
+  color: #fcf1e4; /* Equivalent to var(--color-light) */
   position: absolute;
-  max-width: 50%;
 }
-.banner-section .banner-content-wrapper h3 {
-  color: #3c2904;
-  font-size: 1.75rem; /* Equivalent to 28px assuming 16px base */
-  font-weight: 500;
-  line-height: 2.1rem; /* Equivalent to 33.6px assuming 16px base */
-  margin-bottom: 0.5rem; /* Equivalent to 8px assuming 16px base */
+.banner-section .banner-content-wrapper .banner-heading,
+.banner-section .banner-content-wrapper .banner-description h3 {
+  font-size: 25px; /* Equivalent to 2.7vw at certain breakpoints, explicitly set */
+  font-family: "Paytone One";
+  font-weight: 400;
+  padding-bottom: 10px;
+  color: rgb(60, 41, 4);
 }
-.banner-section .banner-content-wrapper h3 i {
-  color: #3c2904;
-  font-style: italic;
+.banner-section .banner-content-wrapper .banner-description h3 i,
+.banner-section .banner-content-wrapper .banner-description p {
+  color: rgb(60, 41, 4);
 }
-.banner-section .banner-content-wrapper p {
-  color: #3c2904;
+.banner-section .banner-content-wrapper .banner-description p {
   font-size: 1rem; /* Equivalent to 16px assuming 16px base */
   line-height: 1.5rem; /* Equivalent to 24px assuming 16px base */
-  margin-bottom: 1rem; /* Equivalent to 16px assuming 16px base */
-  max-width: 70%;
+  text-align: center;
+  margin-bottom: 8px;
+  max-width: 28vw;
 }
-.banner-section .banner-carousel-indicators {
-  bottom: -0.3125rem; /* Equivalent to -5px assuming 16px base */
+.banner-section .banner-content-wrapper .banner-cta {
+  background-color: rgb(108, 48, 3);
+  margin-top: 0;
+  color: #fff; /* Equivalent to var(--color-light) */
+  padding: 0.625rem 4.1875rem; /* Equivalent to 10px 67px assuming 16px base */
+  border: transparent;
+  border-radius: 1.75rem; /* Equivalent to 28px assuming 16px base */
+  font-weight: 700;
+  font-size: 1.5rem; /* Equivalent to 24px assuming 16px base */
+}
+.banner-section .banner-carousel .carousel-indicators {
   left: 0;
   margin-right: 0;
   margin-left: 7%;
-  justify-content: flex-start;
+  justify-content: start;
+  bottom: -5px;
+  background-color: transparent;
+  border: 1px solid #fcf1e4; /* Equivalent to var(--color-light) */
+  border-radius: 50%;
+  width: 12px;
+  height: 12px;
+  margin-right: 5px;
+  cursor: pointer;
   position: absolute;
   right: 0;
   z-index: 15;
   display: flex;
   padding-left: 0;
+  margin-bottom: 1rem; /* Added for clarity, original was 0 */
   list-style: none;
-  box-sizing: content-box;
-  flex: 0 1 auto;
-  width: 0.75rem; /* Equivalent to 12px assuming 16px base */
-  height: 0.75rem; /* Equivalent to 12px assuming 16px base */
-  margin-right: 0.3125rem; /* Equivalent to 5px assuming 16px base */
-  cursor: pointer;
-  background-color: transparent;
-  border: 1px solid #fcf1e4;
-  border-radius: 50%;
-  text-indent: -999px;
-  transition: opacity 0.6s ease;
 }
-.banner-section .banner-carousel-indicators .active {
-  background-color: #fcf1e4;
+.banner-section .banner-carousel .carousel-indicators .active {
+  background-color: #fcf1e4; /* Equivalent to var(--color-light) */
   opacity: 1;
 }
 .banner-section .next-carousel-btn .carousel-control-prev,
@@ -88,52 +75,59 @@
   display: block !important;
   background: #fff;
   border-radius: 50%;
-  width: 2.5rem; /* Equivalent to 40px assuming 16px base */
-  height: 2.5rem; /* Equivalent to 40px assuming 16px base */
+  width: 40px;
+  height: 40px;
   text-align: center;
-  line-height: 1.25rem; /* Equivalent to 20px assuming 16px base */
-  top: 50%;
-  bottom: 0;
+  line-height: 20px;
+  top: inherit;
+  bottom: 50%;
   opacity: 1;
   position: absolute;
   z-index: 1;
+  padding: 0;
   color: #fff;
   border: 0;
-  cursor: pointer;
-  transform: translateY(-50%);
+  transition: opacity 0.15s ease;
 }
 .banner-section .next-carousel-btn .carousel-control-prev {
-  left: 0.625rem; /* Equivalent to 10px assuming 16px base */
-  margin-left: 0.3125rem; /* Equivalent to 5px assuming 16px base */
+  left: 10px;
+  margin-left: 5px;
 }
 .banner-section .next-carousel-btn .carousel-control-next {
-  right: 0.625rem; /* Equivalent to 10px assuming 16px base */
-  margin-right: 0.3125rem; /* Equivalent to 5px assuming 16px base */
+  right: 10px;
+  margin-right: 5px;
 }
 .banner-section .carousel-control-prev-icon {
-  background-image: url("/content/dam/aemigrate/uploaded-folder/image/next-icon.svg");
+  background-image: url("/etc.clientlibs/itc-rightshift/clientlibs/clientlib-rightshift/resources/icons/next-icon.svg");
   transform: rotate(180deg);
-  top: 0.125rem; /* Equivalent to 2px assuming 16px base */
-  left: -0.1875rem; /* Equivalent to -3px assuming 16px base */
-  width: 2.125rem; /* Equivalent to 34px assuming 16px base */
-  height: 2.125rem; /* Equivalent to 34px assuming 16px base */
+  width: 34px;
+  left: -3px;
+  top: 2px;
+  height: 34px;
   position: relative;
   display: inline-block;
-  background-position: 50% 50%;
   background-repeat: no-repeat;
+  background-position: 50% 50%;
   background-size: 100% 100%;
 }
 .banner-section .carousel-control-next-icon {
-  background-image: url("/content/dam/aemigrate/uploaded-folder/image/next-icon.svg");
-  top: 0.25rem; /* Equivalent to 4px assuming 16px base */
-  left: 0.1875rem; /* Equivalent to 3px assuming 16px base */
-  width: 2.125rem; /* Equivalent to 34px assuming 16px base */
-  height: 2.125rem; /* Equivalent to 34px assuming 16px base */
+  background-image: url("/etc.clientlibs/itc-rightshift/clientlibs/clientlib-rightshift/resources/icons/next-icon.svg");
+  width: 34px;
+  left: 3px;
+  top: 4px;
+  height: 34px;
   position: relative;
   display: inline-block;
-  background-position: 50% 50%;
   background-repeat: no-repeat;
+  background-position: 50% 50%;
   background-size: 100% 100%;
+}
+.banner-section .banner-start-now:hover {
+  background-color: #437d5e;
+  opacity: 0.6;
+  border-color: unset !important;
+  text-decoration: none !important;
+  box-shadow: none !important;
 }
 .banner-section .banner-desktop-image {
   display: block !important;
@@ -144,43 +138,51 @@
   display: none !important;
   width: 100%;
 }
+
 @media (max-width: 992px) {
   .banner-section .banner-content-wrapper {
-    max-width: 100vw !important;
     top: -5%;
-  }
-  .banner-section .banner-content-wrapper p {
-    max-width: none;
   }
 }
 @media (max-width: 768px) {
   .banner-section .banner-content-wrapper {
     top: -2%;
-    transform: translate(-50%, 1.5rem); /* Equivalent to 24px assuming 16px base */
+  }
+  .banner-section .banner-carousel .carousel-indicators {
+    margin-left: 0;
+    justify-content: center;
+  }
+  .banner-section .banner-content-wrapper {
+    transform: translate(-50%, 24px);
     left: 50%;
+    color: #fcf1e4; /* Equivalent to var(--color-light) */
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    padding: 0 1.25rem; /* Equivalent to 20px assuming 16px base */
-  }
-  .banner-section .banner-carousel-heading,
-  .banner-section .banner-carousel-heading h2 {
-    font-size: 7.47vw; /* Equivalent to 119.52px assuming 16px base */
-    margin-top: 1.25rem; /* Equivalent to 20px assuming 16px base */
-  }
-  .banner-section .banner-carousel-description p {
-    font-size: 4.2vw; /* Equivalent to 67.2px assuming 16px base */
-  }
-  .banner-section .banner-carousel-indicators {
-    left: unset;
+    padding: 0 20px;
     top: 0;
-    justify-content: center;
-    margin-left: 0;
+    max-width: 100vw !important;
+    width: 100%;
   }
-  .banner-section .banner-btn-start-now {
-    margin-top: 0.625rem; /* Equivalent to 10px assuming 16px base */
-    margin-bottom: 0.625rem; /* Equivalent to 10px assuming 16px base */
+  .banner-section .banner-carousel .carousel-indicators {
+    top: 0;
+    left: unset;
+    bottom: 0;
+  }
+  .banner-section .banner-cta {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 0.8125rem 1.75rem !important; /* Equivalent to 13px 28px assuming 16px base */
+    font-size: 1rem; /* Equivalent to 16px assuming 16px base */
+  }
+  .banner-section .banner-heading,
+  .banner-section .banner-description h3 {
+    font-size: 6.4vw;
+    line-height: 6.5vw;
+    text-align: center;
+    padding-left: 40px;
+    padding-right: 40px;
   }
   .banner-section .banner-desktop-image {
     display: none !important;
@@ -189,36 +191,18 @@
     display: block !important;
   }
 }
-@media (max-width: 575.978px) {
-  .banner-section .banner-carousel-indicators {
-    bottom: 0;
-    left: 0 !important;
-    top: unset !important;
-  }
-  .banner-section .banner-carousel-heading,
-  .banner-section .banner-carousel-heading h2 {
-    font-size: 6.4vw; /* Equivalent to 102.4px assuming 16px base */
-    line-height: 6.5vw; /* Equivalent to 104px assuming 16px base */
-    text-align: center;
-    padding-left: 2.5rem; /* Equivalent to 40px assuming 16px base */
-    padding-right: 2.5rem; /* Equivalent to 40px assuming 16px base */
-  }
-}
 @media (max-width: 375px) {
-  .banner-section .banner-content-wrapper p {
+  .banner-section .banner-content-wrapper .banner-description p {
+    font-size: 0.875rem; /* Equivalent to 14px assuming 16px base */
+    line-height: 1.2;
     max-width: 100%;
   }
-}
-@media (max-width: 370px) {
-  .banner-section .banner-content-wrapper p {
-    font-size: 0.875rem; /* Equivalent to 14px assuming 16px base */
-    line-height: 1.2; /* Equivalent to 19.2px assuming 16px base */
-  }
-  .banner-section .banner-content-wrapper h2 {
+  .banner-section .banner-content-wrapper .banner-description h3 {
     padding-bottom: 0;
   }
-  .banner-section .banner-btn-start-now {
-    padding: 0.25rem 2rem; /* Equivalent to 4px 32px assuming 16px base */
-    font-size: 1rem; /* Equivalent to 16px assuming 16px base */
+  .banner-section .banner-cta {
+    padding: 0.875rem 2.25rem !important; /* Equivalent to 14px 36px assuming 16px base */
+    font-size: 0.875rem !important; /* Equivalent to 14px assuming 16px base */
+    margin-top: 2px;
   }
 }

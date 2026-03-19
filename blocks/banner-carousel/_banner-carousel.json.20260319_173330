@@ -49,9 +49,15 @@
           "valueType": "string"
         },
         {
-          "component": "text",
+          "component": "richtext",
           "label": "Heading",
           "name": "heading",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Subheading",
+          "name": "subheading",
           "valueType": "string"
         },
         {
@@ -61,9 +67,15 @@
           "valueType": "string"
         },
         {
-          "component": "aem-tag",
-          "label": "CTA",
-          "name": "cta",
+          "component": "text",
+          "label": "CTA Label",
+          "name": "ctaLabel",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "CTA URL",
+          "name": "ctaUrl",
           "valueType": "string"
         }
       ]

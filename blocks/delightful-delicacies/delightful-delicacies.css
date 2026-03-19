@@ -1,103 +1,134 @@
-.delightful-delicacies-section {
-  background: #FFEDD6;
+.makerightshift-itc-how-shift {
+  background-color: #ffedd6;
   display: flex;
   flex-direction: row;
-  /* Tablet and Mobile styles */
-  /* Tablet and Mobile styles */
-  /* Tablet and Mobile styles */
 }
-.delightful-delicacies-section .delightful-delicacies-left-image-div {
+.makerightshift-itc-how-shift .makerightshift-left-image-div {
   width: 100%;
 }
-.delightful-delicacies-section .delightful-delicacies-left-image-div img {
+.makerightshift-itc-how-shift .makerightshift-left-image-div img {
   width: 100%;
   height: 100%;
 }
-.delightful-delicacies-section .delightful-delicacies-container {
+.makerightshift-itc-how-shift .makerightshift-read-more {
   padding: 22px 30px;
 }
-.delightful-delicacies-section .delightful-delicacies-container .delightful-delicacies-read-more-text {
+.makerightshift-itc-how-shift .makerightshift-read-more .makerightshift-read-more-text {
   text-align: center;
   max-width: 450px;
   margin: 0 auto;
 }
-.delightful-delicacies-section .delightful-delicacies-container .delightful-delicacies-how-shift-button {
+.makerightshift-itc-how-shift .makerightshift-read-more .makerightshift-read-more-text h2 {
+  text-align: center;
+}
+.makerightshift-itc-how-shift .makerightshift-read-more .makerightshift-read-more-text p {
+  text-align: center;
+}
+.makerightshift-itc-how-shift .makerightshift-read-more .makerightshift-how-shift-button {
   display: flex;
   justify-content: center;
   margin-top: 40px;
 }
-.delightful-delicacies-section .delightful-delicacies-container .delightful-delicacies-how-shift-button a {
+.makerightshift-itc-how-shift .makerightshift-read-more .makerightshift-how-shift-button .makerightshift-cmp-button {
   background-color: #2d2119 !important;
   padding: 15px 66px;
   color: #fcf1e4;
   border: transparent;
-  font-weight: 700;
   border-radius: 28px;
+  font-weight: 700;
+  font-size: 1.5rem; /* Equivalent to 24px assuming 16px base */
+  line-height: 1.5; /* Equivalent to 24px assuming 16px base */
 }
-@media (max-width: 767.98px) {
-  .delightful-delicacies-section {
-    flex-direction: column;
-    text-align: center;
-  }
+.makerightshift-itc-how-shift .makerightshift-read-more .makerightshift-how-shift-button .makerightshift-cmp-button:hover,
+.makerightshift-itc-how-shift .makerightshift-read-more .makerightshift-how-shift-button .makerightshift-cmp-button:focus,
+.makerightshift-itc-how-shift .makerightshift-read-more .makerightshift-how-shift-button .makerightshift-cmp-button:active {
+  opacity: 0.6;
+  border-color: unset !important;
+  text-decoration: none !important;
+  box-shadow: none !important;
 }
-.delightful-delicacies-section .delightful-delicacies-health-goal-wrapper {
+.makerightshift-itc-how-shift .makerightshift-readMore {
+  text-align: center;
+  display: block;
+}
+.makerightshift-itc-how-shift .makerightshift-itc-health-goal-wrapper {
   background-color: #2d2119;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 180%;
+  min-height: unset;
+  min-width: unset;
 }
-.delightful-delicacies-section .delightful-delicacies-heading {
-  padding-bottom: 0.5rem !important;
-  color: #4f250a;
+.makerightshift-itc-how-shift .makerightshift-itc-health-goal-wrapper img {
+  width: 99px;
+  height: 99px;
 }
-.delightful-delicacies-section p {
-  margin: 0 auto;
-}
-@media (max-width: 767.98px) {
-  .delightful-delicacies-section .delightful-delicacies-health-goal-wrapper img {
-    width: 83px;
-  }
-  .delightful-delicacies-section .delightful-delicacies-heading,
-  .delightful-delicacies-section .delightful-delicacies-read-more-text h2 {
-    font-size: 1.5rem;
-  }
-}
-@media (max-width: 390px) {
-  .delightful-delicacies-section .delightful-delicacies-heading {
-    padding: 0 !important;
-  }
-}
-.delightful-delicacies-section {
-  margin: 1rem 3rem;
-}
-@media (max-width: 768px) {
-  .delightful-delicacies-section {
-    margin: 0.5rem 1.5rem;
-  }
-}
-.delightful-delicacies-section .delightful-delicacies-container .delightful-delicacies-how-shift-button {
-  justify-content: start;
-  margin-left: 2.5rem;
-}
-@media (max-width: 767.98px) {
-  .delightful-delicacies-section .delightful-delicacies-container .delightful-delicacies-how-shift-button {
-    justify-content: center;
-    margin: 0;
-  }
-}
-.delightful-delicacies-section .delightful-delicacies-why-shift-wrapper {
+.makerightshift-itc-how-shift .makerightshift-why-shift-wrapper {
   max-width: 700px;
   margin: 0 auto;
+  justify-content: space-evenly;
 }
-.delightful-delicacies-section .delightful-delicacies-why-shift-wrapper .delightful-delicacies-image-label {
+.makerightshift-itc-how-shift .makerightshift-why-shift-wrapper .makerightshift-image-label {
   text-decoration: none;
   color: #000;
   font-weight: 500;
-  font-size: 16px;
+  font-size: 1rem; /* Equivalent to 16px assuming 16px base */
+  line-height: 1.5rem; /* Equivalent to 24px assuming 16px base */
 }
-.delightful-delicacies-section .delightful-delicacies-why-shift-wrapper .delightful-delicacies-health-goal-wrapper {
-  margin: 0 auto;
-}
-.delightful-delicacies-section .delightful-delicacies-read-more-button {
+.makerightshift-itc-how-shift .makerightshift-rs-heading {
+  padding-bottom: 0.5rem !important;
+  font-size: 2.5rem; /* Equivalent to 40px assuming 16px base */
+  font-family: "Paytone One";
+  font-weight: 500;
+  line-height: 3rem; /* Equivalent to 48px assuming 16px base */
+  color: #4f250a;
   text-align: center;
-  display: block;
-  color: #098040 !important;
-  font-size: 4.36vw !important;
+}
+.makerightshift-itc-how-shift .makerightshift-read-more-text p {
+  margin: 0 auto;
+  font-size: 1.25rem; /* Equivalent to 20px assuming 16px base */
+  line-height: 1.5rem; /* Equivalent to 24px assuming 16px base */
+  margin-bottom: 20px;
+  max-width: 828px;
+  display: block !important;
+  padding-top: 0 !important;
+}
+@media (max-width: 767.98px) {
+  .makerightshift-itc-how-shift {
+    flex-direction: column;
+    text-align: center;
+    margin: 0.5rem 1.5rem;
+  }
+  .makerightshift-itc-how-shift .makerightshift-read-more .makerightshift-how-shift-button {
+    justify-content: center;
+    margin: 0;
+  }
+  .makerightshift-itc-how-shift .makerightshift-read-more .makerightshift-how-shift-button .makerightshift-cmp-button {
+    padding: 15px 36px !important;
+    font-size: 1.125rem; /* Equivalent to 18px assuming 16px base */
+  }
+  .makerightshift-itc-how-shift .makerightshift-rs-heading {
+    font-size: 1.5rem; /* Equivalent to 24px assuming 16px base */
+    line-height: 1.5rem; /* Equivalent to 24px assuming 16px base */
+    padding: 0 12vw !important;
+  }
+  .makerightshift-itc-how-shift .makerightshift-read-more-text h2 {
+    font-size: 1.5rem; /* Equivalent to 24px assuming 16px base */
+  }
+  .makerightshift-itc-how-shift .makerightshift-read-more-text p {
+    font-size: 4.24vw !important;
+  }
+  .makerightshift-itc-how-shift .makerightshift-why-shift-wrapper .makerightshift-itc-health-goal-wrapper img {
+    width: 73px;
+    height: 73px;
+  }
+  .makerightshift-itc-how-shift .makerightshift-why-shift-wrapper .makerightshift-image-label {
+    font-size: 0.9375rem !important; /* Equivalent to 15px assuming 16px base */
+    line-height: 1.25rem !important; /* Equivalent to 20px assuming 16px base */
+    margin: 0;
+  }
+  .makerightshift-itc-how-shift .makerightshift-d-md-none.makerightshift-d-block {
+    display: block;
+  }
 }

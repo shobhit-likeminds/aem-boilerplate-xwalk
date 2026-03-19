@@ -1,0 +1,300 @@
+.header-section {
+  position: fixed;
+  width: 100%;
+  background-color: #fff;
+  z-index: 9999;
+  top: 0;
+  left: 0;
+}
+.header-section .header-navbar {
+  height: 92px;
+}
+.header-section .header-navbar ul:first-child {
+  display: flex;
+  list-style-type: none;
+}
+.header-section a {
+  color: #533012; /* Explicitly set color based on original */
+  text-decoration: none;
+  padding-bottom: 5px;
+}
+.header-section .header-cmp-navigation__item {
+  display: list-item;
+}
+.header-section .header-navbarSupportedContent {
+  justify-content: space-between !important;
+}
+.header-section .header-nav-item {
+  display: flex;
+  align-items: center;
+}
+.header-section .header-nav-item li {
+  padding-right: 22px;
+  font-size: 1rem; /* Equivalent to 16px assuming 16px base */
+}
+.header-section .header-nav-item ul {
+  margin-bottom: 0;
+}
+.header-section .header-nav-link {
+  color: #2d2119; /* Explicitly set color based on original */
+  font-size: 1rem; /* Equivalent to 16px assuming 16px base */
+}
+.header-section .header-icon-list a span {
+  font-size: 0.625rem; /* Equivalent to 10px assuming 16px base */
+}
+.header-section .header-navbar-toggler {
+  border: 0;
+}
+.header-section .header-logo-div {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  align-items: center;
+}
+.header-section .header-logo-div a {
+  padding-top: 14px;
+}
+.header-section .header-logo-div .header-itc-logo-image {
+  width: auto;
+  height: 63px;
+  object-fit: contain;
+  padding-left: 0;
+  border-right: 1px solid #2d2119; /* Explicitly set border color based on original */
+  padding-right: 20px;
+}
+.header-section .header-search-icon {
+  background: none;
+  color: black;
+  padding: 2px 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  gap: 4px;
+  font-size: 0.875rem; /* Equivalent to 14px assuming 16px base */
+  font-weight: bold;
+}
+.header-section .header-search-icon:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+.header-section .header-country-flag {
+  width: 19px;
+  height: 19px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.header-section .header-dropdown-icon {
+  vertical-align: middle;
+  border-style: none;
+}
+.header-section .header-search-block {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  width: 100%;
+}
+.header-section .header-search-box {
+  border: 1px solid #000;
+  background: #FFF;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  justify-content: space-between;
+  padding: 15px;
+}
+.header-section .header-search-container {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  padding: 5px;
+  border-radius: 5px;
+  width: 100%;
+}
+.header-section .header-search-container.hidden {
+  display: none;
+}
+.header-section #searchInput {
+  border: 0;
+  outline: 0;
+  padding: 5px;
+  flex: 1;
+}
+.header-section .header-search-container button {
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+.header-section .header-search-results {
+  border: 1px solid #ccc;
+  padding: 10px;
+  background: #fff;
+  border-radius: 5px;
+  position: absolute;
+  top: 100%;
+  left: 15px;
+  z-index: 1000;
+  width: calc(100% - 30px);
+  max-height: 380px;
+  overflow-y: auto;
+}
+.header-section .header-search-results.hidden {
+  display: none;
+}
+.header-section .header-search-results h3 {
+  margin-top: 0;
+}
+.header-section .header-search-results ul {
+  list-style: none;
+  padding-left: 0;
+}
+.header-section .header-search-results li {
+  margin-bottom: 10px;
+}
+.header-section .header-search-results a {
+  text-decoration: none;
+  color: #000;
+}
+.header-section #viewAllButton {
+  background-color: green;
+  color: white;
+  padding: 10px;
+  border: 0;
+  cursor: pointer;
+  width: 100%;
+  text-align: center;
+  margin-top: 10px;
+  border-radius: 5px;
+}
+.header-section .header-resultList {
+  text-align: left;
+}
+.header-section .header-modal {
+  z-index: 10000;
+}
+.header-section .header-modal.show {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+.header-section .header-modal-title {
+  font-size: 1.875rem; /* Equivalent to 30px assuming 16px base */
+  font-family: inherit;
+  font-weight: bold;
+  color: #4f250a; /* Explicitly set color based on original */
+  line-height: 1;
+}
+.header-section .header-experience-text {
+  font-family: Cataneo;
+  font-size: 2.8125rem; /* Equivalent to 45px assuming 16px base */
+  font-weight: normal;
+  color: #eeb144; /* Explicitly set color based on original */
+  margin-bottom: 0;
+  font-style: italic;
+}
+.header-section .header-modal-content {
+  pointer-events: none !important;
+  background-color: #faf6f2; /* Explicitly set background color based on original */
+}
+.header-section .header-modal-body {
+  padding-top: 0 !important;
+  padding-bottom: 26px !important;
+}
+.header-section .header-modal-body .header-country-option {
+  pointer-events: auto;
+}
+.header-section .header-modal-body .header-country-name {
+  color: #282828; /* Explicitly set color based on original */
+  font-size: 1rem; /* Equivalent to 16px assuming 16px base */
+  font-weight: bold;
+  text-align: center;
+  line-height: 1cm;
+}
+.header-section .header-country-options:hover {
+  cursor: pointer;
+}
+@media (max-width: 1438px) {
+  .header-section .header-logo-image {
+    max-width: 77px;
+  }
+}
+@media (max-width: 1200px) {
+  .header-section .header-navbarSupportedContent {
+    position: absolute;
+    background: #fff7e3; /* Explicitly set background color based on original */
+    min-width: 300px;
+    width: 89%;
+    z-index: 1;
+    padding: 10px;
+    top: 66px;
+    height: 100vh;
+  }
+  .header-section .header-navbar {
+    height: 78px;
+  }
+  .header-section .header-nav-item {
+    background: #6c3003; /* Explicitly set background color based on original */
+    border-radius: 1.6rem;
+  }
+  .header-section .header-nav-item li a {
+    color: #fff; /* Explicitly set color based on original */
+    font-weight: 700;
+    font-size: 1rem !important; /* Equivalent to 16px assuming 16px base */
+  }
+  .header-section .header-nav-item li {
+    padding: 10px 0 !important;
+  }
+  .header-section .header-nav-item ul {
+    padding: 10px 0 20px 20px;
+  }
+  .header-section .header-navbar-toggler {
+    font-size: unset;
+    line-height: unset;
+  }
+  .header-section .header-navbar-toggler .navbar-toggler-icon {
+    max-width: 22px;
+    background: url("/content/dam/kitchens-of-india/placeholders/vector-four.svg") no-repeat;
+  }
+  .header-section .header-navbar-toggler.collapsed .navbar-toggler-icon {
+    background: url("/content/dam/kitchens-of-india/placeholders/menu.svg") no-repeat;
+    max-width: 22px;
+  }
+  .header-section .header-navbar nav ul:first-child {
+    display: block;
+  }
+  .header-section .header-nav-link {
+    font-size: 2vw;
+  }
+  .header-section .header-logo-div img {
+    width: 77px;
+    height: 47px;
+  }
+  .header-section .header-logo-div img {
+    padding-left: 0;
+  }
+  .header-section .header-section-wrapper {
+    padding-left: 13px;
+    padding-top: 10px;
+  }
+}
+@media (max-width: 991px) {
+  .header-section .header-icon-list a span {
+    font-size: 0.5rem; /* Equivalent to 8px assuming 16px base */
+  }
+  .header-section a {
+    padding: 0;
+  }
+  .header-section li a img {
+    max-width: 33px;
+  }
+}
+@media (max-width: 767.98px) {
+  .header-section .header-logo-div {
+    gap: 10px;
+  }
+  .header-section .header-logo-div a {
+    padding-top: 0;
+  }
+  .header-section .header-logo-div .header-it-logo-image {
+    width: 60px;
+    padding-right: 0;
+  }
+  .header-section .header-modal-body .header-country-name {
+    margin-bottom: 0;
+  }
+}
