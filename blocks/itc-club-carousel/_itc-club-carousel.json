@@ -1,31 +1,31 @@
 {
   "definitions": [
     {
-      "title": "RS Cards",
-      "id": "rsCards",
+      "title": "ITC-Club-Carousel",
+      "id": "itcClubCarousel",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block",
             "template": {
-              "filter": "rsCards",
-              "model": "rsCards",
-              "name": "RS Cards"
+              "filter": "itcClubCarousel",
+              "model": "itcClubCarousel",
+              "name": "ITC-Club-Carousel"
             }
           }
         }
       }
     },
     {
-      "title": "RS Card Item",
-      "id": "rsCardItem",
+      "title": "Carousel Item",
+      "id": "carouselItem",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "rsCardItem",
-              "name": "RS Card Item"
+              "model": "carouselItem",
+              "name": "Carousel Item"
             }
           }
         }
@@ -34,7 +34,7 @@
   ],
   "models": [
     {
-      "id": "rsCardItem",
+      "id": "carouselItem",
       "fields": [
         {
           "component": "reference",
@@ -53,21 +53,15 @@
           "label": "Description",
           "name": "description",
           "valueType": "string"
-        },
-        {
-          "component": "reference",
-          "label": "Icon",
-          "name": "icon",
-          "valueType": "string"
         }
       ]
     }
   ],
   "filters": [
     {
-      "id": "rsCards",
+      "id": "itc-club-carousel",
       "components": [
-        "rsCardItem"
+        "carouselItem"
       ]
     }
   ]

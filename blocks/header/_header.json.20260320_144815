@@ -53,63 +53,29 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Main Logo",
-          "name": "mainLogo",
-          "valueType": "string"
-        },
-        {
-          "component": "aem-content",
-          "label": "Main Logo Link",
-          "name": "mainLogoLink",
+          "label": "Logo Image",
+          "name": "logoImage",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Secondary Logo",
-          "name": "secondaryLogo",
-          "valueType": "string"
-        },
-        {
-          "component": "aem-content",
-          "label": "Secondary Logo Link",
-          "name": "secondaryLogoLink",
+          "label": "Logo Link",
+          "name": "logoLink",
           "valueType": "string"
         },
         {
           "component": "container",
-          "itemType": "navigationLink",
           "label": "Navigation Links",
-          "name": "navigationLinks"
-        },
-        {
-          "component": "reference",
-          "label": "Country Flag",
-          "name": "countryFlag",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Country Code",
-          "name": "countryCode",
-          "valueType": "string"
-        },
-        {
-          "component": "reference",
-          "label": "Dropdown Icon",
-          "name": "dropdownIcon",
-          "valueType": "string"
-        },
-        {
-          "component": "reference",
-          "label": "Search Icon",
-          "name": "searchIcon",
-          "valueType": "string"
+          "multi": true,
+          "name": "navigationLinks",
+          "referenceModel": "navigationLink"
         },
         {
           "component": "container",
-          "itemType": "countryOption",
           "label": "Country Options",
-          "name": "countryOptions"
+          "multi": true,
+          "name": "countryOptions",
+          "referenceModel": "countryOption"
         }
       ]
     },
@@ -117,15 +83,15 @@
       "id": "navigationLink",
       "fields": [
         {
-          "component": "aem-content",
-          "label": "Link",
-          "name": "link",
+          "component": "text",
+          "label": "Label",
+          "name": "label",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Text",
-          "name": "text",
+          "label": "URL",
+          "name": "url",
           "valueType": "string"
         }
       ]
@@ -135,8 +101,8 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Flag",
-          "name": "flag",
+          "label": "Flag Image",
+          "name": "flagImage",
           "valueType": "string"
         },
         {
@@ -147,14 +113,8 @@
         },
         {
           "component": "text",
-          "label": "Country Data Attribute",
-          "name": "countryData",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
           "label": "Country URL",
-          "name": "url",
+          "name": "countryUrl",
           "valueType": "string"
         }
       ]

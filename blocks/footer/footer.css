@@ -1,344 +1,2511 @@
-.footer-section {
-  background-color: #4e2600; /* Computed value */
-  padding: 55px 100px; /* Equivalent to 55px 100px */
-}
-.footer-section .logo-image {
-  display: flex;
-  flex-direction: row;
-  gap: 20px; /* Equivalent to 20px */
-  align-items: center;
-}
-@media (max-width: 767.98px) {
-  .footer-section .logo-image {
-    gap: 10px; /* Equivalent to 10px */
-  }
-}
-.footer-section .logo-image .image-logo {
-  width: auto;
-  height: 111px; /* Equivalent to 111px */
-  object-fit: contain;
-  padding-left: 0;
-}
-.footer-section .logo-image .image-logo {
-  width: auto;
-  height: 63px; /* Equivalent to 63px */
-  object-fit: contain;
-  padding-left: 0;
-  border-right: 1px solid #2d2119; /* Computed value */
-  padding-right: 20px; /* Equivalent to 20px */
-}
-@media (max-width: 1200px) {
-  .footer-section .logo-image .image-logo {
-    height: 47px; /* Equivalent to 47px */
-  }
-}
-@media (max-width: 767.98px) {
-  .footer-section .logo-image .image-logo {
-    width: 60px; /* Equivalent to 60px */
-    padding-right: 0;
-  }
-}
-.footer-section .fssai-logo-image .image-logo {
-  width: auto;
-  height: 69px; /* Equivalent to 69px */
-}
-.footer-section .footer-row {
-  display: flex;
-  justify-content: space-between;
-}
-.footer-section .footer-column-left {
-  display: flex;
-}
-@media (max-width: 767.98px) {
-  .footer-section .footer-column-left {
-    justify-content: center;
-  }
-}
-.footer-section .footer-logos {
-  display: flex;
-  align-items: center;
-}
-.footer-section .footer-itc-logo {
-  padding: 30px 0; /* Equivalent to 30px 0px */
-}
-@media (max-width: 1200px) {
-  .footer-section .footer-itc-logo {
-    padding: 0;
-  }
-}
-.footer-section .footer-fssai-logo {
-  padding: 0 0 0 30px; /* Equivalent to 0px 0px 0px 30px */
-}
-@media (max-width: 767.98px) {
-  .footer-section .footer-fssai-logo {
-    padding: 0 0 0 20px; /* Equivalent to 0px 0px 0px 20px */
-  }
-}
-.footer-section .footer-fssai-logo .image-logo {
-  max-width: 230px; /* Equivalent to 230px */
-}
-.footer-section .footer-itc-logo .image-logo {
-  width: 180px; /* Equivalent to 180px */
-}
-@media (max-width: 767.98px) {
-  .footer-section .footer-itc-logo .image-logo {
-    width: 105px !important; /* Equivalent to 105px */
-  }
-}
-.footer-section .footer-column-center {
-  display: flex;
-  padding-top: 40px; /* Equivalent to 40px */
-  padding-left: 4px; /* Equivalent to 4px */
-  padding-right: 4px; /* Equivalent to 4px */
-}
-@media (min-width: 1200px) {
-  .footer-section .footer-column-center {
-    justify-content: space-between;
-  }
-}
-@media (min-width: 768px) and (max-width: 1199.98px) {
-  .footer-section .footer-column-center {
-    padding-top: 0;
-  }
-}
-@media (max-width: 767.98px) {
-  .footer-section .footer-column-center {
-    padding-bottom: 30px; /* Equivalent to 30px */
-  }
-}
-.footer-section .list-1-wrapper ul,
-.footer-section .list-2-wrapper ul {
-  list-style: none;
-  color: #fcf1e4; /* Computed value */
-  padding-left: 0;
-}
-.footer-section .list-2-wrapper ul li {
-  padding-left: 56px; /* Equivalent to 56px */
-  border-left: 2px solid #fcf1e4; /* Computed value */
-  white-space: nowrap;
-}
-@media (max-width: 1200px) {
-  .footer-section .list-2-wrapper ul li {
-    padding-left: 20px; /* Equivalent to 20px */
-  }
-}
-@media (max-width: 767.98px) {
-  .footer-section .list-2-wrapper ul li {
-    padding-left: 50px; /* Equivalent to 50px */
-  }
-}
-.footer-section .list-2-wrapper ul li:last-child {
-  padding-bottom: 0;
-}
-.footer-section .footer-column-links-left {
-  position: relative;
-}
-@media (max-width: 767.98px) {
-  .footer-section .footer-column-links-left {
+.footer-cmp-image__image {  width:100%;height:auto  }
+
+span.footer-cmp-link__screen-reader-only {  display:none  }
+
+.footer-cmp-image__image {   width: 100%; height: auto;   }
+
+@media (max-width: 1200px) { .footer-itc-logo {   margin-left: 15px;   } }
+
+span.footer-cmp-link__screen-reader-only {   display: none;   }
+
+/* .footer-Computed .footer-styles: .footer-div#logo-5a4887d867.footer-cmp-image .footer-header-logo-div */ @media (min-width: 1200px) {  
+  div#logo-5a4887d867.cmp-image header-logo-div {
+    align-items: center;
+    animation-composition: replace;
+    animation-delay: 0s;
+    animation-duration: 0s;
+    animation-iteration-count: 1;
+    animation-play-state: running;
+    animation-timing-function: ease;
+    backface-visibility: visible;
+    background-attachment: scroll;
+    background-clip: border-box;
+    background-color: rgba(0, 0, 0, 0);
+    background-origin: padding-box;
+    background-position: 0% 0%;
+    background-repeat: repeat;
+    block-size: 90px;
+    border-block-end-color: rgb(45, 33, 25);
+    border-block-start-color: rgb(45, 33, 25);
+    border-bottom-color: rgb(45, 33, 25);
+    border-collapse: separate;
+    border-image-outset: 0;
+    border-image-repeat: stretch;
+    border-image-slice: 100%;
+    border-image-width: 1;
+    border-inline-end-color: rgb(45, 33, 25);
+    border-inline-start-color: rgb(45, 33, 25);
+    border-left-color: rgb(45, 33, 25);
+    border-right-color: rgb(45, 33, 25);
+    border-top-color: rgb(45, 33, 25);
+    box-decoration-break: slice;
+    box-sizing: border-box;
+    caption-side: top;
+    caret-color: rgb(45, 33, 25);
+    clip-rule: nonzero;
+    color: rgb(45, 33, 25);
+    color-interpolation: srgb;
+    color-interpolation-filters: linearrgb;
+    column-gap: 20px;
+    column-rule-color: rgb(45, 33, 25);
+    direction: ltr;
     display: flex;
-    justify-content: center;
-    margin-bottom: 16px; /* Equivalent to 16px */
+    dynamic-range-limit: no-limit;
+    empty-cells: show;
+    field-sizing: fixed;
+    fill: rgb(0, 0, 0);
+    fill-opacity: 1;
+    fill-rule: nonzero;
+    flex-direction: row;
+    flex-grow: 0;
+    flex-shrink: 1;
+    flex-wrap: nowrap;
+    flood-color: rgb(0, 0, 0);
+    flood-opacity: 1;
+    font-family: Urbanist;
+    font-size: 16px;
+    font-stretch: 100%;
+    font-weight: 400;
+    grid-auto-flow: row;
+    height: 90px;
+    hyphens: manual;
+    image-orientation: from-image;
+    inline-size: 232.047px;
+    interpolate-size: numeric-only;
+    lighting-color: rgb(255, 255, 255);
+    line-height: 24px;
+    list-style-position: outside;
+    list-style-type: disc;
+    mask-clip: border-box;
+    mask-composite: add;
+    mask-mode: match-source;
+    mask-origin: border-box;
+    mask-position: 0% 0%;
+    mask-repeat: repeat;
+    mask-type: luminance;
+    math-depth: 0;
+    object-fit: fill;
+    object-position: 50% 50%;
+    offset-rotate: auto 0deg;
+    opacity: 1;
+    order: 0;
+    orphans: 2;
+    outline-color: rgb(45, 33, 25);
+    overflow-block: visible;
+    overflow-inline: visible;
+    overflow-x: visible;
+    overflow-y: visible;
+    perspective-origin: 116.016px 45px;
+    position: static;
+    position-visibility: always;
+    print-color-adjust: economy;
+    row-gap: 20px;
+    ruby-align: space-around;
+    ruby-position: over;
+    scroll-timeline-axis: block;
+    shape-image-threshold: 0;
+    stop-color: rgb(0, 0, 0);
+    stop-opacity: 1;
+    stroke-linecap: butt;
+    stroke-linejoin: miter;
+    stroke-miterlimit: 4;
+    stroke-opacity: 1;
+    stroke-width: 1px;
+    tab-size: 8;
+    text-align: left;
+    text-anchor: start;
+    text-decoration: none solid rgb(45, 33, 25);
+    text-decoration-color: rgb(45, 33, 25);
+    text-decoration-style: solid;
+    text-emphasis-color: rgb(45, 33, 25);
+    text-emphasis-position: over;
+    text-overflow: clip;
+    text-size-adjust: 100%;
+    text-wrap-mode: wrap;
+    transform-origin: 116.023px 45px;
+    transform-style: flat;
+    transition-delay: 0s;
+    transition-duration: 0s;
+    transition-property: all;
+    transition-timing-function: ease;
+    unicode-bidi: isolate;
+    vertical-align: baseline;
+    view-timeline-axis: block;
+    visibility: visible;
+    white-space-collapse: collapse;
+    widows: 2;
+    width: 232.047px;
+    writing-mode: horizontal-tb;
+    zoom: 1;
+    -webkit-box-align: stretch;
+    -webkit-box-decoration-break: slice;
+    -webkit-box-flex: 0;
+    -webkit-box-ordinal-group: 1;
+    -webkit-box-orient: horizontal;
+    -webkit-box-pack: start;
+    -webkit-locale: "en";
+    -webkit-mask-box-image-outset: 0;
+    -webkit-mask-box-image-repeat: stretch;
+    -webkit-mask-box-image-slice: 0 fill;
+    -webkit-rtl-ordering: logical;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-text-fill-color: rgb(45, 33, 25);
+    -webkit-text-orientation: vertical-right;
+    -webkit-text-stroke-color: rgb(45, 33, 25);
+    -webkit-user-modify: read-only;
+    -webkit-writing-mode: horizontal-tb;
   }
-}
-.footer-section .footer-lists-container {
-  display: flex;
-  flex-wrap: wrap;
-}
-.footer-section .list-4-wrapper {
-  flex: 1;
-  padding-right: 20px; /* Equivalent to 20px */
-}
-@media (max-width: 767.98px) {
-  .footer-section .list-4-wrapper {
-    padding-right: 0;
   }
-}
-@media (max-width: 375px) {
-  .footer-section .list-4-wrapper {
-    flex: 1 1 100%;
-    padding: 0 10px; /* Equivalent to 0px 10px */
-    max-width: calc(50% - 20px);
+
+/* .footer-Computed .footer-styles: .footer-img.footer-cmp-image__image .footer-itc-logo-image */ @media (min-width: 1200px) {  
+  img.cmp-image__image itc-logo-image {
+    animation-composition: replace;
+    animation-delay: 0s;
+    animation-duration: 0s;
+    animation-iteration-count: 1;
+    animation-play-state: running;
+    animation-timing-function: ease;
+    backface-visibility: visible;
+    background-attachment: scroll;
+    background-clip: border-box;
+    background-color: rgba(0, 0, 0, 0);
+    background-origin: padding-box;
+    background-position: 0% 0%;
+    background-repeat: repeat;
+    block-size: 63px;
+    border-block-end-color: rgb(83, 48, 18);
+    border-block-start-color: rgb(83, 48, 18);
+    border-bottom-color: rgb(83, 48, 18);
+    border-collapse: separate;
+    border-image-outset: 0;
+    border-image-repeat: stretch;
+    border-image-slice: 100%;
+    border-image-width: 1;
+    border-inline-end-color: rgb(45, 33, 25);
+    border-inline-end-style: solid;
+    border-inline-end-width: 1px;
+    border-inline-start-color: rgb(83, 48, 18);
+    border-left-color: rgb(83, 48, 18);
+    border-right-color: rgb(45, 33, 25);
+    border-right-style: solid;
+    border-right-width: 1px;
+    border-top-color: rgb(83, 48, 18);
+    box-decoration-break: slice;
+    box-sizing: border-box;
+    caption-side: top;
+    caret-color: rgb(83, 48, 18);
+    clip-rule: nonzero;
+    color: rgb(83, 48, 18);
+    color-interpolation: srgb;
+    color-interpolation-filters: linearrgb;
+    column-rule-color: rgb(83, 48, 18);
+    direction: ltr;
+    display: inline;
+    dynamic-range-limit: no-limit;
+    empty-cells: show;
+    field-sizing: fixed;
+    fill: rgb(0, 0, 0);
+    fill-opacity: 1;
+    fill-rule: nonzero;
+    flex-direction: row;
+    flex-grow: 0;
+    flex-shrink: 1;
+    flex-wrap: nowrap;
+    flood-color: rgb(0, 0, 0);
+    flood-opacity: 1;
+    font-family: Urbanist;
+    font-size: 16px;
+    font-stretch: 100%;
+    font-weight: 400;
+    grid-auto-flow: row;
+    height: 63px;
+    hyphens: manual;
+    image-orientation: from-image;
+    inline-size: 81.0469px;
+    interpolate-size: numeric-only;
+    lighting-color: rgb(255, 255, 255);
+    line-height: 24px;
+    list-style-position: outside;
+    list-style-type: disc;
+    mask-clip: border-box;
+    mask-composite: add;
+    mask-mode: match-source;
+    mask-origin: border-box;
+    mask-position: 0% 0%;
+    mask-repeat: repeat;
+    mask-type: luminance;
+    math-depth: 0;
+    object-fit: contain;
+    object-position: 50% 50%;
+    offset-rotate: auto 0deg;
+    opacity: 1;
+    order: 0;
+    orphans: 2;
+    outline-color: rgb(83, 48, 18);
+    overflow-block: clip;
+    overflow-clip-margin: content-box;
+    overflow-inline: clip;
+    overflow-x: clip;
+    overflow-y: clip;
+    padding-inline-end: 20px;
+    padding-right: 20px;
+    perspective-origin: 40.5156px 31.5px;
+    position: static;
+    position-visibility: always;
+    print-color-adjust: economy;
+    ruby-align: space-around;
+    ruby-position: over;
+    scroll-timeline-axis: block;
+    shape-image-threshold: 0;
+    stop-color: rgb(0, 0, 0);
+    stop-opacity: 1;
+    stroke-linecap: butt;
+    stroke-linejoin: miter;
+    stroke-miterlimit: 4;
+    stroke-opacity: 1;
+    stroke-width: 1px;
+    tab-size: 8;
+    text-align: left;
+    text-anchor: start;
+    text-decoration: none solid rgb(83, 48, 18);
+    text-decoration-color: rgb(83, 48, 18);
+    text-decoration-style: solid;
+    text-emphasis-color: rgb(83, 48, 18);
+    text-emphasis-position: over;
+    text-overflow: clip;
+    text-size-adjust: 100%;
+    text-wrap-mode: wrap;
+    transform-origin: 40.5234px 31.5px;
+    transform-style: flat;
+    transition-delay: 0s;
+    transition-duration: 0s;
+    transition-property: all;
+    transition-timing-function: ease;
+    vertical-align: middle;
+    view-timeline-axis: block;
+    visibility: visible;
+    white-space-collapse: collapse;
+    widows: 2;
+    width: 81.0469px;
+    writing-mode: horizontal-tb;
+    zoom: 1;
+    -webkit-box-align: stretch;
+    -webkit-box-decoration-break: slice;
+    -webkit-box-flex: 0;
+    -webkit-box-ordinal-group: 1;
+    -webkit-box-orient: horizontal;
+    -webkit-box-pack: start;
+    -webkit-locale: "en";
+    -webkit-mask-box-image-outset: 0;
+    -webkit-mask-box-image-repeat: stretch;
+    -webkit-mask-box-image-slice: 0 fill;
+    -webkit-rtl-ordering: logical;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-text-fill-color: rgb(83, 48, 18);
+    -webkit-text-orientation: vertical-right;
+    -webkit-text-stroke-color: rgb(83, 48, 18);
+    -webkit-user-modify: read-only;
+    -webkit-writing-mode: horizontal-tb;
   }
-}
-.footer-section .list-4-wrapper ul {
-  display: grid;
-  list-style: none;
-  padding-left: 0;
-}
-.footer-section .list-4-wrapper ul li {
-  padding-right: 10px; /* Equivalent to 10px */
-  padding-bottom: 10px; /* Equivalent to 10px */
-  cursor: pointer;
-  color: #fceed9; /* Computed value */
-}
-@media (max-width: 767.98px) {
-  .footer-section .list-4-wrapper ul li {
-    padding: 0 9px !important; /* Equivalent to 0px 9px */
   }
-}
-.footer-section .list-4-wrapper ul li a {
-  padding-right: 48px; /* Equivalent to 48px */
-  color: #fceed9; /* Computed value */
-  white-space: nowrap;
-}
-@media (max-width: 767.98px) {
-  .footer-section .list-4-wrapper ul li a {
-    padding-right: 17px; /* Equivalent to 17px */
+
+/* .footer-Computed .footer-styles: .footer-a.footer-cmp-image__link */ @media (min-width: 1200px) {  
+  a.cmp-image__link {
+    animation-composition: replace;
+    animation-delay: 0s;
+    animation-duration: 0s;
+    animation-iteration-count: 1;
+    animation-play-state: running;
+    animation-timing-function: ease;
+    backface-visibility: visible;
+    background-attachment: scroll;
+    background-clip: border-box;
+    background-color: rgba(0, 0, 0, 0);
+    background-origin: padding-box;
+    background-position: 0% 0%;
+    background-repeat: repeat;
+    block-size: 90px;
+    border-block-end-color: rgb(83, 48, 18);
+    border-block-start-color: rgb(83, 48, 18);
+    border-bottom-color: rgb(83, 48, 18);
+    border-collapse: separate;
+    border-image-outset: 0;
+    border-image-repeat: stretch;
+    border-image-slice: 100%;
+    border-image-width: 1;
+    border-inline-end-color: rgb(83, 48, 18);
+    border-inline-start-color: rgb(83, 48, 18);
+    border-left-color: rgb(83, 48, 18);
+    border-right-color: rgb(83, 48, 18);
+    border-top-color: rgb(83, 48, 18);
+    box-decoration-break: slice;
+    box-sizing: border-box;
+    caption-side: top;
+    caret-color: rgb(83, 48, 18);
+    clip-rule: nonzero;
+    color: rgb(83, 48, 18);
+    color-interpolation: srgb;
+    color-interpolation-filters: linearrgb;
+    column-rule-color: rgb(83, 48, 18);
+    cursor: pointer;
+    direction: ltr;
+    display: block;
+    dynamic-range-limit: no-limit;
+    empty-cells: show;
+    field-sizing: fixed;
+    fill: rgb(0, 0, 0);
+    fill-opacity: 1;
+    fill-rule: nonzero;
+    flex-direction: row;
+    flex-grow: 0;
+    flex-shrink: 1;
+    flex-wrap: nowrap;
+    flood-color: rgb(0, 0, 0);
+    flood-opacity: 1;
+    font-family: Urbanist;
+    font-size: 16px;
+    font-stretch: 100%;
+    font-weight: 400;
+    grid-auto-flow: row;
+    height: 90px;
+    hyphens: manual;
+    image-orientation: from-image;
+    inline-size: 131px;
+    interpolate-size: numeric-only;
+    lighting-color: rgb(255, 255, 255);
+    line-height: 24px;
+    list-style-position: outside;
+    list-style-type: disc;
+    mask-clip: border-box;
+    mask-composite: add;
+    mask-mode: match-source;
+    mask-origin: border-box;
+    mask-position: 0% 0%;
+    mask-repeat: repeat;
+    mask-type: luminance;
+    math-depth: 0;
+    object-fit: fill;
+    object-position: 50% 50%;
+    offset-rotate: auto 0deg;
+    opacity: 1;
+    order: 0;
+    orphans: 2;
+    outline-color: rgb(83, 48, 18);
+    overflow-block: visible;
+    overflow-inline: visible;
+    overflow-x: visible;
+    overflow-y: visible;
+    padding-block-end: 5px;
+    padding-block-start: 14px;
+    padding-bottom: 5px;
+    padding-top: 14px;
+    perspective-origin: 65.5px 45px;
+    position: static;
+    position-visibility: always;
+    print-color-adjust: economy;
+    ruby-align: space-around;
+    ruby-position: over;
+    scroll-timeline-axis: block;
+    shape-image-threshold: 0;
+    stop-color: rgb(0, 0, 0);
+    stop-opacity: 1;
+    stroke-linecap: butt;
+    stroke-linejoin: miter;
+    stroke-miterlimit: 4;
+    stroke-opacity: 1;
+    stroke-width: 1px;
+    tab-size: 8;
+    text-align: left;
+    text-anchor: start;
+    text-decoration: none solid rgb(83, 48, 18);
+    text-decoration-color: rgb(83, 48, 18);
+    text-decoration-style: solid;
+    text-emphasis-color: rgb(83, 48, 18);
+    text-emphasis-position: over;
+    text-overflow: clip;
+    text-size-adjust: 100%;
+    text-wrap-mode: wrap;
+    transform-origin: 65.5px 45px;
+    transform-style: flat;
+    transition-delay: 0s;
+    transition-duration: 0s;
+    transition-property: all;
+    transition-timing-function: ease;
+    vertical-align: baseline;
+    view-timeline-axis: block;
+    visibility: visible;
+    white-space-collapse: collapse;
+    widows: 2;
+    width: 131px;
+    writing-mode: horizontal-tb;
+    zoom: 1;
+    -webkit-box-align: stretch;
+    -webkit-box-decoration-break: slice;
+    -webkit-box-flex: 0;
+    -webkit-box-ordinal-group: 1;
+    -webkit-box-orient: horizontal;
+    -webkit-box-pack: start;
+    -webkit-locale: "en";
+    -webkit-mask-box-image-outset: 0;
+    -webkit-mask-box-image-repeat: stretch;
+    -webkit-mask-box-image-slice: 0 fill;
+    -webkit-rtl-ordering: logical;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-text-fill-color: rgb(83, 48, 18);
+    -webkit-text-orientation: vertical-right;
+    -webkit-text-stroke-color: rgb(83, 48, 18);
+    -webkit-user-modify: read-only;
+    -webkit-writing-mode: horizontal-tb;
   }
-}
-.footer-section .list-3-wrapper {
-  flex: 1;
-  padding-left: 20px; /* Equivalent to 20px */
-}
-@media (max-width: 767.98px) {
-  .footer-section .list-3-wrapper {
-    padding-left: 0;
   }
-}
-@media (max-width: 375px) {
-  .footer-section .list-3-wrapper {
-    flex: 1 1 100%;
-    padding: 0 10px; /* Equivalent to 0px 10px */
-    max-width: calc(50% - 20px);
+
+/* .footer-Computed .footer-styles: .footer-img.footer-cmp-image__image */ @media (min-width: 1200px) {  
+  img.cmp-image__image {
+    animation-composition: replace;
+    animation-delay: 0s;
+    animation-duration: 0s;
+    animation-iteration-count: 1;
+    animation-play-state: running;
+    animation-timing-function: ease;
+    backface-visibility: visible;
+    background-attachment: scroll;
+    background-clip: border-box;
+    background-color: rgba(0, 0, 0, 0);
+    background-origin: padding-box;
+    background-position: 0% 0%;
+    background-repeat: repeat;
+    block-size: 71px;
+    border-block-end-color: rgb(83, 48, 18);
+    border-block-start-color: rgb(83, 48, 18);
+    border-bottom-color: rgb(83, 48, 18);
+    border-collapse: separate;
+    border-image-outset: 0;
+    border-image-repeat: stretch;
+    border-image-slice: 100%;
+    border-image-width: 1;
+    border-inline-end-color: rgb(83, 48, 18);
+    border-inline-start-color: rgb(83, 48, 18);
+    border-left-color: rgb(83, 48, 18);
+    border-right-color: rgb(83, 48, 18);
+    border-top-color: rgb(83, 48, 18);
+    box-decoration-break: slice;
+    box-sizing: border-box;
+    caption-side: top;
+    caret-color: rgb(83, 48, 18);
+    clip-rule: nonzero;
+    color: rgb(83, 48, 18);
+    color-interpolation: srgb;
+    color-interpolation-filters: linearrgb;
+    column-rule-color: rgb(83, 48, 18);
+    cursor: pointer;
+    direction: ltr;
+    display: inline;
+    dynamic-range-limit: no-limit;
+    empty-cells: show;
+    field-sizing: fixed;
+    fill: rgb(0, 0, 0);
+    fill-opacity: 1;
+    fill-rule: nonzero;
+    flex-direction: row;
+    flex-grow: 0;
+    flex-shrink: 1;
+    flex-wrap: nowrap;
+    flood-color: rgb(0, 0, 0);
+    flood-opacity: 1;
+    font-family: Urbanist;
+    font-size: 16px;
+    font-stretch: 100%;
+    font-weight: 400;
+    grid-auto-flow: row;
+    height: 71px;
+    hyphens: manual;
+    image-orientation: from-image;
+    inline-size: 131px;
+    interpolate-size: numeric-only;
+    lighting-color: rgb(255, 255, 255);
+    line-height: 24px;
+    list-style-position: outside;
+    list-style-type: disc;
+    mask-clip: border-box;
+    mask-composite: add;
+    mask-mode: match-source;
+    mask-origin: border-box;
+    mask-position: 0% 0%;
+    mask-repeat: repeat;
+    mask-type: luminance;
+    math-depth: 0;
+    object-fit: fill;
+    object-position: 50% 50%;
+    offset-rotate: auto 0deg;
+    opacity: 1;
+    order: 0;
+    orphans: 2;
+    outline-color: rgb(83, 48, 18);
+    overflow-block: clip;
+    overflow-clip-margin: content-box;
+    overflow-inline: clip;
+    overflow-x: clip;
+    overflow-y: clip;
+    perspective-origin: 65.5px 35.5px;
+    position: static;
+    position-visibility: always;
+    print-color-adjust: economy;
+    ruby-align: space-around;
+    ruby-position: over;
+    scroll-timeline-axis: block;
+    shape-image-threshold: 0;
+    stop-color: rgb(0, 0, 0);
+    stop-opacity: 1;
+    stroke-linecap: butt;
+    stroke-linejoin: miter;
+    stroke-miterlimit: 4;
+    stroke-opacity: 1;
+    stroke-width: 1px;
+    tab-size: 8;
+    text-align: left;
+    text-anchor: start;
+    text-decoration: none solid rgb(83, 48, 18);
+    text-decoration-color: rgb(83, 48, 18);
+    text-decoration-style: solid;
+    text-emphasis-color: rgb(83, 48, 18);
+    text-emphasis-position: over;
+    text-overflow: clip;
+    text-size-adjust: 100%;
+    text-wrap-mode: wrap;
+    transform-origin: 65.5px 35.5px;
+    transform-style: flat;
+    transition-delay: 0s;
+    transition-duration: 0s;
+    transition-property: all;
+    transition-timing-function: ease;
+    vertical-align: middle;
+    view-timeline-axis: block;
+    visibility: visible;
+    white-space-collapse: collapse;
+    widows: 2;
+    width: 131px;
+    writing-mode: horizontal-tb;
+    zoom: 1;
+    -webkit-box-align: stretch;
+    -webkit-box-decoration-break: slice;
+    -webkit-box-flex: 0;
+    -webkit-box-ordinal-group: 1;
+    -webkit-box-orient: horizontal;
+    -webkit-box-pack: start;
+    -webkit-locale: "en";
+    -webkit-mask-box-image-outset: 0;
+    -webkit-mask-box-image-repeat: stretch;
+    -webkit-mask-box-image-slice: 0 fill;
+    -webkit-rtl-ordering: logical;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-text-fill-color: rgb(83, 48, 18);
+    -webkit-text-orientation: vertical-right;
+    -webkit-text-stroke-color: rgb(83, 48, 18);
+    -webkit-user-modify: read-only;
+    -webkit-writing-mode: horizontal-tb;
   }
-}
-.footer-section .list-3-wrapper ul {
-  list-style: none;
-  color: #fcf1e4; /* Computed value */
-  padding-left: 0;
-  display: grid;
-}
-.footer-section .list-3-wrapper ul li {
-  padding-right: 48px; /* Equivalent to 48px */
-  cursor: pointer;
-  color: #fceed9; /* Computed value */
-}
-@media (max-width: 767.98px) {
-  .footer-section .list-3-wrapper ul li {
-    padding: 0 9px !important; /* Equivalent to 0px 9px */
   }
-}
-.footer-section .contact-details .contact-details-title,
-.footer-section .contact-details-description {
-  color: #fff; /* Computed value */
-}
-.footer-section .contact-details-title {
-  font-size: 1.25rem; /* Equivalent to 20px assuming 16px base */
-  font-family: 'Paytone One'; /* Computed value */
-  font-weight: 500; /* Computed value */
-  line-height: 1.2; /* Computed value */
-  margin-bottom: 1rem; /* Equivalent to 16px */
-}
-@media (max-width: 768px) {
-  .footer-section .contact-details-title {
-    font-size: 14px; /* Equivalent to 14px */
+
+/* .footer-Computed .footer-styles: .footer-div.footer-itc-logo */ @media (min-width: 1200px) {  
+  div.footer-itc-logo {
+    animation-composition: replace;
+    animation-delay: 0s;
+    animation-duration: 0s;
+    animation-iteration-count: 1;
+    animation-play-state: running;
+    animation-timing-function: ease;
+    backface-visibility: visible;
+    background-attachment: scroll;
+    background-clip: border-box;
+    background-color: rgba(0, 0, 0, 0);
+    background-origin: padding-box;
+    background-position: 0% 0%;
+    background-repeat: repeat;
+    block-size: 288.828px;
+    border-block-end-color: rgb(45, 33, 25);
+    border-block-start-color: rgb(45, 33, 25);
+    border-bottom-color: rgb(45, 33, 25);
+    border-collapse: separate;
+    border-image-outset: 0;
+    border-image-repeat: stretch;
+    border-image-slice: 100%;
+    border-image-width: 1;
+    border-inline-end-color: rgb(45, 33, 25);
+    border-inline-start-color: rgb(45, 33, 25);
+    border-left-color: rgb(45, 33, 25);
+    border-right-color: rgb(45, 33, 25);
+    border-top-color: rgb(45, 33, 25);
+    box-decoration-break: slice;
+    box-sizing: border-box;
+    caption-side: top;
+    caret-color: rgb(45, 33, 25);
+    clip-rule: nonzero;
+    color: rgb(45, 33, 25);
+    color-interpolation: srgb;
+    color-interpolation-filters: linearrgb;
+    column-rule-color: rgb(45, 33, 25);
+    direction: ltr;
+    display: block;
+    dynamic-range-limit: no-limit;
+    empty-cells: show;
+    field-sizing: fixed;
+    fill: rgb(0, 0, 0);
+    fill-opacity: 1;
+    fill-rule: nonzero;
+    flex-direction: row;
+    flex-grow: 0;
+    flex-shrink: 1;
+    flex-wrap: nowrap;
+    flood-color: rgb(0, 0, 0);
+    flood-opacity: 1;
+    font-family: Urbanist;
+    font-size: 16px;
+    font-stretch: 100%;
+    font-weight: 400;
+    grid-auto-flow: row;
+    height: 288.828px;
+    hyphens: manual;
+    image-orientation: from-image;
+    inline-size: 200px;
+    interpolate-size: numeric-only;
+    lighting-color: rgb(255, 255, 255);
+    line-height: 24px;
+    list-style-position: outside;
+    list-style-type: disc;
+    mask-clip: border-box;
+    mask-composite: add;
+    mask-mode: match-source;
+    mask-origin: border-box;
+    mask-position: 0% 0%;
+    mask-repeat: repeat;
+    mask-type: luminance;
+    math-depth: 0;
+    object-fit: fill;
+    object-position: 50% 50%;
+    offset-rotate: auto 0deg;
+    opacity: 1;
+    order: 0;
+    orphans: 2;
+    outline-color: rgb(45, 33, 25);
+    overflow-block: visible;
+    overflow-inline: visible;
+    overflow-x: visible;
+    overflow-y: visible;
+    padding-block-end: 30px;
+    padding-block-start: 30px;
+    padding-bottom: 30px;
+    padding-top: 30px;
+    perspective-origin: 100px 144.406px;
+    position: static;
+    position-visibility: always;
+    print-color-adjust: economy;
+    ruby-align: space-around;
+    ruby-position: over;
+    scroll-timeline-axis: block;
+    shape-image-threshold: 0;
+    stop-color: rgb(0, 0, 0);
+    stop-opacity: 1;
+    stroke-linecap: butt;
+    stroke-linejoin: miter;
+    stroke-miterlimit: 4;
+    stroke-opacity: 1;
+    stroke-width: 1px;
+    tab-size: 8;
+    text-align: left;
+    text-anchor: start;
+    text-decoration: none solid rgb(45, 33, 25);
+    text-decoration-color: rgb(45, 33, 25);
+    text-decoration-style: solid;
+    text-emphasis-color: rgb(45, 33, 25);
+    text-emphasis-position: over;
+    text-overflow: clip;
+    text-size-adjust: 100%;
+    text-wrap-mode: wrap;
+    transform-origin: 100px 144.414px;
+    transform-style: flat;
+    transition-delay: 0s;
+    transition-duration: 0s;
+    transition-property: all;
+    transition-timing-function: ease;
+    unicode-bidi: isolate;
+    vertical-align: baseline;
+    view-timeline-axis: block;
+    visibility: visible;
+    white-space-collapse: collapse;
+    widows: 2;
+    width: 200px;
+    writing-mode: horizontal-tb;
+    zoom: 1;
+    -webkit-box-align: stretch;
+    -webkit-box-decoration-break: slice;
+    -webkit-box-flex: 0;
+    -webkit-box-ordinal-group: 1;
+    -webkit-box-orient: horizontal;
+    -webkit-box-pack: start;
+    -webkit-locale: "en";
+    -webkit-mask-box-image-outset: 0;
+    -webkit-mask-box-image-repeat: stretch;
+    -webkit-mask-box-image-slice: 0 fill;
+    -webkit-rtl-ordering: logical;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-text-fill-color: rgb(45, 33, 25);
+    -webkit-text-orientation: vertical-right;
+    -webkit-text-stroke-color: rgb(45, 33, 25);
+    -webkit-user-modify: read-only;
+    -webkit-writing-mode: horizontal-tb;
   }
-}
-.footer-section .contact-details-description {
-  font-size: 1rem; /* Equivalent to 16px assuming 16px base */
-  font-weight: 400; /* Computed value */
-  line-height: 1.5; /* Computed value */
-  margin-bottom: 0.25rem; /* Equivalent to 4px */
-}
-@media (max-width: 768px) {
-  .footer-section .contact-details-description {
-    font-size: 14px; /* Equivalent to 14px */
   }
-}
-.footer-section .contact-details-description-last {
-  font-size: 1rem; /* Equivalent to 16px assuming 16px base */
-  font-weight: 400; /* Computed value */
-  line-height: 1.5; /* Computed value */
-  margin-bottom: 0;
-}
-.footer-section .footer-column-links-right {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  margin-top: -63px; /* Equivalent to -63px */
-}
-@media (max-width: 1200px) {
-  .footer-section .footer-column-links-right {
-    padding-right: 56px; /* Equivalent to 56px */
-    margin-top: 0;
+
+/* .footer-Computed .footer-styles: .footer-div#logo-ed7b4b135d.footer-cmp-image .footer-header-logo-div */ @media (min-width: 1200px) {  
+  div#logo-ed7b4b135d.cmp-image header-logo-div {
+    align-items: center;
+    animation-composition: replace;
+    animation-delay: 0s;
+    animation-duration: 0s;
+    animation-iteration-count: 1;
+    animation-play-state: running;
+    animation-timing-function: ease;
+    backface-visibility: visible;
+    background-attachment: scroll;
+    background-clip: border-box;
+    background-color: rgba(0, 0, 0, 0);
+    background-origin: padding-box;
+    background-position: 0% 0%;
+    background-repeat: repeat;
+    block-size: 228.828px;
+    border-block-end-color: rgb(45, 33, 25);
+    border-block-start-color: rgb(45, 33, 25);
+    border-bottom-color: rgb(45, 33, 25);
+    border-collapse: separate;
+    border-image-outset: 0;
+    border-image-repeat: stretch;
+    border-image-slice: 100%;
+    border-image-width: 1;
+    border-inline-end-color: rgb(45, 33, 25);
+    border-inline-start-color: rgb(45, 33, 25);
+    border-left-color: rgb(45, 33, 25);
+    border-right-color: rgb(45, 33, 25);
+    border-top-color: rgb(45, 33, 25);
+    box-decoration-break: slice;
+    box-sizing: border-box;
+    caption-side: top;
+    caret-color: rgb(45, 33, 25);
+    clip-rule: nonzero;
+    color: rgb(45, 33, 25);
+    color-interpolation: srgb;
+    color-interpolation-filters: linearrgb;
+    column-gap: 20px;
+    column-rule-color: rgb(45, 33, 25);
+    direction: ltr;
+    display: flex;
+    dynamic-range-limit: no-limit;
+    empty-cells: show;
+    field-sizing: fixed;
+    fill: rgb(0, 0, 0);
+    fill-opacity: 1;
+    fill-rule: nonzero;
+    flex-direction: row;
+    flex-grow: 0;
+    flex-shrink: 1;
+    flex-wrap: nowrap;
+    flood-color: rgb(0, 0, 0);
+    flood-opacity: 1;
+    font-family: Urbanist;
+    font-size: 16px;
+    font-stretch: 100%;
+    font-weight: 400;
+    grid-auto-flow: row;
+    height: 228.828px;
+    hyphens: manual;
+    image-orientation: from-image;
+    inline-size: 200px;
+    interpolate-size: numeric-only;
+    lighting-color: rgb(255, 255, 255);
+    line-height: 24px;
+    list-style-position: outside;
+    list-style-type: disc;
+    mask-clip: border-box;
+    mask-composite: add;
+    mask-mode: match-source;
+    mask-origin: border-box;
+    mask-position: 0% 0%;
+    mask-repeat: repeat;
+    mask-type: luminance;
+    math-depth: 0;
+    object-fit: fill;
+    object-position: 50% 50%;
+    offset-rotate: auto 0deg;
+    opacity: 1;
+    order: 0;
+    orphans: 2;
+    outline-color: rgb(45, 33, 25);
+    overflow-block: visible;
+    overflow-inline: visible;
+    overflow-x: visible;
+    overflow-y: visible;
+    perspective-origin: 100px 114.406px;
+    position: static;
+    position-visibility: always;
+    print-color-adjust: economy;
+    row-gap: 20px;
+    ruby-align: space-around;
+    ruby-position: over;
+    scroll-timeline-axis: block;
+    shape-image-threshold: 0;
+    stop-color: rgb(0, 0, 0);
+    stop-opacity: 1;
+    stroke-linecap: butt;
+    stroke-linejoin: miter;
+    stroke-miterlimit: 4;
+    stroke-opacity: 1;
+    stroke-width: 1px;
+    tab-size: 8;
+    text-align: left;
+    text-anchor: start;
+    text-decoration: none solid rgb(45, 33, 25);
+    text-decoration-color: rgb(45, 33, 25);
+    text-decoration-style: solid;
+    text-emphasis-color: rgb(45, 33, 25);
+    text-emphasis-position: over;
+    text-overflow: clip;
+    text-size-adjust: 100%;
+    text-wrap-mode: wrap;
+    transform-origin: 100px 114.414px;
+    transform-style: flat;
+    transition-delay: 0s;
+    transition-duration: 0s;
+    transition-property: all;
+    transition-timing-function: ease;
+    unicode-bidi: isolate;
+    vertical-align: baseline;
+    view-timeline-axis: block;
+    visibility: visible;
+    white-space-collapse: collapse;
+    widows: 2;
+    width: 200px;
+    writing-mode: horizontal-tb;
+    zoom: 1;
+    -webkit-box-align: stretch;
+    -webkit-box-decoration-break: slice;
+    -webkit-box-flex: 0;
+    -webkit-box-ordinal-group: 1;
+    -webkit-box-orient: horizontal;
+    -webkit-box-pack: start;
+    -webkit-locale: "en";
+    -webkit-mask-box-image-outset: 0;
+    -webkit-mask-box-image-repeat: stretch;
+    -webkit-mask-box-image-slice: 0 fill;
+    -webkit-rtl-ordering: logical;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-text-fill-color: rgb(45, 33, 25);
+    -webkit-text-orientation: vertical-right;
+    -webkit-text-stroke-color: rgb(45, 33, 25);
+    -webkit-user-modify: read-only;
+    -webkit-writing-mode: horizontal-tb;
   }
-}
-@media (max-width: 767.98px) {
-  .footer-section .footer-column-links-right {
-    align-items: center !important;
-    margin-top: 0;
-    padding-right: 0;
-    padding-left: 0;
   }
-}
-.footer-section .social-icons-wrapper {
-  display: flex;
-}
-.footer-section .social-icons-wrapper .social-list-unstyled {
-  list-style: none;
-  padding-left: 0;
-  display: grid;
-}
-.footer-section .social-icons-wrapper .social-list-unstyled li a {
-  color: #fceed9; /* Computed value */
-  white-space: nowrap;
-}
-.footer-section .social-icons-wrapper .social-list-unstyled li a img {
-  padding-left: 48px; /* Equivalent to 48px */
-}
-@media (max-width: 1200px) {
-  .footer-section .social-icons-wrapper .social-list-unstyled li a img {
-    padding-left: 25px; /* Equivalent to 25px */
+
+/* .footer-Computed .footer-styles: .footer-a.footer-cmp-image__link */ @media (min-width: 1200px) {  
+  a.cmp-image__link {
+    animation-composition: replace;
+    animation-delay: 0s;
+    animation-duration: 0s;
+    animation-iteration-count: 1;
+    animation-play-state: running;
+    animation-timing-function: ease;
+    backface-visibility: visible;
+    background-attachment: scroll;
+    background-clip: border-box;
+    background-color: rgba(0, 0, 0, 0);
+    background-origin: padding-box;
+    background-position: 0% 0%;
+    background-repeat: repeat;
+    block-size: 228.828px;
+    border-block-end-color: rgb(252, 238, 217);
+    border-block-start-color: rgb(252, 238, 217);
+    border-bottom-color: rgb(252, 238, 217);
+    border-collapse: separate;
+    border-image-outset: 0;
+    border-image-repeat: stretch;
+    border-image-slice: 100%;
+    border-image-width: 1;
+    border-inline-end-color: rgb(252, 238, 217);
+    border-inline-start-color: rgb(252, 238, 217);
+    border-left-color: rgb(252, 238, 217);
+    border-right-color: rgb(252, 238, 217);
+    border-top-color: rgb(252, 238, 217);
+    box-decoration-break: slice;
+    box-sizing: border-box;
+    caption-side: top;
+    caret-color: rgb(252, 238, 217);
+    clip-rule: nonzero;
+    color: rgb(252, 238, 217);
+    color-interpolation: srgb;
+    color-interpolation-filters: linearrgb;
+    column-rule-color: rgb(252, 238, 217);
+    cursor: pointer;
+    direction: ltr;
+    display: block;
+    dynamic-range-limit: no-limit;
+    empty-cells: show;
+    field-sizing: fixed;
+    fill: rgb(0, 0, 0);
+    fill-opacity: 1;
+    fill-rule: nonzero;
+    flex-direction: row;
+    flex-grow: 0;
+    flex-shrink: 1;
+    flex-wrap: nowrap;
+    flood-color: rgb(0, 0, 0);
+    flood-opacity: 1;
+    font-family: Urbanist;
+    font-size: 16px;
+    font-stretch: 100%;
+    font-weight: 400;
+    grid-auto-flow: row;
+    height: 228.828px;
+    hyphens: manual;
+    image-orientation: from-image;
+    inline-size: 180px;
+    interpolate-size: numeric-only;
+    lighting-color: rgb(255, 255, 255);
+    line-height: 24px;
+    list-style-position: outside;
+    list-style-type: disc;
+    mask-clip: border-box;
+    mask-composite: add;
+    mask-mode: match-source;
+    mask-origin: border-box;
+    mask-position: 0% 0%;
+    mask-repeat: repeat;
+    mask-type: luminance;
+    math-depth: 0;
+    object-fit: fill;
+    object-position: 50% 50%;
+    offset-rotate: auto 0deg;
+    opacity: 1;
+    order: 0;
+    orphans: 2;
+    outline-color: rgb(252, 238, 217);
+    overflow-block: visible;
+    overflow-inline: visible;
+    overflow-x: visible;
+    overflow-y: visible;
+    padding-block-start: 14px;
+    padding-top: 14px;
+    perspective-origin: 90px 114.406px;
+    position: static;
+    position-visibility: always;
+    print-color-adjust: economy;
+    ruby-align: space-around;
+    ruby-position: over;
+    scroll-timeline-axis: block;
+    shape-image-threshold: 0;
+    stop-color: rgb(0, 0, 0);
+    stop-opacity: 1;
+    stroke-linecap: butt;
+    stroke-linejoin: miter;
+    stroke-miterlimit: 4;
+    stroke-opacity: 1;
+    stroke-width: 1px;
+    tab-size: 8;
+    text-align: left;
+    text-anchor: start;
+    text-decoration: none solid rgb(252, 238, 217);
+    text-decoration-color: rgb(252, 238, 217);
+    text-decoration-style: solid;
+    text-emphasis-color: rgb(252, 238, 217);
+    text-emphasis-position: over;
+    text-overflow: clip;
+    text-size-adjust: 100%;
+    text-wrap-mode: nowrap;
+    transform-origin: 90px 114.414px;
+    transform-style: flat;
+    transition-delay: 0s;
+    transition-duration: 0s;
+    transition-property: all;
+    transition-timing-function: ease;
+    vertical-align: baseline;
+    view-timeline-axis: block;
+    visibility: visible;
+    white-space-collapse: collapse;
+    widows: 2;
+    width: 180px;
+    writing-mode: horizontal-tb;
+    zoom: 1;
+    -webkit-box-align: stretch;
+    -webkit-box-decoration-break: slice;
+    -webkit-box-flex: 0;
+    -webkit-box-ordinal-group: 1;
+    -webkit-box-orient: horizontal;
+    -webkit-box-pack: start;
+    -webkit-locale: "en";
+    -webkit-mask-box-image-outset: 0;
+    -webkit-mask-box-image-repeat: stretch;
+    -webkit-mask-box-image-slice: 0 fill;
+    -webkit-rtl-ordering: logical;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-text-fill-color: rgb(252, 238, 217);
+    -webkit-text-orientation: vertical-right;
+    -webkit-text-stroke-color: rgb(252, 238, 217);
+    -webkit-user-modify: read-only;
+    -webkit-writing-mode: horizontal-tb;
   }
-}
-@media (max-width: 767.98px) {
-  .footer-section .social-icons-wrapper .social-list-unstyled li a img:first-child {
-    padding-left: 10px; /* Equivalent to 10px */
-    padding-right: 10px; /* Equivalent to 10px */
   }
-}
-.footer-section .footer-link {
-  color: #fceed9; /* Computed value */
-  font-size: 16px; /* Equivalent to 16px assuming 16px base */
-  padding-top: 20px; /* Equivalent to 20px */
-}
-@media (max-width: 1200px) {
-  .footer-section .footer-link {
-    font-size: 12px; /* Equivalent to 12px */
-    padding-top: 0;
+
+/* .footer-Computed .footer-styles: .footer-img.footer-cmp-image__image */ @media (min-width: 1200px) {  
+  img.cmp-image__image {
+    animation-composition: replace;
+    animation-delay: 0s;
+    animation-duration: 0s;
+    animation-iteration-count: 1;
+    animation-play-state: running;
+    animation-timing-function: ease;
+    backface-visibility: visible;
+    background-attachment: scroll;
+    background-clip: border-box;
+    background-color: rgba(0, 0, 0, 0);
+    background-origin: padding-box;
+    background-position: 0% 0%;
+    background-repeat: repeat;
+    block-size: 214.828px;
+    border-block-end-color: rgb(252, 238, 217);
+    border-block-start-color: rgb(252, 238, 217);
+    border-bottom-color: rgb(252, 238, 217);
+    border-collapse: separate;
+    border-image-outset: 0;
+    border-image-repeat: stretch;
+    border-image-slice: 100%;
+    border-image-width: 1;
+    border-inline-end-color: rgb(252, 238, 217);
+    border-inline-start-color: rgb(252, 238, 217);
+    border-left-color: rgb(252, 238, 217);
+    border-right-color: rgb(252, 238, 217);
+    border-top-color: rgb(252, 238, 217);
+    box-decoration-break: slice;
+    box-sizing: border-box;
+    caption-side: top;
+    caret-color: rgb(252, 238, 217);
+    clip-rule: nonzero;
+    color: rgb(252, 238, 217);
+    color-interpolation: srgb;
+    color-interpolation-filters: linearrgb;
+    column-rule-color: rgb(252, 238, 217);
+    cursor: pointer;
+    direction: ltr;
+    display: inline;
+    dynamic-range-limit: no-limit;
+    empty-cells: show;
+    field-sizing: fixed;
+    fill: rgb(0, 0, 0);
+    fill-opacity: 1;
+    fill-rule: nonzero;
+    flex-direction: row;
+    flex-grow: 0;
+    flex-shrink: 1;
+    flex-wrap: nowrap;
+    flood-color: rgb(0, 0, 0);
+    flood-opacity: 1;
+    font-family: Urbanist;
+    font-size: 16px;
+    font-stretch: 100%;
+    font-weight: 400;
+    grid-auto-flow: row;
+    height: 214.828px;
+    hyphens: manual;
+    image-orientation: from-image;
+    inline-size: 180px;
+    interpolate-size: numeric-only;
+    lighting-color: rgb(255, 255, 255);
+    line-height: 24px;
+    list-style-position: outside;
+    list-style-type: disc;
+    mask-clip: border-box;
+    mask-composite: add;
+    mask-mode: match-source;
+    mask-origin: border-box;
+    mask-position: 0% 0%;
+    mask-repeat: repeat;
+    mask-type: luminance;
+    math-depth: 0;
+    object-fit: fill;
+    object-position: 50% 50%;
+    offset-rotate: auto 0deg;
+    opacity: 1;
+    order: 0;
+    orphans: 2;
+    outline-color: rgb(252, 238, 217);
+    overflow-block: clip;
+    overflow-clip-margin: content-box;
+    overflow-inline: clip;
+    overflow-x: clip;
+    overflow-y: clip;
+    perspective-origin: 90px 107.406px;
+    position: static;
+    position-visibility: always;
+    print-color-adjust: economy;
+    ruby-align: space-around;
+    ruby-position: over;
+    scroll-timeline-axis: block;
+    shape-image-threshold: 0;
+    stop-color: rgb(0, 0, 0);
+    stop-opacity: 1;
+    stroke-linecap: butt;
+    stroke-linejoin: miter;
+    stroke-miterlimit: 4;
+    stroke-opacity: 1;
+    stroke-width: 1px;
+    tab-size: 8;
+    text-align: left;
+    text-anchor: start;
+    text-decoration: none solid rgb(252, 238, 217);
+    text-decoration-color: rgb(252, 238, 217);
+    text-decoration-style: solid;
+    text-emphasis-color: rgb(252, 238, 217);
+    text-emphasis-position: over;
+    text-overflow: clip;
+    text-size-adjust: 100%;
+    text-wrap-mode: nowrap;
+    transform-origin: 90px 107.414px;
+    transform-style: flat;
+    transition-delay: 0s;
+    transition-duration: 0s;
+    transition-property: all;
+    transition-timing-function: ease;
+    vertical-align: middle;
+    view-timeline-axis: block;
+    visibility: visible;
+    white-space-collapse: collapse;
+    widows: 2;
+    width: 180px;
+    writing-mode: horizontal-tb;
+    zoom: 1;
+    -webkit-box-align: stretch;
+    -webkit-box-decoration-break: slice;
+    -webkit-box-flex: 0;
+    -webkit-box-ordinal-group: 1;
+    -webkit-box-orient: horizontal;
+    -webkit-box-pack: start;
+    -webkit-locale: "en";
+    -webkit-mask-box-image-outset: 0;
+    -webkit-mask-box-image-repeat: stretch;
+    -webkit-mask-box-image-slice: 0 fill;
+    -webkit-rtl-ordering: logical;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-text-fill-color: rgb(252, 238, 217);
+    -webkit-text-orientation: vertical-right;
+    -webkit-text-stroke-color: rgb(252, 238, 217);
+    -webkit-user-modify: read-only;
+    -webkit-writing-mode: horizontal-tb;
   }
-}
-@media (max-width: 767.98px) {
-  .footer-section .footer-link {
-    padding-top: 10px; /* Equivalent to 10px */
   }
-}
-.footer-section-secondary {
-  background-color: #401e08; /* Computed value */
-  padding: 20px 100px; /* Equivalent to 20px 100px */
-}
-@media (max-width: 1200px) {
-  .footer-section-secondary {
-    padding: 20px 30px; /* Equivalent to 20px 30px */
+
+/* .footer-Computed .footer-styles: .footer-div#logo-f7278b4518.footer-cmp-image .footer-header-logo-div */ @media (min-width: 1200px) {  
+  div#logo-f7278b4518.cmp-image header-logo-div {
+    align-items: center;
+    animation-composition: replace;
+    animation-delay: 0s;
+    animation-duration: 0s;
+    animation-iteration-count: 1;
+    animation-play-state: running;
+    animation-timing-function: ease;
+    backface-visibility: visible;
+    background-attachment: scroll;
+    background-clip: border-box;
+    background-color: rgba(0, 0, 0, 0);
+    background-origin: padding-box;
+    background-position: 0% 0%;
+    background-repeat: repeat;
+    block-size: 69px;
+    border-block-end-color: rgb(45, 33, 25);
+    border-block-start-color: rgb(45, 33, 25);
+    border-bottom-color: rgb(45, 33, 25);
+    border-collapse: separate;
+    border-image-outset: 0;
+    border-image-repeat: stretch;
+    border-image-slice: 100%;
+    border-image-width: 1;
+    border-inline-end-color: rgb(45, 33, 25);
+    border-inline-start-color: rgb(45, 33, 25);
+    border-left-color: rgb(45, 33, 25);
+    border-right-color: rgb(45, 33, 25);
+    border-top-color: rgb(45, 33, 25);
+    box-decoration-break: slice;
+    box-sizing: border-box;
+    caption-side: top;
+    caret-color: rgb(45, 33, 25);
+    clip-rule: nonzero;
+    color: rgb(45, 33, 25);
+    color-interpolation: srgb;
+    color-interpolation-filters: linearrgb;
+    column-gap: 20px;
+    column-rule-color: rgb(45, 33, 25);
+    direction: ltr;
+    display: flex;
+    dynamic-range-limit: no-limit;
+    empty-cells: show;
+    field-sizing: fixed;
+    fill: rgb(0, 0, 0);
+    fill-opacity: 1;
+    fill-rule: nonzero;
+    flex-direction: row;
+    flex-grow: 0;
+    flex-shrink: 1;
+    flex-wrap: nowrap;
+    flood-color: rgb(0, 0, 0);
+    flood-opacity: 1;
+    font-family: Urbanist;
+    font-size: 16px;
+    font-stretch: 100%;
+    font-weight: 400;
+    grid-auto-flow: row;
+    height: 69px;
+    hyphens: manual;
+    image-orientation: from-image;
+    inline-size: 212px;
+    interpolate-size: numeric-only;
+    lighting-color: rgb(255, 255, 255);
+    line-height: 24px;
+    list-style-position: outside;
+    list-style-type: disc;
+    mask-clip: border-box;
+    mask-composite: add;
+    mask-mode: match-source;
+    mask-origin: border-box;
+    mask-position: 0% 0%;
+    mask-repeat: repeat;
+    mask-type: luminance;
+    math-depth: 0;
+    object-fit: fill;
+    object-position: 50% 50%;
+    offset-rotate: auto 0deg;
+    opacity: 1;
+    order: 0;
+    orphans: 2;
+    outline-color: rgb(45, 33, 25);
+    overflow-block: visible;
+    overflow-inline: visible;
+    overflow-x: visible;
+    overflow-y: visible;
+    perspective-origin: 106px 34.5px;
+    position: static;
+    position-visibility: always;
+    print-color-adjust: economy;
+    row-gap: 20px;
+    ruby-align: space-around;
+    ruby-position: over;
+    scroll-timeline-axis: block;
+    shape-image-threshold: 0;
+    stop-color: rgb(0, 0, 0);
+    stop-opacity: 1;
+    stroke-linecap: butt;
+    stroke-linejoin: miter;
+    stroke-miterlimit: 4;
+    stroke-opacity: 1;
+    stroke-width: 1px;
+    tab-size: 8;
+    text-align: left;
+    text-anchor: start;
+    text-decoration: none solid rgb(45, 33, 25);
+    text-decoration-color: rgb(45, 33, 25);
+    text-decoration-style: solid;
+    text-emphasis-color: rgb(45, 33, 25);
+    text-emphasis-position: over;
+    text-overflow: clip;
+    text-size-adjust: 100%;
+    text-wrap-mode: wrap;
+    transform-origin: 106px 34.5px;
+    transform-style: flat;
+    transition-delay: 0s;
+    transition-duration: 0s;
+    transition-property: all;
+    transition-timing-function: ease;
+    unicode-bidi: isolate;
+    vertical-align: baseline;
+    view-timeline-axis: block;
+    visibility: visible;
+    white-space-collapse: collapse;
+    widows: 2;
+    width: 212px;
+    writing-mode: horizontal-tb;
+    zoom: 1;
+    -webkit-box-align: stretch;
+    -webkit-box-decoration-break: slice;
+    -webkit-box-flex: 0;
+    -webkit-box-ordinal-group: 1;
+    -webkit-box-orient: horizontal;
+    -webkit-box-pack: start;
+    -webkit-locale: "en";
+    -webkit-mask-box-image-outset: 0;
+    -webkit-mask-box-image-repeat: stretch;
+    -webkit-mask-box-image-slice: 0 fill;
+    -webkit-rtl-ordering: logical;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-text-fill-color: rgb(45, 33, 25);
+    -webkit-text-orientation: vertical-right;
+    -webkit-text-stroke-color: rgb(45, 33, 25);
+    -webkit-user-modify: read-only;
+    -webkit-writing-mode: horizontal-tb;
   }
-}
-@media (max-width: 767.98px) {
-  .footer-section-secondary {
-    padding: 16px 31px; /* Equivalent to 16px 31px */
   }
-}
-.footer-section-secondary .footer-secondary-container {
-  display: flex;
-  list-style: none;
-  gap: 18px; /* Equivalent to 18px */
-  margin: 0;
-  padding: 0;
-}
-.footer-section-secondary .footer-secondary-lists .footer-links {
-  font-size: 16px; /* Equivalent to 16px assuming 16px base */
-  font-weight: 700; /* Computed value */
-  line-height: 1.5; /* Computed value */
-}
-.link-screen-reader-only {
-  display: none;
-}
+
+/* .footer-Computed .footer-styles: .footer-img.footer-cmp-image__image */ @media (min-width: 1200px) {  
+  img.cmp-image__image {
+    animation-composition: replace;
+    animation-delay: 0s;
+    animation-duration: 0s;
+    animation-iteration-count: 1;
+    animation-play-state: running;
+    animation-timing-function: ease;
+    backface-visibility: visible;
+    background-attachment: scroll;
+    background-clip: border-box;
+    background-color: rgba(0, 0, 0, 0);
+    background-origin: padding-box;
+    background-position: 0% 0%;
+    background-repeat: repeat;
+    block-size: 69px;
+    border-block-end-color: rgb(45, 33, 25);
+    border-block-start-color: rgb(45, 33, 25);
+    border-bottom-color: rgb(45, 33, 25);
+    border-collapse: separate;
+    border-image-outset: 0;
+    border-image-repeat: stretch;
+    border-image-slice: 100%;
+    border-image-width: 1;
+    border-inline-end-color: rgb(45, 33, 25);
+    border-inline-start-color: rgb(45, 33, 25);
+    border-left-color: rgb(45, 33, 25);
+    border-right-color: rgb(45, 33, 25);
+    border-top-color: rgb(45, 33, 25);
+    box-decoration-break: slice;
+    box-sizing: border-box;
+    caption-side: top;
+    caret-color: rgb(45, 33, 25);
+    clip-rule: nonzero;
+    color: rgb(45, 33, 25);
+    color-interpolation: srgb;
+    color-interpolation-filters: linearrgb;
+    column-rule-color: rgb(45, 33, 25);
+    direction: ltr;
+    display: block;
+    dynamic-range-limit: no-limit;
+    empty-cells: show;
+    field-sizing: fixed;
+    fill: rgb(0, 0, 0);
+    fill-opacity: 1;
+    fill-rule: nonzero;
+    flex-direction: row;
+    flex-grow: 0;
+    flex-shrink: 1;
+    flex-wrap: nowrap;
+    flood-color: rgb(0, 0, 0);
+    flood-opacity: 1;
+    font-family: Urbanist;
+    font-size: 16px;
+    font-stretch: 100%;
+    font-weight: 400;
+    grid-auto-flow: row;
+    height: 69px;
+    hyphens: manual;
+    image-orientation: from-image;
+    inline-size: 192px;
+    interpolate-size: numeric-only;
+    lighting-color: rgb(255, 255, 255);
+    line-height: 24px;
+    list-style-position: outside;
+    list-style-type: disc;
+    mask-clip: border-box;
+    mask-composite: add;
+    mask-mode: match-source;
+    mask-origin: border-box;
+    mask-position: 0% 0%;
+    mask-repeat: repeat;
+    mask-type: luminance;
+    math-depth: 0;
+    max-inline-size: 230px;
+    max-width: 230px;
+    object-fit: fill;
+    object-position: 50% 50%;
+    offset-rotate: auto 0deg;
+    opacity: 1;
+    order: 0;
+    orphans: 2;
+    outline-color: rgb(45, 33, 25);
+    overflow-block: clip;
+    overflow-clip-margin: content-box;
+    overflow-inline: clip;
+    overflow-x: clip;
+    overflow-y: clip;
+    perspective-origin: 96px 34.5px;
+    position: static;
+    position-visibility: always;
+    print-color-adjust: economy;
+    ruby-align: space-around;
+    ruby-position: over;
+    scroll-timeline-axis: block;
+    shape-image-threshold: 0;
+    stop-color: rgb(0, 0, 0);
+    stop-opacity: 1;
+    stroke-linecap: butt;
+    stroke-linejoin: miter;
+    stroke-miterlimit: 4;
+    stroke-opacity: 1;
+    stroke-width: 1px;
+    tab-size: 8;
+    text-align: left;
+    text-anchor: start;
+    text-decoration: none solid rgb(45, 33, 25);
+    text-decoration-color: rgb(45, 33, 25);
+    text-decoration-style: solid;
+    text-emphasis-color: rgb(45, 33, 25);
+    text-emphasis-position: over;
+    text-overflow: clip;
+    text-size-adjust: 100%;
+    text-wrap-mode: wrap;
+    transform-origin: 96px 34.5px;
+    transform-style: flat;
+    transition-delay: 0s;
+    transition-duration: 0s;
+    transition-property: all;
+    transition-timing-function: ease;
+    vertical-align: middle;
+    view-timeline-axis: block;
+    visibility: visible;
+    white-space-collapse: collapse;
+    widows: 2;
+    width: 192px;
+    writing-mode: horizontal-tb;
+    zoom: 1;
+    -webkit-box-align: stretch;
+    -webkit-box-decoration-break: slice;
+    -webkit-box-flex: 0;
+    -webkit-box-ordinal-group: 1;
+    -webkit-box-orient: horizontal;
+    -webkit-box-pack: start;
+    -webkit-locale: "en";
+    -webkit-mask-box-image-outset: 0;
+    -webkit-mask-box-image-repeat: stretch;
+    -webkit-mask-box-image-slice: 0 fill;
+    -webkit-rtl-ordering: logical;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-text-fill-color: rgb(45, 33, 25);
+    -webkit-text-orientation: vertical-right;
+    -webkit-text-stroke-color: rgb(45, 33, 25);
+    -webkit-user-modify: read-only;
+    -webkit-writing-mode: horizontal-tb;
+  }
+  }
+
+/* .footer-Computed .footer-styles: .footer-ul#list-499c6a3139.footer-cmp-list */ @media (min-width: 1200px) {  
+  ul#list-499c6a3139.cmp-list {
+    animation-composition: replace;
+    animation-delay: 0s;
+    animation-duration: 0s;
+    animation-iteration-count: 1;
+    animation-play-state: running;
+    animation-timing-function: ease;
+    backface-visibility: visible;
+    background-attachment: scroll;
+    background-clip: border-box;
+    background-color: rgba(0, 0, 0, 0);
+    background-origin: padding-box;
+    background-position: 0% 0%;
+    background-repeat: repeat;
+    block-size: 48px;
+    border-block-end-color: rgb(45, 33, 25);
+    border-block-start-color: rgb(45, 33, 25);
+    border-bottom-color: rgb(45, 33, 25);
+    border-collapse: separate;
+    border-image-outset: 0;
+    border-image-repeat: stretch;
+    border-image-slice: 100%;
+    border-image-width: 1;
+    border-inline-end-color: rgb(45, 33, 25);
+    border-inline-start-color: rgb(45, 33, 25);
+    border-left-color: rgb(45, 33, 25);
+    border-right-color: rgb(45, 33, 25);
+    border-top-color: rgb(45, 33, 25);
+    box-decoration-break: slice;
+    box-sizing: border-box;
+    caption-side: top;
+    caret-color: rgb(45, 33, 25);
+    clip-rule: nonzero;
+    color: rgb(45, 33, 25);
+    color-interpolation: srgb;
+    color-interpolation-filters: linearrgb;
+    column-rule-color: rgb(45, 33, 25);
+    direction: ltr;
+    display: grid;
+    dynamic-range-limit: no-limit;
+    empty-cells: show;
+    field-sizing: fixed;
+    fill: rgb(0, 0, 0);
+    fill-opacity: 1;
+    fill-rule: nonzero;
+    flex-direction: row;
+    flex-grow: 0;
+    flex-shrink: 1;
+    flex-wrap: nowrap;
+    flood-color: rgb(0, 0, 0);
+    flood-opacity: 1;
+    font-family: Urbanist;
+    font-size: 16px;
+    font-stretch: 100%;
+    font-weight: 400;
+    grid-auto-flow: row;
+    grid-template-columns: 310px;
+    grid-template-rows: 24px 24px;
+    height: 48px;
+    hyphens: manual;
+    image-orientation: from-image;
+    inline-size: 310px;
+    interpolate-size: numeric-only;
+    lighting-color: rgb(255, 255, 255);
+    line-height: 24px;
+    list-style-position: outside;
+    margin-block-end: 16px;
+    margin-bottom: 16px;
+    mask-clip: border-box;
+    mask-composite: add;
+    mask-mode: match-source;
+    mask-origin: border-box;
+    mask-position: 0% 0%;
+    mask-repeat: repeat;
+    mask-type: luminance;
+    math-depth: 0;
+    object-fit: fill;
+    object-position: 50% 50%;
+    offset-rotate: auto 0deg;
+    opacity: 1;
+    order: 0;
+    orphans: 2;
+    outline-color: rgb(45, 33, 25);
+    overflow-block: visible;
+    overflow-inline: visible;
+    overflow-x: visible;
+    overflow-y: visible;
+    perspective-origin: 155px 24px;
+    position: static;
+    position-visibility: always;
+    print-color-adjust: economy;
+    ruby-align: space-around;
+    ruby-position: over;
+    scroll-timeline-axis: block;
+    shape-image-threshold: 0;
+    stop-color: rgb(0, 0, 0);
+    stop-opacity: 1;
+    stroke-linecap: butt;
+    stroke-linejoin: miter;
+    stroke-miterlimit: 4;
+    stroke-opacity: 1;
+    stroke-width: 1px;
+    tab-size: 8;
+    text-align: left;
+    text-anchor: start;
+    text-decoration: none solid rgb(45, 33, 25);
+    text-decoration-color: rgb(45, 33, 25);
+    text-decoration-style: solid;
+    text-emphasis-color: rgb(45, 33, 25);
+    text-emphasis-position: over;
+    text-overflow: clip;
+    text-size-adjust: 100%;
+    text-wrap-mode: wrap;
+    transform-origin: 155px 24px;
+    transform-style: flat;
+    transition-delay: 0s;
+    transition-duration: 0s;
+    transition-property: all;
+    transition-timing-function: ease;
+    unicode-bidi: isolate;
+    vertical-align: baseline;
+    view-timeline-axis: block;
+    visibility: visible;
+    white-space-collapse: collapse;
+    widows: 2;
+    width: 310px;
+    writing-mode: horizontal-tb;
+    zoom: 1;
+    -webkit-box-align: stretch;
+    -webkit-box-decoration-break: slice;
+    -webkit-box-flex: 0;
+    -webkit-box-ordinal-group: 1;
+    -webkit-box-orient: horizontal;
+    -webkit-box-pack: start;
+    -webkit-locale: "en";
+    -webkit-mask-box-image-outset: 0;
+    -webkit-mask-box-image-repeat: stretch;
+    -webkit-mask-box-image-slice: 0 fill;
+    -webkit-rtl-ordering: logical;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-text-fill-color: rgb(45, 33, 25);
+    -webkit-text-orientation: vertical-right;
+    -webkit-text-stroke-color: rgb(45, 33, 25);
+    -webkit-user-modify: read-only;
+    -webkit-writing-mode: horizontal-tb;
+  }
+  }
+
+/* .footer-Computed .footer-styles: .footer-li.footer-cmp-list__item */ @media (min-width: 1200px) {  
+  li.cmp-list__item {
+    animation-composition: replace;
+    animation-delay: 0s;
+    animation-duration: 0s;
+    animation-iteration-count: 1;
+    animation-play-state: running;
+    animation-timing-function: ease;
+    backface-visibility: visible;
+    background-attachment: scroll;
+    background-clip: border-box;
+    background-color: rgba(0, 0, 0, 0);
+    background-origin: padding-box;
+    background-position: 0% 0%;
+    background-repeat: repeat;
+    block-size: 24px;
+    border-block-end-color: rgb(252, 241, 228);
+    border-block-start-color: rgb(252, 241, 228);
+    border-bottom-color: rgb(252, 241, 228);
+    border-collapse: separate;
+    border-image-outset: 0;
+    border-image-repeat: stretch;
+    border-image-slice: 100%;
+    border-image-width: 1;
+    border-inline-end-color: rgb(252, 241, 228);
+    border-inline-start-color: rgb(252, 241, 228);
+    border-left-color: rgb(252, 241, 228);
+    border-right-color: rgb(252, 241, 228);
+    border-top-color: rgb(252, 241, 228);
+    box-decoration-break: slice;
+    box-sizing: border-box;
+    caption-side: top;
+    caret-color: rgb(252, 241, 228);
+    clip-rule: nonzero;
+    color: rgb(252, 241, 228);
+    color-interpolation: srgb;
+    color-interpolation-filters: linearrgb;
+    column-rule-color: rgb(252, 241, 228);
+    cursor: pointer;
+    direction: ltr;
+    display: list-item;
+    dynamic-range-limit: no-limit;
+    empty-cells: show;
+    field-sizing: fixed;
+    fill: rgb(0, 0, 0);
+    fill-opacity: 1;
+    fill-rule: nonzero;
+    flex-direction: row;
+    flex-grow: 0;
+    flex-shrink: 1;
+    flex-wrap: nowrap;
+    flood-color: rgb(0, 0, 0);
+    flood-opacity: 1;
+    font-family: Urbanist;
+    font-size: 16px;
+    font-stretch: 100%;
+    font-weight: 400;
+    grid-auto-flow: row;
+    height: 24px;
+    hyphens: manual;
+    image-orientation: from-image;
+    inline-size: 310px;
+    interpolate-size: numeric-only;
+    lighting-color: rgb(255, 255, 255);
+    line-height: 24px;
+    list-style-position: outside;
+    mask-clip: border-box;
+    mask-composite: add;
+    mask-mode: match-source;
+    mask-origin: border-box;
+    mask-position: 0% 0%;
+    mask-repeat: repeat;
+    mask-type: luminance;
+    math-depth: 0;
+    object-fit: fill;
+    object-position: 50% 50%;
+    offset-rotate: auto 0deg;
+    opacity: 1;
+    order: 0;
+    orphans: 2;
+    outline-color: rgb(252, 241, 228);
+    overflow-block: visible;
+    overflow-inline: visible;
+    overflow-x: visible;
+    overflow-y: visible;
+    padding-inline-end: 48px;
+    padding-right: 48px;
+    perspective-origin: 155px 12px;
+    position: static;
+    position-visibility: always;
+    print-color-adjust: economy;
+    ruby-align: space-around;
+    ruby-position: over;
+    scroll-timeline-axis: block;
+    shape-image-threshold: 0;
+    stop-color: rgb(0, 0, 0);
+    stop-opacity: 1;
+    stroke-linecap: butt;
+    stroke-linejoin: miter;
+    stroke-miterlimit: 4;
+    stroke-opacity: 1;
+    stroke-width: 1px;
+    tab-size: 8;
+    text-align: left;
+    text-anchor: start;
+    text-decoration: none solid rgb(252, 241, 228);
+    text-decoration-color: rgb(252, 241, 228);
+    text-decoration-style: solid;
+    text-emphasis-color: rgb(252, 241, 228);
+    text-emphasis-position: over;
+    text-overflow: clip;
+    text-size-adjust: 100%;
+    text-wrap-mode: wrap;
+    transform-origin: 155px 12px;
+    transform-style: flat;
+    transition-delay: 0s;
+    transition-duration: 0s;
+    transition-property: all;
+    transition-timing-function: ease;
+    unicode-bidi: isolate;
+    vertical-align: baseline;
+    view-timeline-axis: block;
+    visibility: visible;
+    white-space-collapse: collapse;
+    widows: 2;
+    width: 310px;
+    writing-mode: horizontal-tb;
+    zoom: 1;
+    -webkit-box-align: stretch;
+    -webkit-box-decoration-break: slice;
+    -webkit-box-flex: 0;
+    -webkit-box-ordinal-group: 1;
+    -webkit-box-orient: horizontal;
+    -webkit-box-pack: start;
+    -webkit-locale: "en";
+    -webkit-mask-box-image-outset: 0;
+    -webkit-mask-box-image-repeat: stretch;
+    -webkit-mask-box-image-slice: 0 fill;
+    -webkit-rtl-ordering: logical;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-text-fill-color: rgb(252, 241, 228);
+    -webkit-text-orientation: vertical-right;
+    -webkit-text-stroke-color: rgb(252, 241, 228);
+    -webkit-user-modify: read-only;
+    -webkit-writing-mode: horizontal-tb;
+  }
+  }
+
+/* .footer-Computed .footer-styles: .footer-a.footer-cmp-list__item-link */ @media (min-width: 1200px) {  
+  a.cmp-list__item-link {
+    animation-composition: replace;
+    animation-delay: 0s;
+    animation-duration: 0s;
+    animation-iteration-count: 1;
+    animation-play-state: running;
+    animation-timing-function: ease;
+    backface-visibility: visible;
+    background-attachment: scroll;
+    background-clip: border-box;
+    background-color: rgba(0, 0, 0, 0);
+    background-origin: padding-box;
+    background-position: 0% 0%;
+    background-repeat: repeat;
+    border-block-end-color: rgb(252, 238, 217);
+    border-block-start-color: rgb(252, 238, 217);
+    border-bottom-color: rgb(252, 238, 217);
+    border-collapse: separate;
+    border-image-outset: 0;
+    border-image-repeat: stretch;
+    border-image-slice: 100%;
+    border-image-width: 1;
+    border-inline-end-color: rgb(252, 238, 217);
+    border-inline-start-color: rgb(252, 238, 217);
+    border-left-color: rgb(252, 238, 217);
+    border-right-color: rgb(252, 238, 217);
+    border-top-color: rgb(252, 238, 217);
+    box-decoration-break: slice;
+    box-sizing: border-box;
+    caption-side: top;
+    caret-color: rgb(252, 238, 217);
+    clip-rule: nonzero;
+    color: rgb(252, 238, 217);
+    color-interpolation: srgb;
+    color-interpolation-filters: linearrgb;
+    column-rule-color: rgb(252, 238, 217);
+    cursor: pointer;
+    direction: ltr;
+    display: inline;
+    dynamic-range-limit: no-limit;
+    empty-cells: show;
+    field-sizing: fixed;
+    fill: rgb(0, 0, 0);
+    fill-opacity: 1;
+    fill-rule: nonzero;
+    flex-direction: row;
+    flex-grow: 0;
+    flex-shrink: 1;
+    flex-wrap: nowrap;
+    flood-color: rgb(0, 0, 0);
+    flood-opacity: 1;
+    font-family: Urbanist;
+    font-size: 16px;
+    font-stretch: 100%;
+    font-weight: 400;
+    grid-auto-flow: row;
+    hyphens: manual;
+    image-orientation: from-image;
+    interpolate-size: numeric-only;
+    lighting-color: rgb(255, 255, 255);
+    line-height: 24px;
+    list-style-position: outside;
+    mask-clip: border-box;
+    mask-composite: add;
+    mask-mode: match-source;
+    mask-origin: border-box;
+    mask-position: 0% 0%;
+    mask-repeat: repeat;
+    mask-type: luminance;
+    math-depth: 0;
+    object-fit: fill;
+    object-position: 50% 50%;
+    offset-rotate: auto 0deg;
+    opacity: 1;
+    order: 0;
+    orphans: 2;
+    outline-color: rgb(252, 238, 217);
+    overflow-block: visible;
+    overflow-inline: visible;
+    overflow-x: visible;
+    overflow-y: visible;
+    padding-inline-end: 48px;
+    padding-right: 48px;
+    perspective-origin: 0px 0px;
+    position: static;
+    position-visibility: always;
+    print-color-adjust: economy;
+    ruby-align: space-around;
+    ruby-position: over;
+    scroll-timeline-axis: block;
+    shape-image-threshold: 0;
+    stop-color: rgb(0, 0, 0);
+    stop-opacity: 1;
+    stroke-linecap: butt;
+    stroke-linejoin: miter;
+    stroke-miterlimit: 4;
+    stroke-opacity: 1;
+    stroke-width: 1px;
+    tab-size: 8;
+    text-align: left;
+    text-anchor: start;
+    text-decoration: none solid rgb(252, 238, 217);
+    text-decoration-color: rgb(252, 238, 217);
+    text-decoration-style: solid;
+    text-emphasis-color: rgb(252, 238, 217);
+    text-emphasis-position: over;
+    text-overflow: clip;
+    text-size-adjust: 100%;
+    text-wrap-mode: nowrap;
+    transform-origin: 0px 0px;
+    transform-style: flat;
+    transition-delay: 0s;
+    transition-duration: 0s;
+    transition-property: all;
+    transition-timing-function: ease;
+    vertical-align: baseline;
+    view-timeline-axis: block;
+    visibility: visible;
+    white-space-collapse: collapse;
+    widows: 2;
+    writing-mode: horizontal-tb;
+    zoom: 1;
+    -webkit-box-align: stretch;
+    -webkit-box-decoration-break: slice;
+    -webkit-box-flex: 0;
+    -webkit-box-ordinal-group: 1;
+    -webkit-box-orient: horizontal;
+    -webkit-box-pack: start;
+    -webkit-locale: "en";
+    -webkit-mask-box-image-outset: 0;
+    -webkit-mask-box-image-repeat: stretch;
+    -webkit-mask-box-image-slice: 0 fill;
+    -webkit-rtl-ordering: logical;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-text-fill-color: rgb(252, 238, 217);
+    -webkit-text-orientation: vertical-right;
+    -webkit-text-stroke-color: rgb(252, 238, 217);
+    -webkit-user-modify: read-only;
+    -webkit-writing-mode: horizontal-tb;
+  }
+  }
+
+/* .footer-Computed .footer-styles: .footer-span.footer-cmp-list__item-title */ @media (min-width: 1200px) {  
+  span.cmp-list__item-title {
+    animation-composition: replace;
+    animation-delay: 0s;
+    animation-duration: 0s;
+    animation-iteration-count: 1;
+    animation-play-state: running;
+    animation-timing-function: ease;
+    backface-visibility: visible;
+    background-attachment: scroll;
+    background-clip: border-box;
+    background-color: rgba(0, 0, 0, 0);
+    background-origin: padding-box;
+    background-position: 0% 0%;
+    background-repeat: repeat;
+    border-block-end-color: rgb(252, 238, 217);
+    border-block-start-color: rgb(252, 238, 217);
+    border-bottom-color: rgb(252, 238, 217);
+    border-collapse: separate;
+    border-image-outset: 0;
+    border-image-repeat: stretch;
+    border-image-slice: 100%;
+    border-image-width: 1;
+    border-inline-end-color: rgb(252, 238, 217);
+    border-inline-start-color: rgb(252, 238, 217);
+    border-left-color: rgb(252, 238, 217);
+    border-right-color: rgb(252, 238, 217);
+    border-top-color: rgb(252, 238, 217);
+    box-decoration-break: slice;
+    box-sizing: border-box;
+    caption-side: top;
+    caret-color: rgb(252, 238, 217);
+    clip-rule: nonzero;
+    color: rgb(252, 238, 217);
+    color-interpolation: srgb;
+    color-interpolation-filters: linearrgb;
+    column-rule-color: rgb(252, 238, 217);
+    cursor: pointer;
+    direction: ltr;
+    display: inline;
+    dynamic-range-limit: no-limit;
+    empty-cells: show;
+    field-sizing: fixed;
+    fill: rgb(0, 0, 0);
+    fill-opacity: 1;
+    fill-rule: nonzero;
+    flex-direction: row;
+    flex-grow: 0;
+    flex-shrink: 1;
+    flex-wrap: nowrap;
+    flood-color: rgb(0, 0, 0);
+    flood-opacity: 1;
+    font-family: Urbanist;
+    font-size: 16px;
+    font-stretch: 100%;
+    font-weight: 400;
+    grid-auto-flow: row;
+    hyphens: manual;
+    image-orientation: from-image;
+    interpolate-size: numeric-only;
+    lighting-color: rgb(255, 255, 255);
+    line-height: 24px;
+    list-style-position: outside;
+    mask-clip: border-box;
+    mask-composite: add;
+    mask-mode: match-source;
+    mask-origin: border-box;
+    mask-position: 0% 0%;
+    mask-repeat: repeat;
+    mask-type: luminance;
+    math-depth: 0;
+    object-fit: fill;
+    object-position: 50% 50%;
+    offset-rotate: auto 0deg;
+    opacity: 1;
+    order: 0;
+    orphans: 2;
+    outline-color: rgb(252, 238, 217);
+    overflow-block: visible;
+    overflow-inline: visible;
+    overflow-x: visible;
+    overflow-y: visible;
+    perspective-origin: 0px 0px;
+    position: static;
+    position-visibility: always;
+    print-color-adjust: economy;
+    ruby-align: space-around;
+    ruby-position: over;
+    scroll-timeline-axis: block;
+    shape-image-threshold: 0;
+    stop-color: rgb(0, 0, 0);
+    stop-opacity: 1;
+    stroke-linecap: butt;
+    stroke-linejoin: miter;
+    stroke-miterlimit: 4;
+    stroke-opacity: 1;
+    stroke-width: 1px;
+    tab-size: 8;
+    text-align: left;
+    text-anchor: start;
+    text-decoration: none solid rgb(252, 238, 217);
+    text-decoration-color: rgb(252, 238, 217);
+    text-decoration-style: solid;
+    text-emphasis-color: rgb(252, 238, 217);
+    text-emphasis-position: over;
+    text-overflow: clip;
+    text-size-adjust: 100%;
+    text-wrap-mode: nowrap;
+    transform-origin: 0px 0px;
+    transform-style: flat;
+    transition-delay: 0s;
+    transition-duration: 0s;
+    transition-property: all;
+    transition-timing-function: ease;
+    vertical-align: baseline;
+    view-timeline-axis: block;
+    visibility: visible;
+    white-space-collapse: collapse;
+    widows: 2;
+    writing-mode: horizontal-tb;
+    zoom: 1;
+    -webkit-box-align: stretch;
+    -webkit-box-decoration-break: slice;
+    -webkit-box-flex: 0;
+    -webkit-box-ordinal-group: 1;
+    -webkit-box-orient: horizontal;
+    -webkit-box-pack: start;
+    -webkit-locale: "en";
+    -webkit-mask-box-image-outset: 0;
+    -webkit-mask-box-image-repeat: stretch;
+    -webkit-mask-box-image-slice: 0 fill;
+    -webkit-rtl-ordering: logical;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-text-fill-color: rgb(252, 238, 217);
+    -webkit-text-orientation: vertical-right;
+    -webkit-text-stroke-color: rgb(252, 238, 217);
+    -webkit-user-modify: read-only;
+    -webkit-writing-mode: horizontal-tb;
+  }
+  }
+
+/* .footer-Computed .footer-styles: .footer-li.footer-cmp-list__item */ @media (min-width: 1200px) {  
+  li.cmp-list__item {
+    animation-composition: replace;
+    animation-delay: 0s;
+    animation-duration: 0s;
+    animation-iteration-count: 1;
+    animation-play-state: running;
+    animation-timing-function: ease;
+    backface-visibility: visible;
+    background-attachment: scroll;
+    background-clip: border-box;
+    background-color: rgba(0, 0, 0, 0);
+    background-origin: padding-box;
+    background-position: 0% 0%;
+    background-repeat: repeat;
+    block-size: 24px;
+    border-block-end-color: rgb(252, 241, 228);
+    border-block-start-color: rgb(252, 241, 228);
+    border-bottom-color: rgb(252, 241, 228);
+    border-collapse: separate;
+    border-image-outset: 0;
+    border-image-repeat: stretch;
+    border-image-slice: 100%;
+    border-image-width: 1;
+    border-inline-end-color: rgb(252, 241, 228);
+    border-inline-start-color: rgb(252, 241, 228);
+    border-left-color: rgb(252, 241, 228);
+    border-right-color: rgb(252, 241, 228);
+    border-top-color: rgb(252, 241, 228);
+    box-decoration-break: slice;
+    box-sizing: border-box;
+    caption-side: top;
+    caret-color: rgb(252, 241, 228);
+    clip-rule: nonzero;
+    color: rgb(252, 241, 228);
+    color-interpolation: srgb;
+    color-interpolation-filters: linearrgb;
+    column-rule-color: rgb(252, 241, 228);
+    cursor: pointer;
+    direction: ltr;
+    display: list-item;
+    dynamic-range-limit: no-limit;
+    empty-cells: show;
+    field-sizing: fixed;
+    fill: rgb(0, 0, 0);
+    fill-opacity: 1;
+    fill-rule: nonzero;
+    flex-direction: row;
+    flex-grow: 0;
+    flex-shrink: 1;
+    flex-wrap: nowrap;
+    flood-color: rgb(0, 0, 0);
+    flood-opacity: 1;
+    font-family: Urbanist;
+    font-size: 16px;
+    font-stretch: 100%;
+    font-weight: 400;
+    grid-auto-flow: row;
+    height: 24px;
+    hyphens: manual;
+    image-orientation: from-image;
+    inline-size: 310px;
+    interpolate-size: numeric-only;
+    lighting-color: rgb(255, 255, 255);
+    line-height: 24px;
+    list-style-position: outside;
+    mask-clip: border-box;
+    mask-composite: add;
+    mask-mode: match-source;
+    mask-origin: border-box;
+    mask-position: 0% 0%;
+    mask-repeat: repeat;
+    mask-type: luminance;
+    math-depth: 0;
+    object-fit: fill;
+    object-position: 50% 50%;
+    offset-rotate: auto 0deg;
+    opacity: 1;
+    order: 0;
+    orphans: 2;
+    outline-color: rgb(252, 241, 228);
+    overflow-block: visible;
+    overflow-inline: visible;
+    overflow-x: visible;
+    overflow-y: visible;
+    padding-inline-end: 48px;
+    padding-right: 48px;
+    perspective-origin: 155px 12px;
+    position: static;
+    position-visibility: always;
+    print-color-adjust: economy;
+    ruby-align: space-around;
+    ruby-position: over;
+    scroll-timeline-axis: block;
+    shape-image-threshold: 0;
+    stop-color: rgb(0, 0, 0);
+    stop-opacity: 1;
+    stroke-linecap: butt;
+    stroke-linejoin: miter;
+    stroke-miterlimit: 4;
+    stroke-opacity: 1;
+    stroke-width: 1px;
+    tab-size: 8;
+    text-align: left;
+    text-anchor: start;
+    text-decoration: none solid rgb(252, 241, 228);
+    text-decoration-color: rgb(252, 241, 228);
+    text-decoration-style: solid;
+    text-emphasis-color: rgb(252, 241, 228);
+    text-emphasis-position: over;
+    text-overflow: clip;
+    text-size-adjust: 100%;
+    text-wrap-mode: wrap;
+    transform-origin: 155px 12px;
+    transform-style: flat;
+    transition-delay: 0s;
+    transition-duration: 0s;
+    transition-property: all;
+    transition-timing-function: ease;
+    unicode-bidi: isolate;
+    vertical-align: baseline;
+    view-timeline-axis: block;
+    visibility: visible;
+    white-space-collapse: collapse;
+    widows: 2;
+    width: 310px;
+    writing-mode: horizontal-tb;
+    zoom: 1;
+    -webkit-box-align: stretch;
+    -webkit-box-decoration-break: slice;
+    -webkit-box-flex: 0;
+    -webkit-box-ordinal-group: 1;
+    -webkit-box-orient: horizontal;
+    -webkit-box-pack: start;
+    -webkit-locale: "en";
+    -webkit-mask-box-image-outset: 0;
+    -webkit-mask-box-image-repeat: stretch;
+    -webkit-mask-box-image-slice: 0 fill;
+    -webkit-rtl-ordering: logical;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-text-fill-color: rgb(252, 241, 228);
+    -webkit-text-orientation: vertical-right;
+    -webkit-text-stroke-color: rgb(252, 241, 228);
+    -webkit-user-modify: read-only;
+    -webkit-writing-mode: horizontal-tb;
+  }
+  }
+
+/* .footer-Computed .footer-styles: .footer-a.footer-cmp-list__item-link */ @media (min-width: 1200px) {  
+  a.cmp-list__item-link {
+    animation-composition: replace;
+    animation-delay: 0s;
+    animation-duration: 0s;
+    animation-iteration-count: 1;
+    animation-play-state: running;
+    animation-timing-function: ease;
+    backface-visibility: visible;
+    background-attachment: scroll;
+    background-clip: border-box;
+    background-color: rgba(0, 0, 0, 0);
+    background-origin: padding-box;
+    background-position: 0% 0%;
+    background-repeat: repeat;
+    border-block-end-color: rgb(252, 238, 217);
+    border-block-start-color: rgb(252, 238, 217);
+    border-bottom-color: rgb(252, 238, 217);
+    border-collapse: separate;
+    border-image-outset: 0;
+    border-image-repeat: stretch;
+    border-image-slice: 100%;
+    border-image-width: 1;
+    border-inline-end-color: rgb(252, 238, 217);
+    border-inline-start-color: rgb(252, 238, 217);
+    border-left-color: rgb(252, 238, 217);
+    border-right-color: rgb(252, 238, 217);
+    border-top-color: rgb(252, 238, 217);
+    box-decoration-break: slice;
+    box-sizing: border-box;
+    caption-side: top;
+    caret-color: rgb(252, 238, 217);
+    clip-rule: nonzero;
+    color: rgb(252, 238, 217);
+    color-interpolation: srgb;
+    color-interpolation-filters: linearrgb;
+    column-rule-color: rgb(252, 238, 217);
+    cursor: pointer;
+    direction: ltr;
+    display: inline;
+    dynamic-range-limit: no-limit;
+    empty-cells: show;
+    field-sizing: fixed;
+    fill: rgb(0, 0, 0);
+    fill-opacity: 1;
+    fill-rule: nonzero;
+    flex-direction: row;
+    flex-grow: 0;
+    flex-shrink: 1;
+    flex-wrap: nowrap;
+    flood-color: rgb(0, 0, 0);
+    flood-opacity: 1;
+    font-family: Urbanist;
+    font-size: 16px;
+    font-stretch: 100%;
+    font-weight: 400;
+    grid-auto-flow: row;
+    hyphens: manual;
+    image-orientation: from-image;
+    interpolate-size: numeric-only;
+    lighting-color: rgb(255, 255, 255);
+    line-height: 24px;
+    list-style-position: outside;
+    mask-clip: border-box;
+    mask-composite: add;
+    mask-mode: match-source;
+    mask-origin: border-box;
+    mask-position: 0% 0%;
+    mask-repeat: repeat;
+    mask-type: luminance;
+    math-depth: 0;
+    object-fit: fill;
+    object-position: 50% 50%;
+    offset-rotate: auto 0deg;
+    opacity: 1;
+    order: 0;
+    orphans: 2;
+    outline-color: rgb(252, 238, 217);
+    overflow-block: visible;
+    overflow-inline: visible;
+    overflow-x: visible;
+    overflow-y: visible;
+    padding-inline-end: 48px;
+    padding-right: 48px;
+    perspective-origin: 0px 0px;
+    position: static;
+    position-visibility: always;
+    print-color-adjust: economy;
+    ruby-align: space-around;
+    ruby-position: over;
+    scroll-timeline-axis: block;
+    shape-image-threshold: 0;
+    stop-color: rgb(0, 0, 0);
+    stop-opacity: 1;
+    stroke-linecap: butt;
+    stroke-linejoin: miter;
+    stroke-miterlimit: 4;
+    stroke-opacity: 1;
+    stroke-width: 1px;
+    tab-size: 8;
+    text-align: left;
+    text-anchor: start;
+    text-decoration: none solid rgb(252, 238, 217);
+    text-decoration-color: rgb(252, 238, 217);
+    text-decoration-style: solid;
+    text-emphasis-color: rgb(252, 238, 217);
+    text-emphasis-position: over;
+    text-overflow: clip;
+    text-size-adjust: 100%;
+    text-wrap-mode: nowrap;
+    transform-origin: 0px 0px;
+    transform-style: flat;
+    transition-delay: 0s;
+    transition-duration: 0s;
+    transition-property: all;
+    transition-timing-function: ease;
+    vertical-align: baseline;
+    view-timeline-axis: block;
+    visibility: visible;
+    white-space-collapse: collapse;
+    widows: 2;
+    writing-mode: horizontal-tb;
+    zoom: 1;
+    -webkit-box-align: stretch;
+    -webkit-box-decoration-break: slice;
+    -webkit-box-flex: 0;
+    -webkit-box-ordinal-group: 1;
+    -webkit-box-orient: horizontal;
+    -webkit-box-pack: start;
+    -webkit-locale: "en";
+    -webkit-mask-box-image-outset: 0;
+    -webkit-mask-box-image-repeat: stretch;
+    -webkit-mask-box-image-slice: 0 fill;
+    -webkit-rtl-ordering: logical;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-text-fill-color: rgb(252, 238, 217);
+    -webkit-text-orientation: vertical-right;
+    -webkit-text-stroke-color: rgb(252, 238, 217);
+    -webkit-user-modify: read-only;
+    -webkit-writing-mode: horizontal-tb;
+  }
+  }
+
+/* .footer-Computed .footer-styles: .footer-span.footer-cmp-list__item-title */ @media (min-width: 1200px) {  
+  span.cmp-list__item-title {
+    animation-composition: replace;
+    animation-delay: 0s;
+    animation-duration: 0s;
+    animation-iteration-count: 1;
+    animation-play-state: running;
+    animation-timing-function: ease;
+    backface-visibility: visible;
+    background-attachment: scroll;
+    background-clip: border-box;
+    background-color: rgba(0, 0, 0, 0);
+    background-origin: padding-box;
+    background-position: 0% 0%;
+    background-repeat: repeat;
+    border-block-end-color: rgb(252, 238, 217);
+    border-block-start-color: rgb(252, 238, 217);
+    border-bottom-color: rgb(252, 238, 217);
+    border-collapse: separate;
+    border-image-outset: 0;
+    border-image-repeat: stretch;
+    border-image-slice: 100%;
+    border-image-width: 1;
+    border-inline-end-color: rgb(252, 238, 217);
+    border-inline-start-color: rgb(252, 238, 217);
+    border-left-color: rgb(252, 238, 217);
+    border-right-color: rgb(252, 238, 217);
+    border-top-color: rgb(252, 238, 217);
+    box-decoration-break: slice;
+    box-sizing: border-box;
+    caption-side: top;
+    caret-color: rgb(252, 238, 217);
+    clip-rule: nonzero;
+    color: rgb(252, 238, 217);
+    color-interpolation: srgb;
+    color-interpolation-filters: linearrgb;
+    column-rule-color: rgb(252, 238, 217);
+    cursor: pointer;
+    direction: ltr;
+    display: inline;
+    dynamic-range-limit: no-limit;
+    empty-cells: show;
+    field-sizing: fixed;
+    fill: rgb(0, 0, 0);
+    fill-opacity: 1;
+    fill-rule: nonzero;
+    flex-direction: row;
+    flex-grow: 0;
+    flex-shrink: 1;
+    flex-wrap: nowrap;
+    flood-color: rgb(0, 0, 0);
+    flood-opacity: 1;
+    font-family: Urbanist;
+    font-size: 16px;
+    font-stretch: 100%;
+    font-weight: 400;
+    grid-auto-flow: row;
+    hyphens: manual;
+    image-orientation: from-image;
+    interpolate-size: numeric-only;
+    lighting-color: rgb(255, 255, 255);
+    line-height: 24px;
+    list-style-position: outside;
+    mask-clip: border-box;
+    mask-composite: add;
+    mask-mode: match-source;
+    mask-origin: border-box;
+    mask-position: 0% 0%;
+    mask-repeat: repeat;
+    mask-type: luminance;
+    math-depth: 0;
+    object-fit: fill;
+    object-position: 50% 50%;
+    offset-rotate: auto 0deg;
+    opacity: 1;
+    order: 0;
+    orphans: 2;
+    outline-color: rgb(252, 238, 217);
+    overflow-block: visible;
+    overflow-inline: visible;
+    overflow-x: visible;
+    overflow-y: visible;
+    perspective-origin: 0px 0px;
+    position: static;
+    position-visibility: always;
+    print-color-adjust: economy;
+    ruby-align: space-around;
+    ruby-position: over;
+    scroll-timeline-axis: block;
+    shape-image-threshold: 0;
+    stop-color: rgb(0, 0, 0);
+    stop-opacity: 1;
+    stroke-linecap: butt;
+    stroke-linejoin: miter;
+    stroke-miterlimit: 4;
+    stroke-opacity: 1;
+    stroke-width: 1px;
+    tab-size: 8;
+    text-align: left;
+    text-anchor: start;
+    text-decoration: none solid rgb(252, 238, 217);
+    text-decoration-color: rgb(252, 238, 217);
+    text-decoration-style: solid;
+    text-emphasis-color: rgb(252, 238, 217);
+    text-emphasis-position: over;
+    text-overflow: clip;
+    text-size-adjust: 100%;
+    text-wrap-mode: nowrap;
+    transform-origin: 0px 0px;
+    transform-style: flat;
+    transition-delay: 0s;
+    transition-duration: 0s;
+    transition-property: all;
+    transition-timing-function: ease;
+    vertical-align: baseline;
+    view-timeline-axis: block;
+    visibility: visible;
+    white-space-collapse: collapse;
+    widows: 2;
+    writing-mode: horizontal-tb;
+    zoom: 1;
+    -webkit-box-align: stretch;
+    -webkit-box-decoration-break: slice;
+    -webkit-box-flex: 0;
+    -webkit-box-ordinal-group: 1;
+    -webkit-box-orient: horizontal;
+    -webkit-box-pack: start;
+    -webkit-locale: "en";
+    -webkit-mask-box-image-outset: 0;
+    -webkit-mask-box-image-repeat: stretch;
+    -webkit-mask-box-image-slice: 0 fill;
+    -webkit-rtl-ordering: logical;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-text-fill-color: rgb(252, 238, 217);
+    -webkit-text-orientation: vertical-right;
+    -webkit-text-stroke-color: rgb(252, 238, 217);
+    -webkit-user-modify: read-only;
+    -webkit-writing-mode: horizontal-tb;
+  }
+  }

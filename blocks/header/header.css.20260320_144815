@@ -1,0 +1,293 @@
+.header-itc-header-section {
+  position: fixed;
+  width: 100%;
+  background-color: #fff;
+  z-index: 9999;
+  top: 0px;
+  left: 0px;
+}
+.header-itc-header-section .header-navbar-light .header-navbar-nav .header-nav-link {
+  color: #533012;
+  font-size: 1rem; /* Equivalent to 16px assuming 16px base */
+}
+.header-itc-header-section .header-navbar-light .header-navbar-nav .header-nav-link:hover {
+  text-decoration: none !important;
+}
+.header-itc-header-section .header-cmp-navigation__item {
+  display: list-item;
+}
+.header-itc-header-section .header-navbar-collapse {
+  justify-content: space-between !important;
+}
+.header-itc-header-section .header-navbar {
+  height: 92px;
+}
+.header-itc-header-section .header-cmp-navigation__group {
+  margin-bottom: 0px;
+}
+.header-itc-header-section .header-cmp-navigation__item {
+  padding-right: 22px;
+  font-size: 1rem; /* Equivalent to 16px assuming 16px base */
+}
+.header-itc-header-section .header-cmp-navigation__item-link {
+  color: #533012;
+  text-decoration: none;
+  padding-bottom: 5px;
+}
+.header-itc-header-section .header-cmp-navigation__item-link:hover,
+.header-itc-header-section .header-cmp-navigation__item--active .header-cmp-navigation__item-link {
+  color: #4f250a;
+  border-bottom: 2px solid #4f250a;
+  transition: all 0.3s ease;
+}
+
+@media (max-width: 1438px) {
+  .header-itc-header-section .header-cmp-navigation__item-link,
+  .header-itc-header-icon-list .header-nav-link {
+    font-size: 1vw;
+  }
+  .header-itc-header-section .header-logo-image {
+    max-width: 77px;
+  }
+}
+@media (max-width: 1400px) {
+  .header-itc-header-section .header-logo img {
+    padding-left: 40px;
+  }
+}
+@media (max-width: 1200px) {
+  .header-itc-header-section #navbarSupportedContent {
+    position: absolute;
+    background: #fff7e3;
+    min-width: 300px;
+    width: 89%;
+    z-index: 1;
+    padding: 10px;
+    top: 66px;
+    height: 100vh;
+  }
+  .header-itc-header-section .header-navbar {
+    height: 78px;
+  }
+  .header-itc-header-section .header-cmp-navigation__item-link:hover,
+  .header-itc-header-section .header-cmp-navigation__item--active .header-cmp-navigation__item-link {
+    border-bottom: 2px solid #f8f9fa;
+  }
+  .header-itc-header-section #navbarSupportedContent .header-nav-item {
+    background: #6c3003;
+    border-radius: 1.6rem;
+  }
+  .header-itc-header-section #navbarSupportedContent .header-nav-item .header-cmp-navigation__item-link {
+    color: #fff;
+    font-size: 1rem !important; /* Equivalent to 16px assuming 16px base */
+    font-weight: 700;
+  }
+  .header-itc-header-section #navbarSupportedContent .header-nav-item .header-cmp-navigation__item {
+    padding: 10px 0px !important;
+  }
+  .header-itc-header-section #navbarSupportedContent .header-cmp-navigation__group {
+    padding: 10px 0px 20px 20px;
+  }
+  .header-itc-header-section .header-navbar-toggler .header-navbar-toggler-icon {
+    max-width: 22px;
+    background: url("../../../content/dam/kitchens-of-india/placeholders/vector-four.svg") no-repeat;
+  }
+  .header-itc-header-section .header-navbar-toggler.header-collapsed .header-navbar-toggler-icon {
+    background: url("../../../content/dam/kitchens-of-india/placeholders/menu.svg") no-repeat;
+    max-width: 22px;
+  }
+  .header-itc-header-section .header-cmp-navigation__group {
+    display: block;
+  }
+  .header-itc-header-section .header-cmp-navigation__item-link,
+  .header-itc-header-icon-list .header-nav-link {
+    font-size: 2vw;
+  }
+  .header-itc-header-section .header-logo img {
+    width: 77px;
+    height: 47px;
+  }
+  .header-itc-header-section .header-logo img {
+    padding-left: 0px;
+  }
+}
+@media (max-width: 991px) {
+  .header-itc-header-icon-list .header-d-block {
+    font-size: 8px;
+  }
+  .header-itc-header-section .header-cmp-navigation__item-link {
+    padding: 0px;
+  }
+  .header-itc-header-section .header-cmp-navigation__item-link img {
+    max-width: 33px;
+  }
+  body {
+    padding-top: 78px !important;
+  }
+}
+.header-search-icon {
+  background: none;
+  color: black;
+  padding: 2px 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  gap: 4px;
+  font-size: 0.875rem; /* Equivalent to 14px assuming 16px base */
+  font-weight: bold;
+}
+.header-search-icon:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+.header-header-country-flag {
+  width: 19px;
+  height: 19px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.header-dropdown-icon {
+  vertical-align: middle;
+  border-style: none;
+}
+.header-itc-country-selector {
+  z-index: 10000;
+}
+.header-itc-country-selector.header-show {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+.header-modal-title {
+  font-size: 30px;
+  font-family: inherit;
+  font-weight: bold;
+  color: #4f250a;
+  line-height: 1;
+}
+.header-experience-text {
+  font-family: Cataneo;
+  font-size: 45px;
+  font-weight: normal;
+  color: #eeb144;
+  margin-bottom: 0px;
+  font-style: italic;
+}
+.header-modal-content {
+  pointer-events: none !important;
+}
+.header-modal-body {
+  padding-top: 0px !important;
+  padding-bottom: 26px !important;
+}
+.header-modal-body .header-country-option {
+  pointer-events: auto;
+}
+.header-modal-body .header-country-name {
+  color: #282828;
+  font-size: 1rem; /* Equivalent to 16px assuming 16px base */
+  font-weight: bold;
+  text-align: center;
+  line-height: 1cm;
+}
+.header-modal-body .header-country-name {
+  margin-bottom: 0px;
+}
+.header-modal-content {
+  background-color: #faf6f2;
+}
+.header-country-options:hover {
+  cursor: pointer;
+}
+.header-header-logo-div {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  align-items: center;
+}
+@media (max-width: 767.98px) {
+  .header-header-logo-div {
+    gap: 10px;
+  }
+}
+.header-header-logo-div .header-checkLogoLink {
+  padding-top: 14px;
+}
+@media (max-width: 767.98px) {
+  .header-header-logo-div .header-checkLogoLink {
+    padding-top: 0px;
+  }
+}
+.header-header-logo-div .header-itc-logo-image {
+  width: auto;
+  height: 63px;
+  object-fit: contain;
+  padding-left: 0px;
+  border-right: 1px solid #2d2119;
+  padding-right: 20px;
+}
+@media (max-width: 1200px) {
+  .header-header-logo-div .header-itc-logo-image {
+    height: 47px;
+  }
+}
+@media (max-width: 767.98px) {
+  .header-header-logo-div .header-itc-logo-image {
+    width: 60px;
+    padding-right: 0px;
+  }
+}
+.header-header-logo-div .header-cmp-image__image {
+  padding-left: 0px;
+}
+.header-search-block {
+  position: absolute;
+  right: 0px;
+  top: 100%;
+  width: 100%;
+}
+.header-resultList {
+  text-align: left;
+}
+.header-search-box {
+  border: 1px solid #000;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  justify-content: space-between;
+  padding: 15px;
+}
+@media (min-width: 768px) {
+  .header-search-results {
+    width: 100%;
+    left: 0px;
+  }
+  .header-itc-header-icon-list {
+    text-align: right;
+  }
+  .header-search-block {
+    max-width: 300px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .header-search-box {
+    padding: 10px;
+  }
+}
+@media (min-width: 1200px) {
+  .header-search-results {
+    width: calc(100% + 50px);
+    left: 0px;
+  }
+  .header-itc-header-icon-list {
+    display: flex;
+    align-items: center;
+  }
+  .header-itc-header-icon-list .header-nav-item {
+    display: none;
+  }
+  .header-search-block {
+    max-width: 300px;
+    position: relative;
+    right: -60px;
+    top: unset;
+    transform: unset;
+  }
+}

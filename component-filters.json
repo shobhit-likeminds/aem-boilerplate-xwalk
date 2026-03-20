@@ -42,13 +42,16 @@
       "howshiftSection",
       "whyUsText",
       "clubCarousel",
-      "textComponent"
+      "textComponent",
+      "spaceAdder",
+      "itcClubCarousel",
+      "makeRightShift"
     ]
   },
   {
     "id": "bannerCarousel",
     "components": [
-      "bannerItem"
+      "bannerCarouselItem"
     ]
   },
   {
@@ -136,8 +139,8 @@
     "id": "footer",
     "components": [
       "footerLink",
-      "socialIcon",
-      "footerSecondaryLink"
+      "footerListItem",
+      "socialIcon"
     ]
   },
   {
@@ -173,6 +176,18 @@
     ]
   },
   {
+    "id": "itc-club-carousel",
+    "components": [
+      "carouselItem"
+    ]
+  },
+  {
+    "id": "makeRightShift",
+    "components": [
+      "category"
+    ]
+  },
+  {
     "id": "pageintro",
     "components": [
       "pageintro"
@@ -193,7 +208,7 @@
   {
     "id": "rsCards",
     "components": [
-      "rsCard"
+      "rsCardItem"
     ]
   },
   {
@@ -201,6 +216,12 @@
   },
   {
     "id": "spaceadderVerticalPaddingSection"
+  },
+  {
+    "id": "spaceAdder",
+    "components": [
+      "spaceAdder"
+    ]
   },
   {
     "id": "textComponent",

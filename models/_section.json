@@ -77,7 +77,10 @@
         "howshiftSection",
         "whyUsText",
         "clubCarousel",
-        "textComponent"
+        "textComponent",
+        "spaceAdder",
+        "itcClubCarousel",
+        "makeRightShift"
       ]
     }
   ]
