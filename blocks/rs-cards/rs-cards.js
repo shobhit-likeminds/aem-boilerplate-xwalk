@@ -2,97 +2,56 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  block.classList.add('rscards-rsCards');
+  const rsCardsWrapper = document.createElement('div');
+  rsCardsWrapper.classList.add('rs-cards-wrapper');
 
-  const rowContainer = document.createElement('div');
-  rowContainer.classList.add('rscards-row');
+  const rsCardsRow = document.createElement('div');
+  rsCardsRow.classList.add('rs-cards-row', 'container-row');
 
   [...block.children].forEach((row) => {
     const cardCol = document.createElement('div');
-    cardCol.classList.add(
-      'rscards-col-xl-4',
-      'rscards-col-lg-6',
-      'rscards-pb-md-0',
-      'rscards-pb-4',
-      'rscards-row-gap-4',
-      'rscards-rsCards-koi-rscard-padding',
-    );
     moveInstrumentation(row, cardCol);
+    cardCol.classList.add('rs-cards-col', 'container-col-xl-4', 'container-col-lg-6', 'container-pb-md-0', 'container-pb-4', 'container-row-gap-4', 'container-koi-rscard-padding');
 
     const card = document.createElement('div');
-    card.classList.add('rscards-card', 'rscards-rsCards-rs-card');
+    card.classList.add('rs-cards-card', 'container-card', 'container-rs-card');
 
     const cardBody = document.createElement('div');
-    cardBody.classList.add('rscards-card-body');
+    cardBody.classList.add('rs-cards-card-body', 'container-card-body');
 
-    // Destructure cells based on the rsCardItem model: image, title, description, icon
-    const cells = [...row.children];
-    const imageCell = cells[0];
-    const titleCell = cells[1];
-    const descriptionCell = cells[2];
-    const iconCell = cells[3];
-
-    let imageEl = null;
-    let titleEl = null;
-    let descriptionEl = null;
-    let iconEl = null;
-
-    if (imageCell) {
-      imageEl = imageCell.querySelector('picture');
-    }
-    if (titleCell) {
-      titleEl = titleCell.querySelector('h1, h2, h3, h4, h5, h6');
-    }
-    if (descriptionCell) {
-      descriptionEl = descriptionCell; // The description is the cell itself
-    }
-    if (iconCell) {
-      iconEl = iconCell.querySelector('a');
-    }
-
-    if (imageEl) {
-      const newPicture = createOptimizedPicture(
-        imageEl.querySelector('img').src,
-        imageEl.querySelector('img').alt,
-        false,
-        [{ width: '750' }],
-      );
-      moveInstrumentation(imageEl, newPicture.querySelector('img'));
-      card.append(newPicture);
-    }
-
-    if (iconEl) {
-      const newIconLink = document.createElement('a');
-      newIconLink.classList.add('rscards-rsCards-explore-btn'); // Add a class for styling if needed
-      newIconLink.href = iconEl.href;
-      newIconLink.setAttribute('aria-label', iconEl.getAttribute('aria-label'));
-      newIconLink.target = iconEl.target;
-      moveInstrumentation(iconEl, newIconLink);
-      while (iconEl.firstChild) newIconLink.append(iconEl.firstChild);
-      cardBody.append(newIconLink);
-    }
-
-    if (titleEl) {
-      const newTitle = document.createElement('h5');
-      newTitle.classList.add('rscards-rsCards-blog-card-title');
-      moveInstrumentation(titleEl, newTitle);
-      while (titleEl.firstChild) newTitle.append(titleEl.firstChild);
-      cardBody.append(newTitle);
-    }
-
-    if (descriptionEl) {
-      const newDescription = document.createElement('h5');
-      newDescription.classList.add('rscards-card-title');
-      moveInstrumentation(descriptionEl, newDescription);
-      while (descriptionEl.firstChild) newDescription.append(descriptionEl.firstChild);
-      cardBody.append(newDescription);
-    }
+    [...row.children].forEach((cell, cellIndex) => {
+      if (cellIndex === 0) { // Image
+        const picture = cell.querySelector('picture');
+        if (picture) {
+          const img = picture.querySelector('img');
+          if (img) {
+            const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+            moveInstrumentation(img, optimizedPic.querySelector('img'));
+            card.append(optimizedPic);
+            optimizedPic.querySelector('img').classList.add('rs-cards-image', 'container-w-100', 'container-kitchens-image');
+          }
+        }
+      } else if (cellIndex === 1) { // Heading
+        const heading = document.createElement('h5');
+        heading.classList.add('rs-cards-blog-card-title', 'container-blog-card-title');
+        moveInstrumentation(cell, heading);
+        while (cell.firstChild) heading.append(cell.firstChild);
+        cardBody.append(heading);
+      } else if (cellIndex === 2) { // Description
+        const description = document.createElement('h5');
+        description.classList.add('rs-cards-card-title', 'container-card-title');
+        moveInstrumentation(cell, description);
+        while (cell.firstChild) description.append(cell.firstChild);
+        cardBody.append(description);
+      }
+    });
 
     card.append(cardBody);
     cardCol.append(card);
-    rowContainer.append(cardCol);
+    rsCardsRow.append(cardCol);
   });
 
+  rsCardsWrapper.append(rsCardsRow);
   block.textContent = '';
-  block.append(rowContainer);
+  block.append(rsCardsWrapper);
 }

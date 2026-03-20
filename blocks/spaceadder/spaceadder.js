@@ -1,19 +1,20 @@
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const [paddingRow] = [...block.children];
-
-  const paddingValue = parseInt(paddingRow.firstElementChild.textContent.trim(), 10);
+  const [paddingTopBottomRow] = [...block.children];
 
   const section = document.createElement('section');
-  section.classList.add('spaceadder-spaceAdder-verticalPadding_section');
+  section.classList.add('spaceadder-verticalPadding_section'); // Corrected class prefix
 
-  if (!isNaN(paddingValue)) {
-    section.classList.add(`spaceadder-spaceAdder-padding-${paddingValue}`);
+  if (paddingTopBottomRow) {
+    const paddingValue = parseInt(paddingTopBottomRow.firstElementChild.textContent.trim(), 10);
+    if (!Number.isNaN(paddingValue)) {
+      section.classList.add(`spaceadder-padding-${paddingValue}`); // Corrected class prefix
+    }
+    moveInstrumentation(paddingTopBottomRow, section);
   }
 
-  moveInstrumentation(paddingRow, section);
-
   block.textContent = '';
+  block.classList.add('spaceadder-spaceAdder', 'spaceadder-aem-GridColumn', 'spaceadder-aem-GridColumn--default--12');
   block.append(section);
 }

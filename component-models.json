@@ -142,7 +142,7 @@
     ]
   },
   {
-    "id": "bannerCarouselItem",
+    "id": "bannerSlide",
     "fields": [
       {
         "component": "reference",
@@ -157,15 +157,9 @@
         "valueType": "string"
       },
       {
-        "component": "richtext",
+        "component": "text",
         "label": "Heading",
         "name": "heading",
-        "valueType": "string"
-      },
-      {
-        "component": "richtext",
-        "label": "Subheading",
-        "name": "subheading",
         "valueType": "string"
       },
       {
@@ -178,6 +172,12 @@
         "component": "aem-content",
         "label": "CTA Link",
         "name": "ctaLink",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "CTA Text",
+        "name": "ctaText",
         "valueType": "string"
       }
     ]
@@ -675,6 +675,150 @@
     ]
   },
   {
+    "id": "footerItcFooterSection",
+    "fields": [
+      {
+        "component": "container",
+        "itemType": "logo",
+        "label": "Logos",
+        "name": "logos"
+      },
+      {
+        "component": "container",
+        "itemType": "footerLink",
+        "label": "Footer Links",
+        "name": "footerLinks"
+      },
+      {
+        "component": "container",
+        "itemType": "footerListItem",
+        "label": "Footer List Items",
+        "name": "footerListItems"
+      },
+      {
+        "component": "container",
+        "itemType": "socialIcon",
+        "label": "Social Icons",
+        "name": "socialIcons"
+      },
+      {
+        "component": "container",
+        "itemType": "secondaryFooterLink",
+        "label": "Secondary Footer Links",
+        "name": "secondaryFooterLinks"
+      },
+      {
+        "component": "text",
+        "label": "Copyright",
+        "name": "copyright",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Grievance Officer Title",
+        "name": "grievanceOfficerTitle",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Grievance Officer Name",
+        "name": "grievanceOfficerName",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Grievance Officer Contact",
+        "name": "grievanceOfficerContact",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Grievance Officer Hours",
+        "name": "grievanceOfficerHours",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "logo",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Image",
+        "name": "image",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "footerLink",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Text",
+        "name": "text",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "footerListItem",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Text",
+        "name": "text",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "socialIcon",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Icon",
+        "name": "icon",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "secondaryFooterLink",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "footer",
     "fields": [
       {
@@ -809,6 +953,60 @@
         "component": "aem-content",
         "name": "reference",
         "label": "Reference"
+      }
+    ]
+  },
+  {
+    "id": "headerItcHeaderSection",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Logo Image",
+        "name": "logoImage",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Logo Link",
+        "name": "logoLink",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Logo Alt Text",
+        "name": "logoAltText",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "fields": [
+          {
+            "component": "aem-content",
+            "label": "Shop Link",
+            "name": "shopLink",
+            "valueType": "string"
+          },
+          {
+            "component": "aem-content",
+            "label": "Our Heritage Link",
+            "name": "ourHeritageLink",
+            "valueType": "string"
+          }
+        ],
+        "label": "Navigation",
+        "name": "navigation"
+      },
+      {
+        "component": "reference",
+        "label": "Country Flag India",
+        "name": "countryFlagIndia",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Country Flag USA",
+        "name": "countryFlagUSA",
+        "valueType": "string"
       }
     ]
   },
@@ -1245,7 +1443,13 @@
         "valueType": "string"
       },
       {
-        "component": "richtext",
+        "component": "text",
+        "label": "Alt Text",
+        "name": "altText",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
         "label": "Title",
         "name": "title",
         "valueType": "string"
@@ -1259,7 +1463,7 @@
     ]
   },
   {
-    "id": "category",
+    "id": "whyShiftItem",
     "fields": [
       {
         "component": "reference",
@@ -1274,7 +1478,7 @@
         "valueType": "string"
       },
       {
-        "component": "richtext",
+        "component": "text",
         "label": "Label",
         "name": "label",
         "valueType": "string"
@@ -1286,20 +1490,20 @@
     "fields": [
       {
         "component": "reference",
-        "label": "Main Image",
-        "name": "mainImage",
+        "label": "Banner Image",
+        "name": "bannerImage",
         "valueType": "string"
       },
       {
-        "component": "richtext",
+        "component": "text",
         "label": "Heading",
         "name": "heading",
         "valueType": "string"
       },
       {
         "component": "richtext",
-        "label": "Sub Heading",
-        "name": "subHeading",
+        "label": "Subheading",
+        "name": "subheading",
         "valueType": "string"
       },
       {
@@ -1309,9 +1513,10 @@
         "valueType": "string"
       },
       {
-        "component": "category",
-        "label": "Categories",
-        "name": "categories"
+        "component": "container",
+        "itemType": "whyShiftItem",
+        "label": "Why Shift Items",
+        "name": "whyShiftItems"
       },
       {
         "component": "aem-content",
@@ -1320,7 +1525,7 @@
         "valueType": "string"
       },
       {
-        "component": "richtext",
+        "component": "text",
         "label": "CTA Label",
         "name": "ctaLabel",
         "valueType": "string"
@@ -1403,7 +1608,7 @@
     ]
   },
   {
-    "id": "rsCardItem",
+    "id": "rsCard",
     "fields": [
       {
         "component": "reference",
@@ -1413,20 +1618,14 @@
       },
       {
         "component": "richtext",
-        "label": "Title",
-        "name": "title",
+        "label": "Heading",
+        "name": "heading",
         "valueType": "string"
       },
       {
         "component": "richtext",
         "label": "Description",
         "name": "description",
-        "valueType": "string"
-      },
-      {
-        "component": "reference",
-        "label": "Icon",
-        "name": "icon",
         "valueType": "string"
       }
     ]
@@ -1438,12 +1637,12 @@
     "id": "spaceadderVerticalPaddingSection"
   },
   {
-    "id": "spaceAdder",
+    "id": "spaceadder",
     "fields": [
       {
         "component": "number",
-        "label": "Padding",
-        "name": "padding",
+        "label": "Vertical Padding",
+        "name": "paddingTopBottom",
         "valueType": "number"
       }
     ]
@@ -1476,8 +1675,8 @@
     "fields": [
       {
         "component": "richtext",
-        "label": "Content",
-        "name": "content",
+        "label": "Body",
+        "name": "body",
         "valueType": "string"
       }
     ]

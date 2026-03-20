@@ -10,7 +10,7 @@
             "template": {
               "filter": "text",
               "model": "text",
-              "name": "text"
+              "name": "Text"
             }
           }
         }
@@ -23,8 +23,8 @@
       "fields": [
         {
           "component": "richtext",
-          "label": "Body",
-          "name": "body",
+          "label": "Content",
+          "name": "content",
           "valueType": "string"
         }
       ]

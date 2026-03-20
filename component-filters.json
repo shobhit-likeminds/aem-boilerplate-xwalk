@@ -45,13 +45,16 @@
       "textComponent",
       "spaceAdder",
       "itcClubCarousel",
-      "makeRightShift"
+      "makeRightShift",
+      "headerItcHeaderSection",
+      "spaceadder",
+      "footerItcFooterSection"
     ]
   },
   {
-    "id": "bannerCarousel",
+    "id": "banner-carousel",
     "components": [
-      "bannerCarouselItem"
+      "bannerSlide"
     ]
   },
   {
@@ -136,11 +139,27 @@
     ]
   },
   {
+    "id": "footer-itc-footer-section",
+    "components": [
+      "logo",
+      "footerLink",
+      "footerListItem",
+      "socialIcon",
+      "secondaryFooterLink"
+    ]
+  },
+  {
     "id": "footer",
     "components": [
       "footerLink",
       "footerListItem",
       "socialIcon"
+    ]
+  },
+  {
+    "id": "headerItcHeaderSection",
+    "components": [
+      "headerItcHeaderSection"
     ]
   },
   {
@@ -184,7 +203,7 @@
   {
     "id": "makeRightShift",
     "components": [
-      "category"
+      "whyShiftItem"
     ]
   },
   {
@@ -206,9 +225,9 @@
     ]
   },
   {
-    "id": "rsCards",
+    "id": "rs-cards",
     "components": [
-      "rsCardItem"
+      "rsCard"
     ]
   },
   {
@@ -218,9 +237,9 @@
     "id": "spaceadderVerticalPaddingSection"
   },
   {
-    "id": "spaceAdder",
+    "id": "spaceadder",
     "components": [
-      "spaceAdder"
+      "spaceadder"
     ]
   },
   {

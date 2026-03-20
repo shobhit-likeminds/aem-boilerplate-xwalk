@@ -80,7 +80,10 @@
         "textComponent",
         "spaceAdder",
         "itcClubCarousel",
-        "makeRightShift"
+        "makeRightShift",
+        "headerItcHeaderSection",
+        "spaceadder",
+        "footerItcFooterSection"
       ]
     }
   ]

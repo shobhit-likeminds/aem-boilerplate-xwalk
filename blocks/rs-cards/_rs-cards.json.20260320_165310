@@ -1,7 +1,7 @@
 {
   "definitions": [
     {
-      "title": "Rs-Cards",
+      "title": "RS Cards",
       "id": "rsCards",
       "plugins": {
         "xwalk": {
@@ -9,23 +9,23 @@
             "resourceType": "core/franklin/components/block/v1/block",
             "template": {
               "filter": "rsCards",
-              "model": "rsCard",
-              "name": "Rs-Cards"
+              "model": "rsCards",
+              "name": "RS Cards"
             }
           }
         }
       }
     },
     {
-      "title": "Rs-Card",
-      "id": "rsCard",
+      "title": "RS Card Item",
+      "id": "rsCardItem",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "rsCard",
-              "name": "Rs-Card"
+              "model": "rsCardItem",
+              "name": "RS Card Item"
             }
           }
         }
@@ -34,7 +34,7 @@
   ],
   "models": [
     {
-      "id": "rsCard",
+      "id": "rsCardItem",
       "fields": [
         {
           "component": "reference",
@@ -44,8 +44,8 @@
         },
         {
           "component": "richtext",
-          "label": "Heading",
-          "name": "heading",
+          "label": "Title",
+          "name": "title",
           "valueType": "string"
         },
         {
@@ -53,15 +53,21 @@
           "label": "Description",
           "name": "description",
           "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Icon",
+          "name": "icon",
+          "valueType": "string"
         }
       ]
     }
   ],
   "filters": [
     {
-      "id": "rs-cards",
+      "id": "rsCards",
       "components": [
-        "rsCard"
+        "rsCardItem"
       ]
     }
   ]

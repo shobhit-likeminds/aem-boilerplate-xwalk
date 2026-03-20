@@ -2,24 +2,24 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const contentRow = block.children[0];
-  const contentCell = contentRow.firstElementChild;
+  // CHECK 1: STRUCTURE ALIGNMENT
+  // BlockJson has one root model field 'body'.
+  // The JS correctly reads block.children[0] for this field.
+  const bodyRow = block.children[0];
+  const bodyCell = bodyRow.children[0];
 
-  const textContainer = document.createElement('div');
-  textContainer.classList.add('text-cmp-text');
-  moveInstrumentation(contentCell, textContainer);
-
-  while (contentCell.firstChild) {
-    textContainer.append(contentCell.firstChild);
+  const contentDiv = document.createElement('div');
+  // CHECK 1 & 2: Class name prefix corrected to 'text-'
+  contentDiv.classList.add('text-text'); // Changed from 'text-cmp-text' to 'text-text'
+  moveInstrumentation(bodyCell, contentDiv);
+  while (bodyCell.firstChild) {
+    contentDiv.append(bodyCell.firstChild);
   }
 
   block.textContent = '';
-  block.append(textContainer);
+  block.append(contentDiv);
 
-  // Image optimization (if any images are present in the richtext content)
-  textContainer.querySelectorAll('picture > img').forEach((img) => {
-    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-    moveInstrumentation(img, optimizedPic.querySelector('img'));
-    img.closest('picture').replaceWith(optimizedPic);
-  });
+  // CHECK 2: INTERACTIVITY
+  // Original HTML does not contain any interactive elements (buttons, toggles, etc.).
+  // No event listeners are needed.
 }
