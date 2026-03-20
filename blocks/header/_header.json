@@ -17,45 +17,30 @@
       }
     },
     {
-      "title": "Phone",
-      "id": "phone",
+      "title": "Navigation Link",
+      "id": "navigationLink",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "phone",
-              "name": "Phone"
+              "model": "navigationLink",
+              "name": "Navigation Link"
             }
           }
         }
       }
     },
     {
-      "title": "Social",
-      "id": "social",
+      "title": "Country Option",
+      "id": "countryOption",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "social",
-              "name": "Social"
-            }
-          }
-        }
-      }
-    },
-    {
-      "title": "Menu",
-      "id": "menu",
-      "plugins": {
-        "xwalk": {
-          "page": {
-            "resourceType": "core/franklin/components/block/v1/block/item",
-            "template": {
-              "model": "menu",
-              "name": "Menu"
+              "model": "countryOption",
+              "name": "Country Option"
             }
           }
         }
@@ -67,57 +52,35 @@
       "id": "header",
       "fields": [
         {
-          "component": "container",
-          "items": {
-            "component": "reference",
-            "name": "phone",
-            "reference": "phone"
-          },
-          "label": "Phones",
-          "name": "phones"
-        },
-        {
-          "component": "text",
-          "label": "Consumer Care Email",
-          "name": "consumerCareEmail",
+          "component": "reference",
+          "label": "Logo Image",
+          "name": "logoImage",
           "valueType": "string"
-        },
-        {
-          "component": "container",
-          "items": {
-            "component": "reference",
-            "name": "social",
-            "reference": "social"
-          },
-          "label": "Socials",
-          "name": "socials"
         },
         {
           "component": "reference",
-          "label": "Brand Logo",
-          "name": "brandLogo",
+          "label": "Logo Link",
+          "name": "logoLink",
           "valueType": "string"
         },
         {
           "component": "container",
-          "items": {
-            "component": "reference",
-            "name": "menu",
-            "reference": "menu"
-          },
-          "label": "Menus",
-          "name": "menus"
+          "label": "Navigation Links",
+          "multi": true,
+          "name": "navigationLinks",
+          "referenceModel": "navigationLink"
         },
         {
-          "component": "text",
-          "label": "Search Placeholder",
-          "name": "searchPlaceholder",
-          "valueType": "string"
+          "component": "container",
+          "label": "Country Options",
+          "multi": true,
+          "name": "countryOptions",
+          "referenceModel": "countryOption"
         }
       ]
     },
     {
-      "id": "phone",
+      "id": "navigationLink",
       "fields": [
         {
           "component": "text",
@@ -127,48 +90,31 @@
         },
         {
           "component": "text",
-          "label": "Phone Number",
-          "name": "phoneNumber",
+          "label": "URL",
+          "name": "url",
           "valueType": "string"
         }
       ]
     },
     {
-      "id": "social",
+      "id": "countryOption",
       "fields": [
-        {
-          "component": "text",
-          "label": "Social Link",
-          "name": "link",
-          "valueType": "string"
-        },
         {
           "component": "reference",
-          "label": "Icon",
-          "name": "icon",
+          "label": "Flag Image",
+          "name": "flagImage",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Alt Text",
-          "name": "altText",
-          "valueType": "string"
-        }
-      ]
-    },
-    {
-      "id": "menu",
-      "fields": [
-        {
-          "component": "text",
-          "label": "Menu Label",
-          "name": "label",
+          "label": "Country Name",
+          "name": "countryName",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Menu Link",
-          "name": "link",
+          "label": "Country URL",
+          "name": "countryUrl",
           "valueType": "string"
         }
       ]
@@ -178,9 +124,8 @@
     {
       "id": "header",
       "components": [
-        "phone",
-        "social",
-        "menu"
+        "navigationLink",
+        "countryOption"
       ]
     }
   ]

@@ -1,4 +1,6 @@
 .rs-cards-row {
+  display: flex;
+  flex-wrap: wrap;
   margin-left: 0;
   margin-right: 0;
 }
@@ -7,8 +9,8 @@
   max-width: 33.333333%;
   position: relative;
   width: 100%;
-  padding-right: 15px;
   padding-left: 15px;
+  padding-right: 15px;
 }
 .rs-cards-col-lg-6 {
   flex: 0 0 50%;
@@ -36,64 +38,56 @@
   background-color: #fff;
   background-clip: border-box;
   border: 1px solid rgba(0, 0, 0, 0.125);
-  border-radius: 0.25rem;
-  height: 100%;
   border-radius: 40px;
-}
-.rs-cards-card > img {
-  min-height: 190px;
   height: 100%;
-  object-fit: cover;
-  border-radius: 40px 40px 0 0;
+  min-height: 460px;
 }
 .rs-cards-w-100 {
   width: 100% !important;
 }
 .rs-cards-kitchens-image {
   display: block;
+  width: 100%;
+  height: auto;
   object-fit: fill !important;
   border-bottom-left-radius: 40px;
   border-bottom-right-radius: 40px;
+  min-height: 190px;
 }
 .rs-cards-card-body {
   flex: 1 1 auto;
   min-height: 1px;
-  padding: 1.25rem;
+  padding: 24px 35px 25px !important;
   position: absolute;
   bottom: 0;
   border-bottom-left-radius: 40px;
   border-bottom-right-radius: 40px;
   background: linear-gradient(0deg, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0) 100%);
   color: #fff;
-  padding: 24px 35px 25px !important;
 }
-.rs-cards-explore-btn-hide-id {
+.rs-cards-explore-btn-hide-id-style {
   display: none;
 }
 .rs-cards-blog-card-title {
   margin-bottom: 0.75rem;
-  font-size: 1.375rem; /* Equivalent to 22px assuming 16px base */
   font-family: "Paytone One";
-  font-weight: 500;
-  line-height: 1.2;
-  color: #ffffff;
+  font-size: 1.375rem; /* Equivalent to 22px assuming 16px base */
+  color: #fff;
   display: block;
 }
 .rs-cards-card-title {
   margin-bottom: 0.75rem;
-  font-size: 1rem; /* Equivalent to 16px assuming 16px base */
   font-family: "Paytone One";
-  font-weight: 500;
-  line-height: 1.2;
-  color: #ffffff;
+  font-size: 1rem; /* Equivalent to 16px assuming 16px base */
+  color: #fff;
 }
 .rs-cards-card-title p {
   margin-top: 0;
   margin-bottom: 1rem;
-  font-size: 16px; /* Explicitly defined */
+  color: #fff;
+  font-size: 1rem; /* Equivalent to 16px assuming 16px base */
   font-weight: 400;
-  line-height: 24px; /* Explicitly defined */
-  color: #ffffff;
+  line-height: 1.5;
 }
 .rs-cards-tab-para {
   text-align: center;
@@ -103,24 +97,113 @@
 }
 
 @media (max-width: 768px) {
-  .rs-cards-col-xl-4 {
+  .rs-cards-col-lg-6 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+  .rs-cards-pb-4 {
+    padding-bottom: 1.5rem !important;
+  }
+  .rs-cards-row-gap-4 {
+    margin-bottom: 1rem;
+  }
+  .rs-cards-koi-rscard-padding {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .rs-cards-card {
     width: 80%;
     justify-self: center;
   }
   .rs-cards-blog-card-title {
-    font-size: 1.625rem; /* Equivalent to 26px assuming 16px base */
+    font-size: 26px;
   }
   .rs-cards-card-title p {
-    font-size: 1rem; /* Equivalent to 16px assuming 16px base */
+    font-size: 16px;
+  }
+}
+@media (min-width: 768px) and (max-width: 1200px) {
+  .rs-cards-col-lg-6 {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+  .rs-cards-pb-md-0 {
+    padding-bottom: 0 !important;
   }
   .rs-cards-row-gap-4 {
-    margin-bottom: 1.5rem !important;
+    margin-bottom: 1rem;
+  }
+  .rs-cards-koi-rscard-padding {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+  .rs-cards-blog-card-title {
+    font-size: 1.313rem; /* Equivalent to 21px assuming 16px base */
+  }
+}
+@media (max-width: 767.98px) {
+  .rs-cards-blog-card-title {
+    font-size: 26px;
+  }
+  .rs-cards-card-title p {
+    font-size: 16px;
   }
 }
 
-@media (max-width: 767.98px) {
-  .rs-cards-koi-rscard-padding {
+.kitchens-of-india .rs-cards-row {
+  margin-left: 0;
+  margin-right: 0;
+}
+.kitchens-of-india .rs-cards-card {
+  height: 100%;
+  border-radius: 40px;
+}
+.kitchens-of-india .rs-cards-kitchens-image {
+  object-fit: fill !important;
+  border-bottom-left-radius: 40px;
+  border-bottom-right-radius: 40px;
+}
+.kitchens-of-india .rs-cards-card-body {
+  position: absolute;
+  bottom: 0;
+  border-bottom-left-radius: 40px;
+  border-bottom-right-radius: 40px;
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0) 100%);
+  color: var(--white);
+  padding: 24px 35px 25px !important;
+}
+.kitchens-of-india .rs-cards-card-body .rs-cards-blog-card-title {
+  font-size: 1.375rem; /* Equivalent to 22px assuming 16px base */
+}
+.kitchens-of-india .rs-cards-card-body .rs-cards-card-title {
+  font-size: 1rem; /* Equivalent to 16px assuming 16px base */
+}
+.kitchens-of-india .rs-cards-card-body .rs-cards-card-title p {
+  font-size: 1rem; /* Equivalent to 16px assuming 16px base */
+}
+@media (max-width: 768px) {
+  .kitchens-of-india .rs-cards-card {
+    width: 80%;
+    justify-self: center;
+  }
+  .kitchens-of-india .rs-cards-card-body .rs-cards-blog-card-title {
+    font-size: 26px;
+  }
+  .kitchens-of-india .rs-cards-card-body .rs-cards-card-title p {
+    font-size: 16px;
+  }
+}
+@media (max-width: 768px) {
+  .kitchens-of-india .rs-cards-col-xl-4 {
     padding-left: 0;
     padding-right: 0;
+  }
+}
+@media (min-width: 768px) {
+  .kitchens-of-india .rs-cards-row {
+    margin: 0 3rem 1.25rem;
+  }
+  .kitchens-of-india .rs-cards-row .rs-cards-row-gap-4 {
+    margin-bottom: 1rem;
   }
 }

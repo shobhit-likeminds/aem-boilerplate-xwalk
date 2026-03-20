@@ -1,0 +1,8 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  // The block has no content, as per the EDS Block Structure.
+  // We only need to apply the class from the original HTML.
+  block.classList.add('spaceadder-padding-80');
+}

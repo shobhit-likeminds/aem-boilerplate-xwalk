@@ -1,0 +1,115 @@
+.clubsection-itc-club-section {
+  background-color: var(--color-light);
+  padding-bottom: 50px; /* Equivalent to 50px assuming 16px base */
+  margin-left: 0;
+  margin-right: 0;
+}
+.clubsection-itc-carousel-shift {
+  max-width: 66.8125rem; /* Equivalent to 1069px assuming 16px base */
+  margin: 0 auto;
+  border-radius: 2.8125rem; /* Equivalent to 45px assuming 16px base */
+  position: relative;
+}
+.clubsection-carousel-inner {
+  max-width: 66.8125rem; /* Equivalent to 1069px assuming 16px base */
+  margin: 0 auto;
+  margin-top: -2.5rem; /* Equivalent to -40px assuming 16px base */
+  border-radius: 2.8125rem; /* Equivalent to 45px assuming 16px base */
+}
+.clubsection-carousel-indicators {
+  bottom: -3.125rem; /* Equivalent to -50px assuming 16px base */
+  left: -50%;
+}
+.clubsection-carousel-indicators li {
+  border: 0.0625rem solid #2d2119; /* Equivalent to 1px assuming 16px base */
+}
+.clubsection-carousel-indicators .active {
+  background-color: #2d2119;
+}
+.clubsection-carousel-item {
+  max-height: 25.8125rem; /* Equivalent to 413px assuming 16px base */
+  object-fit: cover;
+}
+.clubsection-carousel__img {
+  height: 27.125rem; /* Equivalent to 434px assuming 16px base */
+  object-fit: cover;
+}
+.clubsection-itc-club-right-wrapper {
+  background: linear-gradient(0deg, #f8d765 0%, #f8d765 100%);
+  padding: 2.5rem 2.8125rem 3.5rem 2.875rem; /* Equivalent to 40px 45px 56px 46px assuming 16px base */
+  display: flex;
+  flex-direction: column;
+  align-items: baseline;
+  overflow-y: auto;
+  height: 27.125rem; /* Equivalent to 434px assuming 16px base */
+  justify-content: space-evenly;
+}
+.clubsection-carousel-inner__title {
+  font-size: 1.75rem; /* Equivalent to 28px assuming 16px base */
+  font-family: "Paytone One";
+  color: var(--bg-dark);
+}
+.clubsection-carousel-inner__description {
+  font-size: 1rem; /* Equivalent to 16px assuming 16px base */
+  line-height: 1.5rem; /* Equivalent to 24px assuming 16px base */
+  color: var(--bg-dark);
+}
+.clubsection-carousel-control-prev,
+.clubsection-carousel-control-next {
+  background: #fff;
+  height: 2.875rem; /* Equivalent to 46px assuming 16px base */
+  width: 2.875rem; /* Equivalent to 46px assuming 16px base */
+  top: 45%;
+  left: -1.0625rem; /* Equivalent to -17px assuming 16px base */
+  border-radius: 3.125rem; /* Equivalent to 50px assuming 16px base */
+  z-index: 9;
+  opacity: 1;
+}
+.clubsection-carousel-control-next {
+  right: -1.0625rem !important; /* Equivalent to -17px assuming 16px base */
+  left: unset !important;
+}
+.carousel-control-prev-icon {
+  background-image: url('../../../content/dam/itc-rightshift/clientlibs/clientlib-rightshift/resources/icons/next-icon.svg');
+  transform: rotate(180deg);
+}
+.carousel-control-next-icon {
+  background-image: url('../../../content/dam/itc-rightshift/clientlibs/clientlib-rightshift/resources/icons/next-icon.svg');
+}
+
+@media (max-width: 768px) {
+  .clubsection-itc-club-section {
+    padding-top: 1.5625rem; /* Equivalent to 25px assuming 16px base */
+    padding-bottom: 1.5625rem !important; /* Equivalent to 25px assuming 16px base */
+    margin-top: 0 !important;
+  }
+  .clubsection-itc-club-right-wrapper {
+    min-height: 21.875rem; /* Equivalent to 350px assuming 16px base */
+    height: auto;
+    padding: 0.625rem 0.75rem 1.375rem 0.625rem !important; /* Equivalent to 10px 12px 22px 10px assuming 16px base */
+  }
+  .clubsection-carousel-inner__title {
+    font-size: 1.375rem !important; /* Equivalent to 22px assuming 16px base */
+  }
+  .clubsection-carousel-inner__description {
+    font-size: 0.875rem !important; /* Equivalent to 14px assuming 16px base */
+    line-height: 1.25rem !important; /* Equivalent to 20px assuming 16px base */
+  }
+  .clubsection-carousel-item {
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-height: unset;
+  }
+  .clubsection-carousel-control-prev,
+  .clubsection-carousel-control-next {
+    display: none;
+  }
+  .clubsection-carousel-indicators {
+    bottom: -2.1875rem !important; /* Equivalent to -35px assuming 16px base */
+    left: 0;
+  }
+  .clubsection-carousel__img {
+    max-height: 17.5625rem !important; /* Equivalent to 281px assuming 16px base */
+  }
+}

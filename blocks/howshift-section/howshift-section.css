@@ -1,0 +1,141 @@
+.howshift-section {
+  background-color: #ffedd6;
+  display: flex;
+  flex-direction: row;
+}
+.howshift-section .howshift-left-image-div {
+  width: 100%;
+}
+.howshift-section .howshift-left-image-div img {
+  width: 100%;
+  height: 100%;
+}
+.howshift-section .howshift-container-read-more {
+  padding: 22px 30px;
+}
+.howshift-section .howshift-container-read-more .howshift-read-more-text {
+  text-align: center;
+  max-width: 450px;
+  margin: 0 auto;
+}
+.howshift-section .howshift-container-read-more .howshift-button {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+}
+.howshift-section .howshift-container-read-more .howshift-button a {
+  background-color: #2d2119; /* Original: var(--bg-dark) */
+  padding: 15px 66px;
+  color: #fcf1e4; /* Original: var(--color-light) */
+  border: transparent;
+  border-radius: 28px;
+  font-weight: 700;
+}
+.howshift-section .howshift-health-goal-wrapper {
+  background-color: #2d2119;
+}
+.howshift-section .howshift-heading {
+  padding-bottom: 0.5rem; /* Equivalent to 8px assuming 16px base */
+  color: #4f250a; /* Original: var(--koi-theme) */
+  font-size: 2.5rem; /* Equivalent to 40px assuming 16px base */
+  font-family: "Paytone One";
+  font-weight: 500;
+  line-height: 3rem; /* Equivalent to 48px assuming 16px base */
+}
+.howshift-section .howshift-read-more-h2 {
+  text-align: center;
+  font-size: 2rem; /* Equivalent to 32px assuming 16px base */
+  font-family: "Paytone One";
+  font-weight: 500;
+  line-height: 2.4rem; /* Equivalent to 38.4px assuming 16px base */
+  color: #2d2119;
+}
+.howshift-section .howshift-read-more-p {
+  margin: 0 auto;
+  text-align: center;
+  font-size: 1.25rem; /* Equivalent to 20px assuming 16px base */
+  font-weight: 400;
+  line-height: 1.5rem; /* Equivalent to 24px assuming 16px base */
+  color: #2d2119;
+}
+.howshift-section .howshift-why-shift-wrapper {
+  max-width: 700px;
+  margin: 0 auto;
+}
+.howshift-section .howshift-why-shift-wrapper .howshift-image-label {
+  text-decoration: none;
+  color: #000;
+  font-weight: 500;
+  font-size: 1rem; /* Equivalent to 16px assuming 16px base */
+  line-height: 1.5rem; /* Equivalent to 24px assuming 16px base */
+}
+.howshift-section .howshift-health-goal-wrapper img {
+  width: 99px;
+  height: 99px;
+  display: block;
+  vertical-align: middle;
+  border-style: none;
+}
+.howshift-section .howshift-button a .howshift-cmp-button-text {
+  font-size: 1.5rem; /* Equivalent to 24px assuming 16px base */
+  font-weight: 700;
+}
+@media (max-width: 767.98px) {
+  .howshift-section {
+    flex-direction: column;
+    text-align: center;
+    padding: 19px 19px 44px;
+  }
+  .howshift-section .howshift-health-goal-wrapper img {
+    width: 83px;
+    height: auto;
+  }
+  .howshift-section .howshift-heading,
+  .howshift-section .howshift-read-more-h2 {
+    font-size: 1.5rem; /* Equivalent to 24px assuming 16px base */
+  }
+  .howshift-section .howshift-read-more-p {
+    font-size: 3.6vw;
+  }
+  .howshift-section .howshift-button a {
+    padding: 15px 36px;
+    font-weight: 700;
+  }
+  .howshift-section .howshift-button {
+    margin-top: 15px;
+  }
+  .howshift-section .howshift-heading {
+    padding: 0 12vw;
+  }
+  .howshift-section .howshift-heading {
+    padding: 0;
+  }
+  .howshift-section .howshift-button a .howshift-cmp-button-text {
+    font-size: 1rem; /* Equivalent to 16px assuming 16px base */
+  }
+}
+@media (max-width: 390px) {
+  .howshift-section .howshift-heading {
+    padding: 0 12vw;
+  }
+  .howshift-section .howshift-heading {
+    padding: 0;
+  }
+}
+@media (min-width: 768px) and (max-width: 1199.98px) {
+  .howshift-section .howshift-heading {
+    font-size: 2.5rem; /* Equivalent to 40px assuming 16px base */
+  }
+}
+@media (min-width: 992px) {
+  .howshift-section .howshift-container-read-more .howshift-button {
+    justify-content: start;
+    margin-left: 2.5rem; /* Equivalent to 40px assuming 16px base */
+  }
+}
+@media (max-width: 767.98px) {
+  .howshift-section .howshift-container-read-more .howshift-button {
+    justify-content: center;
+    margin: 0;
+  }
+}

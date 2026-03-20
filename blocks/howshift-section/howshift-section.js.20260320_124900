@@ -1,0 +1,161 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  const children = [...block.children];
+
+  // Main Image
+  const mainImageRow = children[0];
+  const mainImageDiv = document.createElement('div');
+  mainImageDiv.classList.add('howshift-left-image-div');
+  moveInstrumentation(mainImageRow, mainImageDiv);
+  const mainPicture = mainImageRow.querySelector('picture');
+  if (mainPicture) {
+    mainImageDiv.append(mainPicture);
+  }
+  block.append(mainImageDiv);
+
+  const contentContainer = document.createElement('div');
+  contentContainer.classList.add('howshift-container', 'read-more');
+
+  // Heading
+  const headingRow = children[1];
+  const heading = document.createElement('h1');
+  heading.classList.add('howshift-heading', 'text-center', 'pb-4', 'rs-heading');
+  moveInstrumentation(headingRow, heading);
+  heading.textContent = headingRow.textContent.trim();
+  contentContainer.append(heading);
+
+  // Subheading and Description
+  const subheadingRow = children[2];
+  const descriptionRow = children[3];
+
+  const readMoreTextDiv = document.createElement('div');
+  readMoreTextDiv.classList.add('howshift-read-more-text');
+  if (subheadingRow) {
+    moveInstrumentation(subheadingRow, readMoreTextDiv);
+    while (subheadingRow.firstChild) readMoreTextDiv.append(subheadingRow.firstChild);
+  }
+  if (descriptionRow) {
+    moveInstrumentation(descriptionRow, readMoreTextDiv);
+    while (descriptionRow.firstChild) readMoreTextDiv.append(descriptionRow.firstChild);
+  }
+  contentContainer.append(readMoreTextDiv);
+
+  const readMoreSpan = document.createElement('span');
+  readMoreSpan.classList.add('howshift-read-more');
+  readMoreSpan.textContent = 'Read More'; // Add default text for the span
+  contentContainer.append(readMoreSpan);
+
+  // Howshift Items
+  // The first 6 rows are for mainImage, heading, subheading, description, buttonLink, buttonLabel
+  const itemRows = children.slice(6);
+  const howshiftItemsWrapper = document.createElement('div');
+  howshiftItemsWrapper.classList.add('howshift-why-shift-wrapper', 'd-flex', 'justify-content-evenly', 'flex-wrap');
+
+  itemRows.forEach((row) => {
+    const itemDiv = document.createElement('div');
+    itemDiv.classList.add('howshift-mb-md-0', 'howshift-mb-3', 'howshift-text-center');
+    moveInstrumentation(row, itemDiv);
+
+    const healthGoalWrapper = document.createElement('div');
+    healthGoalWrapper.classList.add('howshift-health-goal-wrapper');
+    itemDiv.append(healthGoalWrapper);
+
+    let itemImage = null;
+    let itemLink = null;
+    let itemLabel = null;
+
+    // Iterate through all cells to find image, link, and label
+    [...row.children].forEach((cell, index) => {
+      if (index === 0 && cell.querySelector('picture')) { // First cell is image
+        itemImage = cell.querySelector('picture');
+      } else if (index === 1 && cell.querySelector('a')) { // Second cell is link
+        itemLink = cell.querySelector('a');
+      } else if (index === 2) { // Third cell is label
+        itemLabel = cell;
+      }
+    });
+
+    if (itemImage) {
+      healthGoalWrapper.append(itemImage);
+    }
+
+    const linkEl = document.createElement('a');
+    linkEl.classList.add('howshift-image-label', 'text-center', 'd-block', 'text-capitalize', 'pt-2');
+    if (itemLink) {
+      linkEl.href = itemLink.href;
+      linkEl.alt = itemLink.textContent.trim(); // Use link text as alt for the link
+    }
+    if (itemLabel) {
+      moveInstrumentation(itemLabel, linkEl);
+      linkEl.innerHTML = itemLabel.innerHTML.trim(); // Use innerHTML to preserve potential <br> tags
+    }
+    itemDiv.append(linkEl);
+    howshiftItemsWrapper.append(itemDiv);
+  });
+  contentContainer.append(howshiftItemsWrapper);
+
+  const mobileSpacer = document.createElement('div');
+  mobileSpacer.classList.add('howshift-d-md-none', 'howshift-d-block');
+  contentContainer.append(mobileSpacer);
+
+  // Button Link and Label
+  const buttonLinkRow = children[4];
+  const buttonLabelRow = children[5];
+
+  const buttonDiv = document.createElement('div');
+  buttonDiv.classList.add('howshift-button', 'howshift-how-shift-button');
+  contentContainer.append(buttonDiv);
+
+  const buttonAnchor = document.createElement('a');
+  buttonAnchor.classList.add('howshift-cmp-button');
+  if (buttonLinkRow) {
+    const linkElement = buttonLinkRow.querySelector('a'); // Check for an actual anchor tag
+    if (linkElement) {
+      buttonAnchor.href = linkElement.href;
+    } else {
+      // Fallback if it's a picture wrapping an img, though model implies 'reference' for link
+      const linkPic = buttonLinkRow.querySelector('picture');
+      if (linkPic && linkPic.querySelector('img')) {
+        // This case is less ideal for a link, but handles if the content is just an image
+        // The model says 'reference' for buttonLink, which typically means a link or a path.
+        // Assuming the 'reference' field for buttonLink could contain an actual <a> tag or a path.
+        // If it's just an image, its src might be the target.
+        buttonAnchor.href = linkPic.querySelector('img').src;
+      }
+    }
+  }
+  if (buttonLabelRow) {
+    moveInstrumentation(buttonLabelRow, buttonAnchor);
+    buttonAnchor.alt = buttonLabelRow.textContent.trim();
+    const spanText = document.createElement('span');
+    spanText.classList.add('howshift-cmp-button__text');
+    spanText.textContent = buttonLabelRow.textContent.trim();
+    buttonAnchor.append(spanText);
+  }
+  const screenReaderSpan = document.createElement('span');
+  screenReaderSpan.classList.add('cmp-link__screen-reader-only');
+  screenReaderSpan.textContent = 'opens in a new tab';
+  buttonAnchor.append(screenReaderSpan);
+  buttonDiv.append(buttonAnchor);
+
+  block.textContent = '';
+  block.append(mainImageDiv, contentContainer);
+
+  block.querySelectorAll('picture > img').forEach((img) => {
+    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+    moveInstrumentation(img, optimizedPic.querySelector('img'));
+    img.closest('picture').replaceWith(optimizedPic);
+  });
+
+  // Interactivity: Read More/Read Less functionality
+  readMoreSpan.addEventListener('click', () => {
+    contentContainer.classList.toggle('read-more');
+    if (contentContainer.classList.contains('read-more')) {
+      readMoreSpan.textContent = 'Read More';
+    } else {
+      readMoreSpan.textContent = 'Read Less';
+    }
+  });
+}

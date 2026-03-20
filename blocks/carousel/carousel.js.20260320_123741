@@ -1,0 +1,160 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  block.classList.add('club-section-wrapper', 'club-section-mx-md-0', 'club-section-mx-4');
+
+  const container = document.createElement('div');
+  container.classList.add('club-section-container');
+  block.append(container);
+
+  const carousel = document.createElement('div');
+  carousel.id = 'carousel';
+  carousel.classList.add('club-section-carousel', 'carousel', 'slide', 'itc-club-carousel');
+  container.append(carousel);
+
+  const carouselShift = document.createElement('div');
+  carouselShift.classList.add('club-section-itc-carousel-shift');
+  carousel.append(carouselShift);
+
+  const carouselInner = document.createElement('div');
+  carouselInner.classList.add('club-section-carousel-inner');
+  carouselShift.append(carouselInner);
+
+  const indicators = document.createElement('ol');
+  indicators.classList.add('club-section-carousel-indicators');
+  carouselInner.append(indicators);
+
+  const carouselItems = [...block.children];
+  carouselItems.forEach((row, index) => {
+    // row0: image (reference)
+    // row1: title (text)
+    // row2: description (richtext)
+
+    const indicator = document.createElement('li');
+    indicator.setAttribute('data-target', '#carousel');
+    indicator.setAttribute('data-slide-to', index.toString());
+    if (index === 0) {
+      indicator.classList.add('active');
+    }
+    indicators.append(indicator);
+
+    const carouselItem = document.createElement('div');
+    carouselItem.classList.add('carousel-item');
+    if (index === 0) {
+      carouselItem.classList.add('active');
+    }
+    carouselInner.append(carouselItem);
+
+    const itemContent = document.createElement('div');
+    itemContent.classList.add('club-section-d-md-flex', 'club-section-d-block');
+    carouselItem.append(itemContent);
+
+    const imageCell = row.children[0];
+    const titleCell = row.children[1];
+    const descriptionCell = row.children[2];
+
+    const picture = imageCell.querySelector('picture');
+    if (picture) {
+      const img = picture.querySelector('img');
+      if (img) {
+        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+        moveInstrumentation(img, optimizedPic.querySelector('img'));
+        optimizedPic.classList.add('club-section-carousel__img', 'club-section-d-block', 'club-section-w-md-50', 'club-section-w-100');
+        itemContent.append(optimizedPic);
+      }
+    }
+
+    const rightWrapper = document.createElement('div');
+    rightWrapper.classList.add('club-section-w-md-50', 'club-section-w-100', 'club-section-itc-club-right-wrapper', 'club-section-read-more');
+    itemContent.append(rightWrapper);
+
+    const title = document.createElement('h2');
+    title.classList.add('club-section-carousel-inner__title');
+    moveInstrumentation(titleCell, title);
+    while (titleCell.firstChild) title.append(titleCell.firstChild);
+    rightWrapper.append(title);
+
+    const description = document.createElement('p');
+    description.classList.add('club-section-carousel-inner__description');
+    moveInstrumentation(descriptionCell, description);
+    while (descriptionCell.firstChild) description.append(descriptionCell.firstChild);
+    rightWrapper.append(description);
+  });
+
+  const prevButton = document.createElement('button');
+  prevButton.classList.add('club-section-carousel-control-prev');
+  prevButton.type = 'button';
+  prevButton.setAttribute('aria-label', 'Previous');
+  prevButton.addEventListener('click', () => {
+    const activeItem = carouselInner.querySelector('.carousel-item.active');
+    let prevItem = activeItem.previousElementSibling;
+    if (!prevItem) { // If it's the first item
+      prevItem = carouselInner.querySelector('.carousel-item:last-of-type'); // Wrap around to the last item
+    }
+
+    if (activeItem && prevItem) {
+      activeItem.classList.remove('active');
+      prevItem.classList.add('active');
+
+      const activeIndicator = indicators.querySelector('.active');
+      let prevIndicator = activeIndicator.previousElementSibling;
+      if (!prevIndicator) {
+        prevIndicator = indicators.lastElementChild;
+      }
+      activeIndicator.classList.remove('active');
+      prevIndicator.classList.add('active');
+    }
+  });
+
+  const prevIcon = document.createElement('span');
+  prevIcon.classList.add('club-section-carousel-control-prev-icon');
+  prevIcon.setAttribute('aria-hidden', 'true');
+  prevButton.append(prevIcon);
+
+  const prevSrOnly = document.createElement('span');
+  prevSrOnly.classList.add('sr-only');
+  prevSrOnly.textContent = 'Previous';
+  prevButton.append(prevSrOnly);
+  carouselShift.append(prevButton);
+
+  const nextButton = document.createElement('button');
+  nextButton.classList.add('club-section-carousel-control-next');
+  nextButton.type = 'button';
+  nextButton.setAttribute('aria-label', 'Next');
+  nextButton.addEventListener('click', () => {
+    const activeItem = carouselInner.querySelector('.carousel-item.active');
+    let nextItem = activeItem.nextElementSibling;
+    if (!nextItem) { // If it's the last item
+      nextItem = carouselInner.querySelector('.carousel-item:first-of-type'); // Wrap around to the first item
+    }
+
+    if (activeItem && nextItem) {
+      activeItem.classList.remove('active');
+      nextItem.classList.add('active');
+
+      const activeIndicator = indicators.querySelector('.active');
+      let nextIndicator = activeIndicator.nextElementSibling;
+      if (!nextIndicator) {
+        nextIndicator = indicators.querySelector('li:first-of-type');
+      }
+      activeIndicator.classList.remove('active');
+      nextIndicator.classList.add('active');
+    }
+  });
+
+  const nextIcon = document.createElement('span');
+  nextIcon.classList.add('club-section-carousel-control-next-icon');
+  nextIcon.setAttribute('aria-hidden', 'true');
+  nextButton.append(nextIcon);
+
+  const nextSrOnly = document.createElement('span');
+  nextSrOnly.classList.add('sr-only');
+  nextSrOnly.textContent = 'Next';
+  nextButton.append(nextSrOnly);
+  carouselShift.append(nextButton);
+
+  // Clear the original block content as it has been moved
+  block.textContent = '';
+  block.append(container);
+}

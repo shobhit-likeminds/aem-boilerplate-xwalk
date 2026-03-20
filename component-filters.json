@@ -38,7 +38,11 @@
       "cardsRsCards",
       "cardsRow",
       "pageintro",
-      "productsList"
+      "productsList",
+      "howshiftSection",
+      "whyUsText",
+      "clubCarousel",
+      "textComponent"
     ]
   },
   {
@@ -48,7 +52,13 @@
     ]
   },
   {
-    "id": "cardsRow",
+    "id": "bannerCarousel",
+    "components": [
+      "bannerCarouselItem"
+    ]
+  },
+  {
+    "id": "cards-row",
     "components": [
       "card"
     ]
@@ -68,7 +78,13 @@
   {
     "id": "carousel",
     "components": [
-      "carouselSlide"
+      "carouselItem"
+    ]
+  },
+  {
+    "id": "clubCarousel",
+    "components": [
+      "slide"
     ]
   },
   {
@@ -119,9 +135,9 @@
   {
     "id": "footer",
     "components": [
-      "footerMenuItem",
-      "footerSocialIcon",
-      "footerBrandItem"
+      "footerLink",
+      "socialIcon",
+      "footerSecondaryLink"
     ]
   },
   {
@@ -134,9 +150,8 @@
   {
     "id": "header",
     "components": [
-      "phone",
-      "social",
-      "menu"
+      "navigationLink",
+      "countryOption"
     ]
   },
   {
@@ -149,6 +164,12 @@
     "id": "howShift",
     "components": [
       "howShiftItem"
+    ]
+  },
+  {
+    "id": "howshiftSection",
+    "components": [
+      "howshiftItem"
     ]
   },
   {
@@ -179,7 +200,13 @@
     "id": "spaceAdderVerticalPadding"
   },
   {
-    "id": "spaceadder-vertical-padding-section"
+    "id": "spaceadderVerticalPaddingSection"
+  },
+  {
+    "id": "textComponent",
+    "components": [
+      "textComponent"
+    ]
   },
   {
     "id": "text",
@@ -189,6 +216,9 @@
   },
   {
     "id": "verticalPaddingSection"
+  },
+  {
+    "id": "whyUsText"
   },
   {
     "id": "whyUs",

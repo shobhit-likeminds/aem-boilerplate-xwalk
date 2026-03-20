@@ -1,151 +1,172 @@
-.shiftclub-section {
-  background-color: #fcf1e4; /* Assuming --color-light is #fcf1e4 */
-  padding-bottom: 25px; /* Equivalent to 50px assuming 16px base */
-  padding-top: 25px; /* Equivalent to 25px assuming 16px base */
-}
-.shiftclub-section .container {
-  max-width: 1470px; /* Equivalent to 1470px assuming 16px base */
-  width: 100%;
-  padding: 0;
-  margin: 0 auto;
-}
-.shiftclub-section .shiftclub-carousel {
-  max-width: 1069px; /* Equivalent to 1069px assuming 16px base */
-  margin: 0 auto;
-}
-.shiftclub-section .shiftclub-carousel-shift {
-  max-width: 1069px; /* Equivalent to 1069px assuming 16px base */
-  margin: -40px auto 0; /* Equivalent to -40px assuming 16px base */
-  border-radius: 45px; /* Equivalent to 45px assuming 16px base */
+.carousel-section {
   position: relative;
 }
-.shiftclub-section .carousel-inner .carousel-item {
-  max-height: 413px; /* Equivalent to 413px assuming 16px base */
-  object-fit: cover;
+.carousel-section .carousel-content-wrapper {
+  transform: translate(90px, 10%);
+  top: -20px;
+  left: 0;
+  bottom: 0;
+  color: #fcf1e4; /* Equivalent to var(--color-light) */
 }
-.shiftclub-section .shiftclub-carousel__img {
-  height: 434px; /* Equivalent to 434px assuming 16px base */
-  object-fit: cover;
-}
-.shiftclub-section .shiftclub-right-wrapper {
-  background: linear-gradient(0deg, #f8d765 0%, #f8d765 100%);
-  padding: 24px 45px 56px 46px; /* Equivalent to 24px 45px 56px 46px assuming 16px base */
-  display: flex;
-  flex-direction: column;
-  align-items: baseline;
-  overflow-y: auto;
-  height: 434px; /* Equivalent to 434px assuming 16px base */
-  justify-content: space-evenly;
-}
-.shiftclub-section .shiftclub-carousel-inner__title {
-  font-size: 28px; /* Equivalent to 28px assuming 16px base */
+.carousel-section .carousel-content-wrapper h1,
+.carousel-section .carousel-content-wrapper h2 {
+  font-size: 2.7vw; /* Dependent on viewport width */
   font-family: "Paytone One";
-  color: #2d2119; /* Assuming --bg-dark is #2d2119 */
-}
-.shiftclub-section .shiftclub-carousel-inner__description {
-  font-size: 16px; /* Equivalent to 16px assuming 16px base */
   font-weight: 400;
-  line-height: 24px; /* Equivalent to 24px assuming 16px base */
-  color: #2d2119; /* Assuming --bg-dark is #2d2119 */
-}
-.shiftclub-section .carousel-control-prev,
-.shiftclub-section .carousel-control-next {
-  background: #fff;
-  height: 46px; /* Equivalent to 46px assuming 16px base */
-  width: 46px; /* Equivalent to 46px assuming 16px base */
-  top: 45%;
-  left: -17px; /* Equivalent to -17px assuming 16px base */
-  border-radius: 50px; /* Equivalent to 50px assuming 16px base */
-  z-index: 9;
-  opacity: 1;
-}
-.shiftclub-section .carousel-control-next {
-  right: -17px; /* Equivalent to -17px assuming 16px base */
-  left: unset;
-}
-.shiftclub-section .carousel-control-prev-icon {
-  background-image: url("/etc.clientlibs/itc-rightshift/clientlibs/clientlib-rightshift/resources/icons/next-icon.svg");
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-  transform: rotate(180deg);
-  display: block;
-}
-.shiftclub-section .carousel-control-next-icon {
-  background-image: url("/etc.clientlibs/itc-rightshift/clientlibs/clientlib-rightshift/resources/icons/next-icon.svg");
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-  display: block;
-}
-.shiftclub-section .carousel-indicators {
-  bottom: -50px; /* Equivalent to -50px assuming 16px base */
-  left: -50%;
-  justify-content: center;
-}
-.shiftclub-section .carousel-indicators li {
-  border: 1px solid #2d2119; /* Assuming --bg-dark is #2d2119 */
-  background-color: transparent;
-  border-radius: 50%;
-  width: 12px; /* Equivalent to 12px assuming 16px base */
-  height: 12px; /* Equivalent to 12px assuming 16px base */
-  margin-right: 5px; /* Equivalent to 5px assuming 16px base */
-  cursor: pointer;
-}
-.shiftclub-section .carousel-indicators .active {
-  background-color: #2d2119; /* Assuming --bg-dark is #2d2119 */
+  padding-bottom: 10px;
 }
 
-@media (max-width: 1300px) {
-  .shiftclub-section .shiftclub-carousel-shift {
-    margin-top: -8px; /* Equivalent to -8px assuming 16px base */
+.carousel-section .carousel-indicators {
+  bottom: -5px;
+  left: 0;
+  margin-right: 0;
+  margin-left: 7%;
+  justify-content: start;
+  background-color: transparent;
+  border: 1px solid #fcf1e4; /* Equivalent to var(--color-light) */
+  border-radius: 50%;
+  width: 12px;
+  height: 12px;
+  margin-right: 5px;
+  cursor: pointer;
+}
+.carousel-section .carousel-indicators .carousel-indicator-active {
+  background-color: #fcf1e4; /* Equivalent to var(--color-light) */
+}
+
+.carousel-section .carousel-desktop-image {
+  display: block !important;
+  height: 100%;
+}
+.carousel-section .carousel-mobile-image {
+  display: none !important;
+}
+
+.carousel-section .carousel-control-prev,
+.carousel-section .carousel-control-next {
+  display: none;
+}
+
+.carousel-control-next-icon {
+  background-image: url("clientlib-rightshift/resources/icons/next-icon.svg");
+}
+.carousel-control-prev-icon {
+  background-image: url("clientlib-rightshift/resources/icons/next-icon.svg");
+  transform: rotate(180deg);
+}
+
+.carousel-content-wrapper h1,
+.carousel-content-wrapper h2 {
+  font-size: 4vw; /* Dependent on viewport width */
+}
+
+.carousel-cta.btn.btn-primary.carousel-start-now {
+  padding: 10px 67px; /* Equivalent to 0.625rem 4.1875rem assuming 16px base */
+  background-color: #098040; /* Equivalent to var(--primary) */
+  color: #fff;
+  border: transparent;
+  font-weight: 700;
+  border-radius: 28px; /* Equivalent to 1.75rem assuming 16px base */
+}
+
+.carousel-cta.btn.btn-primary.carousel-start-now:hover,
+.carousel-cta.btn.btn-primary.carousel-start-now:focus,
+.carousel-cta.btn.btn-primary.carousel-start-now:active {
+  opacity: 0.6;
+  border-color: unset !important;
+  text-decoration: none !important;
+  box-shadow: none !important;
+}
+
+.carousel-cta.btn.btn-primary.carousel-start-now:hover {
+  background-color: #437d5e;
+}
+
+.carousel-heading {
+  color: #3c2904;
+}
+
+.carousel-description h3,
+.carousel-description i,
+.carousel-description p {
+  color: #3c2904;
+}
+
+@media (min-width: 1192px) {
+  .carousel-section .carousel-inner {
+    height: calc(100vh - 94px);
+    max-height: 500px;
   }
 }
-@media (max-width: 990px) {
-  .shiftclub-section .shiftclub-right-wrapper h2 {
-    font-size: 3.43vw !important;
+@media (max-width: 992px) {
+  .carousel-section .carousel-content-wrapper {
+    top: -5%;
   }
-  .shiftclub-section .shiftclub-right-wrapper p {
-    font-size: 14px; /* Equivalent to 14px assuming 16px base */
+  .carousel-content-wrapper p {
+    max-width: none;
   }
 }
-@media (max-width: 767.98px) {
-  .shiftclub-section {
-    margin-top: 0 !important;
-    text-align: center;
-  }
-  .shiftclub-section .shiftclub-right-wrapper {
-    padding: 10px 12px 22px 10px !important; /* Equivalent to 10px 12px 22px 10px assuming 16px base */
-    min-height: auto;
-    height: auto;
-  }
-  .shiftclub-section .shiftclub-carousel__img {
-    max-height: 281px !important; /* Equivalent to 281px assuming 16px base */
-    object-fit: cover;
-  }
-  .shiftclub-section .carousel-inner .carousel-item {
+@media (max-width: 768px) {
+  .carousel-section .carousel-content-wrapper {
+    top: -2%;
+    transform: translate(-50%, 24px);
+    left: 50%;
+    color: #fcf1e4; /* Equivalent to var(--color-light) */
+    display: flex;
     flex-direction: column;
     align-items: center;
-    width: 100%;
-    max-height: unset;
+    text-align: center;
+    padding: 0 20px; /* Equivalent to 0 1.25rem assuming 16px base */
   }
-  .shiftclub-section .carousel-control-prev,
-  .shiftclub-section .carousel-control-next {
-    display: none;
+  .carousel-section .carousel-indicators {
+    top: 0;
+    left: unset;
   }
-  .shiftclub-section .carousel-indicators {
-    bottom: 0 !important;
-    left: 0;
+  .carousel-start-now {
+    margin-top: 10px;
+    margin-bottom: 10px;
   }
-  .shiftclub-section .shiftclub-carousel-inner__title {
-    font-size: 22px !important; /* Equivalent to 22px assuming 16px base */
+  .carousel-desktop-image {
+    display: none !important;
   }
-  .shiftclub-section .shiftclub-carousel-inner__description {
-    font-size: 14px !important; /* Equivalent to 14px assuming 16px base */
-    line-height: 20px; /* Equivalent to 20px assuming 16px base */
+  .carousel-mobile-image {
+    display: block !important;
   }
 }
-@media (max-width: 374.98px) {
-  .shiftclub-section .carousel-indicators {
-    bottom: 219px !important; /* Equivalent to 219px assuming 16px base */
+@media (max-width: 575.978px) {
+  .carousel-section .carousel-indicators {
+    bottom: 0;
+    left: 0 !important;
     top: unset !important;
+  }
+  .carousel-section .carousel-content-wrapper h1,
+  .carousel-section .carousel-content-wrapper h2 {
+    font-size: 6.4vw; /* Dependent on viewport width */
+    line-height: 6.5vw; /* Dependent on viewport width */
+    text-align: center;
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+}
+@media (max-width: 375px) {
+  .carousel-content-wrapper p {
+    max-width: 100%;
+  }
+  .carousel-heading {
+    font-size: 6.4vw; /* Dependent on viewport width */
+    line-height: 6.5vw; /* Dependent on viewport width */
+  }
+}
+@media (max-width: 370px) {
+  .carousel-content-wrapper p {
+    font-size: 14px; /* Equivalent to 0.875rem assuming 16px base */
+    line-height: 1.2;
+  }
+  .carousel-description h2 {
+    padding-bottom: 0;
+  }
+  .carousel-cta.btn.btn-primary.carousel-start-now {
+    padding: 4px 32px; /* Equivalent to 0.25rem 2rem assuming 16px base */
+    font-size: 16px; /* Equivalent to 1rem assuming 16px base */
   }
 }

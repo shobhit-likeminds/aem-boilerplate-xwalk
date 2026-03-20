@@ -73,7 +73,11 @@
         "cardsRsCards",
         "cardsRow",
         "pageintro",
-        "productsList"
+        "productsList",
+        "howshiftSection",
+        "whyUsText",
+        "clubCarousel",
+        "textComponent"
       ]
     }
   ]

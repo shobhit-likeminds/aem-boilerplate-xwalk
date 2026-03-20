@@ -43,9 +43,9 @@
           "valueType": "string"
         },
         {
-          "component": "text",
-          "label": "Headline",
-          "name": "headline",
+          "component": "richtext",
+          "label": "Title",
+          "name": "title",
           "valueType": "string"
         },
         {
@@ -59,7 +59,7 @@
   ],
   "filters": [
     {
-      "id": "cardsRow",
+      "id": "cards-row",
       "components": [
         "card"
       ]

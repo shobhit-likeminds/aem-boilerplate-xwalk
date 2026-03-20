@@ -1,0 +1,187 @@
+{
+  "definitions": [
+    {
+      "title": "Header",
+      "id": "header",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "header",
+              "model": "header",
+              "name": "Header"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Phone",
+      "id": "phone",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "phone",
+              "name": "Phone"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Social",
+      "id": "social",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "social",
+              "name": "Social"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Menu",
+      "id": "menu",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "menu",
+              "name": "Menu"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "header",
+      "fields": [
+        {
+          "component": "container",
+          "items": {
+            "component": "reference",
+            "name": "phone",
+            "reference": "phone"
+          },
+          "label": "Phones",
+          "name": "phones"
+        },
+        {
+          "component": "text",
+          "label": "Consumer Care Email",
+          "name": "consumerCareEmail",
+          "valueType": "string"
+        },
+        {
+          "component": "container",
+          "items": {
+            "component": "reference",
+            "name": "social",
+            "reference": "social"
+          },
+          "label": "Socials",
+          "name": "socials"
+        },
+        {
+          "component": "reference",
+          "label": "Brand Logo",
+          "name": "brandLogo",
+          "valueType": "string"
+        },
+        {
+          "component": "container",
+          "items": {
+            "component": "reference",
+            "name": "menu",
+            "reference": "menu"
+          },
+          "label": "Menus",
+          "name": "menus"
+        },
+        {
+          "component": "text",
+          "label": "Search Placeholder",
+          "name": "searchPlaceholder",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "phone",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Label",
+          "name": "label",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Phone Number",
+          "name": "phoneNumber",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "social",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Social Link",
+          "name": "link",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Icon",
+          "name": "icon",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Alt Text",
+          "name": "altText",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "menu",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Menu Label",
+          "name": "label",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Menu Link",
+          "name": "link",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "header",
+      "components": [
+        "phone",
+        "social",
+        "menu"
+      ]
+    }
+  ]
+}

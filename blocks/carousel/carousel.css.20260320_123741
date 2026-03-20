@@ -1,0 +1,210 @@
+.club-section-wrapper {
+  background-color: #fcf1e4;
+  padding-bottom: 25px; /* Equivalent to 40px assuming 16px base */
+}
+.club-section-wrapper.club-section-mx-md-0 {
+  margin-left: 0; 
+  margin-right: 0;
+}
+.club-section-wrapper.club-section-mx-4 {
+  margin-left: 1.5rem; /* Equivalent to 24px assuming 16px base */
+  margin-right: 1.5rem; /* Equivalent to 24px assuming 16px base */
+}
+@media (max-width: 767.98px) {
+  .club-section-wrapper.club-section-mx-4 {
+    margin-left: 1.5rem; /* Equivalent to 24px assuming 16px base */
+    margin-right: 1.5rem; /* Equivalent to 24px assuming 16px base */
+  }
+}
+.club-section-container {
+  max-width: 1470px;
+  width: 100%;
+  padding: 0;
+  margin: 0 auto;
+}
+.club-section-carousel {
+  position: relative;
+  max-width: 1069px;
+  margin: 0 auto;
+  border-radius: 45px;
+  margin-top: 0; /* Equivalent to 0px assuming 16px base */
+}
+.club-section-itc-carousel-shift {
+  max-width: 1069px;
+  margin: 0 auto;
+  border-radius: 45px;
+  position: relative;
+}
+.club-section-carousel-inner {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  max-height: 413px;
+  object-fit: cover;
+}
+.club-section-carousel-inner::after {
+  display: block;
+  clear: both;
+  content: "";
+}
+.club-section-carousel-indicators {
+  position: absolute;
+  right: 0;
+  bottom: -35px; /* Equivalent to -56px assuming 16px base */
+  left: -50%;
+  z-index: 15;
+  display: flex;
+  justify-content: center;
+  padding-left: 0;
+  margin-right: 15%;
+  margin-left: 15%;
+  list-style: none;
+}
+@media (max-width: 767.98px) {
+  .club-section-carousel-indicators {
+    bottom: -35px !important; /* Equivalent to -56px assuming 16px base */
+    left: 0;
+  }
+}
+.club-section-carousel-indicators li {
+  box-sizing: content-box;
+  flex: 0 1 auto;
+  width: 12px; /* Equivalent to 12px assuming 16px base */
+  height: 12px; /* Equivalent to 12px assuming 16px base */
+  margin-right: 5px; /* Equivalent to 5px assuming 16px base */
+  margin-left: 3px; /* Equivalent to 3px assuming 16px base */
+  text-indent: -999px;
+  cursor: pointer;
+  background-color: #fcf1e4;
+  background-clip: padding-box;
+  border: 1px solid #2d2119;
+  border-radius: 50%;
+  opacity: 0.5;
+  transition: opacity 0.6s ease;
+}
+@media (prefers-reduced-motion: reduce) {
+  .club-section-carousel-indicators li {
+    transition: none;
+  }
+}
+.club-section-carousel-indicators .active {
+  background-color: #2d2119;
+  opacity: 1;
+}
+.club-section-carousel-control-prev,
+.club-section-carousel-control-next {
+  position: absolute;
+  top: 45%;
+  bottom: 0;
+  z-index: 9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px; /* Equivalent to 46px assuming 16px base */
+  height: 46px; /* Equivalent to 46px assuming 16px base */
+  padding: 0;
+  color: #fff;
+  text-align: center;
+  background: #fff;
+  border: 0;
+  opacity: 1;
+  transition: opacity 0.15s ease;
+  border-radius: 50px;
+  left: -17px; /* Equivalent to -17px assuming 16px base */
+}
+@media (prefers-reduced-motion: reduce) {
+  .club-section-carousel-control-prev,
+  .club-section-carousel-control-next {
+    transition: none;
+  }
+}
+.club-section-carousel-control-prev:hover,
+.club-section-carousel-control-prev:focus,
+.club-section-carousel-control-next:hover,
+.club-section-carousel-control-next:focus {
+  color: #fff;
+  text-decoration: none;
+  outline: 0;
+  opacity: 0.9;
+}
+.club-section-carousel-control-next {
+  right: -17px !important; /* Equivalent to -17px assuming 16px base */
+  left: unset !important;
+}
+.club-section-carousel-control-prev-icon,
+.club-section-carousel-control-next-icon {
+  display: inline-block;
+  width: 34px; /* Equivalent to 34px assuming 16px base */
+  height: 34px; /* Equivalent to 34px assuming 16px base */
+  background: url("../../../content/dam/itc-rightshift/clientlibs/clientlib-rightshift/resources/icons/next-icon.svg") 50% 50% / 100% 100% no-repeat;
+}
+.club-section-carousel-control-prev-icon {
+  transform: rotate(180deg);
+}
+.club-section-d-md-flex {
+  display: flex;
+}
+.club-section-d-block {
+  display: block;
+}
+.club-section-w-md-50 {
+  width: 50%;
+}
+.club-section-w-100 {
+  width: 100%;
+}
+.club-section-carousel__img {
+  height: 434px;
+  object-fit: cover;
+}
+.club-section-itc-club-right-wrapper {
+  background: linear-gradient(0deg, #f8d765 0%, #f8d765 100%);
+  padding: 24px 45px 56px 46px;
+  display: flex;
+  flex-direction: column;
+  align-items: baseline;
+  overflow-y: auto;
+  height: 434px;
+  justify-content: space-evenly;
+}
+@media (max-width: 768px) {
+  .club-section-itc-club-right-wrapper {
+    min-height: 335px;
+    height: auto;
+  }
+}
+.club-section-carousel-inner__title {
+  font-family: "Paytone One";
+  font-size: 28px; /* Equivalent to 28px assuming 16px base */
+  font-weight: 500;
+  color: #2d2119;
+  margin-bottom: 0.5rem;
+}
+@media (max-width: 990px) {
+  .club-section-carousel-inner__title {
+    font-size: 3.43vw !important;
+  }
+}
+@media (max-width: 767.98px) {
+  .club-section-carousel-inner__title {
+    font-size: 22px !important; /* Equivalent to 22px assuming 16px base */
+  }
+}
+.club-section-carousel-inner__description {
+  font-size: 16px !important; /* Equivalent to 16px assuming 16px base */
+  line-height: 24px; /* Equivalent to 24px assuming 16px base */
+  font-weight: 400;
+  color: #2d2119;
+  margin-bottom: 1rem;
+}
+@media (max-width: 990px) {
+  .club-section-carousel-inner__description {
+    font-size: 14px !important; /* Equivalent to 14px assuming 16px base */
+  }
+}
+@media (max-width: 767.98px) {
+  .club-section-carousel-inner__description {
+    font-size: 14px !important; /* Equivalent to 14px assuming 16px base */
+    line-height: 20px !important; /* Equivalent to 20px assuming 16px base */
+  }
+}

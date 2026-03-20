@@ -1,0 +1,151 @@
+.shiftclub-section {
+  background-color: #fcf1e4; /* Assuming --color-light is #fcf1e4 */
+  padding-bottom: 25px; /* Equivalent to 50px assuming 16px base */
+  padding-top: 25px; /* Equivalent to 25px assuming 16px base */
+}
+.shiftclub-section .container {
+  max-width: 1470px; /* Equivalent to 1470px assuming 16px base */
+  width: 100%;
+  padding: 0;
+  margin: 0 auto;
+}
+.shiftclub-section .shiftclub-carousel {
+  max-width: 1069px; /* Equivalent to 1069px assuming 16px base */
+  margin: 0 auto;
+}
+.shiftclub-section .shiftclub-carousel-shift {
+  max-width: 1069px; /* Equivalent to 1069px assuming 16px base */
+  margin: -40px auto 0; /* Equivalent to -40px assuming 16px base */
+  border-radius: 45px; /* Equivalent to 45px assuming 16px base */
+  position: relative;
+}
+.shiftclub-section .carousel-inner .carousel-item {
+  max-height: 413px; /* Equivalent to 413px assuming 16px base */
+  object-fit: cover;
+}
+.shiftclub-section .shiftclub-carousel__img {
+  height: 434px; /* Equivalent to 434px assuming 16px base */
+  object-fit: cover;
+}
+.shiftclub-section .shiftclub-right-wrapper {
+  background: linear-gradient(0deg, #f8d765 0%, #f8d765 100%);
+  padding: 24px 45px 56px 46px; /* Equivalent to 24px 45px 56px 46px assuming 16px base */
+  display: flex;
+  flex-direction: column;
+  align-items: baseline;
+  overflow-y: auto;
+  height: 434px; /* Equivalent to 434px assuming 16px base */
+  justify-content: space-evenly;
+}
+.shiftclub-section .shiftclub-carousel-inner__title {
+  font-size: 28px; /* Equivalent to 28px assuming 16px base */
+  font-family: "Paytone One";
+  color: #2d2119; /* Assuming --bg-dark is #2d2119 */
+}
+.shiftclub-section .shiftclub-carousel-inner__description {
+  font-size: 16px; /* Equivalent to 16px assuming 16px base */
+  font-weight: 400;
+  line-height: 24px; /* Equivalent to 24px assuming 16px base */
+  color: #2d2119; /* Assuming --bg-dark is #2d2119 */
+}
+.shiftclub-section .carousel-control-prev,
+.shiftclub-section .carousel-control-next {
+  background: #fff;
+  height: 46px; /* Equivalent to 46px assuming 16px base */
+  width: 46px; /* Equivalent to 46px assuming 16px base */
+  top: 45%;
+  left: -17px; /* Equivalent to -17px assuming 16px base */
+  border-radius: 50px; /* Equivalent to 50px assuming 16px base */
+  z-index: 9;
+  opacity: 1;
+}
+.shiftclub-section .carousel-control-next {
+  right: -17px; /* Equivalent to -17px assuming 16px base */
+  left: unset;
+}
+.shiftclub-section .carousel-control-prev-icon {
+  background-image: url("/etc.clientlibs/itc-rightshift/clientlibs/clientlib-rightshift/resources/icons/next-icon.svg");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  transform: rotate(180deg);
+  display: block;
+}
+.shiftclub-section .carousel-control-next-icon {
+  background-image: url("/etc.clientlibs/itc-rightshift/clientlibs/clientlib-rightshift/resources/icons/next-icon.svg");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  display: block;
+}
+.shiftclub-section .carousel-indicators {
+  bottom: -50px; /* Equivalent to -50px assuming 16px base */
+  left: -50%;
+  justify-content: center;
+}
+.shiftclub-section .carousel-indicators li {
+  border: 1px solid #2d2119; /* Assuming --bg-dark is #2d2119 */
+  background-color: transparent;
+  border-radius: 50%;
+  width: 12px; /* Equivalent to 12px assuming 16px base */
+  height: 12px; /* Equivalent to 12px assuming 16px base */
+  margin-right: 5px; /* Equivalent to 5px assuming 16px base */
+  cursor: pointer;
+}
+.shiftclub-section .carousel-indicators .active {
+  background-color: #2d2119; /* Assuming --bg-dark is #2d2119 */
+}
+
+@media (max-width: 1300px) {
+  .shiftclub-section .shiftclub-carousel-shift {
+    margin-top: -8px; /* Equivalent to -8px assuming 16px base */
+  }
+}
+@media (max-width: 990px) {
+  .shiftclub-section .shiftclub-right-wrapper h2 {
+    font-size: 3.43vw !important;
+  }
+  .shiftclub-section .shiftclub-right-wrapper p {
+    font-size: 14px; /* Equivalent to 14px assuming 16px base */
+  }
+}
+@media (max-width: 767.98px) {
+  .shiftclub-section {
+    margin-top: 0 !important;
+    text-align: center;
+  }
+  .shiftclub-section .shiftclub-right-wrapper {
+    padding: 10px 12px 22px 10px !important; /* Equivalent to 10px 12px 22px 10px assuming 16px base */
+    min-height: auto;
+    height: auto;
+  }
+  .shiftclub-section .shiftclub-carousel__img {
+    max-height: 281px !important; /* Equivalent to 281px assuming 16px base */
+    object-fit: cover;
+  }
+  .shiftclub-section .carousel-inner .carousel-item {
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-height: unset;
+  }
+  .shiftclub-section .carousel-control-prev,
+  .shiftclub-section .carousel-control-next {
+    display: none;
+  }
+  .shiftclub-section .carousel-indicators {
+    bottom: 0 !important;
+    left: 0;
+  }
+  .shiftclub-section .shiftclub-carousel-inner__title {
+    font-size: 22px !important; /* Equivalent to 22px assuming 16px base */
+  }
+  .shiftclub-section .shiftclub-carousel-inner__description {
+    font-size: 14px !important; /* Equivalent to 14px assuming 16px base */
+    line-height: 20px; /* Equivalent to 20px assuming 16px base */
+  }
+}
+@media (max-width: 374.98px) {
+  .shiftclub-section .carousel-indicators {
+    bottom: 219px !important; /* Equivalent to 219px assuming 16px base */
+    top: unset !important;
+  }
+}

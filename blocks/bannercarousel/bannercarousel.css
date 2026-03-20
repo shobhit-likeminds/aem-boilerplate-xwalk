@@ -1,0 +1,183 @@
+.bannercarousel-section {
+  position: relative;
+}
+.bannercarousel-section .carousel-indicators {
+  bottom: -5px;
+  left: 0;
+  margin-right: 0;
+  margin-left: 7%;
+  justify-content: start;
+}
+.bannercarousel-section .carousel-indicators li {
+  background-color: transparent;
+  border: 1px solid #fcf1e4;
+  border-radius: 50%;
+  width: 12px; /* Equivalent to 12px assuming 16px base */
+  height: 12px; /* Equivalent to 12px assuming 16px base */
+  margin-right: 5px; /* Equivalent to 5px assuming 16px base */
+  cursor: pointer;
+}
+.bannercarousel-section .carousel-indicators .active {
+  background-color: #fcf1e4;
+}
+.bannercarousel-section .bannercarousel-next-btn .carousel-control-prev {
+  left: 10px; /* Equivalent to 10px assuming 16px base */
+}
+.bannercarousel-section .bannercarousel-next-btn .carousel-control-next {
+  right: 10px; /* Equivalent to 10px assuming 16px base */
+}
+.bannercarousel-section .carousel-control-next-icon {
+  top: 4px; /* Equivalent to 4px assuming 16px base */
+  left: 3px; /* Equivalent to 3px assuming 16px base */
+  width: 34px; /* Equivalent to 34px assuming 16px base */
+  position: relative;
+  height: 34px; /* Equivalent to 34px assuming 16px base */
+}
+.bannercarousel-section .carousel-control-prev-icon {
+  width: 34px; /* Equivalent to 34px assuming 16px base */
+  left: -3px; /* Equivalent to -3px assuming 16px base */
+  top: 2px; /* Equivalent to 2px assuming 16px base */
+  height: 34px; /* Equivalent to 34px assuming 16px base */
+  position: relative;
+  transform: rotate(180deg);
+}
+.bannercarousel-section .carousel-control-next {
+  margin-right: 5px; /* Equivalent to 5px assuming 16px base */
+}
+.bannercarousel-section .carousel-control-prev {
+  margin-left: 5px; /* Equivalent to 5px assuming 16px base */
+}
+.bannercarousel-section .carousel-control-next,
+.bannercarousel-section .carousel-control-prev {
+  display: none;
+}
+
+.bannercarousel-carousel .carousel-inner {
+  height: calc(100vh - 94px); /* Equivalent to 100vh - 94px assuming 16px base */
+  max-height: 500px; /* Equivalent to 500px assuming 16px base */
+}
+.bannercarousel-carousel .bannercarousel-desktop-image {
+  display: block !important;
+  height: 100%;
+}
+.bannercarousel-carousel .bannercarousel-mobile-image {
+  display: none !important;
+}
+
+.bannercarousel-content-wrapper {
+  color: #fcf1e4;
+  top: 0;
+  transform: translate(90px, 10%);
+  left: 0;
+  bottom: 0;
+  max-width: 50%;
+}
+.bannercarousel-content-wrapper .bannercarousel-heading,
+.bannercarousel-content-wrapper .bannercarousel-description h3 {
+  font-size: 25px; /* Equivalent to 25px assuming 16px base */
+  font-family: "Paytone One";
+  font-weight: 400;
+  padding-bottom: 10px; /* Equivalent to 10px assuming 16px base */
+  color: #3c2904;
+}
+.bannercarousel-content-wrapper .bannercarousel-description p {
+  font-size: 16px; /* Equivalent to 16px assuming 16px base */
+  line-height: 24px; /* Equivalent to 24px assuming 16px base */
+  color: #3c2904;
+  max-width: 70%;
+}
+.bannercarousel-content-wrapper .bannercarousel-btn-start-now {
+  margin-top: 0;
+  padding: 10px 67px !important; /* Equivalent to 10px 67px assuming 16px base */
+  background-color: #6c3003;
+  font-size: 24px; /* Equivalent to 24px assuming 16px base */
+  font-weight: 700;
+  border-radius: 28px; /* Equivalent to 28px assuming 16px base */
+  color: #fcf1e4;
+  border: transparent;
+}
+.bannercarousel-content-wrapper .bannercarousel-btn-start-now:hover,
+.bannercarousel-content-wrapper .bannercarousel-btn-start-now:focus,
+.bannercarousel-content-wrapper .bannercarousel-btn-start-now:active {
+  opacity: 0.6;
+  border-color: unset !important;
+  text-decoration: none !important;
+  box-shadow: none !important;
+  background-color: #437d5e;
+}
+
+@media (max-width: 992px) {
+  .bannercarousel-section .carousel-indicators {
+    margin-left: 0;
+    justify-content: center;
+  }
+  .bannercarousel-content-wrapper {
+    top: -5%;
+    max-width: none;
+  }
+}
+@media (max-width: 768px) {
+  .bannercarousel-section .carousel-indicators {
+    bottom: 0 !important;
+  }
+  .bannercarousel-carousel .bannercarousel-desktop-image {
+    display: none !important;
+  }
+  .bannercarousel-carousel .bannercarousel-mobile-image {
+    display: block !important;
+  }
+  .bannercarousel-content-wrapper {
+    top: -2%;
+    transform: translate(-50%, 24px); /* Equivalent to 24px assuming 16px base */
+    left: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 0 20px; /* Equivalent to 20px assuming 16px base */
+  }
+  .bannercarousel-content-wrapper .bannercarousel-heading,
+  .bannercarousel-content-wrapper .bannercarousel-description h3 {
+    font-size: 7.47vw;
+    margin-top: 20px; /* Equivalent to 20px assuming 16px base */
+    padding-bottom: 0;
+  }
+  .bannercarousel-content-wrapper .bannercarousel-description p {
+    font-size: 4.2vw;
+    max-width: 100%;
+  }
+  .bannercarousel-content-wrapper .bannercarousel-btn-start-now {
+    margin-top: 10px; /* Equivalent to 10px assuming 16px base */
+    margin-bottom: 10px; /* Equivalent to 10px assuming 16px base */
+    padding: 10px 28px !important; /* Equivalent to 10px 28px assuming 16px base */
+    font-size: 16px; /* Equivalent to 16px assuming 16px base */
+  }
+}
+@media (max-width: 575.978px) {
+  .bannercarousel-section .carousel-indicators {
+    left: 0 !important;
+    top: unset !important;
+    bottom: 0;
+  }
+  .bannercarousel-content-wrapper .bannercarousel-heading,
+  .bannercarousel-content-wrapper .bannercarousel-description h3 {
+    font-size: 6.4vw;
+    line-height: 6.5vw;
+    padding-left: 40px; /* Equivalent to 40px assuming 16px base */
+    padding-right: 40px; /* Equivalent to 40px assuming 16px base */
+  }
+}
+@media (max-width: 370px) {
+  .bannercarousel-content-wrapper .bannercarousel-description p {
+    font-size: 14px; /* Equivalent to 14px assuming 16px base */
+    line-height: 1.2;
+  }
+  .bannercarousel-content-wrapper .bannercarousel-heading {
+    margin-bottom: 10px; /* Equivalent to 10px assuming 16px base */
+  }
+  .bannercarousel-content-wrapper .bannercarousel-btn-start-now {
+    padding: 14px 36px !important; /* Equivalent to 14px 36px assuming 16px base */
+    font-size: 14px !important; /* Equivalent to 14px assuming 16px base */
+    margin-top: 2px; /* Equivalent to 2px assuming 16px base */
+  }
+}

@@ -177,6 +177,47 @@
     ]
   },
   {
+    "id": "bannerCarouselItem",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Desktop Image",
+        "name": "desktopImage",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Mobile Image",
+        "name": "mobileImage",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Description",
+        "name": "description",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "CTA Label",
+        "name": "ctaLabel",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "CTA Link",
+        "name": "ctaLink",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "card",
     "fields": [
       {
@@ -186,9 +227,9 @@
         "valueType": "string"
       },
       {
-        "component": "text",
-        "label": "Headline",
-        "name": "headline",
+        "component": "richtext",
+        "label": "Title",
+        "name": "title",
         "valueType": "string"
       },
       {
@@ -242,12 +283,59 @@
     ]
   },
   {
-    "id": "carouselSlide",
+    "id": "carouselItem",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Desktop Image",
+        "name": "desktopImage",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Mobile Image",
+        "name": "mobileImage",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Description",
+        "name": "description",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "CTA Link",
+        "name": "ctaLink",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "CTA Text",
+        "name": "ctaText",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "slide",
     "fields": [
       {
         "component": "reference",
         "label": "Image",
         "name": "image",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Alt Text",
+        "name": "alt",
         "valueType": "string"
       },
       {
@@ -585,101 +673,125 @@
     "fields": [
       {
         "component": "reference",
-        "label": "Brand Image",
-        "name": "brandImage",
+        "label": "ITC Logo",
+        "name": "itcLogo",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "FSSAI Logo",
+        "name": "fssaiLogo",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": {
+          "$ref": "footerLink"
+        },
+        "label": "Footer Links",
+        "maxItems": 10,
+        "name": "footerLinks"
+      },
+      {
+        "component": "container",
+        "item": {
+          "$ref": "footerLink"
+        },
+        "label": "Group Links",
+        "maxItems": 10,
+        "name": "groupLinks"
+      },
+      {
+        "component": "text",
+        "label": "Grievance Officer Title",
+        "name": "grievanceTitle",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Brand Link",
-        "name": "brandLink",
+        "label": "Grievance Officer Name",
+        "name": "grievanceName",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Grievance Officer Contact",
+        "name": "grievanceContact",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Grievance Officer Timings",
+        "name": "grievanceTimings",
         "valueType": "string"
       },
       {
         "component": "container",
-        "components": [
-          "footerMenuItem"
-        ],
-        "label": "Footer Menu",
-        "name": "footerMenu"
+        "item": {
+          "$ref": "socialIcon"
+        },
+        "label": "Social Icons",
+        "maxItems": 10,
+        "name": "socialIcons"
       },
       {
-        "component": "container",
-        "components": [
-          "footerSocialIcon"
-        ],
-        "label": "Footer Social Icons",
-        "name": "footerSocialIcons"
-      },
-      {
-        "component": "container",
-        "components": [
-          "footerBrandItem"
-        ],
-        "label": "Footer Brands",
-        "name": "footerBrands"
-      },
-      {
-        "component": "richtext",
+        "component": "text",
         "label": "Copyright",
         "name": "copyright",
         "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": {
+          "$ref": "footerSecondaryLink"
+        },
+        "label": "Footer Secondary Links",
+        "maxItems": 10,
+        "name": "secondaryLinks"
       }
     ]
   },
   {
-    "id": "footerMenuItem",
+    "id": "footerLink",
     "fields": [
       {
         "component": "text",
-        "label": "Label",
-        "name": "label",
+        "label": "Link Text",
+        "name": "text",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Link",
-        "name": "link",
+        "label": "Link URL",
+        "name": "url",
         "valueType": "string"
       }
     ]
   },
   {
-    "id": "footerSocialIcon",
+    "id": "socialIcon",
     "fields": [
       {
         "component": "reference",
         "label": "Icon Image",
-        "name": "iconImage",
+        "name": "icon",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Icon Link",
-        "name": "iconLink",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Icon Alt",
-        "name": "iconAlt",
+        "label": "Social URL",
+        "name": "url",
         "valueType": "string"
       }
     ]
   },
   {
-    "id": "footerBrandItem",
+    "id": "footerSecondaryLink",
     "fields": [
       {
         "component": "text",
-        "label": "Label",
-        "name": "label",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Link",
-        "name": "link",
+        "label": "Secondary Link URL",
+        "name": "url",
         "valueType": "string"
       }
     ]
@@ -791,57 +903,35 @@
     "id": "header",
     "fields": [
       {
-        "component": "container",
-        "items": {
-          "component": "reference",
-          "name": "phone",
-          "reference": "phone"
-        },
-        "label": "Phones",
-        "name": "phones"
-      },
-      {
-        "component": "text",
-        "label": "Consumer Care Email",
-        "name": "consumerCareEmail",
+        "component": "reference",
+        "label": "Logo Image",
+        "name": "logoImage",
         "valueType": "string"
-      },
-      {
-        "component": "container",
-        "items": {
-          "component": "reference",
-          "name": "social",
-          "reference": "social"
-        },
-        "label": "Socials",
-        "name": "socials"
       },
       {
         "component": "reference",
-        "label": "Brand Logo",
-        "name": "brandLogo",
+        "label": "Logo Link",
+        "name": "logoLink",
         "valueType": "string"
       },
       {
         "component": "container",
-        "items": {
-          "component": "reference",
-          "name": "menu",
-          "reference": "menu"
-        },
-        "label": "Menus",
-        "name": "menus"
+        "label": "Navigation Links",
+        "multi": true,
+        "name": "navigationLinks",
+        "referenceModel": "navigationLink"
       },
       {
-        "component": "text",
-        "label": "Search Placeholder",
-        "name": "searchPlaceholder",
-        "valueType": "string"
+        "component": "container",
+        "label": "Country Options",
+        "multi": true,
+        "name": "countryOptions",
+        "referenceModel": "countryOption"
       }
     ]
   },
   {
-    "id": "phone",
+    "id": "navigationLink",
     "fields": [
       {
         "component": "text",
@@ -851,48 +941,31 @@
       },
       {
         "component": "text",
-        "label": "Phone Number",
-        "name": "phoneNumber",
+        "label": "URL",
+        "name": "url",
         "valueType": "string"
       }
     ]
   },
   {
-    "id": "social",
+    "id": "countryOption",
     "fields": [
-      {
-        "component": "text",
-        "label": "Social Link",
-        "name": "link",
-        "valueType": "string"
-      },
       {
         "component": "reference",
-        "label": "Icon",
-        "name": "icon",
+        "label": "Flag Image",
+        "name": "flagImage",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Alt Text",
-        "name": "altText",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
-    "id": "menu",
-    "fields": [
-      {
-        "component": "text",
-        "label": "Menu Label",
-        "name": "label",
+        "label": "Country Name",
+        "name": "countryName",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Menu Link",
-        "name": "link",
+        "label": "Country URL",
+        "name": "countryUrl",
         "valueType": "string"
       }
     ]
@@ -1047,6 +1120,76 @@
     ]
   },
   {
+    "id": "howshiftSection",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Left Image",
+        "name": "leftImage",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Sub Heading",
+        "name": "subHeading",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Sub Text",
+        "name": "subText",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Howshift Items",
+        "name": "items",
+        "valueType": "array"
+      },
+      {
+        "component": "text",
+        "label": "Button Label",
+        "name": "buttonLabel",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Button URL",
+        "name": "buttonUrl",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "howshiftItem",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Item Image",
+        "name": "itemImage",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Item Label",
+        "name": "itemLabel",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Item URL",
+        "name": "itemUrl",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "pageintro",
     "fields": [
       {
@@ -1151,6 +1294,29 @@
     "id": "spaceadderVerticalPaddingSection"
   },
   {
+    "id": "textComponent",
+    "fields": [
+      {
+        "component": "richtext",
+        "label": "Heading 1",
+        "name": "heading1",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Heading 2",
+        "name": "heading2",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Heading 3",
+        "name": "heading3",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "text",
     "fields": [
       {
@@ -1163,6 +1329,29 @@
   },
   {
     "id": "verticalPaddingSection"
+  },
+  {
+    "id": "whyUsText",
+    "fields": [
+      {
+        "component": "richtext",
+        "label": "Heading 1",
+        "name": "heading1",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Heading 2",
+        "name": "heading2",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Heading 3",
+        "name": "heading3",
+        "valueType": "string"
+      }
+    ]
   },
   {
     "id": "whyUs",

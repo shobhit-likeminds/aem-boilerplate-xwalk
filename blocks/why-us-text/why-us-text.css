@@ -1,0 +1,42 @@
+.whyustext-align-center {
+  text-align: center;
+}
+.whyustext-koi-theme {
+  color: #4f250a;
+}
+.whyustext-cmp-text {
+  margin-top: 1.25rem; /* Equivalent to 20px assuming 16px base */
+}
+.whyustext-cmp-text h1 {
+  font-family: 'Paytone One';
+  font-size: 2.5rem; /* Equivalent to 40px assuming 16px base */
+  font-weight: 500;
+  line-height: 1.2;
+  color: #4f250a;
+  margin-bottom: 0.5rem;
+}
+@media (max-width: 48rem) { /* Equivalent to 768px */
+  .whyustext-pm-left-right {
+    padding-left: 1.375rem; /* Equivalent to 22px */
+    padding-right: 1.375rem; /* Equivalent to 22px */
+  }
+  .whyustext-cmp-text {
+    width: 100% !important;
+    margin: 0 !important;
+  }
+  .whyustext-cmp-text h1 {
+    font-size: 1.675rem; /* Equivalent to 26.8px */
+  }
+  .whyustext-cmp-text h2 {
+    font-size: 1.375rem; /* Equivalent to 22px */
+  }
+  .whyustext-cmp-text h3 {
+    font-size: 1.125rem; /* Equivalent to 18px */
+  }
+  .whyustext-cmp-text h4 {
+    font-size: 1rem; /* Equivalent to 16px */
+  }
+  .whyustext-cmp-text p {
+    font-size: 0.875rem; /* Equivalent to 14px */
+  }
+}

@@ -17,45 +17,45 @@
       }
     },
     {
-      "title": "FooterMenuItem",
-      "id": "footerMenuItem",
+      "title": "Footer Link",
+      "id": "footerLink",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "footerMenuItem",
-              "name": "FooterMenuItem"
+              "model": "footerLink",
+              "name": "Footer Link"
             }
           }
         }
       }
     },
     {
-      "title": "FooterSocialIcon",
-      "id": "footerSocialIcon",
+      "title": "Social Icon",
+      "id": "socialIcon",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "footerSocialIcon",
-              "name": "FooterSocialIcon"
+              "model": "socialIcon",
+              "name": "Social Icon"
             }
           }
         }
       }
     },
     {
-      "title": "FooterBrandItem",
-      "id": "footerBrandItem",
+      "title": "Footer Secondary Link",
+      "id": "footerSecondaryLink",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "footerBrandItem",
-              "name": "FooterBrandItem"
+              "model": "footerSecondaryLink",
+              "name": "Footer Secondary Link"
             }
           }
         }
@@ -68,101 +68,125 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Brand Image",
-          "name": "brandImage",
+          "label": "ITC Logo",
+          "name": "itcLogo",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "FSSAI Logo",
+          "name": "fssaiLogo",
+          "valueType": "string"
+        },
+        {
+          "component": "container",
+          "item": {
+            "$ref": "footerLink"
+          },
+          "label": "Footer Links",
+          "maxItems": 10,
+          "name": "footerLinks"
+        },
+        {
+          "component": "container",
+          "item": {
+            "$ref": "footerLink"
+          },
+          "label": "Group Links",
+          "maxItems": 10,
+          "name": "groupLinks"
+        },
+        {
+          "component": "text",
+          "label": "Grievance Officer Title",
+          "name": "grievanceTitle",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Brand Link",
-          "name": "brandLink",
+          "label": "Grievance Officer Name",
+          "name": "grievanceName",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Grievance Officer Contact",
+          "name": "grievanceContact",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Grievance Officer Timings",
+          "name": "grievanceTimings",
           "valueType": "string"
         },
         {
           "component": "container",
-          "components": [
-            "footerMenuItem"
-          ],
-          "label": "Footer Menu",
-          "name": "footerMenu"
+          "item": {
+            "$ref": "socialIcon"
+          },
+          "label": "Social Icons",
+          "maxItems": 10,
+          "name": "socialIcons"
         },
         {
-          "component": "container",
-          "components": [
-            "footerSocialIcon"
-          ],
-          "label": "Footer Social Icons",
-          "name": "footerSocialIcons"
-        },
-        {
-          "component": "container",
-          "components": [
-            "footerBrandItem"
-          ],
-          "label": "Footer Brands",
-          "name": "footerBrands"
-        },
-        {
-          "component": "richtext",
+          "component": "text",
           "label": "Copyright",
           "name": "copyright",
           "valueType": "string"
+        },
+        {
+          "component": "container",
+          "item": {
+            "$ref": "footerSecondaryLink"
+          },
+          "label": "Footer Secondary Links",
+          "maxItems": 10,
+          "name": "secondaryLinks"
         }
       ]
     },
     {
-      "id": "footerMenuItem",
+      "id": "footerLink",
       "fields": [
         {
           "component": "text",
-          "label": "Label",
-          "name": "label",
+          "label": "Link Text",
+          "name": "text",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Link",
-          "name": "link",
+          "label": "Link URL",
+          "name": "url",
           "valueType": "string"
         }
       ]
     },
     {
-      "id": "footerSocialIcon",
+      "id": "socialIcon",
       "fields": [
         {
           "component": "reference",
           "label": "Icon Image",
-          "name": "iconImage",
+          "name": "icon",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Icon Link",
-          "name": "iconLink",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Icon Alt",
-          "name": "iconAlt",
+          "label": "Social URL",
+          "name": "url",
           "valueType": "string"
         }
       ]
     },
     {
-      "id": "footerBrandItem",
+      "id": "footerSecondaryLink",
       "fields": [
         {
           "component": "text",
-          "label": "Label",
-          "name": "label",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Link",
-          "name": "link",
+          "label": "Secondary Link URL",
+          "name": "url",
           "valueType": "string"
         }
       ]
@@ -172,9 +196,9 @@
     {
       "id": "footer",
       "components": [
-        "footerMenuItem",
-        "footerSocialIcon",
-        "footerBrandItem"
+        "footerLink",
+        "socialIcon",
+        "footerSecondaryLink"
       ]
     }
   ]
