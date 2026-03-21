@@ -1,0 +1,5 @@
+.header-cmp-image__image {  width:100%;height:auto  }
+
+span.header-cmp-link__screen-reader-only {  display:none  }
+
+.header-country-flag {  width:19px;height:19px;border-radius:50%;object-fit:cover  }

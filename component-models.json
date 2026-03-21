@@ -142,7 +142,7 @@
     ]
   },
   {
-    "id": "bannerSlide",
+    "id": "slide",
     "fields": [
       {
         "component": "reference",
@@ -807,62 +807,58 @@
       },
       {
         "component": "container",
-        "items": {
-          "type": "footerLink"
-        },
+        "fields": [
+          {
+            "component": "footer-link"
+          }
+        ],
         "label": "Footer Links",
         "name": "footerLinks"
       },
       {
         "component": "container",
-        "items": {
-          "type": "footerListItem"
-        },
-        "label": "Footer List Items",
-        "name": "footerListItems"
+        "fields": [
+          {
+            "component": "social-link"
+          }
+        ],
+        "label": "Social Links",
+        "name": "socialLinks"
       },
       {
-        "component": "richtext",
+        "component": "text",
         "label": "Grievance Officer Title",
-        "name": "grievanceOfficerTitle",
+        "name": "grievanceTitle",
         "valueType": "string"
       },
       {
-        "component": "richtext",
+        "component": "text",
         "label": "Grievance Officer Name",
-        "name": "grievanceOfficerName",
+        "name": "grievanceName",
         "valueType": "string"
       },
       {
-        "component": "richtext",
+        "component": "text",
         "label": "Grievance Officer Contact",
-        "name": "grievanceOfficerContact",
+        "name": "grievanceContact",
         "valueType": "string"
       },
       {
-        "component": "richtext",
-        "label": "Grievance Officer Timing",
-        "name": "grievanceOfficerTiming",
+        "component": "text",
+        "label": "Grievance Officer Timings",
+        "name": "grievanceTimings",
         "valueType": "string"
       },
       {
-        "component": "container",
-        "items": {
-          "type": "socialIcon"
-        },
-        "label": "Social Icons",
-        "name": "socialIcons"
-      },
-      {
-        "component": "richtext",
-        "label": "Copyright Text",
-        "name": "copyrightText",
+        "component": "text",
+        "label": "Copyright",
+        "name": "copyright",
         "valueType": "string"
       }
     ]
   },
   {
-    "id": "footerLink",
+    "id": "footer-link",
     "fields": [
       {
         "component": "aem-content",
@@ -871,42 +867,25 @@
         "valueType": "string"
       },
       {
-        "component": "richtext",
-        "label": "Text",
+        "component": "text",
+        "label": "Link Text",
         "name": "text",
         "valueType": "string"
       }
     ]
   },
   {
-    "id": "footerListItem",
-    "fields": [
-      {
-        "component": "aem-content",
-        "label": "List Link",
-        "name": "listLink",
-        "valueType": "string"
-      },
-      {
-        "component": "richtext",
-        "label": "List Text",
-        "name": "listText",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
-    "id": "socialIcon",
+    "id": "social-link",
     "fields": [
       {
         "component": "aem-content",
         "label": "Social Link",
-        "name": "socialLink",
+        "name": "link",
         "valueType": "string"
       },
       {
         "component": "reference",
-        "label": "Icon",
+        "label": "Social Icon",
         "name": "icon",
         "valueType": "string"
       }
@@ -933,41 +912,15 @@
       },
       {
         "component": "aem-content",
-        "label": "Logo Link 1",
-        "name": "logoLink1",
-        "valueType": "string"
-      },
-      {
-        "component": "aem-content",
-        "label": "Logo Link 2",
-        "name": "logoLink2",
+        "label": "Logo Link",
+        "name": "logoLink",
         "valueType": "string"
       },
       {
         "component": "container",
-        "itemType": "navItem",
-        "label": "Navigation Items",
-        "name": "navItems",
-        "valueType": "array"
-      },
-      {
-        "component": "reference",
-        "label": "Country Flag IN",
-        "name": "countryFlagIn",
-        "valueType": "string"
-      },
-      {
-        "component": "reference",
-        "label": "Country Flag USA",
-        "name": "countryFlagUsa",
-        "valueType": "string"
-      },
-      {
-        "component": "container",
-        "itemType": "countryOption",
-        "label": "Country Options",
-        "name": "countryOptions",
-        "valueType": "array"
+        "itemType": "navigationLink",
+        "label": "Navigation Links",
+        "name": "navigationLinks"
       },
       {
         "component": "reference",
@@ -976,26 +929,26 @@
         "valueType": "string"
       },
       {
-        "component": "reference",
-        "label": "Dropdown Icon",
-        "name": "dropdownIcon",
-        "valueType": "string"
+        "component": "container",
+        "itemType": "countryOption",
+        "label": "Country Options",
+        "name": "countryOptions"
       }
     ]
   },
   {
-    "id": "navItem",
+    "id": "navigationLink",
     "fields": [
-      {
-        "component": "aem-content",
-        "label": "Label",
-        "name": "label",
-        "valueType": "string"
-      },
       {
         "component": "aem-content",
         "label": "Link",
         "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Label",
+        "name": "label",
         "valueType": "string"
       }
     ]
@@ -1006,19 +959,13 @@
       {
         "component": "reference",
         "label": "Flag Image",
-        "name": "flag",
+        "name": "flagImage",
         "valueType": "string"
       },
       {
-        "component": "aem-content",
+        "component": "text",
         "label": "Country Name",
         "name": "countryName",
-        "valueType": "string"
-      },
-      {
-        "component": "aem-content",
-        "label": "Country URL",
-        "name": "url",
         "valueType": "string"
       }
     ]
@@ -1457,8 +1404,8 @@
       },
       {
         "component": "text",
-        "label": "Title",
-        "name": "title",
+        "label": "Heading",
+        "name": "heading",
         "valueType": "string"
       },
       {
@@ -1470,7 +1417,7 @@
     ]
   },
   {
-    "id": "healthGoal",
+    "id": "category",
     "fields": [
       {
         "component": "reference",
@@ -1485,7 +1432,7 @@
         "valueType": "string"
       },
       {
-        "component": "text",
+        "component": "richtext",
         "label": "Label",
         "name": "label",
         "valueType": "string"
@@ -1497,18 +1444,18 @@
     "fields": [
       {
         "component": "reference",
-        "label": "Main Image",
-        "name": "mainImage",
+        "label": "Banner Image",
+        "name": "bannerImage",
         "valueType": "string"
       },
       {
-        "component": "text",
+        "component": "richtext",
         "label": "Heading",
         "name": "heading",
         "valueType": "string"
       },
       {
-        "component": "text",
+        "component": "richtext",
         "label": "Subheading",
         "name": "subheading",
         "valueType": "string"
@@ -1522,10 +1469,10 @@
       {
         "component": "container",
         "item": {
-          "type": "healthGoal"
+          "type": "category"
         },
-        "label": "Health Goals",
-        "name": "healthGoals",
+        "label": "Categories",
+        "name": "categories",
         "valueType": "array"
       },
       {
@@ -1535,7 +1482,7 @@
         "valueType": "string"
       },
       {
-        "component": "text",
+        "component": "richtext",
         "label": "Button Label",
         "name": "buttonLabel",
         "valueType": "string"
@@ -1643,17 +1590,14 @@
         "label": "Icon",
         "name": "icon",
         "valueType": "string"
-      },
-      {
-        "component": "aem-content",
-        "label": "CTA",
-        "name": "cta",
-        "valueType": "string"
       }
     ]
   },
   {
     "id": "spaceAdderVerticalPadding"
+  },
+  {
+    "id": "spaceAdder"
   },
   {
     "id": "spaceadderVerticalPaddingSection"

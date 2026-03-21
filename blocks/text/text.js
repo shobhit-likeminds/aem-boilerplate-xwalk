@@ -2,19 +2,22 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const contentRow = block.children[0];
-  const contentCell = contentRow.children[0];
+  const [contentRow] = [...block.children];
 
-  const contentWrapper = document.createElement('div');
-  contentWrapper.classList.add('text-content-wrapper'); // Corrected class prefix
-  moveInstrumentation(contentCell, contentWrapper);
-
-  while (contentCell.firstChild) {
-    contentWrapper.append(contentCell.firstChild);
+  if (contentRow) {
+    const contentCell = contentRow.firstElementChild;
+    if (contentCell) {
+      moveInstrumentation(contentRow, contentCell);
+      block.innerHTML = '';
+      block.classList.add('text-text'); // Corrected class name prefix
+      block.append(contentCell);
+    }
   }
 
-  block.textContent = '';
-  block.classList.add('text-cmp-text'); // Already correct
-  block.append(contentWrapper);
+  block.querySelectorAll('picture > img').forEach((img) => {
+    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+    moveInstrumentation(img, optimizedPic.querySelector('img'));
+    img.closest('picture').replaceWith(optimizedPic);
+  });
 }
 

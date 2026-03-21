@@ -54,7 +54,7 @@
   {
     "id": "banner-carousel",
     "components": [
-      "bannerSlide"
+      "slide"
     ]
   },
   {
@@ -149,15 +149,14 @@
   {
     "id": "footer",
     "components": [
-      "footerLink",
-      "footerListItem",
-      "socialIcon"
+      "footer-link",
+      "social-link"
     ]
   },
   {
-    "id": "header-itc-header-section",
+    "id": "headerItcHeaderSection",
     "components": [
-      "navItem",
+      "navigationLink",
       "countryOption"
     ]
   },
@@ -200,9 +199,9 @@
     ]
   },
   {
-    "id": "makeRightShift",
+    "id": "make-right-shift",
     "components": [
-      "healthGoal"
+      "category"
     ]
   },
   {
@@ -231,6 +230,9 @@
   },
   {
     "id": "spaceAdderVerticalPadding"
+  },
+  {
+    "id": "space-adder"
   },
   {
     "id": "spaceadderVerticalPaddingSection"

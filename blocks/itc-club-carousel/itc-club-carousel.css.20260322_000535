@@ -1,0 +1,9 @@
+.shiftclub-d-block {  display:block !important  }
+
+.shiftclub-w-100 {  width:100% !important  }
+
+.shiftclub-mx-4 {  margin-right:1.5rem !important  }
+
+.shiftclub-mx-4 {  margin-left:1.5rem !important  }
+
+.shiftclub-active {  opacity:1  }

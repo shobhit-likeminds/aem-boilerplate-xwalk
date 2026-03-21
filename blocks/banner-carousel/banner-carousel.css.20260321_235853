@@ -1,0 +1,83 @@
+.banner-btn {  display:inline-block;font-weight:400;color:#212529;text-align:center;vertical-align:middle;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;background-color:transparent;border:1px solid transparent;padding:.375rem .75rem;font-size:1rem;line-height:1.5;border-radius:.25rem;transition:color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out  }
+
+.banner-btn:hover {  color:#212529;text-decoration:none  }
+
+.banner-btn:focus {  outline:0;box-shadow:0 0 0 .2rem rgba(0,123,255,.25)  }
+
+.banner-btn:disabled {  opacity:.65  }
+
+.banner-btn:not(:disabled):not(.banner-disabled) {  cursor:pointer  }
+
+.banner-btn-primary {  color:#fff;background-color:#007bff;border-color:#007bff  }
+
+.banner-btn-primary:hover {  color:#fff;background-color:#0069d9;border-color:#0062cc  }
+
+.banner-btn-primary:focus {  color:#fff;background-color:#0069d9;border-color:#0062cc;box-shadow:0 0 0 .2rem rgba(38,143,255,.5)  }
+
+.banner-btn-primary:disabled {  color:#fff;background-color:#007bff;border-color:#007bff  }
+
+.banner-btn-primary:not(:disabled):not(.banner-disabled):active {  color:#fff;background-color:#0062cc;border-color:#005cbf  }
+
+.banner-btn-primary:not(:disabled):not(.banner-disabled):active:focus {  box-shadow:0 0 0 .2rem rgba(38,143,255,.5)  }
+
+.banner-carousel {  position:relative  }
+
+.banner-d-none {  display:none !important  }
+
+.banner-d-block {  display:block !important  }
+
+.banner-position-absolute {  position:absolute !important  }
+
+.banner-sr-only {  position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0  }
+
+.banner-w-100 {  width:100% !important  }
+
+@media print { *,::after,::before { text-shadow:none !important;box-shadow:none !important }
+
+a:not(.banner-btn) {  text-decoration:underline  }
+
+abbr[title]::after {  content:" (" attr(title) ")"  }
+
+pre {  white-space:pre-wrap !important  }
+
+blockquote, .banner-pre {  border:1px solid #adb5bd;page-break-inside:avoid  }
+
+img, .banner-tr {  page-break-inside:avoid  }
+
+h2, .banner-h3, p {  orphans:3;widows:3  }
+
+h2, h3 {  page-break-after:avoid  }
+
+@page{size:a3}
+
+body { min-width:992px !important } }
+
+.banner-btn-primary:hover, .banner-btn-primary:focus, .banner-btn-primary:active {  opacity:.6;border-color:unset !important;box-shadow:none !important  }
+
+.banner-btn {  font-size:24px;font-weight:700;border-radius:28px  }
+
+.banner-btn-primary {  color:#fff;background-color:#098040;border-color:#098040;padding:9px 60px  }
+
+.banner-btn-start-now {  margin-top:20px  }
+
+*/.banner-itc-carousel-section .banner-content-wrapper h1 {  font-size:4vw  }
+
+span.banner-cmp-link__screen-reader-only {  display:none  }
+
+a.banner-btn-start-now {  background-color:var(--primary);padding:15px 66px;color:var(--color-light);border:transparent;border-radius:28px;font-weight:700;border-radius:28px  }
+
+a.banner-btn-start-now {  font-size:24px  }
+
+a.banner-btn-start-now {  padding:10px 67px !important  }
+
+.banner-btn-primary:hover, .banner-btn-primary:focus, .banner-a.banner-btn-start-now:focus, .banner-btn-primary:active, .banner-btn-start-now:active, .banner-btn-start-now:hover {  opacity:.6;border-color:unset !important;text-decoration:none !important;box-shadow:none !important  }
+
+a.banner-btn-start-now:hover {  background-color:#437d5e  }
+
+.banner-active {  opacity:1  }
+
+.banner-d-sm-block {  display:none !important  }
+
+@media only screen and (max-width:1023px) { .banner-d-sm-none {  display:none !important  }
+
+.banner-d-sm-block {  display:block !important  } }

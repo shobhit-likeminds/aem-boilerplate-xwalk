@@ -1,7 +1,7 @@
 {
   "definitions": [
     {
-      "title": "Make-Right-Shift",
+      "title": "Make Right Shift",
       "id": "makeRightShift",
       "plugins": {
         "xwalk": {
@@ -10,22 +10,22 @@
             "template": {
               "filter": "makeRightShift",
               "model": "makeRightShift",
-              "name": "Make-Right-Shift"
+              "name": "Make Right Shift"
             }
           }
         }
       }
     },
     {
-      "title": "Category",
-      "id": "category",
+      "title": "Health Goal",
+      "id": "healthGoal",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "category",
-              "name": "Category"
+              "model": "healthGoal",
+              "name": "Health Goal"
             }
           }
         }
@@ -34,7 +34,7 @@
   ],
   "models": [
     {
-      "id": "category",
+      "id": "healthGoal",
       "fields": [
         {
           "component": "reference",
@@ -49,7 +49,7 @@
           "valueType": "string"
         },
         {
-          "component": "richtext",
+          "component": "text",
           "label": "Label",
           "name": "label",
           "valueType": "string"
@@ -61,18 +61,18 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Banner Image",
-          "name": "bannerImage",
+          "label": "Main Image",
+          "name": "mainImage",
           "valueType": "string"
         },
         {
-          "component": "richtext",
+          "component": "text",
           "label": "Heading",
           "name": "heading",
           "valueType": "string"
         },
         {
-          "component": "richtext",
+          "component": "text",
           "label": "Subheading",
           "name": "subheading",
           "valueType": "string"
@@ -86,10 +86,10 @@
         {
           "component": "container",
           "item": {
-            "type": "category"
+            "type": "healthGoal"
           },
-          "label": "Categories",
-          "name": "categories",
+          "label": "Health Goals",
+          "name": "healthGoals",
           "valueType": "array"
         },
         {
@@ -99,7 +99,7 @@
           "valueType": "string"
         },
         {
-          "component": "richtext",
+          "component": "text",
           "label": "Button Label",
           "name": "buttonLabel",
           "valueType": "string"
@@ -109,9 +109,9 @@
   ],
   "filters": [
     {
-      "id": "make-right-shift",
+      "id": "makeRightShift",
       "components": [
-        "category"
+        "healthGoal"
       ]
     }
   ]

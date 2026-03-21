@@ -99,15 +99,15 @@
           }
         },
         {
-          "title": "Banner-Slide",
-          "id": "bannerSlide",
+          "title": "Slide",
+          "id": "slide",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "bannerSlide",
-                  "name": "Banner-Slide"
+                  "model": "slide",
+                  "name": "Slide"
                 }
               }
             }
@@ -546,45 +546,30 @@
           }
         },
         {
-          "title": "Footer Link",
-          "id": "footerLink",
+          "title": "FooterLink",
+          "id": "footer-link",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "footerLink",
-                  "name": "Footer Link"
+                  "model": "footer-link",
+                  "name": "FooterLink"
                 }
               }
             }
           }
         },
         {
-          "title": "Footer List Item",
-          "id": "footerListItem",
+          "title": "SocialLink",
+          "id": "social-link",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "footerListItem",
-                  "name": "Footer List Item"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Social Icon",
-          "id": "socialIcon",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block/item",
-                "template": {
-                  "model": "socialIcon",
-                  "name": "Social Icon"
+                  "model": "social-link",
+                  "name": "SocialLink"
                 }
               }
             }
@@ -606,7 +591,7 @@
           }
         },
         {
-          "title": "Header-Itc-Header-Section",
+          "title": "Header-ITC-Header-Section",
           "id": "headerItcHeaderSection",
           "plugins": {
             "xwalk": {
@@ -615,22 +600,22 @@
                 "template": {
                   "filter": "headerItcHeaderSection",
                   "model": "headerItcHeaderSection",
-                  "name": "Header-Itc-Header-Section"
+                  "name": "Header-ITC-Header-Section"
                 }
               }
             }
           }
         },
         {
-          "title": "Nav-Item",
-          "id": "navItem",
+          "title": "Navigation-Link",
+          "id": "navigationLink",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "navItem",
-                  "name": "Nav-Item"
+                  "model": "navigationLink",
+                  "name": "Navigation-Link"
                 }
               }
             }
@@ -852,7 +837,7 @@
           }
         },
         {
-          "title": "ITC-Club-Carousel",
+          "title": "Itc-Club-Carousel",
           "id": "itcClubCarousel",
           "plugins": {
             "xwalk": {
@@ -861,7 +846,7 @@
                 "template": {
                   "filter": "itcClubCarousel",
                   "model": "itcClubCarousel",
-                  "name": "ITC-Club-Carousel"
+                  "name": "Itc-Club-Carousel"
                 }
               }
             }
@@ -883,7 +868,7 @@
           }
         },
         {
-          "title": "Make Right Shift",
+          "title": "Make-Right-Shift",
           "id": "makeRightShift",
           "plugins": {
             "xwalk": {
@@ -892,22 +877,22 @@
                 "template": {
                   "filter": "makeRightShift",
                   "model": "makeRightShift",
-                  "name": "Make Right Shift"
+                  "name": "Make-Right-Shift"
                 }
               }
             }
           }
         },
         {
-          "title": "Health Goal",
-          "id": "healthGoal",
+          "title": "Category",
+          "id": "category",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "healthGoal",
-                  "name": "Health Goal"
+                  "model": "category",
+                  "name": "Category"
                 }
               }
             }
@@ -992,7 +977,7 @@
           }
         },
         {
-          "title": "RS-Cards",
+          "title": "Rs-Cards",
           "id": "rsCards",
           "plugins": {
             "xwalk": {
@@ -1001,14 +986,14 @@
                 "template": {
                   "filter": "rsCards",
                   "model": "rsCard",
-                  "name": "RS-Cards"
+                  "name": "Rs-Cards"
                 }
               }
             }
           }
         },
         {
-          "title": "RS-Card",
+          "title": "Rs-Card",
           "id": "rsCard",
           "plugins": {
             "xwalk": {
@@ -1016,7 +1001,7 @@
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
                   "model": "rsCard",
-                  "name": "RS-Card"
+                  "name": "Rs-Card"
                 }
               }
             }
@@ -1033,6 +1018,22 @@
                   "filter": "spaceAdderVerticalPadding",
                   "model": "spaceAdderVerticalPadding",
                   "name": "Space-Adder-VerticalPadding"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Space-Adder",
+          "id": "spaceAdder",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "spaceAdder",
+                  "model": "spaceAdder",
+                  "name": "Space-Adder"
                 }
               }
             }

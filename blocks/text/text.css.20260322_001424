@@ -1,0 +1,29 @@
+.text-component {
+  color: #4f250a;
+  /* Equivalent to 26.8px assuming 16px base */
+  /* Equivalent to 22px assuming 16px base */
+  /* Equivalent to 18px assuming 16px base */
+  /* Equivalent to 16px assuming 16px base */
+  /* Equivalent to 14px assuming 16px base */
+}
+.text-component .cmp-text {
+  margin-top: 1.25rem; /* Equivalent to 20px assuming 16px base */
+}
+.text-component-heading {
+  font-family: "Paytone One", sans-serif;
+  font-size: 2.5rem; /* Equivalent to 40px assuming 16px base */
+  font-weight: 500;
+  line-height: 1.2;
+  margin-bottom: 0.5rem;
+  color: #4f250a;
+  text-align: center;
+}
+@media (max-width: 768px) {
+  .text-component {
+    width: 100% !important;
+    margin: 0 !important;
+  }
+  .text-component-heading {
+    font-size: 1.675rem; /* Equivalent to 26.8px assuming 16px base */
+  }
+}
