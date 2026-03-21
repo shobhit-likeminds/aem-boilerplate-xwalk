@@ -478,22 +478,7 @@
                 "template": {
                   "filter": "footerItcFooterSection",
                   "model": "footerItcFooterSection",
-                  "name": "Footer ITC Footer Section"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Logo",
-          "id": "logo",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block/item",
-                "template": {
-                  "model": "logo",
-                  "name": "Logo"
+                  "name": "footer-itc-footer-section"
                 }
               }
             }
@@ -515,45 +500,30 @@
           }
         },
         {
-          "title": "Footer List Item",
-          "id": "footerListItem",
+          "title": "Footer Social Icon",
+          "id": "footerSocialIcon",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "footerListItem",
-                  "name": "Footer List Item"
+                  "model": "footerSocialIcon",
+                  "name": "Footer Social Icon"
                 }
               }
             }
           }
         },
         {
-          "title": "Social Icon",
-          "id": "socialIcon",
+          "title": "Footer Logo",
+          "id": "footerLogo",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "socialIcon",
-                  "name": "Social Icon"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Secondary Footer Link",
-          "id": "secondaryFooterLink",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block/item",
-                "template": {
-                  "model": "secondaryFooterLink",
-                  "name": "Secondary Footer Link"
+                  "model": "footerLogo",
+                  "name": "Footer Logo"
                 }
               }
             }
@@ -636,7 +606,7 @@
           }
         },
         {
-          "title": "Header-ITC-Header-Section",
+          "title": "Header-Itc-Header-Section",
           "id": "headerItcHeaderSection",
           "plugins": {
             "xwalk": {
@@ -645,7 +615,37 @@
                 "template": {
                   "filter": "headerItcHeaderSection",
                   "model": "headerItcHeaderSection",
-                  "name": "Header-ITC-Header-Section"
+                  "name": "Header-Itc-Header-Section"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Nav-Item",
+          "id": "navItem",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "navItem",
+                  "name": "Nav-Item"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Country-Option",
+          "id": "countryOption",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "countryOption",
+                  "name": "Country-Option"
                 }
               }
             }
@@ -852,7 +852,7 @@
           }
         },
         {
-          "title": "Itc-Club-Carousel",
+          "title": "ITC-Club-Carousel",
           "id": "itcClubCarousel",
           "plugins": {
             "xwalk": {
@@ -861,7 +861,7 @@
                 "template": {
                   "filter": "itcClubCarousel",
                   "model": "itcClubCarousel",
-                  "name": "Itc-Club-Carousel"
+                  "name": "ITC-Club-Carousel"
                 }
               }
             }
@@ -883,7 +883,7 @@
           }
         },
         {
-          "title": "Make-Right-Shift",
+          "title": "Make Right Shift",
           "id": "makeRightShift",
           "plugins": {
             "xwalk": {
@@ -892,22 +892,22 @@
                 "template": {
                   "filter": "makeRightShift",
                   "model": "makeRightShift",
-                  "name": "Make-Right-Shift"
+                  "name": "Make Right Shift"
                 }
               }
             }
           }
         },
         {
-          "title": "Why-Shift-Item",
-          "id": "whyShiftItem",
+          "title": "Health Goal",
+          "id": "healthGoal",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "whyShiftItem",
-                  "name": "Why-Shift-Item"
+                  "model": "healthGoal",
+                  "name": "Health Goal"
                 }
               }
             }
@@ -992,7 +992,7 @@
           }
         },
         {
-          "title": "Rs-Cards",
+          "title": "RS-Cards",
           "id": "rsCards",
           "plugins": {
             "xwalk": {
@@ -1001,14 +1001,14 @@
                 "template": {
                   "filter": "rsCards",
                   "model": "rsCard",
-                  "name": "Rs-Cards"
+                  "name": "RS-Cards"
                 }
               }
             }
           }
         },
         {
-          "title": "Rs-Card",
+          "title": "RS-Card",
           "id": "rsCard",
           "plugins": {
             "xwalk": {
@@ -1016,7 +1016,7 @@
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
                   "model": "rsCard",
-                  "name": "Rs-Card"
+                  "name": "RS-Card"
                 }
               }
             }
@@ -1064,7 +1064,7 @@
                 "template": {
                   "filter": "spaceadder",
                   "model": "spaceadder",
-                  "name": "Spaceadder"
+                  "name": "spaceadder"
                 }
               }
             }
@@ -1096,7 +1096,7 @@
                 "template": {
                   "filter": "text",
                   "model": "text",
-                  "name": "text"
+                  "name": "Text"
                 }
               }
             }

@@ -1,20 +1,15 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const [paddingTopBottomRow] = [...block.children];
+  // The spaceadder block in the EDS structure is empty, as per the provided EDS BLOCK STRUCTURE.
+  // The original HTML shows a <section> element with specific classes.
+  // We need to create this section and apply the classes.
 
   const section = document.createElement('section');
-  section.classList.add('spaceadder-verticalPadding_section'); // Corrected class prefix
+  section.classList.add('spaceadder-spaceAdder-verticalPadding_section', 'spaceadder-padding-80');
 
-  if (paddingTopBottomRow) {
-    const paddingValue = parseInt(paddingTopBottomRow.firstElementChild.textContent.trim(), 10);
-    if (!Number.isNaN(paddingValue)) {
-      section.classList.add(`spaceadder-padding-${paddingValue}`); // Corrected class prefix
-    }
-    moveInstrumentation(paddingTopBottomRow, section);
-  }
-
-  block.textContent = '';
-  block.classList.add('spaceadder-spaceAdder', 'spaceadder-aem-GridColumn', 'spaceadder-aem-GridColumn--default--12');
+  // Since the block has no children to move, we just append the new section.
+  block.textContent = ''; // Clear any potential default content if any
   block.append(section);
 }

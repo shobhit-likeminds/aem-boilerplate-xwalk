@@ -3,17 +3,15 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
   const blockName = 'make-right-shift';
-
-  // Destructure root rows based on BlockJson model
   const [
-    bannerImageRow,
+    mainImageRow,
     headingRow,
     subheadingRow,
     descriptionRow,
-    whyShiftItemsContainerRow, // This row contains the "Why Shift Items" container text
-    ctaLinkRow,
-    ctaLabelRow,
-    ...whyShiftItemRows // Remaining rows are the actual 'whyShiftItem' items
+    healthGoalsContainerRow, // This is the container row for health goals, not the goals themselves
+    buttonLinkRow,
+    buttonLabelRow,
+    ...itemRows // These are the actual health goal item rows
   ] = [...block.children];
 
   const section = document.createElement('section');
@@ -24,26 +22,23 @@ export default function decorate(block) {
   leftImageDiv.classList.add(`${blockName}-left-image-div`);
   leftImageDiv.id = 'leftDivId';
 
-  const bannerImagePicture = bannerImageRow.querySelector('picture');
-  if (bannerImagePicture) {
-    const img = bannerImagePicture.querySelector('img');
-    if (img) {
-      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-      moveInstrumentation(img, optimizedPic.querySelector('img'));
-      leftImageDiv.append(optimizedPic);
-    }
+  const mainImagePicture = mainImageRow.querySelector('picture');
+  if (mainImagePicture) {
+    moveInstrumentation(mainImageRow.firstElementChild, leftImageDiv);
+    leftImageDiv.append(mainImagePicture);
   }
-  moveInstrumentation(bannerImageRow, leftImageDiv);
+  section.append(leftImageDiv);
 
-  // Right Content Container
-  const rightContentContainer = document.createElement('div');
-  rightContentContainer.classList.add(`${blockName}-container`, `${blockName}-read-more`);
+  // Container Div
+  const containerDiv = document.createElement('div');
+  containerDiv.classList.add(`${blockName}-container`, `${blockName}-read-more`);
 
   // Heading
-  const headingEl = document.createElement('h1');
-  headingEl.classList.add(`${blockName}-text-center`, `${blockName}-pb-4`, `${blockName}-rs-heading`);
-  moveInstrumentation(headingRow.firstElementChild, headingEl);
-  headingEl.append(...headingRow.firstElementChild.childNodes);
+  const heading = document.createElement('h1');
+  heading.classList.add(`${blockName}-text-center`, `${blockName}-pb-4`, `${blockName}-rs-heading`);
+  moveInstrumentation(headingRow.firstElementChild, heading);
+  heading.append(...headingRow.firstElementChild.childNodes);
+  containerDiv.append(heading);
 
   // Subheading and Description
   const readMoreTextDiv = document.createElement('div');
@@ -52,57 +47,50 @@ export default function decorate(block) {
   const subheadingEl = document.createElement('h2');
   moveInstrumentation(subheadingRow.firstElementChild, subheadingEl);
   subheadingEl.append(...subheadingRow.firstElementChild.childNodes);
+  readMoreTextDiv.append(subheadingEl);
 
-  const descriptionEl = document.createElement('p');
+  const descriptionEl = document.createElement('div');
   moveInstrumentation(descriptionRow.firstElementChild, descriptionEl);
   descriptionEl.append(...descriptionRow.firstElementChild.childNodes);
+  readMoreTextDiv.append(descriptionEl);
 
-  readMoreTextDiv.append(subheadingEl, descriptionEl);
+  containerDiv.append(readMoreTextDiv);
 
-  // Read More Span (interactive element)
   const readMoreSpan = document.createElement('span');
   readMoreSpan.classList.add(`${blockName}-readMore`);
-  readMoreSpan.textContent = 'Read More'; // Default text, can be customized
-  readMoreSpan.addEventListener('click', () => {
-    rightContentContainer.classList.toggle(`${blockName}-read-more-expanded`);
-    if (rightContentContainer.classList.contains(`${blockName}-read-more-expanded`)) {
-      readMoreSpan.textContent = 'Read Less';
-    } else {
-      readMoreSpan.textContent = 'Read More';
-    }
-  });
+  containerDiv.append(readMoreSpan);
 
-  // Why Shift Items Wrapper
-  const whyShiftWrapper = document.createElement('div');
-  whyShiftWrapper.classList.add(
+  // Health Goals Wrapper
+  const healthGoalsWrapper = document.createElement('div');
+  healthGoalsWrapper.classList.add(
     `${blockName}-d-flex`,
     `${blockName}-justify-content-evenly`,
     `${blockName}-flex-wrap`,
     `${blockName}-why-shift-wrapper`,
   );
 
-  whyShiftItemRows.forEach((row) => {
-    // Each item row has 3 cells: Image, Link, Label
+  itemRows.forEach((row) => {
+    const healthGoalItem = document.createElement('div');
+    healthGoalItem.classList.add(
+      `${blockName}-mb-md-0`,
+      `${blockName}-mb-3`,
+      `${blockName}-text-center`,
+    );
+    moveInstrumentation(row, healthGoalItem);
+
+    const healthGoalImageWrapper = document.createElement('div');
+    healthGoalImageWrapper.classList.add(`${blockName}-itc-health-goal-wrapper`);
+
+    // According to BlockJson, each item row has 3 cells: image, link, label
     const [imageCell, linkCell, labelCell] = [...row.children];
-
-    const itemDiv = document.createElement('div');
-    moveInstrumentation(row, itemDiv);
-    itemDiv.classList.add(`${blockName}-mb-md-0`, `${blockName}-mb-3`, `${blockName}-text-center`);
-
-    const imageWrapper = document.createElement('div');
-    imageWrapper.classList.add(`${blockName}-itc-health-goal-wrapper`);
 
     if (imageCell) {
       const picture = imageCell.querySelector('picture');
       if (picture) {
-        const img = picture.querySelector('img');
-        if (img) {
-          const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-          moveInstrumentation(img, optimizedPic.querySelector('img'));
-          imageWrapper.append(optimizedPic);
-        }
+        healthGoalImageWrapper.append(picture);
       }
     }
+    healthGoalItem.append(healthGoalImageWrapper);
 
     const linkEl = document.createElement('a');
     linkEl.classList.add(
@@ -113,96 +101,98 @@ export default function decorate(block) {
       `${blockName}-image-label`,
     );
 
-    let linkTextContent = '';
-    if (labelCell && labelCell.textContent.trim()) {
-      linkTextContent = labelCell.textContent.trim();
-      moveInstrumentation(labelCell, linkEl);
-    }
-
     if (linkCell) {
-      const foundLink = linkCell.querySelector('a');
-      if (foundLink) {
-        linkEl.href = foundLink.href;
-        linkEl.alt = foundLink.alt || '';
-        if (!linkTextContent) { // If label cell didn't provide text, use link text
-          linkTextContent = foundLink.textContent.trim();
-        }
-        moveInstrumentation(foundLink, linkEl);
-      } else if (linkCell.textContent.trim()) {
-        // If link cell contains text but no <a>, assume it's a URL and use its text as label
-        linkEl.href = linkCell.textContent.trim();
-        if (!linkTextContent) {
-          linkTextContent = linkCell.textContent.trim();
-        }
+      const originalLink = linkCell.querySelector('a');
+      if (originalLink) {
+        linkEl.href = originalLink.href;
+        linkEl.alt = originalLink.alt;
+        moveInstrumentation(originalLink, linkEl);
+        while (originalLink.firstChild) linkEl.append(originalLink.firstChild);
+      } else {
+        // If the link cell contains text but not an <a>, use it as label
         moveInstrumentation(linkCell, linkEl);
+        linkEl.textContent = linkCell.textContent.trim();
       }
     }
-    linkEl.textContent = linkTextContent;
 
-    itemDiv.append(imageWrapper, linkEl);
-    whyShiftWrapper.append(itemDiv);
+    if (labelCell) {
+      if (!linkEl.textContent) { // Only append if linkEl doesn't already have content from linkCell
+        moveInstrumentation(labelCell, linkEl);
+        linkEl.textContent = labelCell.textContent.trim();
+      }
+    }
+    healthGoalItem.append(linkEl);
+    healthGoalsWrapper.append(healthGoalItem);
   });
 
-  // CTA Button
-  const ctaButtonDiv = document.createElement('div');
-  ctaButtonDiv.classList.add(`${blockName}-button`, `${blockName}-how-shift-button`);
+  containerDiv.append(healthGoalsWrapper);
 
-  const ctaLinkEl = document.createElement('a');
-  ctaLinkEl.classList.add(`${blockName}-cmp-button`);
+  const emptyDiv = document.createElement('div');
+  emptyDiv.classList.add(`${blockName}-d-md-none`, `${blockName}-d-block`);
+  containerDiv.append(emptyDiv);
 
-  const ctaLinkContent = ctaLinkRow.querySelector('div');
-  const ctaLabelContent = ctaLabelRow.querySelector('div');
+  // Button
+  const buttonDiv = document.createElement('div');
+  buttonDiv.classList.add(`${blockName}-button`, `${blockName}-how-shift-button`);
 
-  if (ctaLinkContent && ctaLinkContent.querySelector('a')) {
-    const foundLink = ctaLinkContent.querySelector('a');
-    ctaLinkEl.href = foundLink.href;
-    ctaLinkEl.alt = foundLink.alt || '';
-    if (foundLink.target) ctaLinkEl.target = foundLink.target;
-    if (foundLink.id) ctaLinkEl.id = foundLink.id;
-    moveInstrumentation(foundLink, ctaLinkEl);
-  } else if (ctaLinkContent && ctaLinkContent.textContent.trim()) {
-    // If it's just text, assume it's a URL
-    ctaLinkEl.href = ctaLinkContent.textContent.trim();
-    moveInstrumentation(ctaLinkContent, ctaLinkEl);
+  const buttonLink = buttonLinkRow.querySelector('a');
+  const buttonLabel = buttonLabelRow.firstElementChild;
+
+  if (buttonLink && buttonLabel) {
+    const newButtonLink = document.createElement('a');
+    newButtonLink.classList.add(`${blockName}-cmp-button`);
+    newButtonLink.href = buttonLink.href;
+    newButtonLink.target = buttonLink.target;
+    newButtonLink.alt = buttonLink.alt;
+    moveInstrumentation(buttonLink, newButtonLink);
+
+    const buttonSpan = document.createElement('span');
+    buttonSpan.classList.add(`${blockName}-cmp-button__text`);
+    buttonSpan.textContent = buttonLabel.textContent.trim();
+    newButtonLink.append(buttonSpan);
+
+    if (buttonLink.target === '_blank') {
+      const screenReaderSpan = document.createElement('span');
+      screenReaderSpan.classList.add(`${blockName}-cmp-link__screen-reader-only`);
+      screenReaderSpan.textContent = 'opens in a new tab';
+      newButtonLink.append(screenReaderSpan);
+    }
+    buttonDiv.append(newButtonLink);
   }
+  containerDiv.append(buttonDiv);
 
-  const ctaSpanText = document.createElement('span');
-  ctaSpanText.classList.add(`${blockName}-cmp-button__text`);
-  if (ctaLabelContent && ctaLabelContent.textContent.trim()) {
-    moveInstrumentation(ctaLabelContent, ctaSpanText);
-    ctaSpanText.textContent = ctaLabelContent.textContent.trim();
-  } else {
-    ctaSpanText.textContent = 'View All'; // Default label if not provided
-  }
-  ctaLinkEl.append(ctaSpanText);
-
-  const ctaSpanScreenReader = document.createElement('span');
-  ctaSpanScreenReader.classList.add(`${blockName}-cmp-link__screen-reader-only`);
-  ctaSpanScreenReader.textContent = 'opens in a new tab';
-  if (ctaLinkEl.target === '_blank') {
-    ctaLinkEl.append(ctaSpanScreenReader);
-  }
-
-  ctaButtonDiv.append(ctaLinkEl);
-
-  rightContentContainer.append(
-    headingEl,
-    readMoreTextDiv,
-    readMoreSpan, // Append the interactive span
-    whyShiftWrapper,
-    document.createElement('div').classList.add(`${blockName}-d-md-none`, `${blockName}-d-block`),
-    ctaButtonDiv,
-  );
-
-  section.append(leftImageDiv, rightContentContainer);
+  section.append(containerDiv);
 
   block.textContent = '';
   block.append(section);
 
-  // Image optimization for all images within the block
   block.querySelectorAll('picture > img').forEach((img) => {
     const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
     moveInstrumentation(img, optimizedPic.querySelector('img'));
     img.closest('picture').replaceWith(optimizedPic);
   });
+
+  // Interactivity: Read More functionality
+  const readMoreContainer = block.querySelector(`.${blockName}-read-more`);
+  const readMoreText = readMoreContainer.querySelector(`.${blockName}-read-more-text`);
+  const readMoreButton = readMoreContainer.querySelector(`.${blockName}-readMore`);
+
+  if (readMoreText && readMoreButton) {
+    const initialHeight = readMoreText.offsetHeight;
+    if (initialHeight > 100) { // Arbitrary threshold to determine if content is truncated
+      readMoreContainer.classList.add(`${blockName}-truncated`);
+      readMoreButton.textContent = 'Read More';
+    } else {
+      readMoreButton.style.display = 'none'; // Hide button if content is short
+    }
+
+    readMoreButton.addEventListener('click', () => {
+      readMoreContainer.classList.toggle(`${blockName}-expanded`);
+      if (readMoreContainer.classList.contains(`${blockName}-expanded`)) {
+        readMoreButton.textContent = 'Read Less';
+      } else {
+        readMoreButton.textContent = 'Read More';
+      }
+    });
+  }
 }

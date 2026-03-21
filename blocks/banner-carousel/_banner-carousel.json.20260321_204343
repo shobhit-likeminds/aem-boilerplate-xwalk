@@ -68,8 +68,8 @@
         },
         {
           "component": "text",
-          "label": "CTA Label",
-          "name": "ctaLabel",
+          "label": "CTA Text",
+          "name": "ctaText",
           "valueType": "string"
         }
       ]

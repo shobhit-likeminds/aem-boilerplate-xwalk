@@ -1,31 +1,31 @@
 {
   "definitions": [
     {
-      "title": "Banner-Carousel",
-      "id": "bannerCarousel",
+      "title": "Itc-Club-Carousel",
+      "id": "itcClubCarousel",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block",
             "template": {
-              "filter": "bannerCarousel",
-              "model": "bannerCarousel",
-              "name": "Banner-Carousel"
+              "filter": "itcClubCarousel",
+              "model": "itcClubCarousel",
+              "name": "Itc-Club-Carousel"
             }
           }
         }
       }
     },
     {
-      "title": "Banner-Slide",
-      "id": "bannerSlide",
+      "title": "Carousel-Item",
+      "id": "carouselItem",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "bannerSlide",
-              "name": "Banner-Slide"
+              "model": "carouselItem",
+              "name": "Carousel-Item"
             }
           }
         }
@@ -34,24 +34,24 @@
   ],
   "models": [
     {
-      "id": "bannerSlide",
+      "id": "carouselItem",
       "fields": [
         {
           "component": "reference",
-          "label": "Desktop Image",
-          "name": "desktopImage",
-          "valueType": "string"
-        },
-        {
-          "component": "reference",
-          "label": "Mobile Image",
-          "name": "mobileImage",
+          "label": "Image",
+          "name": "image",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Heading",
-          "name": "heading",
+          "label": "Alt Text",
+          "name": "altText",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Title",
+          "name": "title",
           "valueType": "string"
         },
         {
@@ -59,27 +59,15 @@
           "label": "Description",
           "name": "description",
           "valueType": "string"
-        },
-        {
-          "component": "aem-content",
-          "label": "CTA Link",
-          "name": "ctaLink",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "CTA Label",
-          "name": "ctaLabel",
-          "valueType": "string"
         }
       ]
     }
   ],
   "filters": [
     {
-      "id": "banner-carousel",
+      "id": "itc-club-carousel",
       "components": [
-        "bannerSlide"
+        "carouselItem"
       ]
     }
   ]

@@ -10,7 +10,7 @@
             "template": {
               "filter": "spaceadder",
               "model": "spaceadder",
-              "name": "spaceadder"
+              "name": "Spaceadder"
             }
           }
         }
@@ -19,12 +19,23 @@
   ],
   "models": [
     {
-      "id": "spaceadder"
+      "id": "spaceadder",
+      "fields": [
+        {
+          "component": "number",
+          "label": "Vertical Padding",
+          "name": "paddingTopBottom",
+          "valueType": "number"
+        }
+      ]
     }
   ],
   "filters": [
     {
-      "id": "spaceadder"
+      "id": "spaceadder",
+      "components": [
+        "spaceadder"
+      ]
     }
   ]
 }

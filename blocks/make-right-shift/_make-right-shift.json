@@ -1,7 +1,7 @@
 {
   "definitions": [
     {
-      "title": "Make-Right-Shift",
+      "title": "Make Right Shift",
       "id": "makeRightShift",
       "plugins": {
         "xwalk": {
@@ -10,22 +10,22 @@
             "template": {
               "filter": "makeRightShift",
               "model": "makeRightShift",
-              "name": "Make-Right-Shift"
+              "name": "Make Right Shift"
             }
           }
         }
       }
     },
     {
-      "title": "Why-Shift-Item",
-      "id": "whyShiftItem",
+      "title": "Health Goal",
+      "id": "healthGoal",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "whyShiftItem",
-              "name": "Why-Shift-Item"
+              "model": "healthGoal",
+              "name": "Health Goal"
             }
           }
         }
@@ -34,7 +34,7 @@
   ],
   "models": [
     {
-      "id": "whyShiftItem",
+      "id": "healthGoal",
       "fields": [
         {
           "component": "reference",
@@ -61,8 +61,8 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Banner Image",
-          "name": "bannerImage",
+          "label": "Main Image",
+          "name": "mainImage",
           "valueType": "string"
         },
         {
@@ -72,7 +72,7 @@
           "valueType": "string"
         },
         {
-          "component": "richtext",
+          "component": "text",
           "label": "Subheading",
           "name": "subheading",
           "valueType": "string"
@@ -85,20 +85,23 @@
         },
         {
           "component": "container",
-          "itemType": "whyShiftItem",
-          "label": "Why Shift Items",
-          "name": "whyShiftItems"
+          "item": {
+            "type": "healthGoal"
+          },
+          "label": "Health Goals",
+          "name": "healthGoals",
+          "valueType": "array"
         },
         {
           "component": "aem-content",
-          "label": "CTA Link",
-          "name": "ctaLink",
+          "label": "Button Link",
+          "name": "buttonLink",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "CTA Label",
-          "name": "ctaLabel",
+          "label": "Button Label",
+          "name": "buttonLabel",
           "valueType": "string"
         }
       ]
@@ -108,7 +111,7 @@
     {
       "id": "makeRightShift",
       "components": [
-        "whyShiftItem"
+        "healthGoal"
       ]
     }
   ]

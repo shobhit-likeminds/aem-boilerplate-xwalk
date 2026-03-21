@@ -1,7 +1,7 @@
 {
   "definitions": [
     {
-      "title": "Rs-Cards",
+      "title": "RS-Cards",
       "id": "rsCards",
       "plugins": {
         "xwalk": {
@@ -10,14 +10,14 @@
             "template": {
               "filter": "rsCards",
               "model": "rsCard",
-              "name": "Rs-Cards"
+              "name": "RS-Cards"
             }
           }
         }
       }
     },
     {
-      "title": "Rs-Card",
+      "title": "RS-Card",
       "id": "rsCard",
       "plugins": {
         "xwalk": {
@@ -25,7 +25,7 @@
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
               "model": "rsCard",
-              "name": "Rs-Card"
+              "name": "RS-Card"
             }
           }
         }
@@ -44,8 +44,8 @@
         },
         {
           "component": "richtext",
-          "label": "Heading",
-          "name": "heading",
+          "label": "Title",
+          "name": "title",
           "valueType": "string"
         },
         {
@@ -53,13 +53,25 @@
           "label": "Description",
           "name": "description",
           "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Icon",
+          "name": "icon",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "CTA",
+          "name": "cta",
+          "valueType": "string"
         }
       ]
     }
   ],
   "filters": [
     {
-      "id": "rs-cards",
+      "id": "rsCards",
       "components": [
         "rsCard"
       ]
