@@ -34,47 +34,6 @@
   ],
   "models": [
     {
-      "id": "makeRightShift",
-      "fields": [
-        {
-          "component": "reference",
-          "label": "Banner Image",
-          "name": "bannerImage",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Heading",
-          "name": "heading",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Subheading",
-          "name": "subheading",
-          "valueType": "string"
-        },
-        {
-          "component": "richtext",
-          "label": "Description",
-          "name": "description",
-          "valueType": "string"
-        },
-        {
-          "component": "container",
-          "itemType": "category",
-          "label": "Categories",
-          "name": "categories"
-        },
-        {
-          "component": "aem-content",
-          "label": "CTA Link",
-          "name": "cta",
-          "valueType": "string"
-        }
-      ]
-    },
-    {
       "id": "category",
       "fields": [
         {
@@ -96,11 +55,61 @@
           "valueType": "string"
         }
       ]
+    },
+    {
+      "id": "makeRightShift",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Banner Image",
+          "name": "bannerImage",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Heading",
+          "name": "heading",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Subheading",
+          "name": "subheading",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Description",
+          "name": "description",
+          "valueType": "string"
+        },
+        {
+          "component": "container",
+          "item": {
+            "type": "category"
+          },
+          "label": "Categories",
+          "name": "categories",
+          "valueType": "array"
+        },
+        {
+          "component": "aem-content",
+          "label": "Button Link",
+          "name": "buttonLink",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Button Label",
+          "name": "buttonLabel",
+          "valueType": "string"
+        }
+      ]
     }
   ],
   "filters": [
     {
-      "id": "makeRightShift",
+      "id": "make-right-shift",
       "components": [
         "category"
       ]

@@ -2,26 +2,26 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const blockName = 'make-right-shift'; // Define block name for consistent class prefixing
-
+  // Destructure root model fields.
+  // The 'categoriesRow' is a placeholder row for the container, not an item itself.
+  // The actual category items start after the CTA row.
   const [
     bannerImageRow,
     headingRow,
     subheadingRow,
     descriptionRow,
-    categoriesContainerRow, // This row is for the 'Categories' container field, which is type=container
-    buttonLinkRow,
-    buttonLabelRow,
-    ...categoryItemRows
+    categoriesPlaceholderRow, // This row contains the 'Categories' text, not the actual category items
+    ctaRow,
+    ...categoryItemRows // These are the actual category items
   ] = [...block.children];
 
-  // Create the main section container
+  // Create the main section element
   const section = document.createElement('section');
-  section.classList.add(`${blockName}-itc-how-shift`);
+  section.classList.add('make-right-shift-itc-how-shift'); // Correct prefix
 
   // Left Image Div
   const leftImageDiv = document.createElement('div');
-  leftImageDiv.classList.add(`${blockName}-left-image-div`);
+  leftImageDiv.classList.add('make-right-shift-left-image-div'); // Correct prefix
   leftImageDiv.id = 'leftDivId';
   moveInstrumentation(bannerImageRow, leftImageDiv);
   const bannerPicture = bannerImageRow.querySelector('picture');
@@ -30,146 +30,141 @@ export default function decorate(block) {
   }
   section.append(leftImageDiv);
 
-  // Main content container
+  // Container for text and categories
   const container = document.createElement('div');
-  container.classList.add(`${blockName}-container`, 'read-more');
+  container.classList.add('make-right-shift-container', 'make-right-shift-read-more'); // Correct prefix
 
   // Heading
   const heading = document.createElement('h1');
-  heading.classList.add(`${blockName}-text-center`, `${blockName}-pb-4`, `${blockName}-rs-heading`);
+  heading.classList.add('make-right-shift-text-center', 'make-right-shift-pb-4', 'make-right-shift-rs-heading'); // Correct prefix
   moveInstrumentation(headingRow, heading);
-  while (headingRow.firstChild) heading.append(headingRow.firstChild);
+  heading.append(headingRow.firstElementChild);
   container.append(heading);
 
-  // Read More Text (Subheading and Description)
+  // Subheading and Description
   const readMoreTextDiv = document.createElement('div');
-  readMoreTextDiv.classList.add(`${blockName}-read-more-text`);
-
-  const subheading = document.createElement('h2`);
-  moveInstrumentation(subheadingRow, subheading);
-  while (subheadingRow.firstChild) subheading.append(subheadingRow.firstChild);
+  readMoreTextDiv.classList.add('make-right-shift-read-more-text'); // Correct prefix
+  moveInstrumentation(subheadingRow, readMoreTextDiv);
+  const subheading = document.createElement('h2');
+  subheading.style.textAlign = 'center';
+  subheading.append(subheadingRow.firstElementChild);
   readMoreTextDiv.append(subheading);
 
+  moveInstrumentation(descriptionRow, readMoreTextDiv);
   const description = document.createElement('p');
-  moveInstrumentation(descriptionRow, description);
-  while (descriptionRow.firstChild) description.append(descriptionRow.firstChild);
+  description.style.textAlign = 'center';
+  description.append(descriptionRow.firstElementChild);
   readMoreTextDiv.append(description);
 
   container.append(readMoreTextDiv);
 
+  // Read More span (empty in original, but present)
   const readMoreSpan = document.createElement('span');
-  readMoreSpan.classList.add(`${blockName}-readMore`);
+  readMoreSpan.classList.add('make-right-shift-readMore'); // Correct prefix
+  readMoreSpan.textContent = 'Read More'; // Add text content for visibility/interactivity
   container.append(readMoreSpan);
 
   // Categories Wrapper
-  const categoriesWrapper = document.createElement('div');
-  categoriesWrapper.classList.add(
-    `${blockName}-d-flex`,
-    `${blockName}-justify-content-evenly`,
-    `${blockName}-flex-wrap`,
-    `${blockName}-why-shift-wrapper`,
-  );
-  // The categoriesContainerRow itself is just a placeholder, its content is not directly used,
-  // but its instrumentation should be moved if it has any.
-  moveInstrumentation(categoriesContainerRow, categoriesWrapper);
+  const whyShiftWrapper = document.createElement('div');
+  whyShiftWrapper.classList.add('make-right-shift-d-flex', 'make-right-shift-justify-content-evenly', 'make-right-shift-flex-wrap', 'make-right-shift-why-shift-wrapper'); // Correct prefix
 
   categoryItemRows.forEach((row) => {
-    // Each category item row has 3 cells: Image, Link, Label
-    const [imageCell, linkCell, labelCell] = row.children;
+    const categoryDiv = document.createElement('div');
+    categoryDiv.classList.add('make-right-shift-mb-md-0', 'make-right-shift-mb-3', 'make-right-shift-text-center'); // Correct prefix
+    moveInstrumentation(row, categoryDiv);
 
-    const itemDiv = document.createElement('div');
-    itemDiv.classList.add(`${blockName}-mb-md-0`, `${blockName}-mb-3`, `${blockName}-text-center`);
-    moveInstrumentation(row, itemDiv);
+    const imageWrapper = document.createElement('div');
+    imageWrapper.classList.add('make-right-shift-itc-health-goal-wrapper'); // Correct prefix
 
-    const itcHealthGoalWrapper = document.createElement('div');
-    itcHealthGoalWrapper.classList.add(`${blockName}-itc-health-goal-wrapper`);
-    itemDiv.append(itcHealthGoalWrapper);
+    // According to BlockJson, category item has fields: image, link, label
+    const [imageCell, linkCell, labelCell] = [...row.children];
 
-    // Image
-    if (imageCell) {
-      const picture = imageCell.querySelector('picture');
-      if (picture) {
-        itcHealthGoalWrapper.append(picture);
-      }
+    const picture = imageCell.querySelector('picture');
+    if (picture) {
+      imageWrapper.append(picture);
     }
+    categoryDiv.append(imageWrapper);
 
-    // Link and Label
     const linkEl = document.createElement('a');
-    linkEl.classList.add(
-      `${blockName}-text-center`,
-      `${blockName}-d-block`,
-      `${blockName}-text-capitalize`,
-      `${blockName}-pt-2`,
-      `${blockName}-image-label`,
-    );
+    linkEl.classList.add('make-right-shift-text-center', 'make-right-shift-d-block', 'make-right-shift-text-capitalize', 'make-right-shift-pt-2', 'make-right-shift-image-label'); // Correct prefix
 
-    if (linkCell) {
-      const foundLink = linkCell.querySelector('a');
-      if (foundLink) {
-        linkEl.href = foundLink.href;
-        linkEl.alt = foundLink.alt || ''; // Ensure alt attribute is set
-        moveInstrumentation(foundLink, linkEl);
-        while (foundLink.firstChild) linkEl.append(foundLink.firstChild);
+    const originalLink = linkCell.querySelector('a');
+    if (originalLink) {
+      linkEl.href = originalLink.href;
+      linkEl.alt = originalLink.alt || '';
+      // The label content should go into the link text
+      const labelContent = labelCell.firstElementChild;
+      if (labelContent) {
+        linkEl.innerHTML = labelContent.innerHTML; // Use innerHTML to preserve line breaks
       } else {
-        // If there's no <a> in the link cell, just take its content
-        moveInstrumentation(linkCell, linkEl);
-        while (linkCell.firstChild) linkEl.append(linkCell.firstChild);
+        linkEl.textContent = originalLink.textContent;
+      }
+    } else {
+      // If no <a> tag in linkCell, assume the cell content is the link text and href
+      const linkText = linkCell.textContent.trim();
+      linkEl.href = linkText; // Assuming the text itself is the URL if no <a>
+      // The label content should go into the link text
+      const labelContent = labelCell.firstElementChild;
+      if (labelContent) {
+        linkEl.innerHTML = labelContent.innerHTML; // Use innerHTML to preserve line breaks
+      } else {
+        linkEl.textContent = linkText;
       }
     }
 
-    // If link text is still empty, try to get it from the label cell
-    if (labelCell && !linkEl.textContent.trim()) {
-      moveInstrumentation(labelCell, linkEl);
-      while (labelCell.firstChild) linkEl.append(labelCell.firstChild);
+    categoryDiv.append(linkEl);
+    whyShiftWrapper.append(categoryDiv);
+  });
+  container.append(whyShiftWrapper);
+
+  // Empty div for responsiveness (from original HTML)
+  const responsiveDiv = document.createElement('div');
+  responsiveDiv.classList.add('make-right-shift-d-md-none', 'make-right-shift-d-block'); // Correct prefix
+  container.append(responsiveDiv);
+
+  // CTA Button
+  const buttonDiv = document.createElement('div');
+  buttonDiv.classList.add('make-right-shift-button', 'make-right-shift-how-shift-button'); // Correct prefix
+  moveInstrumentation(ctaRow, buttonDiv);
+
+  const ctaLink = ctaRow.querySelector('a');
+  if (ctaLink) {
+    const newCtaLink = document.createElement('a');
+    newCtaLink.classList.add('make-right-shift-cmp-button'); // Correct prefix
+    newCtaLink.href = ctaLink.href;
+    newCtaLink.alt = ctaLink.alt || '';
+    if (ctaLink.target) {
+      newCtaLink.target = ctaLink.target;
     }
 
-    itemDiv.append(linkEl);
-    categoriesWrapper.append(itemDiv);
-  });
+    const spanText = document.createElement('span');
+    spanText.classList.add('make-right-shift-cmp-button__text'); // Correct prefix
+    spanText.textContent = ctaLink.textContent;
+    newCtaLink.append(spanText);
 
-  container.append(categoriesWrapper);
-
-  const mobileSpacerDiv = document.createElement('div');
-  mobileSpacerDiv.classList.add(`${blockName}-d-md-none`, `${blockName}-d-block`);
-  container.append(mobileSpacerDiv);
-
-  // Button
-  const buttonDiv = document.createElement('div');
-  buttonDiv.classList.add(`${blockName}-button`, `${blockName}-how-shift-button`);
-
-  const buttonLink = document.createElement('a');
-  buttonLink.classList.add(`${blockName}-cmp-button`);
-  moveInstrumentation(buttonLinkRow, buttonLink); // Move instrumentation from buttonLinkRow
-
-  const foundButtonLink = buttonLinkRow.querySelector('a');
-  if (foundButtonLink) {
-    buttonLink.href = foundButtonLink.href;
-    buttonLink.target = foundButtonLink.target || '_self';
-    buttonLink.alt = foundButtonLink.alt || '';
-  } else {
-    // If no <a>, just take the text content
-    buttonLink.href = buttonLinkRow.textContent.trim();
+    if (newCtaLink.target === '_blank') {
+      const screenReaderOnlySpan = document.createElement('span');
+      screenReaderOnlySpan.classList.add('make-right-shift-cmp-link__screen-reader-only'); // Correct prefix
+      screenReaderOnlySpan.textContent = 'opens in a new tab';
+      newCtaLink.append(screenReaderOnlySpan);
+    }
+    buttonDiv.append(newCtaLink);
   }
-
-  const buttonSpanText = document.createElement('span');
-  buttonSpanText.classList.add(`${blockName}-cmp-button__text`);
-  moveInstrumentation(buttonLabelRow, buttonSpanText); // Move instrumentation from buttonLabelRow
-  while (buttonLabelRow.firstChild) buttonSpanText.append(buttonLabelRow.firstChild);
-  buttonLink.append(buttonSpanText);
-
-  // Add screen reader span if target is _blank
-  if (buttonLink.target === '_blank') {
-    const screenReaderSpan = document.createElement('span');
-    screenReaderSpan.classList.add(`${blockName}-cmp-link__screen-reader-only`);
-    screenReaderSpan.textContent = 'opens in a new tab';
-    buttonLink.append(screenReaderSpan);
-  }
-
-  buttonDiv.append(buttonLink);
   container.append(buttonDiv);
+
   section.append(container);
 
-  // Image optimization
+  // Add event listener for 'Read More' functionality
+  readMoreSpan.addEventListener('click', () => {
+    container.classList.toggle('make-right-shift-expanded'); // Toggle an 'expanded' class
+    if (container.classList.contains('make-right-shift-expanded')) {
+      readMoreSpan.textContent = 'Read Less';
+    } else {
+      readMoreSpan.textContent = 'Read More';
+    }
+  });
+
+  // Optimize images
   section.querySelectorAll('picture > img').forEach((img) => {
     const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
     moveInstrumentation(img, optimizedPic.querySelector('img'));
@@ -178,24 +173,4 @@ export default function decorate(block) {
 
   block.textContent = '';
   block.append(section);
-
-  // INTERACTIVITY: Read More functionality
-  const readMoreButton = block.querySelector(`.${blockName}-readMore`);
-  const readMoreContent = block.querySelector(`.${blockName}-read-more-text`);
-  if (readMoreButton && readMoreContent) {
-    // Initial state: content might be collapsed by default CSS
-    // Add a class to manage the state (e.g., 'expanded' or 'collapsed')
-    readMoreContent.classList.add(`${blockName}-collapsed`);
-    readMoreButton.textContent = 'Read More'; // Default text
-
-    readMoreButton.addEventListener('click', () => {
-      readMoreContent.classList.toggle(`${blockName}-collapsed`);
-      readMoreContent.classList.toggle(`${blockName}-expanded`);
-      if (readMoreContent.classList.contains(`${blockName}-expanded`)) {
-        readMoreButton.textContent = 'Read Less';
-      } else {
-        readMoreButton.textContent = 'Read More';
-      }
-    });
-  }
 }

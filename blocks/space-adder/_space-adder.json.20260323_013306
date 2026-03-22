@@ -19,23 +19,12 @@
   ],
   "models": [
     {
-      "id": "spaceAdder",
-      "fields": [
-        {
-          "component": "number",
-          "label": "Padding",
-          "name": "padding",
-          "valueType": "number"
-        }
-      ]
+      "id": "spaceAdder"
     }
   ],
   "filters": [
     {
-      "id": "space-adder",
-      "components": [
-        "spaceAdder"
-      ]
+      "id": "space-adder"
     }
   ]
 }

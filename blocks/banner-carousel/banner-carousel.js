@@ -2,112 +2,146 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const blockName = 'banner-carousel';
-  block.classList.add(`${blockName}-section`);
+  const carouselSection = document.createElement('section');
+  carouselSection.classList.add('banner-carousel-section'); // Changed from banner-itc-carousel-section
 
-  const carouselId = 'carouselExampleSlidesOnly';
-  const carousel = document.createElement('div');
-  carousel.id = carouselId;
-  carousel.classList.add(`${blockName}-carousel`, 'carousel', 'slide');
+  const carouselDiv = document.createElement('div');
+  carouselDiv.id = 'carouselExampleSlidesOnly';
+  carouselDiv.classList.add('banner-carousel', 'carousel', 'slide'); // Changed from bannerCarousel
 
-  const indicators = document.createElement('ol');
-  indicators.classList.add(`${blockName}-carousel-indicators`, 'carousel-indicators');
+  const carouselIndicators = document.createElement('ol');
+  carouselIndicators.classList.add('carousel-indicators');
 
-  const inner = document.createElement('div');
-  inner.classList.add(`${blockName}-carousel-inner`, 'carousel-inner');
+  const carouselInner = document.createElement('div');
+  carouselInner.classList.add('carousel-inner');
 
-  [...block.children].forEach((row, index) => {
-    const [desktopImageCell, mobileImageCell, headingCell, descriptionCell, ctaLinkCell, ctaLabelCell] = [...row.children];
+  const bannerItems = [...block.children];
 
-    // Carousel indicator
+  bannerItems.forEach((row, index) => {
+    const [
+      desktopImageCell,
+      mobileImageCell,
+      desktopAltCell,
+      mobileAltCell,
+      headingCell,
+      descriptionCell,
+      ctaLinkCell,
+      ctaLabelCell,
+    ] = row.children;
+
+    // Indicators
     const indicator = document.createElement('li');
-    indicator.setAttribute('data-target', `#${carouselId}`);
-    indicator.setAttribute('data-slide-to', index);
+    indicator.setAttribute('data-target', '#carouselExampleSlidesOnly');
+    indicator.setAttribute('data-slide-to', index.toString());
     if (index === 0) {
       indicator.classList.add('active');
     }
-    indicators.append(indicator);
+    carouselIndicators.append(indicator);
 
-    // Carousel item
-    const item = document.createElement('div');
-    item.classList.add(`${blockName}-carousel-item`, 'carousel-item');
+    // Carousel Item
+    const carouselItem = document.createElement('div');
+    carouselItem.classList.add('carousel-item');
     if (index === 0) {
-      item.classList.add('active');
+      carouselItem.classList.add('active');
     }
-    moveInstrumentation(row, item);
 
     // Desktop Image
     const desktopPicture = desktopImageCell.querySelector('picture');
     if (desktopPicture) {
       const desktopImg = desktopPicture.querySelector('img');
-      const optimizedDesktopPic = createOptimizedPicture(desktopImg.src, desktopImg.alt, index === 0, [{ width: '2000' }]);
-      optimizedDesktopPic.classList.add('d-none', 'd-sm-block', 'w-100', `${blockName}-desktop-image`);
-      moveInstrumentation(desktopImg, optimizedDesktopPic.querySelector('img'));
-      item.append(optimizedDesktopPic);
+      const optimizedDesktopPic = createOptimizedPicture(desktopImg.src, desktopAltCell.textContent, index === 0, [{ width: '2000' }]);
+      const newDesktopImg = optimizedDesktopPic.querySelector('img');
+      newDesktopImg.classList.add('d-none', 'd-sm-block', 'w-100', 'banner-carousel-desktop-image'); // Changed from banner-desktop-image
+      if (index === 0) {
+        newDesktopImg.setAttribute('fetchpriority', 'high');
+      } else {
+        newDesktopImg.setAttribute('loading', 'lazy');
+        newDesktopImg.setAttribute('fetchpriority', 'low');
+      }
+      moveInstrumentation(desktopImg, newDesktopImg);
+      carouselItem.append(optimizedDesktopPic);
     }
 
     // Mobile Image
     const mobilePicture = mobileImageCell.querySelector('picture');
     if (mobilePicture) {
       const mobileImg = mobilePicture.querySelector('img');
-      const optimizedMobilePic = createOptimizedPicture(mobileImg.src, mobileImg.alt, index === 0, [{ width: '750' }]);
-      optimizedMobilePic.classList.add('d-block', 'd-sm-none', 'w-100', `${blockName}-mobile-image`);
-      moveInstrumentation(mobileImg, optimizedMobilePic.querySelector('img'));
-      item.append(optimizedMobilePic);
+      const optimizedMobilePic = createOptimizedPicture(mobileImg.src, mobileAltCell.textContent, index === 0, [{ width: '750' }]);
+      const newMobileImg = optimizedMobilePic.querySelector('img');
+      newMobileImg.classList.add('d-block', 'd-sm-none', 'w-100', 'banner-carousel-mobile-image'); // Changed from banner-mobile-image
+      if (index === 0) {
+        newMobileImg.setAttribute('fetchpriority', 'high');
+      } else {
+        newMobileImg.setAttribute('loading', 'lazy');
+        newMobileImg.setAttribute('fetchpriority', 'low');
+      }
+      moveInstrumentation(mobileImg, newMobileImg);
+      carouselItem.append(optimizedMobilePic);
     }
 
     // Content Wrapper
     const contentWrapper = document.createElement('div');
-    contentWrapper.classList.add(`${blockName}-content-wrapper`, 'position-absolute');
+    contentWrapper.classList.add('banner-carousel-content-wrapper', 'position-absolute'); // Changed from banner-content-wrapper
 
-    // Heading
     const heading = document.createElement('h1');
-    heading.classList.add(`${blockName}-heading`, 'text-sm-left'); // Changed from banner-koi-carousel-heading
+    heading.classList.add('banner-carousel-heading', 'text-sm-left'); // Changed from banner-koi-carousel-heading
+    heading.innerHTML = headingCell.innerHTML;
+    const headingColor = headingCell.querySelector('[data-color]');
+    if (headingColor) {
+      heading.style.color = headingColor.getAttribute('data-color');
+    }
     moveInstrumentation(headingCell, heading);
-    while (headingCell.firstChild) heading.append(headingCell.firstChild);
     contentWrapper.append(heading);
 
-    // Description
-    const description = document.createElement('div');
-    description.classList.add(`${blockName}-description`); // Changed from banner-koi-carousel-description
-    moveInstrumentation(descriptionCell, description);
-    while (descriptionCell.firstChild) description.append(descriptionCell.firstChild);
-    contentWrapper.append(description);
+    const descriptionDiv = document.createElement('div');
+    descriptionDiv.classList.add('banner-carousel-description'); // Changed from banner-koi-carousel-description
+    descriptionDiv.innerHTML = descriptionCell.innerHTML;
+    const descColor = descriptionCell.querySelector('[data-desc-color]');
+    if (descColor) {
+      descriptionDiv.style.color = descColor.getAttribute('data-desc-color');
+      descriptionDiv.querySelectorAll('[style*="color"]').forEach((el) => {
+        el.style.color = descColor.getAttribute('data-desc-color');
+      });
+    }
+    moveInstrumentation(descriptionCell, descriptionDiv);
+    contentWrapper.append(descriptionDiv);
 
-    // CTA Link
-    const ctaLinkElement = ctaLinkCell.querySelector('a');
-    const ctaLabelElement = ctaLabelCell.querySelector('div');
-    if (ctaLinkElement && ctaLabelElement) {
-      const cta = document.createElement('a');
-      cta.href = ctaLinkElement.href;
-      cta.classList.add(`${blockName}-cta`, 'btn', 'btn-primary', 'btn-start-now'); // Changed from banner-koi-carousel-cta
-      cta.target = '_blank';
-      cta.textContent = ctaLabelElement.textContent.trim();
-      const screenReaderOnly = document.createElement('span');
-      screenReaderOnly.classList.add('cmp-link__screen-reader-only');
-      screenReaderOnly.textContent = 'opens in a new tab';
-      cta.append(screenReaderOnly);
-      moveInstrumentation(ctaLinkCell, cta);
-      moveInstrumentation(ctaLabelCell, cta);
-      contentWrapper.append(cta);
+    const ctaLink = ctaLinkCell.querySelector('a');
+    if (ctaLink) {
+      const ctaButton = document.createElement('a');
+      ctaButton.href = ctaLink.href;
+      ctaButton.target = '_blank';
+      ctaButton.classList.add('banner-carousel-cta', 'btn', 'btn-primary', 'btn-start-now'); // Changed from banner-koi-carousel-cta
+      ctaButton.textContent = ctaLabelCell.textContent;
+      const bgColor = ctaLink.getAttribute('data-bg-color');
+      if (bgColor) {
+        ctaButton.style.backgroundColor = bgColor;
+      }
+      const screenReaderSpan = document.createElement('span');
+      screenReaderSpan.classList.add('cmp-link__screen-reader-only');
+      screenReaderSpan.textContent = 'opens in a new tab';
+      ctaButton.append(screenReaderSpan);
+      moveInstrumentation(ctaLinkCell, ctaButton);
+      contentWrapper.append(ctaButton);
     }
 
-    item.append(contentWrapper);
-    inner.append(item);
+    carouselItem.append(contentWrapper);
+    carouselInner.append(carouselItem);
+    moveInstrumentation(row, carouselItem);
   });
 
-  carousel.append(indicators, inner);
+  carouselDiv.append(carouselIndicators, carouselInner);
 
   // Navigation buttons
-  const navButtonsWrapper = document.createElement('div');
-  navButtonsWrapper.classList.add(`${blockName}-next-carousel-btn`);
+  const navButtonsDiv = document.createElement('div');
+  navButtonsDiv.classList.add('banner-carousel-next-carousel-btn'); // Changed from banner-next-carousel-btn
 
   const prevButton = document.createElement('a');
-  prevButton.classList.add(`${blockName}-carousel-control-prev`, 'carousel-control-prev'); // Added blockName prefix
-  prevButton.href = `#${carouselId}`;
+  prevButton.classList.add('carousel-control-prev');
+  prevButton.href = '#carouselExampleSlidesOnly';
   prevButton.setAttribute('role', 'button');
   const prevIcon = document.createElement('span');
-  prevIcon.classList.add(`${blockName}-carousel-control-prev-icon`, 'carousel-control-prev-icon'); // Added blockName prefix
+  prevIcon.classList.add('carousel-control-prev-icon');
   prevIcon.setAttribute('aria-hidden', 'true');
   const prevSrOnly = document.createElement('span');
   prevSrOnly.classList.add('sr-only');
@@ -115,45 +149,47 @@ export default function decorate(block) {
   prevButton.append(prevIcon, prevSrOnly);
 
   const nextButton = document.createElement('a');
-  nextButton.classList.add(`${blockName}-carousel-control-next`, 'carousel-control-next'); // Added blockName prefix
-  nextButton.href = `#${carouselId}`;
+  nextButton.classList.add('carousel-control-next');
+  nextButton.href = '#carouselExampleSlidesOnly';
   nextButton.setAttribute('role', 'button');
   const nextIcon = document.createElement('span');
-  nextIcon.classList.add(`${blockName}-carousel-control-next-icon`, 'carousel-control-next-icon'); // Added blockName prefix
+  nextIcon.classList.add('carousel-control-next-icon');
   nextIcon.setAttribute('aria-hidden', 'true');
   const nextSrOnly = document.createElement('span');
   nextSrOnly.classList.add('sr-only');
   nextSrOnly.textContent = 'Next';
   nextButton.append(nextIcon, nextSrOnly);
 
-  navButtonsWrapper.append(prevButton, nextButton);
-  carousel.append(navButtonsWrapper);
+  navButtonsDiv.append(prevButton, nextButton);
+  carouselDiv.append(navButtonsDiv);
 
+  carouselSection.append(carouselDiv);
   block.textContent = '';
-  block.append(carousel);
+  block.append(carouselSection);
 
   // Add event listeners for carousel functionality
   let currentIndex = 0;
-  const carouselItems = [...inner.children];
-  const carouselIndicators = [...indicators.children];
-  const totalItems = carouselItems.length;
+  const items = carouselInner.querySelectorAll('.carousel-item');
+  const indicators = carouselIndicators.querySelectorAll('li');
 
   const showSlide = (index) => {
-    carouselItems.forEach((item, i) => {
-      item.classList.toggle('active', i === index);
-    });
-    carouselIndicators.forEach((indicator, i) => {
-      indicator.classList.toggle('active', i === index);
+    items.forEach((item, i) => {
+      item.classList.remove('active');
+      indicators[i].classList.remove('active');
+      if (i === index) {
+        item.classList.add('active');
+        indicators[i].classList.add('active');
+      }
     });
   };
 
   const nextSlide = () => {
-    currentIndex = (currentIndex + 1) % totalItems;
+    currentIndex = (currentIndex + 1) % items.length;
     showSlide(currentIndex);
   };
 
   const prevSlide = () => {
-    currentIndex = (currentIndex - 1 + totalItems) % totalItems;
+    currentIndex = (currentIndex - 1 + items.length) % items.length;
     showSlide(currentIndex);
   };
 
@@ -167,20 +203,10 @@ export default function decorate(block) {
     nextSlide();
   });
 
-  carouselIndicators.forEach((indicator, index) => {
-    indicator.addEventListener('click', (e) => {
-      e.preventDefault();
+  indicators.forEach((indicator, index) => {
+    indicator.addEventListener('click', () => {
       currentIndex = index;
       showSlide(currentIndex);
     });
-  });
-
-  // Auto-advance carousel
-  let intervalId = setInterval(nextSlide, 5000); // Change slide every 5 seconds
-
-  // Pause on hover
-  carousel.addEventListener('mouseenter', () => clearInterval(intervalId));
-  carousel.addEventListener('mouseleave', () => {
-    intervalId = setInterval(nextSlide, 5000);
   });
 }

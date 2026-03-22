@@ -1,3 +1,5 @@
+.cmp-image__image { width:100%;height:auto }
+
 @keyframes cmp-search__loading-indicator-spin{0{transform:rotate(0)}
 100%{transform:rotate(360deg)}
 }
@@ -2226,6 +2228,8 @@ h1, h2, h3, h4, h5, h6 { font-family:'Paytone One' }
 
 p { font-weight:400 }
 
+span.cmp-link__screen-reader-only { display:none }
+
 #rs-video-model { overflow-y:hidden;margin-top:0 !important }
 
 @media(min-width:767.98px){.who-we-are-section .slick-list{overflow:visible}
@@ -2384,6 +2388,8 @@ ul::-webkit-scrollbar{display:none}
 .itc-carousel h2{padding-top:0}
 .itc-carousel{padding-top:0 !important}
 }
+
+.header-country-flag { width:19px;height:19px;border-radius:50%;object-fit:cover }
 
 body{color:#2d2119}
 

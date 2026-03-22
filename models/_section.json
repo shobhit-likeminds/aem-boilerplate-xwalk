@@ -83,7 +83,9 @@
         "makeRightShift",
         "headerItcHeaderSection",
         "spaceadder",
-        "footerItcFooterSection"
+        "footerItcFooterSection",
+        "headerITCHeaderSection",
+        "shiftclubItcClubCarousel"
       ]
     }
   ]

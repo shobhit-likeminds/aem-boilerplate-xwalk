@@ -2,260 +2,247 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const blockName = 'footer-itc-footer-section';
   const children = [...block.children];
 
-  // Destructure root model fields based on BlockJson
-  const [
-    logosContainerRow, // block.children[0]
-    linksContainerRow, // block.children[1]
-    socialIconsContainerRow, // block.children[2]
-    copyrightRow, // block.children[3]
-    grievanceOfficerTitleRow, // block.children[4]
-    grievanceOfficerNameRow, // block.children[5]
-    grievanceOfficerContactRow, // block.children[6]
-    grievanceOfficerTimingRow, // block.children[7]
-    ...itemRows // All subsequent rows are item sub-components
-  ] = children;
-
-  // Filter item rows based on their content structure
-  // footerLogo: 2 cells, first cell contains a picture
-  const footerLogos = itemRows.filter((row) => row.children.length === 2 && row.children[0].querySelector('picture') && row.children[1].textContent.trim().startsWith('Logo Link')); // Added text content check for better distinction if needed
-
-  // footerLink: 2 cells, first cell contains text (URL), second cell contains text (Link Text)
-  const footerLinks = itemRows.filter((row) => row.children.length === 2 && !row.children[0].querySelector('picture') && row.children[0].textContent.trim().startsWith('Link URL'));
-
-  // footerSocialIcon: 2 cells, first cell contains a picture (icon), second cell contains text (link)
-  const footerSocialIcons = itemRows.filter((row) => row.children.length === 2 && row.children[0].querySelector('picture') && row.children[1].textContent.trim().startsWith('Social Link'));
-
-
-  block.textContent = '';
-  block.classList.add(`${blockName}`); // Corrected block class name to match blockName
-
   const footerContainer = document.createElement('div');
-  footerContainer.classList.add(`${blockName}-container`);
+  footerContainer.classList.add('footer-itc-footer-section-container');
 
   const footerRow = document.createElement('div');
-  footerRow.classList.add(`${blockName}-row`);
+  footerRow.classList.add('footer-itc-footer-section-row');
 
-  // Left column for logos
-  const leftCol = document.createElement('div');
-  leftCol.classList.add(
-    `${blockName}-col-lg-6`,
-    `${blockName}-col-sm-12`,
-    `${blockName}-d-flex`,
-    `${blockName}-d-lg-block`,
-    `${blockName}-justify-content-center`,
-  );
+  // Root model fields: logos, footerLinks, socialLinks, grievanceOfficerName, grievanceOfficerContact, grievanceOfficerTiming, copyright
+  // The BlockJson has 7 root fields.
+  // children[0] = logos (container)
+  // children[1] = footerLinks (container)
+  // children[2] = socialLinks (container)
+  // children[3] = grievanceOfficerName (text)
+  // children[4] = grievanceOfficerContact (text)
+  // children[5] = grievanceOfficerTiming (text)
+  // children[6] = copyright (text)
+
+  const logosContainer = children[0];
+  const footerLinksContainer = children[1];
+  const socialLinksContainer = children[2];
+  const grievanceOfficerNameRow = children[3];
+  const grievanceOfficerContactRow = children[4];
+  const grievanceOfficerTimingRow = children[5];
+  const copyrightRow = children[6];
+
+  // Item rows are children of their respective containers, not direct children of the block.
+  // We need to extract items from the container divs.
+  const footerLogos = [...logosContainer.children];
+  const footerLinks = [...footerLinksContainer.children];
+  const socialLinks = [...socialLinksContainer.children];
+
+  // Left section for logos
+  const logoSection = document.createElement('div');
+  logoSection.classList.add('footer-itc-footer-section-col-lg-6', 'footer-itc-footer-section-col-sm-12', 'footer-itc-footer-section-d-flex', 'footer-itc-footer-section-d-lg-block', 'footer-itc-footer-section-justify-content-center');
 
   const footerLogosWrapper = document.createElement('div');
-  footerLogosWrapper.classList.add(`${blockName}-footer-logos`);
+  footerLogosWrapper.classList.add('footer-itc-footer-section-footer-logos');
 
   footerLogos.forEach((row) => {
-    const logoWrapper = document.createElement('div');
-    logoWrapper.classList.add(`${blockName}-footer-itc-logo`);
+    // Each footerLogo item row has 2 cells: logoImage (picture) and logoLink (aem-content with link)
+    if (row.children.length === 2) {
+      const logoDiv = document.createElement('div');
+      logoDiv.classList.add('footer-itc-footer-section-footer-itc-logo');
 
-    const logoDiv = document.createElement('div');
-    logoDiv.classList.add(`${blockName}-logo`, `${blockName}-image`);
-    moveInstrumentation(row, logoDiv);
+      const logoImageDiv = document.createElement('div');
+      logoImageDiv.classList.add('footer-itc-footer-section-logo', 'footer-itc-footer-section-image');
+      moveInstrumentation(row.children[0], logoImageDiv);
+      const picture = row.children[0].querySelector('picture');
+      const img = picture ? picture.querySelector('img') : null;
 
-    const picture = row.children[0].querySelector('picture');
-    const img = picture ? picture.querySelector('img') : null;
-    const linkEl = row.children[1].querySelector('a'); // Link URL is in cell[1] for footerLogo
-
-    if (linkEl) {
-      const newLink = document.createElement('a');
-      newLink.classList.add(`${blockName}-cmp-image__link`);
-      newLink.href = linkEl.href;
-      newLink.target = '_self';
-      moveInstrumentation(linkEl, newLink);
-      // The link text is not used here, only the href from the linkEl
-      // If there was text content for the link, it would be handled here.
-      // For images, the link wraps the image.
-      if (img) {
-        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '93' }]);
-        moveInstrumentation(img, optimizedPic.querySelector('img'));
-        newLink.prepend(optimizedPic);
+      const logoLink = document.createElement('a');
+      logoLink.classList.add('footer-itc-footer-section-cmp-image__link');
+      moveInstrumentation(row.children[1], logoLink);
+      const foundLink = row.children[1].querySelector('a'); // The link is inside the second cell
+      if (foundLink) {
+        logoLink.href = foundLink.href;
+        logoLink.target = foundLink.target;
+      } else {
+        // Fallback if no <a> tag is found, use text content as href (though less likely for a link field)
+        logoLink.href = row.children[1].textContent.trim() || '#';
       }
-      logoDiv.append(newLink);
-    } else if (img) {
-      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '93' }]);
-      moveInstrumentation(img, optimizedPic.querySelector('img'));
-      logoDiv.append(optimizedPic);
+
+      if (img) {
+        logoLink.append(img);
+      }
+      logoImageDiv.append(logoLink);
+      logoDiv.append(logoImageDiv);
+      footerLogosWrapper.append(logoDiv);
     }
-    logoWrapper.append(logoDiv);
-    footerLogosWrapper.append(logoWrapper);
   });
+  logoSection.append(footerLogosWrapper);
+  footerRow.append(logoSection);
 
-  leftCol.append(footerLogosWrapper);
-  footerRow.append(leftCol);
-
-  // Middle column for links and grievance officer
-  const middleCol = document.createElement('div');
-  middleCol.classList.add(
-    `${blockName}-col-lg-6`,
-    `${blockName}-col-sm-12`,
-    `${blockName}-itc-footer-link-left`,
-  );
-
-  const footerListsContainer = document.createElement('div');
-  footerListsContainer.classList.add(`${blockName}-footer-lists-container`, `${blockName}-d-flex`);
+  // Middle section for footer links
+  const footerLinksWrapper = document.createElement('div');
+  footerLinksWrapper.classList.add('footer-itc-footer-section-col-lg-3', 'footer-itc-footer-section-col-sm-12', 'footer-itc-footer-section-d-flex', 'footer-itc-footer-section-justify-content-xl-between', 'footer-itc-footer-section-footer-page-links-wrapper', 'footer-itc-footer-section-pt-md-0', 'footer-itc-footer-section-pt-4', 'footer-itc-footer-section-px-1');
 
   const list1 = document.createElement('div');
-  list1.classList.add(`${blockName}-list-4`, `${blockName}-list`);
+  list1.classList.add('footer-itc-footer-section-list-1', 'footer-itc-footer-section-list');
   const ul1 = document.createElement('ul');
   list1.append(ul1);
 
   const list2 = document.createElement('div');
-  list2.classList.add(`${blockName}-list-3`, `${blockName}-list`);
+  list2.classList.add('footer-itc-footer-section-list-2', 'footer-itc-footer-section-list');
   const ul2 = document.createElement('ul');
-  ul2.classList.add(`${blockName}-cmp-list`);
   list2.append(ul2);
 
   footerLinks.forEach((row, index) => {
-    const li = document.createElement('li');
-    li.classList.add(`${blockName}-cmp-list__item`);
-    moveInstrumentation(row, li);
+    // Each footerLink item row has 2 cells: linkUrl (aem-content) and linkText (text, often containing an <a>)
+    if (row.children.length === 2) {
+      const li = document.createElement('li');
+      moveInstrumentation(row, li);
 
-    const urlCell = row.children[0]; // Link URL is in cell[0] for footerLink
-    const textCell = row.children[1]; // Link Text is in cell[1] for footerLink
+      const linkEl = document.createElement('a');
+      linkEl.classList.add('footer-itc-footer-section-cmp-list__item-link');
 
-    const linkEl = urlCell.querySelector('a'); // Check if the URL cell contains an actual link
-    const linkText = textCell.textContent.trim();
+      const linkUrlCell = row.children[0]; // linkUrl field
+      const linkTextCell = row.children[1]; // linkText field
 
-    const newLink = document.createElement('a');
-    newLink.classList.add(`${blockName}-cmp-list__item-link`);
-    newLink.target = '_blank'; // Assuming all footer links open in new tab
-    moveInstrumentation(urlCell, newLink); // Instrument the URL cell
+      const foundLinkInTextCell = linkTextCell.querySelector('a');
+      if (foundLinkInTextCell) {
+        linkEl.href = foundLinkInTextCell.href;
+        linkEl.target = foundLinkInTextCell.target;
+        const span = document.createElement('span');
+        span.classList.add('footer-itc-footer-section-cmp-list__item-title');
+        span.textContent = foundLinkInTextCell.textContent;
+        linkEl.append(span);
+      } else {
+        // If linkText is just text, use linkUrl for href and linkText for content
+        linkEl.href = linkUrlCell.textContent.trim();
+        const span = document.createElement('span');
+        span.classList.add('footer-itc-footer-section-cmp-list__item-title');
+        span.textContent = linkTextCell.textContent.trim();
+        linkEl.append(span);
+      }
+      li.append(linkEl);
 
-    if (linkEl) {
-      newLink.href = linkEl.href;
-    } else {
-      // If no explicit <a> tag in the URL cell, use its text content as href
-      newLink.href = urlCell.textContent.trim();
-    }
-
-    const span = document.createElement('span');
-    span.classList.add(`${blockName}-cmp-list__item-title`);
-    span.textContent = linkText;
-    newLink.append(span);
-
-    li.append(newLink);
-
-    // Distribute links between two lists (example: split evenly)
-    if (index % 2 === 0) {
-      ul1.append(li);
-    } else {
-      ul2.append(li);
+      if (index % 2 === 0) {
+        ul1.append(li);
+      } else {
+        ul2.append(li);
+      }
     }
   });
 
-  footerListsContainer.append(list1, list2);
-  middleCol.append(footerListsContainer);
+  footerLinksWrapper.append(list1, list2);
+  footerRow.append(footerLinksWrapper);
+
+  // Right section for contact details and social links
+  const rightSection = document.createElement('div');
+  rightSection.classList.add('footer-itc-footer-section-col-lg-6', 'footer-itc-footer-section-col-sm-12', 'footer-itc-footer-section-itc-footer-link-left');
+
+  const footerListsContainer = document.createElement('div');
+  footerListsContainer.classList.add('footer-itc-footer-section-footer-lists-container', 'footer-itc-footer-section-d-flex');
+  // Re-append the lists from the middle section to this container to match original HTML structure
+  footerListsContainer.append(list1, list2); // Moving them here to match the example HTML structure
+  rightSection.append(footerListsContainer);
+
 
   const contactDetails = document.createElement('div');
-  contactDetails.classList.add(`${blockName}-contact-details`);
+  contactDetails.classList.add('footer-itc-footer-section-contact-details');
 
-  const grievanceTitle = document.createElement('h5');
-  grievanceTitle.classList.add(`${blockName}-contact-details__title`, `${blockName}-mb-md-3`, `${blockName}-mb-0`);
-  moveInstrumentation(grievanceOfficerTitleRow, grievanceTitle);
-  grievanceTitle.textContent = grievanceOfficerTitleRow.children[0].textContent.trim(); // Access content from first child div
-  contactDetails.append(grievanceTitle);
+  const title = document.createElement('h5');
+  title.classList.add('footer-itc-footer-section-contact-details__title', 'footer-itc-footer-section-mb-md-3', 'footer-itc-footer-section-mb-0');
+  moveInstrumentation(grievanceOfficerNameRow, title);
+  title.textContent = `Grievance Officer: ${grievanceOfficerNameRow.textContent.trim()}`;
+  contactDetails.append(title);
 
-  const grievanceName = document.createElement('p');
-  grievanceName.classList.add(`${blockName}-contact-details__description`, `${blockName}-mb-md-1`, `${blockName}-mb-0`);
-  moveInstrumentation(grievanceOfficerNameRow, grievanceName);
-  grievanceName.textContent = grievanceOfficerNameRow.children[0].textContent.trim(); // Access content from first child div
-  contactDetails.append(grievanceName);
+  const nameP = document.createElement('p');
+  nameP.classList.add('footer-itc-footer-section-contact-details__description', 'footer-itc-footer-section-mb-md-1', 'footer-itc-footer-section-mb-0');
+  moveInstrumentation(grievanceOfficerNameRow, nameP);
+  nameP.textContent = `Name: ${grievanceOfficerNameRow.textContent.trim()}`;
+  contactDetails.append(nameP);
 
-  const grievanceContact = document.createElement('p');
-  grievanceContact.classList.add(`${blockName}-contact-details__description`, `${blockName}-mb-md-1`, `${blockName}-mb-0`);
-  moveInstrumentation(grievanceOfficerContactRow, grievanceContact);
-  grievanceContact.textContent = grievanceOfficerContactRow.children[0].textContent.trim(); // Access content from first child div
-  contactDetails.append(grievanceContact);
+  const contactP = document.createElement('p');
+  contactP.classList.add('footer-itc-footer-section-contact-details__description', 'footer-itc-footer-section-mb-md-1', 'footer-itc-footer-section-mb-0');
+  moveInstrumentation(grievanceOfficerContactRow, contactP);
+  contactP.textContent = `Contact Info: ${grievanceOfficerContactRow.textContent.trim()}`;
+  contactDetails.append(contactP);
 
-  const grievanceTiming = document.createElement('p');
-  grievanceTiming.classList.add(`${blockName}-contact-details__description`, `${blockName}-mb-0`);
-  moveInstrumentation(grievanceOfficerTimingRow, grievanceTiming);
-  grievanceTiming.textContent = grievanceOfficerTimingRow.children[0].textContent.trim(); // Access content from first child div
-  contactDetails.append(grievanceTiming);
+  const timingP = document.createElement('p');
+  timingP.classList.add('footer-itc-footer-section-contact-details__description', 'footer-itc-footer-section-mb-0');
+  moveInstrumentation(grievanceOfficerTimingRow, timingP);
+  timingP.textContent = `(${grievanceOfficerTimingRow.textContent.trim()})`;
+  contactDetails.append(timingP);
 
-  middleCol.append(contactDetails);
-  footerRow.append(middleCol);
+  rightSection.append(contactDetails);
+  footerRow.append(rightSection);
 
-  // Right column for social icons and copyright
-  const rightCol = document.createElement('div');
-  rightCol.classList.add(
-    `${blockName}-col-lg-6`,
-    `${blockName}-col-sm-12`,
-    `${blockName}-align-items-md-end`,
-    `${blockName}-d-flex`,
-    `${blockName}-flex-column`,
-    `${blockName}-itc-footer-link-right`,
-  );
+  // Social links and copyright
+  const socialCopyrightSection = document.createElement('div');
+  socialCopyrightSection.classList.add('footer-itc-footer-section-col-lg-6', 'footer-itc-footer-section-col-sm-12', 'footer-itc-footer-section-align-items-md-end', 'footer-itc-footer-section-d-flex', 'footer-itc-footer-section-flex-column', 'footer-itc-footer-section-itc-footer-link-right');
 
-  const socialIconsWrapper = document.createElement('div');
-  socialIconsWrapper.classList.add(`${blockName}-social-icons-wrapper`); // Added a wrapper for social icons
+  const socialLinksDiv = document.createElement('div');
+  socialLinks.forEach((row) => {
+    // Each footerSocial item row has 2 cells: socialUrl (aem-content) and socialIcon (picture)
+    if (row.children.length === 2) {
+      const ul = document.createElement('ul');
+      ul.classList.add('footer-itc-footer-section-list-unstyled');
+      const li = document.createElement('li');
+      moveInstrumentation(row, li);
 
-  footerSocialIcons.forEach((row) => {
-    const ul = document.createElement('ul');
-    ul.classList.add(`${blockName}-list-unstyled`);
-    const li = document.createElement('li');
-    moveInstrumentation(row, li);
-
-    const iconPicture = row.children[0].querySelector('picture'); // Icon image is in cell[0] for footerSocialIcon
-    const iconImg = iconPicture ? iconPicture.querySelector('img') : null;
-    const socialLinkEl = row.children[1].querySelector('a'); // Social Link is in cell[1] for footerSocialIcon
-
-    if (socialLinkEl) {
-      const newLink = document.createElement('a');
-      newLink.id = 'socialIcons'; // This ID should ideally be unique per icon or removed
-      newLink.href = socialLinkEl.href;
-      newLink.target = '_blank';
-      moveInstrumentation(socialLinkEl, newLink);
-
-      if (iconImg) {
-        const optimizedPic = createOptimizedPicture(iconImg.src, iconImg.alt, false, [{ width: '32' }]);
-        moveInstrumentation(iconImg, optimizedPic.querySelector('img'));
-        newLink.append(optimizedPic);
+      const link = document.createElement('a');
+      link.id = 'socialIcons'; // Keep original ID if it's used for styling/JS elsewhere
+      link.target = '_blank';
+      moveInstrumentation(row.children[0], link);
+      const foundLink = row.children[0].querySelector('a'); // socialUrl can be a link
+      if (foundLink) {
+        link.href = foundLink.href;
+      } else {
+        link.href = row.children[0].textContent.trim();
       }
-      li.append(newLink);
-    } else if (iconImg) {
-      // If no explicit link, just display the icon
-      const optimizedPic = createOptimizedPicture(iconImg.src, iconImg.alt, false, [{ width: '32' }]);
-      moveInstrumentation(iconImg, optimizedPic.querySelector('img'));
-      li.append(optimizedPic);
-    }
-    ul.append(li);
-    socialIconsWrapper.append(ul);
-  });
 
-  rightCol.append(socialIconsWrapper);
+      const picture = row.children[1].querySelector('picture'); // socialIcon is a picture
+      const img = picture ? picture.querySelector('img') : null;
+      if (img) {
+        link.append(img);
+      }
+      const span = document.createElement('span');
+      span.classList.add('footer-itc-footer-section-cmp-link__screen-reader-only');
+      span.textContent = 'opens in a new tab';
+      link.append(span);
+
+      li.append(link);
+      ul.append(li);
+      socialLinksDiv.append(ul);
+    }
+  });
+  socialCopyrightSection.append(socialLinksDiv);
 
   const copyrightSpan = document.createElement('span');
-  copyrightSpan.classList.add(`${blockName}-footer-link`);
+  copyrightSpan.classList.add('footer-itc-footer-section-footer-link');
   moveInstrumentation(copyrightRow, copyrightSpan);
-  copyrightSpan.textContent = copyrightRow.children[0].textContent.trim(); // Access content from first child div
-  rightCol.append(copyrightSpan);
+  copyrightSpan.textContent = copyrightRow.textContent.trim();
+  socialCopyrightSection.append(copyrightSpan);
 
-  footerRow.append(rightCol);
+  footerRow.append(socialCopyrightSection);
   footerContainer.append(footerRow);
-  block.append(footerContainer);
 
-  // The secondary footer section was hardcoded in the original JS.
-  // Based on the BlockJson and EDS structure, there is no explicit model field for a secondary footer.
-  // If a secondary footer is needed, it should be defined in the BlockJson model.
-  // For now, removing the hardcoded secondary footer elements.
-  // If it's meant to be a separate block, it should be handled as such.
+  // Secondary footer section
+  const secondaryFooter = document.createElement('footer');
+  secondaryFooter.classList.add('footer-itc-footer-section', 'footer-itc-footer-section-itc-footer-secondary');
+  const secondaryUl = document.createElement('ul');
+  secondaryUl.classList.add('footer-itc-footer-section-itc-footer-secondary-container');
 
-  // Image optimization for all pictures within the block
+  // The original HTML had two placeholder links here.
+  // Since there's no model field for these, we should remove them or add a model field.
+  // For now, removing them as they are not driven by content.
+  // If they were meant to be part of 'footerLinks' or another item type,
+  // there would need to be a way to distinguish them in the model.
+
+  secondaryFooter.append(secondaryUl);
+
+  block.textContent = '';
+  block.append(footerContainer, secondaryFooter);
+
+  // Image optimization
   block.querySelectorAll('picture > img').forEach((img) => {
-    // Only optimize if not already optimized by createOptimizedPicture with specific width
-    if (!img.closest('picture').dataset.optimized) {
-      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-      moveInstrumentation(img, optimizedPic.querySelector('img'));
-      img.closest('picture').replaceWith(optimizedPic);
-      optimizedPic.dataset.optimized = 'true'; // Mark as optimized
-    }
+    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+    moveInstrumentation(img, optimizedPic.querySelector('img'));
+    img.closest('picture').replaceWith(optimizedPic);
   });
 }
