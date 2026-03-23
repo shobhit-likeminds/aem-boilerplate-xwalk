@@ -5,21 +5,26 @@ export default function decorate(block) {
   const [
     logoImageRow,
     logoLinkRow,
-    navigationContainerRow, // This row is a container, its content is in itemRows
+    navigationLinksContainerRow, // This is a container, not individual links
+    countrySelectorFlagINRow,
+    countrySelectorFlagUSARow,
+    countryOptionsContainerRow, // This is a container, not individual options
     searchIconRow,
-    countryCodeRow,
-    countryFlagRow,
-    countryOptionsContainerRow, // This row is a container, its content is in itemRows
     ...itemRows
   ] = [...block.children];
 
-  // Create header container
-  const headerContainer = document.createElement('div');
-  headerContainer.classList.add('header-itc-header-section-container');
+  // Filter itemRows based on the number of children to distinguish between navigationLink and countryOption
+  const navigationLinks = itemRows.filter((row) => row.children.length === 2);
+  const countryOptions = itemRows.filter((row) => row.children.length === 3);
 
-  // Create navbar
-  const nav = document.createElement('nav');
-  nav.classList.add(
+  const header = document.createElement('header');
+  header.classList.add('header-itc-header-section');
+
+  const headerContainer = document.createElement('div');
+  headerContainer.classList.add('header-container');
+
+  const navbar = document.createElement('nav');
+  navbar.classList.add(
     'header-itc-header-section-navbar',
     'header-itc-header-section-navbar-expand-xl',
     'header-itc-header-section-navbar-light',
@@ -30,47 +35,37 @@ export default function decorate(block) {
     'header-itc-header-section-align-items-center',
   );
 
-  // Navbar Toggler
-  const toggler = document.createElement('button');
-  toggler.classList.add('header-itc-header-section-navbar-toggler', 'header-itc-header-section-collapsed');
-  toggler.type = 'button';
-  toggler.setAttribute('aria-controls', 'navbarSupportedContent');
-  toggler.setAttribute('aria-expanded', 'false');
-  toggler.setAttribute('aria-label', 'Toggle navigation');
-  const togglerSpan = document.createElement('span');
-  togglerSpan.classList.add('header-itc-header-section-navbar-toggler-icon');
-  toggler.append(togglerSpan);
-  nav.append(toggler);
+  const navbarToggler = document.createElement('button');
+  navbarToggler.classList.add('header-itc-header-section-navbar-toggler', 'header-itc-header-section-collapsed');
+  navbarToggler.type = 'button';
+  navbarToggler.setAttribute('aria-controls', 'navbarSupportedContent');
+  navbarToggler.setAttribute('aria-expanded', 'false');
+  navbarToggler.setAttribute('aria-label', 'Toggle navigation');
+  const togglerIcon = document.createElement('span');
+  togglerIcon.classList.add('header-itc-header-section-navbar-toggler-icon');
+  navbarToggler.append(togglerIcon);
 
   const dXlNoneDiv = document.createElement('div');
   dXlNoneDiv.classList.add('header-itc-header-section-d-xl-none');
   dXlNoneDiv.innerHTML = '&nbsp;';
-  nav.append(dXlNoneDiv);
 
-  // Logo
   const logoDiv = document.createElement('div');
   logoDiv.classList.add('header-itc-header-section-logo', 'header-itc-header-section-image');
   const logoLink = document.createElement('a');
-  const foundLogoLink = logoLinkRow.querySelector('div').querySelector('a'); // Access content within the div
-  if (foundLogoLink) {
-    logoLink.href = foundLogoLink.href;
-    logoLink.target = '_blank';
-  } else {
-    logoLink.href = logoLinkRow.querySelector('div').textContent.trim(); // Access content within the div
-    logoLink.target = '_blank';
-  }
-
-  const logoPicture = logoImageRow.querySelector('picture');
+  // logoLinkRow contains the link URL as its first child's text content
+  const logoLinkUrl = logoLinkRow.firstElementChild.textContent.trim();
+  logoLink.href = logoLinkUrl;
+  logoLink.classList.add('header-itc-header-section-cmp-image__link');
+  logoLink.target = '_blank';
+  // logoImageRow contains the picture element as its first child
+  const logoPicture = logoImageRow.firstElementChild.querySelector('picture');
   if (logoPicture) {
-    const img = logoPicture.querySelector('img');
-    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '131' }]);
-    moveInstrumentation(logoPicture, optimizedPic);
-    logoLink.append(optimizedPic);
+    logoLink.append(logoPicture);
   }
+  moveInstrumentation(logoLinkRow.firstElementChild, logoLink); // Instrument the link text
+  moveInstrumentation(logoImageRow.firstElementChild, logoLink); // Instrument the image container
   logoDiv.append(logoLink);
-  nav.append(logoDiv);
 
-  // Navbar collapse content
   const navbarCollapse = document.createElement('div');
   navbarCollapse.classList.add(
     'header-itc-header-section-collapse',
@@ -79,51 +74,43 @@ export default function decorate(block) {
   );
   navbarCollapse.id = 'navbarSupportedContent';
 
-  // Navigation
-  const navigationDiv = document.createElement('div');
-  navigationDiv.classList.add('header-itc-header-section-nav-item', 'header-itc-header-section-navigation');
-  const navigationNav = document.createElement('nav');
-  navigationNav.classList.add('cmp-navigation');
-  navigationNav.setAttribute('role', 'navigation');
-  const navigationUl = document.createElement('ul');
-  navigationUl.classList.add('cmp-navigation__group');
+  const navItemNavigation = document.createElement('div');
+  navItemNavigation.classList.add('header-itc-header-section-nav-item', 'header-itc-header-section-navigation');
+  const navEl = document.createElement('nav');
+  navEl.id = 'navigation-6d5dcb0126'; // Keep original ID if it's from AEM
+  navEl.classList.add('header-itc-header-section-cmp-navigation');
+  navEl.setAttribute('role', 'navigation');
+  const ul = document.createElement('ul');
+  ul.classList.add('header-itc-header-section-cmp-navigation__group');
 
-  // Filter for navigation items (2 cells: link, label)
-  const navigationItems = itemRows.filter((row) => row.children.length === 2);
-  navigationItems.forEach((row) => {
+  navigationLinks.forEach((row) => {
     const li = document.createElement('li');
-    li.classList.add('cmp-navigation__item', 'cmp-navigation__item--level-0');
-    const link = document.createElement('a');
-    link.classList.add('cmp-navigation__item-link');
-    const linkCell = row.children[0].querySelector('div'); // Access content within the div
-    const labelCell = row.children[1].querySelector('div'); // Access content within the div
-    const foundLink = linkCell.querySelector('a');
-    if (foundLink) {
-      link.href = foundLink.href;
-      link.textContent = labelCell.textContent.trim();
-      moveInstrumentation(linkCell, link);
-    } else {
-      link.href = linkCell.textContent.trim();
-      link.textContent = labelCell.textContent.trim();
-    }
-    li.append(link);
-    navigationUl.append(li);
     moveInstrumentation(row, li);
+    li.classList.add(
+      'header-itc-header-section-cmp-navigation__item',
+      'header-itc-header-section-cmp-navigation__item--level-0',
+    );
+    const link = document.createElement('a');
+    link.classList.add('header-itc-header-section-cmp-navigation__item-link');
+    const linkUrl = row.children[0].textContent.trim();
+    const label = row.children[1].textContent.trim();
+    link.href = linkUrl;
+    link.textContent = label;
+    li.append(link);
+    ul.append(li);
   });
-  navigationNav.append(navigationUl);
-  navigationDiv.append(navigationNav);
-  navbarCollapse.append(navigationDiv);
 
-  // Header section right side
-  const headerSectionRight = document.createElement('div');
-  headerSectionRight.classList.add(
+  navEl.append(ul);
+  navItemNavigation.append(navEl);
+
+  const headerSection = document.createElement('div');
+  headerSection.classList.add(
     'header-itc-header-section-header-section',
     'header-itc-header-section-d-flex',
     'header-itc-header-section-align-items-center',
     'header-itc-header-section-justify-content-end',
   );
 
-  // Country selector trigger
   const countrySelectorTrigger = document.createElement('div');
   countrySelectorTrigger.classList.add(
     'header-itc-header-section-search-icon',
@@ -134,33 +121,25 @@ export default function decorate(block) {
 
   const countryCodeSpan = document.createElement('span');
   countryCodeSpan.classList.add('header-itc-header-section-country-code');
-  countryCodeSpan.textContent = countryCodeRow.querySelector('div').textContent.trim(); // Access content within the div
-  countrySelectorTrigger.append(countryCodeSpan);
+  countryCodeSpan.textContent = 'IN'; // Default to IN
 
+  const countryFlagIN = countrySelectorFlagINRow.querySelector('img');
   const countryFlagImg = document.createElement('img');
   countryFlagImg.classList.add('header-itc-header-section-header-country-flag');
-  const flagPicture = countryFlagRow.querySelector('picture');
-  if (flagPicture) {
-    const img = flagPicture.querySelector('img');
-    countryFlagImg.src = img.src;
-    countryFlagImg.alt = img.alt;
-    moveInstrumentation(flagPicture, countryFlagImg);
-  }
-  countrySelectorTrigger.append(countryFlagImg);
+  countryFlagImg.src = countryFlagIN.src;
+  countryFlagImg.alt = countryFlagIN.alt;
 
   const dropdownIcon = document.createElement('img');
   dropdownIcon.src = '/content/dam/aemigrate/uploaded-folder/image/dropdown-icon.png';
   dropdownIcon.alt = 'dropdown-icon';
   dropdownIcon.classList.add('header-itc-header-section-dropdown-icon');
-  countrySelectorTrigger.append(dropdownIcon);
-  headerSectionRight.append(countrySelectorTrigger);
-  navbarCollapse.append(headerSectionRight);
 
-  // Search and country selector
+  countrySelectorTrigger.append(countryCodeSpan, countryFlagImg, dropdownIcon);
+  headerSection.append(countrySelectorTrigger);
+
   const itcHeaderIconList = document.createElement('div');
   itcHeaderIconList.classList.add('header-itc-header-section-itc-header-icon-list');
 
-  // Search block
   const searchBlock = document.createElement('div');
   searchBlock.id = 'searchBlock';
   searchBlock.classList.add('header-itc-header-section-search-block', 'header-itc-header-section-hidden');
@@ -177,102 +156,86 @@ export default function decorate(block) {
   searchInput.type = 'text';
   searchInput.id = 'searchInput';
   searchInput.placeholder = 'Search';
-  searchContainer.append(searchInput);
 
   const searchButton = document.createElement('button');
   searchButton.id = 'searchButton';
+  const searchIconImg = searchIconRow.firstElementChild.querySelector('img'); // Correctly get img from searchIconRow
   const searchButtonImg = document.createElement('img');
-  const searchIconPicture = searchIconRow.querySelector('picture');
-  if (searchIconPicture) {
-    const img = searchIconPicture.querySelector('img');
-    searchButtonImg.src = img.src;
-    searchButtonImg.alt = img.alt;
-    moveInstrumentation(searchIconPicture, searchButtonImg);
-  }
+  searchButtonImg.loading = 'lazy';
+  searchButtonImg.src = searchIconImg.src;
+  searchButtonImg.alt = searchIconImg.alt;
   searchButton.append(searchButtonImg);
-  searchContainer.append(searchButton);
-  searchBox.append(searchContainer);
+
+  searchContainer.append(searchInput, searchButton);
 
   const closeButton = document.createElement('img');
   closeButton.id = 'closeButton';
-  closeButton.src = '/content/dam/aemigrate/uploaded-folder/image/1774209134013.svg+xml';
+  closeButton.loading = 'lazy';
+  closeButton.src = '/content/dam/aemigrate/uploaded-folder/image/1774242539326.svg+xml';
   closeButton.alt = 'Close icon';
-  searchBox.append(closeButton);
-  searchBlock.append(searchBox);
+
+  searchBox.append(searchContainer, closeButton);
 
   const searchResults = document.createElement('div');
   searchResults.id = 'searchResults';
   searchResults.classList.add('header-itc-header-section-search-results', 'header-itc-header-section-hidden');
 
-  const popularSuggestionsH4 = document.createElement('h4');
-  popularSuggestionsH4.classList.add('header-itc-header-section-resultList');
-  popularSuggestionsH4.textContent = 'Popular Suggestions';
-  searchResults.append(popularSuggestionsH4);
+  const popularSuggestions = document.createElement('h4');
+  popularSuggestions.classList.add('header-itc-header-section-resultList');
+  popularSuggestions.textContent = 'Popular Suggestions';
+  const suggestionsList = document.createElement('ul');
+  suggestionsList.id = 'suggestionsList';
 
-  const suggestionsListUl = document.createElement('ul');
-  suggestionsListUl.id = 'suggestionsList';
-  searchResults.append(suggestionsListUl);
-
-  const pagesH4 = document.createElement('h4');
-  pagesH4.classList.add('header-itc-header-section-resultList');
-  pagesH4.textContent = 'Pages';
-  searchResults.append(pagesH4);
-
-  const productsListUl = document.createElement('ul');
-  productsListUl.id = 'productsList';
-  productsListUl.classList.add('header-itc-header-section-products');
-  searchResults.append(productsListUl);
+  const pagesResultList = document.createElement('h4');
+  pagesResultList.classList.add('header-itc-header-section-resultList');
+  pagesResultList.textContent = 'Pages';
+  const productsList = document.createElement('ul');
+  productsList.id = 'productsList';
+  productsList.classList.add('header-itc-header-section-products');
 
   const viewAllButton = document.createElement('button');
   viewAllButton.id = 'viewAllButton';
   viewAllButton.textContent = 'VIEW ALL ITEMS';
-  searchResults.append(viewAllButton);
-  searchBlock.append(searchResults);
-  itcHeaderIconList.append(searchBlock);
 
-  const searchIconLink = document.createElement('a');
-  searchIconLink.classList.add('header-itc-header-section-nav-link');
-  searchIconLink.id = 'searchIconLink'; // Add an ID for easy targeting
+  searchResults.append(
+    popularSuggestions,
+    suggestionsList,
+    pagesResultList,
+    productsList,
+    viewAllButton,
+  );
 
-  const searchIconImg = document.createElement('img');
-  searchIconImg.id = 'searchIcon';
-  if (searchIconPicture) {
-    const img = searchIconPicture.querySelector('img');
-    searchIconImg.src = img.src;
-    searchIconImg.alt = img.alt;
-    moveInstrumentation(searchIconPicture, searchIconImg);
-  } else {
-    searchIconImg.src = '/content/dam/aemigrate/uploaded-folder/image/search-icon.png';
-    searchIconImg.alt = 'Search icon';
-  }
-  searchIconLink.append(searchIconImg);
+  searchBlock.append(searchBox, searchResults);
 
+  const searchNavLink = document.createElement('a');
+  searchNavLink.classList.add('header-itc-header-section-nav-link');
+  searchNavLink.id = 'searchIconTrigger'; // Custom ID for event listener
+  const searchIconNavLinkImg = searchIconRow.firstElementChild.querySelector('img'); // Correctly get img from searchIconRow
+  const searchIconImgEl = document.createElement('img');
+  searchIconImgEl.loading = 'lazy';
+  searchIconImgEl.id = 'searchIcon';
+  searchIconImgEl.src = searchIconNavLinkImg.src;
+  searchIconImgEl.alt = searchIconNavLinkImg.alt;
   const searchSpan = document.createElement('span');
   searchSpan.classList.add('header-itc-header-section-d-block');
   searchSpan.textContent = 'Search';
-  searchIconLink.append(searchSpan);
-  itcHeaderIconList.append(searchIconLink);
+  searchNavLink.append(searchIconImgEl, searchSpan);
 
-  const navItemLi = document.createElement('li');
-  navItemLi.classList.add('header-itc-header-section-nav-item');
-  const navItemLink = document.createElement('a');
-  navItemLink.classList.add('header-itc-header-section-nav-link');
-  navItemLi.append(navItemLink);
-  itcHeaderIconList.append(navItemLi);
+  itcHeaderIconList.append(searchBlock, searchNavLink);
 
-  nav.append(navbarCollapse);
-  nav.append(itcHeaderIconList);
-  headerContainer.append(nav);
-  block.append(headerContainer);
+  navbarCollapse.append(navItemNavigation, headerSection);
+  navbar.append(navbarToggler, dXlNoneDiv, logoDiv, navbarCollapse, itcHeaderIconList);
+  headerContainer.append(navbar);
+  header.append(headerContainer);
 
-  // Country Modal
   const countryModal = document.createElement('div');
   countryModal.classList.add('header-itc-header-section-modal', 'header-itc-header-section-fade', 'header-itc-header-section-itc-country-selector');
   countryModal.id = 'countryModal';
-  countryModal.setAttribute('tabindex', '-1');
+  countryModal.tabIndex = -1;
   countryModal.setAttribute('role', 'dialog');
   countryModal.setAttribute('aria-labelledby', 'countryModalLabel');
   countryModal.setAttribute('aria-modal', 'true');
+  countryModal.style.display = 'none'; // Initially hidden
 
   const modalDialog = document.createElement('div');
   modalDialog.classList.add('header-itc-header-section-modal-dialog', 'header-itc-header-section-modal-dialog-centered');
@@ -282,11 +245,7 @@ export default function decorate(block) {
   modalContent.classList.add('header-itc-header-section-modal-content');
 
   const modalHeader = document.createElement('div');
-  modalHeader.classList.add(
-    'header-itc-header-section-modal-header',
-    'header-itc-header-section-border-0',
-    'header-itc-header-section-text-center',
-  );
+  modalHeader.classList.add('header-itc-header-section-modal-header', 'header-itc-header-section-border-0', 'header-itc-header-section-text-center');
   const headerW100 = document.createElement('div');
   headerW100.classList.add('header-itc-header-section-w-100');
   const modalTitle = document.createElement('h2');
@@ -297,11 +256,9 @@ export default function decorate(block) {
   experienceText.textContent = 'Experience';
   headerW100.append(modalTitle, experienceText);
   modalHeader.append(headerW100);
-  modalContent.append(modalHeader);
 
   const modalBody = document.createElement('div');
   modalBody.classList.add('header-itc-header-section-modal-body');
-
   const countryOptionsDiv = document.createElement('div');
   countryOptionsDiv.classList.add(
     'header-itc-header-section-country-options',
@@ -310,11 +267,9 @@ export default function decorate(block) {
     'header-itc-header-section-align-items-center',
   );
 
-  // Filter for country option items (4 cells: flag, countryName, countryCode, countryUrl)
-  const countryOptionItems = itemRows.filter((row) => row.children.length === 4);
-  countryOptionItems.forEach((row) => {
-    const countryOption = document.createElement('div');
-    countryOption.classList.add(
+  countryOptions.forEach((row) => {
+    const countryOptionDiv = document.createElement('div');
+    countryOptionDiv.classList.add(
       'header-itc-header-section-country-option',
       'header-itc-header-section-mx-3',
       'header-itc-header-section-d-flex',
@@ -322,59 +277,57 @@ export default function decorate(block) {
       'header-itc-header-section-align-items-center',
     );
 
-    const flagCell = row.children[0].querySelector('div'); // Access content within the div
-    const countryNameCell = row.children[1].querySelector('div'); // Access content within the div
-    const countryCodeCell = row.children[2].querySelector('div'); // Access content within the div
-    const countryUrlCell = row.children[3].querySelector('div'); // Access content within the div
-
-    const flagPictureEl = flagCell.querySelector('picture');
-    if (flagPictureEl) {
-      const img = flagPictureEl.querySelector('img');
-      const countryFlag = document.createElement('img');
-      countryFlag.src = img.src;
-      countryFlag.alt = img.alt;
-      countryFlag.classList.add('header-itc-header-section-country-flag');
-      countryFlag.classList.add(`header-itc-header-section-${countryCodeCell.textContent.trim().toLowerCase()}-flag`);
-      countryOption.append(countryFlag);
-      moveInstrumentation(flagCell, countryFlag);
+    const flagImage = row.children[0].querySelector('picture > img');
+    const countryFlag = document.createElement('img');
+    countryFlag.src = flagImage.src;
+    countryFlag.alt = flagImage.alt;
+    countryFlag.classList.add('header-itc-header-section-country-flag');
+    if (flagImage.alt.toLowerCase().includes('india')) {
+      countryOptionDiv.classList.add('header-itc-header-section-selected'); // Default selected
+      countryFlag.classList.add('header-itc-header-section-india-flag');
+      countryOptionDiv.setAttribute('data-country', 'india');
+    } else if (flagImage.alt.toLowerCase().includes('usa')) {
+      countryFlag.classList.add('header-itc-header-section-usa-flag');
+      countryOptionDiv.setAttribute('data-country', 'usa');
     }
 
     const countryName = document.createElement('p');
     countryName.classList.add('header-itc-header-section-country-name');
-    countryName.textContent = countryNameCell.textContent.trim();
-    countryOption.append(countryName);
+    countryName.textContent = row.children[1].textContent.trim();
 
-    countryOption.setAttribute('data-country', countryCodeCell.textContent.trim().toLowerCase());
-    const countryLink = countryUrlCell.querySelector('a');
-    if (countryLink) {
-      countryOption.setAttribute('data-url', countryLink.href);
-    } else {
-      countryOption.setAttribute('data-url', countryUrlCell.textContent.trim());
-    }
+    const countryUrl = row.children[2].textContent.trim();
+    countryOptionDiv.setAttribute('data-url', countryUrl);
 
-    countryOptionsDiv.append(countryOption);
-    moveInstrumentation(row, countryOption);
+    countryOptionDiv.append(countryFlag, countryName);
+    countryOptionsDiv.append(countryOptionDiv);
   });
 
   modalBody.append(countryOptionsDiv);
-  modalContent.append(modalBody);
+  modalContent.append(modalHeader, modalBody);
   modalDialog.append(modalContent);
   countryModal.append(modalDialog);
-  block.append(countryModal);
 
-  // Event Listeners for interactive behavior
-  toggler.addEventListener('click', () => {
+  header.append(countryModal);
+
+  block.textContent = '';
+  block.append(header);
+
+  // Event Listeners
+  navbarToggler.addEventListener('click', () => {
     navbarCollapse.classList.toggle('header-itc-header-section-show');
-    toggler.classList.toggle('header-itc-header-section-collapsed');
-    toggler.setAttribute('aria-expanded', navbarCollapse.classList.contains('header-itc-header-section-show'));
+    navbarToggler.classList.toggle('header-itc-header-section-collapsed');
+    navbarToggler.setAttribute(
+      'aria-expanded',
+      navbarCollapse.classList.contains('header-itc-header-section-show'),
+    );
   });
 
-  const modalTrigger = countrySelectorTrigger;
-  modalTrigger.addEventListener('click', () => {
+  countrySelectorTrigger.addEventListener('click', () => {
     countryModal.classList.add('header-itc-header-section-show');
     countryModal.style.display = 'block';
   });
 
+  // Event listener for clicking outside the modal to close it
   countryModal.addEventListener('click', (e) => {
     if (e.target === countryModal) {
       countryModal.classList.remove('header-itc-header-section-show');
@@ -382,33 +335,61 @@ export default function decorate(block) {
     }
   });
 
-  // Add click listener for individual country options
-  countryOptionsDiv.querySelectorAll('.header-itc-header-section-country-option').forEach((option) => {
+  document.querySelectorAll('.header-itc-header-section-country-option').forEach((option) => {
     option.addEventListener('click', () => {
-      const url = option.getAttribute('data-url');
-      if (url) {
-        window.location.href = url;
-      }
+      document.querySelectorAll('.header-itc-header-section-country-option').forEach((opt) => {
+        opt.classList.remove('header-itc-header-section-selected');
+      });
+      option.classList.add('header-itc-header-section-selected');
+      const selectedCountryCode = option
+        .getAttribute('data-country')
+        .toUpperCase();
+      countryCodeSpan.textContent = selectedCountryCode;
+
+      const selectedFlagSrc = option.querySelector('.header-itc-header-section-country-flag').src;
+      countryFlagImg.src = selectedFlagSrc;
+
+      // Optionally navigate to the country URL
+      // window.location.href = option.getAttribute('data-url');
+      countryModal.classList.remove('header-itc-header-section-show');
+      countryModal.style.display = 'none';
     });
   });
 
-  // Search functionality
-  const searchIconTrigger = document.getElementById('searchIconLink');
-  const searchCloseButton = document.getElementById('closeButton');
-  const searchContainerDiv = document.getElementById('searchContainer');
-  const searchResultsDiv = document.getElementById('searchResults');
+  const searchIconTrigger = document.getElementById('searchIconTrigger');
+  if (searchIconTrigger) {
+    searchIconTrigger.addEventListener('click', () => {
+      searchBlock.classList.toggle('header-itc-header-section-hidden');
+      searchContainer.classList.toggle('header-itc-header-section-hidden');
+      searchResults.classList.add('header-itc-header-section-hidden'); // Hide results when opening search
+      searchInput.value = ''; // Clear search input
+    });
+  }
 
-  searchIconTrigger.addEventListener('click', () => {
-    searchBlock.classList.remove('header-itc-header-section-hidden');
-    searchContainerDiv.classList.remove('header-itc-header-section-hidden');
-    searchResultsDiv.classList.remove('header-itc-header-section-hidden');
-  });
+  const searchButtonEl = document.getElementById('searchButton');
+  if (searchButtonEl) {
+    searchButtonEl.addEventListener('click', () => {
+      const query = searchInput.value.trim();
+      if (query) {
+        // Simulate search results
+        suggestionsList.innerHTML = `<li>Suggestion for "${query}"</li>`;
+        productsList.innerHTML = `<li>Product for "${query}"</li>`;
+        searchResults.classList.remove('header-itc-header-section-hidden');
+      } else {
+        searchResults.classList.add('header-itc-header-section-hidden');
+      }
+    });
+  }
 
-  searchCloseButton.addEventListener('click', () => {
-    searchBlock.classList.add('header-itc-header-section-hidden');
-    searchContainerDiv.classList.add('header-itc-header-section-hidden');
-    searchResultsDiv.classList.add('header-itc-header-section-hidden');
-  });
+  const closeButtonEl = document.getElementById('closeButton');
+  if (closeButtonEl) {
+    closeButtonEl.addEventListener('click', () => {
+      searchBlock.classList.add('header-itc-header-section-hidden');
+      searchContainer.classList.add('header-itc-header-section-hidden');
+      searchResults.classList.add('header-itc-header-section-hidden');
+      searchInput.value = '';
+    });
+  }
 
   // Image optimization
   block.querySelectorAll('picture > img').forEach((img) => {

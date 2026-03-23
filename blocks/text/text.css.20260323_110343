@@ -2385,8 +2385,6 @@ ul::-webkit-scrollbar{display:none}
 .itc-carousel{padding-top:0 !important}
 }
 
-.header-country-flag { width:19px;height:19px;border-radius:50%;object-fit:cover }
-
 body{color:#2d2119}
 
 @media(max-width:375px){.itc-banner p{max-width:100%}

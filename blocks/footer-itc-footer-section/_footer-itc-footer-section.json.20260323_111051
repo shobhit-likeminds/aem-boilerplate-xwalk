@@ -1,0 +1,175 @@
+{
+  "definitions": [
+    {
+      "title": "Footer-ITC-Footer-Section",
+      "id": "footerItcFooterSection",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "footerItcFooterSection",
+              "model": "footerItcFooterSection",
+              "name": "Footer-ITC-Footer-Section"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Footer-Logo",
+      "id": "footerLogo",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "footerLogo",
+              "name": "Footer-Logo"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Footer-Link",
+      "id": "footerLink",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "footerLink",
+              "name": "Footer-Link"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Footer-Social",
+      "id": "footerSocial",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "footerSocial",
+              "name": "Footer-Social"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "footerLogo",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Logo Image",
+          "name": "logoImage",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Logo Link",
+          "name": "logoLink",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "footerLink",
+      "fields": [
+        {
+          "component": "aem-content",
+          "label": "Link URL",
+          "name": "linkUrl",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Link Text",
+          "name": "linkText",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "footerSocial",
+      "fields": [
+        {
+          "component": "aem-content",
+          "label": "Social URL",
+          "name": "socialUrl",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Social Icon",
+          "name": "socialIcon",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "footerItcFooterSection",
+      "fields": [
+        {
+          "component": "container",
+          "itemType": "footerLogo",
+          "label": "Logos",
+          "name": "logos"
+        },
+        {
+          "component": "container",
+          "itemType": "footerLink",
+          "label": "Footer Links",
+          "name": "footerLinks"
+        },
+        {
+          "component": "container",
+          "itemType": "footerSocial",
+          "label": "Social Links",
+          "name": "socialLinks"
+        },
+        {
+          "component": "text",
+          "label": "Grievance Officer Name",
+          "name": "grievanceOfficerName",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Grievance Officer Contact",
+          "name": "grievanceOfficerContact",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Grievance Officer Timing",
+          "name": "grievanceOfficerTiming",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Copyright",
+          "name": "copyright",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "footer-itc-footer-section",
+      "components": [
+        "footerLogo",
+        "footerLink",
+        "footerSocial"
+      ]
+    }
+  ]
+}

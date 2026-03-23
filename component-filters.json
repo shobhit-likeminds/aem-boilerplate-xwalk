@@ -50,13 +50,14 @@
       "spaceadder",
       "footerItcFooterSection",
       "headerITCHeaderSection",
-      "shiftclubItcClubCarousel"
+      "shiftclubItcClubCarousel",
+      "rs-cards"
     ]
   },
   {
     "id": "banner-carousel",
     "components": [
-      "bannerItem"
+      "bannerCarouselItem"
     ]
   },
   {
@@ -145,7 +146,8 @@
     "components": [
       "footerLogo",
       "footerLink",
-      "footerSocial"
+      "footerSocialIcon",
+      "footerSecondaryLink"
     ]
   },
   {
@@ -158,18 +160,7 @@
   {
     "id": "header-itc-header-section",
     "components": [
-      "headerITCHeaderSection"
-    ]
-  },
-  {
-    "id": "navigation",
-    "components": [
-      "navigationItem"
-    ]
-  },
-  {
-    "id": "country-options",
-    "components": [
+      "navigationLink",
       "countryOption"
     ]
   },
@@ -212,9 +203,9 @@
     ]
   },
   {
-    "id": "makeRightShift",
+    "id": "make-right-shift",
     "components": [
-      "category"
+      "goalItem"
     ]
   },
   {
@@ -238,7 +229,7 @@
   {
     "id": "rs-cards",
     "components": [
-      "rsCard"
+      "rs-card"
     ]
   },
   {

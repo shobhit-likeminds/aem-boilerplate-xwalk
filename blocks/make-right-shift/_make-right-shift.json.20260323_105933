@@ -17,15 +17,15 @@
       }
     },
     {
-      "title": "Goal-Item",
-      "id": "goalItem",
+      "title": "Category",
+      "id": "category",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "goalItem",
-              "name": "Goal-Item"
+              "model": "category",
+              "name": "Category"
             }
           }
         }
@@ -33,29 +33,6 @@
     }
   ],
   "models": [
-    {
-      "id": "goalItem",
-      "fields": [
-        {
-          "component": "reference",
-          "label": "Image",
-          "name": "image",
-          "valueType": "string"
-        },
-        {
-          "component": "aem-content",
-          "label": "Link",
-          "name": "link",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Label",
-          "name": "label",
-          "valueType": "string"
-        }
-      ]
-    },
     {
       "id": "makeRightShift",
       "fields": [
@@ -72,27 +49,50 @@
           "valueType": "string"
         },
         {
-          "component": "richtext",
+          "component": "text",
           "label": "Subheading",
           "name": "subheading",
           "valueType": "string"
         },
         {
-          "component": "block",
-          "itemId": "goalItem",
-          "label": "Goals",
-          "name": "goals"
-        },
-        {
-          "component": "aem-content",
-          "label": "Button Link",
-          "name": "buttonLink",
+          "component": "richtext",
+          "label": "Description",
+          "name": "description",
           "valueType": "string"
         },
         {
-          "component": "text",
-          "label": "Button Label",
-          "name": "buttonLabel",
+          "component": "container",
+          "itemType": "category",
+          "label": "Categories",
+          "name": "categories"
+        },
+        {
+          "component": "aem-content",
+          "label": "CTA Link",
+          "name": "cta",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "category",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Image",
+          "name": "image",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Link",
+          "name": "link",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Label",
+          "name": "label",
           "valueType": "string"
         }
       ]
@@ -100,9 +100,9 @@
   ],
   "filters": [
     {
-      "id": "make-right-shift",
+      "id": "makeRightShift",
       "components": [
-        "goalItem"
+        "category"
       ]
     }
   ]

@@ -1,31 +1,31 @@
 {
   "definitions": [
     {
-      "title": "Make-Right-Shift",
-      "id": "makeRightShift",
+      "title": "Banner-Carousel",
+      "id": "bannerCarousel",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block",
             "template": {
-              "filter": "makeRightShift",
-              "model": "makeRightShift",
-              "name": "Make-Right-Shift"
+              "filter": "bannerCarousel",
+              "model": "bannerCarousel",
+              "name": "Banner-Carousel"
             }
           }
         }
       }
     },
     {
-      "title": "Goal-Item",
-      "id": "goalItem",
+      "title": "Banner-Item",
+      "id": "bannerItem",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "goalItem",
-              "name": "Goal-Item"
+              "model": "bannerItem",
+              "name": "Banner-Item"
             }
           }
         }
@@ -34,35 +34,30 @@
   ],
   "models": [
     {
-      "id": "goalItem",
+      "id": "bannerItem",
       "fields": [
         {
           "component": "reference",
-          "label": "Image",
-          "name": "image",
+          "label": "Desktop Image",
+          "name": "desktopImage",
           "valueType": "string"
         },
         {
-          "component": "aem-content",
-          "label": "Link",
-          "name": "link",
+          "component": "reference",
+          "label": "Mobile Image",
+          "name": "mobileImage",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Label",
-          "name": "label",
+          "label": "Desktop Image Alt",
+          "name": "desktopAlt",
           "valueType": "string"
-        }
-      ]
-    },
-    {
-      "id": "makeRightShift",
-      "fields": [
+        },
         {
-          "component": "reference",
-          "label": "Banner Image",
-          "name": "bannerImage",
+          "component": "text",
+          "label": "Mobile Image Alt",
+          "name": "mobileAlt",
           "valueType": "string"
         },
         {
@@ -73,26 +68,20 @@
         },
         {
           "component": "richtext",
-          "label": "Subheading",
-          "name": "subheading",
+          "label": "Description",
+          "name": "description",
           "valueType": "string"
         },
         {
-          "component": "block",
-          "itemId": "goalItem",
-          "label": "Goals",
-          "name": "goals"
-        },
-        {
           "component": "aem-content",
-          "label": "Button Link",
-          "name": "buttonLink",
+          "label": "CTA Link",
+          "name": "ctaLink",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Button Label",
-          "name": "buttonLabel",
+          "label": "CTA Label",
+          "name": "ctaLabel",
           "valueType": "string"
         }
       ]
@@ -100,9 +89,9 @@
   ],
   "filters": [
     {
-      "id": "make-right-shift",
+      "id": "banner-carousel",
       "components": [
-        "goalItem"
+        "bannerItem"
       ]
     }
   ]

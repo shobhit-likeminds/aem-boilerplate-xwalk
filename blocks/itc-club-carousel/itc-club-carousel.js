@@ -2,161 +2,173 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const blockPrefix = 'itc-club-carousel-';
+  const section = document.createElement('section');
+  section.classList.add('itc-club-carousel-section', 'mx-md-0', 'mx-4'); // Corrected class prefix
 
-  const carouselContainer = document.createElement('div');
-  carouselContainer.classList.add(blockPrefix + 'container'); // Corrected class prefix
+  const container = document.createElement('div');
+  container.classList.add('itc-club-carousel-container'); // Corrected class prefix
+  section.append(container);
 
   const carousel = document.createElement('div');
   carousel.id = 'carousel';
-  carousel.classList.add(blockPrefix + 'carousel', 'carousel', 'slide');
+  carousel.classList.add('itc-club-carousel', 'slide'); // Corrected class prefix
   carousel.setAttribute('data-ride', 'carousel');
+  container.append(carousel);
 
   const carouselShift = document.createElement('div');
-  carouselShift.classList.add(blockPrefix + 'itc-carousel-shift');
+  carouselShift.classList.add('itc-club-carousel-shift'); // Corrected class prefix
+  carousel.append(carouselShift);
 
   const carouselInner = document.createElement('div');
-  carouselInner.classList.add(blockPrefix + 'carousel-inner');
+  carouselInner.classList.add('itc-club-carousel-inner'); // Corrected class prefix
+  carouselShift.append(carouselInner);
 
-  const olIndicators = document.createElement('ol');
-  olIndicators.classList.add(blockPrefix + 'carousel-indicators');
+  const indicators = document.createElement('ol');
+  indicators.classList.add('itc-club-carousel-indicators'); // Corrected class prefix
+  carouselInner.append(indicators);
 
-  const itemRows = [...block.children];
+  const items = [...block.children];
 
-  itemRows.forEach((row, index) => {
-    // Create indicator
-    const liIndicator = document.createElement('li');
-    liIndicator.setAttribute('data-target', '#carousel');
-    liIndicator.setAttribute('data-slide-to', index.toString());
+  items.forEach((row, index) => {
+    // Indicators
+    const indicator = document.createElement('li');
+    indicator.setAttribute('data-target', '#carousel');
+    indicator.setAttribute('data-slide-to', index.toString());
     if (index === 0) {
-      liIndicator.classList.add('active');
+      indicator.classList.add('active');
     }
-    olIndicators.append(liIndicator);
+    indicators.append(indicator);
 
-    // Add event listener for indicator click
-    liIndicator.addEventListener('click', () => {
-      const currentActiveItem = carouselInner.querySelector('.carousel-item.active');
-      const currentActiveIndicator = olIndicators.querySelector('.active');
-
-      if (currentActiveItem) {
-        currentActiveItem.classList.remove('active');
-      }
-      if (currentActiveIndicator) {
-        currentActiveIndicator.classList.remove('active');
-      }
-
-      carouselInner.children[index].classList.add('active');
-      liIndicator.classList.add('active');
-    });
-
-    // Create carousel item
+    // Carousel Items
     const carouselItem = document.createElement('div');
-    carouselItem.classList.add(blockPrefix + 'carousel-item', 'carousel-item');
+    carouselItem.classList.add('itc-club-carousel-item'); // Corrected class prefix
     if (index === 0) {
       carouselItem.classList.add('active');
     }
-
-    const itemContentWrapper = document.createElement('div');
-    itemContentWrapper.classList.add(blockPrefix + 'd-md-flex', 'd-block'); // Corrected class prefix
-
     moveInstrumentation(row, carouselItem);
 
-    const [imageCell, headingCell, descriptionCell] = [...row.children];
+    const itemContentWrapper = document.createElement('div');
+    itemContentWrapper.classList.add('itc-club-carousel-d-md-flex', 'itc-club-carousel-d-block'); // Corrected class prefix
+    carouselItem.append(itemContentWrapper);
+
+    const [imageCell, altCell, titleCell, descriptionCell] = [...row.children];
 
     // Image
     const picture = imageCell.querySelector('picture');
     if (picture) {
       const img = picture.querySelector('img');
-      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-      moveInstrumentation(img, optimizedPic.querySelector('img'));
-      optimizedPic.querySelector('img').classList.add(blockPrefix + 'carousel__img', 'd-block', 'w-md-50', 'w-100');
-      itemContentWrapper.append(optimizedPic);
+      if (img) {
+        const optimizedPic = createOptimizedPicture(img.src, altCell.textContent.trim(), false, [{ width: '750' }]);
+        optimizedPic.querySelector('img').classList.add(
+          'itc-club-carousel__img', // Corrected class prefix
+          'itc-club-carousel-d-block', // Corrected class prefix
+          'itc-club-carousel-w-md-50', // Corrected class prefix
+          'itc-club-carousel-w-100', // Corrected class prefix
+        );
+        moveInstrumentation(img, optimizedPic.querySelector('img'));
+        itemContentWrapper.append(optimizedPic);
+      }
     }
 
-    // Right wrapper for text content
+    // Right content wrapper
     const rightWrapper = document.createElement('div');
-    rightWrapper.classList.add(blockPrefix + 'w-md-50', 'w-100', blockPrefix + 'right-wrapper', 'read-more'); // Corrected class prefix
+    rightWrapper.classList.add(
+      'itc-club-carousel-w-md-50', // Corrected class prefix
+      'itc-club-carousel-w-100', // Corrected class prefix
+      'itc-club-carousel-right-wrapper', // Corrected class prefix
+      'itc-club-carousel-read-more', // Corrected class prefix
+    );
+    itemContentWrapper.append(rightWrapper);
 
-    // Heading
-    const heading = document.createElement('h2');
-    heading.classList.add(blockPrefix + 'carousel-inner__title');
-    moveInstrumentation(headingCell, heading);
-    while (headingCell.firstChild) heading.append(headingCell.firstChild);
-    rightWrapper.append(heading);
+    // Title
+    const title = document.createElement('h2');
+    title.classList.add('itc-club-carousel-inner__title'); // Corrected class prefix
+    moveInstrumentation(titleCell, title);
+    while (titleCell.firstChild) title.append(titleCell.firstChild);
+    rightWrapper.append(title);
 
     // Description
     const description = document.createElement('p');
-    description.classList.add(blockPrefix + 'carousel-inner__description');
+    description.classList.add('itc-club-carousel-inner__description'); // Corrected class prefix
     moveInstrumentation(descriptionCell, description);
     while (descriptionCell.firstChild) description.append(descriptionCell.firstChild);
     rightWrapper.append(description);
 
-    itemContentWrapper.append(rightWrapper);
-    carouselItem.append(itemContentWrapper);
     carouselInner.append(carouselItem);
   });
 
-  carouselShift.append(olIndicators, carouselInner);
-
-  // Previous button
+  // Previous Button
   const prevButton = document.createElement('button');
-  prevButton.classList.add(blockPrefix + 'carousel-control-prev');
+  prevButton.classList.add('itc-club-carousel-control-prev'); // Corrected class prefix
   prevButton.type = 'button';
-  prevButton.setAttribute('data-target', '#carousel');
-  prevButton.setAttribute('data-slide', 'prev');
-  prevButton.addEventListener('click', () => {
-    const activeItem = carouselInner.querySelector('.carousel-item.active');
-    const prevItem = activeItem.previousElementSibling || carouselInner.lastElementChild;
-    if (prevItem && prevItem.classList.contains('carousel-item')) {
-      activeItem.classList.remove('active');
-      prevItem.classList.add('active');
-      const activeIndicator = olIndicators.querySelector('.active');
-      const prevIndicator = activeIndicator.previousElementSibling || olIndicators.lastElementChild;
-      activeIndicator.classList.remove('active');
-      prevIndicator.classList.add('active');
-    }
-  });
-
-  const prevIcon = document.createElement('span');
-  prevIcon.classList.add(blockPrefix + 'carousel-control-prev-icon');
-  prevIcon.setAttribute('aria-hidden', 'true');
-  const prevSrOnly = document.createElement('span');
-  prevSrOnly.classList.add(blockPrefix + 'sr-only'); // Corrected class prefix
-  prevSrOnly.textContent = 'Previous';
-  prevButton.append(prevIcon, prevSrOnly);
+  prevButton.setAttribute('aria-label', 'Previous');
+  prevButton.setAttribute('data-target', '#carousel'); // Added data-target
+  prevButton.setAttribute('data-slide', 'prev'); // Added data-slide
   carouselShift.append(prevButton);
 
-  // Next button
-  const nextButton = document.createElement('button');
-  nextButton.classList.add(blockPrefix + 'carousel-control-next');
-  nextButton.type = 'button';
-  nextButton.setAttribute('data-target', '#carousel');
-  nextButton.setAttribute('data-slide', 'next');
-  nextButton.addEventListener('click', () => {
-    const activeItem = carouselInner.querySelector('.carousel-item.active');
-    const nextItem = activeItem.nextElementSibling || carouselInner.firstElementChild;
-    if (nextItem && nextItem.classList.contains('carousel-item')) {
-      activeItem.classList.remove('active');
-      nextItem.classList.add('active');
-      const activeIndicator = olIndicators.querySelector('.active');
-      const nextIndicator = activeIndicator.nextElementSibling || olIndicators.firstElementChild;
-      activeIndicator.classList.remove('active');
-      nextIndicator.classList.add('active');
-    }
-  });
+  const prevIcon = document.createElement('span');
+  prevIcon.classList.add('itc-club-carousel-control-prev-icon'); // Corrected class prefix
+  prevIcon.setAttribute('aria-hidden', 'true');
+  prevButton.append(prevIcon);
 
-  const nextIcon = document.createElement('span');
-  nextIcon.classList.add(blockPrefix + 'carousel-control-next-icon');
-  nextIcon.setAttribute('aria-hidden', 'true');
-  const nextSrOnly = document.createElement('span');
-  nextSrOnly.classList.add(blockPrefix + 'sr-only'); // Corrected class prefix
-  nextSrOnly.textContent = 'Next';
-  nextButton.append(nextIcon, nextSrOnly);
+  const prevSrOnly = document.createElement('span');
+  prevSrOnly.classList.add('itc-club-carousel-sr-only'); // Corrected class prefix
+  prevSrOnly.textContent = 'Previous';
+  prevButton.append(prevSrOnly);
+
+  // Next Button
+  const nextButton = document.createElement('button');
+  nextButton.classList.add('itc-club-carousel-control-next'); // Corrected class prefix
+  nextButton.type = 'button';
+  nextButton.setAttribute('aria-label', 'Next');
+  nextButton.setAttribute('data-target', '#carousel'); // Added data-target
+  nextButton.setAttribute('data-slide', 'next'); // Added data-slide
   carouselShift.append(nextButton);
 
-  carousel.append(carouselShift);
-  carouselContainer.append(carousel);
+  const nextIcon = document.createElement('span');
+  nextIcon.classList.add('itc-club-carousel-control-next-icon'); // Corrected class prefix
+  nextIcon.setAttribute('aria-hidden', 'true');
+  nextButton.append(nextIcon);
+
+  const nextSrOnly = document.createElement('span');
+  nextSrOnly.classList.add('itc-club-carousel-sr-only'); // Corrected class prefix
+  nextSrOnly.textContent = 'Next';
+  nextButton.append(nextSrOnly);
+
+  // Carousel logic
+  let currentIndex = 0;
+  const carouselItems = [...carouselInner.querySelectorAll('.itc-club-carousel-item')]; // Corrected class prefix
+  const carouselIndicators = [...indicators.querySelectorAll('li')];
+  const totalItems = carouselItems.length;
+
+  const updateCarousel = () => {
+    carouselItems.forEach((item, i) => {
+      item.classList.remove('active');
+      carouselIndicators[i].classList.remove('active');
+      if (i === currentIndex) {
+        item.classList.add('active');
+        carouselIndicators[i].classList.add('active');
+      }
+    });
+  };
+
+  prevButton.addEventListener('click', () => {
+    currentIndex = (currentIndex - 1 + totalItems) % totalItems;
+    updateCarousel();
+  });
+
+  nextButton.addEventListener('click', () => {
+    currentIndex = (currentIndex + 1) % totalItems;
+    updateCarousel();
+  });
+
+  carouselIndicators.forEach((indicator, index) => {
+    indicator.addEventListener('click', () => {
+      currentIndex = index;
+      updateCarousel();
+    });
+  });
+
   block.textContent = '';
-  block.classList.add(blockPrefix + 'itc-club-section', 'mx-md-0', 'mx-4'); // Corrected class prefix
-  block.append(carouselContainer);
+  block.append(section);
 }
