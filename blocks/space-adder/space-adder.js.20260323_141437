@@ -2,13 +2,14 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const [verticalPaddingRow] = [...block.children];
+  const [paddingRow] = [...block.children];
 
   const section = document.createElement('section');
   section.classList.add('space-adder-verticalPadding_section'); // Corrected class name prefix
-  moveInstrumentation(verticalPaddingRow, section);
+  moveInstrumentation(paddingRow, section);
 
-  const paddingValue = verticalPaddingRow.firstElementChild ? parseInt(verticalPaddingRow.firstElementChild.textContent.trim(), 10) : 0;
+  const paddingCell = paddingRow.firstElementChild;
+  const paddingValue = paddingCell ? parseInt(paddingCell.textContent.trim(), 10) : 0;
 
   if (!isNaN(paddingValue) && paddingValue > 0) {
     section.classList.add(`space-adder-padding-${paddingValue}`); // Corrected class name prefix
@@ -17,4 +18,3 @@ export default function decorate(block) {
   block.textContent = '';
   block.append(section);
 }
-

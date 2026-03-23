@@ -51,13 +51,20 @@
       "footerItcFooterSection",
       "headerITCHeaderSection",
       "shiftclubItcClubCarousel",
-      "rs-cards"
+      "rs-cards",
+      "bannerItcCarousel"
     ]
   },
   {
     "id": "banner-carousel",
     "components": [
       "bannerCarouselItem"
+    ]
+  },
+  {
+    "id": "banner-itc-carousel",
+    "components": [
+      "bannerItcCarouselItem"
     ]
   },
   {
@@ -144,10 +151,9 @@
   {
     "id": "footer-itc-footer-section",
     "components": [
-      "footerLogo",
       "footerLink",
-      "footerSocialIcon",
-      "footerSecondaryLink"
+      "footerNavigation",
+      "footerSocial"
     ]
   },
   {
@@ -174,8 +180,8 @@
   {
     "id": "header",
     "components": [
-      "navigationLink",
-      "countryOption"
+      "navigation-item",
+      "country-option"
     ]
   },
   {
