@@ -169,7 +169,7 @@
     ]
   },
   {
-    "id": "header-itc-header-section",
+    "id": "headerItcHeaderSection",
     "components": [
       "navigationLink",
       "countryOption"
