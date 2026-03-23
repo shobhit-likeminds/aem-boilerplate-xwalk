@@ -2052,10 +2052,6 @@ body{min-width:992px !important}
 
 #whatsappIcon { position:fixed;z-index:999;width:60px;height:60px;bottom:80px;right:15px;transition:bottom .3s ease-in-out }
 
-.footer-itc-footer-secondary { background-color:var(--bg-dark);padding:20px 100px }
-
-.footer-itc-footer-secondary .footer-itc-footer-secondary-container { display:flex;list-style:none;gap:18px;margin:0;padding:0 }
-
 @media(max-width:1200px){.footer-logo-img{max-width:77px}
 .footer-itc-footer-section ul li{font-size:12px}
 .footer-itc-footer-section{padding:32px 30px}

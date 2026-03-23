@@ -4,28 +4,40 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
 export default function decorate(block) {
   const [
     bannerImageRow,
+    bannerAltRow,
     headingRow,
     subheadingRow,
-    goalsPlaceholderRow, // This row is for the 'goals' block field, but its content is the item rows that follow
-    buttonLinkRow,
-    buttonLabelRow,
-    ...goalItemRows
+    descriptionRow,
+    categoriesRow, // This row itself is just a placeholder for the container, its content is not used directly
+    ctaLinkRow,
+    ctaLabelRow,
+    ...categoryItemRows
   ] = [...block.children];
 
   const section = document.createElement('section');
   section.classList.add('make-right-shift-itc-how-shift');
 
-  // Banner Image
+  // Left Image Div
   const leftImageDiv = document.createElement('div');
   leftImageDiv.classList.add('make-right-shift-left-image-div');
   leftImageDiv.id = 'leftDivId';
+
   const bannerPicture = bannerImageRow.querySelector('picture');
   if (bannerPicture) {
-    moveInstrumentation(bannerImageRow, leftImageDiv);
-    leftImageDiv.append(bannerPicture);
+    const bannerImg = bannerPicture.querySelector('img');
+    if (bannerImg) {
+      // bannerAltRow contains the alt text directly
+      const altText = bannerAltRow.firstElementChild?.textContent.trim() || '';
+      const optimizedPic = createOptimizedPicture(bannerImg.src, altText, false, [{ width: '750' }]);
+      moveInstrumentation(bannerImg, optimizedPic.querySelector('img'));
+      leftImageDiv.append(optimizedPic);
+    }
   }
+  moveInstrumentation(bannerImageRow, leftImageDiv);
+  moveInstrumentation(bannerAltRow, leftImageDiv);
   section.append(leftImageDiv);
 
+  // Right Content Container
   const container = document.createElement('div');
   container.classList.add('make-right-shift-container', 'make-right-shift-read-more');
 
@@ -33,89 +45,107 @@ export default function decorate(block) {
   const heading = document.createElement('h1');
   heading.classList.add('make-right-shift-text-center', 'make-right-shift-pb-4', 'make-right-shift-rs-heading');
   moveInstrumentation(headingRow, heading);
-  heading.append(...headingRow.children[0].childNodes);
+  while (headingRow.firstElementChild?.firstChild) heading.append(headingRow.firstElementChild.firstChild);
   container.append(heading);
 
-  // Subheading
-  const subheadingDiv = document.createElement('div');
-  subheadingDiv.classList.add('make-right-shift-read-more-text');
-  moveInstrumentation(subheadingRow, subheadingDiv);
-  // The subheadingRow.children[0] contains the actual content
-  while (subheadingRow.children[0].firstChild) subheadingDiv.append(subheadingRow.children[0].firstChild);
-  container.append(subheadingDiv);
+  // Subheading and Description
+  const readMoreTextDiv = document.createElement('div');
+  readMoreTextDiv.classList.add('make-right-shift-read-more-text');
+
+  const subheading = document.createElement('h2');
+  moveInstrumentation(subheadingRow, subheading);
+  while (subheadingRow.firstElementChild?.firstChild) subheading.append(subheadingRow.firstElementChild.firstChild);
+  readMoreTextDiv.append(subheading);
+
+  moveInstrumentation(descriptionRow, readMoreTextDiv);
+  while (descriptionRow.firstElementChild?.firstChild) readMoreTextDiv.append(descriptionRow.firstElementChild.firstChild);
+  container.append(readMoreTextDiv);
 
   const readMoreSpan = document.createElement('span');
   readMoreSpan.classList.add('make-right-shift-readMore');
-  readMoreSpan.textContent = 'Read More'; // Add default text
   container.append(readMoreSpan);
 
-  // Goals
-  const goalsWrapper = document.createElement('div');
-  goalsWrapper.classList.add('make-right-shift-d-flex', 'make-right-shift-justify-content-evenly', 'make-right-shift-flex-wrap', 'make-right-shift-why-shift-wrapper');
+  // Categories Wrapper
+  const whyShiftWrapper = document.createElement('div');
+  whyShiftWrapper.classList.add('make-right-shift-d-flex', 'make-right-shift-justify-content-evenly', 'make-right-shift-flex-wrap', 'make-right-shift-why-shift-wrapper');
+  moveInstrumentation(categoriesRow, whyShiftWrapper); // categoriesRow is the container placeholder
 
-  goalItemRows.forEach((row) => {
-    const itemDiv = document.createElement('div');
-    itemDiv.classList.add('make-right-shift-mb-md-0', 'make-right-shift-mb-3', 'make-right-shift-text-center');
-    moveInstrumentation(row, itemDiv);
+  categoryItemRows.forEach((row) => {
+    const categoryDiv = document.createElement('div');
+    categoryDiv.classList.add('make-right-shift-mb-md-0', 'make-right-shift-mb-3', 'make-right-shift-text-center');
+    moveInstrumentation(row, categoryDiv);
 
-    const goalImageWrapper = document.createElement('div');
-    goalImageWrapper.classList.add('make-right-shift-itc-health-goal-wrapper');
+    const healthGoalWrapper = document.createElement('div');
+    healthGoalWrapper.classList.add('make-right-shift-itc-health-goal-wrapper');
 
-    // Each goal item row has 3 cells: Image, Link, Label
-    const imageCell = row.children[0];
-    const linkCell = row.children[1];
-    const labelCell = row.children[2];
+    const cells = [...row.children];
+    // Based on BlockJson model 'category': image, alt, link, label
+    const imageCell = cells[0];
+    const altTextCell = cells[1];
+    const linkCell = cells[2];
+    const labelCell = cells[3];
 
-    const pictureEl = imageCell.querySelector('picture');
-    if (pictureEl) {
-      goalImageWrapper.append(pictureEl);
+    const imageEl = imageCell?.querySelector('picture');
+    const linkEl = linkCell?.querySelector('a');
+    const labelEl = labelCell?.querySelector('p'); // Label is richtext, so it's inside a <p>
+
+    if (imageEl) {
+      const img = imageEl.querySelector('img');
+      const alt = altTextCell?.textContent.trim() || (img ? img.alt : '');
+      const optimizedPic = createOptimizedPicture(img.src, alt, false, [{ width: '750' }]);
+      moveInstrumentation(img, optimizedPic.querySelector('img'));
+      healthGoalWrapper.append(optimizedPic);
     }
-    itemDiv.append(goalImageWrapper);
+    categoryDiv.append(healthGoalWrapper);
 
-    const linkEl = document.createElement('a');
-    linkEl.classList.add('make-right-shift-text-center', 'make-right-shift-d-block', 'make-right-shift-text-capitalize', 'make-right-shift-pt-2', 'make-right-shift-image-label');
-    const anchorInLinkCell = linkCell.querySelector('a');
-    if (anchorInLinkCell) {
-      linkEl.href = anchorInLinkCell.href;
-      linkEl.alt = anchorInLinkCell.textContent.trim();
+    const anchor = document.createElement('a');
+    anchor.classList.add('make-right-shift-text-center', 'make-right-shift-d-block', 'make-right-shift-text-capitalize', 'make-right-shift-pt-2', 'make-right-shift-image-label');
+    if (linkEl) {
+      anchor.href = linkEl.href;
+      anchor.alt = linkEl.alt || '';
+      moveInstrumentation(linkCell, anchor); // Instrument the cell, not the inner <a>
     }
-    if (labelCell) {
-      linkEl.append(...labelCell.childNodes);
+    if (labelEl) {
+      moveInstrumentation(labelCell, anchor); // Instrument the cell, not the inner <p>
+      while (labelEl.firstChild) anchor.append(labelEl.firstChild);
     }
-    itemDiv.append(linkEl);
-    goalsWrapper.append(itemDiv);
+    categoryDiv.append(anchor);
+    whyShiftWrapper.append(categoryDiv);
   });
-  container.append(goalsWrapper);
+  container.append(whyShiftWrapper);
 
   const emptyDiv = document.createElement('div');
   emptyDiv.classList.add('make-right-shift-d-md-none', 'make-right-shift-d-block');
   container.append(emptyDiv);
 
-  // Button
+  // CTA Button
   const buttonDiv = document.createElement('div');
   buttonDiv.classList.add('make-right-shift-button', 'make-right-shift-how-shift-button');
-  const buttonLink = document.createElement('a');
-  buttonLink.classList.add('make-right-shift-cmp-button');
-  const buttonLinkAnchor = buttonLinkRow.querySelector('a');
-  if (buttonLinkAnchor) {
-    buttonLink.href = buttonLinkAnchor.href;
-    buttonLink.alt = buttonLinkAnchor.textContent.trim();
-    buttonLink.target = '_blank';
+
+  const ctaAnchor = document.createElement('a');
+  ctaAnchor.classList.add('make-right-shift-cmp-button');
+  ctaAnchor.target = '_blank'; // Assuming target blank from original HTML
+  ctaAnchor.id = 'button-e83cd77db8'; // Hardcoded ID from original HTML, if needed, otherwise remove
+
+  const ctaLink = ctaLinkRow.querySelector('a');
+  if (ctaLink) {
+    ctaAnchor.href = ctaLink.href;
+    ctaAnchor.alt = ctaLink.alt || '';
   }
-  moveInstrumentation(buttonLinkRow, buttonLink);
+  moveInstrumentation(ctaLinkRow, ctaAnchor);
 
-  const buttonSpan = document.createElement('span');
-  buttonSpan.classList.add('make-right-shift-cmp-button__text');
-  moveInstrumentation(buttonLabelRow, buttonSpan);
-  buttonSpan.append(...buttonLabelRow.children[0].childNodes);
-  buttonLink.append(buttonSpan);
+  const ctaSpanText = document.createElement('span');
+  ctaSpanText.classList.add('make-right-shift-cmp-button__text');
+  moveInstrumentation(ctaLabelRow, ctaSpanText);
+  while (ctaLabelRow.firstElementChild?.firstChild) ctaSpanText.append(ctaLabelRow.firstElementChild.firstChild);
+  ctaAnchor.append(ctaSpanText);
 
-  const screenReaderSpan = document.createElement('span');
-  screenReaderSpan.classList.add('make-right-shift-cmp-link__screen-reader-only');
-  screenReaderSpan.textContent = 'opens in a new tab';
-  buttonLink.append(screenReaderSpan);
+  const ctaSpanScreenReader = document.createElement('span');
+  ctaSpanScreenReader.classList.add('make-right-shift-cmp-link__screen-reader-only');
+  ctaSpanScreenReader.textContent = 'opens in a new tab'; // Hardcoded from original HTML
+  ctaAnchor.append(ctaSpanScreenReader);
 
-  buttonDiv.append(buttonLink);
+  buttonDiv.append(ctaAnchor);
   container.append(buttonDiv);
 
   section.append(container);
@@ -123,24 +153,27 @@ export default function decorate(block) {
   block.textContent = '';
   block.append(section);
 
-  block.querySelectorAll('picture > img').forEach((img) => {
-    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-    moveInstrumentation(img, optimizedPic.querySelector('img'));
-    img.closest('picture').replaceWith(optimizedPic);
-  });
+  // Interactivity: Read More/Read Less functionality
+  const readMoreButton = container.querySelector('.make-right-shift-readMore');
+  const readMoreContent = container.querySelector('.make-right-shift-read-more-text');
 
-  // Interactivity for "Read More"
-  const readMoreButton = block.querySelector('.make-right-shift-readMore');
-  const readMoreText = block.querySelector('.make-right-shift-read-more-text');
+  if (readMoreButton && readMoreContent) {
+    const descriptionParagraph = descriptionRow.querySelector('p');
+    if (descriptionParagraph && descriptionParagraph.textContent.trim().length > 150) { // Example threshold
+      readMoreContent.classList.add('make-right-shift-collapsed');
+      readMoreButton.textContent = 'Read More';
+      readMoreButton.style.display = 'block'; // Show button only if content is long
 
-  if (readMoreButton && readMoreText) {
-    readMoreButton.addEventListener('click', () => {
-      readMoreText.classList.toggle('make-right-shift-expanded');
-      if (readMoreText.classList.contains('make-right-shift-expanded')) {
-        readMoreButton.textContent = 'Read Less';
-      } else {
-        readMoreButton.textContent = 'Read More';
-      }
-    });
+      readMoreButton.addEventListener('click', () => {
+        readMoreContent.classList.toggle('make-right-shift-collapsed');
+        if (readMoreContent.classList.contains('make-right-shift-collapsed')) {
+          readMoreButton.textContent = 'Read More';
+        } else {
+          readMoreButton.textContent = 'Read Less';
+        }
+      });
+    } else {
+      readMoreButton.style.display = 'none'; // Hide button if content is short
+    }
   }
 }

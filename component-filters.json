@@ -52,7 +52,8 @@
       "headerITCHeaderSection",
       "shiftclubItcClubCarousel",
       "rs-cards",
-      "bannerItcCarousel"
+      "bannerItcCarousel",
+      "container"
     ]
   },
   {
@@ -64,7 +65,7 @@
   {
     "id": "banner-itc-carousel",
     "components": [
-      "bannerItcCarouselItem"
+      "bannerCarouselItem"
     ]
   },
   {
@@ -125,6 +126,9 @@
     ]
   },
   {
+    "id": "container"
+  },
+  {
     "id": "countrySelectorModal",
     "components": [
       "countryOption"
@@ -152,8 +156,8 @@
     "id": "footer-itc-footer-section",
     "components": [
       "footerLink",
-      "footerNavigation",
-      "footerSocial"
+      "socialIcon",
+      "secondaryLink"
     ]
   },
   {
@@ -209,9 +213,9 @@
     ]
   },
   {
-    "id": "make-right-shift",
+    "id": "makeRightShift",
     "components": [
-      "goalItem"
+      "category"
     ]
   },
   {

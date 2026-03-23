@@ -1,20 +1,25 @@
-import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const [verticalPaddingRow] = [...block.children];
-
   const section = document.createElement('section');
-  section.classList.add('space-adder-verticalPadding_section'); // Corrected class name prefix
-  moveInstrumentation(verticalPaddingRow, section);
+  section.classList.add('space-adder-verticalPadding_section'); // Corrected class prefix
 
-  const paddingValue = verticalPaddingRow.firstElementChild ? parseInt(verticalPaddingRow.firstElementChild.textContent.trim(), 10) : 0;
+  // BlockJson indicates one root field: "padding"
+  // This corresponds to block.children[0]
+  const [paddingRow] = [...block.children];
 
-  if (!isNaN(paddingValue) && paddingValue > 0) {
-    section.classList.add(`space-adder-padding-${paddingValue}`); // Corrected class name prefix
+  if (paddingRow) {
+    // The "padding" field is a number, stored in the first div of the row
+    const paddingCell = paddingRow.querySelector('div');
+    if (paddingCell) {
+      const paddingValue = parseInt(paddingCell.textContent.trim(), 10);
+      if (!isNaN(paddingValue)) {
+        section.classList.add(`space-adder-padding-${paddingValue}`); // Corrected class prefix
+      }
+    }
+    moveInstrumentation(paddingRow, section);
   }
 
   block.textContent = '';
   block.append(section);
 }
-

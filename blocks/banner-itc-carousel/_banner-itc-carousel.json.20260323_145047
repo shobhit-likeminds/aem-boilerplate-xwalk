@@ -17,15 +17,15 @@
       }
     },
     {
-      "title": "Banner-Carousel-Item",
-      "id": "bannerCarouselItem",
+      "title": "Banner-ITC-Carousel-Item",
+      "id": "bannerItcCarouselItem",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "bannerCarouselItem",
-              "name": "Banner-Carousel-Item"
+              "model": "bannerItcCarouselItem",
+              "name": "Banner-ITC-Carousel-Item"
             }
           }
         }
@@ -34,7 +34,7 @@
   ],
   "models": [
     {
-      "id": "bannerCarouselItem",
+      "id": "bannerItcCarouselItem",
       "fields": [
         {
           "component": "reference",
@@ -68,8 +68,8 @@
         },
         {
           "component": "text",
-          "label": "CTA Text",
-          "name": "ctaText",
+          "label": "CTA Label",
+          "name": "ctaLabel",
           "valueType": "string"
         }
       ]
@@ -79,7 +79,7 @@
     {
       "id": "banner-itc-carousel",
       "components": [
-        "bannerCarouselItem"
+        "bannerItcCarouselItem"
       ]
     }
   ]

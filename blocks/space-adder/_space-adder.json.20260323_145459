@@ -23,8 +23,8 @@
       "fields": [
         {
           "component": "number",
-          "label": "Padding",
-          "name": "padding",
+          "label": "Vertical Padding",
+          "name": "verticalPadding",
           "valueType": "number"
         }
       ]

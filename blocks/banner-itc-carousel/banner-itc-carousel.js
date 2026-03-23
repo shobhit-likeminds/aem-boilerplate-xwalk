@@ -2,21 +2,19 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const carouselId = `carousel-${Math.random().toString(36).substring(2, 15)}`;
+  const carouselId = 'carouselExampleSlidesOnly';
   block.id = carouselId;
-
-  const carouselWrapper = document.createElement('div');
-  carouselWrapper.classList.add('banner-itc-carousel', 'carousel', 'slide');
+  block.classList.add('banner-itc-carousel', 'carousel', 'slide'); // Corrected block name prefix
 
   const olIndicators = document.createElement('ol');
-  olIndicators.classList.add('banner-itc-carousel-indicators', 'carousel-indicators');
+  olIndicators.classList.add('carousel-indicators');
 
   const carouselInner = document.createElement('div');
-  carouselInner.classList.add('banner-itc-carousel-inner', 'carousel-inner');
+  carouselInner.classList.add('carousel-inner');
 
-  [...block.children].forEach((row, index) => {
-    moveInstrumentation(row, carouselInner);
+  const itemRows = [...block.children];
 
+  itemRows.forEach((row, index) => {
     const liIndicator = document.createElement('li');
     liIndicator.setAttribute('data-target', `#${carouselId}`);
     liIndicator.setAttribute('data-slide-to', index.toString());
@@ -26,88 +24,92 @@ export default function decorate(block) {
     olIndicators.append(liIndicator);
 
     const carouselItem = document.createElement('div');
-    carouselItem.classList.add('banner-itc-carousel-item', 'carousel-item');
+    carouselItem.classList.add('carousel-item');
     if (index === 0) {
       carouselItem.classList.add('active');
     }
+    moveInstrumentation(row, carouselItem);
 
-    const [
-      desktopImageCell,
-      mobileImageCell,
-      headingCell,
-      descriptionCell,
-      ctaLinkCell,
-      ctaLabelCell,
-    ] = row.children;
+    // BlockJson defines 6 fields for 'bannerCarouselItem'
+    const [desktopImageCell, mobileImageCell, headingCell, descriptionCell, ctaLinkCell, ctaTextCell] = row.children;
 
     // Desktop Image
     const desktopPicture = desktopImageCell.querySelector('picture');
     if (desktopPicture) {
-      const img = desktopPicture.querySelector('img');
-      const optimizedPic = createOptimizedPicture(img.src, img.alt, index === 0, [{ width: '1200' }]);
-      moveInstrumentation(img, optimizedPic.querySelector('img'));
-      optimizedPic.classList.add('d-none', 'd-sm-block', 'w-100', 'banner-itc-carousel-desktop-image');
-      carouselItem.append(optimizedPic);
+      const desktopImg = desktopPicture.querySelector('img');
+      const optimizedDesktopPic = createOptimizedPicture(desktopImg.src, desktopImg.alt, index === 0, [{ width: '2000' }]);
+      moveInstrumentation(desktopImg, optimizedDesktopPic.querySelector('img'));
+      optimizedDesktopPic.querySelector('img').classList.add('d-none', 'd-sm-block', 'w-100', 'banner-itc-carousel-desktop-image'); // Corrected block name prefix
+      carouselItem.append(optimizedDesktopPic);
     }
 
     // Mobile Image
     const mobilePicture = mobileImageCell.querySelector('picture');
     if (mobilePicture) {
-      const img = mobilePicture.querySelector('img');
-      const optimizedPic = createOptimizedPicture(img.src, img.alt, index === 0, [{ width: '750' }]);
-      moveInstrumentation(img, optimizedPic.querySelector('img'));
-      optimizedPic.classList.add('d-block', 'd-sm-none', 'w-100', 'banner-itc-carousel-mobile-image');
-      carouselItem.append(optimizedPic);
+      const mobileImg = mobilePicture.querySelector('img');
+      const optimizedMobilePic = createOptimizedPicture(mobileImg.src, mobileImg.alt, index === 0, [{ width: '750' }]);
+      moveInstrumentation(mobileImg, optimizedMobilePic.querySelector('img'));
+      optimizedMobilePic.querySelector('img').classList.add('d-block', 'd-sm-none', 'w-100', 'banner-itc-carousel-mobile-image'); // Corrected block name prefix
+      carouselItem.append(optimizedMobilePic);
     }
 
     const contentWrapper = document.createElement('div');
-    contentWrapper.classList.add('banner-itc-carousel-content-wrapper', 'position-absolute');
+    contentWrapper.classList.add('banner-itc-carousel-content-wrapper', 'position-absolute'); // Corrected block name prefix
 
     // Heading
-    const heading = document.createElement('h1');
-    heading.classList.add('banner-itc-carousel-heading', 'text-sm-left');
-    moveInstrumentation(headingCell, heading);
-    while (headingCell.firstChild) heading.append(headingCell.firstChild);
-    contentWrapper.append(heading);
+    const headingEl = document.createElement('h1');
+    headingEl.classList.add('banner-itc-carousel-heading', 'text-sm-left'); // Corrected block name prefix
+    const headingLink = headingCell.querySelector('a');
+    if (headingLink) {
+      headingEl.append(headingLink);
+    } else {
+      while (headingCell.firstChild) headingEl.append(headingCell.firstChild);
+    }
+    const headingColor = headingEl.querySelector('[data-color]');
+    if (headingColor) {
+      headingEl.style.color = headingColor.dataset.color;
+      headingEl.removeAttribute('data-color');
+    }
+    contentWrapper.append(headingEl);
 
     // Description
-    const description = document.createElement('div');
-    description.classList.add('banner-itc-carousel-description');
-    moveInstrumentation(descriptionCell, description);
-    while (descriptionCell.firstChild) description.append(descriptionCell.firstChild);
-    contentWrapper.append(description);
+    const descriptionDiv = document.createElement('div');
+    descriptionDiv.classList.add('banner-itc-carousel-description'); // Corrected block name prefix
+    const descColor = descriptionCell.querySelector('[data-desc-color]');
+    if (descColor) {
+      descriptionDiv.setAttribute('data-desc-color', descColor.dataset.descColor);
+      descColor.removeAttribute('data-desc-color');
+    }
+    while (descriptionCell.firstChild) descriptionDiv.append(descriptionCell.firstChild);
+    contentWrapper.append(descriptionDiv);
 
     // CTA Link
-    const ctaLink = document.createElement('a');
-    ctaLink.classList.add('banner-itc-carousel-cta', 'btn', 'btn-primary', 'btn-start-now');
-    const authoredLink = ctaLinkCell.querySelector('a');
-    if (authoredLink) {
-      ctaLink.href = authoredLink.href;
-      if (authoredLink.target) ctaLink.target = authoredLink.target;
-      if (authoredLink.alt) ctaLink.alt = authoredLink.alt;
-      // Append screen reader span if it exists in the original link
-      const screenReaderSpan = authoredLink.querySelector('.cmp-link__screen-reader-only');
-      if (screenReaderSpan) {
-        ctaLink.append(screenReaderSpan.cloneNode(true));
+    const ctaLink = ctaLinkCell.querySelector('a');
+    const ctaText = ctaTextCell.textContent.trim();
+    if (ctaLink && ctaText) {
+      const ctaButton = document.createElement('a');
+      ctaButton.href = ctaLink.href;
+      ctaButton.classList.add('banner-itc-carousel-cta', 'btn', 'btn-primary', 'btn-start-now'); // Corrected block name prefix
+      ctaButton.textContent = ctaText;
+      if (ctaLink.target) ctaButton.target = ctaLink.target;
+      if (ctaLink.alt) ctaButton.alt = ctaLink.alt;
+      const bgColor = ctaLink.dataset.bgColor;
+      if (bgColor) {
+        ctaButton.style.backgroundColor = bgColor;
       }
+      moveInstrumentation(ctaLinkCell, ctaButton);
+      contentWrapper.append(ctaButton);
     }
-    moveInstrumentation(ctaLabelCell, ctaLink);
-    while (ctaLabelCell.firstChild) ctaLink.prepend(ctaLabelCell.firstChild); // Prepend label
-    contentWrapper.append(ctaLink);
 
     carouselItem.append(contentWrapper);
     carouselInner.append(carouselItem);
   });
 
-  carouselWrapper.append(olIndicators);
-  carouselWrapper.append(carouselInner);
-
-  // Next and Previous buttons
-  const nextBtnWrapper = document.createElement('div');
-  nextBtnWrapper.classList.add('banner-itc-carousel-next-carousel-btn');
+  const nextPrevButtons = document.createElement('div');
+  nextPrevButtons.classList.add('banner-itc-carousel-next-carousel-btn'); // Corrected block name prefix
 
   const prevButton = document.createElement('a');
-  prevButton.classList.add('banner-itc-carousel-control-prev', 'carousel-control-prev');
+  prevButton.classList.add('carousel-control-prev');
   prevButton.href = `#${carouselId}`;
   prevButton.setAttribute('role', 'button');
   prevButton.addEventListener('click', (e) => {
@@ -117,22 +119,17 @@ export default function decorate(block) {
     if (prev) {
       currentActive.classList.remove('active');
       prev.classList.add('active');
-      const currentIndicator = olIndicators.querySelector('.active');
+      const currentIndicator = olIndicators.querySelector('li.active');
       const prevIndicator = currentIndicator.previousElementSibling || olIndicators.lastElementChild;
-      currentIndicator.classList.remove('active');
-      prevIndicator.classList.add('active');
+      if (currentIndicator) currentIndicator.classList.remove('active');
+      if (prevIndicator) prevIndicator.classList.add('active');
     }
   });
-  const prevSpanIcon = document.createElement('span');
-  prevSpanIcon.classList.add('banner-itc-carousel-control-prev-icon', 'carousel-control-prev-icon');
-  prevSpanIcon.setAttribute('aria-hidden', 'true');
-  const prevSpanSr = document.createElement('span');
-  prevSpanSr.classList.add('sr-only');
-  prevSpanSr.textContent = 'Previous';
-  prevButton.append(prevSpanIcon, prevSpanSr);
+  prevButton.innerHTML = '<span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="sr-only">Previous</span>';
+  nextPrevButtons.append(prevButton);
 
   const nextButton = document.createElement('a');
-  nextButton.classList.add('banner-itc-carousel-control-next', 'carousel-control-next');
+  nextButton.classList.add('carousel-control-next');
   nextButton.href = `#${carouselId}`;
   nextButton.setAttribute('role', 'button');
   nextButton.addEventListener('click', (e) => {
@@ -142,38 +139,15 @@ export default function decorate(block) {
     if (next) {
       currentActive.classList.remove('active');
       next.classList.add('active');
-      const currentIndicator = olIndicators.querySelector('.active');
+      const currentIndicator = olIndicators.querySelector('li.active');
       const nextIndicator = currentIndicator.nextElementSibling || olIndicators.firstElementChild;
-      currentIndicator.classList.remove('active');
-      nextIndicator.classList.add('active');
+      if (currentIndicator) currentIndicator.classList.remove('active');
+      if (nextIndicator) nextIndicator.classList.add('active');
     }
   });
-  const nextSpanIcon = document.createElement('span');
-  nextSpanIcon.classList.add('banner-itc-carousel-control-next-icon', 'carousel-control-next-icon');
-  nextSpanIcon.setAttribute('aria-hidden', 'true');
-  const nextSpanSr = document.createElement('span');
-  nextSpanSr.classList.add('sr-only');
-  nextSpanSr.textContent = 'Next';
-  nextButton.append(nextSpanIcon, nextSpanSr);
-
-  nextBtnWrapper.append(prevButton, nextButton);
-  carouselWrapper.append(nextBtnWrapper);
+  nextButton.innerHTML = '<span class="carousel-control-next-icon" aria-hidden="true"></span><span class="sr-only">Next</span>';
+  nextPrevButtons.append(nextButton);
 
   block.textContent = '';
-  block.append(carouselWrapper);
-
-  // Auto-advance carousel
-  let currentIndex = 0;
-  const items = carouselInner.children;
-  const indicators = olIndicators.children;
-
-  const advanceCarousel = () => {
-    items[currentIndex].classList.remove('active');
-    indicators[currentIndex].classList.remove('active');
-    currentIndex = (currentIndex + 1) % items.length;
-    items[currentIndex].classList.add('active');
-    indicators[currentIndex].classList.add('active');
-  };
-
-  setInterval(advanceCarousel, 5000); // Advance every 5 seconds
+  block.append(olIndicators, carouselInner, nextPrevButtons);
 }

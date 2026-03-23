@@ -87,7 +87,8 @@
         "headerITCHeaderSection",
         "shiftclubItcClubCarousel",
         "rs-cards",
-        "bannerItcCarousel"
+        "bannerItcCarousel",
+        "container"
       ]
     }
   ]
