@@ -2,14 +2,14 @@
   "definitions": [
     {
       "title": "Make-Right-Shift",
-      "id": "makeRightShift",
+      "id": "make-right-shift",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block",
             "template": {
-              "filter": "makeRightShift",
-              "model": "makeRightShift",
+              "filter": "make-right-shift",
+              "model": "make-right-shift",
               "name": "Make-Right-Shift"
             }
           }
@@ -57,7 +57,7 @@
       ]
     },
     {
-      "id": "makeRightShift",
+      "id": "make-right-shift",
       "fields": [
         {
           "component": "reference",
@@ -107,7 +107,7 @@
   ],
   "filters": [
     {
-      "id": "makeRightShift",
+      "id": "make-right-shift",
       "components": [
         "category"
       ]

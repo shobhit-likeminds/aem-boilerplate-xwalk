@@ -16,12 +16,12 @@
       "cards",
       "columns",
       "fragment",
-      "headerItcHeaderSection",
-      "bannerItcCarousel",
-      "spaceAdder",
-      "itcClubCarousel",
-      "makeRightShift",
-      "rsCards",
+      "header-itc-header-section",
+      "banner-itc-carousel",
+      "space-adder",
+      "itc-club-carousel",
+      "make-right-shift",
+      "rs-cards",
       "footer"
     ]
   },
@@ -73,7 +73,7 @@
     ]
   },
   {
-    "id": "makeRightShift",
+    "id": "make-right-shift",
     "components": [
       "category"
     ]
@@ -81,7 +81,7 @@
   {
     "id": "rs-cards",
     "components": [
-      "rsCard"
+      "rs-card"
     ]
   },
   {
