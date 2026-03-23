@@ -24,7 +24,7 @@
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "rs-card",
+              "model": "rsCard",
               "name": "RS-Card"
             }
           }
@@ -43,13 +43,7 @@
           "valueType": "string"
         },
         {
-          "component": "aem-content",
-          "label": "Link",
-          "name": "link",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
+          "component": "richtext",
           "label": "Title",
           "name": "title",
           "valueType": "string"

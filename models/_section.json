@@ -57,7 +57,9 @@
         "itc-club-carousel",
         "make-right-shift",
         "rs-cards",
-        "footer"
+        "footer",
+        "banner-carousel",
+        "carousel"
       ]
     }
   ]

@@ -10,7 +10,7 @@
             "template": {
               "filter": "text",
               "model": "text",
-              "name": "Text"
+              "name": "text"
             }
           }
         }
@@ -32,7 +32,10 @@
   ],
   "filters": [
     {
-      "id": "text"
+      "id": "text",
+      "components": [
+        "text"
+      ]
     }
   ]
 }

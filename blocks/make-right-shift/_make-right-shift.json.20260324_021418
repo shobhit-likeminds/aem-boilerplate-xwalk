@@ -17,15 +17,15 @@
       }
     },
     {
-      "title": "Make-Right-Shift-Item",
-      "id": "make-right-shift-item",
+      "title": "Category",
+      "id": "category",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "make-right-shift-item",
-              "name": "Make-Right-Shift-Item"
+              "model": "category",
+              "name": "Category"
             }
           }
         }
@@ -34,22 +34,45 @@
   ],
   "models": [
     {
+      "id": "category",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Image",
+          "name": "image",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Link",
+          "name": "link",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Label",
+          "name": "label",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
       "id": "make-right-shift",
       "fields": [
         {
           "component": "reference",
-          "label": "Main Image",
-          "name": "main-image",
+          "label": "Banner Image",
+          "name": "bannerImage",
           "valueType": "string"
         },
         {
-          "component": "text",
+          "component": "richtext",
           "label": "Heading",
           "name": "heading",
           "valueType": "string"
         },
         {
-          "component": "text",
+          "component": "richtext",
           "label": "Subheading",
           "name": "subheading",
           "valueType": "string"
@@ -62,46 +85,21 @@
         },
         {
           "component": "container",
-          "item": {
-            "type": "make-right-shift-item"
-          },
-          "label": "Items",
-          "name": "items",
+          "itemType": "category",
+          "label": "Categories",
+          "name": "categories",
           "valueType": "array"
         },
         {
           "component": "aem-content",
-          "label": "Button Link",
-          "name": "button-link",
+          "label": "CTA Link",
+          "name": "ctaLink",
           "valueType": "string"
         },
         {
-          "component": "text",
-          "label": "Button Label",
-          "name": "button-label",
-          "valueType": "string"
-        }
-      ]
-    },
-    {
-      "id": "make-right-shift-item",
-      "fields": [
-        {
-          "component": "reference",
-          "label": "Item Image",
-          "name": "item-image",
-          "valueType": "string"
-        },
-        {
-          "component": "aem-content",
-          "label": "Item Link",
-          "name": "item-link",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Item Label",
-          "name": "item-label",
+          "component": "richtext",
+          "label": "CTA Label",
+          "name": "ctaLabel",
           "valueType": "string"
         }
       ]
@@ -111,7 +109,7 @@
     {
       "id": "make-right-shift",
       "components": [
-        "make-right-shift-item"
+        "category"
       ]
     }
   ]

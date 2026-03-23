@@ -2,170 +2,84 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const rowWrapper = document.createElement('div');
-  rowWrapper.classList.add('row');
+  const rowDiv = document.createElement('div');
+  rowDiv.classList.add('row');
 
   [...block.children].forEach((row) => {
-    const cardCol = document.createElement('div');
-    moveInstrumentation(row, cardCol);
-    cardCol.classList.add('col-xl-4', 'col-lg-6', 'pb-md-0', 'pb-4', 'row-gap-4', 'koi-rscard-padding');
+    const colDiv = document.createElement('div');
+    colDiv.classList.add('col-xl-4', 'col-lg-6', 'pb-md-0', 'pb-4', 'row-gap-4', 'rsCards-koi-rscard-padding');
+    moveInstrumentation(row, colDiv);
 
-    const card = document.createElement('div');
-    card.classList.add('card', 'rs-card');
+    const cardDiv = document.createElement('div');
+    cardDiv.classList.add('card', 'rsCards-rs-card');
 
-    const cardBody = document.createElement('div');
-    cardBody.classList.add('card-body');
+    const cardBodyDiv = document.createElement('div');
+    cardBodyDiv.classList.add('card-body');
 
-    let imageEl;
-    let titleEl;
-    let descriptionEl;
+    // Assuming the order of cells is image, link, title, description based on model
+    const [imageCell, linkCell, titleCell, descriptionCell] = [...row.children];
 
-    // The BlockJson defines fields in order: image, title, description
-    // So we should read cells in that specific order.
-    const cells = [...row.children];
-    if (cells[0]) { // Image
-      imageEl = cells[0].querySelector('picture');
-    }
-    if (cells[1]) { // Title
-      titleEl = cells[1];
-    }
-    if (cells[2]) { // Description
-      descriptionEl = cells[2];
-    }
-
-    if (imageEl) {
-      const img = imageEl.querySelector('img');
+    // Image
+    const picture = imageCell.querySelector('picture');
+    if (picture) {
+      const img = picture.querySelector('img');
       if (img) {
-        const newImg = document.createElement('img');
-        newImg.loading = 'lazy';
-        newImg.classList.add('w-100', 'kitchens-image'); // Class from original HTML
-        newImg.alt = img.alt || '';
-        newImg.src = img.src;
-        card.append(newImg);
+        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+        moveInstrumentation(img, optimizedPic.querySelector('img'));
+        cardDiv.append(optimizedPic);
+        optimizedPic.querySelector('img').classList.add('w-100', 'rsCards-kitchens-image');
       }
     }
 
-    if (titleEl) {
-      const h5Title = document.createElement('h5');
-      h5Title.classList.add('blog-card-title'); // Class from original HTML
-      moveInstrumentation(titleEl, h5Title);
-      while (titleEl.firstChild) h5Title.append(titleEl.firstChild);
-      cardBody.append(h5Title);
+    // Link
+    const foundLink = linkCell.querySelector('a');
+    if (foundLink) {
+      const linkEl = document.createElement('a');
+      linkEl.href = foundLink.href;
+      linkEl.setAttribute('aria-label', foundLink.getAttribute('aria-label'));
+      linkEl.target = foundLink.target;
+      // The original HTML shows the link wrapping an image, not just text.
+      // We need to preserve the content of the link cell, which might be an image.
+      moveInstrumentation(linkCell, linkEl);
+      while (linkCell.firstChild) linkEl.append(linkCell.firstChild);
+      cardBodyDiv.append(linkEl);
     }
 
-    if (descriptionEl) {
-      const pDescription = document.createElement('p'); // Changed to 'p' for description
-      pDescription.classList.add('card-title'); // Class from original HTML
-      moveInstrumentation(descriptionEl, pDescription);
-      while (descriptionEl.firstChild) pDescription.append(descriptionEl.firstChild);
-      cardBody.append(pDescription);
-    }
+    // Title
+    const titleEl = document.createElement('h5');
+    titleEl.classList.add('rsCards-blog-card-title');
+    moveInstrumentation(titleCell, titleEl);
+    while (titleCell.firstChild) titleEl.append(titleCell.firstChild);
+    cardBodyDiv.append(titleEl);
 
-    card.append(cardBody);
-    cardCol.append(card);
-    rowWrapper.append(cardCol);
-  });
+    // Description
+    // The original HTML shows the description wrapped in a <p> inside an <h5>.
+    // The model defines it as richtext. Let's create an h5 and append the content.
+    const descriptionEl = document.createElement('h5');
+    descriptionEl.classList.add('card-title'); // Class name from original HTML
+    moveInstrumentation(descriptionCell, descriptionEl);
+    while (descriptionCell.firstChild) descriptionEl.append(descriptionCell.firstChild);
+    cardBodyDiv.append(descriptionEl);
 
-  rowWrapper.querySelectorAll('picture > img').forEach((img) => {
-    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-    moveInstrumentation(img, optimizedPic.querySelector('img'));
-    img.closest('picture').replaceWith(optimizedPic);
+    cardDiv.append(cardBodyDiv);
+    colDiv.append(cardDiv);
+    rowDiv.append(colDiv);
   });
 
   block.textContent = '';
-  block.append(rowWrapper);
+  block.append(rowDiv);
 
-  // --- INTERACTIVITY CHECKS ---
-
-  // 1. Navbar Toggler
-  const navbarToggler = document.querySelector('.navbar-toggler');
-  if (navbarToggler) {
-    navbarToggler.addEventListener('click', () => {
-      const targetId = navbarToggler.dataset.target;
-      const targetElement = document.querySelector(targetId);
-      if (targetElement) {
-        targetElement.classList.toggle('collapse');
-        targetElement.classList.toggle('show');
-        navbarToggler.classList.toggle('collapsed');
-        navbarToggler.setAttribute('aria-expanded', targetElement.classList.contains('show'));
-      }
-    });
-  }
-
-  // 2. Country Selector Trigger (Modal)
-  const countrySelectorTrigger = document.querySelector('.country-selector-trigger');
-  const countryModal = document.getElementById('countryModal');
-  if (countrySelectorTrigger && countryModal) {
-    countrySelectorTrigger.addEventListener('click', () => {
-      countryModal.classList.add('show');
-      countryModal.style.display = 'block';
-      countryModal.setAttribute('aria-modal', 'true');
-      countryModal.setAttribute('role', 'dialog');
-    });
-
-    // Add event listener to close modal if it's not already handled by Bootstrap JS (EDS doesn't use it)
-    const closeModalButtons = countryModal.querySelectorAll('[data-dismiss="modal"], .close');
-    closeModalButtons.forEach((button) => {
-      button.addEventListener('click', () => {
-        countryModal.classList.remove('show');
-        countryModal.style.display = 'none';
-        countryModal.removeAttribute('aria-modal');
-        countryModal.removeAttribute('role');
-      });
-    });
-
-    // Close modal when clicking outside
-    countryModal.addEventListener('click', (event) => {
-      if (event.target === countryModal) {
-        countryModal.classList.remove('show');
-        countryModal.style.display = 'none';
-        countryModal.removeAttribute('aria-modal');
-        countryModal.removeAttribute('role');
-      }
-    });
-  }
-
-  // 3. Search Icon
-  const searchIcon = document.getElementById('searchIcon');
-  const searchBlock = document.getElementById('searchBlock');
-  const searchContainer = document.getElementById('searchContainer');
-  const searchResults = document.getElementById('searchResults');
-  const closeButton = document.getElementById('closeButton');
-
-  if (searchIcon && searchBlock && searchContainer && searchResults && closeButton) {
-    searchIcon.addEventListener('click', () => {
-      searchBlock.classList.remove('hidden');
-      searchContainer.classList.remove('hidden');
-      searchResults.classList.remove('hidden');
-    });
-
-    closeButton.addEventListener('click', () => {
-      searchBlock.classList.add('hidden');
-      searchContainer.classList.add('hidden');
-      searchResults.classList.add('hidden');
-    });
-  }
-
-  // 4. Carousel controls (assuming Bootstrap carousel is not used, and manual control is needed)
-  // The HTML uses data-ride="carousel" and data-slide attributes, which imply Bootstrap JS.
-  // Since EDS doesn't use Bootstrap JS, these need to be handled manually if the carousel is to be interactive.
-  // For this review, we'll assume the carousel is driven by CSS or a separate script if not Bootstrap.
-  // If manual JS control were needed, it would look something like this:
-  // const carouselElements = document.querySelectorAll('.carousel.slide');
-  // carouselElements.forEach((carousel) => {
-  //   const prevButton = carousel.querySelector('.carousel-control-prev');
-  //   const nextButton = carousel.querySelector('.carousel-control-next');
-  //   if (prevButton) {
-  //     prevButton.addEventListener('click', (e) => {
-  //       e.preventDefault();
-  //       // Implement logic to go to previous slide
-  //     });
-  //   }
-  //   if (nextButton) {
-  //     nextButton.addEventListener('click', (e) => {
-  //       e.preventDefault();
-  //       // Implement logic to go to next slide
-  //     });
-  //   }
-  // });
+  // The 'rsCards-tab-para' div is present in the original HTML as a sibling to the 'row' div,
+  // but it's not part of the model structure. It seems to be a static element.
+  // The current JS appends it to rowDiv, which is incorrect based on the original HTML structure.
+  // It should be a direct child of the main block div, after the row div.
+  // However, the block.children loop only processes model items.
+  // If 'rsCards-tab-para' is not part of the model, it should be handled outside the loop,
+  // or if it's a fixed element that always appears, it should be created after the rowDiv.
+  // Given it's an empty div, it's likely a placeholder or for styling.
+  // For now, let's assume it's a static element that should be a direct child of the block,
+  // after the generated row.
+  const tabParaDiv = document.createElement('div');
+  tabParaDiv.classList.add('rsCards-tab-para');
+  block.append(tabParaDiv);
 }

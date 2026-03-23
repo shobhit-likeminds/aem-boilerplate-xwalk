@@ -22,7 +22,15 @@
       "itc-club-carousel",
       "make-right-shift",
       "rs-cards",
-      "footer"
+      "footer",
+      "banner-carousel",
+      "carousel"
+    ]
+  },
+  {
+    "id": "banner-carousel",
+    "components": [
+      "banner"
     ]
   },
   {
@@ -35,6 +43,12 @@
     "id": "cards",
     "components": [
       "card"
+    ]
+  },
+  {
+    "id": "carousel",
+    "components": [
+      "carousel-item"
     ]
   },
   {
@@ -55,15 +69,17 @@
   {
     "id": "footer",
     "components": [
+      "footer-logo",
       "footer-link",
+      "footer-nav-link",
       "footer-social-link"
     ]
   },
   {
     "id": "header-itc-header-section",
     "components": [
-      "navigationItem",
-      "countryOption"
+      "header-navigation-item",
+      "header-country-option"
     ]
   },
   {
@@ -75,7 +91,7 @@
   {
     "id": "make-right-shift",
     "components": [
-      "category"
+      "make-right-shift-item"
     ]
   },
   {
@@ -88,9 +104,6 @@
     "id": "space-adder"
   },
   {
-    "id": "text",
-    "components": [
-      "text"
-    ]
+    "id": "text"
   }
 ]

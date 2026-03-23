@@ -1,31 +1,31 @@
 {
   "definitions": [
     {
-      "title": "RS-Cards",
-      "id": "rs-cards",
+      "title": "Carousel",
+      "id": "carousel",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block",
             "template": {
-              "filter": "rs-cards",
-              "model": "rs-cards",
-              "name": "RS-Cards"
+              "filter": "carousel",
+              "model": "carousel",
+              "name": "Carousel"
             }
           }
         }
       }
     },
     {
-      "title": "RS-Card",
-      "id": "rs-card",
+      "title": "Carousel Item",
+      "id": "carousel-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "rs-card",
-              "name": "RS-Card"
+              "model": "carousel-item",
+              "name": "Carousel Item"
             }
           }
         }
@@ -34,7 +34,7 @@
   ],
   "models": [
     {
-      "id": "rs-card",
+      "id": "carousel-item",
       "fields": [
         {
           "component": "reference",
@@ -43,9 +43,9 @@
           "valueType": "string"
         },
         {
-          "component": "aem-content",
-          "label": "Link",
-          "name": "link",
+          "component": "text",
+          "label": "Image Alt Text",
+          "name": "image-alt",
           "valueType": "string"
         },
         {
@@ -61,13 +61,27 @@
           "valueType": "string"
         }
       ]
+    },
+    {
+      "id": "carousel",
+      "fields": [
+        {
+          "component": "container",
+          "item": {
+            "type": "carousel-item"
+          },
+          "label": "Carousel Items",
+          "name": "items",
+          "valueType": "array"
+        }
+      ]
     }
   ],
   "filters": [
     {
-      "id": "rs-cards",
+      "id": "carousel",
       "components": [
-        "rs-card"
+        "carousel-item"
       ]
     }
   ]

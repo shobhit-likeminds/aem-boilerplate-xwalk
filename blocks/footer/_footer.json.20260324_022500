@@ -17,7 +17,7 @@
       }
     },
     {
-      "title": "Footer-Link",
+      "title": "Footer Link",
       "id": "footer-link",
       "plugins": {
         "xwalk": {
@@ -25,29 +25,14 @@
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
               "model": "footer-link",
-              "name": "Footer-Link"
+              "name": "Footer Link"
             }
           }
         }
       }
     },
     {
-      "title": "Footer-Nav-Link",
-      "id": "footer-nav-link",
-      "plugins": {
-        "xwalk": {
-          "page": {
-            "resourceType": "core/franklin/components/block/v1/block/item",
-            "template": {
-              "model": "footer-nav-link",
-              "name": "Footer-Nav-Link"
-            }
-          }
-        }
-      }
-    },
-    {
-      "title": "Footer-Social-Link",
+      "title": "Footer Social Link",
       "id": "footer-social-link",
       "plugins": {
         "xwalk": {
@@ -55,22 +40,7 @@
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
               "model": "footer-social-link",
-              "name": "Footer-Social-Link"
-            }
-          }
-        }
-      }
-    },
-    {
-      "title": "Footer-Logo",
-      "id": "footer-logo",
-      "plugins": {
-        "xwalk": {
-          "page": {
-            "resourceType": "core/franklin/components/block/v1/block/item",
-            "template": {
-              "model": "footer-logo",
-              "name": "Footer-Logo"
+              "name": "Footer Social Link"
             }
           }
         }
@@ -82,58 +52,52 @@
       "id": "footer",
       "fields": [
         {
-          "component": "container",
-          "items": {
-            "component": "footer-logo"
-          },
-          "label": "Logos",
-          "name": "logos"
+          "component": "reference",
+          "label": "ITC Logo",
+          "name": "itcLogo",
+          "valueType": "string"
         },
         {
-          "component": "container",
-          "items": {
-            "component": "footer-link"
-          },
+          "component": "reference",
+          "label": "FSSAI Logo",
+          "name": "fssaiLogo",
+          "valueType": "string"
+        },
+        {
+          "block": "footer-link",
+          "component": "block",
           "label": "Footer Links",
-          "name": "footerLinks"
+          "name": "footerLinks",
+          "valueType": "array"
         },
         {
-          "component": "container",
-          "items": {
-            "component": "footer-nav-link"
-          },
-          "label": "Navigation Links",
-          "name": "navigationLinks"
-        },
-        {
-          "component": "container",
-          "items": {
-            "component": "footer-social-link"
-          },
-          "label": "Social Links",
-          "name": "socialLinks"
+          "block": "footer-social-link",
+          "component": "block",
+          "label": "Footer Social Links",
+          "name": "footerSocialLinks",
+          "valueType": "array"
         },
         {
           "component": "text",
-          "label": "Grievance Officer Title",
+          "label": "Grievance Title",
           "name": "grievanceTitle",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Grievance Officer Name",
+          "label": "Grievance Name",
           "name": "grievanceName",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Grievance Officer Contact",
+          "label": "Grievance Contact",
           "name": "grievanceContact",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Grievance Officer Timing",
+          "label": "Grievance Contact Time",
           "name": "grievanceTime",
           "valueType": "string"
         },
@@ -163,23 +127,6 @@
       ]
     },
     {
-      "id": "footer-nav-link",
-      "fields": [
-        {
-          "component": "aem-content",
-          "label": "Link",
-          "name": "link",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Label",
-          "name": "label",
-          "valueType": "string"
-        }
-      ]
-    },
-    {
       "id": "footer-social-link",
       "fields": [
         {
@@ -190,25 +137,8 @@
         },
         {
           "component": "reference",
-          "label": "Icon",
+          "label": "Social Icon",
           "name": "icon",
-          "valueType": "string"
-        }
-      ]
-    },
-    {
-      "id": "footer-logo",
-      "fields": [
-        {
-          "component": "reference",
-          "label": "Logo Image",
-          "name": "image",
-          "valueType": "string"
-        },
-        {
-          "component": "aem-content",
-          "label": "Logo Link",
-          "name": "link",
           "valueType": "string"
         }
       ]
@@ -218,9 +148,7 @@
     {
       "id": "footer",
       "components": [
-        "footer-logo",
         "footer-link",
-        "footer-nav-link",
         "footer-social-link"
       ]
     }
