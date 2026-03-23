@@ -50,7 +50,14 @@
         "hero",
         "cards",
         "columns",
-        "fragment"
+        "fragment",
+        "headerItcHeaderSection",
+        "bannerItcCarousel",
+        "spaceAdder",
+        "itcClubCarousel",
+        "makeRightShift",
+        "rsCards",
+        "footer"
       ]
     }
   ]

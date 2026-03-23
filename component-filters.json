@@ -15,7 +15,20 @@
       "hero",
       "cards",
       "columns",
-      "fragment"
+      "fragment",
+      "headerItcHeaderSection",
+      "bannerItcCarousel",
+      "spaceAdder",
+      "itcClubCarousel",
+      "makeRightShift",
+      "rsCards",
+      "footer"
+    ]
+  },
+  {
+    "id": "banner-itc-carousel",
+    "components": [
+      "slide"
     ]
   },
   {
@@ -37,6 +50,47 @@
       "image",
       "button",
       "title"
+    ]
+  },
+  {
+    "id": "footer",
+    "components": [
+      "footer-link",
+      "footer-social-link"
+    ]
+  },
+  {
+    "id": "header-itc-header-section",
+    "components": [
+      "navigationItem",
+      "countryOption"
+    ]
+  },
+  {
+    "id": "itc-club-carousel",
+    "components": [
+      "carouselItem"
+    ]
+  },
+  {
+    "id": "makeRightShift",
+    "components": [
+      "category"
+    ]
+  },
+  {
+    "id": "rs-cards",
+    "components": [
+      "rsCard"
+    ]
+  },
+  {
+    "id": "space-adder"
+  },
+  {
+    "id": "text",
+    "components": [
+      "text"
     ]
   }
 ]
