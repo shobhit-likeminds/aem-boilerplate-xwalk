@@ -1,3 +1,5 @@
+.header-cmp-image__image { width:100%;height:auto }
+
 @keyframes cmp-search__loading-indicator-spin{0{transform:rotate(0)}
 100%{transform:rotate(360deg)}
 }
@@ -848,6 +850,8 @@ kbd kbd { padding:0;font-size:100%;font-weight:700 }
 pre { display:block;font-size:87.5%;color:#212529 }
 
 pre code { font-size:inherit;color:inherit;word-break:normal }
+
+.header-container { width:100%;padding-right:15px;padding-left:15px;margin-right:auto;margin-left:auto }
 
 @media(min-width:576px){.header-container,.header-container-sm{max-width:540px}
 }
@@ -2000,6 +2004,8 @@ h2, h3 { page-break-after:avoid }
 
 body{min-width:992px !important}
 
+.header-container { min-width:992px !important }
+
 .header-navbar { display:none } }
 
 @media(min-width:1500px) and (max-width:1950px){.header-itc-carousel-section .header-carousel-indicators{left:0;justify-content:flex-start;margin-left:85px;margin-right:unset}
@@ -2338,9 +2344,13 @@ body{padding-top:78px !important}
 
 body{font-family:var(--urbanist-font);padding-top:92px}
 
+.header-container { max-width:1470px;width:100%;padding:0;margin:0 auto }
+
 h1, h2, h3, h4, h5, h6 { font-family:'Paytone One' }
 
 p { font-weight:400 }
+
+span.header-cmp-link__screen-reader-only { display:none }
 
 #rs-video-model { overflow-y:hidden;margin-top:0 !important }
 

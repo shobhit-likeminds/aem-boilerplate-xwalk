@@ -53,7 +53,8 @@
       "shiftclubItcClubCarousel",
       "rs-cards",
       "bannerItcCarousel",
-      "container"
+      "container",
+      "healthgoalBanner"
     ]
   },
   {
@@ -156,8 +157,8 @@
     "id": "footer-itc-footer-section",
     "components": [
       "footerLink",
-      "socialIcon",
-      "secondaryLink"
+      "footerSocialLink",
+      "footerSecondaryLink"
     ]
   },
   {
@@ -186,6 +187,12 @@
     "components": [
       "navigation-item",
       "country-option"
+    ]
+  },
+  {
+    "id": "healthgoal-banner",
+    "components": [
+      "healthgoalCategory"
     ]
   },
   {
@@ -239,7 +246,7 @@
   {
     "id": "rs-cards",
     "components": [
-      "rs-card"
+      "rsCard"
     ]
   },
   {

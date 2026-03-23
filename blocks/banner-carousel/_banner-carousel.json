@@ -49,7 +49,7 @@
           "valueType": "string"
         },
         {
-          "component": "richtext",
+          "component": "text",
           "label": "Heading",
           "name": "heading",
           "valueType": "string"
@@ -64,6 +64,12 @@
           "component": "aem-content",
           "label": "CTA Link",
           "name": "ctaLink",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "CTA Label",
+          "name": "ctaLabel",
           "valueType": "string"
         }
       ]

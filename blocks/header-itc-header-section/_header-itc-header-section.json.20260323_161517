@@ -49,6 +49,52 @@
   ],
   "models": [
     {
+      "id": "navigationLink",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Label",
+          "name": "label",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "URL",
+          "name": "url",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "countryOption",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Flag Image",
+          "name": "flag",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Country Name",
+          "name": "countryName",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Country Value",
+          "name": "countryValue",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Country URL",
+          "name": "countryUrl",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
       "id": "headerItcHeaderSection",
       "fields": [
         {
@@ -65,25 +111,29 @@
         },
         {
           "component": "container",
-          "item": "navigationLink",
+          "items": {
+            "type": "navigationLink"
+          },
           "label": "Navigation Links",
           "name": "navigationLinks"
         },
         {
           "component": "reference",
-          "label": "India Flag",
-          "name": "countryFlagIn",
+          "label": "Current Country Flag",
+          "name": "countryFlag",
           "valueType": "string"
         },
         {
-          "component": "reference",
-          "label": "USA Flag",
-          "name": "countryFlagUsa",
+          "component": "text",
+          "label": "Current Country Code",
+          "name": "countryCode",
           "valueType": "string"
         },
         {
           "component": "container",
-          "item": "countryOption",
+          "items": {
+            "type": "countryOption"
+          },
           "label": "Country Options",
           "name": "countryOptions"
         },
@@ -91,40 +141,6 @@
           "component": "reference",
           "label": "Search Icon",
           "name": "searchIcon",
-          "valueType": "string"
-        }
-      ]
-    },
-    {
-      "id": "navigationLink",
-      "fields": [
-        {
-          "component": "aem-content",
-          "label": "Link",
-          "name": "link",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Text",
-          "name": "text",
-          "valueType": "string"
-        }
-      ]
-    },
-    {
-      "id": "countryOption",
-      "fields": [
-        {
-          "component": "reference",
-          "label": "Flag",
-          "name": "flag",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Country Name",
-          "name": "countryName",
           "valueType": "string"
         }
       ]

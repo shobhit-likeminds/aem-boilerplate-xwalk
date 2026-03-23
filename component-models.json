@@ -157,7 +157,7 @@
         "valueType": "string"
       },
       {
-        "component": "richtext",
+        "component": "text",
         "label": "Heading",
         "name": "heading",
         "valueType": "string"
@@ -172,6 +172,12 @@
         "component": "aem-content",
         "label": "CTA Link",
         "name": "ctaLink",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "CTA Label",
+        "name": "ctaLabel",
         "valueType": "string"
       }
     ]
@@ -718,7 +724,7 @@
       {
         "component": "reference",
         "label": "ITC Logo",
-        "name": "itcLogo",
+        "name": "logo",
         "valueType": "string"
       },
       {
@@ -728,28 +734,16 @@
         "valueType": "string"
       },
       {
-        "component": "aem-content",
-        "label": "ITC Logo Link",
-        "name": "itcLogoLink",
-        "valueType": "string"
-      },
-      {
-        "component": "container",
-        "item": "footerLink",
+        "block": "footerLink",
+        "component": "block",
         "label": "Footer Links",
         "name": "footerLinks"
       },
       {
-        "component": "container",
-        "item": "footerLink",
-        "label": "Heritage Links",
-        "name": "heritageLinks"
-      },
-      {
-        "component": "text",
-        "label": "Grievance Officer Title",
-        "name": "grievanceOfficerTitle",
-        "valueType": "string"
+        "block": "footerSocialLink",
+        "component": "block",
+        "label": "Footer Social Links",
+        "name": "footerSocialLinks"
       },
       {
         "component": "text",
@@ -765,15 +759,9 @@
       },
       {
         "component": "text",
-        "label": "Grievance Officer Time",
-        "name": "grievanceOfficerTime",
+        "label": "Grievance Officer Timing",
+        "name": "grievanceOfficerTiming",
         "valueType": "string"
-      },
-      {
-        "component": "container",
-        "item": "socialIcon",
-        "label": "Social Icons",
-        "name": "socialIcons"
       },
       {
         "component": "text",
@@ -782,10 +770,10 @@
         "valueType": "string"
       },
       {
-        "component": "container",
-        "item": "secondaryLink",
-        "label": "Secondary Links",
-        "name": "secondaryLinks"
+        "block": "footerSecondaryLink",
+        "component": "block",
+        "label": "Footer Secondary Links",
+        "name": "footerSecondaryLinks"
       }
     ]
   },
@@ -794,42 +782,42 @@
     "fields": [
       {
         "component": "aem-content",
-        "label": "Link",
-        "name": "link",
+        "label": "Link URL",
+        "name": "url",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Text",
-        "name": "text",
+        "label": "Link Label",
+        "name": "label",
         "valueType": "string"
       }
     ]
   },
   {
-    "id": "socialIcon",
+    "id": "footerSocialLink",
     "fields": [
       {
         "component": "aem-content",
-        "label": "Social Link",
-        "name": "link",
+        "label": "Social URL",
+        "name": "url",
         "valueType": "string"
       },
       {
         "component": "reference",
-        "label": "Icon",
+        "label": "Social Icon",
         "name": "icon",
         "valueType": "string"
       }
     ]
   },
   {
-    "id": "secondaryLink",
+    "id": "footerSecondaryLink",
     "fields": [
       {
         "component": "aem-content",
-        "label": "Secondary Link",
-        "name": "link",
+        "label": "Secondary Link URL",
+        "name": "url",
         "valueType": "string"
       }
     ]
@@ -952,52 +940,6 @@
     ]
   },
   {
-    "id": "navigationLink",
-    "fields": [
-      {
-        "component": "text",
-        "label": "Label",
-        "name": "label",
-        "valueType": "string"
-      },
-      {
-        "component": "aem-content",
-        "label": "URL",
-        "name": "url",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
-    "id": "countryOption",
-    "fields": [
-      {
-        "component": "reference",
-        "label": "Flag Image",
-        "name": "flag",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Country Name",
-        "name": "countryName",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Country Value",
-        "name": "countryValue",
-        "valueType": "string"
-      },
-      {
-        "component": "aem-content",
-        "label": "Country URL",
-        "name": "countryUrl",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
     "id": "headerItcHeaderSection",
     "fields": [
       {
@@ -1014,29 +956,25 @@
       },
       {
         "component": "container",
-        "items": {
-          "type": "navigationLink"
-        },
+        "item": "navigationLink",
         "label": "Navigation Links",
         "name": "navigationLinks"
       },
       {
         "component": "reference",
-        "label": "Current Country Flag",
-        "name": "countryFlag",
+        "label": "India Flag",
+        "name": "countryFlagIn",
         "valueType": "string"
       },
       {
-        "component": "text",
-        "label": "Current Country Code",
-        "name": "countryCode",
+        "component": "reference",
+        "label": "USA Flag",
+        "name": "countryFlagUsa",
         "valueType": "string"
       },
       {
         "component": "container",
-        "items": {
-          "type": "countryOption"
-        },
+        "item": "countryOption",
         "label": "Country Options",
         "name": "countryOptions"
       },
@@ -1044,6 +982,40 @@
         "component": "reference",
         "label": "Search Icon",
         "name": "searchIcon",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "navigationLink",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Text",
+        "name": "text",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "countryOption",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Flag",
+        "name": "flag",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Country Name",
+        "name": "countryName",
         "valueType": "string"
       }
     ]
@@ -1218,6 +1190,76 @@
         "component": "text",
         "label": "Country Name",
         "name": "name",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "healthgoalBanner",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Banner Image",
+        "name": "bannerImage",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Sub Heading",
+        "name": "subHeading",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Description",
+        "name": "description",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "itemType": "healthgoalCategory",
+        "label": "Categories",
+        "name": "categories"
+      },
+      {
+        "component": "aem-content",
+        "label": "CTA Link",
+        "name": "ctaLink",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "CTA Text",
+        "name": "ctaText",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "healthgoalCategory",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Image",
+        "name": "image",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Label",
+        "name": "label",
         "valueType": "string"
       }
     ]
@@ -1628,7 +1670,7 @@
     ]
   },
   {
-    "id": "rs-card",
+    "id": "rsCard",
     "fields": [
       {
         "component": "reference",
@@ -1646,6 +1688,12 @@
         "component": "richtext",
         "label": "Description",
         "name": "description",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Icon",
+        "name": "icon",
         "valueType": "string"
       }
     ]
@@ -1687,8 +1735,8 @@
     "fields": [
       {
         "component": "number",
-        "label": "Padding",
-        "name": "padding",
+        "label": "Vertical Padding",
+        "name": "verticalPadding",
         "valueType": "number"
       }
     ]

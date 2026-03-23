@@ -1,7 +1,7 @@
 {
   "definitions": [
     {
-      "title": "Footer-ITC-Footer-Section",
+      "title": "Footer ITC Footer Section",
       "id": "footerItcFooterSection",
       "plugins": {
         "xwalk": {
@@ -10,14 +10,14 @@
             "template": {
               "filter": "footerItcFooterSection",
               "model": "footerItcFooterSection",
-              "name": "Footer-ITC-Footer-Section"
+              "name": "Footer ITC Footer Section"
             }
           }
         }
       }
     },
     {
-      "title": "Footer-Link",
+      "title": "Footer Link",
       "id": "footerLink",
       "plugins": {
         "xwalk": {
@@ -25,37 +25,37 @@
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
               "model": "footerLink",
-              "name": "Footer-Link"
+              "name": "Footer Link"
             }
           }
         }
       }
     },
     {
-      "title": "Footer-Social-Link",
-      "id": "footerSocialLink",
+      "title": "Social Icon",
+      "id": "socialIcon",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "footerSocialLink",
-              "name": "Footer-Social-Link"
+              "model": "socialIcon",
+              "name": "Social Icon"
             }
           }
         }
       }
     },
     {
-      "title": "Footer-Secondary-Link",
-      "id": "footerSecondaryLink",
+      "title": "Secondary Link",
+      "id": "secondaryLink",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "footerSecondaryLink",
-              "name": "Footer-Secondary-Link"
+              "model": "secondaryLink",
+              "name": "Secondary Link"
             }
           }
         }
@@ -69,7 +69,7 @@
         {
           "component": "reference",
           "label": "ITC Logo",
-          "name": "logo",
+          "name": "itcLogo",
           "valueType": "string"
         },
         {
@@ -79,16 +79,28 @@
           "valueType": "string"
         },
         {
-          "block": "footerLink",
-          "component": "block",
+          "component": "aem-content",
+          "label": "ITC Logo Link",
+          "name": "itcLogoLink",
+          "valueType": "string"
+        },
+        {
+          "component": "container",
+          "item": "footerLink",
           "label": "Footer Links",
           "name": "footerLinks"
         },
         {
-          "block": "footerSocialLink",
-          "component": "block",
-          "label": "Footer Social Links",
-          "name": "footerSocialLinks"
+          "component": "container",
+          "item": "footerLink",
+          "label": "Heritage Links",
+          "name": "heritageLinks"
+        },
+        {
+          "component": "text",
+          "label": "Grievance Officer Title",
+          "name": "grievanceOfficerTitle",
+          "valueType": "string"
         },
         {
           "component": "text",
@@ -104,9 +116,15 @@
         },
         {
           "component": "text",
-          "label": "Grievance Officer Timing",
-          "name": "grievanceOfficerTiming",
+          "label": "Grievance Officer Time",
+          "name": "grievanceOfficerTime",
           "valueType": "string"
+        },
+        {
+          "component": "container",
+          "item": "socialIcon",
+          "label": "Social Icons",
+          "name": "socialIcons"
         },
         {
           "component": "text",
@@ -115,10 +133,10 @@
           "valueType": "string"
         },
         {
-          "block": "footerSecondaryLink",
-          "component": "block",
-          "label": "Footer Secondary Links",
-          "name": "footerSecondaryLinks"
+          "component": "container",
+          "item": "secondaryLink",
+          "label": "Secondary Links",
+          "name": "secondaryLinks"
         }
       ]
     },
@@ -127,42 +145,42 @@
       "fields": [
         {
           "component": "aem-content",
-          "label": "Link URL",
-          "name": "url",
+          "label": "Link",
+          "name": "link",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Link Label",
-          "name": "label",
+          "label": "Text",
+          "name": "text",
           "valueType": "string"
         }
       ]
     },
     {
-      "id": "footerSocialLink",
+      "id": "socialIcon",
       "fields": [
         {
           "component": "aem-content",
-          "label": "Social URL",
-          "name": "url",
+          "label": "Social Link",
+          "name": "link",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Social Icon",
+          "label": "Icon",
           "name": "icon",
           "valueType": "string"
         }
       ]
     },
     {
-      "id": "footerSecondaryLink",
+      "id": "secondaryLink",
       "fields": [
         {
           "component": "aem-content",
-          "label": "Secondary Link URL",
-          "name": "url",
+          "label": "Secondary Link",
+          "name": "link",
           "valueType": "string"
         }
       ]
@@ -173,8 +191,8 @@
       "id": "footer-itc-footer-section",
       "components": [
         "footerLink",
-        "footerSocialLink",
-        "footerSecondaryLink"
+        "socialIcon",
+        "secondaryLink"
       ]
     }
   ]

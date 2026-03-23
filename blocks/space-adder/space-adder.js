@@ -1,23 +1,25 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
+  // CHECK 1: STRUCTURE ALIGNMENT
+  // BlockJson has one root field "verticalPadding".
+  // The JS correctly reads one root row from block.children.
+  const [verticalPaddingRow] = [...block.children];
+
   const section = document.createElement('section');
-  section.classList.add('space-adder-verticalPadding_section'); // Corrected class prefix
+  // CHECK 2: INTERACTIVITY - No interactive elements in this block.
+  // CHECK 3: CSS CLASS NAMES
+  // The original HTML shows the section has class "spaceAdder-spaceAdder".
+  // The generated JS used "spaceAdder-verticalPadding_section", which is incorrect.
+  // Corrected to "spaceAdder-spaceAdder".
+  section.classList.add('spaceAdder-spaceAdder');
+  moveInstrumentation(verticalPaddingRow, section);
 
-  // BlockJson indicates one root field: "padding"
-  // This corresponds to block.children[0]
-  const [paddingRow] = [...block.children];
-
-  if (paddingRow) {
-    // The "padding" field is a number, stored in the first div of the row
-    const paddingCell = paddingRow.querySelector('div');
-    if (paddingCell) {
-      const paddingValue = parseInt(paddingCell.textContent.trim(), 10);
-      if (!isNaN(paddingValue)) {
-        section.classList.add(`space-adder-padding-${paddingValue}`); // Corrected class prefix
-      }
-    }
-    moveInstrumentation(paddingRow, section);
+  // The content of the first cell of the first row contains the padding value.
+  const paddingValue = parseInt(verticalPaddingRow.firstElementChild.textContent.trim(), 10);
+  if (!isNaN(paddingValue)) {
+    section.classList.add(`padding-${paddingValue}`);
   }
 
   block.textContent = '';

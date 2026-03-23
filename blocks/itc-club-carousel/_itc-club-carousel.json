@@ -1,7 +1,7 @@
 {
   "definitions": [
     {
-      "title": "ITC-Club-Carousel",
+      "title": "Itc-Club-Carousel",
       "id": "itcClubCarousel",
       "plugins": {
         "xwalk": {
@@ -10,7 +10,7 @@
             "template": {
               "filter": "itcClubCarousel",
               "model": "itcClubCarousel",
-              "name": "ITC-Club-Carousel"
+              "name": "Itc-Club-Carousel"
             }
           }
         }
