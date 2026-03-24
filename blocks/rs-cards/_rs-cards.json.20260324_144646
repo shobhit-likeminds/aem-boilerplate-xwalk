@@ -1,7 +1,7 @@
 {
   "definitions": [
     {
-      "title": "Rs-Cards",
+      "title": "RS-Cards",
       "id": "rs-cards",
       "plugins": {
         "xwalk": {
@@ -10,14 +10,14 @@
             "template": {
               "filter": "rs-cards",
               "model": "rs-cards",
-              "name": "Rs-Cards"
+              "name": "RS-Cards"
             }
           }
         }
       }
     },
     {
-      "title": "Rs-Card",
+      "title": "RS-Card",
       "id": "rs-card",
       "plugins": {
         "xwalk": {
@@ -25,7 +25,7 @@
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
               "model": "rs-card",
-              "name": "Rs-Card"
+              "name": "RS-Card"
             }
           }
         }
@@ -54,7 +54,7 @@
           "valueType": "string"
         },
         {
-          "component": "text",
+          "component": "richtext",
           "label": "Title",
           "name": "title",
           "valueType": "string"

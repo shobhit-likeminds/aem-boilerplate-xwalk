@@ -1,3 +1,5 @@
+.header-cmp-image__image { width:100%;height:auto }
+
 @keyframes cmp-search__loading-indicator-spin{0{transform:rotate(0)}
 100%{transform:rotate(360deg)}
 }
@@ -2347,6 +2349,8 @@ body{font-family:var(--urbanist-font);padding-top:92px}
 h1, h2, h3, h4, h5, h6 { font-family:'Paytone One' }
 
 p { font-weight:400 }
+
+span.header-cmp-link__screen-reader-only { display:none }
 
 #rs-video-model { overflow-y:hidden;margin-top:0 !important }
 

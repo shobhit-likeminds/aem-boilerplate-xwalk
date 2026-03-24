@@ -142,18 +142,10 @@
     ]
   },
   {
-    "id": "banner-carousel",
-    "fields": [
-      {
-        "component": "container",
-        "item": "banner",
-        "label": "Banners",
-        "name": "banners"
-      }
-    ]
+    "id": "banner-carousel"
   },
   {
-    "id": "banner",
+    "id": "banner-slide",
     "fields": [
       {
         "component": "reference",
@@ -388,64 +380,50 @@
     "fields": [
       {
         "component": "container",
-        "items": {
-          "component": "footer-logo"
-        },
+        "item": "logo",
         "label": "Logos",
         "name": "logos"
       },
       {
         "component": "container",
-        "items": {
-          "component": "footer-link"
-        },
+        "item": "footer-link",
         "label": "Footer Links",
         "name": "footerLinks"
       },
       {
         "component": "container",
-        "items": {
-          "component": "footer-nav-link"
-        },
-        "label": "Navigation Links",
-        "name": "navigationLinks"
-      },
-      {
-        "component": "container",
-        "items": {
-          "component": "footer-social-link"
-        },
+        "item": "social-link",
         "label": "Social Links",
         "name": "socialLinks"
       },
       {
+        "component": "richtext",
+        "label": "Copyright",
+        "name": "copyright",
+        "valueType": "string"
+      },
+      {
         "component": "text",
         "label": "Grievance Officer Title",
-        "name": "grievanceTitle",
+        "name": "grievance-officer-title",
         "valueType": "string"
       },
       {
         "component": "text",
         "label": "Grievance Officer Name",
-        "name": "grievanceName",
+        "name": "grievance-officer-name",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Grievance Officer Contact",
-        "name": "grievanceContact",
+        "label": "Grievance Officer Contact Info",
+        "name": "grievance-officer-contact",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Grievance Officer Timing",
-        "name": "grievanceTime",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Copyright",
-        "name": "copyright",
+        "label": "Grievance Officer Hours",
+        "name": "grievance-officer-hours",
         "valueType": "string"
       }
     ]
@@ -461,14 +439,14 @@
       },
       {
         "component": "text",
-        "label": "Label",
-        "name": "label",
+        "label": "Text",
+        "name": "text",
         "valueType": "string"
       }
     ]
   },
   {
-    "id": "footer-nav-link",
+    "id": "social-link",
     "fields": [
       {
         "component": "aem-content",
@@ -477,32 +455,15 @@
         "valueType": "string"
       },
       {
-        "component": "text",
-        "label": "Label",
-        "name": "label",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
-    "id": "footer-social-link",
-    "fields": [
-      {
-        "component": "aem-content",
-        "label": "Social Link",
-        "name": "link",
-        "valueType": "string"
-      },
-      {
         "component": "reference",
-        "label": "Icon",
+        "label": "Icon Image",
         "name": "icon",
         "valueType": "string"
       }
     ]
   },
   {
-    "id": "footer-logo",
+    "id": "logo",
     "fields": [
       {
         "component": "reference",
@@ -514,6 +475,12 @@
         "component": "aem-content",
         "label": "Logo Link",
         "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Alt Text",
+        "name": "alt",
         "valueType": "string"
       }
     ]
@@ -626,14 +593,20 @@
       },
       {
         "component": "aem-content",
-        "label": "Logo Link 1",
-        "name": "logo-link-1",
+        "label": "Logo Link",
+        "name": "logo-link",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Secondary Logo Image",
+        "name": "secondary-logo-image",
         "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "Logo Link 2",
-        "name": "logo-link-2",
+        "label": "Secondary Logo Link",
+        "name": "secondary-logo-link",
         "valueType": "string"
       },
       {
@@ -644,14 +617,26 @@
       },
       {
         "component": "reference",
-        "label": "Search Icon Image",
-        "name": "search-icon-image",
+        "label": "Country Flag Image",
+        "name": "country-flag-image",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Country Code",
+        "name": "country-code",
         "valueType": "string"
       },
       {
         "component": "reference",
-        "label": "Country Flag Image",
-        "name": "country-flag-image",
+        "label": "Country Dropdown Icon",
+        "name": "country-dropdown-icon",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Search Icon Image",
+        "name": "search-icon-image",
         "valueType": "string"
       },
       {
@@ -659,6 +644,18 @@
         "item": "country-option",
         "label": "Country Options",
         "name": "country-options"
+      },
+      {
+        "component": "richtext",
+        "label": "Country Modal Title",
+        "name": "country-modal-title",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Country Modal Experience Text",
+        "name": "country-modal-experience-text",
+        "valueType": "string"
       }
     ]
   },
@@ -669,6 +666,12 @@
         "component": "aem-content",
         "label": "Link",
         "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Text",
+        "name": "text",
         "valueType": "string"
       }
     ]
@@ -781,7 +784,7 @@
         "component": "container",
         "item": "carousel-item",
         "label": "Carousel Items",
-        "name": "carousel-items"
+        "name": "items"
       }
     ]
   },
@@ -888,6 +891,58 @@
     ]
   },
   {
+    "id": "right-shift-banner",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Banner Image",
+        "name": "banner-image",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Subheading",
+        "name": "subheading",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Button Link",
+        "name": "button-link",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "why-shift-item",
+        "label": "Why Shift Items",
+        "name": "why-shift-items"
+      }
+    ]
+  },
+  {
+    "id": "why-shift-item",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Image",
+        "name": "image",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "rs-cards",
     "fields": [
       {
@@ -908,7 +963,7 @@
         "valueType": "string"
       },
       {
-        "component": "richtext",
+        "component": "text",
         "label": "Title",
         "name": "title",
         "valueType": "string"
@@ -941,8 +996,8 @@
     "fields": [
       {
         "component": "richtext",
-        "label": "Body",
-        "name": "body",
+        "label": "Content",
+        "name": "content",
         "valueType": "string"
       }
     ]

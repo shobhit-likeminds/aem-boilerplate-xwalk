@@ -1,0 +1,97 @@
+{
+  "definitions": [
+    {
+      "title": "Right-Shift-Banner",
+      "id": "right-shift-banner",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "right-shift-banner",
+              "model": "right-shift-banner",
+              "name": "Right-Shift-Banner"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Why-Shift-Item",
+      "id": "why-shift-item",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "why-shift-item",
+              "name": "Why-Shift-Item"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "right-shift-banner",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Banner Image",
+          "name": "banner-image",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Heading",
+          "name": "heading",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Subheading",
+          "name": "subheading",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Button Link",
+          "name": "button-link",
+          "valueType": "string"
+        },
+        {
+          "component": "container",
+          "item": "why-shift-item",
+          "label": "Why Shift Items",
+          "name": "why-shift-items"
+        }
+      ]
+    },
+    {
+      "id": "why-shift-item",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Image",
+          "name": "image",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Link",
+          "name": "link",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "right-shift-banner",
+      "components": [
+        "why-shift-item"
+      ]
+    }
+  ]
+}

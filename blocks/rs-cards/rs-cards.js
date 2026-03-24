@@ -2,8 +2,6 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  block.classList.add('rsCards-rs-cards');
-
   const rowDiv = document.createElement('div');
   rowDiv.classList.add('row');
 
@@ -20,90 +18,102 @@ export default function decorate(block) {
 
     const cells = [...row.children];
 
-    const imageCell = cells[0];
-    const titleCell = cells[1];
-    const descriptionCell = cells[2];
-    const iconCell = cells[3];
-    const linkCell = cells[4];
+    let imageEl;
+    let titleEl;
+    let descriptionEl;
+    let iconEl;
+    let linkElFromCell; // Store the original link element from cell[4]
 
-    // Image
-    const picture = imageCell.querySelector('picture');
-    if (picture) {
-      const img = picture.querySelector('img');
-      if (img) {
-        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-        // Corrected class name from 'rsCards-kitchens-image' to 'rsCards-rightshift-image' based on original HTML
-        optimizedPic.classList.add('w-100', 'rsCards-rightshift-image');
-        optimizedPic.querySelector('img').style.display = 'block'; // Ensure it's visible based on original HTML
-        moveInstrumentation(imageCell, optimizedPic);
-        cardDiv.append(optimizedPic);
+    cells.forEach((cell, index) => {
+      if (index === 0) { // Image
+        // The original HTML had two images, one with display: none and one with display: block.
+        // We only take the one that is visible.
+        // The block structure only provides one picture element per cell, so we assume it's the intended one.
+        const picture = cell.querySelector('picture');
+        if (picture) {
+          imageEl = picture.querySelector('img');
+          if (imageEl) {
+            // Use the class from the original HTML for the visible image
+            imageEl.classList.add('w-100', 'rsCards-kitchens-image');
+            imageEl.style.display = 'block'; // Ensure it's visible based on original HTML
+          }
+        }
+      } else if (index === 1) { // Title
+        titleEl = document.createElement('h5');
+        titleEl.classList.add('rsCards-blog-card-title');
+        titleEl.style.display = 'block';
+        moveInstrumentation(cell, titleEl);
+        while (cell.firstChild) titleEl.append(cell.firstChild);
+      } else if (index === 2) { // Description
+        descriptionEl = document.createElement('h5');
+        descriptionEl.classList.add('card-title');
+        moveInstrumentation(cell, descriptionEl);
+        while (cell.firstChild) descriptionEl.append(cell.firstChild);
+      } else if (index === 3) { // Icon
+        const picture = cell.querySelector('picture');
+        if (picture) {
+          const img = picture.querySelector('img');
+          if (img) {
+            // The original HTML uses the icon inside an <a> tag, and the <a> has an id and style.
+            // We need to create the <a> and put the icon inside it.
+            const iconLink = document.createElement('a');
+            if (linkElFromCell) { // Use the link properties from the link cell if available
+              iconLink.href = linkElFromCell.href;
+              iconLink.setAttribute('aria-label', linkElFromCell.getAttribute('aria-label') || `Read more about '${titleEl ? titleEl.textContent.trim() : ''}'`);
+              iconLink.target = linkElFromCell.target;
+              iconLink.id = 'explore-btn-hide-id'; // Copy ID from original HTML
+              iconLink.style.display = linkElFromCell.style.display; // Copy display style
+            } else {
+              // Fallback if linkElFromCell is not yet processed (shouldn't happen with correct order)
+              iconLink.setAttribute('aria-label', `Read more about '${titleEl ? titleEl.textContent.trim() : ''}'`);
+              iconLink.id = 'explore-btn-hide-id';
+            }
+            moveInstrumentation(cell, iconLink);
+            iconLink.append(img); // Append the icon img to the new link
+            iconEl = iconLink; // Store the link element as the icon element
+          }
+        }
+      } else if (index === 4) { // Link
+        linkElFromCell = cell.querySelector('a'); // Store the original link element
       }
+    });
+
+    if (imageEl) {
+      const pictureWrapper = document.createElement('div'); // Create a wrapper for the image
+      pictureWrapper.append(imageEl.closest('picture') || imageEl);
+      cardDiv.append(pictureWrapper);
     }
 
     const cardBodyDiv = document.createElement('div');
     cardBodyDiv.classList.add('card-body');
 
-    // Link with Icon
-    const foundLink = linkCell.querySelector('a');
-    const linkEl = document.createElement('a');
-    // The link itself doesn't have 'rsCards-blog-card-title' class in the original HTML, the H5 title does.
-    // The original HTML shows the link containing the icon, and the H5 title separately.
-    // Re-evaluating the structure: the link is a wrapper for the icon, and the title is a separate H5.
-    // The original HTML has an `<a>` tag with `id="explore-btn-hide-id"` and an `<img>` inside it.
-    // The `rsCards-blog-card-title` class is on the `h5` element.
-    // Let's ensure the link is created correctly as per original HTML.
-    if (foundLink) {
-      linkEl.href = foundLink.href;
-      linkEl.setAttribute('aria-label', `Read more about '${titleCell.textContent.trim()}'`);
-      linkEl.setAttribute('target', '_self');
-      linkEl.id = 'explore-btn-hide-id'; // Apply ID from original HTML
+    if (iconEl) {
+      cardBodyDiv.append(iconEl);
     }
-
-    const iconPicture = iconCell.querySelector('picture');
-    if (iconPicture) {
-      const iconImg = iconPicture.querySelector('img');
-      if (iconImg) {
-        const optimizedIconPic = createOptimizedPicture(iconImg.src, iconImg.alt, false, [{ width: '24' }]); // Assuming a small icon size
-        optimizedIconPic.querySelector('img').removeAttribute('loading'); // Remove loading attribute from icon
-        moveInstrumentation(iconCell, optimizedIconPic);
-        linkEl.append(optimizedIconPic);
-      }
+    if (titleEl) {
+      cardBodyDiv.append(titleEl);
     }
-    // Append the link (which may contain the icon) to the card body
-    cardBodyDiv.append(linkEl);
-
-    // Title
-    const titleEl = document.createElement('h5');
-    titleEl.classList.add('rsCards-blog-card-title');
-    titleEl.style.display = 'block'; // Ensure it's visible based on original HTML
-    moveInstrumentation(titleCell, titleEl);
-    while (titleCell.firstChild) titleEl.append(titleCell.firstChild);
-    cardBodyDiv.append(titleEl);
-
-    // Description
-    // Original HTML shows <h5 class="card-title"><p>...</p></h5>
-    // The JS was creating an h5 and putting text directly. It should create an h5 and put the p inside.
-    // Or, more accurately, the description cell itself contains a <p> tag.
-    // The original HTML has <h5 class="card-title"><p>...</p></h5>, so we should replicate that.
-    const descriptionWrapperEl = document.createElement('h5');
-    descriptionWrapperEl.classList.add('card-title'); // Class from original HTML
-    moveInstrumentation(descriptionCell, descriptionWrapperEl);
-    // The description cell already contains a <p> tag, so we move that directly.
-    while (descriptionCell.firstChild) descriptionWrapperEl.append(descriptionCell.firstChild);
-    cardBodyDiv.append(descriptionWrapperEl);
+    if (descriptionEl) {
+      cardBodyDiv.append(descriptionEl);
+    }
 
     cardDiv.append(cardBodyDiv);
     colDiv.append(cardDiv);
     rowDiv.append(colDiv);
   });
 
-  const tabParaDiv = document.createElement('div');
-  tabParaDiv.classList.add('rsCards-tab-para');
-  rowDiv.append(tabParaDiv);
+  rowDiv.querySelectorAll('picture > img').forEach((img) => {
+    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+    moveInstrumentation(img, optimizedPic.querySelector('img'));
+    img.closest('picture').replaceWith(optimizedPic);
+  });
+
+  // The 'rsCards-tab-para' div is present in the original HTML but not part of the block's model structure.
+  // It appears to be a static element outside the repeatable card items.
+  // If it's meant to be generated by the block, it should be part of the model.
+  // As it's not, we should not generate it here.
+  // If it was part of the model (e.g., a root field), it would be processed differently.
 
   block.textContent = '';
   block.append(rowDiv);
-
-  // Removed the redundant image optimization loop at the end.
-  // Images are optimized when they are created within the loop.
 }

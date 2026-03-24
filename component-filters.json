@@ -27,13 +27,14 @@
       "carousel",
       "header",
       "healthgoal-banner",
-      "footer-itc-footer-section"
+      "footer-itc-footer-section",
+      "right-shift-banner"
     ]
   },
   {
     "id": "banner-carousel",
     "components": [
-      "banner"
+      "banner-slide"
     ]
   },
   {
@@ -80,10 +81,9 @@
   {
     "id": "footer",
     "components": [
-      "footer-logo",
+      "logo",
       "footer-link",
-      "footer-nav-link",
-      "footer-social-link"
+      "social-link"
     ]
   },
   {
@@ -116,6 +116,12 @@
     "id": "make-right-shift",
     "components": [
       "make-right-shift-item"
+    ]
+  },
+  {
+    "id": "right-shift-banner",
+    "components": [
+      "why-shift-item"
     ]
   },
   {

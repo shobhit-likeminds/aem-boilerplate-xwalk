@@ -5,12 +5,15 @@ export default function decorate(block) {
   const section = document.createElement('section');
   section.classList.add('banner-itc-carousel-section');
 
-  // Generate a unique ID for the carousel if it doesn't have one
-  const carouselId = `carouselExampleSlidesOnly-${Math.random().toString(36).substring(2, 11)}`;
+  const carouselId = `carousel-${Math.random().toString(36).substring(2, 15)}`;
   const carousel = document.createElement('div');
   carousel.id = carouselId;
   carousel.classList.add('banner-bannerCarousel', 'carousel', 'slide');
-  carousel.setAttribute('data-ride', 'carousel'); // Add data-ride for Bootstrap carousel functionality
+  carousel.setAttribute('data-ride', 'carousel'); // Add data-ride for Bootstrap-like auto-play if needed
+
+  const [bannersContainerRow, ...bannerRows] = [...block.children];
+  // The first row is just the container label, not an actual banner item.
+  moveInstrumentation(bannersContainerRow, carousel);
 
   const carouselIndicators = document.createElement('ol');
   carouselIndicators.classList.add('carousel-indicators');
@@ -18,22 +21,33 @@ export default function decorate(block) {
   const carouselInner = document.createElement('div');
   carouselInner.classList.add('carousel-inner');
 
-  const slides = [...block.children];
-
-  slides.forEach((row, index) => {
-    // Check 1: Structure Alignment - Reads exactly 5 cells per item row as per BlockJson
+  bannerRows.forEach((row, index) => {
     const [desktopImageCell, mobileImageCell, headingCell, descriptionCell, ctaLinkCell] = [...row.children];
 
-    // Indicators
+    // Create indicator
     const indicator = document.createElement('li');
     indicator.setAttribute('data-target', `#${carouselId}`);
     indicator.setAttribute('data-slide-to', index.toString());
     if (index === 0) {
       indicator.classList.add('active');
     }
+    // Add event listener for indicators
+    indicator.addEventListener('click', (e) => {
+      e.preventDefault();
+      const slideToIndex = parseInt(e.target.getAttribute('data-slide-to'), 10);
+      const currentActiveItem = carouselInner.querySelector('.carousel-item.active');
+      const currentActiveIndicator = carouselIndicators.querySelector('li.active');
+      const targetItem = carouselInner.children[slideToIndex];
+      const targetIndicator = carouselIndicators.children[slideToIndex];
+
+      if (currentActiveItem) currentActiveItem.classList.remove('active');
+      if (currentActiveIndicator) currentActiveIndicator.classList.remove('active');
+      if (targetItem) targetItem.classList.add('active');
+      if (targetIndicator) targetIndicator.classList.add('active');
+    });
     carouselIndicators.append(indicator);
 
-    // Carousel Item
+    // Create carousel item
     const carouselItem = document.createElement('div');
     carouselItem.classList.add('carousel-item');
     if (index === 0) {
@@ -45,40 +59,30 @@ export default function decorate(block) {
     const desktopPicture = desktopImageCell.querySelector('picture');
     if (desktopPicture) {
       const desktopImg = desktopPicture.querySelector('img');
-      const newDesktopImg = document.createElement('img');
-      newDesktopImg.src = desktopImg.src;
-      newDesktopImg.alt = desktopImg.alt;
-      // Check 2: Class names copied verbatim from ORIGINAL HTML
+      const optimizedDesktopPic = createOptimizedPicture(desktopImg.src, desktopImg.alt, index === 0, [{ width: '1200' }]);
+      const newDesktopImg = optimizedDesktopPic.querySelector('img');
+      moveInstrumentation(desktopImg, newDesktopImg);
       newDesktopImg.classList.add('d-none', 'd-sm-block', 'w-100', 'banner-desktop-image');
-      newDesktopImg.setAttribute('loading', 'eager');
-      newDesktopImg.setAttribute('fetchpriority', 'high');
-      moveInstrumentation(desktopImageCell, newDesktopImg);
-      carouselItem.append(newDesktopImg);
+      carouselItem.append(optimizedDesktopPic);
     }
 
     // Mobile Image
     const mobilePicture = mobileImageCell.querySelector('picture');
     if (mobilePicture) {
       const mobileImg = mobilePicture.querySelector('img');
-      const newMobileImg = document.createElement('img');
-      newMobileImg.src = mobileImg.src;
-      newMobileImg.alt = mobileImg.alt;
-      // Check 2: Class names copied verbatim from ORIGINAL HTML
+      const optimizedMobilePic = createOptimizedPicture(mobileImg.src, mobileImg.alt, index === 0, [{ width: '750' }]);
+      const newMobileImg = optimizedMobilePic.querySelector('img');
+      moveInstrumentation(mobileImg, newMobileImg);
       newMobileImg.classList.add('d-block', 'd-sm-none', 'w-100', 'banner-mobile-image');
-      newMobileImg.setAttribute('loading', 'eager');
-      newMobileImg.setAttribute('fetchpriority', 'high');
-      moveInstrumentation(mobileImageCell, newMobileImg);
-      carouselItem.append(newMobileImg);
+      carouselItem.append(optimizedMobilePic);
     }
 
     // Content Wrapper
-    // Check 2: Class names copied verbatim from ORIGINAL HTML
     const contentWrapper = document.createElement('div');
-    contentWrapper.classList.add('banner-content-wrapper', 'position-absolute');
+    contentWrapper.classList.add('banner-banner-content-wrapper', 'position-absolute');
 
     // Heading
     const heading = document.createElement('h1');
-    // Check 2: Class names copied verbatim from ORIGINAL HTML
     heading.classList.add('banner-koi-carousel-heading', 'text-sm-left');
     moveInstrumentation(headingCell, heading);
     while (headingCell.firstChild) heading.append(headingCell.firstChild);
@@ -86,29 +90,26 @@ export default function decorate(block) {
 
     // Description
     const description = document.createElement('div');
-    // Check 2: Class names copied verbatim from ORIGINAL HTML
     description.classList.add('banner-koi-carousel-description');
     moveInstrumentation(descriptionCell, description);
     while (descriptionCell.firstChild) description.append(descriptionCell.firstChild);
     contentWrapper.append(description);
 
     // CTA Link
-    const ctaLink = ctaLinkCell.querySelector('a');
-    if (ctaLink) {
-      const newCtaLink = document.createElement('a');
-      newCtaLink.href = ctaLink.href;
-      // Check 2: Class names copied verbatim from ORIGINAL HTML
-      newCtaLink.classList.add('banner-koi-carousel-cta', 'btn', 'btn-primary', 'btn-start-now');
-      newCtaLink.target = '_blank';
-      newCtaLink.alt = ctaLink.textContent.trim();
-      moveInstrumentation(ctaLinkCell, newCtaLink);
-      while (ctaLinkCell.firstChild) newCtaLink.append(ctaLinkCell.firstChild);
-      const srOnlySpan = document.createElement('span');
-      // Check 2: Class names copied verbatim from ORIGINAL HTML
-      srOnlySpan.classList.add('cmp-link__screen-reader-only');
-      srOnlySpan.textContent = 'opens in a new tab';
-      newCtaLink.append(srOnlySpan);
-      contentWrapper.append(newCtaLink);
+    const foundCtaLink = ctaLinkCell.querySelector('a');
+    if (foundCtaLink) {
+      const ctaLink = document.createElement('a');
+      ctaLink.href = foundCtaLink.href;
+      ctaLink.classList.add('banner-koi-carousel-cta', 'btn', 'btn-primary', 'btn-start-now');
+      ctaLink.target = '_blank';
+      ctaLink.alt = foundCtaLink.textContent.trim(); // Use link text as alt
+      moveInstrumentation(ctaLinkCell, ctaLink);
+      while (ctaLinkCell.firstChild) ctaLink.append(ctaLinkCell.firstChild);
+      const screenReaderSpan = document.createElement('span');
+      screenReaderSpan.classList.add('cmp-link__screen-reader-only');
+      screenReaderSpan.textContent = 'opens in a new tab';
+      ctaLink.append(screenReaderSpan);
+      contentWrapper.append(ctaLink);
     }
 
     carouselItem.append(contentWrapper);
@@ -118,54 +119,57 @@ export default function decorate(block) {
   carousel.append(carouselIndicators, carouselInner);
 
   // Next and previous buttons
-  // Check 2: Class names copied verbatim from ORIGINAL HTML
   const navButtonsWrapper = document.createElement('div');
   navButtonsWrapper.classList.add('banner-next-carousel-btn');
 
   const prevButton = document.createElement('a');
-  // Check 2: Class names copied verbatim from ORIGINAL HTML
   prevButton.classList.add('carousel-control-prev');
   prevButton.href = `#${carouselId}`;
   prevButton.setAttribute('role', 'button');
-  prevButton.setAttribute('data-slide', 'prev'); // Add data-slide for Bootstrap carousel functionality
-  // Check 2: Interactivity - Added event listener for previous button
+  prevButton.setAttribute('data-slide', 'prev'); // Add data-slide attribute
   prevButton.addEventListener('click', (e) => {
     e.preventDefault();
-    // Bootstrap's carousel JS handles the slide logic when data-slide is present.
-    // We just need to trigger the click on the carousel element itself.
-    carousel.dispatchEvent(new CustomEvent('slide.bs.carousel', { detail: { direction: 'prev' } }));
+    const activeItem = carouselInner.querySelector('.carousel-item.active');
+    const prevItem = activeItem.previousElementSibling || carouselInner.lastElementChild;
+    const activeIndicator = carouselIndicators.querySelector('li.active');
+    const prevIndicator = activeIndicator.previousElementSibling || carouselIndicators.lastElementChild;
+
+    if (activeItem) activeItem.classList.remove('active');
+    if (prevItem) prevItem.classList.add('active');
+    if (activeIndicator) activeIndicator.classList.remove('active');
+    if (prevIndicator) prevIndicator.classList.add('active');
   });
 
   const prevIcon = document.createElement('span');
-  // Check 2: Class names copied verbatim from ORIGINAL HTML
   prevIcon.classList.add('carousel-control-prev-icon');
   prevIcon.setAttribute('aria-hidden', 'true');
   const prevSrOnly = document.createElement('span');
-  // Check 2: Class names copied verbatim from ORIGINAL HTML
   prevSrOnly.classList.add('sr-only');
   prevSrOnly.textContent = 'Previous';
   prevButton.append(prevIcon, prevSrOnly);
 
   const nextButton = document.createElement('a');
-  // Check 2: Class names copied verbatim from ORIGINAL HTML
   nextButton.classList.add('carousel-control-next');
   nextButton.href = `#${carouselId}`;
   nextButton.setAttribute('role', 'button');
-  nextButton.setAttribute('data-slide', 'next'); // Add data-slide for Bootstrap carousel functionality
-  // Check 2: Interactivity - Added event listener for next button
+  nextButton.setAttribute('data-slide', 'next'); // Add data-slide attribute
   nextButton.addEventListener('click', (e) => {
     e.preventDefault();
-    // Bootstrap's carousel JS handles the slide logic when data-slide is present.
-    // We just need to trigger the click on the carousel element itself.
-    carousel.dispatchEvent(new CustomEvent('slide.bs.carousel', { detail: { direction: 'next' } }));
+    const activeItem = carouselInner.querySelector('.carousel-item.active');
+    const nextItem = activeItem.nextElementSibling || carouselInner.firstElementChild;
+    const activeIndicator = carouselIndicators.querySelector('li.active');
+    const nextIndicator = activeIndicator.nextElementSibling || carouselIndicators.firstElementChild;
+
+    if (activeItem) activeItem.classList.remove('active');
+    if (nextItem) nextItem.classList.add('active');
+    if (activeIndicator) activeIndicator.classList.remove('active');
+    if (nextIndicator) nextIndicator.classList.add('active');
   });
 
   const nextIcon = document.createElement('span');
-  // Check 2: Class names copied verbatim from ORIGINAL HTML
   nextIcon.classList.add('carousel-control-next-icon');
   nextIcon.setAttribute('aria-hidden', 'true');
   const nextSrOnly = document.createElement('span');
-  // Check 2: Class names copied verbatim from ORIGINAL HTML
   nextSrOnly.classList.add('sr-only');
   nextSrOnly.textContent = 'Next';
   nextButton.append(nextIcon, nextSrOnly);
@@ -174,14 +178,6 @@ export default function decorate(block) {
   carousel.append(navButtonsWrapper);
 
   section.append(carousel);
-
   block.textContent = '';
   block.append(section);
-
-  // Image optimization
-  block.querySelectorAll('picture > img').forEach((img) => {
-    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '2000' }]);
-    moveInstrumentation(img, optimizedPic.querySelector('img'));
-    img.closest('picture').replaceWith(optimizedPic);
-  });
 }

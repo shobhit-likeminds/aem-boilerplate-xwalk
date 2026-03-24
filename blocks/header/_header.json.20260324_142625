@@ -59,20 +59,14 @@
         },
         {
           "component": "aem-content",
-          "label": "Logo Link",
-          "name": "logo-link",
-          "valueType": "string"
-        },
-        {
-          "component": "reference",
-          "label": "Secondary Logo Image",
-          "name": "secondary-logo-image",
+          "label": "Logo Link 1",
+          "name": "logo-link-1",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "label": "Secondary Logo Link",
-          "name": "secondary-logo-link",
+          "label": "Logo Link 2",
+          "name": "logo-link-2",
           "valueType": "string"
         },
         {
@@ -83,26 +77,14 @@
         },
         {
           "component": "reference",
-          "label": "Country Flag Image",
-          "name": "country-flag-image",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Country Code",
-          "name": "country-code",
-          "valueType": "string"
-        },
-        {
-          "component": "reference",
-          "label": "Country Dropdown Icon",
-          "name": "country-dropdown-icon",
-          "valueType": "string"
-        },
-        {
-          "component": "reference",
           "label": "Search Icon Image",
           "name": "search-icon-image",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Country Flag Image",
+          "name": "country-flag-image",
           "valueType": "string"
         },
         {
@@ -110,18 +92,6 @@
           "item": "country-option",
           "label": "Country Options",
           "name": "country-options"
-        },
-        {
-          "component": "richtext",
-          "label": "Country Modal Title",
-          "name": "country-modal-title",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Country Modal Experience Text",
-          "name": "country-modal-experience-text",
-          "valueType": "string"
         }
       ]
     },
@@ -132,12 +102,6 @@
           "component": "aem-content",
           "label": "Link",
           "name": "link",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Text",
-          "name": "text",
           "valueType": "string"
         }
       ]

@@ -32,30 +32,45 @@
       }
     },
     {
-      "title": "Social-Link",
-      "id": "social-link",
+      "title": "Footer-Nav-Link",
+      "id": "footer-nav-link",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "social-link",
-              "name": "Social-Link"
+              "model": "footer-nav-link",
+              "name": "Footer-Nav-Link"
             }
           }
         }
       }
     },
     {
-      "title": "Logo",
-      "id": "logo",
+      "title": "Footer-Social-Link",
+      "id": "footer-social-link",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "logo",
-              "name": "Logo"
+              "model": "footer-social-link",
+              "name": "Footer-Social-Link"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Footer-Logo",
+      "id": "footer-logo",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "footer-logo",
+              "name": "Footer-Logo"
             }
           }
         }
@@ -68,50 +83,64 @@
       "fields": [
         {
           "component": "container",
-          "item": "logo",
+          "items": {
+            "component": "footer-logo"
+          },
           "label": "Logos",
           "name": "logos"
         },
         {
           "component": "container",
-          "item": "footer-link",
+          "items": {
+            "component": "footer-link"
+          },
           "label": "Footer Links",
           "name": "footerLinks"
         },
         {
           "component": "container",
-          "item": "social-link",
+          "items": {
+            "component": "footer-nav-link"
+          },
+          "label": "Navigation Links",
+          "name": "navigationLinks"
+        },
+        {
+          "component": "container",
+          "items": {
+            "component": "footer-social-link"
+          },
           "label": "Social Links",
           "name": "socialLinks"
         },
         {
-          "component": "richtext",
-          "label": "Copyright",
-          "name": "copyright",
-          "valueType": "string"
-        },
-        {
           "component": "text",
           "label": "Grievance Officer Title",
-          "name": "grievance-officer-title",
+          "name": "grievanceTitle",
           "valueType": "string"
         },
         {
           "component": "text",
           "label": "Grievance Officer Name",
-          "name": "grievance-officer-name",
+          "name": "grievanceName",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Grievance Officer Contact Info",
-          "name": "grievance-officer-contact",
+          "label": "Grievance Officer Contact",
+          "name": "grievanceContact",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Grievance Officer Hours",
-          "name": "grievance-officer-hours",
+          "label": "Grievance Officer Timing",
+          "name": "grievanceTime",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Copyright",
+          "name": "copyright",
           "valueType": "string"
         }
       ]
@@ -127,14 +156,14 @@
         },
         {
           "component": "text",
-          "label": "Text",
-          "name": "text",
+          "label": "Label",
+          "name": "label",
           "valueType": "string"
         }
       ]
     },
     {
-      "id": "social-link",
+      "id": "footer-nav-link",
       "fields": [
         {
           "component": "aem-content",
@@ -143,15 +172,32 @@
           "valueType": "string"
         },
         {
+          "component": "text",
+          "label": "Label",
+          "name": "label",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "footer-social-link",
+      "fields": [
+        {
+          "component": "aem-content",
+          "label": "Social Link",
+          "name": "link",
+          "valueType": "string"
+        },
+        {
           "component": "reference",
-          "label": "Icon Image",
+          "label": "Icon",
           "name": "icon",
           "valueType": "string"
         }
       ]
     },
     {
-      "id": "logo",
+      "id": "footer-logo",
       "fields": [
         {
           "component": "reference",
@@ -164,12 +210,6 @@
           "label": "Logo Link",
           "name": "link",
           "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Alt Text",
-          "name": "alt",
-          "valueType": "string"
         }
       ]
     }
@@ -178,9 +218,10 @@
     {
       "id": "footer",
       "components": [
-        "logo",
+        "footer-logo",
         "footer-link",
-        "social-link"
+        "footer-nav-link",
+        "footer-social-link"
       ]
     }
   ]

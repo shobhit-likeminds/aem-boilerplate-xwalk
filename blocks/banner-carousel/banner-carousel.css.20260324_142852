@@ -1932,10 +1932,6 @@ h2, h3 { page-break-after:avoid }
 
 body{min-width:992px !important} }
 
-.banner-itc-carousel-section .banner-content-wrapper { transform:translate(90px,10%);top:-20px;left:0;bottom:0;color:var(--color-light) }
-
-.banner-itc-carousel-section .banner-content-wrapper h1 { font-size:2.7vw;font-family:"Paytone One";font-weight:400;padding-bottom:10px }
-
 .banner-itc-carousel-section { position:relative }
 
 @media(min-width:1500px) and (max-width:1950px){.banner-itc-carousel-section .banner-carousel-indicators{left:0;justify-content:flex-start;margin-left:85px;margin-right:unset}
