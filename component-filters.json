@@ -35,7 +35,8 @@
       "card-list",
       "media",
       "scarp-separator",
-      "stats-by-the-number"
+      "stats-by-the-number",
+      "rs-card-list"
     ]
   },
   {
@@ -86,9 +87,10 @@
   {
     "id": "footer-itc-footer-section",
     "components": [
+      "footer-logo",
       "footer-link",
       "footer-social",
-      "footer-logo"
+      "footer-secondary-link"
     ]
   },
   {
@@ -117,8 +119,8 @@
   {
     "id": "header",
     "components": [
-      "header-navigation-item",
-      "header-country-option"
+      "navigation-link",
+      "country-option"
     ]
   },
   {
@@ -133,13 +135,13 @@
   {
     "id": "itc-club-carousel",
     "components": [
-      "carousel-item"
+      "itc-club-carousel-item"
     ]
   },
   {
     "id": "make-right-shift",
     "components": [
-      "why-shift-item"
+      "make-right-shift-item"
     ]
   },
   {
@@ -149,6 +151,12 @@
     "id": "right-shift-banner",
     "components": [
       "why-shift-item"
+    ]
+  },
+  {
+    "id": "rs-card-list",
+    "components": [
+      "rs-card"
     ]
   },
   {

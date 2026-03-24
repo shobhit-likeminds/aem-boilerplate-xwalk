@@ -268,6 +268,21 @@
           }
         },
         {
+          "title": "Footer-Logo",
+          "id": "footer-logo",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "footer-logo",
+                  "name": "Footer-Logo"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Footer-Link",
           "id": "footer-link",
           "plugins": {
@@ -298,15 +313,15 @@
           }
         },
         {
-          "title": "Footer-Logo",
-          "id": "footer-logo",
+          "title": "Footer-Secondary-Link",
+          "id": "footer-secondary-link",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "footer-logo",
-                  "name": "Footer-Logo"
+                  "model": "footer-secondary-link",
+                  "name": "Footer-Secondary-Link"
                 }
               }
             }
@@ -512,30 +527,30 @@
           }
         },
         {
-          "title": "Header-Navigation-Item",
-          "id": "header-navigation-item",
+          "title": "Navigation Link",
+          "id": "navigation-link",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "header-navigation-item",
-                  "name": "Header-Navigation-Item"
+                  "model": "navigation-link",
+                  "name": "Navigation Link"
                 }
               }
             }
           }
         },
         {
-          "title": "Header-Country-Option",
-          "id": "header-country-option",
+          "title": "Country Option",
+          "id": "country-option",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "header-country-option",
-                  "name": "Header-Country-Option"
+                  "model": "country-option",
+                  "name": "Country Option"
                 }
               }
             }
@@ -620,15 +635,15 @@
           }
         },
         {
-          "title": "Carousel-Item",
-          "id": "carousel-item",
+          "title": "ITC-Club-Carousel-Item",
+          "id": "itc-club-carousel-item",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "carousel-item",
-                  "name": "Carousel-Item"
+                  "model": "itc-club-carousel-item",
+                  "name": "ITC-Club-Carousel-Item"
                 }
               }
             }
@@ -651,15 +666,15 @@
           }
         },
         {
-          "title": "Why-Shift-Item",
-          "id": "why-shift-item",
+          "title": "Make-Right-Shift-Item",
+          "id": "make-right-shift-item",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "why-shift-item",
-                  "name": "Why-Shift-Item"
+                  "model": "make-right-shift-item",
+                  "name": "Make-Right-Shift-Item"
                 }
               }
             }
@@ -707,6 +722,37 @@
                 "template": {
                   "model": "why-shift-item",
                   "name": "Why-Shift-Item"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "RS-Card-List",
+          "id": "rs-card-list",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "rs-card-list",
+                  "model": "rs-card-list",
+                  "name": "RS-Card-List"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "RS-Card",
+          "id": "rs-card",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "rs-card",
+                  "name": "RS-Card"
                 }
               }
             }

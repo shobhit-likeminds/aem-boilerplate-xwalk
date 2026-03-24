@@ -17,21 +17,6 @@
       }
     },
     {
-      "title": "Footer-Logo",
-      "id": "footer-logo",
-      "plugins": {
-        "xwalk": {
-          "page": {
-            "resourceType": "core/franklin/components/block/v1/block/item",
-            "template": {
-              "model": "footer-logo",
-              "name": "Footer-Logo"
-            }
-          }
-        }
-      }
-    },
-    {
       "title": "Footer-Link",
       "id": "footer-link",
       "plugins": {
@@ -62,15 +47,15 @@
       }
     },
     {
-      "title": "Footer-Secondary-Link",
-      "id": "footer-secondary-link",
+      "title": "Footer-Logo",
+      "id": "footer-logo",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "footer-secondary-link",
-              "name": "Footer-Secondary-Link"
+              "model": "footer-logo",
+              "name": "Footer-Logo"
             }
           }
         }
@@ -84,26 +69,20 @@
         {
           "component": "container",
           "item": "footer-logo",
-          "label": "Logos",
-          "name": "logos"
+          "label": "Footer Logos",
+          "name": "footerLogos"
         },
         {
           "component": "container",
           "item": "footer-link",
           "label": "Footer Links",
-          "name": "footer-links"
+          "name": "footerLinks"
         },
         {
           "component": "container",
           "item": "footer-social",
-          "label": "Social Links",
-          "name": "footer-social"
-        },
-        {
-          "component": "container",
-          "item": "footer-secondary-link",
-          "label": "Secondary Links",
-          "name": "footer-secondary-links"
+          "label": "Footer Socials",
+          "name": "footerSocials"
         },
         {
           "component": "richtext",
@@ -112,27 +91,37 @@
           "valueType": "string"
         },
         {
-          "component": "text",
-          "label": "Grievance Title",
-          "name": "grievance-title",
+          "component": "richtext",
+          "label": "Grievance Officer",
+          "name": "grievanceOfficer",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "footer-link",
+      "fields": [
+        {
+          "component": "aem-content",
+          "label": "Link",
+          "name": "link",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "footer-social",
+      "fields": [
+        {
+          "component": "aem-content",
+          "label": "Social Link",
+          "name": "link",
           "valueType": "string"
         },
         {
-          "component": "text",
-          "label": "Grievance Name",
-          "name": "grievance-name",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Grievance Contact Info",
-          "name": "grievance-contact",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Grievance Hours",
-          "name": "grievance-hours",
+          "component": "reference",
+          "label": "Icon",
+          "name": "icon",
           "valueType": "string"
         }
       ]
@@ -153,61 +142,15 @@
           "valueType": "string"
         }
       ]
-    },
-    {
-      "id": "footer-link",
-      "fields": [
-        {
-          "component": "text",
-          "label": "Label",
-          "name": "label",
-          "valueType": "string"
-        },
-        {
-          "component": "aem-content",
-          "label": "Link",
-          "name": "link",
-          "valueType": "string"
-        }
-      ]
-    },
-    {
-      "id": "footer-social",
-      "fields": [
-        {
-          "component": "reference",
-          "label": "Social Icon",
-          "name": "icon",
-          "valueType": "string"
-        },
-        {
-          "component": "aem-content",
-          "label": "Social Link",
-          "name": "link",
-          "valueType": "string"
-        }
-      ]
-    },
-    {
-      "id": "footer-secondary-link",
-      "fields": [
-        {
-          "component": "aem-content",
-          "label": "Secondary Link",
-          "name": "link",
-          "valueType": "string"
-        }
-      ]
     }
   ],
   "filters": [
     {
       "id": "footer-itc-footer-section",
       "components": [
-        "footer-logo",
         "footer-link",
         "footer-social",
-        "footer-secondary-link"
+        "footer-logo"
       ]
     }
   ]

@@ -1,3 +1,5 @@
+.cmp-image__image { width:100%;height:auto }
+
 @keyframes cmp-search__loading-indicator-spin{0{transform:rotate(0)}
 100%{transform:rotate(360deg)}
 }
@@ -849,6 +851,8 @@ pre { display:block;font-size:87.5%;color:#212529 }
 
 pre code { font-size:inherit;color:inherit;word-break:normal }
 
+.container { width:100%;padding-right:15px;padding-left:15px;margin-right:auto;margin-left:auto }
+
 @media(min-width:576px){.container,.container-sm{max-width:540px}
 }
 
@@ -1313,8 +1317,6 @@ to{background-position:0 0}
 @media(prefers-reduced-motion:reduce){.spinner-border,.spinner-grow{-webkit-animation-duration:1.5s;animation-duration:1.5s}
 }
 
-.d-block { display:block !important }
-
 @media(min-width:576px){.d-sm-none{display:none !important}
 .d-sm-inline{display:inline !important}
 .d-sm-inline-block{display:inline-block !important}
@@ -1525,12 +1527,6 @@ to{background-position:0 0}
 
 @supports((position:-webkit-sticky) or(position:sticky)){.sticky-top{position:-webkit-sticky;position:sticky;top:0;z-index:1020}
 }
-
-.w-100 { width:100% !important }
-
-.mx-4 { margin-right:1.5rem !important }
-
-.mx-4 { margin-left:1.5rem !important }
 
 @media(min-width:576px){.m-sm-0{margin:0 !important}
 .mt-sm-0,.my-sm-0{margin-top:0 !important}
@@ -1936,7 +1932,9 @@ h2, h3 { page-break-after:avoid }
 
 @page{size:a3}
 
-body{min-width:992px !important} }
+body{min-width:992px !important}
+
+.container { min-width:992px !important } }
 
 @media(min-width:1500px) and (max-width:1950px){.itc-carousel-section .carousel-indicators{left:0;justify-content:flex-start;margin-left:85px;margin-right:unset}
 }
@@ -2230,9 +2228,13 @@ body{padding-top:78px !important}
 
 body{font-family:var(--urbanist-font);padding-top:92px}
 
+.container { max-width:1470px;width:100%;padding:0;margin:0 auto }
+
 h1, h2, h3, h4, h5, h6 { font-family:'Paytone One' }
 
 p { font-weight:400 }
+
+span.cmp-link__screen-reader-only { display:none }
 
 #rs-video-model { overflow-y:hidden;margin-top:0 !important }
 
@@ -2393,9 +2395,9 @@ ul::-webkit-scrollbar{display:none}
 .itc-carousel{padding-top:0 !important}
 }
 
-body{color:#2d2119}
+.header-country-flag { width:19px;height:19px;border-radius:50%;object-fit:cover }
 
-.active { opacity:1 }
+body{color:#2d2119}
 
 @media(max-width:375px){.itc-banner p{max-width:100%}
 }

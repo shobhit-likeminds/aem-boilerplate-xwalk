@@ -17,15 +17,15 @@
       }
     },
     {
-      "title": "ITC-Club-Carousel-Item",
-      "id": "itc-club-carousel-item",
+      "title": "Carousel-Item",
+      "id": "carousel-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "itc-club-carousel-item",
-              "name": "ITC-Club-Carousel-Item"
+              "model": "carousel-item",
+              "name": "Carousel-Item"
             }
           }
         }
@@ -38,19 +38,25 @@
       "fields": [
         {
           "component": "container",
-          "item": "itc-club-carousel-item",
+          "item": "carousel-item",
           "label": "Carousel Items",
-          "name": "carousel-items"
+          "name": "carouselItems"
         }
       ]
     },
     {
-      "id": "itc-club-carousel-item",
+      "id": "carousel-item",
       "fields": [
         {
           "component": "reference",
           "label": "Image",
           "name": "image",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Alt Text",
+          "name": "alt",
           "valueType": "string"
         },
         {
@@ -72,7 +78,7 @@
     {
       "id": "itc-club-carousel",
       "components": [
-        "itc-club-carousel-item"
+        "carousel-item"
       ]
     }
   ]

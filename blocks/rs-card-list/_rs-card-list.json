@@ -1,31 +1,31 @@
 {
   "definitions": [
     {
-      "title": "ITC-Club-Carousel",
-      "id": "itc-club-carousel",
+      "title": "RS-Card-List",
+      "id": "rs-card-list",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block",
             "template": {
-              "filter": "itc-club-carousel",
-              "model": "itc-club-carousel",
-              "name": "ITC-Club-Carousel"
+              "filter": "rs-card-list",
+              "model": "rs-card-list",
+              "name": "RS-Card-List"
             }
           }
         }
       }
     },
     {
-      "title": "ITC-Club-Carousel-Item",
-      "id": "itc-club-carousel-item",
+      "title": "RS-Card",
+      "id": "rs-card",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "itc-club-carousel-item",
-              "name": "ITC-Club-Carousel-Item"
+              "model": "rs-card",
+              "name": "RS-Card"
             }
           }
         }
@@ -34,18 +34,18 @@
   ],
   "models": [
     {
-      "id": "itc-club-carousel",
+      "id": "rs-card-list",
       "fields": [
         {
           "component": "container",
-          "item": "itc-club-carousel-item",
-          "label": "Carousel Items",
-          "name": "carousel-items"
+          "item": "rs-card",
+          "label": "Cards",
+          "name": "cards"
         }
       ]
     },
     {
-      "id": "itc-club-carousel-item",
+      "id": "rs-card",
       "fields": [
         {
           "component": "reference",
@@ -54,7 +54,7 @@
           "valueType": "string"
         },
         {
-          "component": "text",
+          "component": "richtext",
           "label": "Title",
           "name": "title",
           "valueType": "string"
@@ -70,9 +70,9 @@
   ],
   "filters": [
     {
-      "id": "itc-club-carousel",
+      "id": "rs-card-list",
       "components": [
-        "itc-club-carousel-item"
+        "rs-card"
       ]
     }
   ]

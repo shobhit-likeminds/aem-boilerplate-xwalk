@@ -3,17 +3,14 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
   const allRows = [...block.children];
-  // The first row is the container label, which we don't need to render.
-  // The rest are banner items.
-  const bannerItems = allRows.slice(1);
+  const bannerItems = allRows.slice(1); // Skip the first row which is the container label
 
-  const carouselSection = document.createElement('section');
-  carouselSection.classList.add('banner-itc-carousel-section');
+  // Generate a unique ID for the carousel if not already present
+  const carouselId = `carousel-${Math.random().toString(36).substring(2, 9)}`;
+  block.id = carouselId; // Set the ID on the block itself
 
-  const carouselWrapper = document.createElement('div');
-  carouselWrapper.id = 'carouselExampleSlidesOnly';
-  carouselWrapper.classList.add('banner-bannerCarousel', 'carousel', 'slide');
-  carouselWrapper.setAttribute('data-ride', 'carousel');
+  block.classList.add('carousel', 'slide');
+  block.setAttribute('data-ride', 'carousel');
 
   const carouselIndicators = document.createElement('ol');
   carouselIndicators.classList.add('carousel-indicators');
@@ -22,109 +19,125 @@ export default function decorate(block) {
   carouselInner.classList.add('carousel-inner');
 
   bannerItems.forEach((row, index) => {
+    // Check if the row has the expected number of children (8 for banner items)
+    if (row.children.length !== 8) {
+      console.warn('Skipping malformed banner item row:', row);
+      return;
+    }
+
     const [
       desktopImageCell,
       mobileImageCell,
-      desktopImageAltCell,
-      mobileImageAltCell,
+      desktopAltCell,
+      mobileAltCell,
       headingCell,
       descriptionCell,
       ctaLinkCell,
-      ctaLabelCell,
+      ctaTextCell,
     ] = row.children;
 
-    // Indicators
+    // Create indicator
     const indicator = document.createElement('li');
-    indicator.setAttribute('data-target', '#carouselExampleSlidesOnly');
+    indicator.setAttribute('data-target', `#${carouselId}`); // Use dynamic ID
     indicator.setAttribute('data-slide-to', index.toString());
     if (index === 0) {
       indicator.classList.add('active');
     }
     carouselIndicators.append(indicator);
 
-    // Carousel Item
+    // Create carousel item
     const carouselItem = document.createElement('div');
     carouselItem.classList.add('carousel-item');
     if (index === 0) {
       carouselItem.classList.add('active');
     }
-    moveInstrumentation(row, carouselItem);
 
+    // Desktop Image
     const desktopPicture = desktopImageCell.querySelector('picture');
     const desktopImg = desktopPicture ? desktopPicture.querySelector('img') : null;
     if (desktopImg) {
       const optimizedDesktopPic = createOptimizedPicture(
         desktopImg.src,
-        desktopImageAltCell.textContent.trim(),
+        desktopAltCell.textContent.trim() || desktopImg.alt,
         index === 0, // Eager load first image
-        [{ width: '2000' }],
+        [{ media: '(min-width: 576px)', width: '2000' }], // Assuming a large desktop width
       );
-      optimizedDesktopPic.querySelector('img').classList.add('d-none', 'd-sm-block', 'w-100', 'desktop-image'); // Corrected class name
-      optimizedDesktopPic.querySelector('img').alt = desktopImageAltCell.textContent.trim();
-      moveInstrumentation(desktopImg, optimizedDesktopPic.querySelector('img'));
+      const newDesktopImg = optimizedDesktopPic.querySelector('img');
+      newDesktopImg.classList.add('d-none', 'd-sm-block', 'w-100', 'banner-desktop-image');
+      newDesktopImg.setAttribute('loading', index === 0 ? 'eager' : 'lazy');
+      newDesktopImg.setAttribute('fetchpriority', index === 0 ? 'high' : 'low');
+      moveInstrumentation(desktopImg, newDesktopImg);
       carouselItem.append(optimizedDesktopPic);
     }
 
+    // Mobile Image
     const mobilePicture = mobileImageCell.querySelector('picture');
     const mobileImg = mobilePicture ? mobilePicture.querySelector('img') : null;
     if (mobileImg) {
       const optimizedMobilePic = createOptimizedPicture(
         mobileImg.src,
-        mobileImageAltCell.textContent.trim(),
+        mobileAltCell.textContent.trim() || mobileImg.alt,
         index === 0, // Eager load first image
-        [{ width: '750' }],
+        [{ width: '750' }], // Mobile width
       );
-      optimizedMobilePic.querySelector('img').classList.add('d-block', 'd-sm-none', 'w-100', 'mobile-image'); // Corrected class name
-      optimizedMobilePic.querySelector('img').alt = mobileImageAltCell.textContent.trim();
-      moveInstrumentation(mobileImg, optimizedMobilePic.querySelector('img'));
+      const newMobileImg = optimizedMobilePic.querySelector('img');
+      newMobileImg.classList.add('d-block', 'd-sm-none', 'w-100', 'banner-mobile-image');
+      newMobileImg.setAttribute('loading', index === 0 ? 'eager' : 'lazy');
+      newMobileImg.setAttribute('fetchpriority', index === 0 ? 'high' : 'low');
+      moveInstrumentation(mobileImg, newMobileImg);
       carouselItem.append(optimizedMobilePic);
     }
 
+    // Content Wrapper
     const contentWrapper = document.createElement('div');
-    contentWrapper.classList.add('banner-banner-content-wrapper', 'position-absolute');
+    contentWrapper.classList.add('banner-content-wrapper', 'position-absolute');
 
+    // Heading
     const heading = document.createElement('h1');
     heading.classList.add('banner-koi-carousel-heading', 'text-sm-left');
     moveInstrumentation(headingCell, heading);
-    heading.textContent = headingCell.textContent.trim();
+    while (headingCell.firstChild) heading.append(headingCell.firstChild);
     contentWrapper.append(heading);
 
+    // Description
     const description = document.createElement('div');
     description.classList.add('banner-koi-carousel-description');
     moveInstrumentation(descriptionCell, description);
     while (descriptionCell.firstChild) description.append(descriptionCell.firstChild);
     contentWrapper.append(description);
 
-    const ctaLinkElement = ctaLinkCell.querySelector('a');
-    if (ctaLinkElement) {
-      const cta = document.createElement('a');
-      cta.href = ctaLinkElement.href;
-      cta.classList.add('banner-koi-carousel-cta', 'btn', 'btn-primary', 'btn-start-now');
-      cta.alt = ctaLabelCell.textContent.trim();
-      cta.target = '_blank'; // Assuming target blank from original HTML
-      moveInstrumentation(ctaLinkCell, cta);
-      cta.textContent = ctaLabelCell.textContent.trim();
-
-      const screenReaderOnlySpan = document.createElement('span');
-      screenReaderOnlySpan.classList.add('cmp-link__screen-reader-only');
-      screenReaderOnlySpan.textContent = 'opens in a new tab';
-      cta.append(screenReaderOnlySpan);
-      contentWrapper.append(cta);
+    // CTA Link
+    const ctaLink = ctaLinkCell.querySelector('a');
+    if (ctaLink) {
+      const newCtaLink = document.createElement('a');
+      newCtaLink.href = ctaLink.href;
+      newCtaLink.classList.add('banner-koi-carousel-cta', 'btn', 'btn-primary', 'btn-start-now');
+      newCtaLink.alt = ctaTextCell.textContent.trim();
+      newCtaLink.target = '_blank'; // From original HTML
+      moveInstrumentation(ctaLinkCell, newCtaLink);
+      newCtaLink.textContent = ctaTextCell.textContent.trim(); // Use CTA Text for link content
+      const srOnlySpan = document.createElement('span');
+      srOnlySpan.classList.add('cmp-link__screen-reader-only');
+      srOnlySpan.textContent = 'opens in a new tab';
+      newCtaLink.append(srOnlySpan);
+      contentWrapper.append(newCtaLink);
     }
 
     carouselItem.append(contentWrapper);
     carouselInner.append(carouselItem);
   });
 
-  const nextCarouselBtn = document.createElement('div');
-  nextCarouselBtn.classList.add('banner-next-carousel-btn');
+  // Next and previous buttons wrapper
+  const navButtonsWrapper = document.createElement('div');
+  navButtonsWrapper.classList.add('banner-next-carousel-btn');
 
-  const prevControl = document.createElement('a');
-  prevControl.classList.add('carousel-control-prev');
-  prevControl.href = '#carouselExampleSlidesOnly';
-  prevControl.setAttribute('role', 'button');
-  prevControl.setAttribute('data-slide', 'prev'); // data-slide is inert, but kept for semantic consistency
-  prevControl.addEventListener('click', (e) => {
+  // Previous button
+  const prevButton = document.createElement('a');
+  prevButton.classList.add('carousel-control-prev');
+  prevButton.href = `#${carouselId}`; // Use dynamic ID
+  prevButton.setAttribute('role', 'button');
+  prevButton.setAttribute('data-slide', 'prev'); // Added missing data-slide attribute
+  prevButton.addEventListener('click', (e) => {
     e.preventDefault();
     const activeItem = carouselInner.querySelector('.carousel-item.active');
     let prevItem = activeItem.previousElementSibling;
@@ -134,27 +147,29 @@ export default function decorate(block) {
     if (prevItem) {
       activeItem.classList.remove('active');
       prevItem.classList.add('active');
-      updateIndicators(prevItem);
+      const activeIndicator = carouselIndicators.querySelector('.active');
+      const prevIndicator = carouselIndicators.children[Array.from(carouselInner.children).indexOf(prevItem)];
+      if (activeIndicator) activeIndicator.classList.remove('active');
+      if (prevIndicator) prevIndicator.classList.add('active');
     }
   });
 
   const prevIcon = document.createElement('span');
-  prevIcon.classList.add('carousel-control-prev-icon'); // Corrected class name
+  prevIcon.classList.add('carousel-control-prev-icon');
   prevIcon.setAttribute('aria-hidden', 'true');
-  prevControl.append(prevIcon);
-
   const prevSrOnly = document.createElement('span');
   prevSrOnly.classList.add('sr-only');
   prevSrOnly.textContent = 'Previous';
-  prevControl.append(prevSrOnly);
-  nextCarouselBtn.append(prevControl);
+  prevButton.append(prevIcon, prevSrOnly);
+  navButtonsWrapper.append(prevButton);
 
-  const nextControl = document.createElement('a');
-  nextControl.classList.add('carousel-control-next');
-  nextControl.href = '#carouselExampleSlidesOnly';
-  nextControl.setAttribute('role', 'button');
-  nextControl.setAttribute('data-slide', 'next'); // data-slide is inert, but kept for semantic consistency
-  nextControl.addEventListener('click', (e) => {
+  // Next button
+  const nextButton = document.createElement('a');
+  nextButton.classList.add('carousel-control-next');
+  nextButton.href = `#${carouselId}`; // Use dynamic ID
+  nextButton.setAttribute('role', 'button');
+  nextButton.setAttribute('data-slide', 'next'); // Added missing data-slide attribute
+  nextButton.addEventListener('click', (e) => {
     e.preventDefault();
     const activeItem = carouselInner.querySelector('.carousel-item.active');
     let nextItem = activeItem.nextElementSibling;
@@ -164,66 +179,22 @@ export default function decorate(block) {
     if (nextItem) {
       activeItem.classList.remove('active');
       nextItem.classList.add('active');
-      updateIndicators(nextItem);
+      const activeIndicator = carouselIndicators.querySelector('.active');
+      const nextIndicator = carouselIndicators.children[Array.from(carouselInner.children).indexOf(nextItem)];
+      if (activeIndicator) activeIndicator.classList.remove('active');
+      if (nextIndicator) nextIndicator.classList.add('active');
     }
   });
 
   const nextIcon = document.createElement('span');
-  nextIcon.classList.add('carousel-control-next-icon'); // Corrected class name
+  nextIcon.classList.add('carousel-control-next-icon');
   nextIcon.setAttribute('aria-hidden', 'true');
-  nextControl.append(nextIcon);
-
   const nextSrOnly = document.createElement('span');
   nextSrOnly.classList.add('sr-only');
   nextSrOnly.textContent = 'Next';
-  nextControl.append(nextSrOnly);
-  nextCarouselBtn.append(nextControl);
+  nextButton.append(nextIcon, nextSrOnly);
+  navButtonsWrapper.append(nextButton);
 
-  carouselWrapper.append(carouselIndicators, carouselInner, nextCarouselBtn);
-  carouselSection.append(carouselWrapper);
-
-  block.textContent = '';
-  block.append(carouselSection);
-
-  function updateIndicators(activeItem) {
-    const activeIndex = [...carouselInner.children].indexOf(activeItem);
-    carouselIndicators.querySelectorAll('li').forEach((li, i) => {
-      if (i === activeIndex) {
-        li.classList.add('active');
-      } else {
-        li.classList.remove('active');
-      }
-    });
-  }
-
-  // Auto-advance carousel
-  let currentIndex = 0;
-  const intervalTime = 5000; // 5 seconds
-  setInterval(() => {
-    const currentActiveItem = carouselInner.querySelector('.carousel-item.active');
-    let nextItem = currentActiveItem.nextElementSibling;
-    if (!nextItem || !nextItem.classList.contains('carousel-item')) {
-      nextItem = carouselInner.firstElementChild;
-    }
-    if (nextItem) {
-      currentActiveItem.classList.remove('active');
-      nextItem.classList.add('active');
-      updateIndicators(nextItem);
-    }
-  }, intervalTime);
-
-  // Handle indicator clicks
-  carouselIndicators.querySelectorAll('li').forEach((indicatorEl, index) => {
-    indicatorEl.addEventListener('click', (e) => {
-      e.preventDefault();
-      carouselInner.querySelectorAll('.carousel-item').forEach((item, itemIndex) => {
-        if (itemIndex === index) {
-          item.classList.add('active');
-        } else {
-          item.classList.remove('active');
-        }
-      });
-      updateIndicators(carouselInner.children[index]);
-    });
-  });
+  block.textContent = ''; // Clear the block
+  block.append(carouselIndicators, carouselInner, navButtonsWrapper);
 }

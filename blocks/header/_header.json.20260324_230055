@@ -17,30 +17,30 @@
       }
     },
     {
-      "title": "Navigation Link",
-      "id": "navigation-link",
+      "title": "Header-Navigation-Item",
+      "id": "header-navigation-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "navigation-link",
-              "name": "Navigation Link"
+              "model": "header-navigation-item",
+              "name": "Header-Navigation-Item"
             }
           }
         }
       }
     },
     {
-      "title": "Country Option",
-      "id": "country-option",
+      "title": "Header-Country-Option",
+      "id": "header-country-option",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "country-option",
-              "name": "Country Option"
+              "model": "header-country-option",
+              "name": "Header-Country-Option"
             }
           }
         }
@@ -65,15 +65,9 @@
         },
         {
           "component": "container",
-          "item": "navigation-link",
-          "label": "Navigation Links",
-          "name": "navigation-links"
-        },
-        {
-          "component": "reference",
-          "label": "Country Flag Image",
-          "name": "country-flag-image",
-          "valueType": "string"
+          "item": "header-navigation-item",
+          "label": "Navigation Items",
+          "name": "navigation-items"
         },
         {
           "component": "text",
@@ -83,31 +77,43 @@
         },
         {
           "component": "reference",
-          "label": "Dropdown Icon Image",
-          "name": "dropdown-icon-image",
+          "label": "Country Flag",
+          "name": "country-flag",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Dropdown Icon",
+          "name": "dropdown-icon",
           "valueType": "string"
         },
         {
           "component": "container",
-          "item": "country-option",
+          "item": "header-country-option",
           "label": "Country Options",
           "name": "country-options"
         }
       ]
     },
     {
-      "id": "navigation-link",
+      "id": "header-navigation-item",
       "fields": [
         {
           "component": "aem-content",
           "label": "Link",
           "name": "link",
           "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Label",
+          "name": "label",
+          "valueType": "string"
         }
       ]
     },
     {
-      "id": "country-option",
+      "id": "header-country-option",
       "fields": [
         {
           "component": "reference",
@@ -128,8 +134,8 @@
     {
       "id": "header",
       "components": [
-        "navigation-link",
-        "country-option"
+        "header-navigation-item",
+        "header-country-option"
       ]
     }
   ]

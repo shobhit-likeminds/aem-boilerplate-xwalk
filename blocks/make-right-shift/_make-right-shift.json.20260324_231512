@@ -17,15 +17,15 @@
       }
     },
     {
-      "title": "Make-Right-Shift-Item",
-      "id": "make-right-shift-item",
+      "title": "Why-Shift-Item",
+      "id": "why-shift-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "make-right-shift-item",
-              "name": "Make-Right-Shift-Item"
+              "model": "why-shift-item",
+              "name": "Why-Shift-Item"
             }
           }
         }
@@ -38,8 +38,8 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Main Image",
-          "name": "main-image",
+          "label": "Banner Image",
+          "name": "banner-image",
           "valueType": "string"
         },
         {
@@ -55,27 +55,21 @@
           "valueType": "string"
         },
         {
-          "component": "richtext",
-          "label": "Description",
-          "name": "description",
-          "valueType": "string"
+          "component": "container",
+          "item": "why-shift-item",
+          "label": "Why Shift Items",
+          "name": "why-shift-items"
         },
         {
           "component": "aem-content",
           "label": "CTA Link",
           "name": "cta-link",
           "valueType": "string"
-        },
-        {
-          "component": "container",
-          "item": "make-right-shift-item",
-          "label": "Items",
-          "name": "items"
         }
       ]
     },
     {
-      "id": "make-right-shift-item",
+      "id": "why-shift-item",
       "fields": [
         {
           "component": "reference",
@@ -84,15 +78,15 @@
           "valueType": "string"
         },
         {
-          "component": "aem-content",
-          "label": "Link",
-          "name": "link",
+          "component": "text",
+          "label": "Label",
+          "name": "label",
           "valueType": "string"
         },
         {
-          "component": "richtext",
-          "label": "Label",
-          "name": "label",
+          "component": "aem-content",
+          "label": "Link",
+          "name": "link",
           "valueType": "string"
         }
       ]
@@ -102,7 +96,7 @@
     {
       "id": "make-right-shift",
       "components": [
-        "make-right-shift-item"
+        "why-shift-item"
       ]
     }
   ]

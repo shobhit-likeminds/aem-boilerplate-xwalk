@@ -70,7 +70,8 @@
         "card-list",
         "media",
         "scarp-separator",
-        "stats-by-the-number"
+        "stats-by-the-number",
+        "rs-card-list"
       ]
     }
   ]
