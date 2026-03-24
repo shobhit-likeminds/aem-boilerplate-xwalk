@@ -63,7 +63,14 @@
         "header",
         "healthgoal-banner",
         "footer-itc-footer-section",
-        "right-shift-banner"
+        "right-shift-banner",
+        "header-navigation",
+        "hero-full-width",
+        "text-and-media-true",
+        "card-list",
+        "media",
+        "scarp-separator",
+        "stats-by-the-number"
       ]
     }
   ]

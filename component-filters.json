@@ -28,7 +28,14 @@
       "header",
       "healthgoal-banner",
       "footer-itc-footer-section",
-      "right-shift-banner"
+      "right-shift-banner",
+      "header-navigation",
+      "hero-full-width",
+      "text-and-media-true",
+      "card-list",
+      "media",
+      "scarp-separator",
+      "stats-by-the-number"
     ]
   },
   {
@@ -41,6 +48,12 @@
     "id": "banner-itc-carousel",
     "components": [
       "slide"
+    ]
+  },
+  {
+    "id": "card-list",
+    "components": [
+      "card"
     ]
   },
   {
@@ -81,9 +94,10 @@
   {
     "id": "footer",
     "components": [
-      "logo",
-      "footer-link",
-      "social-link"
+      "social-link",
+      "navigation-link",
+      "language",
+      "policy-link"
     ]
   },
   {
@@ -91,6 +105,14 @@
     "components": [
       "header-navigation-item",
       "header-country-option"
+    ]
+  },
+  {
+    "id": "header-navigation",
+    "components": [
+      "nav-item",
+      "subnav-item",
+      "language-item"
     ]
   },
   {
@@ -107,6 +129,9 @@
     ]
   },
   {
+    "id": "hero-full-width"
+  },
+  {
     "id": "itc-club-carousel",
     "components": [
       "carousel-item"
@@ -117,6 +142,9 @@
     "components": [
       "make-right-shift-item"
     ]
+  },
+  {
+    "id": "media"
   },
   {
     "id": "right-shift-banner",
@@ -131,7 +159,25 @@
     ]
   },
   {
+    "id": "scarp-separator"
+  },
+  {
     "id": "space-adder"
+  },
+  {
+    "id": "stats-by-the-number",
+    "components": [
+      "stats-tab"
+    ]
+  },
+  {
+    "id": "stats-tab",
+    "components": [
+      "stats-card"
+    ]
+  },
+  {
+    "id": "text-and-media-true"
   },
   {
     "id": "text"

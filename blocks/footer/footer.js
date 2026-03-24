@@ -2,241 +2,216 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  // Destructure root rows based on BlockJson model
   const [
-    logosContainer, // block.children[0]
-    footerLinksContainer, // block.children[1]
-    socialLinksContainer, // block.children[2]
-    copyrightRow, // block.children[3]
-    grievanceOfficerTitleRow, // block.children[4]
-    grievanceOfficerNameRow, // block.children[5]
-    grievanceOfficerContactRow, // block.children[6]
-    grievanceOfficerHoursRow, // block.children[7]
+    socialLinksContainer,
+    navigationLinksContainer,
+    languagesContainer,
+    policyLinksContainer,
+    copyrightRow,
+    ...itemRows
   ] = [...block.children];
 
-  // Extract item rows from their respective containers
-  const logos = [...logosContainer.children];
-  const footerLinks = [...footerLinksContainer.children];
-  const socialLinks = [...socialLinksContainer.children];
-
   block.textContent = '';
+  block.classList.add('footer-wrapper');
 
-  const footerSection = document.createElement('footer');
-  footerSection.classList.add('footer-itc-footer-section');
+  // Navigation section
+  const navigationDiv = document.createElement('div');
+  navigationDiv.classList.add('navigation', 'footer-nav-css-from-wrapper');
+  block.append(navigationDiv);
 
-  const footerContainer = document.createElement('div');
-  footerContainer.classList.add('footer-container');
-  footerSection.append(footerContainer);
+  const navigationWrapper = document.createElement('div');
+  navigationWrapper.classList.add('navigation-wrapper');
+  navigationDiv.append(navigationWrapper);
 
-  const footerRow = document.createElement('div');
-  footerRow.classList.add('footer-row');
-  footerContainer.append(footerRow);
+  // Logo
+  const navigationLogo = document.createElement('div');
+  navigationLogo.classList.add('navigation-logo');
+  navigationWrapper.append(navigationLogo);
 
-  // Left column for logos
-  const leftCol = document.createElement('div');
-  leftCol.classList.add('footer-col-lg-6', 'footer-col-sm-12', 'footer-d-flex', 'footer-d-lg-block', 'footer-justify-content-center');
-  footerRow.append(leftCol);
+  const logoLink = document.createElement('a');
+  logoLink.href = '/';
+  logoLink.setAttribute('target', '_self');
+  logoLink.setAttribute('aria-label', 'Qiddiya - Go to homepage');
+  navigationLogo.append(logoLink);
 
-  const footerLogosDiv = document.createElement('div');
-  footerLogosDiv.classList.add('footer-footer-logos');
-  leftCol.append(footerLogosDiv);
+  const logoSpan = document.createElement('span');
+  logoSpan.classList.add('qd-icon', 'qd-icon--logo', 'qd-logo-footer');
+  for (let i = 1; i <= 25; i += 1) {
+    const pathSpan = document.createElement('span');
+    pathSpan.classList.add(`path${i}`);
+    logoSpan.append(pathSpan);
+  }
+  logoLink.append(logoSpan);
 
-  logos.forEach((logoRow) => {
-    const logoDiv = document.createElement('div');
-    // Determine class based on content, assuming first logo is itc and second is fssai from original HTML
-    // This is a heuristic based on the original HTML, not directly from BlockJson fields.
-    // A more robust solution might involve an explicit 'type' field in the logo model if needed.
-    const isItcLogo = logoRow.querySelector('img[alt="ITC logo"]');
-    logoDiv.classList.add(isItcLogo ? 'footer-footer-itc-logo' : 'footer-footer-fssai-logo');
-    moveInstrumentation(logoRow, logoDiv);
+  const navigationContent = document.createElement('div');
+  navigationContent.classList.add('navigation-content');
+  navigationWrapper.append(navigationContent);
 
-    const logoInnerDiv = document.createElement('div');
-    logoInnerDiv.classList.add('footer-logo', 'footer-image');
-    logoDiv.append(logoInnerDiv);
+  // Social Links
+  const socialLinksDiv = document.createElement('div');
+  socialLinksDiv.classList.add('socialLinks', 'social-links', 'footer-social-css-from-wrapper');
+  navigationContent.append(socialLinksDiv);
 
-    const linkEl = document.createElement('a');
-    const foundLink = logoRow.children[1].querySelector('a'); // Link is in the second cell
-    if (foundLink) {
-      linkEl.href = foundLink.href;
-      linkEl.target = '_self';
-      linkEl.classList.add('footer-cmp-image__link');
-    }
+  const socialLinksList = document.createElement('ul');
+  socialLinksList.classList.add('social-links-list');
+  socialLinksDiv.append(socialLinksList);
 
-    const picture = logoRow.children[0].querySelector('picture'); // Image is in the first cell
-    if (picture) {
-      const img = picture.querySelector('img');
-      if (img) {
-        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-        moveInstrumentation(img, optimizedPic.querySelector('img'));
-        linkEl.append(optimizedPic);
-      }
-    }
-    logoInnerDiv.append(linkEl);
-    footerLogosDiv.append(logoDiv);
-  });
+  // Filter social link items from the initial container
+  const socialLinkItems = [...socialLinksContainer.children].filter(
+    (row) => row.children.length === 2 && row.querySelector('div:first-child a') && row.querySelector('div:last-child').textContent.trim() !== ''
+  );
 
-  // Middle column for footer links and grievance officer
-  const middleCol = document.createElement('div');
-  middleCol.classList.add('footer-col-lg-6', 'footer-col-sm-12', 'footer-itc-footer-link-left'); // Corrected class from original HTML
-  footerRow.append(middleCol);
-
-  const footerListsContainer = document.createElement('div');
-  footerListsContainer.classList.add('footer-footer-lists-container', 'footer-d-flex');
-  middleCol.append(footerListsContainer);
-
-  const ul1 = document.createElement('ul');
-  ul1.classList.add('footer-list-4', 'footer-list'); // Matching original HTML structure
-  footerListsContainer.append(ul1);
-
-  const ul2 = document.createElement('ul');
-  ul2.classList.add('footer-list-3', 'footer-list'); // Matching original HTML structure
-  footerListsContainer.append(ul2);
-
-  footerLinks.forEach((linkRow, index) => {
+  socialLinkItems.forEach((row) => {
     const li = document.createElement('li');
-    moveInstrumentation(linkRow, li);
+    moveInstrumentation(row, li);
+    li.classList.add('social-links-item');
 
+    const linkCell = row.children[0];
+    const labelCell = row.children[1];
+
+    const foundLink = linkCell.querySelector('a');
     const linkEl = document.createElement('a');
-    const foundLink = linkRow.children[0].querySelector('a'); // Link is in the first cell
-    const textContent = linkRow.children[1].textContent; // Text is in the second cell
-
+    linkEl.classList.add('social-links-icon', 'qd-icon');
     if (foundLink) {
       linkEl.href = foundLink.href;
-      linkEl.target = '_blank';
-      linkEl.setAttribute('data-cmp-clickable', '');
-      linkEl.append(textContent); // Use the text content from the second cell
-      const screenReaderSpan = document.createElement('span');
-      screenReaderSpan.classList.add('footer-cmp-link__screen-reader-only');
-      screenReaderSpan.textContent = 'opens in a new tab';
-      linkEl.append(screenReaderSpan);
-    } else {
-      linkEl.textContent = textContent;
+      linkEl.setAttribute('target', '_blank');
+      linkEl.setAttribute('aria-label', labelCell.textContent.trim());
+    }
+
+    const iconClass = labelCell.textContent.trim().toLowerCase();
+    if (iconClass === 'x') {
+      linkEl.classList.add('qd-icon--x');
+    } else if (iconClass === 'instagram') {
+      linkEl.classList.add('qd-icon--instagram');
+    } else if (iconClass === 'youtube') {
+      linkEl.classList.add('qd-icon--youtube');
+    } else if (iconClass === 'tiktok') {
+      linkEl.classList.add('qd-icon--tiktok');
+    } else if (iconClass === 'linkedin') {
+      linkEl.classList.add('qd-icon--linkedin');
     }
     li.append(linkEl);
-
-    // Distribute links between the two ULs as per original HTML structure
-    if (index < 3) { // Assuming first 3 links go to ul1, rest to ul2 based on original HTML
-      ul1.append(li);
-    } else {
-      ul2.append(li);
-    }
+    socialLinksList.append(li);
   });
 
-  // Grievance Officer details
-  const contactDetailsDiv = document.createElement('div');
-  contactDetailsDiv.classList.add('footer-contact-details');
-  middleCol.append(contactDetailsDiv);
+  // Navigation Links
+  const navigationLinksList = document.createElement('ul');
+  navigationLinksList.classList.add('navigation-links');
+  navigationContent.append(navigationLinksList);
 
-  const grievanceTitle = document.createElement('h5');
-  grievanceTitle.classList.add('footer-contact-details__title', 'footer-mb-md-3', 'footer-mb-0');
-  moveInstrumentation(grievanceOfficerTitleRow, grievanceTitle);
-  grievanceTitle.textContent = grievanceOfficerTitleRow.querySelector('div').textContent.trim(); // Get content from inner div
-  contactDetailsDiv.append(grievanceTitle);
+  // Filter navigation link items from the initial container
+  const navLinkItems = [...navigationLinksContainer.children].filter(
+    (row) => row.children.length === 2 && row.querySelector('div:first-child a') && row.querySelector('div:last-child').textContent.trim() !== ''
+  );
 
-  const grievanceName = document.createElement('p');
-  grievanceName.classList.add('footer-contact-details__description', 'footer-mb-md-1', 'footer-mb-0');
-  moveInstrumentation(grievanceOfficerNameRow, grievanceName);
-  grievanceName.textContent = `Name: ${grievanceOfficerNameRow.querySelector('div').textContent.trim()}`; // Get content from inner div
-  contactDetailsDiv.append(grievanceName);
-
-  const grievanceContact = document.createElement('p');
-  grievanceContact.classList.add('footer-contact-details__description', 'footer-mb-md-1', 'footer-mb-0');
-  moveInstrumentation(grievanceOfficerContactRow, grievanceContact);
-  grievanceContact.textContent = `Contact Info: ${grievanceOfficerContactRow.querySelector('div').textContent.trim()}`; // Get content from inner div
-  contactDetailsDiv.append(grievanceContact);
-
-  const grievanceHours = document.createElement('p');
-  grievanceHours.classList.add('footer-contact-details__description', 'footer-mb-0');
-  moveInstrumentation(grievanceOfficerHoursRow, grievanceHours);
-  grievanceHours.textContent = `(${grievanceOfficerHoursRow.querySelector('div').textContent.trim()})`; // Get content from inner div
-  contactDetailsDiv.append(grievanceHours);
-
-  // Right column for social links and copyright
-  const rightCol = document.createElement('div');
-  rightCol.classList.add('footer-col-lg-6', 'footer-col-sm-12', 'footer-align-items-md-end', 'footer-d-flex', 'footer-flex-column', 'footer-itc-footer-link-right');
-  footerRow.append(rightCol);
-
-  const socialLinksWrapper = document.createElement('div'); // Wrapper for social ULs
-  rightCol.append(socialLinksWrapper);
-
-  socialLinks.forEach((socialLinkRow) => {
-    const ul = document.createElement('ul');
-    ul.classList.add('footer-list-unstyled');
-    moveInstrumentation(socialLinkRow, ul);
-
+  navLinkItems.forEach((row) => {
     const li = document.createElement('li');
-    ul.append(li);
+    moveInstrumentation(row, li);
 
+    const linkCell = row.children[0];
+    const labelCell = row.children[1];
+
+    const foundLink = linkCell.querySelector('a');
     const linkEl = document.createElement('a');
-    linkEl.id = 'socialIcons';
-    linkEl.target = '_blank';
-    linkEl.setAttribute('data-cmp-clickable', '');
-
-    const foundLink = socialLinkRow.children[0].querySelector('a'); // Link is in the first cell
+    linkEl.classList.add('navigation-link-item');
+    linkEl.setAttribute('tabindex', '0');
+    linkEl.setAttribute('target', '_self');
     if (foundLink) {
       linkEl.href = foundLink.href;
+      linkEl.title = labelCell.textContent.trim();
+      linkEl.textContent = labelCell.textContent.trim();
     }
-
-    const picture = socialLinkRow.children[1].querySelector('picture'); // Icon image is in the second cell
-    if (picture) {
-      const img = picture.querySelector('img');
-      if (img) {
-        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-        moveInstrumentation(img, optimizedPic.querySelector('img'));
-        linkEl.append(optimizedPic);
-      }
-    }
-
-    const screenReaderSpan = document.createElement('span');
-    screenReaderSpan.classList.add('footer-cmp-link__screen-reader-only');
-    screenReaderSpan.textContent = 'opens in a new tab';
-    linkEl.append(screenReaderSpan);
-
     li.append(linkEl);
-    socialLinksWrapper.append(ul);
+    navigationLinksList.append(li);
   });
 
-  const copyrightSpan = document.createElement('span');
-  copyrightSpan.classList.add('footer-footer-link');
-  moveInstrumentation(copyrightRow, copyrightSpan);
-  copyrightSpan.textContent = copyrightRow.querySelector('div').textContent.trim(); // Get content from inner div
-  rightCol.append(copyrightSpan);
+  // Divider
+  const divider = document.createElement('div');
+  divider.classList.add('footer-divider');
+  block.append(divider);
 
-  block.append(footerSection);
+  // Bottom section
+  const footerBottom = document.createElement('div');
+  footerBottom.classList.add('footer-bottom');
+  block.append(footerBottom);
 
-  // Secondary footer section
-  const secondaryFooter = document.createElement('footer');
-  secondaryFooter.classList.add('footer-itc-footer-section', 'footer-itc-footer-secondary');
-  block.append(secondaryFooter);
+  // Language Selector
+  const languageSelectorDiv = document.createElement('div');
+  languageSelectorDiv.classList.add('language-selector', 'footer-lang-css-from-wrapper');
+  footerBottom.append(languageSelectorDiv);
 
-  const secondaryUl = document.createElement('ul');
-  secondaryUl.classList.add('footer-itc-footer-secondary-container');
-  secondaryFooter.append(secondaryUl);
+  const languageSelectorList = document.createElement('ul');
+  languageSelectorList.classList.add('language-selector-list');
+  languageSelectorDiv.append(languageSelectorList);
 
-  // Add placeholder secondary links if needed, based on original HTML structure
-  // The provided EDS structure doesn't have explicit fields for these,
-  // so creating them as empty placeholders matching the original HTML.
-  const secondaryLi1 = document.createElement('li');
-  secondaryLi1.classList.add('footer-itc-footer-secondary-lists');
-  const secondaryLink1 = document.createElement('a');
-  secondaryLink1.classList.add('footer-footer-links');
-  secondaryLink1.target = '_blank';
-  const secondarySpan1 = document.createElement('span');
-  secondarySpan1.classList.add('footer-cmp-link__screen-reader-only');
-  secondarySpan1.textContent = 'opens in a new tab';
-  secondaryLink1.append(secondarySpan1);
-  secondaryLi1.append(secondaryLink1);
-  secondaryUl.append(secondaryLi1);
+  // Filter language items from the initial container
+  const languageItems = [...languagesContainer.children].filter(
+    (row) => row.children.length === 2 && row.querySelector('div:first-child a') && row.querySelector('div:last-child').textContent.trim() !== ''
+  );
 
-  const secondaryLi2 = document.createElement('li');
-  secondaryLi2.classList.add('footer-itc-footer-secondary-lists');
-  const secondaryLink2 = document.createElement('a');
-  secondaryLink2.classList.add('footer-footer-links');
-  secondaryLink2.target = '_blank';
-  const secondarySpan2 = document.createElement('span');
-  secondarySpan2.classList.add('footer-cmp-link__screen-reader-only');
-  secondarySpan2.textContent = 'opens in a new tab';
-  secondaryLink2.append(secondarySpan2);
-  secondaryLi2.append(secondaryLink2);
-  secondaryUl.append(secondaryLi2);
+  languageItems.forEach((row, index) => {
+    const li = document.createElement('li');
+    moveInstrumentation(row, li);
+    if (index === 0) {
+      li.classList.add('active');
+    }
+
+    const linkCell = row.children[0];
+    const labelCell = row.children[1];
+
+    const foundLink = linkCell.querySelector('a');
+    const linkEl = document.createElement('a');
+    linkEl.classList.add('language-selector-link');
+    if (foundLink) {
+      linkEl.href = foundLink.href;
+      linkEl.setAttribute('aria-label', labelCell.textContent.trim());
+      linkEl.setAttribute('data-lang', labelCell.textContent.trim().toLowerCase().substring(0, 2));
+      linkEl.textContent = labelCell.textContent.trim();
+    }
+    li.append(linkEl);
+    languageSelectorList.append(li);
+  });
+
+  // Policy Links
+  const policyLinksDiv = document.createElement('div');
+  policyLinksDiv.classList.add('policy-links', 'footer-policy-css-from-wrapper');
+  footerBottom.append(policyLinksDiv);
+
+  const policyLinksWrapper = document.createElement('div');
+  policyLinksWrapper.classList.add('policy-links-wrapper');
+  policyLinksDiv.append(policyLinksWrapper);
+
+  const policyLinksContent = document.createElement('div');
+  policyLinksContent.classList.add('policy-links-content');
+  policyLinksWrapper.append(policyLinksContent);
+
+  // Filter policy link items from the initial container
+  const policyLinkItems = [...policyLinksContainer.children].filter(
+    (row) => row.children.length === 2 && row.querySelector('div:first-child a') && row.querySelector('div:last-child').textContent.trim() !== ''
+  );
+
+  policyLinkItems.forEach((row) => {
+    const linkCell = row.children[0];
+    const labelCell = row.children[1];
+
+    const foundLink = linkCell.querySelector('a');
+    const linkEl = document.createElement('a');
+    linkEl.classList.add('policy-links-item');
+    linkEl.setAttribute('tabindex', '0');
+    linkEl.setAttribute('target', '_self');
+    if (foundLink) {
+      linkEl.href = foundLink.href;
+      linkEl.title = labelCell.textContent.trim();
+      linkEl.textContent = labelCell.textContent.trim();
+    }
+    moveInstrumentation(row, linkEl);
+    policyLinksContent.append(linkEl);
+  });
+
+  // Copyright
+  const copyrightP = document.createElement('p');
+  copyrightP.classList.add('policy-links-copyright');
+  moveInstrumentation(copyrightRow, copyrightP);
+  copyrightP.textContent = copyrightRow.querySelector('div:last-child').textContent.trim();
+  policyLinksWrapper.append(copyrightP);
 }
