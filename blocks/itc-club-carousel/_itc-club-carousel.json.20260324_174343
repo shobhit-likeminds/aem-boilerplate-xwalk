@@ -40,7 +40,7 @@
           "component": "container",
           "item": "carousel-item",
           "label": "Carousel Items",
-          "name": "carouselItems"
+          "name": "items"
         }
       ]
     },

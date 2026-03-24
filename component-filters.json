@@ -41,7 +41,7 @@
   {
     "id": "banner-carousel",
     "components": [
-      "banner-slide"
+      "banner"
     ]
   },
   {
@@ -94,10 +94,9 @@
   {
     "id": "footer",
     "components": [
-      "social-link",
-      "navigation-link",
-      "language",
-      "policy-link"
+      "footer-logo",
+      "footer-link",
+      "footer-social"
     ]
   },
   {
@@ -118,8 +117,8 @@
   {
     "id": "header",
     "components": [
-      "navigation-link",
-      "country-option"
+      "header-navigation-item",
+      "header-country-option"
     ]
   },
   {
@@ -140,7 +139,7 @@
   {
     "id": "make-right-shift",
     "components": [
-      "make-right-shift-item"
+      "why-shift-item"
     ]
   },
   {

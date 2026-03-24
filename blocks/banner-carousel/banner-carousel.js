@@ -2,15 +2,18 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const section = document.createElement('section');
-  section.classList.add('banner-itc-carousel-section');
+  const allRows = [...block.children];
+  // The first row is the container label, which we don't need to render.
+  // The rest are banner items.
+  const bannerItems = allRows.slice(1);
 
-  // Generate a unique ID for the carousel if it doesn't have one
-  const carouselId = `carouselExampleSlidesOnly-${Math.random().toString(36).substring(2, 11)}`;
-  const carousel = document.createElement('div');
-  carousel.id = carouselId;
-  carousel.classList.add('banner-bannerCarousel', 'carousel', 'slide');
-  carousel.setAttribute('data-ride', 'carousel'); // Add data-ride for Bootstrap carousel functionality
+  const carouselSection = document.createElement('section');
+  carouselSection.classList.add('banner-itc-carousel-section');
+
+  const carouselWrapper = document.createElement('div');
+  carouselWrapper.id = 'carouselExampleSlidesOnly';
+  carouselWrapper.classList.add('banner-bannerCarousel', 'carousel', 'slide');
+  carouselWrapper.setAttribute('data-ride', 'carousel');
 
   const carouselIndicators = document.createElement('ol');
   carouselIndicators.classList.add('carousel-indicators');
@@ -18,15 +21,21 @@ export default function decorate(block) {
   const carouselInner = document.createElement('div');
   carouselInner.classList.add('carousel-inner');
 
-  const slides = [...block.children];
-
-  slides.forEach((row, index) => {
-    // Check 1: Structure Alignment - Reads exactly 5 cells per item row as per BlockJson
-    const [desktopImageCell, mobileImageCell, headingCell, descriptionCell, ctaLinkCell] = [...row.children];
+  bannerItems.forEach((row, index) => {
+    const [
+      desktopImageCell,
+      mobileImageCell,
+      desktopImageAltCell,
+      mobileImageAltCell,
+      headingCell,
+      descriptionCell,
+      ctaLinkCell,
+      ctaLabelCell,
+    ] = row.children;
 
     // Indicators
     const indicator = document.createElement('li');
-    indicator.setAttribute('data-target', `#${carouselId}`);
+    indicator.setAttribute('data-target', '#carouselExampleSlidesOnly');
     indicator.setAttribute('data-slide-to', index.toString());
     if (index === 0) {
       indicator.classList.add('active');
@@ -41,147 +50,180 @@ export default function decorate(block) {
     }
     moveInstrumentation(row, carouselItem);
 
-    // Desktop Image
     const desktopPicture = desktopImageCell.querySelector('picture');
-    if (desktopPicture) {
-      const desktopImg = desktopPicture.querySelector('img');
-      const newDesktopImg = document.createElement('img');
-      newDesktopImg.src = desktopImg.src;
-      newDesktopImg.alt = desktopImg.alt;
-      // Check 2: Class names copied verbatim from ORIGINAL HTML
-      newDesktopImg.classList.add('d-none', 'd-sm-block', 'w-100', 'banner-desktop-image');
-      newDesktopImg.setAttribute('loading', 'eager');
-      newDesktopImg.setAttribute('fetchpriority', 'high');
-      moveInstrumentation(desktopImageCell, newDesktopImg);
-      carouselItem.append(newDesktopImg);
+    const desktopImg = desktopPicture ? desktopPicture.querySelector('img') : null;
+    if (desktopImg) {
+      const optimizedDesktopPic = createOptimizedPicture(
+        desktopImg.src,
+        desktopImageAltCell.textContent.trim(),
+        index === 0, // Eager load first image
+        [{ width: '2000' }],
+      );
+      optimizedDesktopPic.querySelector('img').classList.add('d-none', 'd-sm-block', 'w-100', 'desktop-image'); // Corrected class name
+      optimizedDesktopPic.querySelector('img').alt = desktopImageAltCell.textContent.trim();
+      moveInstrumentation(desktopImg, optimizedDesktopPic.querySelector('img'));
+      carouselItem.append(optimizedDesktopPic);
     }
 
-    // Mobile Image
     const mobilePicture = mobileImageCell.querySelector('picture');
-    if (mobilePicture) {
-      const mobileImg = mobilePicture.querySelector('img');
-      const newMobileImg = document.createElement('img');
-      newMobileImg.src = mobileImg.src;
-      newMobileImg.alt = mobileImg.alt;
-      // Check 2: Class names copied verbatim from ORIGINAL HTML
-      newMobileImg.classList.add('d-block', 'd-sm-none', 'w-100', 'banner-mobile-image');
-      newMobileImg.setAttribute('loading', 'eager');
-      newMobileImg.setAttribute('fetchpriority', 'high');
-      moveInstrumentation(mobileImageCell, newMobileImg);
-      carouselItem.append(newMobileImg);
+    const mobileImg = mobilePicture ? mobilePicture.querySelector('img') : null;
+    if (mobileImg) {
+      const optimizedMobilePic = createOptimizedPicture(
+        mobileImg.src,
+        mobileImageAltCell.textContent.trim(),
+        index === 0, // Eager load first image
+        [{ width: '750' }],
+      );
+      optimizedMobilePic.querySelector('img').classList.add('d-block', 'd-sm-none', 'w-100', 'mobile-image'); // Corrected class name
+      optimizedMobilePic.querySelector('img').alt = mobileImageAltCell.textContent.trim();
+      moveInstrumentation(mobileImg, optimizedMobilePic.querySelector('img'));
+      carouselItem.append(optimizedMobilePic);
     }
 
-    // Content Wrapper
-    // Check 2: Class names copied verbatim from ORIGINAL HTML
     const contentWrapper = document.createElement('div');
-    contentWrapper.classList.add('banner-content-wrapper', 'position-absolute');
+    contentWrapper.classList.add('banner-banner-content-wrapper', 'position-absolute');
 
-    // Heading
     const heading = document.createElement('h1');
-    // Check 2: Class names copied verbatim from ORIGINAL HTML
     heading.classList.add('banner-koi-carousel-heading', 'text-sm-left');
     moveInstrumentation(headingCell, heading);
-    while (headingCell.firstChild) heading.append(headingCell.firstChild);
+    heading.textContent = headingCell.textContent.trim();
     contentWrapper.append(heading);
 
-    // Description
     const description = document.createElement('div');
-    // Check 2: Class names copied verbatim from ORIGINAL HTML
     description.classList.add('banner-koi-carousel-description');
     moveInstrumentation(descriptionCell, description);
     while (descriptionCell.firstChild) description.append(descriptionCell.firstChild);
     contentWrapper.append(description);
 
-    // CTA Link
-    const ctaLink = ctaLinkCell.querySelector('a');
-    if (ctaLink) {
-      const newCtaLink = document.createElement('a');
-      newCtaLink.href = ctaLink.href;
-      // Check 2: Class names copied verbatim from ORIGINAL HTML
-      newCtaLink.classList.add('banner-koi-carousel-cta', 'btn', 'btn-primary', 'btn-start-now');
-      newCtaLink.target = '_blank';
-      newCtaLink.alt = ctaLink.textContent.trim();
-      moveInstrumentation(ctaLinkCell, newCtaLink);
-      while (ctaLinkCell.firstChild) newCtaLink.append(ctaLinkCell.firstChild);
-      const srOnlySpan = document.createElement('span');
-      // Check 2: Class names copied verbatim from ORIGINAL HTML
-      srOnlySpan.classList.add('cmp-link__screen-reader-only');
-      srOnlySpan.textContent = 'opens in a new tab';
-      newCtaLink.append(srOnlySpan);
-      contentWrapper.append(newCtaLink);
+    const ctaLinkElement = ctaLinkCell.querySelector('a');
+    if (ctaLinkElement) {
+      const cta = document.createElement('a');
+      cta.href = ctaLinkElement.href;
+      cta.classList.add('banner-koi-carousel-cta', 'btn', 'btn-primary', 'btn-start-now');
+      cta.alt = ctaLabelCell.textContent.trim();
+      cta.target = '_blank'; // Assuming target blank from original HTML
+      moveInstrumentation(ctaLinkCell, cta);
+      cta.textContent = ctaLabelCell.textContent.trim();
+
+      const screenReaderOnlySpan = document.createElement('span');
+      screenReaderOnlySpan.classList.add('cmp-link__screen-reader-only');
+      screenReaderOnlySpan.textContent = 'opens in a new tab';
+      cta.append(screenReaderOnlySpan);
+      contentWrapper.append(cta);
     }
 
     carouselItem.append(contentWrapper);
     carouselInner.append(carouselItem);
   });
 
-  carousel.append(carouselIndicators, carouselInner);
+  const nextCarouselBtn = document.createElement('div');
+  nextCarouselBtn.classList.add('banner-next-carousel-btn');
 
-  // Next and previous buttons
-  // Check 2: Class names copied verbatim from ORIGINAL HTML
-  const navButtonsWrapper = document.createElement('div');
-  navButtonsWrapper.classList.add('banner-next-carousel-btn');
-
-  const prevButton = document.createElement('a');
-  // Check 2: Class names copied verbatim from ORIGINAL HTML
-  prevButton.classList.add('carousel-control-prev');
-  prevButton.href = `#${carouselId}`;
-  prevButton.setAttribute('role', 'button');
-  prevButton.setAttribute('data-slide', 'prev'); // Add data-slide for Bootstrap carousel functionality
-  // Check 2: Interactivity - Added event listener for previous button
-  prevButton.addEventListener('click', (e) => {
+  const prevControl = document.createElement('a');
+  prevControl.classList.add('carousel-control-prev');
+  prevControl.href = '#carouselExampleSlidesOnly';
+  prevControl.setAttribute('role', 'button');
+  prevControl.setAttribute('data-slide', 'prev'); // data-slide is inert, but kept for semantic consistency
+  prevControl.addEventListener('click', (e) => {
     e.preventDefault();
-    // Bootstrap's carousel JS handles the slide logic when data-slide is present.
-    // We just need to trigger the click on the carousel element itself.
-    carousel.dispatchEvent(new CustomEvent('slide.bs.carousel', { detail: { direction: 'prev' } }));
+    const activeItem = carouselInner.querySelector('.carousel-item.active');
+    let prevItem = activeItem.previousElementSibling;
+    if (!prevItem || !prevItem.classList.contains('carousel-item')) {
+      prevItem = carouselInner.lastElementChild;
+    }
+    if (prevItem) {
+      activeItem.classList.remove('active');
+      prevItem.classList.add('active');
+      updateIndicators(prevItem);
+    }
   });
 
   const prevIcon = document.createElement('span');
-  // Check 2: Class names copied verbatim from ORIGINAL HTML
-  prevIcon.classList.add('carousel-control-prev-icon');
+  prevIcon.classList.add('carousel-control-prev-icon'); // Corrected class name
   prevIcon.setAttribute('aria-hidden', 'true');
+  prevControl.append(prevIcon);
+
   const prevSrOnly = document.createElement('span');
-  // Check 2: Class names copied verbatim from ORIGINAL HTML
   prevSrOnly.classList.add('sr-only');
   prevSrOnly.textContent = 'Previous';
-  prevButton.append(prevIcon, prevSrOnly);
+  prevControl.append(prevSrOnly);
+  nextCarouselBtn.append(prevControl);
 
-  const nextButton = document.createElement('a');
-  // Check 2: Class names copied verbatim from ORIGINAL HTML
-  nextButton.classList.add('carousel-control-next');
-  nextButton.href = `#${carouselId}`;
-  nextButton.setAttribute('role', 'button');
-  nextButton.setAttribute('data-slide', 'next'); // Add data-slide for Bootstrap carousel functionality
-  // Check 2: Interactivity - Added event listener for next button
-  nextButton.addEventListener('click', (e) => {
+  const nextControl = document.createElement('a');
+  nextControl.classList.add('carousel-control-next');
+  nextControl.href = '#carouselExampleSlidesOnly';
+  nextControl.setAttribute('role', 'button');
+  nextControl.setAttribute('data-slide', 'next'); // data-slide is inert, but kept for semantic consistency
+  nextControl.addEventListener('click', (e) => {
     e.preventDefault();
-    // Bootstrap's carousel JS handles the slide logic when data-slide is present.
-    // We just need to trigger the click on the carousel element itself.
-    carousel.dispatchEvent(new CustomEvent('slide.bs.carousel', { detail: { direction: 'next' } }));
+    const activeItem = carouselInner.querySelector('.carousel-item.active');
+    let nextItem = activeItem.nextElementSibling;
+    if (!nextItem || !nextItem.classList.contains('carousel-item')) {
+      nextItem = carouselInner.firstElementChild;
+    }
+    if (nextItem) {
+      activeItem.classList.remove('active');
+      nextItem.classList.add('active');
+      updateIndicators(nextItem);
+    }
   });
 
   const nextIcon = document.createElement('span');
-  // Check 2: Class names copied verbatim from ORIGINAL HTML
-  nextIcon.classList.add('carousel-control-next-icon');
+  nextIcon.classList.add('carousel-control-next-icon'); // Corrected class name
   nextIcon.setAttribute('aria-hidden', 'true');
+  nextControl.append(nextIcon);
+
   const nextSrOnly = document.createElement('span');
-  // Check 2: Class names copied verbatim from ORIGINAL HTML
   nextSrOnly.classList.add('sr-only');
   nextSrOnly.textContent = 'Next';
-  nextButton.append(nextIcon, nextSrOnly);
+  nextControl.append(nextSrOnly);
+  nextCarouselBtn.append(nextControl);
 
-  navButtonsWrapper.append(prevButton, nextButton);
-  carousel.append(navButtonsWrapper);
-
-  section.append(carousel);
+  carouselWrapper.append(carouselIndicators, carouselInner, nextCarouselBtn);
+  carouselSection.append(carouselWrapper);
 
   block.textContent = '';
-  block.append(section);
+  block.append(carouselSection);
 
-  // Image optimization
-  block.querySelectorAll('picture > img').forEach((img) => {
-    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '2000' }]);
-    moveInstrumentation(img, optimizedPic.querySelector('img'));
-    img.closest('picture').replaceWith(optimizedPic);
+  function updateIndicators(activeItem) {
+    const activeIndex = [...carouselInner.children].indexOf(activeItem);
+    carouselIndicators.querySelectorAll('li').forEach((li, i) => {
+      if (i === activeIndex) {
+        li.classList.add('active');
+      } else {
+        li.classList.remove('active');
+      }
+    });
+  }
+
+  // Auto-advance carousel
+  let currentIndex = 0;
+  const intervalTime = 5000; // 5 seconds
+  setInterval(() => {
+    const currentActiveItem = carouselInner.querySelector('.carousel-item.active');
+    let nextItem = currentActiveItem.nextElementSibling;
+    if (!nextItem || !nextItem.classList.contains('carousel-item')) {
+      nextItem = carouselInner.firstElementChild;
+    }
+    if (nextItem) {
+      currentActiveItem.classList.remove('active');
+      nextItem.classList.add('active');
+      updateIndicators(nextItem);
+    }
+  }, intervalTime);
+
+  // Handle indicator clicks
+  carouselIndicators.querySelectorAll('li').forEach((indicatorEl, index) => {
+    indicatorEl.addEventListener('click', (e) => {
+      e.preventDefault();
+      carouselInner.querySelectorAll('.carousel-item').forEach((item, itemIndex) => {
+        if (itemIndex === index) {
+          item.classList.add('active');
+        } else {
+          item.classList.remove('active');
+        }
+      });
+      updateIndicators(carouselInner.children[index]);
+    });
   });
 }

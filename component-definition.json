@@ -99,15 +99,15 @@
           }
         },
         {
-          "title": "Banner-Slide",
-          "id": "banner-slide",
+          "title": "Banner",
+          "id": "banner",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "banner-slide",
-                  "name": "Banner-Slide"
+                  "model": "banner",
+                  "name": "Banner"
                 }
               }
             }
@@ -329,60 +329,45 @@
           }
         },
         {
-          "title": "Social-Link",
-          "id": "social-link",
+          "title": "Footer-Link",
+          "id": "footer-link",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "social-link",
-                  "name": "Social-Link"
+                  "model": "footer-link",
+                  "name": "Footer-Link"
                 }
               }
             }
           }
         },
         {
-          "title": "Navigation-Link",
-          "id": "navigation-link",
+          "title": "Footer-Social",
+          "id": "footer-social",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "navigation-link",
-                  "name": "Navigation-Link"
+                  "model": "footer-social",
+                  "name": "Footer-Social"
                 }
               }
             }
           }
         },
         {
-          "title": "Language",
-          "id": "language",
+          "title": "Footer-Logo",
+          "id": "footer-logo",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "language",
-                  "name": "Language"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Policy-Link",
-          "id": "policy-link",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block/item",
-                "template": {
-                  "model": "policy-link",
-                  "name": "Policy-Link"
+                  "model": "footer-logo",
+                  "name": "Footer-Logo"
                 }
               }
             }
@@ -527,30 +512,30 @@
           }
         },
         {
-          "title": "Navigation Link",
-          "id": "navigation-link",
+          "title": "Header-Navigation-Item",
+          "id": "header-navigation-item",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "navigation-link",
-                  "name": "Navigation Link"
+                  "model": "header-navigation-item",
+                  "name": "Header-Navigation-Item"
                 }
               }
             }
           }
         },
         {
-          "title": "Country Option",
-          "id": "country-option",
+          "title": "Header-Country-Option",
+          "id": "header-country-option",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "country-option",
-                  "name": "Country Option"
+                  "model": "header-country-option",
+                  "name": "Header-Country-Option"
                 }
               }
             }
@@ -666,15 +651,15 @@
           }
         },
         {
-          "title": "Make-Right-Shift-Item",
-          "id": "make-right-shift-item",
+          "title": "Why-Shift-Item",
+          "id": "why-shift-item",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "make-right-shift-item",
-                  "name": "Make-Right-Shift-Item"
+                  "model": "why-shift-item",
+                  "name": "Why-Shift-Item"
                 }
               }
             }

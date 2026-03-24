@@ -1,0 +1,119 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  const rowDiv = document.createElement('div');
+  rowDiv.classList.add('row');
+
+  // Skip the first row which is the container field label
+  const itemRows = [...block.children].slice(1);
+
+  itemRows.forEach((row) => {
+    const colDiv = document.createElement('div');
+    colDiv.classList.add('col-xl-4', 'col-lg-6', 'pb-md-0', 'pb-4', 'row-gap-4', 'rsCards-koi-rscard-padding');
+    moveInstrumentation(row, colDiv);
+
+    const cardDiv = document.createElement('div');
+    cardDiv.classList.add('card', 'rsCards-rs-card');
+
+    const cells = [...row.children];
+
+    let imageEl;
+    let titleEl;
+    let descriptionEl;
+    let iconEl;
+    let linkElFromCell; // Store the original link element from cell[4]
+
+    cells.forEach((cell, index) => {
+      if (index === 0) { // Image
+        // The original HTML had two images, one with display: none and one with display: block.
+        // We only take the one that is visible.
+        // The block structure only provides one picture element per cell, so we assume it's the intended one.
+        const picture = cell.querySelector('picture');
+        if (picture) {
+          imageEl = picture.querySelector('img');
+          if (imageEl) {
+            // Use the class from the original HTML for the visible image
+            imageEl.classList.add('w-100', 'rsCards-kitchens-image');
+            imageEl.style.display = 'block'; // Ensure it's visible based on original HTML
+          }
+        }
+      } else if (index === 1) { // Title
+        titleEl = document.createElement('h5');
+        titleEl.classList.add('rsCards-blog-card-title');
+        titleEl.style.display = 'block';
+        moveInstrumentation(cell, titleEl);
+        while (cell.firstChild) titleEl.append(cell.firstChild);
+      } else if (index === 2) { // Description
+        descriptionEl = document.createElement('h5');
+        descriptionEl.classList.add('card-title');
+        moveInstrumentation(cell, descriptionEl);
+        while (cell.firstChild) descriptionEl.append(cell.firstChild);
+      } else if (index === 3) { // Icon
+        const picture = cell.querySelector('picture');
+        if (picture) {
+          const img = picture.querySelector('img');
+          if (img) {
+            // The original HTML uses the icon inside an <a> tag, and the <a> has an id and style.
+            // We need to create the <a> and put the icon inside it.
+            const iconLink = document.createElement('a');
+            if (linkElFromCell) { // Use the link properties from the link cell if available
+              iconLink.href = linkElFromCell.href;
+              iconLink.setAttribute('aria-label', linkElFromCell.getAttribute('aria-label') || `Read more about '${titleEl ? titleEl.textContent.trim() : ''}'`);
+              iconLink.target = linkElFromCell.target;
+              iconLink.id = 'explore-btn-hide-id'; // Copy ID from original HTML
+              iconLink.style.display = linkElFromCell.style.display; // Copy display style
+            } else {
+              // Fallback if linkElFromCell is not yet processed (shouldn't happen with correct order)
+              iconLink.setAttribute('aria-label', `Read more about '${titleEl ? titleEl.textContent.trim() : ''}'`);
+              iconLink.id = 'explore-btn-hide-id';
+            }
+            moveInstrumentation(cell, iconLink);
+            iconLink.append(img); // Append the icon img to the new link
+            iconEl = iconLink; // Store the link element as the icon element
+          }
+        }
+      } else if (index === 4) { // Link
+        linkElFromCell = cell.querySelector('a'); // Store the original link element
+      }
+    });
+
+    if (imageEl) {
+      const pictureWrapper = document.createElement('div'); // Create a wrapper for the image
+      pictureWrapper.append(imageEl.closest('picture') || imageEl);
+      cardDiv.append(pictureWrapper);
+    }
+
+    const cardBodyDiv = document.createElement('div');
+    cardBodyDiv.classList.add('card-body');
+
+    if (iconEl) {
+      cardBodyDiv.append(iconEl);
+    }
+    if (titleEl) {
+      cardBodyDiv.append(titleEl);
+    }
+    if (descriptionEl) {
+      cardBodyDiv.append(descriptionEl);
+    }
+
+    cardDiv.append(cardBodyDiv);
+    colDiv.append(cardDiv);
+    rowDiv.append(colDiv);
+  });
+
+  rowDiv.querySelectorAll('picture > img').forEach((img) => {
+    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+    moveInstrumentation(img, optimizedPic.querySelector('img'));
+    img.closest('picture').replaceWith(optimizedPic);
+  });
+
+  // The 'rsCards-tab-para' div is present in the original HTML but not part of the block's model structure.
+  // It appears to be a static element outside the repeatable card items.
+  // If it's meant to be generated by the block, it should be part of the model.
+  // As it's not, we should not generate it here.
+  // If it was part of the model (e.g., a root field), it would be processed differently.
+
+  block.textContent = '';
+  block.append(rowDiv);
+}
