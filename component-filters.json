@@ -24,7 +24,10 @@
       "rs-cards",
       "footer",
       "banner-carousel",
-      "carousel"
+      "carousel",
+      "header",
+      "healthgoal-banner",
+      "footer-itc-footer-section"
     ]
   },
   {
@@ -67,6 +70,14 @@
     ]
   },
   {
+    "id": "footer-itc-footer-section",
+    "components": [
+      "footer-link",
+      "footer-social",
+      "footer-logo"
+    ]
+  },
+  {
     "id": "footer",
     "components": [
       "footer-logo",
@@ -83,9 +94,22 @@
     ]
   },
   {
+    "id": "header",
+    "components": [
+      "navigation-link",
+      "country-option"
+    ]
+  },
+  {
+    "id": "healthgoal-banner",
+    "components": [
+      "healthgoal-item"
+    ]
+  },
+  {
     "id": "itc-club-carousel",
     "components": [
-      "carouselItem"
+      "carousel-item"
     ]
   },
   {

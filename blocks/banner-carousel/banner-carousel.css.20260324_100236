@@ -1284,6 +1284,8 @@ to{background-position:0 0}
 @media(min-width:1200px){.banner-modal-xl{max-width:1140px}
 }
 
+.banner-carousel { position:relative }
+
 @media(prefers-reduced-motion:reduce){.banner-carousel-item{transition:none}
 }
 
@@ -1931,8 +1933,6 @@ h2, h3 { page-break-after:avoid }
 @page{size:a3}
 
 body{min-width:992px !important} }
-
-.banner-itc-carousel-section { position:relative }
 
 @media(min-width:1500px) and (max-width:1950px){.banner-itc-carousel-section .banner-carousel-indicators{left:0;justify-content:flex-start;margin-left:85px;margin-right:unset}
 }

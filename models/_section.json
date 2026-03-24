@@ -59,7 +59,10 @@
         "rs-cards",
         "footer",
         "banner-carousel",
-        "carousel"
+        "carousel",
+        "header",
+        "healthgoal-banner",
+        "footer-itc-footer-section"
       ]
     }
   ]

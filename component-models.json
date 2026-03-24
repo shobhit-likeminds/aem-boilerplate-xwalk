@@ -142,6 +142,17 @@
     ]
   },
   {
+    "id": "banner-carousel",
+    "fields": [
+      {
+        "component": "container",
+        "item": "banner",
+        "label": "Banners",
+        "name": "banners"
+      }
+    ]
+  },
+  {
     "id": "banner",
     "fields": [
       {
@@ -157,7 +168,7 @@
         "valueType": "string"
       },
       {
-        "component": "richtext",
+        "component": "text",
         "label": "Heading",
         "name": "heading",
         "valueType": "string"
@@ -289,6 +300,86 @@
         "name": "rows",
         "value": "",
         "label": "Rows"
+      }
+    ]
+  },
+  {
+    "id": "footer-itc-footer-section",
+    "fields": [
+      {
+        "component": "container",
+        "item": "footer-logo",
+        "label": "Footer Logos",
+        "name": "footerLogos"
+      },
+      {
+        "component": "container",
+        "item": "footer-link",
+        "label": "Footer Links",
+        "name": "footerLinks"
+      },
+      {
+        "component": "container",
+        "item": "footer-social",
+        "label": "Footer Socials",
+        "name": "footerSocials"
+      },
+      {
+        "component": "richtext",
+        "label": "Copyright",
+        "name": "copyright",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Grievance Officer",
+        "name": "grievanceOfficer",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "footer-link",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "footer-social",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Social Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Icon",
+        "name": "icon",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "footer-logo",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Logo Image",
+        "name": "image",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Logo Link",
+        "name": "link",
+        "valueType": "string"
       }
     ]
   },
@@ -525,6 +616,139 @@
     ]
   },
   {
+    "id": "header",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Logo Image",
+        "name": "logo-image",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Logo Link 1",
+        "name": "logo-link-1",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Logo Link 2",
+        "name": "logo-link-2",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "navigation-link",
+        "label": "Navigation Links",
+        "name": "navigation-links"
+      },
+      {
+        "component": "reference",
+        "label": "Search Icon Image",
+        "name": "search-icon-image",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Country Flag Image",
+        "name": "country-flag-image",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "country-option",
+        "label": "Country Options",
+        "name": "country-options"
+      }
+    ]
+  },
+  {
+    "id": "navigation-link",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "country-option",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Flag Image",
+        "name": "flag-image",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Country Name",
+        "name": "country-name",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "healthgoal-banner",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Main Image",
+        "name": "main-image",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Main Heading",
+        "name": "main-heading",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Subheading",
+        "name": "subheading",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Description",
+        "name": "description",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "CTA Link",
+        "name": "cta-link",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "healthgoal-item",
+        "label": "Items",
+        "name": "items"
+      }
+    ]
+  },
+  {
+    "id": "healthgoal-item",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Image",
+        "name": "image",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "hero",
     "fields": [
       {
@@ -551,7 +775,18 @@
     ]
   },
   {
-    "id": "carouselItem",
+    "id": "itc-club-carousel",
+    "fields": [
+      {
+        "component": "container",
+        "item": "carousel-item",
+        "label": "Carousel Items",
+        "name": "carousel-items"
+      }
+    ]
+  },
+  {
+    "id": "carousel-item",
     "fields": [
       {
         "component": "reference",
@@ -561,7 +796,7 @@
       },
       {
         "component": "text",
-        "label": "Image Alt",
+        "label": "Alt Text",
         "name": "alt",
         "valueType": "string"
       },
@@ -653,6 +888,17 @@
     ]
   },
   {
+    "id": "rs-cards",
+    "fields": [
+      {
+        "component": "container",
+        "item": "rs-card",
+        "label": "Cards",
+        "name": "cards"
+      }
+    ]
+  },
+  {
     "id": "rs-card",
     "fields": [
       {
@@ -662,13 +908,7 @@
         "valueType": "string"
       },
       {
-        "component": "aem-content",
-        "label": "Link",
-        "name": "link",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
+        "component": "richtext",
         "label": "Title",
         "name": "title",
         "valueType": "string"
@@ -677,6 +917,18 @@
         "component": "richtext",
         "label": "Description",
         "name": "description",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Icon",
+        "name": "icon",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
         "valueType": "string"
       }
     ]
@@ -689,8 +941,8 @@
     "fields": [
       {
         "component": "richtext",
-        "label": "Content",
-        "name": "content",
+        "label": "Body",
+        "name": "body",
         "valueType": "string"
       }
     ]

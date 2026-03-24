@@ -1,7 +1,7 @@
 {
   "definitions": [
     {
-      "title": "ITC-Club-Carousel",
+      "title": "ITC Club Carousel",
       "id": "itc-club-carousel",
       "plugins": {
         "xwalk": {
@@ -10,22 +10,22 @@
             "template": {
               "filter": "itc-club-carousel",
               "model": "itc-club-carousel",
-              "name": "ITC-Club-Carousel"
+              "name": "ITC Club Carousel"
             }
           }
         }
       }
     },
     {
-      "title": "Carousel-Item",
-      "id": "carousel-item",
+      "title": "Carousel Item",
+      "id": "carouselItem",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "carousel-item",
-              "name": "Carousel-Item"
+              "model": "carouselItem",
+              "name": "Carousel Item"
             }
           }
         }
@@ -34,18 +34,7 @@
   ],
   "models": [
     {
-      "id": "itc-club-carousel",
-      "fields": [
-        {
-          "component": "container",
-          "item": "carousel-item",
-          "label": "Carousel Items",
-          "name": "carousel-items"
-        }
-      ]
-    },
-    {
-      "id": "carousel-item",
+      "id": "carouselItem",
       "fields": [
         {
           "component": "reference",
@@ -55,7 +44,7 @@
         },
         {
           "component": "text",
-          "label": "Alt Text",
+          "label": "Image Alt",
           "name": "alt",
           "valueType": "string"
         },
@@ -78,7 +67,7 @@
     {
       "id": "itc-club-carousel",
       "components": [
-        "carousel-item"
+        "carouselItem"
       ]
     }
   ]

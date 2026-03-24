@@ -849,8 +849,6 @@ pre { display:block;font-size:87.5%;color:#212529 }
 
 pre code { font-size:inherit;color:inherit;word-break:normal }
 
-.shiftclub-container { width:100%;padding-right:15px;padding-left:15px;margin-right:auto;margin-left:auto }
-
 @media(min-width:576px){.shiftclub-container,.shiftclub-container-sm{max-width:540px}
 }
 
@@ -1552,8 +1550,6 @@ to{background-position:0 0}
 @supports((position:-webkit-sticky) or(position:sticky)){.shiftclub-sticky-top{position:-webkit-sticky;position:sticky;top:0;z-index:1020}
 }
 
-.shiftclub-sr-only { position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0 }
-
 @media(min-width:576px){.shiftclub-m-sm-0{margin:0 !important}
 .shiftclub-mt-sm-0,.shiftclub-my-sm-0{margin-top:0 !important}
 .shiftclub-mr-sm-0,.shiftclub-mx-sm-0{margin-right:0 !important}
@@ -1958,9 +1954,7 @@ h2, h3 { page-break-after:avoid }
 
 @page{size:a3}
 
-body{min-width:992px !important}
-
-.shiftclub-container { min-width:992px !important } }
+body{min-width:992px !important} }
 
 .shiftclub-carousel-indicators li { background-color:transparent;border:1px solid var(--color-light);border-radius:50%;width:12px;height:12px;margin-right:5px;cursor:pointer }
 
@@ -2279,8 +2273,6 @@ body{padding-top:78px !important}
 
 body{font-family:var(--urbanist-font);padding-top:92px}
 
-.shiftclub-container { max-width:1470px;width:100%;padding:0;margin:0 auto }
-
 h1, h2, h3, h4, h5, h6 { font-family:'Paytone One' }
 
 p { font-weight:400 }
@@ -2292,10 +2284,6 @@ p { font-weight:400 }
 .shiftclub-itc-club-section .shiftclub-carousel-inner .shiftclub-carousel-item { max-height:413px;object-fit:cover }
 
 .shiftclub-carousel-inner .shiftclub-carousel-item:last-child h2 { max-width:450px;width:100% }
-
-.shiftclub-itc-club-carousel .shiftclub-carousel-indicators { left:-50% }
-
-.shiftclub-itc-club-carousel p { font-size:20px !important }
 
 .shiftclub-carousel-control-next { display:block !important }
 

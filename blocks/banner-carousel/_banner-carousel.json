@@ -34,6 +34,17 @@
   ],
   "models": [
     {
+      "id": "banner-carousel",
+      "fields": [
+        {
+          "component": "container",
+          "item": "banner",
+          "label": "Banners",
+          "name": "banners"
+        }
+      ]
+    },
+    {
       "id": "banner",
       "fields": [
         {
@@ -49,7 +60,7 @@
           "valueType": "string"
         },
         {
-          "component": "richtext",
+          "component": "text",
           "label": "Heading",
           "name": "heading",
           "valueType": "string"

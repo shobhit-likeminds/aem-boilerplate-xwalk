@@ -221,6 +221,67 @@
           }
         },
         {
+          "title": "Footer-ITC-Footer-Section",
+          "id": "footer-itc-footer-section",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "footer-itc-footer-section",
+                  "model": "footer-itc-footer-section",
+                  "name": "Footer-ITC-Footer-Section"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Footer-Link",
+          "id": "footer-link",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "footer-link",
+                  "name": "Footer-Link"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Footer-Social",
+          "id": "footer-social",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "footer-social",
+                  "name": "Footer-Social"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Footer-Logo",
+          "id": "footer-logo",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "footer-logo",
+                  "name": "Footer-Logo"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Footer",
           "id": "footer",
           "plugins": {
@@ -358,6 +419,83 @@
           }
         },
         {
+          "title": "Header",
+          "id": "header",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "header",
+                  "model": "header",
+                  "name": "Header"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Navigation Link",
+          "id": "navigation-link",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "navigation-link",
+                  "name": "Navigation Link"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Country Option",
+          "id": "country-option",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "country-option",
+                  "name": "Country Option"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Healthgoal-Banner",
+          "id": "healthgoal-banner",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "healthgoal-banner",
+                  "model": "healthgoal-banner",
+                  "name": "Healthgoal-Banner"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Healthgoal-Item",
+          "id": "healthgoal-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "healthgoal-item",
+                  "name": "Healthgoal-Item"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Hero",
           "id": "hero",
           "plugins": {
@@ -373,7 +511,7 @@
           }
         },
         {
-          "title": "ITC Club Carousel",
+          "title": "ITC-Club-Carousel",
           "id": "itc-club-carousel",
           "plugins": {
             "xwalk": {
@@ -382,22 +520,22 @@
                 "template": {
                   "filter": "itc-club-carousel",
                   "model": "itc-club-carousel",
-                  "name": "ITC Club Carousel"
+                  "name": "ITC-Club-Carousel"
                 }
               }
             }
           }
         },
         {
-          "title": "Carousel Item",
-          "id": "carouselItem",
+          "title": "Carousel-Item",
+          "id": "carousel-item",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "carouselItem",
-                  "name": "Carousel Item"
+                  "model": "carousel-item",
+                  "name": "Carousel-Item"
                 }
               }
             }

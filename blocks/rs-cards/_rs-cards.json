@@ -34,6 +34,17 @@
   ],
   "models": [
     {
+      "id": "rs-cards",
+      "fields": [
+        {
+          "component": "container",
+          "item": "rs-card",
+          "label": "Cards",
+          "name": "cards"
+        }
+      ]
+    },
+    {
       "id": "rs-card",
       "fields": [
         {
@@ -43,13 +54,7 @@
           "valueType": "string"
         },
         {
-          "component": "aem-content",
-          "label": "Link",
-          "name": "link",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
+          "component": "richtext",
           "label": "Title",
           "name": "title",
           "valueType": "string"
@@ -58,6 +63,18 @@
           "component": "richtext",
           "label": "Description",
           "name": "description",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Icon",
+          "name": "icon",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Link",
+          "name": "link",
           "valueType": "string"
         }
       ]
