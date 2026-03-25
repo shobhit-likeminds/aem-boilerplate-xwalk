@@ -1,17 +1,15 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
 export default function decorate(block) {
-  // The space-adder block does not have any fields according to BlockJson.
-  // Its purpose is to apply specific CSS classes for vertical padding directly
-  // to the block element itself, as indicated by the original HTML structure
-  // where the padding classes are on a section, and the block is a wrapper.
-  // However, in EDS, the decorate function receives the block element (div.space-adder)
-  // which should then be styled.
-
-  // Apply the padding classes directly to the block element.
-  // The original HTML shows these classes on a <section>, but the block itself
-  // is the container we are decorating.
-  block.classList.add('spaceAdder-verticalPadding_section', 'padding-80');
-
-  // Since this block has no content or children to process,
-  // and its purpose is purely for spacing via CSS classes,
-  // no further DOM manipulation is needed.
+  // The original HTML already contains the <section class="verticalPadding_section padding-80"></section>
+  // The block itself is just a container for this section.
+  // No need to create and append a new section, as it's already part of the block's content.
+  // The block is essentially a wrapper for the section.
+  // The decorate function should not modify the block's content if it's already structured correctly.
+  // In this case, the block is just a div with the class "space-adder" (from the block name)
+  // and it contains the section.
+  // Since the BlockJson has no fields, there's no dynamic content to render.
+  // The block's purpose is likely just to provide the wrapper for the section.
+  // Therefore, no action is needed in the decorate function.
 }

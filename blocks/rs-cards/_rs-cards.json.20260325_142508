@@ -39,8 +39,8 @@
         {
           "component": "container",
           "item": "rs-card",
-          "label": "Rs Cards",
-          "name": "rs-cards"
+          "label": "Cards",
+          "name": "cards"
         }
       ]
     },
@@ -54,15 +54,15 @@
           "valueType": "string"
         },
         {
-          "component": "text",
-          "label": "Blog Card Title",
-          "name": "blog-card-title",
+          "component": "richtext",
+          "label": "Title",
+          "name": "title",
           "valueType": "string"
         },
         {
           "component": "richtext",
-          "label": "Card Title",
-          "name": "card-title",
+          "label": "Text",
+          "name": "text",
           "valueType": "string"
         }
       ]

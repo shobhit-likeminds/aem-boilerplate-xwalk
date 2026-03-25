@@ -849,6 +849,8 @@ pre { display:block;font-size:87.5%;color:#212529 }
 
 pre code { font-size:inherit;color:inherit;word-break:normal }
 
+.container { width:100%;padding-right:15px;padding-left:15px;margin-right:auto;margin-left:auto }
+
 @media(min-width:576px){.container,.container-sm{max-width:540px}
 }
 
@@ -1284,17 +1286,47 @@ to{background-position:0 0}
 @media(min-width:1200px){.modal-xl{max-width:1140px}
 }
 
+.carousel { position:relative }
+
+.carousel-inner { position:relative;width:100%;overflow:hidden }
+
+.carousel-inner::after { display:block;clear:both;content:"" }
+
+.carousel-item { position:relative;display:none;float:left;width:100%;margin-right:-100%;-webkit-backface-visibility:hidden;backface-visibility:hidden;transition:-webkit-transform .6s ease-in-out;transition:transform .6s ease-in-out;transition:transform .6s ease-in-out,-webkit-transform .6s ease-in-out }
+
 @media(prefers-reduced-motion:reduce){.carousel-item{transition:none}
 }
+
+.carousel-item.active { display:block }
 
 @media(prefers-reduced-motion:reduce){.carousel-fade .active.carousel-item-left,.carousel-fade .active.carousel-item-right{transition:none}
 }
 
+.carousel-control-next, .carousel-control-prev { position:absolute;top:0;bottom:0;z-index:1;display:-ms-flexbox;display:flex;-ms-flex-align:center;align-items:center;-ms-flex-pack:center;justify-content:center;width:15%;padding:0;color:#fff;text-align:center;background:0;border:0;opacity:.5;transition:opacity .15s ease }
+
 @media(prefers-reduced-motion:reduce){.carousel-control-next,.carousel-control-prev{transition:none}
 }
 
+.carousel-control-next:focus, .carousel-control-next:hover, .carousel-control-prev:focus, .carousel-control-prev:hover { color:#fff;text-decoration:none;outline:0;opacity:.9 }
+
+.carousel-control-prev { left:0 }
+
+.carousel-control-next { right:0 }
+
+.carousel-control-next-icon, .carousel-control-prev-icon { display:inline-block;width:20px;height:20px;background:50%/100% 100% no-repeat }
+
+.carousel-control-prev-icon { background-image:url("data:image/svg+xml,%3csvgxmlns='http://www.w3.org/2000/svg'fill='%23fff'width='8'height='8'viewBox='0088'%3e%3cpathd='M5.250l-44441.5-1.5L4.254l2.5-2.5L5.250z'/%3e%3c/svg%3e") }
+
+.carousel-control-next-icon { background-image:url("data:image/svg+xml,%3csvgxmlns='http://www.w3.org/2000/svg'fill='%23fff'width='8'height='8'viewBox='0088'%3e%3cpathd='M2.750l-1.51.5L3.754l-2.52.5L2.758l4-4-4-4z'/%3e%3c/svg%3e") }
+
+.carousel-indicators { position:absolute;right:0;bottom:0;left:0;z-index:15;display:-ms-flexbox;display:flex;-ms-flex-pack:center;justify-content:center;padding-left:0;margin-right:15%;margin-left:15%;list-style:none }
+
+.carousel-indicators li { box-sizing:content-box;-ms-flex:0 1 auto;flex:0 1 auto;width:30px;height:3px;margin-right:3px;margin-left:3px;text-indent:-999px;cursor:pointer;background-color:#fff;background-clip:padding-box;border-top:10px solid transparent;border-bottom:10px solid transparent;opacity:.5;transition:opacity .6s ease }
+
 @media(prefers-reduced-motion:reduce){.carousel-indicators li{transition:none}
 }
+
+.carousel-indicators .active { opacity:1 }
 
 @-webkit-keyframes spinner-border{to{-webkit-transform:rotate(360deg);transform:rotate(360deg)}
 }
@@ -1525,6 +1557,8 @@ to{background-position:0 0}
 
 @supports((position:-webkit-sticky) or(position:sticky)){.sticky-top{position:-webkit-sticky;position:sticky;top:0;z-index:1020}
 }
+
+.sr-only { position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0 }
 
 .w-100 { width:100% !important }
 
@@ -1936,7 +1970,32 @@ h2, h3 { page-break-after:avoid }
 
 @page{size:a3}
 
-body{min-width:992px !important} }
+body{min-width:992px !important}
+
+.container { min-width:992px !important } }
+
+.carousel-indicators li { background-color:transparent;border:1px solid var(--color-light);border-radius:50%;width:12px;height:12px;margin-right:5px;cursor:pointer }
+
+.carousel-indicators .active { background-color:var(--color-light) }
+
+.itc-club-section { background-color:var(--color-light);padding-bottom:100px }
+
+.itc-carousel-shift { max-width:1069px;margin:0 auto;border-radius:45px;position:relative }
+
+.itc-club-right-wrapper { background:linear-gradient(0,#F8D765 0,#F8D765 100%);padding:0 45px 56px 46px;display:flex;flex-direction:column;align-items:baseline;overflow-y:auto;height:434px;justify-content:space-evenly;@media(max-width:768px){min-height:335px;height:auto}
+ }
+
+.carousel-control-next, .carousel-control-prev { background:#fff;Border-radius:50%;width:40px;height:40px;text-align:center;line-height:20px;top:inherit;bottom:50%;opacity:1;@media(max-width:768px){.kitchens-of-india &{bottom:45%}
+}
+ }
+
+.carousel-control-next-icon { top:4px;left:3px;width:34px;position:relative;height:34px }
+
+.carousel-control-prev-icon { width:34px;left:-3px;top:2px;height:34px;position:relative }
+
+.carousel-control-next { margin-right:5px }
+
+.carousel-control-prev { margin-left:5px }
 
 @media(min-width:1500px) and (max-width:1950px){.itc-carousel-section .carousel-indicators{left:0;justify-content:flex-start;margin-left:85px;margin-right:unset}
 }
@@ -2113,6 +2172,8 @@ body{padding-top:78px !important}
 .who-we-are-section h3{margin-top:-64px}
 }
 
+.itc-club-right-wrapper h2, .itc-club-right-wrapper p { color:var(--bg-dark) }
+
 @media(max-width:767.98px){.itc-health-goal-wrapper img{height:73px;width:73px}
 .itc-health-goal-wrapper{picture{height:128px;width:128px}
 }
@@ -2199,6 +2260,8 @@ body{padding-top:78px !important}
 .itc-calculator-section .progress-bar{top:25%}
 }
 
+.itc-club-section { padding-bottom:0 !important }
+
 @media(max-width:1400px){.itc-talk-left-wrapper{width:36vw;left:26px;bottom:9vw}
 .itc-talk-left-wrapper p,.itc-talk-left-wrapper span{font-size:12px}
 .itc-talk-left-wrapper .button a{padding:7px 28px}
@@ -2230,11 +2293,25 @@ body{padding-top:78px !important}
 
 body{font-family:var(--urbanist-font);padding-top:92px}
 
+.container { max-width:1470px;width:100%;padding:0;margin:0 auto }
+
 h1, h2, h3, h4, h5, h6 { font-family:'Paytone One' }
 
 p { font-weight:400 }
 
 #rs-video-model { overflow-y:hidden;margin-top:0 !important }
+
+.itc-club-right-wrapper h2 { font-size:45px;font-family:'Paytone One' }
+
+.itc-club-section .carousel-inner .carousel-item { max-height:413px;object-fit:cover }
+
+.carousel-inner .carousel-item:last-child h2 { max-width:450px;width:100% }
+
+.itc-club-carousel .carousel-indicators { left:-50% }
+
+.itc-club-carousel p { font-size:20px !important }
+
+.carousel-control-next { display:block !important }
 
 @media(min-width:767.98px){.who-we-are-section .slick-list{overflow:visible}
 }
@@ -2277,6 +2354,14 @@ p { font-weight:400 }
 #read-more-button{color:var(--primary);font-size:4.66vw !important}
 }
 
+.itc-club-section { background-color:var(--color-light);padding-bottom:50px !important }
+
+.itc-club-section .carousel-inner { max-width:1069px;margin:0 auto;margin-top:-40px;border-radius:45px }
+
+.carousel-control-next { display:none }
+
+.itc-club-right-wrapper { background:linear-gradient(0,#f8d765 0,#f8d765 100%);padding:40px 45px 56px 46px }
+
 @media(min-width:1400px){.itc-right-shift-wrapper div:last-of-type{margin-top:-200px;margin-left:450px}
 }
 
@@ -2303,6 +2388,14 @@ nav li.cmp-breadcrumb__item+li.cmp-breadcrumb__item::before{content:"<" !importa
 .carousel-indicators{bottom:11px}
 .itc-club-section{padding-bottom:40px !important}
 }
+
+.carousel-control-next-icon { background-image:url('clientlib-rightshift/resources/icons/next-icon.svg') }
+
+.carousel-control-prev-icon { background-image:url('clientlib-rightshift/resources/icons/next-icon.svg');transform:rotate(180deg) }
+
+.itc-club-section button.carousel-control-prev, .itc-club-section button.carousel-control-next { background:#fff;height:46px;width:46px;top:50%;left:-17px;border-radius:50px;z-index:9;opacity:1 }
+
+.itc-club-section button.carousel-control-next { right:-17px !important;left:unset !important }
 
 @media(max-width:370px){a.btn-start-now,.itc-club-right-wrapper button{padding:14px 36px !important;font-size:14px !important;margin-top:2px}
 .itc-make-shift-section .button a span,.itc-club-right-wrapper button{font-size:14px !important}
@@ -2396,6 +2489,26 @@ ul::-webkit-scrollbar{display:none}
 body{color:#2d2119}
 
 .active { opacity:1 }
+
+.carousel-control-next, .carousel-control-prev { border-radius:50%;background:#fff;width:40px;height:40px;text-align:center;line-height:20px;top:inherit;bottom:50%;opacity:1 }
+
+.carousel-control-prev { left:66px }
+
+.carousel-control-next { right:72px }
+
+.itc-club-section .carousel-inner { margin-top:0 }
+
+.carousel-indicators { bottom:-50px }
+
+.carousel-indicators li { border:1px solid #2d2119 }
+
+.carousel-indicators .active { background-color:#2d2119 }
+
+@media only screen and (max-width:767.9px) { .carousel-control-prev { left:0 }
+
+.carousel-control-next { right:0 }
+
+.itc-club-section .carousel-indicators { bottom:-35px !important } }
 
 @media(max-width:375px){.itc-banner p{max-width:100%}
 }

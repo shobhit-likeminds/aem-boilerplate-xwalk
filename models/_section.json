@@ -77,7 +77,11 @@
         "main-details",
         "features",
         "highlights",
-        "feature-list"
+        "feature-list",
+        "itc-header-section",
+        "itc-how-shift",
+        "cmp-text",
+        "itc-footer-section"
       ]
     }
   ]

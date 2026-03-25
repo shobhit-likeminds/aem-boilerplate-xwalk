@@ -2365,6 +2365,18 @@ nav li.cmp-breadcrumb__item+li.cmp-breadcrumb__item::before{content:"<" !importa
 
 @font-face{font-family:'slick';font-weight:normal;font-style:normal;font-display:swap;src:url('clientlib-rightshift/css/fonts/slick.eot');src:url('clientlib-rightshift/css/fonts/slick.eot?#iefix') format('embedded-opentype'),url('clientlib-rightshift/css/fonts/slick.woff') format('woff'),url('clientlib-rightshift/css/fonts/slick.ttf') format('truetype'),url('clientlib-rightshift/css/fonts/slick.svg#slick') format('svg')}
 
+.rs-card.card { min-height:460px }
+
+.rs-card.card>img { min-height:190px;height:100%;object-fit:cover;border-radius:40px 40px 0 0 }
+
+.rs-card>.rightshift-image { min-height:190px;height:100%;object-fit:cover;border-radius:40px 40px 0 0;display:none }
+
+.rs-card>.kitchens-image { display:none }
+
+.rs-card.card .card-body { padding:24px 35px 45px 35px }
+
+.tab-para { text-align:center;margin:0 auto;width:100%;max-width:807px }
+
 .card-body a#explore-btn-hide-id { display:none }
 
 @media(max-width:767.98px){.itc-tab .nav-pills .nav-link{font-size:3vw;padding:.5rem 0 .5rem 0}
