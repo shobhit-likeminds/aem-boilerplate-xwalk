@@ -66,7 +66,20 @@
         "nav",
         "section-features",
         "section-who-uses",
-        "aside"
+        "aside",
+        "cky-consent-container",
+        "header-wrapper",
+        "breadcrumb",
+        "banner-carousel",
+        "description",
+        "social-link",
+        "buy-products",
+        "gallery-carousel",
+        "health-benefits",
+        "user-guide-wrapper",
+        "dabur-chyawanprash-stories",
+        "back-to-top",
+        "footer-logo"
       ]
     }
   ]

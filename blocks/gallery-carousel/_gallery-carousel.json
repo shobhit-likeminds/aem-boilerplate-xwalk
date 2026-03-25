@@ -1,31 +1,31 @@
 {
   "definitions": [
     {
-      "title": "Banner-Carousel",
-      "id": "banner-carousel",
+      "title": "Gallery-Carousel",
+      "id": "gallery-carousel",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block",
             "template": {
-              "filter": "banner-carousel",
-              "model": "banner-carousel",
-              "name": "Banner-Carousel"
+              "filter": "gallery-carousel",
+              "model": "gallery-carousel",
+              "name": "Gallery-Carousel"
             }
           }
         }
       }
     },
     {
-      "title": "Banner",
-      "id": "banner",
+      "title": "Gallery-Carousel-Item",
+      "id": "gallery-carousel-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "banner",
-              "name": "Banner"
+              "model": "gallery-carousel-item",
+              "name": "Gallery-Carousel-Item"
             }
           }
         }
@@ -34,10 +34,18 @@
   ],
   "models": [
     {
-      "id": "banner-carousel"
+      "id": "gallery-carousel",
+      "fields": [
+        {
+          "component": "container",
+          "item": "gallery-carousel-item",
+          "label": "Slides",
+          "name": "slides"
+        }
+      ]
     },
     {
-      "id": "banner",
+      "id": "gallery-carousel-item",
       "fields": [
         {
           "component": "reference",
@@ -53,14 +61,8 @@
         },
         {
           "component": "richtext",
-          "label": "Subtitle",
-          "name": "subtitle",
-          "valueType": "string"
-        },
-        {
-          "component": "aem-content",
-          "label": "CTA",
-          "name": "cta",
+          "label": "Body",
+          "name": "body",
           "valueType": "string"
         }
       ]
@@ -68,9 +70,9 @@
   ],
   "filters": [
     {
-      "id": "banner-carousel",
+      "id": "gallery-carousel",
       "components": [
-        "banner"
+        "gallery-carousel-item"
       ]
     }
   ]

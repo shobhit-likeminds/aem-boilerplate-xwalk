@@ -1117,11 +1117,15 @@ img[data-lazy] {
  *  License - http://fontawesome.io/license (Font: SIL OFL 1.1, CSS: MIT License)
  */@font-face{font-family:'FontAwesome';src:url('../fonts/fontawesome-webfont.eot?v=4.3.0');src:url('../fonts/fontawesome-webfont.eot?#iefix&v=4.3.0') format('embedded-opentype'),url('../fonts/fontawesome-webfont.woff2?v=4.3.0') format('woff2'),url('../fonts/fontawesome-webfont.woff?v=4.3.0') format('woff'),url('../fonts/fontawesome-webfont.ttf?v=4.3.0') format('truetype'),url('../fonts/fontawesome-webfont.svg?v=4.3.0#fontawesomeregular') format('svg');font-weight:normal;font-style:normal}
 
+.fa { display:inline-block;font:normal normal normal 14px/1 FontAwesome;font-size:inherit;text-rendering:auto;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;transform:translate(0, 0) }
+
 @-webkit-keyframes fa-spin{0%{-webkit-transform:rotate(0deg);transform:rotate(0deg)}100%{-webkit-transform:rotate(359deg);transform:rotate(359deg)}}
 
 @keyframes fa-spin{0%{-webkit-transform:rotate(0deg);transform:rotate(0deg)}100%{-webkit-transform:rotate(359deg);transform:rotate(359deg)}}
 
 :root .fa-rotate-90,:root .fa-rotate-180,:root .fa-rotate-270,:root .fa-flip-horizontal,:root .fa-flip-vertical{filter:none}
+
+.fa-arrow-up:before { content:"\f062" }
 
 /* cyrillic-ext */
 @font-face { 
@@ -1979,12 +1983,6 @@ img {
   vertical-align: middle;
  }
 
-.img-responsive { 
-  display: block;
-  max-width: 100%;
-  height: auto;
- }
-
 hr { 
   margin-top: 20px;
   margin-bottom: 20px;
@@ -2273,8 +2271,81 @@ output {
   color: #555555;
  }
 
-.form-group { 
-  margin-bottom: 15px;
+.btn { 
+  display: inline-block;
+  margin-bottom: 0;
+  font-weight: normal;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  -ms-touch-action: manipulation;
+  touch-action: manipulation;
+  cursor: pointer;
+  background-image: none;
+  border: 1px solid transparent;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  border-radius: 4px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+ }
+
+.btn:focus, .btn:active:focus { 
+  outline: 5px auto -webkit-focus-ring-color;
+  outline-offset: -2px;
+ }
+
+.btn:hover, .btn:focus { 
+  color: #333;
+  text-decoration: none;
+ }
+
+.btn:active { 
+  background-image: none;
+  outline: 0;
+  -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+ }
+
+.btn-primary { 
+  color: #fff;
+  background-color: #337ab7;
+  border-color: #2e6da4;
+ }
+
+.btn-primary:focus { 
+  color: #fff;
+  background-color: #286090;
+  border-color: #122b40;
+ }
+
+.btn-primary:hover { 
+  color: #fff;
+  background-color: #286090;
+  border-color: #204d74;
+ }
+
+.btn-primary:active { 
+  color: #fff;
+  background-color: #286090;
+  background-image: none;
+  border-color: #204d74;
+ }
+
+.btn-primary:active:hover, .btn-primary:active:focus { 
+  color: #fff;
+  background-color: #204d74;
+  border-color: #122b40;
+ }
+
+.btn-lg { 
+  padding: 10px 16px;
+  font-size: 18px;
+  line-height: 1.3333333;
+  border-radius: 6px;
  }
 
 @-webkit-keyframes progress-bar-stripes {
@@ -2303,33 +2374,6 @@ output {
     background-position: 0 0;
   }
 }
-
-.carousel { 
-  position: relative;
- }
-
-.carousel-inner { 
-  position: relative;
-  width: 100%;
-  overflow: hidden;
- }
-
-.carousel-inner > .active { 
-  display: block;
- }
-
-.carousel-inner > .active { 
-  left: 0;
- }
-
-.clearfix:before, .clearfix:after { 
-  display: table;
-  content: " ";
- }
-
-.clearfix:after { 
-  clear: both;
- }
 
 @-ms-viewport {
   width: device-width;
@@ -2497,7 +2541,7 @@ ol, ul {
   padding-left: 1.5em;
  }
 
-p:last-child, .form-group:last-child { 
+p:last-child { 
   margin-bottom: 0;
  }
 
@@ -3356,41 +3400,6 @@ label {
   text-align: center;
  }
 
-/* Home page css end here */
-
-/* Products page css start here */
-.view-our-brands-banner-slick .banner-content-box.align-Left { 
-  position: absolute;
-  width: 25%;
- }
-
-.view-our-brands-banner-slick .banner-content-box.align-Left h3.title { 
-  text-align: left;
- }
-
-.view-our-brands-banner-slick .banner-content-box .read-more a { 
-  margin-top: 0;
-  font-size: 20px;
-  cursor: pointer;
-  text-decoration: none;
-  font-family: 'EB Garamond', serif;
-  font-weight: 500;
-  font-style: normal;
-  line-height: 1;
-  color: #fff;
-  text-transform: capitalize;
-  padding: 14px 30px;
-  display: inline-block;
-  border: 1px solid #D1A272;
-  outline: none;
-  background: #D1A272;
- }
-
-.view-our-brands-banner-slick .image-box img { 
-  width: 100%;
-  height: auto;
- }
-
 #block-whatconstitutesayurvedicliving h5 { 
   font-size: 16px;
   font-weight: 600;
@@ -3414,11 +3423,6 @@ label {
     stroke-dasharray: 0 100;
   }
 }
-
-/* .view-our-brands-banner-slick .banner-content-box.align-Left {  width:auto; } */
-.view-our-brands-banner-slick .read-more { margin-top:20px;  }
-
-.banner-content-box .sub_title {  font-size: 18px; font-weight: 300 !important; font-style: normal; line-height: 1.4; letter-spacing: 0px; color: #fff; margin-bottom:0 !important;margin-top:0 !important; font-family: 'Nunito Sans', sans-serif;  }
 
 input#edit-first-name, input#edit-last-name, input#edit-email-id, input#edit-mobile, input#edit-current-company {  border: 1px solid #AAAAAA;padding: 10px 20px;width: 100%; background:#fff;  }
 
@@ -4156,7 +4160,7 @@ a, a:hover {
   transition: all .4s cubic-bezier(.25, .74, .22, .99);
  }
 
-h3, .block h3 { 
+h3 { 
   font-family: 'EB Garamond', serif;
   font-size: 35px;
   font-weight: 500;
@@ -4177,25 +4181,6 @@ p {
   margin-bottom: 25px !important;
  }
 
-.banner-content-box h3 { 
-  color: #D1A272;
-  /* color: #6F6B67; */
-  font-size: 62px;
-  line-height: 1.3;
-  font-family: 'EB Garamond', serif;
-  font-weight: 500;
-  font-style: normal;
-  letter-spacing: 0px;
- }
-
-.banner-content-box h4 { 
-  color: #D1A272;
-  font-size: 24px;
-  line-height: 1;
-  font-family: 'EB Garamond', serif;
-  font-style: normal;
- }
-
 #cboxTitle { 
   top: 0;
   bottom: initial;
@@ -4207,14 +4192,6 @@ p {
   letter-spacing: 0px;
   text-align: center;
   display: block !important;
- }
-
-/* .body-care-content-box .body-care-content .body-care-item .views-element-container { 
-    background: rgba(225, 225, 225, .9);
-} */
-
-.body-care-content-box .body-care-content .body-care-item .views-element-container .view-care-of-body {
-  display: none;
  }
 
 #quicktabs-tabpage-contact_information_tab-0>div+div { 
@@ -4372,23 +4349,11 @@ input[type="file"] {
 
  }
 
-@media only screen and (max-width: 1500px) { .banner-content-box h3 { 
-    font-size: 52px;
-   }
-
-section#block-views-block-explore-brand-block-2 { 
+@media only screen and (max-width: 1500px) { section#block-views-block-explore-brand-block-2 { 
     padding: 0 5% !important;
    }
 
-.view-our-brands-banner-slick .banner-content-box h3 { 
-    font-size: 52px !important;
-   }
-
-.view-our-brands-banner-slick .banner-content-box { 
-    left: 5% !important;
-   }
-
-h3, .block h3 { 
+h3 { 
     font-size: 28px;
    }
 
@@ -4400,7 +4365,7 @@ p {
     font-size: 16px;
    } }
 
-@media only screen and (max-width: 1366px) { h3, .block h3 { 
+@media only screen and (max-width: 1366px) { h3 { 
     font-size: 28px;
    }
 
@@ -4410,19 +4375,6 @@ p {
 
 h2 { 
     font-size: 14px;
-   }
-
-.banner-content-box h3 { 
-    font-size: 42px;
-   }
-
-.view-our-brands-banner-slick .banner-content-box h3 { 
-    font-size: 32px !important;
-    margin-top: 10px;
-   } }
-
-@media only screen and (max-width:979px) { .view-our-brands-banner-slick .banner-content-box.align-Left { 
-    width: 40%;
    } }
 
 table { 
@@ -4437,18 +4389,6 @@ li::marker {
 #edit-counties-foe-which-you-would-like-to-apply-for-distribution--wrapper legend { 
   margin-bottom: 40px;
   border: 0px;
- }
-
-/* .page-node-type-landing-page.page-node-134 .banner-content-box { 
-  width: 490px !important;
-  max-width: 490px !important;
-  padding-left: 120px;
-} */
-
-.page-node-type-landing-page.page-node-134 .banner-content-box h3,
-.page-node-type-landing-page.page-node-159 .banner-content-box h3,
-.page-node-type-landing-page.page-node-158 .banner-content-box h3 {
-  text-align: left;
  }
 
 #quicktabs-ayurvedic_body_types_tab { 
@@ -4492,30 +4432,6 @@ section#block-views-block-explore-brand-block-2 {
   backdrop-filter: blur(50px);
  }
 
-.banner-content-box .sub_title { 
-  margin-bottom: 73px;
- }
-
-.views-element-container { 
-  position: relative;
- }
-
-.view-our-brands-banner-slick .banner-content-box { 
-  left: 7%;
-  top: 25%;
-  width: 30%;
- }
-
-.view-our-brands-banner-slick .banner-content-box h3 { 
-  margin-bottom: 30px;
-  font-family: 'EB Garamond', serif;
-  font-size: 62px;
-  font-weight: 500;
-  font-style: normal;
-  line-height: 1.2;
-  color: #6F6B67;
- }
-
 #views-exposed-form-meet-the-ceo-page-1 { 
   display: none;
  }
@@ -4523,10 +4439,6 @@ section#block-views-block-explore-brand-block-2 {
 @media only screen and (max-width: 767px) { #edit-actions button { 
     padding: 10px 32px;
     margin-top: 18px;
-   } }
-
-@media only screen and (max-width: 1700px) { .view-our-brands-banner-slick .read-more { 
-     margin-top: 0;
    } }
 
 /* For medium devices (tablets, 768px to 1023px) */
@@ -4625,11 +4537,7 @@ section#block-views-block-explore-brand-block-2 {
   }
  }
 
-@media only screen and (max-width: 1500px) { .view-our-brands-banner-slick .read-more { 
-    margin-top: 0;
-  }
-
-#block-whatconstitutesayurvedicliving h5 { 
+@media only screen and (max-width: 1500px) { #block-whatconstitutesayurvedicliving h5 { 
     font-size: 14px;
    }
 
@@ -4637,12 +4545,7 @@ section#block-views-block-explore-brand-block-2 {
     font-size: 28px;
    } }
 
-@media only screen and (max-width: 1366px) { .view-our-brands-banner-slick .banner-content-box .read-more a { 
-    font-size: 18px;
-    padding: 11px 30px;
-   }
-
-#block-daburaroundtheworld { padding-top: 50px; }
+@media only screen and (max-width: 1366px) { #block-daburaroundtheworld { padding-top: 50px; }
 
 input#edit-first-name, input#edit-last-name, input#edit-email-id, input#edit-mobile, input#edit-current-company { font-size: 16px;line-height: 1.2;height: 42px; } }
 
@@ -4667,30 +4570,7 @@ input#edit-first-name, input#edit-last-name, input#edit-email-id, input#edit-mob
     padding: 0px 15px;
    }
 
-.banner-content-box h3 { 
-    font-size: 32px;
-    line-height: 38px;
-    margin-bottom: 0px;
-   }
-
-/*   .page-node-type-our-brands .banner-wrapper-box .banner-content-box { 
-    left: 15px;
-    top: 68%;
-  } */
-  .page-node-type-our-brands .banner-wrapper-box .banner-content-box,
-  .view-our-brands-banner-slick .banner-content-box,
-  .view-our-brands-banner-slick .banner-content-box.align-Left,
-  .view-our-brands-banner-slick .banner-content-box.align-Center {
-    width: calc(100% - 50px) !important;
-    margin: auto;
-    position: initial;
-    top: 0 !important;
-    left: 0 !important;
-    text-align: center !important;
-    margin-bottom: 30px;
-   }
-
-h3, .block h3, #quicktabs-ayurvedic_body_types_tab h3 { 
+h3, #quicktabs-ayurvedic_body_types_tab h3 { 
     font-size: 24px;
     line-height: 1.1;
    }
@@ -4704,53 +4584,8 @@ h2, #block-whatconstitutesayurvedicliving h5 {
     text-align: center !important;
    }
 
-.view-our-brands-banner-slick .banner-content-box, .view-our-brands-banner-slick .banner-content-box.align-Left { 
-    width: 80%;
-    top: 60px;
-   }
-
-.banner-content-box h3, .view-our-brands-banner-slick .banner-content-box h3 { 
-    font-size: 28px !important;
-    line-height: 1.23;
-    text-align: left;
-    font-weight: 400;
-   }
-
-.view-our-brands-banner-slick .banner-content-box.align-Left h3.title { 
-    text-align: center;
-   }
-
-.banner-content-box h4 { 
-    font-size: 18px;
-   }
-
 section#block-views-block-explore-brand-block-2 { 
     padding: 0 15% !important;
-   }
-
-/* .views-element-container .slick__arrow .slick-prev { 
-  left: 15px;
-}
-
-.views-element-container .slick__arrow .slick-next {
-  right: 15px;
-} */
-
-  .view-id-our_latest_stories .slick-initialized .slick-slide {
-    margin: 0 10px;
-   }
-
-.view-our-brands-banner-slick .banner-content-box h3 { 
-    font-size: 28px !important;
-   }
-
-.view-our-brands-banner-slick .banner-content-box .read-more a { 
-    font-size: 15px;
-    margin-bottom: 40px;
-   }
-
-.view-our-brands-banner-slick .banner-content-box h3 { 
-    margin-top: 20px;
    }
 
 #quicktabs-ayurvedic_body_types_tab h3, #quicktabs-ayurvedic_body_types_tab p { 
@@ -4765,13 +4600,6 @@ input#edit-first-name, input#edit-last-name, input#edit-email-id, input#edit-mob
     padding: 0;
    }
 
-/*.page-node-type-our-brands .banner-wrapper-box .banner-content-box, .view-our-brands-banner-slick .banner-content-box, .view-our-brands-banner-slick .banner-content-box.align-Left {  position:absolute !important; top:inherit !important; max-width: 80% !important; bottom: 15% !important; left:20px !important; text-align:left !important; }*/
-
-    .block-views-blockpolicies-and-initiatives-block-1 .flexslider .views-field-field-upload-image-eb1, .block-views-blockpolicies-and-initiatives-block-1 .flexslider .views-field-field-upload-image-ov { width:100%;  }
-
-/* .view-our-brands-banner-slick .banner-content-box.align-Left h3.title {  text-align:left !important; } */
-    .view-our-brands-banner-slick .banner-content-box .read-more a { margin-bottom:0; padding: 14px 59px !important;  }
-
 section#block-views-block-policies-and-initiatives-block-2 {  display:none !important;  } }
 
 @media only screen and (max-width:767px) { section#block-views-block-policies-and-initiatives-awards-block-6 {  display:none;  }
@@ -4779,43 +4607,6 @@ section#block-views-block-policies-and-initiatives-block-2 {  display:none !impo
 input#edit-expected-ctc, input#edit-portfolio-link {  font-size:16px; height:50px;  }
 
 #block-daburaroundtheworld { padding-top: 20px; } }
-
-.carousel { 
-  position: relative;
- }
-
-.carousel-inner { 
-  position: relative;
-  width: 100%;
-  overflow: hidden;
- }
-
-.carousel-inner::after { 
-  display: block;
-  clear: both;
-  content: "";
- }
-
-.carousel-item { 
-  position: relative;
-  display: none;
-  float: left;
-  width: 100%;
-  margin-right: -100%;
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-  transition: -webkit-transform 0.6s ease-in-out;
-  transition: transform 0.6s ease-in-out;
-  transition: transform 0.6s ease-in-out, -webkit-transform 0.6s ease-in-out;
- }
-
-@media (prefers-reduced-motion: reduce) { .carousel-item { 
-    transition: none;
-   } }
-
-.carousel-item.active { 
-  display: block;
- }
 
 body{opacity:1.0 !important;}
 
@@ -4832,46 +4623,3 @@ body{opacity:1.0 !important;}
 .cky-accordion-header-des *{font-size:14px}
 
 @media (max-width:352px) { .cky-preference-content-wrapper *,.cky-accordion-header-des *,.cky-dma-content-wrapper *{font-size:12px} }
-
-@media screen and (min-width: 800px) { .view-our-brands-banner-slick .banner-content-box.align-Left { 
-    position: absolute;
-    width: 25% !important;
-
- } }
-
-.view-our-brands-banner-slick .banner-content-box { 
-    top: 25% !important;
-    
- }
-
-@media only screen and (min-width:1300px) { .view-our-brands-banner-slick .banner-content-box h3 { font-size:32px !important; } }
-
-@media only screen and (max-width:1299px) { .view-our-brands-banner-slick .banner-content-box h3 { font-size:32px !important; } }
-
-@media only screen and (max-width:1199px) { .view-our-brands-banner-slick .banner-content-box h3 { font-size:28px !important; } }
-
-@media only screen and (max-width:991px) { .view-our-brands-banner-slick .banner-content-box h3 { font-size:28px !important; } }
-
-@media only screen and (max-width:767px) { .carousel .carousel-item { 
-  height: 300px;
- }
-
-.carousel-item img { 
-    position: absolute;
-    top: 0;
-    left: 0;
-    min-height: 300px;
- } }
-
-@media only screen and (max-width:575px) { .carousel .carousel-item { 
-  height: 240px;
- }
-
-.carousel-item img { 
-    position: absolute;
-    top: 0;
-    left: 0;
-    min-height: 240px;
- }
-
-.view-our-brands-banner-slick .banner-content-box h3 { font-size: 24px !important; } }

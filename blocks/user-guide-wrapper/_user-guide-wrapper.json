@@ -1,0 +1,91 @@
+{
+  "definitions": [
+    {
+      "title": "User-Guide-Wrapper",
+      "id": "user-guide-wrapper",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "user-guide-wrapper",
+              "model": "user-guide-wrapper",
+              "name": "User-Guide-Wrapper"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Guide-List",
+      "id": "guide-list",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "guide-list",
+              "name": "Guide-List"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "user-guide-wrapper",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "UserGuideImg",
+          "name": "userguideimg",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Block Title",
+          "name": "block-title",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "H1 Tag",
+          "name": "h1tag",
+          "valueType": "string"
+        },
+        {
+          "component": "container",
+          "item": "guide-list",
+          "label": "Guide List",
+          "name": "guide_list"
+        }
+      ]
+    },
+    {
+      "id": "guide-list",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Title",
+          "name": "title",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Description",
+          "name": "description",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "user-guide-wrapper",
+      "components": [
+        "guide-list"
+      ]
+    }
+  ]
+}

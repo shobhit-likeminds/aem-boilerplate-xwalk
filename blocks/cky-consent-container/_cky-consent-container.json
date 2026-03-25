@@ -1,0 +1,168 @@
+{
+  "definitions": [
+    {
+      "title": "Cky-Consent-Container",
+      "id": "cky-consent-container",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "cky-consent-container",
+              "model": "cky-consent-container",
+              "name": "Cky-Consent-Container"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Cky-Category-Direct-Item",
+      "id": "cky-category-direct-item",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "cky-category-direct-item",
+              "name": "Cky-Category-Direct-Item"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Cky-Accordion",
+      "id": "cky-accordion",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "cky-accordion",
+              "name": "Cky-Accordion"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Cky-Audit-Table",
+      "id": "cky-audit-table",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "cky-audit-table",
+              "name": "Cky-Audit-Table"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "cky-consent-container",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Title",
+          "name": "title",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Description",
+          "name": "description",
+          "valueType": "string"
+        },
+        {
+          "component": "container",
+          "item": "cky-category-direct-item",
+          "label": "Category Direct Items",
+          "name": "categoryDirectItems"
+        },
+        {
+          "component": "container",
+          "item": "cky-accordion",
+          "label": "Accordions",
+          "name": "accordions"
+        }
+      ]
+    },
+    {
+      "id": "cky-category-direct-item",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Category Title",
+          "name": "categoryTitle",
+          "valueType": "string"
+        },
+        {
+          "component": "boolean",
+          "label": "Enabled",
+          "name": "enabled",
+          "valueType": "boolean"
+        }
+      ]
+    },
+    {
+      "id": "cky-accordion",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Accordion Title",
+          "name": "accordionTitle",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Accordion Description",
+          "name": "accordionDescription",
+          "valueType": "string"
+        },
+        {
+          "component": "container",
+          "item": "cky-audit-table",
+          "label": "Audit Tables",
+          "name": "auditTables"
+        }
+      ]
+    },
+    {
+      "id": "cky-audit-table",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Cookie Name",
+          "name": "cookieName",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Duration",
+          "name": "duration",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Cookie Description",
+          "name": "cookieDescription",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "cky-consent-container",
+      "components": [
+        "cky-category-direct-item",
+        "cky-accordion"
+      ]
+    }
+  ]
+}

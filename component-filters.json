@@ -31,7 +31,20 @@
       "nav",
       "section-features",
       "section-who-uses",
-      "aside"
+      "aside",
+      "cky-consent-container",
+      "header-wrapper",
+      "breadcrumb",
+      "banner-carousel",
+      "description",
+      "social-link",
+      "buy-products",
+      "gallery-carousel",
+      "health-benefits",
+      "user-guide-wrapper",
+      "dabur-chyawanprash-stories",
+      "back-to-top",
+      "footer-logo"
     ]
   },
   {
@@ -41,9 +54,24 @@
     ]
   },
   {
-    "id": "bannerCarousel",
+    "id": "back-to-top"
+  },
+  {
+    "id": "banner-carousel",
     "components": [
-      "bannerSlide"
+      "banner"
+    ]
+  },
+  {
+    "id": "breadcrumb",
+    "components": [
+      "crumb"
+    ]
+  },
+  {
+    "id": "buy-products",
+    "components": [
+      "product"
     ]
   },
   {
@@ -56,6 +84,13 @@
     "id": "carousel",
     "components": [
       "carouselItem"
+    ]
+  },
+  {
+    "id": "cky-consent-container",
+    "components": [
+      "cky-category-direct-item",
+      "cky-accordion"
     ]
   },
   {
@@ -74,10 +109,19 @@
     ]
   },
   {
+    "id": "dabur-chyawanprash-stories",
+    "components": [
+      "story-item"
+    ]
+  },
+  {
     "id": "delightfulDelicacies",
     "components": [
       "category"
     ]
+  },
+  {
+    "id": "description"
   },
   {
     "id": "feature-list",
@@ -87,7 +131,23 @@
     ]
   },
   {
+    "id": "footer-logo",
+    "components": [
+      "footer-menu",
+      "footer-address",
+      "footer-contact",
+      "footer-copyright",
+      "footer-social"
+    ]
+  },
+  {
     "id": "footer"
+  },
+  {
+    "id": "gallery-carousel",
+    "components": [
+      "gallery-carousel-item"
+    ]
   },
   {
     "id": "headerSection",
@@ -97,7 +157,21 @@
     ]
   },
   {
+    "id": "header-wrapper",
+    "components": [
+      "header-menu-item",
+      "header-right-menu-item",
+      "header-region-item"
+    ]
+  },
+  {
     "id": "header"
+  },
+  {
+    "id": "health-benefits",
+    "components": [
+      "health-list"
+    ]
   },
   {
     "id": "highlights",
@@ -133,7 +207,19 @@
     ]
   },
   {
+    "id": "social-link",
+    "components": [
+      "social-link-item"
+    ]
+  },
+  {
     "id": "spaceAdderVerticalPadding"
+  },
+  {
+    "id": "user-guide-wrapper",
+    "components": [
+      "guide-list"
+    ]
   },
   {
     "id": "whyUs",

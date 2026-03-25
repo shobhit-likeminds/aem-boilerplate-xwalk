@@ -1,0 +1,105 @@
+{
+  "definitions": [
+    {
+      "title": "Dabur Chyawanprash Stories",
+      "id": "dabur-chyawanprash-stories",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "dabur-chyawanprash-stories",
+              "model": "dabur-chyawanprash-stories",
+              "name": "Dabur Chyawanprash Stories"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Story Item",
+      "id": "story-item",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "story-item",
+              "name": "Story Item"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "dabur-chyawanprash-stories",
+      "fields": [
+        {
+          "component": "radio-group",
+          "label": "Category",
+          "name": "category",
+          "options": [
+            {
+              "label": "All",
+              "value": "all"
+            },
+            {
+              "label": "Brand",
+              "value": "brand"
+            },
+            {
+              "label": "Videos",
+              "value": "videos"
+            }
+          ],
+          "valueType": "string"
+        },
+        {
+          "component": "container",
+          "item": "story-item",
+          "label": "Stories",
+          "name": "stories"
+        }
+      ]
+    },
+    {
+      "id": "story-item",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Image",
+          "name": "image",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Link",
+          "name": "link",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Title",
+          "name": "title",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Description",
+          "name": "description",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "dabur-chyawanprash-stories",
+      "components": [
+        "story-item"
+      ]
+    }
+  ]
+}

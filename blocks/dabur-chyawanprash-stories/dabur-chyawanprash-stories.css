@@ -146,6 +146,18 @@
   }
 }
 
+.slick-slide { 
+    display: none;
+    float: left;
+
+    height: 100%;
+    min-height: 1px;
+ }
+
+.slick-slide img { 
+    display: block;
+ }
+
 /**
  * @file
  * Alignment classes for text and block level elements.
@@ -782,6 +794,17 @@ html.js .js-webform-visually-hidden[style*="display: none"] {
 
 }
 
+.blaze-slider { --slides-to-show:1;--slide-gap:20px;direction:ltr }
+
+.blaze-container { position:relative }
+
+.blaze-track-container { overflow:hidden }
+
+.blaze-track { will-change:transform;touch-action:pan-y;display:flex;gap:var(--slide-gap);--slide-width:calc(
+    (100% - (var(--slides-to-show) - 1) * var(--slide-gap)) /
+      var(--slides-to-show)
+  );box-sizing:border-box }
+
 .blaze-track>*{box-sizing:border-box;width:var(--slide-width);flex-shrink:0}
 
 /**
@@ -859,6 +882,28 @@ html.js .js-webform-visually-hidden[style*="display: none"] {
   position: relative;
 }
 
+.slide__content::after { 
+  content: "";
+  display: table;
+  clear: both;
+ }
+
+/* Overrides .slick-slider to make caption text selectable. */
+.slide__caption { 
+  cursor: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  -o-user-select: text;
+  -webkit-user-select: text;
+  user-select: text;
+  width: 100%;
+ }
+
+/* Only display when JS is ready. */
+.slick__arrow { 
+  visibility: visible;
+ }
+
 /**
  * Skins.
  * Arrows contained/wrapped within slick__arrow for easy moves.
@@ -867,6 +912,104 @@ html.js .js-webform-visually-hidden[style*="display: none"] {
 .slick-prev {
   left: 0;
 }
+
+.slick-next { 
+  right: 0;
+ }
+
+.slick__arrow { 
+  bottom: auto;
+  height: 2px;
+  left: 0;
+  margin-top: -1px;
+  pointer-events: none;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 100%;
+  z-index: 2;
+ }
+
+even if dup. */
+.slick-arrow { 
+  border: 0;
+  background: none;
+  border-radius: 50%;
+  font-size: 0;
+  width: 42px;
+  height: 42px;
+  pointer-events: auto;
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
+ }
+
+.slick-arrow:active, .slick-arrow:focus { 
+  box-shadow: none;
+  outline: 0;
+ }
+
+/* 
+.slick-arrow::before, .slick-arrow::after { 
+  pointer-events: none;
+}
+
+.slick-arrow::before {
+  color: #ff6d2c;
+  font-size: 36px;
+  font-size: 2.25rem;
+}
+
+.slick-arrow:hover::before {
+  color: #37465b;
+} */
+
+.slick__arrow .slick-prev:before,
+.slick__arrow .slick-next:before {
+  width: 20px;
+  height: 20px;
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  margin: auto;
+  -webkit-transition: all .5s ease;
+  transition: all .5s ease;
+  border-bottom: 2px solid #D1A272;
+  border-right: 2px solid #D1A272;
+ }
+
+.slick__arrow .slick-next:before { 
+  -webkit-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+  right: 4px;
+ }
+
+.slick__arrow .slick-prev:before { 
+  -webkit-transform: rotate(135deg);
+  transform: rotate(135deg);
+  left: 4px;
+ }
+
+/* .slick__arrow .slick-next { 
+  right: -20px;
+}
+.slick__arrow .slick-prev {
+  left: -20px;
+} */
+
+/**
+ * Bullets.
+ */
+/* Makes the pointer work when bullets placed over the slide. */
+/* Overrides core > 1.3.11, otherwise thumbnails are non-clickable */
+.slick button,
+.slick--thumbnail .slick__slide img {
+  pointer-events: auto;
+ }
 
 /**
  * Media.
@@ -1111,6 +1254,10 @@ img[data-lazy] {
 .bef-exposed-form .form--inline .form-item {
   float: none;
 }
+
+.bef-exposed-form .form--inline > .form-item { 
+  float: left; /* LRT */
+ }
 
 /*!
  *  Font Awesome 4.3.0 by @davegandy - http://fontawesome.io - @fontawesome
@@ -2277,6 +2424,113 @@ output {
   margin-bottom: 15px;
  }
 
+.radio { 
+  position: relative;
+  display: block;
+  margin-top: 10px;
+  margin-bottom: 10px;
+ }
+
+.radio label { 
+  min-height: 20px;
+  padding-left: 20px;
+  margin-bottom: 0;
+  font-weight: 400;
+  cursor: pointer;
+ }
+
+@media (min-width: 768px) { .form-inline .form-group { 
+    display: inline-block;
+    margin-bottom: 0;
+    vertical-align: middle;
+   }
+
+.form-inline .control-label { 
+    margin-bottom: 0;
+    vertical-align: middle;
+   }
+
+.form-inline .radio { 
+    display: inline-block;
+    margin-top: 0;
+    margin-bottom: 0;
+    vertical-align: middle;
+   }
+
+.form-inline .radio label { 
+    padding-left: 0;
+   } }
+
+.btn { 
+  display: inline-block;
+  margin-bottom: 0;
+  font-weight: normal;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  -ms-touch-action: manipulation;
+  touch-action: manipulation;
+  cursor: pointer;
+  background-image: none;
+  border: 1px solid transparent;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  border-radius: 4px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+ }
+
+.btn:focus, .btn:active:focus { 
+  outline: 5px auto -webkit-focus-ring-color;
+  outline-offset: -2px;
+ }
+
+.btn:hover, .btn:focus { 
+  color: #333;
+  text-decoration: none;
+ }
+
+.btn:active { 
+  background-image: none;
+  outline: 0;
+  -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+ }
+
+.btn-info { 
+  color: #fff;
+  background-color: #5bc0de;
+  border-color: #46b8da;
+ }
+
+.btn-info:focus { 
+  color: #fff;
+  background-color: #31b0d5;
+  border-color: #1b6d85;
+ }
+
+.btn-info:hover { 
+  color: #fff;
+  background-color: #31b0d5;
+  border-color: #269abc;
+ }
+
+.btn-info:active { 
+  color: #fff;
+  background-color: #31b0d5;
+  background-image: none;
+  border-color: #269abc;
+ }
+
+.btn-info:active:hover, .btn-info:active:focus { 
+  color: #fff;
+  background-color: #269abc;
+  border-color: #1b6d85;
+ }
+
 @-webkit-keyframes progress-bar-stripes {
   from {
     background-position: 40px 0;
@@ -2303,24 +2557,6 @@ output {
     background-position: 0 0;
   }
 }
-
-.carousel { 
-  position: relative;
- }
-
-.carousel-inner { 
-  position: relative;
-  width: 100%;
-  overflow: hidden;
- }
-
-.carousel-inner > .active { 
-  display: block;
- }
-
-.carousel-inner > .active { 
-  left: 0;
- }
 
 .clearfix:before, .clearfix:after { 
   display: table;
@@ -2397,6 +2633,10 @@ table .radio.form-no-label {
   margin-bottom: 0;
   margin-top: 0;
 }
+
+.form-actions .btn { 
+  margin-right: 10px;
+ }
 
 /**
  * Icon styles.
@@ -3276,6 +3516,136 @@ section#home-annual {
   }
  }
 
+.ir-video { 
+  position: relative;
+ }
+
+.ir-video:before { 
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  content: '';
+  width: 100px;
+  height: 100px;
+  border-radius: 100%;
+  border: 1px solid #fff;
+ }
+
+.ir-video:after { 
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  content: '';
+  width: 28px;
+  height: 36px;
+  background: url(/static/images/play2.svg) no-repeat 0 0;
+ }
+
+/* .slide__description:hover { 
+    box-shadow: 0 0 11px rgb(33 33 33 / 20%);
+    background-color: #fff;
+} */
+
+.slide__description:hover .temp6-textbbrdr {
+  /* transform: inherit;
+    top: inherit;
+    left: 45%;
+    bottom: -10px; */
+  /* left: 25px;
+    bottom: 0;
+    transform: rotateZ(-90deg); */
+ }
+
+/* .slide__description:hover .temp6-img-cnt h4 { 
+     text-align: center; 
+    padding-left: 0;
+    transform: translateX(33%);
+} */
+
+.slick__arrow .slick-next {
+  right: -33px;
+ }
+
+.slick__arrow .slick-prev { 
+  left: -51px;
+ }
+
+/* our-brand/dabur-chyawanprash css start*/
+
+
+/* discover our lates story css start home page*/
+
+.temp11-sliderpost { 
+  position: relative;
+ }
+
+.temp11-img-ttli p { 
+  background: rgba(209, 162, 114, .6);
+  padding: 4px 10px;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.32px;
+  text-transform: uppercase;
+ }
+
+.temp11-img-ttli { 
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 2;
+ }
+
+.temp11-img-text { 
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  width: 100%;
+  padding: 10px 10px 20px;
+  background: transparent linear-gradient(180deg, var(--unnamed-color-603f1e00) 0%, #4C32182A 22%, #1D1D1C 100%) 0% 0% no-repeat padding-box;
+  background: transparent linear-gradient(180deg, #603F1E00 0%, #4C32182A 22%, #1D1D1C 100%) 0% 0% no-repeat padding-box;
+  z-index: 2;
+ }
+
+.temp11-img-text span a { 
+  font-size: 16px;
+  line-height: 1.5;
+  color: #fff;
+  text-align: center;
+ }
+
+.temp11-img-text p { 
+  text-align: center;
+ }
+
+.temp11-sliderpost:hover .temp11-sliderimg { 
+  transform: scale(1.1);
+ }
+
+.temp11-sliderimg { 
+  background-size: cover;
+  transition: all .5s ease-in;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+ }
+
+.temp11-sliderpost { 
+  height: 100%;
+  width: 100%;
+  transition: box-shadow .3s;
+  margin-bottom: 30px;
+  position: relative;
+ }
+
+.temp11-bg-height { 
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+ }
+
 input#edit-first-name, input#edit-last-name, input#edit-email-id, input#edit-mobile, input#edit-current-company { 
   border: 1px solid #D1A272;
   height: 48px;
@@ -3356,39 +3726,38 @@ label {
   text-align: center;
  }
 
-/* Home page css end here */
-
-/* Products page css start here */
-.view-our-brands-banner-slick .banner-content-box.align-Left { 
+/* .dabur-chyawanprash-stories .view-ingredients-slideshow-brand-page .slick--view--ingredients-slideshow-brand-page .slide__description .views-field-field-upload-image:before { 
   position: absolute;
-  width: 25%;
- }
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  content: '';
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+  border: 1px solid #fff;
+  background: #fff;
+  z-index: 1;
+}
 
-.view-our-brands-banner-slick .banner-content-box.align-Left h3.title { 
-  text-align: left;
- }
+.dabur-chyawanprash-stories .view-ingredients-slideshow-brand-page .slick--view--ingredients-slideshow-brand-page .slide__description .views-field-field-upload-image:after {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  content: '';
+  width: 14px;
+  height: 18px;
+  background: url(/static/images/play-black.svg) no-repeat 0 0;
+  background-size: cover;
+  z-index: 1;
+} */
 
-.view-our-brands-banner-slick .banner-content-box .read-more a { 
-  margin-top: 0;
-  font-size: 20px;
-  cursor: pointer;
-  text-decoration: none;
-  font-family: 'EB Garamond', serif;
-  font-weight: 500;
-  font-style: normal;
-  line-height: 1;
-  color: #fff;
-  text-transform: capitalize;
-  padding: 14px 30px;
-  display: inline-block;
-  border: 1px solid #D1A272;
-  outline: none;
-  background: #D1A272;
- }
+/* Products page css end here */
 
-.view-our-brands-banner-slick .image-box img { 
-  width: 100%;
-  height: auto;
+/* Newsroom page css start here */
+.latest-release .prees-release {
+  border-right: 1px solid rgba(167, 164, 161, 0.5);
  }
 
 #block-whatconstitutesayurvedicliving h5 { 
@@ -3409,16 +3778,42 @@ label {
   padding-top: 100px !important;
  }
 
+.dabur-chyawanprash-stories .view-ingredients-slideshow-brand-page .slide__description .ir-video:before { 
+  width: 54px;
+  height: 54px;
+  background: #fff;
+  box-shadow: 0px 3px 6px rgb(0 0 0 / 30%);
+  z-index: 1;
+ }
+
+.dabur-chyawanprash-stories .view-ingredients-slideshow-brand-page .slide__description .ir-video:after { 
+  width: 14px;
+  height: 18px;
+  background: url(/static/images/play-black.svg) no-repeat 0 0;
+  background-size: cover;
+  z-index: 1;
+ }
+
+.dabur-chyawanprash-stories .view-ingredients-slideshow-brand-page .slide__description .temp11-sliderpost .temp11-img-text p { 
+  color: #fff;
+ }
+
+/* .view-our-policy-download .view-content .views-row { 
+  width: calc(50% - 40px);
+}
+ */
+.path-esops .view-our-policy-download .view-content .views-row {
+  width: 100%;
+ }
+
 @keyframes progress {
   0% {
     stroke-dasharray: 0 100;
   }
 }
 
-/* .view-our-brands-banner-slick .banner-content-box.align-Left {  width:auto; } */
-.view-our-brands-banner-slick .read-more { margin-top:20px;  }
-
-.banner-content-box .sub_title {  font-size: 18px; font-weight: 300 !important; font-style: normal; line-height: 1.4; letter-spacing: 0px; color: #fff; margin-bottom:0 !important;margin-top:0 !important; font-family: 'Nunito Sans', sans-serif;  }
+/*.life-at-dabur-new-block5 .view-content ~ div {   }*/
+.life-at-dabur-new-block5 .view-content ~ div { display:inline-block; vertical-align:top;  }
 
 input#edit-first-name, input#edit-last-name, input#edit-email-id, input#edit-mobile, input#edit-current-company {  border: 1px solid #AAAAAA;padding: 10px 20px;width: 100%; background:#fff;  }
 
@@ -4156,7 +4551,7 @@ a, a:hover {
   transition: all .4s cubic-bezier(.25, .74, .22, .99);
  }
 
-h3, .block h3 { 
+h3 { 
   font-family: 'EB Garamond', serif;
   font-size: 35px;
   font-weight: 500;
@@ -4177,23 +4572,24 @@ p {
   margin-bottom: 25px !important;
  }
 
-.banner-content-box h3 { 
-  color: #D1A272;
-  /* color: #6F6B67; */
-  font-size: 62px;
-  line-height: 1.3;
-  font-family: 'EB Garamond', serif;
-  font-weight: 500;
-  font-style: normal;
-  letter-spacing: 0px;
- }
+/* .views_slideshow_cycle_teaser_section .views_slideshow_cycle_slide .views-field-field-upload-image .field-content:before { 
+    width: 50%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    content: '';
+    background: transparent linear-gradient(90deg, rgba(252, 250, 248, .87) 0%, rgba(230, 234, 233, 0) 100%);
+} */
 
-.banner-content-box h4 { 
-  color: #D1A272;
-  font-size: 24px;
-  line-height: 1;
-  font-family: 'EB Garamond', serif;
-  font-style: normal;
+.banner-wrapper-box .banner-content-box,
+.view-slideshow .views-field-nothing {
+  max-width: 820px;
+  position: absolute;
+  margin: auto;
+  left: 12%;
+  top: 50%;
+  transform: translateY(-50%);
  }
 
 #cboxTitle { 
@@ -4231,6 +4627,11 @@ p {
   font-weight: 400;
   font-family: 'Nunito Sans', sans-serif;
   margin-top: 15px;
+ }
+
+.views-exposed-form .form--inline { 
+  width: 100%;
+  text-align: center;
  }
 
 #cboxWrapper { 
@@ -4286,6 +4687,14 @@ input[type="file"] {
 #edit-linkedin-profile-link { 
   height: 48px;
  }
+
+@media screen and (max-width: 1500px) { /*.hrTemp2 .slick-prev { 
+  bottom: -354px;
+}*/
+
+.life-at-dabur-new-block7 .view-content {
+  overflow: inherit;
+ } }
 
 @media screen and (max-width: 650px) { #block-views-block-talent-cultural-at-dabur-block-5 { 
   margin-top: -127px;
@@ -4372,23 +4781,19 @@ input[type="file"] {
 
  }
 
-@media only screen and (max-width: 1500px) { .banner-content-box h3 { 
-    font-size: 52px;
-   }
-
-section#block-views-block-explore-brand-block-2 { 
+@media only screen and (max-width: 1500px) { section#block-views-block-explore-brand-block-2 { 
     padding: 0 5% !important;
    }
 
-.view-our-brands-banner-slick .banner-content-box h3 { 
-    font-size: 52px !important;
+.temp11-img-text p { 
+    font-size: 14px;
    }
 
-.view-our-brands-banner-slick .banner-content-box { 
-    left: 5% !important;
+.temp11-img-ttli p { 
+    font-size: 12px;
    }
 
-h3, .block h3 { 
+h3 { 
     font-size: 28px;
    }
 
@@ -4400,7 +4805,7 @@ p {
     font-size: 16px;
    } }
 
-@media only screen and (max-width: 1366px) { h3, .block h3 { 
+@media only screen and (max-width: 1366px) { h3 { 
     font-size: 28px;
    }
 
@@ -4410,19 +4815,6 @@ p {
 
 h2 { 
     font-size: 14px;
-   }
-
-.banner-content-box h3 { 
-    font-size: 42px;
-   }
-
-.view-our-brands-banner-slick .banner-content-box h3 { 
-    font-size: 32px !important;
-    margin-top: 10px;
-   } }
-
-@media only screen and (max-width:979px) { .view-our-brands-banner-slick .banner-content-box.align-Left { 
-    width: 40%;
    } }
 
 table { 
@@ -4437,18 +4829,6 @@ li::marker {
 #edit-counties-foe-which-you-would-like-to-apply-for-distribution--wrapper legend { 
   margin-bottom: 40px;
   border: 0px;
- }
-
-/* .page-node-type-landing-page.page-node-134 .banner-content-box { 
-  width: 490px !important;
-  max-width: 490px !important;
-  padding-left: 120px;
-} */
-
-.page-node-type-landing-page.page-node-134 .banner-content-box h3,
-.page-node-type-landing-page.page-node-159 .banner-content-box h3,
-.page-node-type-landing-page.page-node-158 .banner-content-box h3 {
-  text-align: left;
  }
 
 #quicktabs-ayurvedic_body_types_tab { 
@@ -4477,6 +4857,46 @@ input[type="radio"], input[type="checkbox"] {
   padding-top: 180px;
  }
 
+.dabur-chyawanprash-stories { 
+  width: 100%;
+  overflow: hidden;
+ }
+
+.dabur-chyawanprash-stories .bef-exposed-form label.control-label { 
+  font-family: 'EB Garamond', serif;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 1.3;
+  color: #707070;
+  padding: 0px 5px 7px;
+  border-bottom: 2px solid transparent;
+ }
+
+.dabur-chyawanprash-stories .bef-exposed-form label.control-label.checked_button_active { 
+  border-bottom-color: #d1a272;
+  color: #d1a272;
+ }
+
+.dabur-chyawanprash-stories .bef-exposed-form .form--inline>.form-item { 
+  float: unset;
+  text-align: center;
+ }
+
+.dabur-chyawanprash-stories legend { 
+  border: 0px;
+  margin: 0;
+ }
+
+.dabur-chyawanprash-stories .view-filters .form-radios ul li { 
+  display: inline-block;
+  margin-left: 30px;
+  margin-right: 30px;
+ }
+
+.dabur-chyawanprash-stories .view-ingredients-slideshow-brand-page { 
+  padding: 0px 10% 90px;
+ }
+
 #block-thedaburvaluesarenotjustasetofvaluesbutitisourwayoflife { 
   margin-top: 70px;
  }
@@ -4492,28 +4912,71 @@ section#block-views-block-explore-brand-block-2 {
   backdrop-filter: blur(50px);
  }
 
-.banner-content-box .sub_title { 
-  margin-bottom: 73px;
+.slide__caption { 
+  padding: 0px;
+  top: 0;
+ }
+
+/* .block-views-blockslideshow-block-1 .views-field-nothing:before { 
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 100%;
+    height: 100%;
+    content: '';
+    background: rgba(255, 255, 255, .1);
+    -webkit-filter: blur(50px);
+    -moz-filter: blur(50px);
+    -o-filter: blur(50px);
+    filter: blur(50px);
+    transform: translate(-50%, -50%);
+} */
+
+.block-views-blockslideshow-block-2 .fsSliderItemTxtHead {
+  position: absolute;
+  margin: auto;
+  width: 38%;
+  left: 7%;
+  top: 50%;
+  transform: translateY(-50%);
  }
 
 .views-element-container { 
   position: relative;
  }
 
-.view-our-brands-banner-slick .banner-content-box { 
-  left: 7%;
-  top: 25%;
-  width: 30%;
+/* ........... */
+
+.views-field-nothing { 
+  position: relative;
+  margin: auto;
+  overflow: hidden;
  }
 
-.view-our-brands-banner-slick .banner-content-box h3 { 
-  margin-bottom: 30px;
-  font-family: 'EB Garamond', serif;
-  font-size: 62px;
-  font-weight: 500;
-  font-style: normal;
-  line-height: 1.2;
-  color: #6F6B67;
+/*..................... brands inner page........ */
+
+/* .dabur-chyawanprash-stories .view-display-id-block_2 a { 
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  width: 100%;
+  height: 142px;
+  padding: 10px;
+  background: transparent linear-gradient(180deg, var(--unnamed-color-603f1e00) 0%, #4C32182A 22%, #1D1D1C 100%) 0% 0% no-repeat padding-box;
+  background: transparent linear-gradient(180deg, #603F1E00 0%, #4C32182A 22%, #1D1D1C 100%) 0% 0% no-repeat padding-box;
+  letter-spacing: 0px;
+  color: #FFFFFF;
+  opacity: 1;
+  font-size: 16px;
+  bottom: 0px;
+  text-align: center;
+  padding: 15px;
+  padding-top: 45px;
+  line-height: 1.4;
+} */
+
+.dabur-chyawanprash-stories .view-display-id-block_2 .slick__slide {
+  margin: 0 40px;
  }
 
 #views-exposed-form-meet-the-ceo-page-1 { 
@@ -4523,10 +4986,6 @@ section#block-views-block-explore-brand-block-2 {
 @media only screen and (max-width: 767px) { #edit-actions button { 
     padding: 10px 32px;
     margin-top: 18px;
-   } }
-
-@media only screen and (max-width: 1700px) { .view-our-brands-banner-slick .read-more { 
-     margin-top: 0;
    } }
 
 /* For medium devices (tablets, 768px to 1023px) */
@@ -4625,11 +5084,7 @@ section#block-views-block-explore-brand-block-2 {
   }
  }
 
-@media only screen and (max-width: 1500px) { .view-our-brands-banner-slick .read-more { 
-    margin-top: 0;
-  }
-
-#block-whatconstitutesayurvedicliving h5 { 
+@media only screen and (max-width: 1500px) { #block-whatconstitutesayurvedicliving h5 { 
     font-size: 14px;
    }
 
@@ -4637,12 +5092,7 @@ section#block-views-block-explore-brand-block-2 {
     font-size: 28px;
    } }
 
-@media only screen and (max-width: 1366px) { .view-our-brands-banner-slick .banner-content-box .read-more a { 
-    font-size: 18px;
-    padding: 11px 30px;
-   }
-
-#block-daburaroundtheworld { padding-top: 50px; }
+@media only screen and (max-width: 1366px) { #block-daburaroundtheworld { padding-top: 50px; }
 
 input#edit-first-name, input#edit-last-name, input#edit-email-id, input#edit-mobile, input#edit-current-company { font-size: 16px;line-height: 1.2;height: 42px; } }
 
@@ -4658,7 +5108,12 @@ input#edit-first-name, input#edit-last-name, input#edit-email-id, input#edit-mob
     font-size: 24px;
    } }
 
-@media only screen and (min-width:0px) and (max-width:767px) { #quicktabs-container-dabur_campus_bridge_tab { 
+@media only screen and (min-width:0px) and (max-width:767px) { .bef-exposed-form .form--inline>.form-item { 
+    width: 100%;
+    /* margin-right: 0px; */
+   }
+
+#quicktabs-container-dabur_campus_bridge_tab { 
     padding: 0px 15px;
    }
 
@@ -4667,30 +5122,11 @@ input#edit-first-name, input#edit-last-name, input#edit-email-id, input#edit-mob
     padding: 0px 15px;
    }
 
-.banner-content-box h3 { 
-    font-size: 32px;
-    line-height: 38px;
-    margin-bottom: 0px;
+.dabur-chyawanprash-stories .view-ingredients-slideshow-brand-page { 
+    padding: 0px 0px 80px;
    }
 
-/*   .page-node-type-our-brands .banner-wrapper-box .banner-content-box { 
-    left: 15px;
-    top: 68%;
-  } */
-  .page-node-type-our-brands .banner-wrapper-box .banner-content-box,
-  .view-our-brands-banner-slick .banner-content-box,
-  .view-our-brands-banner-slick .banner-content-box.align-Left,
-  .view-our-brands-banner-slick .banner-content-box.align-Center {
-    width: calc(100% - 50px) !important;
-    margin: auto;
-    position: initial;
-    top: 0 !important;
-    left: 0 !important;
-    text-align: center !important;
-    margin-bottom: 30px;
-   }
-
-h3, .block h3, #quicktabs-ayurvedic_body_types_tab h3 { 
+h3, #quicktabs-ayurvedic_body_types_tab h3 { 
     font-size: 24px;
     line-height: 1.1;
    }
@@ -4702,26 +5138,6 @@ p {
 h2, #block-whatconstitutesayurvedicliving h5 { 
     font-size: 13px;
     text-align: center !important;
-   }
-
-.view-our-brands-banner-slick .banner-content-box, .view-our-brands-banner-slick .banner-content-box.align-Left { 
-    width: 80%;
-    top: 60px;
-   }
-
-.banner-content-box h3, .view-our-brands-banner-slick .banner-content-box h3 { 
-    font-size: 28px !important;
-    line-height: 1.23;
-    text-align: left;
-    font-weight: 400;
-   }
-
-.view-our-brands-banner-slick .banner-content-box.align-Left h3.title { 
-    text-align: center;
-   }
-
-.banner-content-box h4 { 
-    font-size: 18px;
    }
 
 section#block-views-block-explore-brand-block-2 { 
@@ -4740,17 +5156,25 @@ section#block-views-block-explore-brand-block-2 {
     margin: 0 10px;
    }
 
-.view-our-brands-banner-slick .banner-content-box h3 { 
-    font-size: 28px !important;
-   }
+/*   .page-node-1 .slick--view--our-brands-banner-slick .slick__arrow { 
+    left: calc(50% - 130px);
+    width: 260px;
+    display: block;
+  }
 
-.view-our-brands-banner-slick .banner-content-box .read-more a { 
-    font-size: 15px;
-    margin-bottom: 40px;
-   }
+  .page-node-1 .slick--view--our-brands-banner-slick .slider__counter {
+    display: block;
+  }
 
-.view-our-brands-banner-slick .banner-content-box h3 { 
-    margin-top: 20px;
+  .page-node-1 .slick--view--our-brands-banner-slick .slideCount {
+    display: none !important;
+    opacity: 0;
+    visibility: hidden;
+  } */
+
+  .page-node-1 .slick--view--our-brands-banner-slick .slick__arrow .slick-prev {
+    left: 0;
+    right: initial;
    }
 
 #quicktabs-ayurvedic_body_types_tab h3, #quicktabs-ayurvedic_body_types_tab p { 
@@ -4765,13 +5189,6 @@ input#edit-first-name, input#edit-last-name, input#edit-email-id, input#edit-mob
     padding: 0;
    }
 
-/*.page-node-type-our-brands .banner-wrapper-box .banner-content-box, .view-our-brands-banner-slick .banner-content-box, .view-our-brands-banner-slick .banner-content-box.align-Left {  position:absolute !important; top:inherit !important; max-width: 80% !important; bottom: 15% !important; left:20px !important; text-align:left !important; }*/
-
-    .block-views-blockpolicies-and-initiatives-block-1 .flexslider .views-field-field-upload-image-eb1, .block-views-blockpolicies-and-initiatives-block-1 .flexslider .views-field-field-upload-image-ov { width:100%;  }
-
-/* .view-our-brands-banner-slick .banner-content-box.align-Left h3.title {  text-align:left !important; } */
-    .view-our-brands-banner-slick .banner-content-box .read-more a { margin-bottom:0; padding: 14px 59px !important;  }
-
 section#block-views-block-policies-and-initiatives-block-2 {  display:none !important;  } }
 
 @media only screen and (max-width:767px) { section#block-views-block-policies-and-initiatives-awards-block-6 {  display:none;  }
@@ -4779,43 +5196,6 @@ section#block-views-block-policies-and-initiatives-block-2 {  display:none !impo
 input#edit-expected-ctc, input#edit-portfolio-link {  font-size:16px; height:50px;  }
 
 #block-daburaroundtheworld { padding-top: 20px; } }
-
-.carousel { 
-  position: relative;
- }
-
-.carousel-inner { 
-  position: relative;
-  width: 100%;
-  overflow: hidden;
- }
-
-.carousel-inner::after { 
-  display: block;
-  clear: both;
-  content: "";
- }
-
-.carousel-item { 
-  position: relative;
-  display: none;
-  float: left;
-  width: 100%;
-  margin-right: -100%;
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-  transition: -webkit-transform 0.6s ease-in-out;
-  transition: transform 0.6s ease-in-out;
-  transition: transform 0.6s ease-in-out, -webkit-transform 0.6s ease-in-out;
- }
-
-@media (prefers-reduced-motion: reduce) { .carousel-item { 
-    transition: none;
-   } }
-
-.carousel-item.active { 
-  display: block;
- }
 
 body{opacity:1.0 !important;}
 
@@ -4833,45 +5213,7 @@ body{opacity:1.0 !important;}
 
 @media (max-width:352px) { .cky-preference-content-wrapper *,.cky-accordion-header-des *,.cky-dma-content-wrapper *{font-size:12px} }
 
-@media screen and (min-width: 800px) { .view-our-brands-banner-slick .banner-content-box.align-Left { 
-    position: absolute;
-    width: 25% !important;
-
- } }
-
-.view-our-brands-banner-slick .banner-content-box { 
-    top: 25% !important;
-    
+.dabur-chyawanprash-stories .view-ingredients-slideshow-brand-page .view-content .views-field-nothing { 
+    display: flex;
+    justify-content: center;
  }
-
-@media only screen and (min-width:1300px) { .view-our-brands-banner-slick .banner-content-box h3 { font-size:32px !important; } }
-
-@media only screen and (max-width:1299px) { .view-our-brands-banner-slick .banner-content-box h3 { font-size:32px !important; } }
-
-@media only screen and (max-width:1199px) { .view-our-brands-banner-slick .banner-content-box h3 { font-size:28px !important; } }
-
-@media only screen and (max-width:991px) { .view-our-brands-banner-slick .banner-content-box h3 { font-size:28px !important; } }
-
-@media only screen and (max-width:767px) { .carousel .carousel-item { 
-  height: 300px;
- }
-
-.carousel-item img { 
-    position: absolute;
-    top: 0;
-    left: 0;
-    min-height: 300px;
- } }
-
-@media only screen and (max-width:575px) { .carousel .carousel-item { 
-  height: 240px;
- }
-
-.carousel-item img { 
-    position: absolute;
-    top: 0;
-    left: 0;
-    min-height: 240px;
- }
-
-.view-our-brands-banner-slick .banner-content-box h3 { font-size: 24px !important; } }
