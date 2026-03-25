@@ -36,7 +36,12 @@
       "media",
       "scarp-separator",
       "stats-by-the-number",
-      "rs-card-list"
+      "rs-card-list",
+      "header-wrapper",
+      "intro",
+      "main-details",
+      "features",
+      "highlights"
     ]
   },
   {
@@ -85,6 +90,13 @@
     ]
   },
   {
+    "id": "features",
+    "components": [
+      "feature",
+      "action"
+    ]
+  },
+  {
     "id": "footer-itc-footer-section",
     "components": [
       "footer-logo",
@@ -96,9 +108,7 @@
   {
     "id": "footer",
     "components": [
-      "footer-logo",
-      "footer-link",
-      "footer-social"
+      "footer-contact-item"
     ]
   },
   {
@@ -114,6 +124,12 @@
       "nav-item",
       "subnav-item",
       "language-item"
+    ]
+  },
+  {
+    "id": "header-wrapper",
+    "components": [
+      "nav-item"
     ]
   },
   {
@@ -133,9 +149,25 @@
     "id": "hero-full-width"
   },
   {
+    "id": "highlights",
+    "components": [
+      "highlight"
+    ]
+  },
+  {
+    "id": "intro"
+  },
+  {
     "id": "itc-club-carousel",
     "components": [
       "itc-club-carousel-item"
+    ]
+  },
+  {
+    "id": "main-details",
+    "components": [
+      "feature",
+      "action"
     ]
   },
   {

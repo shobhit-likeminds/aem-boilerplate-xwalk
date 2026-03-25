@@ -71,7 +71,12 @@
         "media",
         "scarp-separator",
         "stats-by-the-number",
-        "rs-card-list"
+        "rs-card-list",
+        "header-wrapper",
+        "intro",
+        "main-details",
+        "features",
+        "highlights"
       ]
     }
   ]

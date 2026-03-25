@@ -1,0 +1,136 @@
+{
+  "definitions": [
+    {
+      "title": "Main-Details",
+      "id": "main-details",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "main-details",
+              "model": "main-details",
+              "name": "Main-Details"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Feature",
+      "id": "feature",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "feature",
+              "name": "Feature"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Action",
+      "id": "action",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "action",
+              "name": "Action"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "main-details",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Title",
+          "name": "title",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Image",
+          "name": "image",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Features Heading",
+          "name": "features-heading",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Features Description",
+          "name": "features-description",
+          "valueType": "string"
+        },
+        {
+          "component": "container",
+          "item": "feature",
+          "label": "Features",
+          "name": "features"
+        },
+        {
+          "component": "container",
+          "item": "action",
+          "label": "Actions",
+          "name": "actions"
+        }
+      ]
+    },
+    {
+      "id": "feature",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Icon Class",
+          "name": "icon-class",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Heading",
+          "name": "heading",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Description",
+          "name": "description",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "action",
+      "fields": [
+        {
+          "component": "aem-content",
+          "label": "Link",
+          "name": "link",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "main-details",
+      "components": [
+        "feature",
+        "action"
+      ]
+    }
+  ]
+}
