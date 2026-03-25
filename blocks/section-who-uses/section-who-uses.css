@@ -46,6 +46,22 @@ html{box-sizing:border-box;-ms-overflow-style:scrollbar;color:#fff;font-size:1re
 
 *,::after,::before{box-sizing:inherit}
 
+.container { width:100%;padding-right:15px;padding-left:15px;margin-right:auto;margin-left:auto }
+
+@media (min-width:576px) { .container { max-width:540px } }
+
+@media (min-width:768px) { .container { max-width:720px } }
+
+@media (min-width:992px) { .container { max-width:960px } }
+
+@media (min-width:1200px) { .container { max-width:1140px } }
+
+.row { display:flex;flex-wrap:wrap;margin-right:-15px;margin-left:-15px }
+
+.col { position:relative;width:100%;padding-right:15px;padding-left:15px }
+
+.col { flex-basis:0;flex-grow:1;max-width:100% }
+
 .row-cols-1>*{flex:0 0 100%;max-width:100%}
 
 .row-cols-2>*{flex:0 0 50%;max-width:50%}
@@ -106,6 +122,10 @@ html{box-sizing:border-box;-ms-overflow-style:scrollbar;color:#fff;font-size:1re
 
 .row-cols-xl-6>*{flex:0 0 16.666667%;max-width:16.666667%} }
 
+.d-flex { display:flex!important }
+
+.align-items-center { align-items:center!important }
+
 body{background-color:#111}
 
 a { color:#069 }
@@ -130,6 +150,12 @@ main { background-color:#eee;color:#222 }
 
 section { padding:35px 0 55px }
 
+.section-who-uses { color:#222;border-top:1px solid #bbb;background-color:#ddd }
+
+.section-who-uses .col { margin-bottom:9px;margin-top:9px }
+
+.section-who-uses img { text-align:center;max-width:90%;vertical-align:middle;max-height:40px;display:flex;align-items:center;margin-left:auto;margin-right:auto;padding:6px }
+
 @media only screen and (max-width:768px) { html{font-size:calc(.8rem + .5vw)!important}
 
 h1 { font-size:calc(1.4rem + 1.5vw)!important }
@@ -142,4 +168,6 @@ header p { font-size:calc(1rem + .3vw)!important }
 
 section { padding:25px 0!important } }
 
-@media only screen and (max-width:575px) { header { margin-top:30px } }
+@media only screen and (max-width:575px) { header { margin-top:30px }
+
+.section-who-uses img { padding-left:15px;padding-right:15px } }

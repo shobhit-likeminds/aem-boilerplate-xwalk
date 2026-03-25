@@ -1,0 +1,79 @@
+{
+  "definitions": [
+    {
+      "title": "Aside",
+      "id": "aside",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "aside",
+              "model": "aside",
+              "name": "Aside"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Inline-Block-List-Item",
+      "id": "inline-block-list-item",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "inline-block-list-item",
+              "name": "Inline-Block-List-Item"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "aside",
+      "fields": [
+        {
+          "component": "container",
+          "item": "inline-block-list-item",
+          "label": "Inline Block List Items",
+          "name": "items"
+        }
+      ]
+    },
+    {
+      "id": "inline-block-list-item",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Image",
+          "name": "image",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Link",
+          "name": "link",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Text",
+          "name": "text",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "aside",
+      "components": [
+        "inline-block-list-item"
+      ]
+    }
+  ]
+}

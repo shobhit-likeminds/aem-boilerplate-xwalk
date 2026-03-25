@@ -27,7 +27,17 @@
       "header",
       "intro",
       "feature-list",
-      "highlights"
+      "highlights",
+      "nav",
+      "section-features",
+      "section-who-uses",
+      "aside"
+    ]
+  },
+  {
+    "id": "aside",
+    "components": [
+      "inline-block-list-item"
     ]
   },
   {
@@ -77,12 +87,7 @@
     ]
   },
   {
-    "id": "footer",
-    "components": [
-      "contact",
-      "contact-info",
-      "copyright"
-    ]
+    "id": "footer"
   },
   {
     "id": "headerSection",
@@ -92,10 +97,7 @@
     ]
   },
   {
-    "id": "header",
-    "components": [
-      "nav-item"
-    ]
+    "id": "header"
   },
   {
     "id": "highlights",
@@ -107,9 +109,27 @@
     "id": "intro"
   },
   {
+    "id": "nav",
+    "components": [
+      "site-nav-item"
+    ]
+  },
+  {
     "id": "reasonCards",
     "components": [
       "reasonCard"
+    ]
+  },
+  {
+    "id": "section-features",
+    "components": [
+      "feature"
+    ]
+  },
+  {
+    "id": "section-who-uses",
+    "components": [
+      "logo"
     ]
   },
   {

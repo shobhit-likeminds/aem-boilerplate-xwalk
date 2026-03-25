@@ -62,7 +62,11 @@
         "header",
         "intro",
         "feature-list",
-        "highlights"
+        "highlights",
+        "nav",
+        "section-features",
+        "section-who-uses",
+        "aside"
       ]
     }
   ]

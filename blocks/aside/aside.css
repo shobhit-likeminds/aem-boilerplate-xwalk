@@ -46,6 +46,16 @@ html{box-sizing:border-box;-ms-overflow-style:scrollbar;color:#fff;font-size:1re
 
 *,::after,::before{box-sizing:inherit}
 
+.container { width:100%;padding-right:15px;padding-left:15px;margin-right:auto;margin-left:auto }
+
+@media (min-width:576px) { .container { max-width:540px } }
+
+@media (min-width:768px) { .container { max-width:720px } }
+
+@media (min-width:992px) { .container { max-width:960px } }
+
+@media (min-width:1200px) { .container { max-width:1140px } }
+
 .row-cols-1>*{flex:0 0 100%;max-width:100%}
 
 .row-cols-2>*{flex:0 0 50%;max-width:50%}
@@ -122,6 +132,10 @@ footer a { color:#ffa000 }
 
 footer { font-size:.9rem;padding:2em;margin-bottom:25px;margin-top:25px }
 
+.aside a { margin:5px }
+
+.aside img { margin-right:5px }
+
 header { margin-bottom:85px;margin-top:85px }
 
 header p { color:#ddd;font-size:1.25rem;margin:25px }
@@ -129,6 +143,12 @@ header p { color:#ddd;font-size:1.25rem;margin:25px }
 main { background-color:#eee;color:#222 }
 
 section { padding:35px 0 55px }
+
+.aside { background-color:#ccc;padding:25px 0;border-top:1px solid #bbb }
+
+.inline-block-list li { display:inline-block;margin-left:12px }
+
+.inline-block-list li:first-child { margin-left:0 }
 
 @media only screen and (max-width:768px) { html{font-size:calc(.8rem + .5vw)!important}
 
@@ -140,6 +160,12 @@ header { margin-top:40px!important }
 
 header p { font-size:calc(1rem + .3vw)!important }
 
-section { padding:25px 0!important } }
+section { padding:25px 0!important }
 
-@media only screen and (max-width:575px) { header { margin-top:30px } }
+.inline-block-list li { display:block;margin:0 auto 1.5em }
+
+.inline-block-list li:last-child { margin-right:1.5em } }
+
+@media only screen and (max-width:575px) { header { margin-top:30px }
+
+.aside .inline-block-list li { display:block;margin-top:15px;margin-bottom:15px } }

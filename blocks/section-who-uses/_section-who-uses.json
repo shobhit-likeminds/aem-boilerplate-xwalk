@@ -1,0 +1,79 @@
+{
+  "definitions": [
+    {
+      "title": "Section-Who-Uses",
+      "id": "section-who-uses",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "section-who-uses",
+              "model": "section-who-uses",
+              "name": "Section-Who-Uses"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Logo",
+      "id": "logo",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "logo",
+              "name": "Logo"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "section-who-uses",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Heading",
+          "name": "heading",
+          "valueType": "string"
+        },
+        {
+          "component": "container",
+          "item": "logo",
+          "label": "Logos",
+          "name": "logos"
+        }
+      ]
+    },
+    {
+      "id": "logo",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Image",
+          "name": "image",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Alt Text",
+          "name": "alt",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "section-who-uses",
+      "components": [
+        "logo"
+      ]
+    }
+  ]
+}

@@ -142,6 +142,40 @@
     ]
   },
   {
+    "id": "aside",
+    "fields": [
+      {
+        "component": "container",
+        "item": "inline-block-list-item",
+        "label": "Inline Block List Items",
+        "name": "items"
+      }
+    ]
+  },
+  {
+    "id": "inline-block-list-item",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Image",
+        "name": "image",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Text",
+        "name": "text",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "bannerSlide",
     "fields": [
       {
@@ -392,126 +426,9 @@
     "id": "footer",
     "fields": [
       {
-        "component": "text",
-        "label": "Title",
-        "name": "title",
-        "valueType": "string"
-      },
-      {
         "component": "richtext",
-        "label": "Intro Heading",
-        "name": "intro-heading",
-        "valueType": "string"
-      },
-      {
-        "component": "richtext",
-        "label": "Intro Text",
-        "name": "intro-text",
-        "valueType": "string"
-      },
-      {
-        "component": "container",
-        "item": "contact",
-        "label": "Contact Form",
-        "name": "contact"
-      },
-      {
-        "component": "container",
-        "item": "contact-info",
-        "label": "Contact Info",
-        "name": "contact-info"
-      },
-      {
-        "component": "container",
-        "item": "copyright",
-        "label": "Copyright",
-        "name": "copyright"
-      }
-    ]
-  },
-  {
-    "id": "contact",
-    "fields": [
-      {
-        "component": "text",
-        "label": "Name",
-        "name": "name",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Email",
-        "name": "email",
-        "valueType": "string"
-      },
-      {
-        "component": "richtext",
-        "label": "Message",
-        "name": "message",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
-    "id": "contact-info",
-    "fields": [
-      {
-        "component": "text",
-        "label": "Mailing Address Heading",
-        "name": "mailing-address-heading",
-        "valueType": "string"
-      },
-      {
-        "component": "richtext",
-        "label": "Mailing Address",
-        "name": "mailing-address",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Social Heading",
-        "name": "social-heading",
-        "valueType": "string"
-      },
-      {
-        "component": "richtext",
-        "label": "Social Links",
-        "name": "social-links",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Email Heading",
-        "name": "email-heading",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Email Address",
-        "name": "email-address",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Phone Heading",
-        "name": "phone-heading",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Phone Number",
-        "name": "phone-number",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
-    "id": "copyright",
-    "fields": [
-      {
-        "component": "richtext",
-        "label": "Copyright Text",
-        "name": "copyright-text",
+        "label": "Content",
+        "name": "content",
         "valueType": "string"
       }
     ]
@@ -624,37 +541,26 @@
     "fields": [
       {
         "component": "text",
-        "label": "Logo Heading",
-        "name": "logo-heading",
+        "label": "Heading",
+        "name": "heading",
         "valueType": "string"
       },
       {
-        "component": "text",
-        "label": "Logo Subtext",
-        "name": "logo-subtext",
-        "valueType": "string"
-      },
-      {
-        "component": "container",
-        "item": "nav-item",
-        "label": "Navigation Items",
-        "name": "nav-items"
-      }
-    ]
-  },
-  {
-    "id": "nav-item",
-    "fields": [
-      {
-        "component": "text",
-        "label": "Text",
-        "name": "text",
+        "component": "richtext",
+        "label": "Description",
+        "name": "description",
         "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "Link",
-        "name": "link",
+        "label": "Primary CTA Link",
+        "name": "primary-cta-link",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Secondary Link",
+        "name": "secondary-link",
         "valueType": "string"
       }
     ]
@@ -767,6 +673,34 @@
     ]
   },
   {
+    "id": "nav",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Site Logo",
+        "name": "site-logo",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "site-nav-item",
+        "label": "Site Nav Items",
+        "name": "site-nav-items"
+      }
+    ]
+  },
+  {
+    "id": "site-nav-item",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "reasonCard",
     "fields": [
       {
@@ -791,6 +725,80 @@
         "component": "richtext",
         "label": "Description",
         "name": "description",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "section-features",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "feature",
+        "label": "Features",
+        "name": "features"
+      }
+    ]
+  },
+  {
+    "id": "feature",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Image",
+        "name": "image",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Title",
+        "name": "title",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Text",
+        "name": "text",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "section-who-uses",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "logo",
+        "label": "Logos",
+        "name": "logos"
+      }
+    ]
+  },
+  {
+    "id": "logo",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Image",
+        "name": "image",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Alt Text",
+        "name": "alt",
         "valueType": "string"
       }
     ]

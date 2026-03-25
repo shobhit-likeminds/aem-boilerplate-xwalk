@@ -83,6 +83,37 @@
       "id": "blocks",
       "components": [
         {
+          "title": "Aside",
+          "id": "aside",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "aside",
+                  "model": "aside",
+                  "name": "Aside"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Inline-Block-List-Item",
+          "id": "inline-block-list-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "inline-block-list-item",
+                  "name": "Inline-Block-List-Item"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Banner-Carousel",
           "id": "bannerCarousel",
           "plugins": {
@@ -268,51 +299,6 @@
           }
         },
         {
-          "title": "Contact",
-          "id": "contact",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block/item",
-                "template": {
-                  "model": "contact",
-                  "name": "Contact"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Contact-Info",
-          "id": "contact-info",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block/item",
-                "template": {
-                  "model": "contact-info",
-                  "name": "Contact-Info"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Copyright",
-          "id": "copyright",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block/item",
-                "template": {
-                  "model": "copyright",
-                  "name": "Copyright"
-                }
-              }
-            }
-          }
-        },
-        {
           "title": "Fragment",
           "id": "fragment",
           "plugins": {
@@ -390,21 +376,6 @@
           }
         },
         {
-          "title": "Nav-Item",
-          "id": "nav-item",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block/item",
-                "template": {
-                  "model": "nav-item",
-                  "name": "Nav-Item"
-                }
-              }
-            }
-          }
-        },
-        {
           "title": "Hero",
           "id": "hero",
           "plugins": {
@@ -467,6 +438,37 @@
           }
         },
         {
+          "title": "Nav",
+          "id": "nav",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "nav",
+                  "model": "nav",
+                  "name": "Nav"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Site-Nav-Item",
+          "id": "site-nav-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "site-nav-item",
+                  "name": "Site-Nav-Item"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Reason-Cards",
           "id": "reasonCards",
           "plugins": {
@@ -492,6 +494,68 @@
                 "template": {
                   "model": "reasonCard",
                   "name": "Reason-Card"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Section-Features",
+          "id": "section-features",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "section-features",
+                  "model": "section-features",
+                  "name": "Section-Features"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Feature",
+          "id": "feature",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "feature",
+                  "name": "Feature"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Section-Who-Uses",
+          "id": "section-who-uses",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "section-who-uses",
+                  "model": "section-who-uses",
+                  "name": "Section-Who-Uses"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Logo",
+          "id": "logo",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "logo",
+                  "name": "Logo"
                 }
               }
             }
