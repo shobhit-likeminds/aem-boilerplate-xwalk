@@ -1,0 +1,68 @@
+{
+  "definitions": [
+    {
+      "title": "Intro",
+      "id": "intro",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "intro",
+              "model": "intro",
+              "name": "Intro"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "intro",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Title",
+          "name": "title",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Paragraph 1",
+          "name": "paragraph1",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Paragraph 2",
+          "name": "paragraph2",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Paragraph 3",
+          "name": "paragraph3",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "CTA Link",
+          "name": "cta-link",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "CTA Label",
+          "name": "cta-label",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "intro"
+    }
+  ]
+}

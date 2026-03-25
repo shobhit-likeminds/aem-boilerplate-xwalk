@@ -308,146 +308,210 @@
     ]
   },
   {
-    "id": "footer",
+    "id": "feature-list",
     "fields": [
       {
-        "component": "reference",
-        "items": {
-          "type": "string"
-        },
-        "label": "Logos",
-        "name": "logos",
-        "valueType": "array"
-      },
-      {
-        "component": "reference",
-        "items": {
-          "type": "string"
-        },
-        "label": "Footer Links",
-        "name": "footerLinks",
-        "valueType": "array"
-      },
-      {
-        "component": "reference",
-        "items": {
-          "type": "string"
-        },
-        "label": "Footer Social Links",
-        "name": "footerSocialLinks",
-        "valueType": "array"
-      },
-      {
-        "component": "reference",
-        "items": {
-          "type": "string"
-        },
-        "label": "Footer Secondary Links",
-        "name": "footerSecondaryLinks",
-        "valueType": "array"
-      },
-      {
-        "component": "richtext",
-        "label": "Grievance Officer Title",
-        "name": "grievanceOfficerTitle",
+        "component": "text",
+        "label": "Title",
+        "name": "title",
         "valueType": "string"
       },
       {
-        "component": "richtext",
-        "label": "Grievance Officer Name",
-        "name": "grievanceOfficerName",
-        "valueType": "string"
-      },
-      {
-        "component": "richtext",
-        "label": "Grievance Officer Contact",
-        "name": "grievanceOfficerContact",
-        "valueType": "string"
-      },
-      {
-        "component": "richtext",
-        "label": "Grievance Officer Timing",
-        "name": "grievanceOfficerTiming",
-        "valueType": "string"
-      },
-      {
-        "component": "richtext",
-        "label": "Copyright Text",
-        "name": "copyrightText",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
-    "id": "logo",
-    "fields": [
-      {
         "component": "reference",
-        "label": "Logo Image",
+        "label": "Image",
         "name": "image",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Alt Text",
-        "name": "altText",
+        "label": "Heading",
+        "name": "heading",
         "valueType": "string"
       },
       {
-        "component": "text",
-        "label": "Logo Link",
-        "name": "link",
+        "component": "richtext",
+        "label": "Description",
+        "name": "description",
         "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "feature",
+        "label": "Features",
+        "name": "features"
+      },
+      {
+        "component": "container",
+        "item": "action",
+        "label": "Actions",
+        "name": "actions"
       }
     ]
   },
   {
-    "id": "footerLink",
+    "id": "feature",
     "fields": [
       {
         "component": "text",
-        "label": "Link Label",
-        "name": "label",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Link URL",
-        "name": "url",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
-    "id": "footerSocialLink",
-    "fields": [
-      {
-        "component": "reference",
-        "label": "Social Icon",
+        "label": "Icon",
         "name": "icon",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Social Link URL",
-        "name": "url",
+        "label": "Title",
+        "name": "title",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Text",
+        "name": "text",
         "valueType": "string"
       }
     ]
   },
   {
-    "id": "footerSecondaryLink",
+    "id": "action",
     "fields": [
       {
-        "component": "text",
-        "label": "Link Label",
-        "name": "label",
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Link URL",
-        "name": "url",
+        "label": "Label",
+        "name": "label",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "footer",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Title",
+        "name": "title",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Intro Heading",
+        "name": "intro-heading",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Intro Text",
+        "name": "intro-text",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "contact",
+        "label": "Contact Form",
+        "name": "contact"
+      },
+      {
+        "component": "container",
+        "item": "contact-info",
+        "label": "Contact Info",
+        "name": "contact-info"
+      },
+      {
+        "component": "container",
+        "item": "copyright",
+        "label": "Copyright",
+        "name": "copyright"
+      }
+    ]
+  },
+  {
+    "id": "contact",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Name",
+        "name": "name",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Email",
+        "name": "email",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Message",
+        "name": "message",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "contact-info",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Mailing Address Heading",
+        "name": "mailing-address-heading",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Mailing Address",
+        "name": "mailing-address",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Social Heading",
+        "name": "social-heading",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Social Links",
+        "name": "social-links",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Email Heading",
+        "name": "email-heading",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Email Address",
+        "name": "email-address",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Phone Heading",
+        "name": "phone-heading",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Phone Number",
+        "name": "phone-number",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "copyright",
+    "fields": [
+      {
+        "component": "richtext",
+        "label": "Copyright Text",
+        "name": "copyright-text",
         "valueType": "string"
       }
     ]
@@ -556,6 +620,46 @@
     ]
   },
   {
+    "id": "header",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Logo Heading",
+        "name": "logo-heading",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Logo Subtext",
+        "name": "logo-subtext",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "nav-item",
+        "label": "Navigation Items",
+        "name": "nav-items"
+      }
+    ]
+  },
+  {
+    "id": "nav-item",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Text",
+        "name": "text",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "hero",
     "fields": [
       {
@@ -577,6 +681,87 @@
         "name": "text",
         "value": "",
         "label": "Text",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "highlights",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Title",
+        "name": "title",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "highlight",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Image",
+        "name": "image",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Description",
+        "name": "description",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "intro",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Title",
+        "name": "title",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Paragraph 1",
+        "name": "paragraph1",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Paragraph 2",
+        "name": "paragraph2",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Paragraph 3",
+        "name": "paragraph3",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "CTA Link",
+        "name": "cta-link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "CTA Label",
+        "name": "cta-label",
         "valueType": "string"
       }
     ]

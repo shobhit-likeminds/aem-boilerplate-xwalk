@@ -58,7 +58,11 @@
         "delightfulDelicacies",
         "whyUs",
         "reasonCards",
-        "footer"
+        "footer",
+        "header",
+        "intro",
+        "feature-list",
+        "highlights"
       ]
     }
   ]

@@ -23,7 +23,11 @@
       "delightfulDelicacies",
       "whyUs",
       "reasonCards",
-      "footer"
+      "footer",
+      "header",
+      "intro",
+      "feature-list",
+      "highlights"
     ]
   },
   {
@@ -66,12 +70,18 @@
     ]
   },
   {
+    "id": "feature-list",
+    "components": [
+      "feature",
+      "action"
+    ]
+  },
+  {
     "id": "footer",
     "components": [
-      "logo",
-      "footerLink",
-      "footerSocialLink",
-      "footerSecondaryLink"
+      "contact",
+      "contact-info",
+      "copyright"
     ]
   },
   {
@@ -80,6 +90,21 @@
       "navigationItem",
       "countryOption"
     ]
+  },
+  {
+    "id": "header",
+    "components": [
+      "nav-item"
+    ]
+  },
+  {
+    "id": "highlights",
+    "components": [
+      "highlight"
+    ]
+  },
+  {
+    "id": "intro"
   },
   {
     "id": "reasonCards",
