@@ -368,6 +368,75 @@
     ]
   },
   {
+    "id": "feature-list",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Title",
+        "name": "title",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Image",
+        "name": "image",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "feature",
+        "label": "Features",
+        "name": "features"
+      },
+      {
+        "component": "container",
+        "item": "button",
+        "label": "Buttons",
+        "name": "buttons"
+      }
+    ]
+  },
+  {
+    "id": "feature",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Icon",
+        "name": "icon",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Text",
+        "name": "text",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "button",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Label",
+        "name": "label",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "features",
     "fields": [
       {
@@ -574,33 +643,33 @@
       },
       {
         "component": "richtext",
-        "label": "Intro",
-        "name": "intro",
+        "label": "Description",
+        "name": "description",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Contact Name (Form)",
-        "name": "contact-name",
+        "label": "Contact Form Name",
+        "name": "contact-form-name",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Contact Email (Form)",
-        "name": "contact-email",
+        "label": "Contact Form Email",
+        "name": "contact-form-email",
         "valueType": "string"
       },
       {
         "component": "richtext",
-        "label": "Contact Message (Form)",
-        "name": "contact-message",
+        "label": "Contact Form Message",
+        "name": "contact-form-message",
         "valueType": "string"
       },
       {
         "component": "container",
-        "item": "footer-contact-item",
-        "label": "Contact Items",
-        "name": "contact-items"
+        "item": "contact-info",
+        "label": "Contact Info",
+        "name": "contact-info"
       },
       {
         "component": "richtext",
@@ -611,18 +680,18 @@
     ]
   },
   {
-    "id": "footer-contact-item",
+    "id": "contact-info",
     "fields": [
       {
         "component": "text",
-        "label": "Label",
-        "name": "label",
+        "label": "Heading",
+        "name": "heading",
         "valueType": "string"
       },
       {
         "component": "richtext",
-        "label": "Value",
-        "name": "value",
+        "label": "Content",
+        "name": "content",
         "valueType": "string"
       }
     ]
@@ -854,73 +923,38 @@
     "id": "header",
     "fields": [
       {
-        "component": "reference",
-        "label": "Logo Image",
-        "name": "logo-image",
-        "valueType": "string"
-      },
-      {
-        "component": "aem-content",
-        "label": "Logo Link",
-        "name": "logo-link",
-        "valueType": "string"
-      },
-      {
-        "component": "container",
-        "item": "navigation-link",
-        "label": "Navigation Links",
-        "name": "navigation-links"
-      },
-      {
-        "component": "reference",
-        "label": "Country Flag Image",
-        "name": "country-flag-image",
+        "component": "text",
+        "label": "Logo Heading",
+        "name": "logo-heading",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Country Code",
-        "name": "country-code",
-        "valueType": "string"
-      },
-      {
-        "component": "reference",
-        "label": "Dropdown Icon Image",
-        "name": "dropdown-icon-image",
+        "label": "Logo Subtitle",
+        "name": "logo-subtitle",
         "valueType": "string"
       },
       {
         "component": "container",
-        "item": "country-option",
-        "label": "Country Options",
-        "name": "country-options"
+        "item": "nav-item",
+        "label": "Navigation Items",
+        "name": "nav-items"
       }
     ]
   },
   {
-    "id": "navigation-link",
+    "id": "nav-item",
     "fields": [
+      {
+        "component": "text",
+        "label": "Label",
+        "name": "label",
+        "valueType": "string"
+      },
       {
         "component": "aem-content",
         "label": "Link",
         "name": "link",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
-    "id": "country-option",
-    "fields": [
-      {
-        "component": "reference",
-        "label": "Flag Image",
-        "name": "flag-image",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Country Name",
-        "name": "country-name",
         "valueType": "string"
       }
     ]
@@ -1064,6 +1098,12 @@
         "label": "Title",
         "name": "title",
         "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "highlight",
+        "label": "Highlights",
+        "name": "highlights"
       }
     ]
   },
@@ -1083,27 +1123,15 @@
         "valueType": "string"
       },
       {
+        "component": "richtext",
+        "label": "Text",
+        "name": "text",
+        "valueType": "string"
+      },
+      {
         "component": "aem-content",
         "label": "Link",
         "name": "link",
-        "valueType": "string"
-      },
-      {
-        "component": "richtext",
-        "label": "Description",
-        "name": "description",
-        "valueType": "string"
-      },
-      {
-        "component": "aem-content",
-        "label": "Button Link",
-        "name": "button-link",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Button Label",
-        "name": "button-label",
         "valueType": "string"
       }
     ]
@@ -1119,8 +1147,20 @@
       },
       {
         "component": "richtext",
-        "label": "Body",
-        "name": "body",
+        "label": "Paragraph 1",
+        "name": "paragraph1",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Paragraph 2",
+        "name": "paragraph2",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Paragraph 3",
+        "name": "paragraph3",
         "valueType": "string"
       },
       {
@@ -1131,8 +1171,8 @@
       },
       {
         "component": "text",
-        "label": "Button Label",
-        "name": "button-label",
+        "label": "Button Text",
+        "name": "button-text",
         "valueType": "string"
       }
     ]

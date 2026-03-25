@@ -17,15 +17,15 @@
       }
     },
     {
-      "title": "Contact-Info",
-      "id": "contact-info",
+      "title": "Footer-Contact-Item",
+      "id": "footer-contact-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "contact-info",
-              "name": "Contact-Info"
+              "model": "footer-contact-item",
+              "name": "Footer-Contact-Item"
             }
           }
         }
@@ -50,33 +50,33 @@
         },
         {
           "component": "richtext",
-          "label": "Description",
-          "name": "description",
+          "label": "Intro",
+          "name": "intro",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Contact Form Name",
-          "name": "contact-form-name",
+          "label": "Contact Name (Form)",
+          "name": "contact-name",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Contact Form Email",
-          "name": "contact-form-email",
+          "label": "Contact Email (Form)",
+          "name": "contact-email",
           "valueType": "string"
         },
         {
           "component": "richtext",
-          "label": "Contact Form Message",
-          "name": "contact-form-message",
+          "label": "Contact Message (Form)",
+          "name": "contact-message",
           "valueType": "string"
         },
         {
           "component": "container",
-          "item": "contact-info",
-          "label": "Contact Info",
-          "name": "contact-info"
+          "item": "footer-contact-item",
+          "label": "Contact Items",
+          "name": "contact-items"
         },
         {
           "component": "richtext",
@@ -87,18 +87,18 @@
       ]
     },
     {
-      "id": "contact-info",
+      "id": "footer-contact-item",
       "fields": [
         {
           "component": "text",
-          "label": "Heading",
-          "name": "heading",
+          "label": "Label",
+          "name": "label",
           "valueType": "string"
         },
         {
           "component": "richtext",
-          "label": "Content",
-          "name": "content",
+          "label": "Value",
+          "name": "value",
           "valueType": "string"
         }
       ]
@@ -108,7 +108,7 @@
     {
       "id": "footer",
       "components": [
-        "contact-info"
+        "footer-contact-item"
       ]
     }
   ]

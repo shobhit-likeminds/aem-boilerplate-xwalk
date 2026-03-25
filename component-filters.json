@@ -41,7 +41,8 @@
       "intro",
       "main-details",
       "features",
-      "highlights"
+      "highlights",
+      "feature-list"
     ]
   },
   {
@@ -90,6 +91,13 @@
     ]
   },
   {
+    "id": "feature-list",
+    "components": [
+      "feature",
+      "button"
+    ]
+  },
+  {
     "id": "features",
     "components": [
       "feature",
@@ -108,7 +116,7 @@
   {
     "id": "footer",
     "components": [
-      "footer-contact-item"
+      "contact-info"
     ]
   },
   {
@@ -135,8 +143,7 @@
   {
     "id": "header",
     "components": [
-      "navigation-link",
-      "country-option"
+      "nav-item"
     ]
   },
   {

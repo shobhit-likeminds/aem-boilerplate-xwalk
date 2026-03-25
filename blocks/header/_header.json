@@ -17,30 +17,15 @@
       }
     },
     {
-      "title": "Navigation Link",
-      "id": "navigation-link",
+      "title": "Nav-Item",
+      "id": "nav-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "navigation-link",
-              "name": "Navigation Link"
-            }
-          }
-        }
-      }
-    },
-    {
-      "title": "Country Option",
-      "id": "country-option",
-      "plugins": {
-        "xwalk": {
-          "page": {
-            "resourceType": "core/franklin/components/block/v1/block/item",
-            "template": {
-              "model": "country-option",
-              "name": "Country Option"
+              "model": "nav-item",
+              "name": "Nav-Item"
             }
           }
         }
@@ -52,73 +37,38 @@
       "id": "header",
       "fields": [
         {
-          "component": "reference",
-          "label": "Logo Image",
-          "name": "logo-image",
-          "valueType": "string"
-        },
-        {
-          "component": "aem-content",
-          "label": "Logo Link",
-          "name": "logo-link",
-          "valueType": "string"
-        },
-        {
-          "component": "container",
-          "item": "navigation-link",
-          "label": "Navigation Links",
-          "name": "navigation-links"
-        },
-        {
-          "component": "reference",
-          "label": "Country Flag Image",
-          "name": "country-flag-image",
+          "component": "text",
+          "label": "Logo Heading",
+          "name": "logo-heading",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Country Code",
-          "name": "country-code",
-          "valueType": "string"
-        },
-        {
-          "component": "reference",
-          "label": "Dropdown Icon Image",
-          "name": "dropdown-icon-image",
+          "label": "Logo Subtitle",
+          "name": "logo-subtitle",
           "valueType": "string"
         },
         {
           "component": "container",
-          "item": "country-option",
-          "label": "Country Options",
-          "name": "country-options"
+          "item": "nav-item",
+          "label": "Navigation Items",
+          "name": "nav-items"
         }
       ]
     },
     {
-      "id": "navigation-link",
+      "id": "nav-item",
       "fields": [
+        {
+          "component": "text",
+          "label": "Label",
+          "name": "label",
+          "valueType": "string"
+        },
         {
           "component": "aem-content",
           "label": "Link",
           "name": "link",
-          "valueType": "string"
-        }
-      ]
-    },
-    {
-      "id": "country-option",
-      "fields": [
-        {
-          "component": "reference",
-          "label": "Flag Image",
-          "name": "flag-image",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Country Name",
-          "name": "country-name",
           "valueType": "string"
         }
       ]
@@ -128,8 +78,7 @@
     {
       "id": "header",
       "components": [
-        "navigation-link",
-        "country-option"
+        "nav-item"
       ]
     }
   ]

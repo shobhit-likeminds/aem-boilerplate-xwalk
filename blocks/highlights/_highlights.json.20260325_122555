@@ -41,12 +41,6 @@
           "label": "Title",
           "name": "title",
           "valueType": "string"
-        },
-        {
-          "component": "container",
-          "item": "highlight",
-          "label": "Highlights",
-          "name": "highlights"
         }
       ]
     },
@@ -66,15 +60,27 @@
           "valueType": "string"
         },
         {
+          "component": "aem-content",
+          "label": "Link",
+          "name": "link",
+          "valueType": "string"
+        },
+        {
           "component": "richtext",
-          "label": "Text",
-          "name": "text",
+          "label": "Description",
+          "name": "description",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "label": "Link",
-          "name": "link",
+          "label": "Button Link",
+          "name": "button-link",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Button Label",
+          "name": "button-label",
           "valueType": "string"
         }
       ]

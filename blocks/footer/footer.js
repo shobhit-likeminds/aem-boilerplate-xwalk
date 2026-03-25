@@ -5,195 +5,168 @@ export default function decorate(block) {
   const [
     titleRow,
     headingRow,
-    introRow,
-    contactNameRow,
-    contactEmailRow,
-    contactMessageRow,
-    contactItemsContainerRow, // Renamed to clearly indicate it's the container for items
+    descriptionRow,
+    contactFormNameRow,
+    contactFormEmailRow,
+    contactFormMessageRow,
+    contactInfoContainerRow, // This row is empty, just a placeholder for the container
     copyrightRow,
-    ...itemRows // These are the actual footer-contact-item rows
+    ...contactInfoItemRows
   ] = [...block.children];
 
-  // Wrapper section
   const section = document.createElement('section');
   section.id = 'footer';
-  section.classList.add('footer-wrapper');
+  section.classList.add('wrapper');
 
-  // Title
-  const footerTitle = document.createElement('div');
-  footerTitle.classList.add('footer-title');
-  moveInstrumentation(titleRow, footerTitle);
-  footerTitle.append(titleRow.firstElementChild.textContent);
-  section.append(footerTitle);
+  const titleDiv = document.createElement('div');
+  titleDiv.classList.add('title');
+  moveInstrumentation(titleRow, titleDiv);
+  titleDiv.append(titleRow.firstElementChild.textContent);
 
-  // Main footer container
-  const footerContainer = document.createElement('div');
-  footerContainer.classList.add('footer-container');
+  const containerDiv = document.createElement('div');
+  containerDiv.classList.add('container');
 
-  // Header section
   const header = document.createElement('header');
-  header.classList.add('footer-style1');
-  moveInstrumentation(headingRow, header);
+  header.classList.add('style1');
+
   const h2 = document.createElement('h2');
+  moveInstrumentation(headingRow, h2);
   h2.append(headingRow.firstElementChild.textContent);
-  header.append(h2);
-  moveInstrumentation(introRow, header);
-  const pIntro = document.createElement('p');
-  while (introRow.firstElementChild.firstChild) {
-    pIntro.append(introRow.firstElementChild.firstChild);
-  }
-  header.append(pIntro);
-  footerContainer.append(header);
 
-  // Main content row for form and contact items
-  const footerRow = document.createElement('div');
-  footerRow.classList.add('footer-row');
+  const p = document.createElement('p');
+  moveInstrumentation(descriptionRow, p);
+  // Corrected: Handle richtext content for description
+  p.innerHTML = descriptionRow.firstElementChild.innerHTML;
 
-  // Contact Form column
-  const formCol = document.createElement('div');
-  formCol.classList.add('footer-col-6', 'footer-col-12-medium');
+  header.append(h2, p);
+
+  const rowDiv = document.createElement('div');
+  rowDiv.classList.add('row');
+
+  // Contact Form Section
+  const col6Form = document.createElement('div');
+  col6Form.classList.add('col-6', 'col-12-medium');
+
   const formSection = document.createElement('section');
   const form = document.createElement('form');
   form.method = 'post';
   form.action = '#';
-  const formInnerRow = document.createElement('div');
-  formInnerRow.classList.add('footer-row', 'footer-gtr-50');
 
-  // Name input
-  const nameCol = document.createElement('div');
-  nameCol.classList.add('footer-col-6', 'footer-col-12-small');
+  const gtrDiv = document.createElement('div');
+  gtrDiv.classList.add('row', 'gtr-50');
+
+  const col6Name = document.createElement('div');
+  col6Name.classList.add('col-6', 'col-12-small');
   const nameInput = document.createElement('input');
   nameInput.type = 'text';
   nameInput.name = 'name';
   nameInput.id = 'contact-name';
-  nameInput.placeholder = 'Name';
-  moveInstrumentation(contactNameRow, nameInput);
-  nameInput.value = contactNameRow.firstElementChild.textContent;
-  nameCol.append(nameInput);
-  formInnerRow.append(nameCol);
+  nameInput.placeholder = contactFormNameRow.firstElementChild.textContent;
+  moveInstrumentation(contactFormNameRow, nameInput);
+  col6Name.append(nameInput);
 
-  // Email input
-  const emailCol = document.createElement('div');
-  emailCol.classList.add('footer-col-6', 'footer-col-12-small');
+  const col6Email = document.createElement('div');
+  col6Email.classList.add('col-6', 'col-12-small');
   const emailInput = document.createElement('input');
   emailInput.type = 'text';
   emailInput.name = 'email';
   emailInput.id = 'contact-email';
-  emailInput.placeholder = 'Email';
-  moveInstrumentation(contactEmailRow, emailInput);
-  emailInput.value = contactEmailRow.firstElementChild.textContent;
-  emailCol.append(emailInput);
-  formInnerRow.append(emailCol);
+  emailInput.placeholder = contactFormEmailRow.firstElementChild.textContent;
+  moveInstrumentation(contactFormEmailRow, emailInput);
+  col6Email.append(emailInput);
 
-  // Message textarea
-  const messageCol = document.createElement('div');
-  messageCol.classList.add('footer-col-12');
+  const col12Message = document.createElement('div');
+  col12Message.classList.add('col-12');
   const messageTextarea = document.createElement('textarea');
   messageTextarea.name = 'message';
   messageTextarea.id = 'contact-message';
-  messageTextarea.placeholder = 'Message';
   messageTextarea.rows = '4';
-  moveInstrumentation(contactMessageRow, messageTextarea);
-  while (contactMessageRow.firstElementChild.firstChild) {
-    messageTextarea.append(contactMessageRow.firstElementChild.firstChild);
-  }
-  messageCol.append(messageTextarea);
-  formInnerRow.append(messageCol);
+  messageTextarea.placeholder = contactFormMessageRow.firstElementChild.textContent;
+  moveInstrumentation(contactFormMessageRow, messageTextarea);
+  col12Message.append(messageTextarea);
 
-  // Form actions
-  const actionsCol = document.createElement('div');
-  actionsCol.classList.add('footer-col-12');
+  const col12Actions = document.createElement('div');
+  col12Actions.classList.add('col-12');
   const actionsUl = document.createElement('ul');
-  actionsUl.classList.add('footer-actions');
+  actionsUl.classList.add('actions');
+
   const submitLi = document.createElement('li');
   const submitInput = document.createElement('input');
   submitInput.type = 'submit';
-  submitInput.classList.add('footer-style1');
+  submitInput.classList.add('style1');
   submitInput.value = 'Send';
   submitLi.append(submitInput);
-  actionsUl.append(submitLi);
+
   const resetLi = document.createElement('li');
   const resetInput = document.createElement('input');
   resetInput.type = 'reset';
-  resetInput.classList.add('footer-style2');
+  resetInput.classList.add('style2');
   resetInput.value = 'Reset';
   resetLi.append(resetInput);
-  actionsUl.append(resetLi);
-  actionsCol.append(actionsUl);
-  formInnerRow.append(actionsCol);
 
-  form.append(formInnerRow);
+  actionsUl.append(submitLi, resetLi);
+  col12Actions.append(actionsUl);
+
+  gtrDiv.append(col6Name, col6Email, col12Message, col12Actions);
+  form.append(gtrDiv);
   formSection.append(form);
-  formCol.append(formSection);
-  footerRow.append(formCol);
+  col6Form.append(formSection);
+  rowDiv.append(col6Form);
 
-  // Contact Items column
-  const contactItemsCol = document.createElement('div');
-  contactItemsCol.classList.add('footer-col-6', 'footer-col-12-medium');
+  // Contact Info Section
+  const col6Contact = document.createElement('div');
+  col6Contact.classList.add('col-6', 'col-12-medium');
+
   const contactSection = document.createElement('section');
-  contactSection.classList.add('footer-feature-list', 'footer-small');
-  const contactInnerRow = document.createElement('div');
-  contactInnerRow.classList.add('footer-row');
+  contactSection.classList.add('feature-list', 'small');
 
-  // Move instrumentation from the contact-items container row
-  // This row itself doesn't contain data, but acts as a placeholder for the item list
-  moveInstrumentation(contactItemsContainerRow, contactSection);
+  const contactRowDiv = document.createElement('div');
+  contactRowDiv.classList.add('row');
 
-  itemRows.forEach((row) => {
-    // Each item row has two cells: label and value
-    const [labelCell, valueCell] = row.children;
+  contactInfoItemRows.forEach((row) => {
+    const [headingCell, contentCell] = [...row.children];
+
+    const col6Small = document.createElement('div');
+    col6Small.classList.add('col-6', 'col-12-small');
 
     const itemSection = document.createElement('section');
-    const itemCol = document.createElement('div');
-    itemCol.classList.add('footer-col-6', 'footer-col-12-small');
-    moveInstrumentation(row, itemCol);
-
     const h3 = document.createElement('h3');
-    h3.classList.add('footer-icon', 'footer-solid');
+    h3.classList.add('icon', 'solid');
+    
+    // Corrected: Determine icon based on heading content, not index
+    const headingText = headingCell.textContent.toLowerCase();
+    if (headingText.includes('address') || headingText.includes('home')) h3.classList.add('fa-home');
+    else if (headingText.includes('social') || headingText.includes('comment')) h3.classList.add('fa-comment');
+    else if (headingText.includes('email') || headingText.includes('envelope')) h3.classList.add('fa-envelope');
+    else if (headingText.includes('phone')) h3.classList.add('fa-phone');
+    else h3.classList.add('fa-info'); // Fallback icon
 
-    const labelText = labelCell.textContent.trim();
-    h3.append(labelText);
+    moveInstrumentation(headingCell, h3);
+    h3.append(headingCell.textContent);
 
-    // Add specific icon classes based on label text
-    if (labelText.toLowerCase().includes('mailing')) {
-      h3.classList.add('footer-fa-home');
-    } else if (labelText.toLowerCase().includes('social')) {
-      h3.classList.add('footer-fa-comment');
-    } else if (labelText.toLowerCase().includes('email')) {
-      h3.classList.add('footer-fa-envelope');
-    } else if (labelText.toLowerCase().includes('phone')) {
-      h3.classList.add('footer-fa-phone');
-    }
+    const contentP = document.createElement('p');
+    moveInstrumentation(contentCell, contentP);
+    // Corrected: Handle richtext content for contact info items
+    contentP.innerHTML = contentCell.innerHTML;
 
-    itemSection.append(h3);
-
-    const pValue = document.createElement('p');
-    while (valueCell.firstChild) {
-      pValue.append(valueCell.firstChild);
-    }
-    itemSection.append(pValue);
-    itemCol.append(itemSection);
-    contactInnerRow.append(itemCol);
+    itemSection.append(h3, contentP);
+    col6Small.append(itemSection);
+    contactRowDiv.append(col6Small);
   });
 
-  contactSection.append(contactInnerRow);
-  contactItemsCol.append(contactSection);
-  footerRow.append(contactItemsCol);
-  footerContainer.append(footerRow);
+  contactSection.append(contactRowDiv);
+  col6Contact.append(contactSection);
+  rowDiv.append(col6Contact);
 
-  // Copyright
+  // Copyright Section
   const copyrightDiv = document.createElement('div');
-  copyrightDiv.id = 'footer-copyright';
+  copyrightDiv.id = 'copyright';
   moveInstrumentation(copyrightRow, copyrightDiv);
-  const copyrightUl = document.createElement('ul');
-  // The copyrightRow's firstElementChild contains the rich text content, which might be multiple nodes
-  while (copyrightRow.firstElementChild.firstChild) {
-    copyrightUl.append(copyrightRow.firstElementChild.firstChild);
-  }
-  copyrightDiv.append(copyrightUl);
-  footerContainer.append(copyrightDiv);
+  // Corrected: Handle richtext content for copyright
+  copyrightDiv.innerHTML = copyrightRow.firstElementChild.innerHTML;
 
-  section.append(footerContainer);
+  containerDiv.append(header, rowDiv, copyrightDiv);
+  section.append(titleDiv, containerDiv);
 
   block.textContent = '';
   block.append(section);

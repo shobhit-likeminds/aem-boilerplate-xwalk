@@ -372,6 +372,29 @@ form > :first-child {
 .actions .button:first-child { 
     margin-left: 0 !important;  }
 
+/* Icons */
+/*
+		Icons pulled from the following (via icomoon.io/app):
+
+			Icon Set:	Font Awesome -- http://fortawesome.github.com/Font-Awesome/
+			License:	SIL -- http://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&id=OFL
+
+			Icon Set:	IcoMoon - Free -- http://keyamoon.com/icomoon/
+			License:	CC BY 3.0 -- http://creativecommons.org/licenses/by/3.0/
+
+			Icon Set:	Broccolidry -- http://dribbble.com/shots/587469-Free-16px-Broccolidryiconsaniconsetitisfullof-icons
+			License:	Aribitrary -- http://licence.visualidiot.com/
+	*/
+.icon:before { 
+  font-family: 'h5u';
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;  }
+
 /* Header */
 #header { 
   position: relative;

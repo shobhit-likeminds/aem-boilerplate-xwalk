@@ -2,109 +2,110 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const wrapper = document.createElement('section');
-  wrapper.classList.add('highlights-wrapper', 'highlights-style3');
-  moveInstrumentation(block, wrapper);
+  const [titleRow, highlightsContainerRow, ...highlightRows] = [...block.children];
 
-  const [titleRow, ...highlightRows] = [...block.children];
+  const section = document.createElement('section');
+  section.id = 'highlights';
+  section.classList.add('wrapper', 'style3');
 
   // Title
   const titleDiv = document.createElement('div');
-  titleDiv.classList.add('highlights-title');
   moveInstrumentation(titleRow, titleDiv);
+  titleDiv.classList.add('title'); // Corrected class name
   while (titleRow.firstChild) titleDiv.append(titleRow.firstChild);
-  wrapper.append(titleDiv);
+  section.append(titleDiv);
 
-  const container = document.createElement('div');
-  container.classList.add('highlights-container');
-  wrapper.append(container);
+  // Container for highlights
+  const containerDiv = document.createElement('div');
+  moveInstrumentation(highlightsContainerRow, containerDiv);
+  containerDiv.classList.add('container');
+  // Remove the "Highlights value" text from the container row
+  containerDiv.textContent = '';
 
-  const highlightsRow = document.createElement('div');
-  highlightsRow.classList.add('highlights-row', 'highlights-aln-center');
-  container.append(highlightsRow);
+  const rowDiv = document.createElement('div');
+  rowDiv.classList.add('row', 'aln-center');
 
-  highlightRows.forEach((row) => {
+  highlightRows.forEach((highlightRow) => {
     const colDiv = document.createElement('div');
-    colDiv.classList.add('highlights-col-4', 'highlights-col-12-medium');
-    moveInstrumentation(row, colDiv);
+    moveInstrumentation(highlightRow, colDiv);
+    colDiv.classList.add('col-4', 'col-12-medium');
 
-    const section = document.createElement('section');
-    section.classList.add('highlights-highlight');
-    colDiv.append(section);
+    const highlightSection = document.createElement('section');
+    highlightSection.classList.add('highlight'); // Corrected class name
 
-    const cells = [...row.children];
-
-    // Image and Link
+    const cells = [...highlightRow.children];
     const imageCell = cells[0];
     const headingCell = cells[1];
-    const linkCell = cells[2];
-    const descriptionCell = cells[3];
-    const buttonLinkCell = cells[4];
-    const buttonLabelCell = cells[5]; // Correctly identified as the 6th cell
+    const textCell = cells[2];
+    const linkCell = cells[3];
 
+    // Image and link
     const imageLink = document.createElement('a');
-    imageLink.classList.add('highlights-image', 'highlights-featured');
-    const originalLink = linkCell.querySelector('a');
-    if (originalLink) {
-      imageLink.href = originalLink.href;
+    imageLink.classList.add('image', 'featured');
+    const foundLink = linkCell.querySelector('a');
+    if (foundLink) {
+      imageLink.href = foundLink.href;
     } else {
-      imageLink.href = '#'; // Fallback if no link provided
+      imageLink.href = '#'; // Fallback if no link is provided
     }
-    moveInstrumentation(imageCell, imageLink);
-    while (imageCell.firstChild) imageLink.append(imageCell.firstChild);
-    section.append(imageLink);
+
+    const picture = imageCell.querySelector('picture');
+    if (picture) {
+      moveInstrumentation(imageCell, imageLink);
+      imageLink.append(picture);
+    }
+    highlightSection.append(imageLink);
 
     // Heading
     const h3 = document.createElement('h3');
     const headingLink = document.createElement('a');
-    if (originalLink) { // Use the same link as the image
-      headingLink.href = originalLink.href;
+    if (foundLink) {
+      headingLink.href = foundLink.href;
     } else {
       headingLink.href = '#';
     }
     moveInstrumentation(headingCell, headingLink);
     while (headingCell.firstChild) headingLink.append(headingCell.firstChild);
     h3.append(headingLink);
-    section.append(h3);
+    highlightSection.append(h3);
 
-    // Description
-    const descriptionP = document.createElement('p');
-    moveInstrumentation(descriptionCell, descriptionP);
-    while (descriptionCell.firstChild) descriptionP.append(descriptionCell.firstChild);
-    section.append(descriptionP);
+    // Text
+    const p = document.createElement('p');
+    moveInstrumentation(textCell, p);
+    while (textCell.firstChild) p.append(textCell.firstChild);
+    highlightSection.append(p);
 
     // Button
     const ulActions = document.createElement('ul');
-    ulActions.classList.add('highlights-actions');
-    const liAction = document.createElement('li');
-    const buttonLinkEl = document.createElement('a');
-    buttonLinkEl.classList.add('highlights-button', 'highlights-style1');
-
-    const originalButtonLink = buttonLinkCell.querySelector('a');
-    if (originalButtonLink) {
-      buttonLinkEl.href = originalButtonLink.href;
-      // The button label should come from buttonLabelCell, not the link text
-      buttonLinkEl.textContent = buttonLabelCell.textContent.trim();
+    ulActions.classList.add('actions');
+    const liActions = document.createElement('li');
+    const buttonLink = document.createElement('a');
+    buttonLink.classList.add('button', 'style1');
+    if (foundLink) {
+      buttonLink.href = foundLink.href;
+      moveInstrumentation(linkCell, buttonLink);
+      buttonLink.textContent = foundLink.textContent;
     } else {
-      buttonLinkEl.href = '#';
-      buttonLinkEl.textContent = buttonLabelCell.textContent.trim() || 'Learn More'; // Fallback text
+      buttonLink.href = '#';
+      buttonLink.textContent = 'Learn More';
     }
-    moveInstrumentation(buttonLinkCell, buttonLinkEl); // Instrumentation for the button link cell
-    // No need to append children from buttonLinkCell if we're setting textContent from buttonLabelCell
+    liActions.append(buttonLink);
+    ulActions.append(liActions);
+    highlightSection.append(ulActions);
 
-    liAction.append(buttonLinkEl);
-    ulActions.append(liAction);
-    section.append(ulActions);
-
-    highlightsRow.append(colDiv);
+    colDiv.append(highlightSection);
+    rowDiv.append(colDiv);
   });
 
-  wrapper.querySelectorAll('picture > img').forEach((img) => {
+  containerDiv.append(rowDiv);
+  section.append(containerDiv);
+
+  section.querySelectorAll('picture > img').forEach((img) => {
     const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
     moveInstrumentation(img, optimizedPic.querySelector('img'));
     img.closest('picture').replaceWith(optimizedPic);
   });
 
   block.textContent = '';
-  block.append(wrapper);
+  block.append(section);
 }
