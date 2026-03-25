@@ -1,0 +1,262 @@
+{
+  "definitions": [
+    {
+      "title": "Elementor-Footer",
+      "id": "elementor-footer",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "elementor-footer",
+              "model": "elementor-footer",
+              "name": "Elementor-Footer"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Footer-Link-List",
+      "id": "footer-link-list",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "footer-link-list",
+              "name": "Footer-Link-List"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Footer-Brand-List",
+      "id": "footer-brand-list",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "footer-brand-list",
+              "name": "Footer-Brand-List"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Footer-Other-Link-List",
+      "id": "footer-other-link-list",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "footer-other-link-list",
+              "name": "Footer-Other-Link-List"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Footer-Contact-List",
+      "id": "footer-contact-list",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "footer-contact-list",
+              "name": "Footer-Contact-List"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Footer-Social-Link",
+      "id": "footer-social-link",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "footer-social-link",
+              "name": "Footer-Social-Link"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Footer-Logo",
+      "id": "footer-logo",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "footer-logo",
+              "name": "Footer-Logo"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "elementor-footer",
+      "fields": [
+        {
+          "component": "container",
+          "item": "footer-link-list",
+          "label": "Important Links",
+          "name": "important-links"
+        },
+        {
+          "component": "container",
+          "item": "footer-brand-list",
+          "label": "Our Brands",
+          "name": "our-brands"
+        },
+        {
+          "component": "container",
+          "item": "footer-other-link-list",
+          "label": "Other Links",
+          "name": "other-links"
+        },
+        {
+          "component": "container",
+          "item": "footer-contact-list",
+          "label": "Contact List",
+          "name": "contact-list"
+        },
+        {
+          "component": "container",
+          "item": "footer-social-link",
+          "label": "Social Links",
+          "name": "social-links"
+        },
+        {
+          "component": "container",
+          "item": "footer-logo",
+          "label": "Footer Logo",
+          "name": "footer-logo"
+        }
+      ]
+    },
+    {
+      "id": "footer-link-list",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Text",
+          "name": "text",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Link",
+          "name": "link",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "footer-brand-list",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Brand",
+          "name": "brand",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "footer-other-link-list",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Text",
+          "name": "text",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Link",
+          "name": "link",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "footer-contact-list",
+      "fields": [
+        {
+          "component": "richtext",
+          "label": "Text",
+          "name": "text",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Link",
+          "name": "link",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "footer-social-link",
+      "fields": [
+        {
+          "component": "aem-content",
+          "label": "Link",
+          "name": "link",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Icon",
+          "name": "icon",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "footer-logo",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Logo",
+          "name": "logo",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Link",
+          "name": "link",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "elementor-footer",
+      "components": [
+        "footer-link-list",
+        "footer-brand-list",
+        "footer-other-link-list",
+        "footer-contact-list",
+        "footer-social-link",
+        "footer-logo"
+      ]
+    }
+  ]
+}

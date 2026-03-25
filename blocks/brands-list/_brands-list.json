@@ -1,0 +1,91 @@
+{
+  "definitions": [
+    {
+      "title": "Brands-List",
+      "id": "brands-list",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "brands-list",
+              "model": "brands-list",
+              "name": "Brands-List"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Brand",
+      "id": "brand",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "brand",
+              "name": "Brand"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "brands-list",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Heading",
+          "name": "heading",
+          "valueType": "string"
+        },
+        {
+          "component": "container",
+          "item": "brand",
+          "label": "Brands",
+          "name": "brands"
+        }
+      ]
+    },
+    {
+      "id": "brand",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Logo",
+          "name": "logo",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Link",
+          "name": "link",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Button Text",
+          "name": "button-text",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Side Image",
+          "name": "side-image",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "brands-list",
+      "components": [
+        "brand"
+      ]
+    }
+  ]
+}

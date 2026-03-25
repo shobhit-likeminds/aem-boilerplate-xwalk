@@ -44,7 +44,19 @@
       "user-guide-wrapper",
       "dabur-chyawanprash-stories",
       "back-to-top",
-      "footer-logo"
+      "footer-logo",
+      "e-n-carousel",
+      "about-us-cta",
+      "elementor-element",
+      "brands-list",
+      "esc-list",
+      "elementor-footer"
+    ]
+  },
+  {
+    "id": "about-us-cta",
+    "components": [
+      "about-us-cta-item"
     ]
   },
   {
@@ -60,6 +72,12 @@
     "id": "banner-carousel",
     "components": [
       "banner"
+    ]
+  },
+  {
+    "id": "brands-list",
+    "components": [
+      "brand"
     ]
   },
   {
@@ -124,6 +142,32 @@
     "id": "description"
   },
   {
+    "id": "e-n-carousel",
+    "components": [
+      "carousel-slide"
+    ]
+  },
+  {
+    "id": "elementor-element"
+  },
+  {
+    "id": "elementor-footer",
+    "components": [
+      "footer-link-list",
+      "footer-brand-list",
+      "footer-other-link-list",
+      "footer-contact-list",
+      "footer-social-link",
+      "footer-logo"
+    ]
+  },
+  {
+    "id": "esc-list",
+    "components": [
+      "esc-item"
+    ]
+  },
+  {
     "id": "feature-list",
     "components": [
       "feature",
@@ -165,7 +209,10 @@
     ]
   },
   {
-    "id": "header"
+    "id": "header",
+    "components": [
+      "header-nav-item"
+    ]
   },
   {
     "id": "health-benefits",

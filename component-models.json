@@ -142,6 +142,38 @@
     ]
   },
   {
+    "id": "about-us-cta"
+  },
+  {
+    "id": "about-us-cta-item",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Description",
+        "name": "description",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Image",
+        "name": "image",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "aside",
     "fields": [
       {
@@ -206,6 +238,52 @@
         "component": "aem-content",
         "label": "CTA",
         "name": "cta",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "brands-list",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "brand",
+        "label": "Brands",
+        "name": "brands"
+      }
+    ]
+  },
+  {
+    "id": "brand",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Logo",
+        "name": "logo",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Button Text",
+        "name": "button-text",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Side Image",
+        "name": "side-image",
         "valueType": "string"
       }
     ]
@@ -550,6 +628,216 @@
         "component": "richtext",
         "label": "Body",
         "name": "body",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "e-n-carousel",
+    "fields": [
+      {
+        "component": "container",
+        "item": "carousel-slide",
+        "label": "Slides",
+        "name": "slides"
+      }
+    ]
+  },
+  {
+    "id": "carousel-slide",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Image",
+        "name": "image",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "elementor-element",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Image",
+        "name": "image",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "elementor-footer",
+    "fields": [
+      {
+        "component": "container",
+        "item": "footer-link-list",
+        "label": "Important Links",
+        "name": "important-links"
+      },
+      {
+        "component": "container",
+        "item": "footer-brand-list",
+        "label": "Our Brands",
+        "name": "our-brands"
+      },
+      {
+        "component": "container",
+        "item": "footer-other-link-list",
+        "label": "Other Links",
+        "name": "other-links"
+      },
+      {
+        "component": "container",
+        "item": "footer-contact-list",
+        "label": "Contact List",
+        "name": "contact-list"
+      },
+      {
+        "component": "container",
+        "item": "footer-social-link",
+        "label": "Social Links",
+        "name": "social-links"
+      },
+      {
+        "component": "container",
+        "item": "footer-logo",
+        "label": "Footer Logo",
+        "name": "footer-logo"
+      }
+    ]
+  },
+  {
+    "id": "footer-link-list",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Text",
+        "name": "text",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "footer-brand-list",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Brand",
+        "name": "brand",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "footer-other-link-list",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Text",
+        "name": "text",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "footer-contact-list",
+    "fields": [
+      {
+        "component": "richtext",
+        "label": "Text",
+        "name": "text",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "footer-social-link",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Icon",
+        "name": "icon",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "footer-logo",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Logo",
+        "name": "logo",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "esc-list",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "esc-item",
+        "label": "ESC Items",
+        "name": "items"
+      }
+    ]
+  },
+  {
+    "id": "esc-item",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Title",
+        "name": "title",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Description",
+        "name": "description",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Image",
+        "name": "image",
         "valueType": "string"
       }
     ]
@@ -975,27 +1263,38 @@
     "id": "header",
     "fields": [
       {
+        "component": "reference",
+        "label": "Logo",
+        "name": "logo",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Logo Link",
+        "name": "logo-link",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "header-nav-item",
+        "label": "Navigation Items",
+        "name": "navigation-items"
+      }
+    ]
+  },
+  {
+    "id": "header-nav-item",
+    "fields": [
+      {
         "component": "text",
-        "label": "Heading",
-        "name": "heading",
-        "valueType": "string"
-      },
-      {
-        "component": "richtext",
-        "label": "Description",
-        "name": "description",
+        "label": "Label",
+        "name": "label",
         "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "Primary CTA Link",
-        "name": "primary-cta-link",
-        "valueType": "string"
-      },
-      {
-        "component": "aem-content",
-        "label": "Secondary Link",
-        "name": "secondary-link",
+        "label": "Link",
+        "name": "link",
         "valueType": "string"
       }
     ]
