@@ -17,30 +17,30 @@
       }
     },
     {
-      "title": "Menu-Item",
-      "id": "menu-item",
+      "title": "Main-Menu-Item",
+      "id": "main-menu-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "menu-item",
-              "name": "Menu-Item"
+              "model": "main-menu-item",
+              "name": "Main-Menu-Item"
             }
           }
         }
       }
     },
     {
-      "title": "Quick-Link",
-      "id": "quick-link",
+      "title": "Menu-Quick-Link",
+      "id": "menu-quick-link",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "quick-link",
-              "name": "Quick-Link"
+              "model": "menu-quick-link",
+              "name": "Menu-Quick-Link"
             }
           }
         }
@@ -53,48 +53,54 @@
       "fields": [
         {
           "component": "container",
-          "item": "menu-item",
-          "label": "Menu Items",
-          "name": "menu-items"
+          "item": "main-menu-item",
+          "label": "Main Menu",
+          "name": "main-menu"
         },
         {
           "component": "container",
-          "item": "quick-link",
-          "label": "Quick Links",
-          "name": "quick-links"
+          "item": "menu-quick-link",
+          "label": "Menu Quick Link",
+          "name": "menu-quick-link"
         }
       ]
     },
     {
-      "id": "menu-item",
+      "id": "main-menu-item",
       "fields": [
         {
           "component": "text",
-          "label": "Label",
-          "name": "label",
+          "label": "ID",
+          "name": "id",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Name",
+          "name": "name",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "label": "URL",
-          "name": "url",
+          "label": "Link",
+          "name": "link",
           "valueType": "string"
         }
       ]
     },
     {
-      "id": "quick-link",
+      "id": "menu-quick-link",
       "fields": [
         {
-          "component": "text",
-          "label": "Label",
-          "name": "label",
+          "component": "aem-content",
+          "label": "Link",
+          "name": "link",
           "valueType": "string"
         },
         {
-          "component": "aem-content",
-          "label": "URL",
-          "name": "url",
+          "component": "text",
+          "label": "Text",
+          "name": "text",
           "valueType": "string"
         }
       ]
@@ -104,8 +110,8 @@
     {
       "id": "navigation-root-ssy",
       "components": [
-        "menu-item",
-        "quick-link"
+        "main-menu-item",
+        "menu-quick-link"
       ]
     }
   ]

@@ -2,47 +2,49 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const container = document.createElement('div');
-  container.classList.add('breadcrumb-breadCrumb-sp4');
+  const breadcrumbContainer = document.createElement('div');
+  breadcrumbContainer.classList.add('breadcrumb-breadCrumb-sp4');
 
-  [...block.children].forEach((row) => {
-    // Each row represents a 'breadcrumb-item' with three cells: link, text, separator
-    const cells = row.children;
+  // Skip the first row which is just the container label.
+  // All subsequent rows are breadcrumb items.
+  const itemRows = [...block.children].slice(1);
 
-    // Cell 0: Link
-    if (cells[0]) {
-      const linkElement = cells[0].querySelector('a');
-      if (linkElement) {
+  itemRows.forEach((row) => {
+    // According to BlockJson for 'breadcrumb-item':
+    // cell[0]: field="link" label="Link" type=aem-content
+    // cell[1]: field="text" label="Text" type=text
+    // cell[2]: field="separator" label="Separator" type=text
+    const [linkCell, textCell, separatorCell] = row.children;
+
+    if (linkCell) {
+      const link = linkCell.querySelector('a');
+      if (link) {
         const breadcrumbLink = document.createElement('a');
         breadcrumbLink.classList.add('breadcrumb-breadCrumbLink-HWo');
-        breadcrumbLink.href = linkElement.href;
-        moveInstrumentation(cells[0], breadcrumbLink);
-        while (cells[0].firstChild) breadcrumbLink.append(cells[0].firstChild);
-        container.append(breadcrumbLink);
+        breadcrumbLink.href = link.href;
+        moveInstrumentation(linkCell, breadcrumbLink);
+        while (linkCell.firstChild) breadcrumbLink.append(linkCell.firstChild);
+        breadcrumbContainer.append(breadcrumbLink);
       }
     }
 
-    // Cell 1: Text
-    if (cells[1]) {
-      // Only append text if it's not part of a link (i.e., if the link cell was empty or not present)
-      // Based on the BlockJson, text is a separate field, so it should always be appended if present.
-      const text = document.createElement('span');
-      text.classList.add('breadcrumb-breadCrumbText-xuk');
-      moveInstrumentation(cells[1], text);
-      while (cells[1].firstChild) text.append(cells[1].firstChild);
-      container.append(text);
+    if (textCell) {
+      const breadcrumbText = document.createElement('span');
+      breadcrumbText.classList.add('breadcrumb-breadCrumbText-xuk');
+      moveInstrumentation(textCell, breadcrumbText);
+      while (textCell.firstChild) breadcrumbText.append(textCell.firstChild);
+      breadcrumbContainer.append(breadcrumbText);
     }
 
-    // Cell 2: Separator
-    if (cells[2]) {
-      const separator = document.createElement('span');
-      separator.classList.add('breadcrumb-breadCrumbSeparator-xlX');
-      moveInstrumentation(cells[2], separator);
-      while (cells[2].firstChild) separator.append(cells[2].firstChild);
-      container.append(separator);
+    if (separatorCell) {
+      const breadcrumbSeparator = document.createElement('span');
+      breadcrumbSeparator.classList.add('breadcrumb-breadCrumbSeparator-xlX');
+      moveInstrumentation(separatorCell, breadcrumbSeparator);
+      while (separatorCell.firstChild) breadcrumbSeparator.append(separatorCell.firstChild);
+      breadcrumbContainer.append(breadcrumbSeparator);
     }
   });
 
   block.textContent = '';
-  block.append(container);
+  block.append(breadcrumbContainer);
 }

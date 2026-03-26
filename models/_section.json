@@ -94,7 +94,9 @@
         "bloglisting-pagination",
         "footer-root-u2c",
         "mask-root-xlr",
-        "navigation-root-ssy"
+        "navigation-root-ssy",
+        "home-blog-listing",
+        "toast-root"
       ]
     }
   ]

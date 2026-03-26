@@ -22,24 +22,10 @@
       "id": "bloglisting-pagination",
       "fields": [
         {
-          "component": "select",
+          "component": "number",
           "label": "Page Size",
           "name": "page-size",
-          "options": [
-            {
-              "label": "2",
-              "value": "2"
-            },
-            {
-              "label": "10",
-              "value": "10"
-            },
-            {
-              "label": "20",
-              "value": "20"
-            }
-          ],
-          "valueType": "string"
+          "valueType": "number"
         }
       ]
     }

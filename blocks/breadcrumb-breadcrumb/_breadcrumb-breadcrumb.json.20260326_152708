@@ -34,15 +34,7 @@
   ],
   "models": [
     {
-      "id": "breadcrumb-breadcrumb",
-      "fields": [
-        {
-          "component": "container",
-          "item": "breadcrumb-item",
-          "label": "Breadcrumb Items",
-          "name": "items"
-        }
-      ]
+      "id": "breadcrumb-breadcrumb"
     },
     {
       "id": "breadcrumb-item",

@@ -252,10 +252,24 @@
     "id": "bloglisting-pagination",
     "fields": [
       {
-        "component": "number",
+        "component": "select",
         "label": "Page Size",
         "name": "page-size",
-        "valueType": "number"
+        "options": [
+          {
+            "label": "2",
+            "value": "2"
+          },
+          {
+            "label": "10",
+            "value": "10"
+          },
+          {
+            "label": "20",
+            "value": "20"
+          }
+        ],
+        "valueType": "string"
       }
     ]
   },
@@ -306,7 +320,15 @@
     ]
   },
   {
-    "id": "breadcrumb-breadcrumb"
+    "id": "breadcrumb-breadcrumb",
+    "fields": [
+      {
+        "component": "container",
+        "item": "breadcrumb-item",
+        "label": "Breadcrumb Items",
+        "name": "items"
+      }
+    ]
   },
   {
     "id": "breadcrumb-item",
@@ -1066,15 +1088,127 @@
     ]
   },
   {
-    "id": "footer-root-u2c"
+    "id": "footer-root-u2c",
+    "fields": [
+      {
+        "component": "container",
+        "item": "footer-social-link",
+        "label": "Footer Social Links",
+        "name": "footerSocialLinks"
+      },
+      {
+        "component": "container",
+        "item": "footer-app-link",
+        "label": "Footer App Links",
+        "name": "footerAppLinks"
+      },
+      {
+        "component": "container",
+        "item": "footer-link-section",
+        "label": "Footer Link Sections",
+        "name": "footerLinkSections"
+      },
+      {
+        "component": "container",
+        "item": "footer-bottom-link",
+        "label": "Footer Bottom Links",
+        "name": "footerBottomLinks"
+      },
+      {
+        "component": "richtext",
+        "label": "Copyright",
+        "name": "copyright",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "footer-social-link",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "URL",
+        "name": "url",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Icon Image",
+        "name": "icon",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "footer-app-link",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "App Store URL",
+        "name": "url",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "App Store Icon",
+        "name": "icon",
+        "valueType": "string"
+      }
+    ]
   },
   {
     "id": "footer-link-section",
     "fields": [
       {
-        "component": "richtext",
-        "label": "Content",
-        "name": "content",
+        "component": "text",
+        "label": "Section Title",
+        "name": "sectionTitle",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "footer-link-section-item",
+        "label": "Section Items",
+        "name": "sectionItems"
+      }
+    ]
+  },
+  {
+    "id": "footer-link-section-item",
+    "fields": [
+      {
+        "component": "checkbox-group",
+        "label": "Checkbox",
+        "name": "checkbox",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Label",
+        "name": "label",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link URL",
+        "name": "url",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "footer-bottom-link",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "URL",
+        "name": "url",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Label",
+        "name": "label",
         "valueType": "string"
       }
     ]
@@ -1320,37 +1454,17 @@
     ]
   },
   {
-    "id": "header",
-    "fields": [
-      {
-        "component": "reference",
-        "label": "Logo",
-        "name": "logo",
-        "valueType": "string"
-      },
-      {
-        "component": "container",
-        "item": "header-link",
-        "label": "Header Links",
-        "name": "headerLinks"
-      },
-      {
-        "component": "text",
-        "label": "Search Placeholder",
-        "name": "search_placeholder",
-        "valueType": "string"
-      },
-      {
-        "component": "container",
-        "item": "menu-item",
-        "label": "Menu Items",
-        "name": "menuItems"
-      }
-    ]
+    "id": "header"
   },
   {
-    "id": "header-link",
+    "id": "header-menu-item",
     "fields": [
+      {
+        "component": "text",
+        "label": "Label",
+        "name": "label",
+        "valueType": "string"
+      },
       {
         "component": "aem-content",
         "label": "Link",
@@ -1358,27 +1472,10 @@
         "valueType": "string"
       },
       {
-        "component": "text",
-        "label": "Text",
-        "name": "text",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
-    "id": "menu-item",
-    "fields": [
-      {
-        "component": "aem-content",
-        "label": "Link",
-        "name": "link",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Text",
-        "name": "text",
-        "valueType": "string"
+        "component": "container",
+        "item": "header-menu-item",
+        "label": "Submenu Items",
+        "name": "children"
       },
       {
         "component": "reference",
@@ -1495,6 +1592,52 @@
     ]
   },
   {
+    "id": "home-blog-listing",
+    "fields": [
+      {
+        "component": "container",
+        "item": "blog-listing-item",
+        "label": "Blog Listing Items",
+        "name": "items"
+      }
+    ]
+  },
+  {
+    "id": "blog-listing-item",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Image",
+        "name": "image",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Image Alt Text",
+        "name": "image-alt",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Title",
+        "name": "title",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Description",
+        "name": "description",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Read Story Link",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "intro",
     "fields": [
       {
@@ -1581,12 +1724,6 @@
         "label": "Search Input",
         "name": "search-input",
         "valueType": "string"
-      },
-      {
-        "component": "reference",
-        "label": "Icon Image",
-        "name": "icon-image",
-        "valueType": "string"
       }
     ]
   },
@@ -1623,54 +1760,48 @@
     "fields": [
       {
         "component": "container",
-        "item": "main-menu-item",
-        "label": "Main Menu",
-        "name": "main-menu"
+        "item": "menu-item",
+        "label": "Menu Items",
+        "name": "menu-items"
       },
       {
         "component": "container",
-        "item": "menu-quick-link",
-        "label": "Menu Quick Link",
-        "name": "menu-quick-link"
+        "item": "quick-link",
+        "label": "Quick Links",
+        "name": "quick-links"
       }
     ]
   },
   {
-    "id": "main-menu-item",
+    "id": "menu-item",
     "fields": [
       {
         "component": "text",
-        "label": "ID",
-        "name": "id",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Name",
-        "name": "name",
+        "label": "Label",
+        "name": "label",
         "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "Link",
-        "name": "link",
+        "label": "URL",
+        "name": "url",
         "valueType": "string"
       }
     ]
   },
   {
-    "id": "menu-quick-link",
+    "id": "quick-link",
     "fields": [
       {
-        "component": "aem-content",
-        "label": "Link",
-        "name": "link",
+        "component": "text",
+        "label": "Label",
+        "name": "label",
         "valueType": "string"
       },
       {
-        "component": "text",
-        "label": "Text",
-        "name": "text",
+        "component": "aem-content",
+        "label": "URL",
+        "name": "url",
         "valueType": "string"
       }
     ]
@@ -1814,6 +1945,9 @@
   },
   {
     "id": "spaceAdderVerticalPadding"
+  },
+  {
+    "id": "toast-root"
   },
   {
     "id": "user-guide-wrapper",

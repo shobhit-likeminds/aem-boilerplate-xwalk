@@ -26,6 +26,12 @@
           "label": "Search Input",
           "name": "search-input",
           "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Icon Image",
+          "name": "icon-image",
+          "valueType": "string"
         }
       ]
     }

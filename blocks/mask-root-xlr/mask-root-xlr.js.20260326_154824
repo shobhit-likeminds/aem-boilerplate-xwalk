@@ -5,9 +5,9 @@ export default function decorate(block) {
   const button = document.createElement('button');
   button.classList.add('mask-root-xlR', 'appearance-none', 'bg-black', 'block', 'cursor-pointer', 'fixed', 'h-full', 'left-0', 'opacity-0', 'top-0', 'w-full', 'z-mask', 'invisible');
 
-  // No content to move from the block as it's an empty block.
-  // The button itself represents the entire block's functionality.
-
+  // The original HTML has no content inside the button, so we don't need to move instrumentation or append children.
+  // If there were children in the original block, we would move them.
+  // Since the block is empty, we just append the new button.
   block.textContent = '';
   block.append(button);
 }

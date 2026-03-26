@@ -2,9 +2,8 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const [mainMenuConfig, quickLinkConfig, ...itemRows] = [...block.children];
+  const [menuItemsContainer, quickLinksContainer, ...itemRows] = [...block.children];
 
-  // Create the main navigation container
   const aside = document.createElement('aside');
   aside.classList.add('navigation-root-SSY', 'bg-white', 'bottom-0', 'grid', 'left-0', 'max-w-modal', 'opacity-0', 'overflow-hidden', 'fixed', 'top-0', 'w-full', 'z-menu');
   moveInstrumentation(block, aside);
@@ -18,30 +17,31 @@ export default function decorate(block) {
   closeButton.type = 'button';
   closeButton.setAttribute('aria-hidden', 'false');
   closeButton.setAttribute('aria-label', 'Close');
-  const closeImg = document.createElement('img');
-  closeImg.alt = 'svg file';
-  closeImg.src = '/content/dam/aemigrate/uploaded-folder/image/1774510729937.svg+xml'; // Placeholder image
-  closeButton.append(closeImg);
 
-  const navHeaderTitle = document.createElement('span');
-  navHeaderTitle.classList.add('navHeader-title-jo-', 'capitalize', 'font-normal', 'inline-flex', 'items-center', 'px-2xs', 'py-0', 'text-colorDefault');
-  const titleSpan = document.createElement('span');
-  // Corrected: Read text content from the first child element of mainMenuConfig
-  titleSpan.textContent = mainMenuConfig.firstElementChild.textContent.trim();
-  navHeaderTitle.append(titleSpan);
+  const closeIcon = document.createElement('img');
+  closeIcon.alt = 'svg file';
+  closeIcon.src = '/content/dam/aemigrate/uploaded-folder/image/1774517933353.svg+xml';
+  closeButton.append(closeIcon);
 
-  header.append(closeButton, navHeaderTitle);
+  const navTitleSpan = document.createElement('span');
+  navTitleSpan.classList.add('navHeader-title-jo-', 'capitalize', 'font-normal', 'inline-flex', 'items-center', 'px-2xs', 'py-0', 'text-colorDefault');
+  const mainMenuSpan = document.createElement('span');
+  mainMenuSpan.textContent = 'Main Menu';
+  navTitleSpan.append(mainMenuSpan);
+
+  header.append(closeButton, navTitleSpan);
+  aside.append(header);
 
   // Footer
   const footer = document.createElement('div');
   footer.classList.add('navigation-footer-RBP');
 
-  const switchers = document.createElement('div');
-  switchers.classList.add('navigation-switchers-IAR', 'bg-gray-100', 'grid', 'grid-flow-col', 'justify-between', 'w-full', 'sm_hidden');
-  footer.append(switchers);
+  const switchersDiv = document.createElement('div');
+  switchersDiv.classList.add('navigation-switchers-IAR', 'bg-gray-100', 'grid', 'grid-flow-col', 'justify-between', 'w-full', 'sm_hidden');
+  footer.append(switchersDiv);
 
-  const authBar = document.createElement('div');
-  authBar.classList.add('authBar-root-qo8', 'bg-white', 'gap-3', 'grid', 'grid-flow-col', 'h-[3rem]', 'items-stretch');
+  const authBarDiv = document.createElement('div');
+  authBarDiv.classList.add('authBar-root-qo8', 'bg-white', 'gap-3', 'grid', 'grid-flow-col', 'h-[3rem]', 'items-stretch');
 
   const signInButton = document.createElement('button');
   const authBarContents = document.createElement('span');
@@ -50,8 +50,11 @@ export default function decorate(block) {
   const signInSpan = document.createElement('span');
   signInSpan.classList.add('authBar-signIn-q-9', 'linkButton-root-QwB', 'clickable-root-sDL', 'cursor-pointer', 'inline-flex', 'items-center', 'justify-center', 'leading-none', 'pointer-events-auto', 'text-center', 'leading-tight', 'max-w-full', 'text-colorDefault', 'text-brand-dark', 'hover_text-colorDefault');
   signInSpan.textContent = 'Sign In';
+  authBarContents.append(signInSpan);
 
-  const separator = document.createTextNode('/');
+  const slashSpan = document.createElement('span');
+  slashSpan.textContent = '/';
+  authBarContents.append(slashSpan);
 
   const accountChip = document.createElement('span');
   accountChip.classList.add('accountChip-root-biX', 'grid', 'grid-flow-col', 'items-center');
@@ -59,13 +62,13 @@ export default function decorate(block) {
   accountChipText.classList.add('accountChip-text-6Zl');
   const accountChipImg = document.createElement('img');
   accountChipImg.alt = 'svg file';
-  accountChipImg.src = '/content/dam/aemigrate/uploaded-folder/image/1774510726116.svg+xml'; // Placeholder image
+  accountChipImg.src = '/content/dam/aemigrate/uploaded-folder/image/1774517932267.svg+xml';
   accountChip.append(accountChipText, accountChipImg);
-
-  authBarContents.append(signInSpan, separator, accountChip);
+  authBarContents.append(accountChip);
   signInButton.append(authBarContents);
-  authBar.append(signInButton);
-  footer.append(authBar);
+  authBarDiv.append(signInButton);
+  footer.append(authBarDiv);
+  aside.append(footer);
 
   // Body
   const body = document.createElement('div');
@@ -76,164 +79,140 @@ export default function decorate(block) {
 
   const cmsBlock = document.createElement('div');
   cmsBlock.classList.add('cmsBlock-root-rsi');
-
   const cmsBlockContent = document.createElement('div');
   cmsBlockContent.classList.add('cmsBlock-content-BTy');
-
-  const richContent = document.createElement('div');
-  richContent.classList.add('richContent-root-Byp');
+  const richContent1 = document.createElement('div');
+  richContent1.classList.add('richContent-root-Byp');
 
   const rowContained = document.createElement('div');
   rowContained.classList.add('row-contained-PD6', 'row-root-rPq', 'header_quick_menu');
-  rowContained.style.display = 'flex';
-  rowContained.style.justifyContent = 'flex-start';
-  rowContained.style.flexDirection = 'column';
+  const flexDiv = document.createElement('div');
+  flexDiv.style.display = 'flex';
+  flexDiv.style.justifyContent = 'flex-start';
+  flexDiv.style.flexDirection = 'column';
 
-  const htmlRoot = document.createElement('div');
-  htmlRoot.classList.add('html-root-Uwa');
-  htmlRoot.setAttribute('role', 'presentation');
+  const htmlDiv1 = document.createElement('div');
+  htmlDiv1.classList.add('html-root-Uwa');
+  htmlDiv1.setAttribute('role', 'presentation');
 
   const mainMenuUl = document.createElement('ul');
   mainMenuUl.classList.add('mainMenu');
 
-  const menuQuickLinkUl = document.createElement('ul');
-  menuQuickLinkUl.classList.add('menu-quick-link');
-
-  const mainMenuRows = itemRows.filter((row) => row.children.length === 3);
-  const quickLinkRows = itemRows.filter((row) => row.children.length === 2);
-
-  mainMenuRows.forEach((row) => {
+  // Process menu items from block.children[0]
+  const menuItems = [...menuItemsContainer.children];
+  menuItems.forEach((row) => {
     const li = document.createElement('li');
-    moveInstrumentation(row, li);
     li.classList.add('isSubmenu');
+    moveInstrumentation(row, li);
 
-    const [idCell, nameCell, linkCell] = [...row.children];
-    const id = idCell.textContent.trim();
-    const name = nameCell.textContent.trim();
-    const link = linkCell.querySelector('a');
+    const labelCell = row.children[0];
+    const urlCell = row.children[1];
 
-    const input = document.createElement('input');
-    input.id = id;
-    input.tabIndex = 0;
-    input.name = id;
-    input.type = 'checkbox';
-    input.value = id;
+    if (labelCell && urlCell) {
+      const input = document.createElement('input');
+      const labelText = labelCell.textContent.trim().toLowerCase().replace(/\s/g, '-');
+      input.id = labelText;
+      input.name = labelText;
+      input.type = 'checkbox';
+      input.value = labelText;
+      input.setAttribute('tabindex', '0');
 
-    const label = document.createElement('label');
-    label.htmlFor = id;
+      const labelEl = document.createElement('label');
+      labelEl.setAttribute('for', labelText);
 
-    const linkEl = document.createElement('a');
-    if (link) {
-      linkEl.href = link.href;
-      linkEl.textContent = name;
-    } else {
-      linkEl.textContent = name;
+      const link = document.createElement('a');
+      const foundLink = urlCell.querySelector('a');
+      if (foundLink) {
+        link.href = foundLink.href;
+        link.textContent = foundLink.textContent;
+      }
+      link.setAttribute('tabindex', '0');
+
+      labelEl.append(link);
+      li.append(input, labelEl);
+
+      // Check for nested sub-menus in the original HTML structure
+      const subMenuUl = row.querySelector('ul.subMenu');
+      if (subMenuUl) {
+        li.append(subMenuUl);
+      }
+
+      // Add event listener for submenu toggling
+      labelEl.addEventListener('click', (e) => {
+        if (e.target.tagName === 'A') {
+          // If the link itself is clicked, let it navigate
+          return;
+        }
+        input.checked = !input.checked;
+      });
     }
-    linkEl.tabIndex = 0;
-    label.append(linkEl);
-    li.append(input, label);
-
-    // Placeholder for subMenu - based on original HTML structure
-    const subMenuUl = document.createElement('ul');
-    subMenuUl.classList.add('subMenu');
-    // Add a dummy li to simulate sub-menu content for now
-    // In a real scenario, this would be populated dynamically or from additional block content
-    const subMenuLi = document.createElement('li');
-    subMenuLi.textContent = 'Submenu Item (Placeholder)';
-    subMenuUl.append(subMenuLi);
-    li.append(subMenuUl);
-
     mainMenuUl.append(li);
   });
+  htmlDiv1.append(mainMenuUl);
 
-  quickLinkRows.forEach((row) => {
+  const quickLinkUl = document.createElement('ul');
+  quickLinkUl.classList.add('menu-quick-link');
+
+  // Process quick links from block.children[1]
+  const quickLinks = [...quickLinksContainer.children];
+  quickLinks.forEach((row) => {
     const li = document.createElement('li');
     moveInstrumentation(row, li);
-    const [linkCell, textCell] = [...row.children];
-    const link = linkCell.querySelector('a');
-    const text = textCell.textContent.trim();
 
-    const linkEl = document.createElement('a');
-    if (link) {
-      linkEl.href = link.href;
-      linkEl.textContent = text;
-    } else {
-      linkEl.textContent = text;
+    const labelCell = row.children[0];
+    const urlCell = row.children[1];
+
+    if (labelCell && urlCell) {
+      const link = document.createElement('a');
+      const foundLink = urlCell.querySelector('a');
+      if (foundLink) {
+        link.href = foundLink.href;
+        link.textContent = foundLink.textContent;
+      }
+      link.setAttribute('tabindex', '0');
+      li.append(link);
     }
-    linkEl.tabIndex = 0;
-    li.append(linkEl);
-    menuQuickLinkUl.append(li);
+    quickLinkUl.append(li);
   });
+  htmlDiv1.append(quickLinkUl);
 
-  htmlRoot.append(mainMenuUl, menuQuickLinkUl);
-  rowContained.append(htmlRoot);
-  richContent.append(rowContained);
-  cmsBlockContent.append(richContent);
+  flexDiv.append(htmlDiv1);
+  rowContained.append(flexDiv);
+  richContent1.append(rowContained);
+  cmsBlockContent.append(richContent1);
+
+  const richContent2 = document.createElement('div');
+  richContent2.classList.add('richContent-root-Byp');
+  const htmlDiv2 = document.createElement('div');
+  htmlDiv2.classList.add('html-root-Uwa');
+  htmlDiv2.setAttribute('role', 'presentation');
+  const styleEl = document.createElement('style');
+  styleEl.textContent = `.header_quick_menu ul { list-style: none; }`;
+  htmlDiv2.append(styleEl);
+  richContent2.append(htmlDiv2);
+
+  cmsBlockContent.append(richContent2);
   cmsBlock.append(cmsBlockContent);
   categoryTree.append(cmsBlock);
   body.append(categoryTree);
+  aside.append(body);
 
-  // Modal
-  const modal = document.createElement('div');
-  modal.classList.add('navigation-modal-Ed0', 'absolute', 'bg-white', 'bottom-0', 'left-0', 'opacity-0', 'overflow-auto', 'right-0', 'top-lg');
+  const navigationModal = document.createElement('div');
+  navigationModal.classList.add('navigation-modal-Ed0', 'absolute', 'bg-white', 'bottom-0', 'left-0', 'opacity-0', 'overflow-auto', 'right-0', 'top-lg');
+  aside.append(navigationModal);
 
-  aside.append(header, footer, body, modal);
-
-  // Event Listeners for interactive behavior
   closeButton.addEventListener('click', () => {
-    aside.classList.remove('opacity-100', 'navigation-root-SSY--open');
+    aside.classList.remove('opacity-100');
     aside.classList.add('opacity-0');
   });
 
-  // Added: Event listener for signInButton to toggle a class on authBar
-  signInButton.addEventListener('click', () => {
-    authBar.classList.toggle('authBar-root-qo8--active'); // Example class to toggle
-  });
+  block.textContent = '';
+  block.append(aside);
 
-  // Toggle for main menu items (simulated from original HTML's checkbox behavior)
-  mainMenuUl.querySelectorAll('li.isSubmenu > input[type="checkbox"]').forEach((checkbox) => {
-    checkbox.addEventListener('change', () => {
-      const parentLi = checkbox.closest('li.isSubmenu');
-      if (parentLi) {
-        if (checkbox.checked) {
-          parentLi.classList.add('active'); // Add a class to indicate open state
-        } else {
-          parentLi.classList.remove('active'); // Remove class for closed state
-        }
-      }
-    });
-  });
-
-  // Image optimization for any images found
+  // Image optimization
   aside.querySelectorAll('picture > img').forEach((img) => {
     const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
     moveInstrumentation(img, optimizedPic.querySelector('img'));
     img.closest('picture').replaceWith(optimizedPic);
   });
-
-  // Added: Event listener to close the navigation when clicking outside of it
-  document.addEventListener('click', (event) => {
-    if (!aside.contains(event.target) && aside.classList.contains('navigation-root-SSY--open')) {
-      aside.classList.remove('opacity-100', 'navigation-root-SSY--open');
-      aside.classList.add('opacity-0');
-    }
-  });
-
-  // Added: Event listener to close the navigation on escape key press
-  document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape' && aside.classList.contains('navigation-root-SSY--open')) {
-      aside.classList.remove('opacity-100', 'navigation-root-SSY--open');
-      aside.classList.add('opacity-0');
-    }
-  });
-
-  // Example of how to open the navigation (e.g., from a hamburger menu button elsewhere)
-  // For demonstration, let's assume there's a button with class 'open-nav-button'
-  // document.querySelector('.open-nav-button')?.addEventListener('click', () => {
-  //   aside.classList.remove('opacity-0');
-  //   aside.classList.add('opacity-100', 'navigation-root-SSY--open');
-  // });
-
-  block.textContent = '';
-  block.append(aside);
 }
