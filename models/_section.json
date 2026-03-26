@@ -85,7 +85,16 @@
         "elementor-element",
         "brands-list",
         "esc-list",
-        "elementor-footer"
+        "elementor-footer",
+        "card-list",
+        "moe-push-class",
+        "breadcrumb-breadcrumb",
+        "mpblog-search",
+        "blog-listing",
+        "bloglisting-pagination",
+        "footer-root-u2c",
+        "mask-root-xlr",
+        "navigation-root-ssy"
       ]
     }
   ]

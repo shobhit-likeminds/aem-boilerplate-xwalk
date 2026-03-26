@@ -1,46 +1,46 @@
 {
   "definitions": [
     {
-      "title": "Header",
-      "id": "header",
+      "title": "Navigation-Root-Ssy",
+      "id": "navigation-root-ssy",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block",
             "template": {
-              "filter": "header",
-              "model": "header",
-              "name": "Header"
+              "filter": "navigation-root-ssy",
+              "model": "navigation-root-ssy",
+              "name": "Navigation-Root-Ssy"
             }
           }
         }
       }
     },
     {
-      "title": "Header Link",
-      "id": "header-link",
+      "title": "Main-Menu-Item",
+      "id": "main-menu-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "header-link",
-              "name": "Header Link"
+              "model": "main-menu-item",
+              "name": "Main-Menu-Item"
             }
           }
         }
       }
     },
     {
-      "title": "Menu Item",
-      "id": "menu-item",
+      "title": "Menu-Quick-Link",
+      "id": "menu-quick-link",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "menu-item",
-              "name": "Menu Item"
+              "model": "menu-quick-link",
+              "name": "Menu-Quick-Link"
             }
           }
         }
@@ -49,36 +49,47 @@
   ],
   "models": [
     {
-      "id": "header",
+      "id": "navigation-root-ssy",
       "fields": [
         {
-          "component": "reference",
-          "label": "Logo",
-          "name": "logo",
-          "valueType": "string"
+          "component": "container",
+          "item": "main-menu-item",
+          "label": "Main Menu",
+          "name": "main-menu"
         },
         {
           "component": "container",
-          "item": "header-link",
-          "label": "Header Links",
-          "name": "headerLinks"
-        },
-        {
-          "component": "text",
-          "label": "Search Placeholder",
-          "name": "search_placeholder",
-          "valueType": "string"
-        },
-        {
-          "component": "container",
-          "item": "menu-item",
-          "label": "Menu Items",
-          "name": "menuItems"
+          "item": "menu-quick-link",
+          "label": "Menu Quick Link",
+          "name": "menu-quick-link"
         }
       ]
     },
     {
-      "id": "header-link",
+      "id": "main-menu-item",
+      "fields": [
+        {
+          "component": "text",
+          "label": "ID",
+          "name": "id",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Name",
+          "name": "name",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Link",
+          "name": "link",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "menu-quick-link",
       "fields": [
         {
           "component": "aem-content",
@@ -90,29 +101,6 @@
           "component": "text",
           "label": "Text",
           "name": "text",
-          "valueType": "string"
-        }
-      ]
-    },
-    {
-      "id": "menu-item",
-      "fields": [
-        {
-          "component": "aem-content",
-          "label": "Link",
-          "name": "link",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Text",
-          "name": "text",
-          "valueType": "string"
-        },
-        {
-          "component": "reference",
-          "label": "Image",
-          "name": "image",
           "valueType": "string"
         }
       ]
@@ -120,10 +108,10 @@
   ],
   "filters": [
     {
-      "id": "header",
+      "id": "navigation-root-ssy",
       "components": [
-        "header-link",
-        "menu-item"
+        "main-menu-item",
+        "menu-quick-link"
       ]
     }
   ]

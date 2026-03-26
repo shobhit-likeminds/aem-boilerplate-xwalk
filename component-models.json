@@ -243,6 +243,23 @@
     ]
   },
   {
+    "id": "blog-listing"
+  },
+  {
+    "id": "blog-post-item"
+  },
+  {
+    "id": "bloglisting-pagination",
+    "fields": [
+      {
+        "component": "number",
+        "label": "Page Size",
+        "name": "page-size",
+        "valueType": "number"
+      }
+    ]
+  },
+  {
     "id": "brands-list",
     "fields": [
       {
@@ -284,6 +301,32 @@
         "component": "reference",
         "label": "Side Image",
         "name": "side-image",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "breadcrumb-breadcrumb"
+  },
+  {
+    "id": "breadcrumb-item",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Text",
+        "name": "text",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Separator",
+        "name": "separator",
         "valueType": "string"
       }
     ]
@@ -337,6 +380,9 @@
         "valueType": "string"
       }
     ]
+  },
+  {
+    "id": "card-list"
   },
   {
     "id": "card",
@@ -1020,6 +1066,20 @@
     ]
   },
   {
+    "id": "footer-root-u2c"
+  },
+  {
+    "id": "footer-link-section",
+    "fields": [
+      {
+        "component": "richtext",
+        "label": "Content",
+        "name": "content",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "footer",
     "fields": [
       {
@@ -1269,32 +1329,61 @@
         "valueType": "string"
       },
       {
-        "component": "aem-content",
-        "label": "Logo Link",
-        "name": "logo-link",
+        "component": "container",
+        "item": "header-link",
+        "label": "Header Links",
+        "name": "headerLinks"
+      },
+      {
+        "component": "text",
+        "label": "Search Placeholder",
+        "name": "search_placeholder",
         "valueType": "string"
       },
       {
         "component": "container",
-        "item": "header-nav-item",
-        "label": "Navigation Items",
-        "name": "navigation-items"
+        "item": "menu-item",
+        "label": "Menu Items",
+        "name": "menuItems"
       }
     ]
   },
   {
-    "id": "header-nav-item",
+    "id": "header-link",
     "fields": [
-      {
-        "component": "text",
-        "label": "Label",
-        "name": "label",
-        "valueType": "string"
-      },
       {
         "component": "aem-content",
         "label": "Link",
         "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Text",
+        "name": "text",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "menu-item",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Text",
+        "name": "text",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Image",
+        "name": "image",
         "valueType": "string"
       }
     ]
@@ -1447,6 +1536,61 @@
     ]
   },
   {
+    "id": "mask-root-xlr"
+  },
+  {
+    "id": "moe-push-class",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Image",
+        "name": "image",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Description",
+        "name": "description",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Don't Allow Button Text",
+        "name": "button-dont-allow",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Allow Button Text",
+        "name": "button-allow",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "mpblog-search",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Search Input",
+        "name": "search-input",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Icon Image",
+        "name": "icon-image",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "nav",
     "fields": [
       {
@@ -1470,6 +1614,63 @@
         "component": "aem-content",
         "label": "Link",
         "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "navigation-root-ssy",
+    "fields": [
+      {
+        "component": "container",
+        "item": "main-menu-item",
+        "label": "Main Menu",
+        "name": "main-menu"
+      },
+      {
+        "component": "container",
+        "item": "menu-quick-link",
+        "label": "Menu Quick Link",
+        "name": "menu-quick-link"
+      }
+    ]
+  },
+  {
+    "id": "main-menu-item",
+    "fields": [
+      {
+        "component": "text",
+        "label": "ID",
+        "name": "id",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Name",
+        "name": "name",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "menu-quick-link",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Text",
+        "name": "text",
         "valueType": "string"
       }
     ]

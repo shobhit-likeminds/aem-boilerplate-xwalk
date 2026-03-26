@@ -192,6 +192,53 @@
           }
         },
         {
+          "title": "Blog-Listing",
+          "id": "blog-listing",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "blog-listing",
+                  "model": "blog-listing",
+                  "name": "Blog-Listing"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Blog-Post-Item",
+          "id": "blog-post-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "blog-post-item",
+                  "name": "Blog-Post-Item"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Bloglisting-Pagination",
+          "id": "bloglisting-pagination",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "bloglisting-pagination",
+                  "model": "bloglisting-pagination",
+                  "name": "Bloglisting-Pagination"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Brands-List",
           "id": "brands-list",
           "plugins": {
@@ -217,6 +264,37 @@
                 "template": {
                   "model": "brand",
                   "name": "Brand"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Breadcrumb-Breadcrumb",
+          "id": "breadcrumb-breadcrumb",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "breadcrumb-breadcrumb",
+                  "model": "breadcrumb-breadcrumb",
+                  "name": "Breadcrumb-Breadcrumb"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Breadcrumb-Item",
+          "id": "breadcrumb-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "breadcrumb-item",
+                  "name": "Breadcrumb-Item"
                 }
               }
             }
@@ -279,6 +357,22 @@
                 "template": {
                   "model": "product",
                   "name": "Product"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Card-List",
+          "id": "card-list",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "card-list",
+                  "model": "card-list",
+                  "name": "Card-List"
                 }
               }
             }
@@ -806,6 +900,37 @@
           }
         },
         {
+          "title": "Footer-Root-U2C",
+          "id": "footer-root-u2c",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "footer-root-u2c",
+                  "model": "footer-root-u2c",
+                  "name": "Footer-Root-U2C"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Footer-Link-Section",
+          "id": "footer-link-section",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "footer-link-section",
+                  "name": "Footer-Link-Section"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Footer",
           "id": "footer",
           "plugins": {
@@ -991,15 +1116,30 @@
           }
         },
         {
-          "title": "Header-Nav-Item",
-          "id": "header-nav-item",
+          "title": "Header Link",
+          "id": "header-link",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "header-nav-item",
-                  "name": "Header-Nav-Item"
+                  "model": "header-link",
+                  "name": "Header Link"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Menu Item",
+          "id": "menu-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "menu-item",
+                  "name": "Menu Item"
                 }
               }
             }
@@ -1099,6 +1239,54 @@
           }
         },
         {
+          "title": "Mask-Root-Xlr",
+          "id": "mask-root-xlr",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "mask-root-xlr",
+                  "model": "mask-root-xlr",
+                  "name": "Mask-Root-Xlr"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Moe-Push-Class",
+          "id": "moe-push-class",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "moe-push-class",
+                  "model": "moe-push-class",
+                  "name": "Moe-Push-Class"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Mpblog-Search",
+          "id": "mpblog-search",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "mpblog-search",
+                  "model": "mpblog-search",
+                  "name": "Mpblog-Search"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Nav",
           "id": "nav",
           "plugins": {
@@ -1124,6 +1312,52 @@
                 "template": {
                   "model": "site-nav-item",
                   "name": "Site-Nav-Item"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Navigation-Root-Ssy",
+          "id": "navigation-root-ssy",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "navigation-root-ssy",
+                  "model": "navigation-root-ssy",
+                  "name": "Navigation-Root-Ssy"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Main-Menu-Item",
+          "id": "main-menu-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "main-menu-item",
+                  "name": "Main-Menu-Item"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Menu-Quick-Link",
+          "id": "menu-quick-link",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "menu-quick-link",
+                  "name": "Menu-Quick-Link"
                 }
               }
             }

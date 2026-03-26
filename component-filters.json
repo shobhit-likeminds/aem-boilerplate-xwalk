@@ -50,7 +50,16 @@
       "elementor-element",
       "brands-list",
       "esc-list",
-      "elementor-footer"
+      "elementor-footer",
+      "card-list",
+      "moe-push-class",
+      "breadcrumb-breadcrumb",
+      "mpblog-search",
+      "blog-listing",
+      "bloglisting-pagination",
+      "footer-root-u2c",
+      "mask-root-xlr",
+      "navigation-root-ssy"
     ]
   },
   {
@@ -75,9 +84,24 @@
     ]
   },
   {
+    "id": "blog-listing",
+    "components": [
+      "blog-post-item"
+    ]
+  },
+  {
+    "id": "bloglisting-pagination"
+  },
+  {
     "id": "brands-list",
     "components": [
       "brand"
+    ]
+  },
+  {
+    "id": "breadcrumb-breadcrumb",
+    "components": [
+      "breadcrumb-item"
     ]
   },
   {
@@ -91,6 +115,9 @@
     "components": [
       "product"
     ]
+  },
+  {
+    "id": "card-list"
   },
   {
     "id": "cards",
@@ -185,6 +212,12 @@
     ]
   },
   {
+    "id": "footer-root-u2c",
+    "components": [
+      "footer-link-section"
+    ]
+  },
+  {
     "id": "footer"
   },
   {
@@ -211,7 +244,8 @@
   {
     "id": "header",
     "components": [
-      "header-nav-item"
+      "header-link",
+      "menu-item"
     ]
   },
   {
@@ -230,9 +264,25 @@
     "id": "intro"
   },
   {
+    "id": "mask-root-xlr"
+  },
+  {
+    "id": "moe-push-class"
+  },
+  {
+    "id": "mpblog-search"
+  },
+  {
     "id": "nav",
     "components": [
       "site-nav-item"
+    ]
+  },
+  {
+    "id": "navigation-root-ssy",
+    "components": [
+      "main-menu-item",
+      "menu-quick-link"
     ]
   },
   {
