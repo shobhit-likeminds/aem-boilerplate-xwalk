@@ -96,7 +96,15 @@
         "mask-root-xlr",
         "navigation-root-ssy",
         "home-blog-listing",
-        "toast-root"
+        "toast-root",
+        "itc-header-section",
+        "itc-country-selector",
+        "space-adder",
+        "itc-club-carousel",
+        "itc-how-shift",
+        "cmp-text",
+        "rs-cards",
+        "itc-footer-section"
       ]
     }
   ]

@@ -61,7 +61,15 @@
       "mask-root-xlr",
       "navigation-root-ssy",
       "home-blog-listing",
-      "toast-root"
+      "toast-root",
+      "itc-header-section",
+      "itc-country-selector",
+      "space-adder",
+      "itc-club-carousel",
+      "itc-how-shift",
+      "cmp-text",
+      "rs-cards",
+      "itc-footer-section"
     ]
   },
   {
@@ -139,6 +147,9 @@
       "cky-category-direct-item",
       "cky-accordion"
     ]
+  },
+  {
+    "id": "cmp-text"
   },
   {
     "id": "columns",
@@ -274,6 +285,38 @@
     "id": "intro"
   },
   {
+    "id": "itc-club-carousel",
+    "components": [
+      "itc-club-carousel-item"
+    ]
+  },
+  {
+    "id": "itc-country-selector",
+    "components": [
+      "country-option"
+    ]
+  },
+  {
+    "id": "itc-footer-section",
+    "components": [
+      "footer-link",
+      "social-link"
+    ]
+  },
+  {
+    "id": "itc-header-section",
+    "components": [
+      "navigation-item",
+      "country-option"
+    ]
+  },
+  {
+    "id": "itc-how-shift",
+    "components": [
+      "why-shift-item"
+    ]
+  },
+  {
     "id": "mask-root-xlr"
   },
   {
@@ -302,6 +345,12 @@
     ]
   },
   {
+    "id": "rs-cards",
+    "components": [
+      "rs-card"
+    ]
+  },
+  {
     "id": "section-features",
     "components": [
       "feature"
@@ -321,6 +370,9 @@
   },
   {
     "id": "spaceAdderVerticalPadding"
+  },
+  {
+    "id": "space-adder"
   },
   {
     "id": "toast-root"

@@ -34,47 +34,33 @@
   ],
   "models": [
     {
-      "id": "banner-carousel",
-      "fields": [
-        {
-          "component": "container",
-          "item": "banner",
-          "label": "Banners",
-          "name": "banners"
-        }
-      ]
+      "id": "banner-carousel"
     },
     {
       "id": "banner",
       "fields": [
         {
           "component": "reference",
-          "label": "Desktop Image",
-          "name": "desktop-image",
+          "label": "Image",
+          "name": "image",
           "valueType": "string"
         },
         {
-          "component": "reference",
-          "label": "Mobile Image",
-          "name": "mobile-image",
-          "valueType": "string"
-        },
-        {
-          "component": "richtext",
-          "label": "Heading",
-          "name": "heading",
+          "component": "text",
+          "label": "Title",
+          "name": "title",
           "valueType": "string"
         },
         {
           "component": "richtext",
-          "label": "Description",
-          "name": "description",
+          "label": "Subtitle",
+          "name": "subtitle",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "label": "CTA Link",
-          "name": "cta-link",
+          "label": "CTA",
+          "name": "cta",
           "valueType": "string"
         }
       ]
