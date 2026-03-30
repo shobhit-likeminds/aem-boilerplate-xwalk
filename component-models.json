@@ -142,18 +142,21 @@
     ]
   },
   {
-    "id": "bannerSlide",
+    "id": "banner-carousel"
+  },
+  {
+    "id": "banner",
     "fields": [
       {
         "component": "reference",
         "label": "Desktop Image",
-        "name": "desktopImage",
+        "name": "desktop-image",
         "valueType": "string"
       },
       {
         "component": "reference",
         "label": "Mobile Image",
-        "name": "mobileImage",
+        "name": "mobile-image",
         "valueType": "string"
       },
       {
@@ -169,15 +172,9 @@
         "valueType": "string"
       },
       {
-        "component": "text",
-        "label": "CTA Label",
-        "name": "ctaLabel",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "CTA URL",
-        "name": "ctaUrl",
+        "component": "aem-content",
+        "label": "CTA Link",
+        "name": "cta-link",
         "valueType": "string"
       }
     ]
@@ -254,6 +251,17 @@
         "component": "richtext",
         "label": "Description",
         "name": "description",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "cmp-text",
+    "fields": [
+      {
+        "component": "richtext",
+        "label": "Text",
+        "name": "text",
         "valueType": "string"
       }
     ]
@@ -809,6 +817,283 @@
     ]
   },
   {
+    "id": "itc-club-carousel",
+    "fields": [
+      {
+        "component": "container",
+        "item": "carousel-item",
+        "label": "Carousel Items",
+        "name": "carouselItems"
+      }
+    ]
+  },
+  {
+    "id": "carousel-item",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Image",
+        "name": "image",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Alt Text",
+        "name": "alt",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Title",
+        "name": "title",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Description",
+        "name": "description",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "itc-footer-section",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "ITC Logo Image",
+        "name": "itc_logo_image",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "FSSAI Logo Image",
+        "name": "fssai_logo_image",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "footer-link",
+        "label": "Footer Links",
+        "name": "footer_links"
+      },
+      {
+        "component": "container",
+        "item": "footer-list-item",
+        "label": "Footer List Items",
+        "name": "footer_list_items"
+      },
+      {
+        "component": "richtext",
+        "label": "Grievance Officer Title",
+        "name": "grievance_officer_title",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Grievance Officer Name",
+        "name": "grievance_officer_name",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Grievance Officer Contact",
+        "name": "grievance_officer_contact",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Grievance Officer Timing",
+        "name": "grievance_officer_timing",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "social-link",
+        "label": "Social Links",
+        "name": "social_links"
+      },
+      {
+        "component": "richtext",
+        "label": "Copyright",
+        "name": "copyright",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "footer-link",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "URL",
+        "name": "url",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Text",
+        "name": "text",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "footer-list-item",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "URL",
+        "name": "url",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Title",
+        "name": "title",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "social-link",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "URL",
+        "name": "url",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Icon Image",
+        "name": "icon",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "itc-header-section",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Logo Image",
+        "name": "logo-image",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Logo Link",
+        "name": "logo-link",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "navigation-item",
+        "label": "Navigation Items",
+        "name": "navigation-items"
+      },
+      {
+        "component": "reference",
+        "label": "Header Country Flag",
+        "name": "header-country-flag",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "country-option",
+        "label": "Country Options",
+        "name": "country-options"
+      }
+    ]
+  },
+  {
+    "id": "navigation-item",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Text",
+        "name": "text",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "country-option",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Country Flag",
+        "name": "country-flag",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Country Name",
+        "name": "country-name",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "make-right-shift",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Banner Image",
+        "name": "banner-image",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Subheading",
+        "name": "subheading",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "why-shift-item",
+        "label": "Why Shift Items",
+        "name": "why-shift-items"
+      },
+      {
+        "component": "aem-content",
+        "label": "CTA Link",
+        "name": "cta-link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "why-shift-item",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Image",
+        "name": "image",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "mask-root-xlr"
   },
   {
@@ -925,7 +1210,36 @@
     ]
   },
   {
+    "id": "rs-cards"
+  },
+  {
+    "id": "rs-card",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Image",
+        "name": "image",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Title",
+        "name": "title",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Description",
+        "name": "description",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "spaceAdderVerticalPadding"
+  },
+  {
+    "id": "space-adder"
   },
   {
     "id": "toast-root"

@@ -70,7 +70,15 @@
         "toast-root",
         "header-switchers",
         "header-root-bau",
-        "home-bloglistingctn-kyx"
+        "home-bloglistingctn-kyx",
+        "itc-header-section",
+        "banner-carousel",
+        "space-adder",
+        "itc-club-carousel",
+        "make-right-shift",
+        "cmp-text",
+        "rs-cards",
+        "itc-footer-section"
       ]
     }
   ]

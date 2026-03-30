@@ -1,0 +1,193 @@
+{
+  "definitions": [
+    {
+      "title": "Itc-Footer-Section",
+      "id": "itc-footer-section",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "itc-footer-section",
+              "model": "itc-footer-section",
+              "name": "Itc-Footer-Section"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Footer-Link",
+      "id": "footer-link",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "footer-link",
+              "name": "Footer-Link"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Footer-List-Item",
+      "id": "footer-list-item",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "footer-list-item",
+              "name": "Footer-List-Item"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Social-Link",
+      "id": "social-link",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "social-link",
+              "name": "Social-Link"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "itc-footer-section",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "ITC Logo Image",
+          "name": "itc_logo_image",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "FSSAI Logo Image",
+          "name": "fssai_logo_image",
+          "valueType": "string"
+        },
+        {
+          "component": "container",
+          "item": "footer-link",
+          "label": "Footer Links",
+          "name": "footer_links"
+        },
+        {
+          "component": "container",
+          "item": "footer-list-item",
+          "label": "Footer List Items",
+          "name": "footer_list_items"
+        },
+        {
+          "component": "richtext",
+          "label": "Grievance Officer Title",
+          "name": "grievance_officer_title",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Grievance Officer Name",
+          "name": "grievance_officer_name",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Grievance Officer Contact",
+          "name": "grievance_officer_contact",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Grievance Officer Timing",
+          "name": "grievance_officer_timing",
+          "valueType": "string"
+        },
+        {
+          "component": "container",
+          "item": "social-link",
+          "label": "Social Links",
+          "name": "social_links"
+        },
+        {
+          "component": "richtext",
+          "label": "Copyright",
+          "name": "copyright",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "footer-link",
+      "fields": [
+        {
+          "component": "aem-content",
+          "label": "URL",
+          "name": "url",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Text",
+          "name": "text",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "footer-list-item",
+      "fields": [
+        {
+          "component": "aem-content",
+          "label": "URL",
+          "name": "url",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Title",
+          "name": "title",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "social-link",
+      "fields": [
+        {
+          "component": "aem-content",
+          "label": "URL",
+          "name": "url",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Icon Image",
+          "name": "icon",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "itc-footer-section",
+      "components": [
+        "footer-link",
+        "footer-list-item",
+        "social-link"
+      ]
+    }
+  ]
+}
