@@ -629,7 +629,23 @@ function decorateBlock(block) {
  * @param {Element} main The container element
  */
 function decorateBlocks(main) {
-  main.querySelectorAll('div.section > div > div').forEach(decorateBlock);
+  // FIX for AEM-generated pages: Add 'section' class if missing
+  main.querySelectorAll('[data-aue-model="section"]').forEach((section) => {
+    if (!section.classList.contains('section')) {
+      section.classList.add('section');
+    }
+  });
+
+  // Standard EDS: div.section > div > div
+  const standardBlocks = main.querySelectorAll('div.section > div > div');
+
+  // AEM variant: div.section > div (no wrapper, blocks are direct children)
+  const aemBlocks = main.querySelectorAll('div.section > div[class]:not([class=""])');
+
+  // Combine both and deduplicate
+  const allBlocks = new Set([...standardBlocks, ...aemBlocks]);
+
+  allBlocks.forEach(decorateBlock);
 }
 
 /**
