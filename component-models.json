@@ -679,34 +679,6 @@
     "id": "header-switchers"
   },
   {
-    "id": "header",
-    "fields": [
-      {
-        "component": "container",
-        "item": "header-menu-item",
-        "label": "Menu Items",
-        "name": "menu-items"
-      }
-    ]
-  },
-  {
-    "id": "header-menu-item",
-    "fields": [
-      {
-        "component": "text",
-        "label": "Label",
-        "name": "label",
-        "valueType": "string"
-      },
-      {
-        "component": "aem-content",
-        "label": "Link",
-        "name": "link",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
     "id": "hero",
     "fields": [
       {

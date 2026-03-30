@@ -483,37 +483,6 @@
           }
         },
         {
-          "title": "Header",
-          "id": "header",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block",
-                "template": {
-                  "filter": "header",
-                  "model": "header",
-                  "name": "Header"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Header-Menu-Item",
-          "id": "header-menu-item",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block/item",
-                "template": {
-                  "model": "header-menu-item",
-                  "name": "Header-Menu-Item"
-                }
-              }
-            }
-          }
-        },
-        {
           "title": "Hero",
           "id": "hero",
           "plugins": {

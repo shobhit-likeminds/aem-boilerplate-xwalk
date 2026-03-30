@@ -24,7 +24,6 @@
       "whyUs",
       "reasonCards",
       "footer",
-      "header",
       "breadcrumb-breadcrumb",
       "mpblog-search",
       "home-blog-listing",
@@ -124,12 +123,6 @@
   },
   {
     "id": "header-switchers"
-  },
-  {
-    "id": "header",
-    "components": [
-      "header-menu-item"
-    ]
   },
   {
     "id": "home-blog-listing",
