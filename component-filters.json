@@ -23,7 +23,12 @@
       "delightfulDelicacies",
       "whyUs",
       "reasonCards",
-      "footer"
+      "footer",
+      "elementor-nav",
+      "elementor-element-7a30379",
+      "product-list",
+      "category-carousel",
+      "elementor-footer"
     ]
   },
   {
@@ -42,6 +47,12 @@
     "id": "carousel",
     "components": [
       "carouselItem"
+    ]
+  },
+  {
+    "id": "category-carousel",
+    "components": [
+      "category-carousel-item"
     ]
   },
   {
@@ -66,6 +77,23 @@
     ]
   },
   {
+    "id": "elementor-element-7a30379"
+  },
+  {
+    "id": "elementor-footer",
+    "components": [
+      "footer-link",
+      "social-icon"
+    ]
+  },
+  {
+    "id": "elementor-nav",
+    "components": [
+      "nav-menu-item",
+      "icon-list-item"
+    ]
+  },
+  {
     "id": "footer",
     "components": [
       "logo",
@@ -79,6 +107,12 @@
     "components": [
       "navigationItem",
       "countryOption"
+    ]
+  },
+  {
+    "id": "product-list",
+    "components": [
+      "product"
     ]
   },
   {
