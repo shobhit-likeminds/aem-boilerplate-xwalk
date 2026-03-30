@@ -2,87 +2,75 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  // CHECK 1: STRUCTURE ALIGNMENT
-  // BlockJson has 1 root model field: "search-input".
-  // The JS correctly reads 1 root row from block.children.
-  const [searchInputRow] = [...block.children];
-
   const form = document.createElement('form');
   form.setAttribute('autocomplete', 'off');
   form.classList.add('search-searchForm-CQs');
 
   const div1 = document.createElement('div');
-  const searchFieldDiv = document.createElement('div');
-  searchFieldDiv.classList.add('search-searchField-WuY');
+  const div2 = document.createElement('div');
+  div2.classList.add('search-searchField-WuY');
 
-  const iconSpan = document.createElement('span');
-  iconSpan.classList.add('icon-root-cnm', 'items-center', 'inline-flex', 'justify-center');
+  const span = document.createElement('span');
+  span.classList.add('icon-root-cnm', 'items-center', 'inline-flex', 'justify-center');
 
-  // The original HTML uses an SVG image directly in the span.
-  // We'll create an img element to represent that.
   const img = document.createElement('img');
-  img.alt = 'svg file';
-  // Note: The original src is a relative path. For AEM, it should be absolute or handled by createOptimizedPicture.
-  // Assuming the path is correct for AEM context or will be resolved.
-  img.src = '/content/dam/aemigrate/uploaded-folder/image/1774855954129.svg+xml';
-  iconSpan.append(img);
+  img.setAttribute('alt', 'svg file');
+  img.setAttribute('src', '/content/dam/aemigrate/uploaded-folder/image/1774863123837.svg+xml');
+  span.append(img);
 
   const input = document.createElement('input');
-  input.id = 'blog-search-input-field';
-  input.type = 'text';
-  input.placeholder = 'Search blogs here...';
+  input.setAttribute('id', 'blog-search-input-field');
+  input.setAttribute('type', 'text');
+  input.setAttribute('placeholder', 'Search blogs here...');
 
-  // Extract the value from the searchInputRow for potential pre-filling, though placeholder is used.
-  // BlockJson indicates 'search-input' is a string field. The JS correctly reads the text content.
-  const searchInputValue = searchInputRow.querySelector('div')?.textContent.trim();
-  if (searchInputValue && searchInputValue !== 'Search Input value') { // Check against default value
-    input.value = searchInputValue;
+  // CHECK 0 & 1: Replaced row.children[0] with content detection
+  // BlockJson indicates one field 'search-input' which maps to the first (and only) row.
+  // The value is inside the div within that row.
+  const [searchInputRow] = [...block.children];
+  if (searchInputRow) {
+    const searchInputCell = searchInputRow.querySelector('div'); // This targets the inner div containing the text
+    if (searchInputCell) {
+      const inputValue = searchInputCell.textContent.trim();
+      // Only set value if it's not the default placeholder text from the authoring UI
+      if (inputValue && inputValue !== 'Search Input value') {
+        input.setAttribute('value', inputValue);
+      }
+    }
+    moveInstrumentation(searchInputRow, input);
   }
 
-  searchFieldDiv.append(iconSpan, input);
-  div1.append(searchFieldDiv);
+  div2.append(span, input);
+  div1.append(div2);
 
   const autocompleteDiv = document.createElement('div');
   autocompleteDiv.classList.add('search-autocomplete--VT');
 
   form.append(div1, autocompleteDiv);
 
-  // Move instrumentation from the original block children to the new form
-  moveInstrumentation(searchInputRow, form);
-
   block.textContent = '';
   block.append(form);
-  block.classList.add('mpblog-search'); // Add the block's own class to the block element
 
-  // CHECK 2: INTERACTIVITY
-  // The original HTML contains an input field, which is an interactive element.
-  // The JS needs an event listener for this input field to handle search functionality.
-  // For a search input, common events are 'input' (for live search/autocomplete) or 'change' (for final submission).
-  // Given the presence of 'search-autocomplete--VT' div, an 'input' event listener is appropriate for autocomplete.
+  // CHECK 2: Interactivity - Add event listener for the search input
+  // The original HTML has an input field, which implies user interaction (typing, submitting).
+  // This listener can be expanded to handle search logic, autocomplete, etc.
   input.addEventListener('input', (event) => {
-    const searchTerm = event.target.value.trim();
-    // In a real scenario, this would trigger an API call or filter local data.
-    // For this review, we'll just log and demonstrate the listener.
-    // The autocompleteDiv would be populated here.
-    if (searchTerm.length > 2) { // Example: trigger autocomplete after 3 characters
-      console.log('Search term for autocomplete:', searchTerm);
-      // Example: populate autocompleteDiv (simplified)
-      autocompleteDiv.innerHTML = `<div>Showing results for: <strong>${searchTerm}</strong></div>`;
-      autocompleteDiv.style.display = 'block'; // Show autocomplete results
+    // Example: Log the current input value
+    // In a real scenario, this would trigger search suggestions or filter results
+    console.log('Search input changed:', event.target.value);
+    // You might want to add/remove classes to autocompleteDiv based on input
+    if (event.target.value.length > 0) {
+      autocompleteDiv.classList.add('is-active'); // Example class for showing autocomplete
+      // Populate autocompleteDiv with suggestions here
     } else {
-      autocompleteDiv.innerHTML = '';
-      autocompleteDiv.style.display = 'none'; // Hide autocomplete if search term is too short
+      autocompleteDiv.classList.remove('is-active');
+      autocompleteDiv.innerHTML = ''; // Clear suggestions
     }
   });
 
-  // Also, a form submission listener is generally good practice for search forms.
+  // Optional: Add a submit listener to the form if there's a search button or implicit submission
   form.addEventListener('submit', (event) => {
     event.preventDefault(); // Prevent default form submission
-    const searchTerm = input.value.trim();
-    if (searchTerm) {
-      console.log('Form submitted with search term:', searchTerm);
-      // In a real scenario, this would navigate to a search results page or filter content.
-      // Example: window.location.href = `/search?q=${encodeURIComponent(searchTerm)}`;
-    }
+    console.log('Form submitted with value:', input.value);
+    // Implement search logic here, e.g., redirect to a search results page
   });
 }

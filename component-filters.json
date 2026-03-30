@@ -32,7 +32,10 @@
       "footer-root-u2c",
       "mask-root-xlr",
       "navigation-root-ssy",
-      "toast-root"
+      "toast-root",
+      "header-switchers",
+      "header-root-bau",
+      "home-bloglistingctn-kyx"
     ]
   },
   {
@@ -83,10 +86,7 @@
   {
     "id": "footer-root-u2c",
     "components": [
-      "footer-social-link",
-      "footer-app-link",
-      "footer-accordion",
-      "footer-link"
+      "footer-link-section"
     ]
   },
   {
@@ -99,11 +99,20 @@
     ]
   },
   {
+    "id": "header-root-bau",
+    "components": [
+      "main-menu-item"
+    ]
+  },
+  {
     "id": "headerSection",
     "components": [
       "navigationItem",
       "countryOption"
     ]
+  },
+  {
+    "id": "header-switchers"
   },
   {
     "id": "header",
@@ -118,6 +127,12 @@
     ]
   },
   {
+    "id": "home-bloglistingctn-kyx",
+    "components": [
+      "bloglistingitem-blog_container-4j-"
+    ]
+  },
+  {
     "id": "mask-root-xlr"
   },
   {
@@ -126,7 +141,7 @@
   {
     "id": "navigation-root-ssy",
     "components": [
-      "main-menu-item",
+      "mainmenu",
       "menu-quick-link"
     ]
   },

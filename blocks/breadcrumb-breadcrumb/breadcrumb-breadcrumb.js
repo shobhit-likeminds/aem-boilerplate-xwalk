@@ -4,35 +4,58 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
 export default function decorate(block) {
   const breadcrumbContainer = document.createElement('div');
   breadcrumbContainer.classList.add('breadcrumb-breadCrumb-sp4');
-  moveInstrumentation(block, breadcrumbContainer);
 
   [...block.children].forEach((row) => {
-    const [linkCell, labelCell, separatorCell] = [...row.children];
+    const cells = [...row.children];
 
-    const linkEl = linkCell.querySelector('a');
-    if (linkEl) {
-      const newLink = document.createElement('a');
-      newLink.classList.add('breadcrumb-breadCrumbLink-HWo'); // Corrected class name
-      newLink.href = linkEl.href;
-      moveInstrumentation(linkCell, newLink);
-      while (linkCell.firstChild) newLink.append(linkCell.firstChild);
-      breadcrumbContainer.append(newLink);
+    // According to the BlockJson and EDS Block Structure, each row has 3 cells:
+    // cell[0]: link
+    // cell[1]: text
+    // cell[2]: separator
+    const linkCell = cells[0];
+    const textCell = cells[1];
+    const separatorCell = cells[2];
+
+    let linkElement = null;
+    let textElement = null;
+    let separatorElement = null;
+
+    // Process link cell
+    if (linkCell) {
+      const foundLink = linkCell.querySelector('a');
+      if (foundLink) {
+        linkElement = document.createElement('a');
+        linkElement.classList.add('breadcrumb-breadCrumbLink-HWo');
+        linkElement.href = foundLink.href;
+        moveInstrumentation(linkCell, linkElement);
+        while (linkCell.firstChild) linkElement.append(linkCell.firstChild);
+      }
     }
 
-    const labelText = labelCell.textContent.trim();
-    if (labelText) {
-      const labelSpan = document.createElement('span');
-      labelSpan.classList.add('breadcrumb-breadCrumbText-xuk'); // Corrected class name
-      labelSpan.textContent = labelText;
-      breadcrumbContainer.append(labelSpan);
+    // Process text cell
+    if (textCell) {
+      textElement = document.createElement('span');
+      textElement.classList.add('breadcrumb-breadCrumbText-xuk');
+      moveInstrumentation(textCell, textElement);
+      while (textCell.firstChild) textElement.append(textCell.firstChild);
     }
 
-    const separatorText = separatorCell.textContent.trim();
-    if (separatorText) {
-      const separatorSpan = document.createElement('span');
-      separatorSpan.classList.add('breadcrumb-breadCrumbSeparator-xlX'); // Corrected class name
-      separatorSpan.textContent = separatorText;
-      breadcrumbContainer.append(separatorSpan);
+    // Process separator cell
+    if (separatorCell) {
+      separatorElement = document.createElement('span');
+      separatorElement.classList.add('breadcrumb-breadCrumbSeparator-xlX');
+      moveInstrumentation(separatorCell, separatorElement);
+      while (separatorCell.firstChild) separatorElement.append(separatorCell.firstChild);
+    }
+
+    if (linkElement) {
+      breadcrumbContainer.append(linkElement);
+    }
+    if (separatorElement) { // Separator should come after the link
+      breadcrumbContainer.append(separatorElement);
+    }
+    if (textElement) { // Text should come after the separator
+      breadcrumbContainer.append(textElement);
     }
   });
 

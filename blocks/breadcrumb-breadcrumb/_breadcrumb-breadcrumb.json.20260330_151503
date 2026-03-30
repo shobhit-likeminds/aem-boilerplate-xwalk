@@ -55,8 +55,8 @@
         },
         {
           "component": "text",
-          "label": "Text",
-          "name": "text",
+          "label": "Label",
+          "name": "label",
           "valueType": "string"
         },
         {

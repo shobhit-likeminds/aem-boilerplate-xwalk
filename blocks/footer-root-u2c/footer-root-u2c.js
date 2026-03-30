@@ -2,30 +2,18 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const children = [...block.children];
-
-  // Destructure the known single-row fields first
   const [
     popularSearchesRow,
     copyrightRow,
-    visaImageRow,
-    ...remainingRows
-  ] = children;
-
-  // Filter item rows from the remainingRows
-  const socialLinks = remainingRows.filter(
-    (row) => row.children.length === 2 && row.querySelector('a') && row.querySelector('picture'),
-  );
-  const appLinks = remainingRows.filter(
-    (row) => row.children.length === 2 && row.querySelector('a') && row.querySelector('picture') && socialLinks.indexOf(row) === -1,
-  );
-  const accordions = remainingRows.filter(
-    (row) => row.children.length === 2 && !row.querySelector('a') && !row.querySelector('picture'),
-  );
-  const bottomLinks = remainingRows.filter((row) => row.children.length === 1 && row.querySelector('a'));
+    bottomLinksRow,
+    visaCardImageRow,
+    ...footerLinkSectionRows
+  ] = [...block.children];
 
   block.textContent = '';
-  block.classList.add(
+
+  const footerRoot = document.createElement('footer');
+  footerRoot.classList.add(
     'footer-root-u2C',
     'border-t-2',
     'border-solid',
@@ -42,266 +30,134 @@ export default function decorate(block) {
 
   const footerLinksCustom = document.createElement('div');
   footerLinksCustom.classList.add('footer-links_custom-hGP', 'grid');
+  footerRoot.append(footerLinksCustom);
 
+  // Placeholder for social icons and newsletter, not directly in EDS model
+  // but present in original HTML, so we create a div for structure.
   const footerCustomSocialIcons = document.createElement('div');
-  footerCustomSocialIcons.classList.add('footer-custom_socialicons-AkO', 'grid', 'border-b', 'pb-xs', 'mb-xs');
-
-  // Newsletter section (hardcoded as per original HTML structure)
-  const newsletterRoot = document.createElement('div');
-  newsletterRoot.classList.add('newsletter-root-vPn', 'gap-none', 'grid', 'items-start', 'relative');
-
-  const newsletterTitle = document.createElement('span');
-  newsletterTitle.classList.add('newsletter-title-3KR', 'block', 'text-colorDefault', 'text-sm');
-  newsletterTitle.textContent = 'Sign up for The Circle Program';
-
-  const newsletterText = document.createElement('p');
-  newsletterText.classList.add('newsletter-newsletter_text-YrL');
-  newsletterText.textContent = 'Subscribe to receive updates, access to exclusive deals, and more.';
-
-  const newsletterForm = document.createElement('form');
-  newsletterForm.classList.add('newsletter-form-4nF', 'relative', 'grid');
-
-  const fieldRoot = document.createElement('div');
-  fieldRoot.classList.add('field-root-HJ-', 'content-start', 'grid', 'text-colorDefault');
-
-  const fieldLabel = document.createElement('label');
-  fieldLabel.classList.add('field-label-ZLF', 'flex', 'items-center', 'justify-between', 'leading-none', 'px-0', 'py-2.5', 'pb-0');
-  fieldLabel.setAttribute('for', 'email');
-  fieldLabel.textContent = 'Email';
-
-  const fieldIconsRoot = document.createElement('span');
-  fieldIconsRoot.classList.add('fieldIcons-root-ecG', 'grid-flow-col', 'h-[2.5rem]', 'inline-grid', 'w-full');
-  fieldIconsRoot.style.setProperty('--iconsBefore', '0');
-  fieldIconsRoot.style.setProperty('--iconsAfter', '0');
-
-  const fieldIconsInput = document.createElement('span');
-  fieldIconsInput.classList.add('fieldIcons-input-Ced', 'items-center', 'flex');
-
-  const emailInput = document.createElement('input');
-  emailInput.classList.add('textInput-input-Jz0', 'field-input-2Mu', 'appearance-none', 'bg-white', 'border-2', 'border-solid', 'border-input', 'flex-textInput', 'h-[2.5rem]', 'inline-flex', 'm-0', 'max-w-full', 'rounded-input', 'text-colorDefault', 'w-full', 'focus_outline-none', 'focus_shadow-inputFocus', 'disabled_text-subtle');
-  emailInput.setAttribute('autocomplete', 'email');
-  emailInput.setAttribute('placeholder', 'you@email.com');
-  emailInput.setAttribute('id', 'email');
-  emailInput.setAttribute('name', 'email');
-  emailInput.setAttribute('value', '');
-
-  fieldIconsInput.append(emailInput);
-
-  const fieldIconsBefore = document.createElement('span');
-  fieldIconsBefore.classList.add('fieldIcons-before-G3M', 'flex', 'items-center', 'justify-center', 'mx-0.5', 'my-0', 'pointer-events-none', 'w-[2.5rem]', 'z-foreground');
-
-  const fieldIconsAfter = document.createElement('span');
-  fieldIconsAfter.classList.add('fieldIcons-after-xwp', 'flex', 'items-center', 'justify-center', 'mx-0.5', 'my-0', 'pointer-events-none', 'w-[2.5rem]', 'z-foreground');
-
-  fieldIconsRoot.append(fieldIconsInput, fieldIconsBefore, fieldIconsAfter);
-
-  const messageRoot = document.createElement('p');
-  messageRoot.classList.add('message-root-B-9', 'font-normal', 'leading-none', 'pb-0.5', 'px-0.5', 'text-colorDefault');
-
-  fieldRoot.append(fieldLabel, fieldIconsRoot, messageRoot);
-
-  const subscribeLink = document.createElement('button');
-  subscribeLink.classList.add('newsletter-subscribe_link-Cwe', 'hidden', 'max-h-[100px]', 'px-3', 'py-0', 'right-1', 'text-colorDefault', 'top-0', 'underline', 'md_inline-block', 'text-white', 'px-7', 'whitespace-nowrap', 'no-underline');
-  subscribeLink.setAttribute('type', 'submit');
-  subscribeLink.setAttribute('tabindex', '0');
-  const subscribeLinkContent = document.createElement('span');
-  subscribeLinkContent.classList.add('button-content-ouv', 'gap-1.5', 'grid-flow-col', 'inline-grid', 'items-center', 'justify-center', 'justify-items-center');
-  subscribeLinkContent.textContent = 'Join Us';
-  subscribeLink.append(subscribeLinkContent);
-
-  const buttonsContainer = document.createElement('div');
-  buttonsContainer.classList.add('newsletter-buttonsContainer-DOG', 'gap-sm', 'grid', 'grid-flow-row', 'justify-center', 'mt-xs', 'w-full', 'md_hidden');
-  const joinUsButton = document.createElement('button');
-  joinUsButton.classList.add('button-root_normalPriority-Z4b', 'button-root-3iv', 'border-[1px]', 'border-solid', 'cursor-pointer', 'inline-flex', 'items-center', 'justify-center', 'leading-tight', 'max-w-full', 'min-w-[10rem]', 'outline-none', 'pointer-events-auto', 'px-sm', 'text-center', 'text-sm', 'uppercase', 'disabled_bg-gray-400', 'disabled_border-gray-400', 'disabled_opacity-50', 'disabled_pointer-events-none', 'disabled_text-white', 'focus_shadow-inputFocus', 'bg-blue-60', 'border-blue-60', 'text-white', 'active_bg-blue-80', 'active_border-blue-80', 'active_text-white', 'hover_bg-blue-80', 'hover_border-blue-80', 'hover_text-white', 'min-w-[6.3rem]');
-  joinUsButton.setAttribute('type', 'submit');
-  joinUsButton.setAttribute('tabindex', '0');
-  const joinUsButtonContent = document.createElement('span');
-  joinUsButtonContent.classList.add('button-content-ouv', 'gap-1.5', 'grid-flow-col', 'inline-grid', 'items-center', 'justify-center', 'justify-items-center');
-  joinUsButtonContent.textContent = 'Join Us';
-  joinUsButton.append(joinUsButtonContent);
-  buttonsContainer.append(joinUsButton);
-
-  newsletterForm.append(fieldRoot, subscribeLink, buttonsContainer);
-  newsletterRoot.append(newsletterTitle, newsletterText, newsletterForm);
-  footerCustomSocialIcons.append(newsletterRoot);
-
-  const socialAppContainer = document.createElement('div');
-
-  const socialLinksUl = document.createElement('ul');
-  socialLinksUl.classList.add('footer-socialLinks-Dfa', 'gap-xs', 'grid', 'grid-flow-col', 'justify-start', 'py-5');
-
-  socialLinks.forEach((row) => {
-    const li = document.createElement('li');
-    moveInstrumentation(row, li);
-    const linkCell = row.children[0]; // Link is in the first cell
-    const iconCell = row.children[1]; // Icon is in the second cell
-
-    if (linkCell && iconCell) {
-      const link = document.createElement('a');
-      link.href = linkCell.querySelector('a')?.href || '#';
-      link.target = '_blank';
-      link.setAttribute('aria-label', linkCell.textContent.trim().toLowerCase());
-
-      const img = iconCell.querySelector('img');
-      if (img) {
-        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '32' }]);
-        moveInstrumentation(img, optimizedPic.querySelector('img'));
-        link.append(optimizedPic);
-      }
-      li.append(link);
-    }
-    socialLinksUl.append(li);
-  });
-  socialAppContainer.append(socialLinksUl);
-
-  const appImageDiv = document.createElement('div');
-  appImageDiv.classList.add('footer-app_image-y-E', 'flex');
-
-  appLinks.forEach((row) => {
-    const linkCell = row.children[0]; // Link is in the first cell
-    const imageCell = row.children[1]; // Image is in the second cell
-
-    if (linkCell && imageCell) {
-      const link = document.createElement('a');
-      link.href = linkCell.querySelector('a')?.href || '#';
-      link.target = '_blank';
-      link.setAttribute('aria-label', linkCell.textContent.trim().toLowerCase());
-
-      const img = imageCell.querySelector('img');
-      if (img) {
-        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '130' }]);
-        optimizedPic.querySelector('img').classList.add('footer-appIcon-S1J');
-        moveInstrumentation(img, optimizedPic.querySelector('img'));
-        link.append(optimizedPic);
-      }
-      appImageDiv.append(link);
-    }
-  });
-  socialAppContainer.append(appImageDiv);
-  footerCustomSocialIcons.append(socialAppContainer);
+  footerCustomSocialIcons.classList.add(
+    'footer-custom_socialicons-AkO',
+    'grid',
+    'border-b',
+    'pb-xs',
+    'mb-xs',
+  );
   footerLinksCustom.append(footerCustomSocialIcons);
 
-  const cmsFooterLink = document.createElement('div');
-  cmsFooterLink.classList.add('footer-cms_footer_link-W9u');
-
+  // Footer Link Sections
+  const footerCmsFooterLink = document.createElement('div');
+  footerCmsFooterLink.classList.add('footer-cms_footer_link-W9u');
   const cmsBlockRoot = document.createElement('div');
   cmsBlockRoot.classList.add('cmsBlock-root-rsi');
-
   const cmsBlockContent = document.createElement('div');
   cmsBlockContent.classList.add('cmsBlock-content-BTy');
-
-  const richContentRoot = document.createElement('div');
-  richContentRoot.classList.add('richContent-root-Byp');
-
+  const richContent = document.createElement('div');
+  richContent.classList.add('richContent-root-Byp');
   const htmlRoot = document.createElement('div');
   htmlRoot.classList.add('html-root-Uwa');
   htmlRoot.setAttribute('role', 'presentation');
-
   const footerLinkSec = document.createElement('div');
   footerLinkSec.classList.add('footer_link_sec');
 
-  const accordionsUl = document.createElement('ul');
-  accordions.forEach((row) => {
-    const li = document.createElement('li');
-    moveInstrumentation(row, li);
+  footerLinkSectionRows.forEach((row) => {
+    const cells = [...row.children];
+    const sectionTitleCell = cells.find(cell => !cell.querySelector('input') && !cell.querySelector('a'));
+    const sectionItemsCell = cells.find(cell => cell.textContent.trim() === 'true'); // checkbox-group value
 
-    const titleCell = row.children[0];
-    const linksCell = row.children[1];
+    if (sectionTitleCell && sectionItemsCell) {
+      const ul = document.createElement('ul');
+      const li = document.createElement('li');
+      moveInstrumentation(row, li);
 
-    const input = document.createElement('input');
-    const id = titleCell.textContent.trim().replace(/\s/g, '');
-    input.setAttribute('id', id);
-    input.setAttribute('tabindex', '0');
-    input.setAttribute('name', id);
-    input.setAttribute('type', 'checkbox');
-    input.setAttribute('value', id);
-    input.setAttribute('aria-label', titleCell.textContent.trim().toLowerCase());
+      const input = document.createElement('input');
+      const inputId = sectionTitleCell.textContent.replace(/\s+/g, '');
+      input.id = inputId;
+      input.setAttribute('tabindex', '0');
+      input.name = inputId;
+      input.type = 'checkbox';
+      input.value = inputId;
+      input.setAttribute('aria-label', sectionTitleCell.textContent.toLowerCase().replace(/\s+/g, '-'));
 
-    const titleSpan = document.createElement('span');
-    titleSpan.classList.add('footerAccordianTitle');
-    titleSpan.textContent = titleCell.textContent.trim();
+      const span = document.createElement('span');
+      span.classList.add('footerAccordianTitle');
+      span.textContent = sectionTitleCell.textContent;
 
-    // Add event listener for accordion toggle
-    titleSpan.addEventListener('click', () => {
-      input.checked = !input.checked;
-    });
-    input.addEventListener('change', () => {
-      // This listener ensures the state is correctly reflected if changed by other means
-    });
+      li.append(input, span);
 
-    li.append(input, titleSpan);
+      // The actual nested links are not part of the EDS model for 'section-items'
+      // but are expected by the original HTML structure.
+      // Since the EDS model only has a checkbox-group for 'section-items',
+      // we'll leave this part as a placeholder or assume it's handled by other blocks
+      // if the original HTML had dynamic content here.
+      // For now, we just append the title as per the EDS model.
+      // To match the original HTML, we need to add a placeholder for the nested UL.
+      // Since the EDS model doesn't provide this content, we'll create an empty one
+      // and rely on potential client-side rendering or other blocks to populate it.
+      const nestedUl = document.createElement('ul');
+      nestedUl.classList.add('footerAccordian'); // Class from original HTML
+      li.append(nestedUl);
 
-    const linksUl = document.createElement('ul');
-    linksUl.classList.add('footerAccordian');
-    // The links cell contains nested <ul> structures, so we need to iterate through its children
-    // and then find 'a' tags within those children.
-    [...linksCell.children].forEach((linkContainer) => {
-      // linkContainer could be a <ul> or <li> directly containing <a> or more <ul>
-      const nestedLinks = linkContainer.querySelectorAll('a');
-      nestedLinks.forEach((linkA) => {
-        const linkLi = document.createElement('li');
-        moveInstrumentation(linkA.closest('li') || linkContainer, linkLi); // Use closest li for instrumentation if available
-        const newLink = document.createElement('a');
-        newLink.href = linkA.href;
-        newLink.textContent = linkA.textContent;
-        newLink.setAttribute('tabindex', '0');
-        newLink.setAttribute('aria-label', linkA.textContent.trim().toLowerCase());
-        linkLi.append(newLink);
-        linksUl.append(linkLi);
+      ul.append(li);
+      footerLinkSec.append(ul);
+
+      // Add event listener for accordion functionality
+      input.addEventListener('change', () => {
+        if (input.checked) {
+          nestedUl.style.display = 'block';
+        } else {
+          nestedUl.style.display = 'none';
+        }
       });
-    });
-    li.append(linksUl);
-    accordionsUl.append(li);
+    }
   });
-  footerLinkSec.append(accordionsUl);
 
   htmlRoot.append(footerLinkSec);
-  richContentRoot.append(htmlRoot);
-  cmsBlockContent.append(richContentRoot);
+  richContent.append(htmlRoot);
+  cmsBlockContent.append(richContent);
+  footerCmsFooterLink.append(cmsBlockRoot);
   cmsBlockRoot.append(cmsBlockContent);
-  cmsFooterLink.append(cmsBlockRoot);
-  footerLinksCustom.append(cmsFooterLink);
+  footerLinksCustom.append(footerCmsFooterLink);
 
-  const popularSearchesCmsBlock = document.createElement('div');
-  popularSearchesCmsBlock.classList.add('cmsBlock-root-rsi');
-  const popularSearchesCmsBlockContent = document.createElement('div');
-  popularSearchesCmsBlockContent.classList.add('cmsBlock-content-BTy');
+  // Popular Searches
+  const popularSearchesContainer = document.createElement('div');
+  popularSearchesContainer.classList.add('cmsBlock-root-rsi');
+  const popularSearchesContent = document.createElement('div');
+  popularSearchesContent.classList.add('cmsBlock-content-BTy');
   const popularSearchesRichContent = document.createElement('div');
   popularSearchesRichContent.classList.add('richContent-root-Byp');
   const popularSearchesHtmlRoot = document.createElement('div');
   popularSearchesHtmlRoot.classList.add('html-root-Uwa');
   popularSearchesHtmlRoot.setAttribute('role', 'presentation');
   moveInstrumentation(popularSearchesRow, popularSearchesHtmlRoot);
-  // Ensure we append the content of the first cell of popularSearchesRow
-  if (popularSearchesRow && popularSearchesRow.children[0]) {
-    while (popularSearchesRow.children[0].firstChild) {
-      popularSearchesHtmlRoot.append(popularSearchesRow.children[0].firstChild);
-    }
+  while (popularSearchesRow.firstChild) {
+    popularSearchesHtmlRoot.append(popularSearchesRow.firstChild);
   }
   popularSearchesRichContent.append(popularSearchesHtmlRoot);
-  popularSearchesCmsBlockContent.append(popularSearchesRichContent);
-  popularSearchesCmsBlock.append(popularSearchesCmsBlockContent);
+  popularSearchesContent.append(popularSearchesRichContent);
+  popularSearchesContainer.append(popularSearchesContent);
+  footerLinksCustom.append(popularSearchesContainer);
 
+  // Footer Brandings (Copyright and Bottom Links)
   const footerBrandings = document.createElement('div');
   footerBrandings.classList.add('footer-brandings-I1l', 'py-5');
-
   const brandingContainer = document.createElement('div');
   brandingContainer.classList.add('footer-branding_container-0It', 'flex', 'justify-between');
+  footerBrandings.append(brandingContainer);
 
+  // Copyright
   const copyrightP = document.createElement('p');
   copyrightP.classList.add('footer-copyright-dyU', 'text-center');
   moveInstrumentation(copyrightRow, copyrightP);
-  // Ensure we append the content of the first cell of copyrightRow
-  if (copyrightRow && copyrightRow.children[0]) {
-    while (copyrightRow.children[0].firstChild) {
-      copyrightP.append(copyrightRow.children[0].firstChild);
-    }
+  while (copyrightRow.firstChild) {
+    copyrightP.append(copyrightRow.firstChild);
   }
+  brandingContainer.append(copyrightP);
 
+  // Bottom Links
   const bottomLinksCmsBlock = document.createElement('div');
   bottomLinksCmsBlock.classList.add('cmsBlock-root-rsi');
-  const bottomLinksCmsBlockContent = document.createElement('div');
-  bottomLinksCmsBlockContent.classList.add('cmsBlock-content-BTy');
+  const bottomLinksCmsContent = document.createElement('div');
+  bottomLinksCmsContent.classList.add('cmsBlock-content-BTy');
   const bottomLinksRichContent = document.createElement('div');
   bottomLinksRichContent.classList.add('richContent-root-Byp');
   const bottomLinksHtmlRoot = document.createElement('div');
@@ -310,52 +166,57 @@ export default function decorate(block) {
 
   const bottomLinksUl = document.createElement('ul');
   bottomLinksUl.classList.add('footer_bottom_link');
-  bottomLinks.forEach((row, index) => {
-    const li = document.createElement('li');
-    moveInstrumentation(row, li);
-    const link = row.querySelector('a'); // Link is in the first cell
+
+  // Use content detection for bottom links as well
+  const bottomLinkCells = [...bottomLinksRow.children];
+  bottomLinkCells.forEach(cell => {
+    const link = cell.querySelector('a');
     if (link) {
-      const newLink = document.createElement('a');
-      newLink.href = link.href;
-      newLink.textContent = link.textContent;
-      newLink.setAttribute('tabindex', '0');
-      li.append(newLink);
-    }
-    bottomLinksUl.append(li);
-    if (index < bottomLinks.length - 1) {
-      const separator = document.createElement('li');
-      separator.style.padding = '0 2px';
-      separator.textContent = '/';
-      bottomLinksUl.append(separator);
+      const li = document.createElement('li');
+      moveInstrumentation(cell, li);
+      li.append(link);
+      bottomLinksUl.append(li);
     }
   });
+
   bottomLinksHtmlRoot.append(bottomLinksUl);
   bottomLinksRichContent.append(bottomLinksHtmlRoot);
-  bottomLinksCmsBlockContent.append(bottomLinksRichContent);
-  bottomLinksCmsBlock.append(bottomLinksCmsBlockContent);
+  bottomLinksCmsContent.append(bottomLinksRichContent);
+  bottomLinksCmsBlock.append(bottomLinksCmsContent);
+  brandingContainer.append(bottomLinksCmsBlock);
 
+  // Visa Card Image
   const visaCardDiv = document.createElement('div');
   visaCardDiv.classList.add('footer-visa_card-V6y');
-  // Visa image is in the first cell of visaImageRow
-  const visaImg = visaImageRow?.children[0]?.querySelector('img');
-  if (visaImg) {
-    const optimizedPic = createOptimizedPicture(visaImg.src, visaImg.alt, false, [{ width: '185' }]);
-    optimizedPic.querySelector('img').width = '185';
-    optimizedPic.querySelector('img').height = '25';
-    moveInstrumentation(visaImg, optimizedPic.querySelector('img'));
-    visaCardDiv.append(optimizedPic);
-  }
-
-  brandingContainer.append(copyrightP, bottomLinksCmsBlock, visaCardDiv);
-  footerBrandings.append(brandingContainer);
-
-  block.append(footerLinksCustom, popularSearchesCmsBlock, footerBrandings);
-
-  block.querySelectorAll('picture > img').forEach((img) => {
-    if (!img.closest('.footer-app_image-y-E') && !img.closest('.footer-visa_card-V6y')) {
-      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+  const visaCardPicture = visaCardImageRow.querySelector('picture');
+  if (visaCardPicture) {
+    const img = visaCardPicture.querySelector('img');
+    if (img) {
+      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '185' }]);
       moveInstrumentation(img, optimizedPic.querySelector('img'));
-      img.closest('picture').replaceWith(optimizedPic);
+      visaCardDiv.append(optimizedPic);
     }
-  });
+  }
+  brandingContainer.append(visaCardDiv);
+
+  block.append(footerRoot);
+
+  // Add event listener for newsletter form submission
+  const newsletterForm = document.querySelector('.newsletter-form-4nF');
+  if (newsletterForm) {
+    newsletterForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const emailInput = newsletterForm.querySelector('#email');
+      if (emailInput && emailInput.value) {
+        // eslint-disable-next-line no-console
+        console.log('Newsletter subscription submitted:', emailInput.value);
+        // Here you would typically send the data to a backend service
+        // For now, we'll just log it and clear the input
+        emailInput.value = '';
+        alert('Thank you for subscribing!');
+      } else {
+        alert('Please enter a valid email address.');
+      }
+    });
+  }
 }

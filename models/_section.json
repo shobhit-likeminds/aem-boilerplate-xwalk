@@ -67,7 +67,10 @@
         "footer-root-u2c",
         "mask-root-xlr",
         "navigation-root-ssy",
-        "toast-root"
+        "toast-root",
+        "header-switchers",
+        "header-root-bau",
+        "home-bloglistingctn-kyx"
       ]
     }
   ]

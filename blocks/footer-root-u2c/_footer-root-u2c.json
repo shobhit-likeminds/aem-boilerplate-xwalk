@@ -17,60 +17,15 @@
       }
     },
     {
-      "title": "Footer-Social-Link",
-      "id": "footer-social-link",
+      "title": "Footer-Link-Section",
+      "id": "footer-link-section",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "footer-social-link",
-              "name": "Footer-Social-Link"
-            }
-          }
-        }
-      }
-    },
-    {
-      "title": "Footer-App-Link",
-      "id": "footer-app-link",
-      "plugins": {
-        "xwalk": {
-          "page": {
-            "resourceType": "core/franklin/components/block/v1/block/item",
-            "template": {
-              "model": "footer-app-link",
-              "name": "Footer-App-Link"
-            }
-          }
-        }
-      }
-    },
-    {
-      "title": "Footer-Accordion",
-      "id": "footer-accordion",
-      "plugins": {
-        "xwalk": {
-          "page": {
-            "resourceType": "core/franklin/components/block/v1/block/item",
-            "template": {
-              "model": "footer-accordion",
-              "name": "Footer-Accordion"
-            }
-          }
-        }
-      }
-    },
-    {
-      "title": "Footer-Link",
-      "id": "footer-link",
-      "plugins": {
-        "xwalk": {
-          "page": {
-            "resourceType": "core/franklin/components/block/v1/block/item",
-            "template": {
-              "model": "footer-link",
-              "name": "Footer-Link"
+              "model": "footer-link-section",
+              "name": "Footer-Link-Section"
             }
           }
         }
@@ -83,26 +38,14 @@
       "fields": [
         {
           "component": "container",
-          "item": "footer-social-link",
-          "label": "Social Links",
-          "name": "socialLinks"
-        },
-        {
-          "component": "container",
-          "item": "footer-app-link",
-          "label": "App Links",
-          "name": "appLinks"
-        },
-        {
-          "component": "container",
-          "item": "footer-accordion",
-          "label": "Accordions",
-          "name": "accordions"
+          "item": "footer-link-section",
+          "label": "Footer Link Sections",
+          "name": "footer-link-sections"
         },
         {
           "component": "richtext",
           "label": "Popular Searches",
-          "name": "popularSearches",
+          "name": "popular-searches",
           "valueType": "string"
         },
         {
@@ -112,78 +55,33 @@
           "valueType": "string"
         },
         {
-          "component": "container",
-          "item": "footer-link",
+          "component": "aem-content",
           "label": "Bottom Links",
-          "name": "bottomLinks"
+          "name": "bottom-links",
+          "valueType": "string"
         },
         {
           "component": "reference",
           "label": "Visa Card Image",
-          "name": "visaImage",
+          "name": "visa-card-image",
           "valueType": "string"
         }
       ]
     },
     {
-      "id": "footer-social-link",
-      "fields": [
-        {
-          "component": "aem-content",
-          "label": "Link",
-          "name": "link",
-          "valueType": "string"
-        },
-        {
-          "component": "reference",
-          "label": "Icon",
-          "name": "icon",
-          "valueType": "string"
-        }
-      ]
-    },
-    {
-      "id": "footer-app-link",
-      "fields": [
-        {
-          "component": "aem-content",
-          "label": "Link",
-          "name": "link",
-          "valueType": "string"
-        },
-        {
-          "component": "reference",
-          "label": "Image",
-          "name": "image",
-          "valueType": "string"
-        }
-      ]
-    },
-    {
-      "id": "footer-accordion",
+      "id": "footer-link-section",
       "fields": [
         {
           "component": "text",
-          "label": "Title",
-          "name": "title",
+          "label": "Section Title",
+          "name": "section-title",
           "valueType": "string"
         },
         {
-          "component": "container",
-          "item": "footer-link",
-          "label": "Links",
-          "name": "links"
-        }
-      ]
-    },
-    {
-      "id": "footer-link",
-      "fields": [
-        {
-          "component": "aem-content",
-          "label": "Link",
-          "name": "link",
-          "valueType": "string"
+          "component": "checkbox-group",
+          "label": "Section Items",
+          "name": "section-items",
+          "valueType": "array"
         }
       ]
     }
@@ -192,10 +90,7 @@
     {
       "id": "footer-root-u2c",
       "components": [
-        "footer-social-link",
-        "footer-app-link",
-        "footer-accordion",
-        "footer-link"
+        "footer-link-section"
       ]
     }
   ]

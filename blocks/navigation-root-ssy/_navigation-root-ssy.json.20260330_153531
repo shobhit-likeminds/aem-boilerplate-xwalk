@@ -1,7 +1,7 @@
 {
   "definitions": [
     {
-      "title": "Navigation-Root-Ssy",
+      "title": "Navigation-Root-SSY",
       "id": "navigation-root-ssy",
       "plugins": {
         "xwalk": {
@@ -10,22 +10,22 @@
             "template": {
               "filter": "navigation-root-ssy",
               "model": "navigation-root-ssy",
-              "name": "Navigation-Root-Ssy"
+              "name": "Navigation-Root-SSY"
             }
           }
         }
       }
     },
     {
-      "title": "Mainmenu",
-      "id": "mainmenu",
+      "title": "Main-Menu-Item",
+      "id": "main-menu-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "mainmenu",
-              "name": "Mainmenu"
+              "model": "main-menu-item",
+              "name": "Main-Menu-Item"
             }
           }
         }
@@ -53,25 +53,31 @@
       "fields": [
         {
           "component": "container",
-          "item": "mainmenu",
-          "label": "MainMenu",
-          "name": "mainmenu"
+          "item": "main-menu-item",
+          "label": "Main Menu",
+          "name": "main-menu"
         },
         {
           "component": "container",
           "item": "menu-quick-link",
           "label": "Menu Quick Link",
-          "name": "menuquicklink"
+          "name": "menu-quick-links"
         }
       ]
     },
     {
-      "id": "mainmenu",
+      "id": "main-menu-item",
       "fields": [
         {
-          "component": "richtext",
-          "label": "Menu",
-          "name": "menu",
+          "component": "text",
+          "label": "Label",
+          "name": "label",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "URL",
+          "name": "url",
           "valueType": "string"
         }
       ]
@@ -80,9 +86,15 @@
       "id": "menu-quick-link",
       "fields": [
         {
+          "component": "text",
+          "label": "Label",
+          "name": "label",
+          "valueType": "string"
+        },
+        {
           "component": "aem-content",
-          "label": "Link",
-          "name": "link",
+          "label": "URL",
+          "name": "url",
           "valueType": "string"
         }
       ]
@@ -92,7 +104,7 @@
     {
       "id": "navigation-root-ssy",
       "components": [
-        "mainmenu",
+        "main-menu-item",
         "menu-quick-link"
       ]
     }
