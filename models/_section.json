@@ -58,7 +58,16 @@
         "delightfulDelicacies",
         "whyUs",
         "reasonCards",
-        "footer"
+        "footer",
+        "header",
+        "breadcrumb-breadcrumb",
+        "mpblog-search",
+        "home-blog-listing",
+        "pagination",
+        "footer-root-u2c",
+        "mask-root-xlr",
+        "navigation-root-ssy",
+        "toast-root"
       ]
     }
   ]

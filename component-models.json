@@ -183,6 +183,40 @@
     ]
   },
   {
+    "id": "breadcrumb-breadcrumb",
+    "fields": [
+      {
+        "component": "container",
+        "item": "breadcrumb-item",
+        "label": "Breadcrumb Items",
+        "name": "items"
+      }
+    ]
+  },
+  {
+    "id": "breadcrumb-item",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Label",
+        "name": "label",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Separator",
+        "name": "separator",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "card",
     "fields": [
       {
@@ -303,6 +337,115 @@
         "component": "text",
         "label": "Button Text",
         "name": "buttonText",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "footer-root-u2c",
+    "fields": [
+      {
+        "component": "container",
+        "item": "footer-social-link",
+        "label": "Social Links",
+        "name": "socialLinks"
+      },
+      {
+        "component": "container",
+        "item": "footer-app-link",
+        "label": "App Links",
+        "name": "appLinks"
+      },
+      {
+        "component": "container",
+        "item": "footer-accordion",
+        "label": "Accordions",
+        "name": "accordions"
+      },
+      {
+        "component": "richtext",
+        "label": "Popular Searches",
+        "name": "popularSearches",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Copyright",
+        "name": "copyright",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "footer-link",
+        "label": "Bottom Links",
+        "name": "bottomLinks"
+      },
+      {
+        "component": "reference",
+        "label": "Visa Card Image",
+        "name": "visaImage",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "footer-social-link",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Icon",
+        "name": "icon",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "footer-app-link",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Image",
+        "name": "image",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "footer-accordion",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Title",
+        "name": "title",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "footer-link",
+        "label": "Links",
+        "name": "links"
+      }
+    ]
+  },
+  {
+    "id": "footer-link",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
         "valueType": "string"
       }
     ]
@@ -556,6 +699,34 @@
     ]
   },
   {
+    "id": "header",
+    "fields": [
+      {
+        "component": "container",
+        "item": "header-menu-item",
+        "label": "Menu Items",
+        "name": "menu-items"
+      }
+    ]
+  },
+  {
+    "id": "header-menu-item",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Label",
+        "name": "label",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "hero",
     "fields": [
       {
@@ -578,6 +749,151 @@
         "value": "",
         "label": "Text",
         "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "home-blog-listing",
+    "fields": [
+      {
+        "component": "container",
+        "item": "home-blog-list-item",
+        "label": "Blog Items",
+        "name": "items"
+      }
+    ]
+  },
+  {
+    "id": "home-blog-list-item",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Image",
+        "name": "image",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Image Alt",
+        "name": "imageAlt",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Title",
+        "name": "title",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Description",
+        "name": "description",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Read Story Link",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "mask-root-xlr"
+  },
+  {
+    "id": "mpblog-search",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Search Input",
+        "name": "search-input",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "navigation-root-ssy",
+    "fields": [
+      {
+        "component": "container",
+        "item": "main-menu-item",
+        "label": "Main Menu",
+        "name": "main-menu"
+      },
+      {
+        "component": "container",
+        "item": "menu-quick-link",
+        "label": "Menu Quick Link",
+        "name": "menu-quick-links"
+      }
+    ]
+  },
+  {
+    "id": "main-menu-item",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Label",
+        "name": "label",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "URL",
+        "name": "url",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "menu-quick-link",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Label",
+        "name": "label",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "URL",
+        "name": "url",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "pagination",
+    "fields": [
+      {
+        "component": "container",
+        "item": "nav-button",
+        "label": "Nav Buttons",
+        "name": "nav-buttons"
+      }
+    ]
+  },
+  {
+    "id": "nav-button",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Icon",
+        "name": "icon",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Aria Label",
+        "name": "aria-label",
+        "valueType": "string"
+      },
+      {
+        "component": "boolean",
+        "label": "Disabled",
+        "name": "disabled",
+        "valueType": "boolean"
       }
     ]
   },
@@ -612,6 +928,9 @@
   },
   {
     "id": "spaceAdderVerticalPadding"
+  },
+  {
+    "id": "toast-root"
   },
   {
     "id": "whyUsCard",
