@@ -1,0 +1,264 @@
+.footer-section {
+  background-color: #4e2600; /* Explicit color based on --koi-theme */
+  padding: 55px 100px;
+}
+.footer-section .logo-image .cmp-image__image {
+  width: auto;
+  height: auto;
+}
+.footer-section .footer-itc-logo {
+  padding: 30px 0;
+}
+.footer-section .footer-itc-logo img {
+  width: 180px;
+  height: auto; /* Ensure aspect ratio is maintained */
+}
+.footer-section .footer-fssai-logo {
+  padding: 0 0 0 30px;
+}
+.footer-section .footer-fssai-logo img {
+  max-width: 230px;
+  height: auto; /* Ensure aspect ratio is maintained */
+}
+.footer-section .footer-logos {
+  display: flex;
+  align-items: center;
+}
+.footer-section .footer-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-right: -15px; /* Compensate for column padding */
+  margin-left: -15px; /* Compensate for column padding */
+}
+.footer-section .footer-col-logo {
+  flex: 0 0 50%; /* Equivalent to col-lg-6 */
+  max-width: 50%;
+  padding-right: 15px;
+  padding-left: 15px;
+  display: flex; /* d-flex */
+  justify-content: center; /* justify-content-center */
+}
+.footer-section .footer-col-links {
+  flex: 0 0 25%; /* Equivalent to col-lg-3 */
+  max-width: 25%;
+  padding-right: 15px;
+  padding-left: 15px;
+  display: flex; /* d-flex */
+  justify-content: space-between; /* justify-content-xl-between */
+  padding-top: 0; /* pt-md-0 */
+  padding-bottom: 1.5rem; /* pb-4 */
+  padding-right: 0.25rem; /* px-1 */
+  padding-left: 0.25rem; /* px-1 */
+}
+.footer-section .footer-col-left {
+  flex: 0 0 50%; /* Equivalent to col-lg-6 */
+  max-width: 50%;
+  padding-right: 15px;
+  padding-left: 15px;
+}
+.footer-section .footer-col-right {
+  flex: 0 0 50%; /* Equivalent to col-lg-6 */
+  max-width: 50%;
+  padding-right: 15px;
+  padding-left: 15px;
+  display: flex; /* d-flex */
+  flex-direction: column; /* flex-column */
+  align-items: flex-end; /* align-items-md-end */
+  margin-top: -63px;
+}
+.footer-section .footer-lists-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+.footer-section .list-4-container {
+  flex: 1;
+  padding-right: 20px;
+}
+.footer-section .list-3-container {
+  flex: 1;
+  padding-left: 20px;
+}
+.footer-section .list-4-container ul,
+.footer-section .list-3-container ul,
+.footer-section .footer-col-right ul {
+  list-style: none;
+  padding-left: 0;
+  display: grid;
+}
+.footer-section .list-4-container ul li,
+.footer-section .list-3-container ul li {
+  padding-right: 48px;
+  padding-bottom: 10px;
+  cursor: pointer;
+  color: #fceed9; /* Explicit color */
+}
+.footer-section .list-3-container ul li {
+  padding-right: 48px;
+  cursor: pointer;
+}
+.footer-section .contact-details__title,
+.footer-section .contact-details__description {
+  color: #fff; /* Explicit color */
+}
+.footer-section .contact-details__description {
+  font-size: 1rem; /* Equivalent to 16px assuming 16px base */
+  line-height: 1.5; /* Explicit line-height */
+  margin-bottom: 0; /* mb-0 */
+}
+.footer-section .contact-details__title {
+  margin-bottom: 0; /* mb-0 */
+}
+.footer-section .footer-col-right div:first-child {
+  display: flex;
+}
+.footer-section .footer-col-right img {
+  padding-left: 48px;
+}
+.footer-section .footer-link {
+  color: #fceed9; /* Explicit color */
+  font-size: 16px; /* Equivalent to 16px assuming 16px base */
+  padding-top: 20px;
+}
+.footer-section .footer-link:hover {
+  color: #fceed9; /* Explicit color */
+}
+.footer-section a {
+  color: #fceed9; /* Explicit color */
+  white-space: nowrap;
+}
+.footer-section .footer-page-links-wrapper li {
+  padding-bottom: 30px;
+  cursor: pointer;
+}
+.footer-section .footer-page-links-wrapper .list-2-container ul li {
+  padding-left: 56px;
+  border-left: 2px solid var(--color-light); /* Assuming --color-light is defined elsewhere */
+  white-space: nowrap;
+}
+.footer-section .footer-page-links-wrapper .list-2-container ul li:last-child {
+  padding-bottom: 0;
+}
+.footer-section-secondary {
+  background-color: #401e08; /* Explicit color */
+  padding: 20px 100px;
+}
+.footer-section-secondary .footer-secondary-container {
+  display: flex;
+  list-style: none;
+  gap: 18px;
+  margin: 0;
+  padding: 0;
+}
+.footer-section-secondary .footer-secondary-lists .footer-links {
+  font-size: 16px; /* Equivalent to 16px assuming 16px base */
+  font-weight: 700;
+  line-height: 1.5;
+}
+.footer-section .logo-image {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  align-items: center;
+}
+.footer-section .logo-image a {
+  padding-top: 14px;
+}
+.footer-section .logo-image .cmp-image__image {
+  width: auto;
+  height: 63px;
+  object-fit: contain;
+  padding-left: 0;
+  border-right: 1px solid #2d2119; /* Explicit color */
+  padding-right: 20px;
+}
+@media (max-width: 1200px) {
+  .footer-section {
+    padding: 32px 30px;
+  }
+  .footer-section .footer-itc-logo {
+    padding: 0;
+    margin-left: 15px;
+  }
+  .footer-section .footer-col-right {
+    padding-right: 56px;
+    margin-top: 0;
+  }
+  .footer-section .footer-col-right img {
+    padding-left: 25px;
+  }
+  .footer-section .footer-link {
+    font-size: 12px; /* Equivalent to 12px assuming 16px base */
+    padding-top: 0;
+  }
+  .footer-section .footer-page-links-wrapper li {
+    padding-bottom: 12px;
+  }
+}
+@media (max-width: 767.98px) {
+  .footer-section {
+    padding: 16px 31px;
+    position: relative;
+  }
+  .footer-section .footer-col-logo {
+    padding-right: 15px;
+    padding-left: 15px;
+  }
+  .footer-section .footer-col-links {
+    padding-top: 40px; /* pt-4 */
+    padding-bottom: 30px; /* pb-30px */
+  }
+  .footer-section .footer-col-left {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 16px;
+  }
+  .footer-section .footer-col-right {
+    padding-right: 0;
+    padding-left: 0;
+    margin-top: 0;
+    align-items: center;
+  }
+  .footer-section .footer-col-right img:first-child {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  .footer-section .footer-link {
+    padding-top: 10px;
+  }
+  .footer-section .contact-details__title {
+    font-size: 14px; /* Equivalent to 14px assuming 16px base */
+  }
+  .footer-section .contact-details {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .footer-section .list-4-container ul li,
+  .footer-section .list-3-container ul li {
+    padding: 0 9px !important;
+  }
+  .footer-section .footer-itc-logo img {
+    width: 105px !important;
+  }
+  .footer-section .footer-fssai-logo {
+    padding: 0 0 0 20px;
+  }
+  .footer-section .logo-image a {
+    padding-top: 0;
+  }
+  .footer-section .logo-image .cmp-image__image {
+    width: 60px;
+    padding-right: 0;
+  }
+}
+@media (max-width: 375px) {
+  .footer-section .footer-lists-container {
+    flex-wrap: wrap;
+  }
+  .footer-section .list-4-container,
+  .footer-section .list-3-container {
+    flex: 1 1 100%;
+    padding: 0 10px;
+    max-width: calc(50% - 20px);
+  }
+}

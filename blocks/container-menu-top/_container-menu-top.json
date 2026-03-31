@@ -1,0 +1,91 @@
+{
+  "definitions": [
+    {
+      "title": "Container-Menu-Top",
+      "id": "container-menu-top",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "container-menu-top",
+              "model": "container-menu-top",
+              "name": "Container-Menu-Top"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Menu-Item",
+      "id": "menu-item",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "menu-item",
+              "name": "Menu-Item"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "container-menu-top",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Logo",
+          "name": "logo",
+          "valueType": "string"
+        },
+        {
+          "component": "container",
+          "item": "menu-item",
+          "label": "Menu Items",
+          "name": "menuItems"
+        },
+        {
+          "component": "container",
+          "item": "menu-item",
+          "label": "Right Menu Items",
+          "name": "rightMenuItems"
+        }
+      ]
+    },
+    {
+      "id": "menu-item",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Label",
+          "name": "label",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Link",
+          "name": "link",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Image",
+          "name": "image",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "container-menu-top",
+      "components": [
+        "menu-item"
+      ]
+    }
+  ]
+}

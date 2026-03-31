@@ -28,7 +28,20 @@
       "elementor-element-7a30379",
       "product-list",
       "category-carousel",
-      "elementor-footer"
+      "elementor-footer",
+      "container-menu-top",
+      "hero-steel",
+      "manufactures",
+      "steel-stories",
+      "app-section",
+      "video-banner",
+      "footer-mobile"
+    ]
+  },
+  {
+    "id": "app-section",
+    "components": [
+      "app-item"
     ]
   },
   {
@@ -71,6 +84,12 @@
     ]
   },
   {
+    "id": "container-menu-top",
+    "components": [
+      "menu-item"
+    ]
+  },
+  {
     "id": "delightfulDelicacies",
     "components": [
       "category"
@@ -94,12 +113,17 @@
     ]
   },
   {
+    "id": "footer-mobile",
+    "components": [
+      "footer-link",
+      "social-link"
+    ]
+  },
+  {
     "id": "footer",
     "components": [
-      "logo",
-      "footerLink",
-      "footerSocialLink",
-      "footerSecondaryLink"
+      "footer-link-group",
+      "footer-social-link"
     ]
   },
   {
@@ -108,6 +132,12 @@
       "navigationItem",
       "countryOption"
     ]
+  },
+  {
+    "id": "hero-steel"
+  },
+  {
+    "id": "manufactures"
   },
   {
     "id": "product-list",
@@ -123,6 +153,15 @@
   },
   {
     "id": "spaceAdderVerticalPadding"
+  },
+  {
+    "id": "steel-stories",
+    "components": [
+      "story"
+    ]
+  },
+  {
+    "id": "video-banner"
   },
   {
     "id": "whyUs",

@@ -142,6 +142,40 @@
     ]
   },
   {
+    "id": "app-section",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Image",
+        "name": "image",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "app-item",
+        "label": "Applications",
+        "name": "applications"
+      }
+    ]
+  },
+  {
+    "id": "app-item",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Text",
+        "name": "text",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "bannerSlide",
     "fields": [
       {
@@ -280,6 +314,52 @@
         "name": "rows",
         "value": "",
         "label": "Rows"
+      }
+    ]
+  },
+  {
+    "id": "container-menu-top",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Logo",
+        "name": "logo",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "menu-item",
+        "label": "Menu Items",
+        "name": "menuItems"
+      },
+      {
+        "component": "container",
+        "item": "menu-item",
+        "label": "Right Menu Items",
+        "name": "rightMenuItems"
+      }
+    ]
+  },
+  {
+    "id": "menu-item",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Label",
+        "name": "label",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Image",
+        "name": "image",
+        "valueType": "string"
       }
     ]
   },
@@ -497,146 +577,144 @@
     ]
   },
   {
-    "id": "footer",
+    "id": "footer-mobile",
     "fields": [
       {
-        "component": "reference",
-        "items": {
-          "type": "string"
-        },
-        "label": "Logos",
-        "name": "logos",
-        "valueType": "array"
+        "component": "container",
+        "item": "social-link",
+        "label": "Social Links",
+        "name": "social-links"
       },
       {
-        "component": "reference",
-        "items": {
-          "type": "string"
-        },
+        "component": "container",
+        "item": "footer-link",
         "label": "Footer Links",
-        "name": "footerLinks",
-        "valueType": "array"
+        "name": "footer-links"
       },
       {
-        "component": "reference",
-        "items": {
-          "type": "string"
-        },
-        "label": "Footer Social Links",
-        "name": "footerSocialLinks",
-        "valueType": "array"
-      },
-      {
-        "component": "reference",
-        "items": {
-          "type": "string"
-        },
-        "label": "Footer Secondary Links",
-        "name": "footerSecondaryLinks",
-        "valueType": "array"
-      },
-      {
-        "component": "richtext",
-        "label": "Grievance Officer Title",
-        "name": "grievanceOfficerTitle",
+        "component": "text",
+        "label": "Copyright",
+        "name": "copyright",
         "valueType": "string"
       },
       {
-        "component": "richtext",
-        "label": "Grievance Officer Name",
-        "name": "grievanceOfficerName",
-        "valueType": "string"
-      },
-      {
-        "component": "richtext",
-        "label": "Grievance Officer Contact",
-        "name": "grievanceOfficerContact",
-        "valueType": "string"
-      },
-      {
-        "component": "richtext",
-        "label": "Grievance Officer Timing",
-        "name": "grievanceOfficerTiming",
-        "valueType": "string"
-      },
-      {
-        "component": "richtext",
-        "label": "Copyright Text",
-        "name": "copyrightText",
+        "component": "aem-content",
+        "label": "Privacy Policy Link",
+        "name": "privacy-policy-link",
         "valueType": "string"
       }
     ]
   },
   {
-    "id": "logo",
+    "id": "footer-link",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Label",
+        "name": "label",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "URL",
+        "name": "url",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "social-link",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Icon Class",
+        "name": "icon-class",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "URL",
+        "name": "url",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "footer",
     "fields": [
       {
         "component": "reference",
-        "label": "Logo Image",
-        "name": "image",
+        "label": "Logo",
+        "name": "logo",
         "valueType": "string"
       },
       {
-        "component": "text",
-        "label": "Alt Text",
-        "name": "altText",
-        "valueType": "string"
+        "component": "container",
+        "item": "footer-link-group",
+        "label": "Link Groups",
+        "name": "linkGroups"
+      },
+      {
+        "component": "container",
+        "item": "footer-social-link",
+        "label": "Social Links",
+        "name": "socialLinks"
       },
       {
         "component": "text",
-        "label": "Logo Link",
+        "label": "Copyright",
+        "name": "copyright",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Privacy Policy Link",
+        "name": "privacyPolicy",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "footer-link-group",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Group Title",
+        "name": "title",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "footer-link",
+        "label": "Links",
+        "name": "links"
+      }
+    ]
+  },
+  {
+    "id": "footer-link",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Link",
         "name": "link",
         "valueType": "string"
       }
     ]
   },
   {
-    "id": "footerLink",
+    "id": "footer-social-link",
     "fields": [
       {
-        "component": "text",
-        "label": "Link Label",
-        "name": "label",
+        "component": "aem-content",
+        "label": "Social Link",
+        "name": "link",
         "valueType": "string"
       },
-      {
-        "component": "text",
-        "label": "Link URL",
-        "name": "url",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
-    "id": "footerSocialLink",
-    "fields": [
       {
         "component": "reference",
-        "label": "Social Icon",
+        "label": "Icon",
         "name": "icon",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Social Link URL",
-        "name": "url",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
-    "id": "footerSecondaryLink",
-    "fields": [
-      {
-        "component": "text",
-        "label": "Link Label",
-        "name": "label",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Link URL",
-        "name": "url",
         "valueType": "string"
       }
     ]
@@ -745,6 +823,41 @@
     ]
   },
   {
+    "id": "hero-steel",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Image Desktop",
+        "name": "image-desktop",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Image Mobile",
+        "name": "image-mobile",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Breadcrumb",
+        "name": "breadcrumb",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Description",
+        "name": "description",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "hero",
     "fields": [
       {
@@ -766,6 +879,41 @@
         "name": "text",
         "value": "",
         "label": "Text",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "manufactures",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Main Image Desktop",
+        "name": "main-image-desktop",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Main Image Mobile",
+        "name": "main-image-mobile",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Side Image",
+        "name": "side-image",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Description",
+        "name": "description",
         "valueType": "string"
       }
     ]
@@ -835,6 +983,75 @@
   },
   {
     "id": "spaceAdderVerticalPadding"
+  },
+  {
+    "id": "steel-stories",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Image",
+        "name": "image",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "story",
+        "label": "Stories",
+        "name": "stories"
+      }
+    ]
+  },
+  {
+    "id": "story",
+    "fields": [
+      {
+        "component": "richtext",
+        "label": "Text",
+        "name": "text",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "video-banner",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Desktop Image",
+        "name": "desktop-image",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Mobile Image",
+        "name": "mobile-image",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Video Link",
+        "name": "video-link",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Play Icon",
+        "name": "play-icon",
+        "valueType": "string"
+      }
+    ]
   },
   {
     "id": "whyUsCard",
