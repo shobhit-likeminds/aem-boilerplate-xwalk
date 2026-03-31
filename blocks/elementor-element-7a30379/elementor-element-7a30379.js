@@ -5,7 +5,7 @@ export default function decorate(block) {
   const [imageRow, headingRow, breadcrumbRow] = [...block.children];
 
   block.textContent = '';
-  block.classList.add('e-con-full', 'e-flex', 'e-con', 'e-parent', 'e-lazyloaded');
+  block.classList.add('elementor', 'elementor-30', 'e-con-full', 'e-flex', 'e-con', 'e-parent', 'e-lazyloaded');
 
   // Image
   if (imageRow) {
