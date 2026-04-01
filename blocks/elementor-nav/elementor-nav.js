@@ -60,7 +60,7 @@ export default function decorate(block) {
   navMenuItems.forEach((row) => {
     const cells = [...row.children];
     const li = document.createElement('li');
-    li.classList.add('menu-item', 'elementor-item');
+    li.classList.add('menu-item');  // FIXED: removed 'elementor-item' from <li>
     moveInstrumentation(row, li);
 
     const linkCell = cells.find(cell => cell.querySelector('a'));
@@ -68,7 +68,7 @@ export default function decorate(block) {
 
     const foundLink = linkCell ? linkCell.querySelector('a') : null;
     const linkEl = document.createElement('a');
-    linkEl.classList.add('elementor-item');
+    linkEl.classList.add('elementor-item');  // FIXED: only <a> should have this class
     if (foundLink) {
       linkEl.href = foundLink.href;
       linkEl.textContent = labelCell ? labelCell.textContent : '';
