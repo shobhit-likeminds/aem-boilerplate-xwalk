@@ -1,0 +1,223 @@
+{
+  "definitions": [
+    {
+      "title": "Boing Header Footer",
+      "id": "boing-header-footer",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "boing-header-footer",
+              "model": "boing-header-footer",
+              "name": "Boing Header Footer"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Sidebar Menu Item",
+      "id": "sidebar-menu-item",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "sidebar-menu-item",
+              "name": "Sidebar Menu Item"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Footer List Link",
+      "id": "footer-list-link",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "footer-list-link",
+              "name": "Footer List Link"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Footer Social Link",
+      "id": "footer-social-link",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "footer-social-link",
+              "name": "Footer Social Link"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "boing-header-footer",
+      "fields": [
+        {
+          "component": "text",
+          "label": "App Name",
+          "name": "app-name",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Header SVG",
+          "name": "header-svg",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Header Logo",
+          "name": "header-logo",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Header Logo Link",
+          "name": "header-logo-link",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Login Button Label",
+          "name": "login-label",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Login Button Link",
+          "name": "login-link",
+          "valueType": "string"
+        },
+        {
+          "component": "container",
+          "item": "sidebar-menu-item",
+          "label": "Sidebar Menu Items",
+          "name": "sidebar-menu-items"
+        },
+        {
+          "component": "reference",
+          "label": "Footer Logo 1",
+          "name": "footer-logo-1",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Footer Logo 1 Link",
+          "name": "footer-logo-1-link",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Footer Logo 2",
+          "name": "footer-logo-2",
+          "valueType": "string"
+        },
+        {
+          "component": "container",
+          "item": "footer-list-link",
+          "label": "Footer List Links",
+          "name": "footer-list-links"
+        },
+        {
+          "component": "container",
+          "item": "footer-social-link",
+          "label": "Footer Social Links",
+          "name": "footer-social-links"
+        },
+        {
+          "component": "aem-content",
+          "label": "Footer Brand Left Link",
+          "name": "footer-brand-left-link",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Copyright Text",
+          "name": "copyright",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "sidebar-menu-item",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Icon",
+          "name": "icon",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Label",
+          "name": "label",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Link",
+          "name": "link",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "footer-list-link",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Label",
+          "name": "label",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Link",
+          "name": "link",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "footer-social-link",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Icon",
+          "name": "icon",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Link",
+          "name": "link",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "boing-header-footer",
+      "components": [
+        "sidebar-menu-item",
+        "footer-list-link",
+        "footer-social-link"
+      ]
+    }
+  ]
+}

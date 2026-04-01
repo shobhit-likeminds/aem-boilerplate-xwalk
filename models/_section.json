@@ -75,7 +75,15 @@
         "elementor-element",
         "elementor-widget-theme-archive-title",
         "woocommerce-breadcrumb",
-        "search"
+        "search",
+        "boing-header-footer",
+        "banner-carousel",
+        "banner",
+        "featurecards",
+        "article-listing",
+        "space-adder",
+        "footer-brand",
+        "sticky-bottom-nav"
       ]
     }
   ]
