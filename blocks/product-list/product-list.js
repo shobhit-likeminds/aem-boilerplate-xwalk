@@ -2,6 +2,9 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
+  // CRITICAL: Add page ID classes to the block root element
+  block.classList.add('elementor', 'elementor-30');
+
   const productListContainer = document.createElement('div');
   productListContainer.classList.add('elementor-loop-container', 'elementor-grid');
   productListContainer.setAttribute('role', 'list');

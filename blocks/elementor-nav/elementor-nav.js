@@ -2,10 +2,13 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
+  // CRITICAL: Add page ID classes to the block root element
+  block.classList.add('elementor', 'elementor-30');
+
   const [logoRow, ...itemRows] = [...block.children];
 
   const mainContainer = document.createElement('div');
-  mainContainer.classList.add('elementor', 'elementor-30', 'elementor-element', 'elementor-element-7910b0b', 'e-con-full', 'e-flex', 'e-con', 'e-parent', 'e-lazyloaded', 'elementor-sticky', 'elementor-sticky--active', 'elementor-section--handles-inside', 'elementor-sticky--effects');
+  mainContainer.classList.add('elementor-element', 'elementor-element-7910b0b', 'e-con-full', 'e-flex', 'e-con', 'e-parent', 'e-lazyloaded', 'elementor-sticky', 'elementor-sticky--active', 'elementor-section--handles-inside', 'elementor-sticky--effects');
 
   const topNavContainer = document.createElement('div');
   topNavContainer.classList.add('elementor-element', 'elementor-element-2dcde62', 'e-flex', 'e-con-boxed', 'e-con', 'e-child');

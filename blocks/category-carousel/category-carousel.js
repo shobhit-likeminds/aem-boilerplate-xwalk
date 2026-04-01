@@ -2,10 +2,13 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
+  // CRITICAL: Add page ID classes to the block root element
+  block.classList.add('elementor', 'elementor-132');
+
   const [headingRow, ...itemRows] = [...block.children];
 
   const mainContainer = document.createElement('div');
-  mainContainer.classList.add('elementor', 'elementor-132', 'elementor-element', 'elementor-element-1c8724a2', 'e-flex', 'e-con-boxed', 'e-con', 'e-parent', 'e-lazyloaded');
+  mainContainer.classList.add('elementor-element', 'elementor-element-1c8724a2', 'e-flex', 'e-con-boxed', 'e-con', 'e-parent', 'e-lazyloaded');
 
   const innerContainer = document.createElement('div');
   innerContainer.classList.add('e-con-inner');
