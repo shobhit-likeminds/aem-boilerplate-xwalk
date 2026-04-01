@@ -29,20 +29,20 @@
         },
         {
           "component": "reference",
-          "label": "Hero Image Desktop",
-          "name": "hero-image-desktop",
+          "label": "Main Image Desktop",
+          "name": "main-image-desktop",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Hero Image Mobile",
-          "name": "hero-image-mobile",
+          "label": "Main Image Mobile",
+          "name": "main-image-mobile",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Image",
-          "name": "image",
+          "label": "Side Image",
+          "name": "side-image",
           "valueType": "string"
         },
         {

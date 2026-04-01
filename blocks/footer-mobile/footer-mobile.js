@@ -2,138 +2,122 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
+  block.classList.add('visible-xs');
+
   const [copyrightRow, privacyPolicyLinkRow, ...itemRows] = [...block.children];
 
-  const socialLinks = [];
-  const footerLinks = [];
+  const containerDiv = document.createElement('div');
+  containerDiv.classList.add('container');
 
-  itemRows.forEach((row) => {
+  const socialLinksDiv = document.createElement('div');
+  socialLinksDiv.classList.add('link-social');
+
+  const socialTitleDiv = document.createElement('div');
+  socialTitleDiv.classList.add('title-social');
+  socialTitleDiv.textContent = 'Follow Us';
+  socialLinksDiv.append(socialTitleDiv);
+
+  const socialParagraph = document.createElement('p');
+  // Filter for social links: 1 cell containing an anchor
+  const footerSocialLinks = itemRows.filter((row) => {
     const cells = [...row.children];
-    if (cells.length === 2) {
-      const firstCellText = cells[0].textContent.trim();
-      const secondCellLink = cells[1].querySelector('a');
-
-      // Check if it's a social link (based on icon class pattern, e.g., 'fa-twitter')
-      // This is a heuristic, assuming social links have specific icon class names.
-      // A more robust solution might involve a data attribute or a specific class on the row.
-      if (firstCellText.startsWith('fa-') && secondCellLink) {
-        socialLinks.push(row);
-      } else if (secondCellLink) { // If it has a label and a link, assume it's a footer link
-        footerLinks.push(row);
-      }
-    }
+    return cells.length === 1 && cells[0].querySelector('a');
   });
 
-  const container = document.createElement('div');
-  container.classList.add('container');
-
-  // Social Links
-  if (socialLinks.length > 0) {
-    const linkSocial = document.createElement('div');
-    linkSocial.classList.add('link-social');
-
-    const titleSocial = document.createElement('div');
-    titleSocial.classList.add('title-social');
-    titleSocial.textContent = 'Follow Us';
-    linkSocial.append(titleSocial);
-
-    const socialParagraph = document.createElement('p');
-    socialLinks.forEach((row) => {
-      const cells = [...row.children];
-      const iconClassCell = cells[0];
-      const urlCell = cells[1];
-
-      const a = document.createElement('a');
-      const foundLink = urlCell.querySelector('a');
-      if (foundLink) {
-        a.href = foundLink.href;
+  footerSocialLinks.forEach((row) => {
+    const linkCell = [...row.children][0]; // Safe as filtered for 1 child
+    const link = linkCell.querySelector('a');
+    if (link) {
+      const socialLink = document.createElement('a');
+      moveInstrumentation(row, socialLink);
+      socialLink.href = link.href;
+      const icon = document.createElement('i');
+      icon.classList.add('fa');
+      if (link.href.includes('twitter')) {
+        icon.classList.add('fa-twitter');
+      } else if (link.href.includes('facebook')) {
+        icon.classList.add('fa-facebook');
+      } else if (link.href.includes('linkedin')) {
+        icon.classList.add('fa-linkedin');
       }
-      moveInstrumentation(urlCell, a);
+      icon.innerHTML = '&nbsp;';
+      socialLink.append(icon);
+      socialParagraph.append(socialLink);
+    }
+  });
+  socialLinksDiv.append(socialParagraph);
+  containerDiv.append(socialLinksDiv);
 
-      const i = document.createElement('i');
-      i.classList.add('fa');
-      if (iconClassCell) {
-        i.classList.add(iconClassCell.textContent.trim());
-      }
-      i.innerHTML = '&nbsp;';
-      a.append(i);
-      socialParagraph.append(a);
-    });
-    linkSocial.append(socialParagraph);
-    container.append(linkSocial);
-  }
+  const footerLinksDiv = document.createElement('div');
+  footerLinksDiv.classList.add('link-footer', 'clearfix');
 
-  // Footer Links
-  if (footerLinks.length > 0) {
-    const linkFooter = document.createElement('div');
-    linkFooter.classList.add('link-footer', 'clearfix');
+  // Filter for footer links: 2 cells
+  const footerLinks = itemRows.filter((row) => [...row.children].length === 2);
+  const half = Math.ceil(footerLinks.length / 2);
+  const firstHalfLinks = footerLinks.slice(0, half);
+  const secondHalfLinks = footerLinks.slice(half);
 
-    // Split footer links into two columns if needed
-    const midPoint = Math.ceil(footerLinks.length / 2);
-    const ul1 = document.createElement('ul');
-    ul1.classList.add('text-footer');
-    const ul2 = document.createElement('ul');
-    ul2.classList.add('text-footer');
-
-    footerLinks.forEach((row, index) => {
+  const createLinkList = (links) => {
+    const ul = document.createElement('ul');
+    ul.classList.add('text-footer');
+    links.forEach((row) => {
       const li = document.createElement('li');
       moveInstrumentation(row, li);
-
       const cells = [...row.children];
-      const labelCell = cells[0];
-      const urlCell = cells[1];
-
-      const a = document.createElement('a');
-      const foundLink = urlCell.querySelector('a');
-      if (foundLink) {
-        a.href = foundLink.href;
+      const labelCell = cells[0]; // Safe as filtered for 2 children
+      const urlCell = cells[1]; // Safe as filtered for 2 children
+      if (labelCell && urlCell) {
+        const link = urlCell.querySelector('a');
+        if (link) {
+          const newLink = document.createElement('a');
+          newLink.href = link.href;
+          moveInstrumentation(labelCell, newLink);
+          while (labelCell.firstChild) newLink.append(labelCell.firstChild);
+          li.append(newLink);
+        }
       }
-      if (labelCell) {
-        a.textContent = labelCell.textContent.trim();
-      }
-      li.append(a);
-
-      if (index < midPoint) {
-        ul1.append(li);
-      } else {
-        ul2.append(li);
-      }
+      ul.append(li);
     });
+    return ul;
+  };
 
-    linkFooter.append(ul1);
-    if (ul2.children.length > 0) {
-      linkFooter.append(ul2);
-    }
-    container.append(linkFooter);
-  }
+  footerLinksDiv.append(createLinkList(firstHalfLinks));
+  footerLinksDiv.append(createLinkList(secondHalfLinks));
+  containerDiv.append(footerLinksDiv);
 
   block.textContent = '';
-  block.classList.add('visible-xs');
-  block.append(container);
+  block.append(containerDiv);
 
-  // Footer Bottom (Copyright and Privacy Policy)
-  const footerBottom = document.createElement('div');
-  footerBottom.classList.add('footer-bottom');
+  const footerBottomDiv = document.createElement('div');
+  footerBottomDiv.classList.add('footer-bottom');
 
   const copyrightDiv = document.createElement('div');
   copyrightDiv.classList.add('copyright');
   moveInstrumentation(copyrightRow, copyrightDiv);
-  const copyrightText = copyrightRow.querySelector('div').textContent.trim();
-  const currentYear = new Date().getFullYear();
-  copyrightDiv.innerHTML = `${copyrightText.replace('2023', `<span id="cyear">${currentYear}</span>`)}`;
-  footerBottom.append(copyrightDiv);
+  // Original HTML has "Copyright © JSW Steel <span id="cyear">2023</span> All rights reserved"
+  // The JS was trying to prepend/append to a <p> that might not exist or be the direct child.
+  // Better to reconstruct based on the original HTML structure.
+  const copyrightText = copyrightRow.textContent.trim();
+  const p = document.createElement('p');
+  p.textContent = copyrightText; // Start with the text from the block
+  copyrightDiv.append(p);
+
+  const yearSpan = document.createElement('span');
+  yearSpan.id = 'cyear';
+  yearSpan.textContent = new Date().getFullYear().toString();
+
+  // Reconstruct the copyright string as per original HTML
+  p.textContent = 'Copyright © JSW Steel ';
+  p.append(yearSpan);
+  p.append(' All rights reserved');
+
+  footerBottomDiv.append(copyrightDiv);
 
   const privacyLinkDiv = document.createElement('div');
   privacyLinkDiv.classList.add('link-term');
   moveInstrumentation(privacyPolicyLinkRow, privacyLinkDiv);
-  const privacyLink = privacyPolicyLinkRow.querySelector('a');
-  if (privacyLink) {
-    const newPrivacyLink = document.createElement('a');
-    newPrivacyLink.href = privacyLink.href;
-    newPrivacyLink.textContent = privacyLink.textContent.trim();
-    privacyLinkDiv.append(newPrivacyLink);
-  }
-  footerBottom.append(privacyLinkDiv);
+  while (privacyPolicyLinkRow.firstChild) privacyLinkDiv.append(privacyPolicyLinkRow.firstChild);
+  footerBottomDiv.append(privacyLinkDiv);
 
-  block.append(footerBottom);
+  block.append(footerBottomDiv);
 }

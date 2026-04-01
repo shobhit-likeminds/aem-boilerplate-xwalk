@@ -159,7 +159,7 @@
       {
         "component": "container",
         "item": "app-item",
-        "label": "Applications",
+        "label": "Applications List",
         "name": "applications"
       }
     ]
@@ -334,9 +334,9 @@
       },
       {
         "component": "container",
-        "item": "menu-item",
-        "label": "Right Menu Items",
-        "name": "rightMenuItems"
+        "item": "social-link",
+        "label": "Social Links",
+        "name": "socialLinks"
       }
     ]
   },
@@ -356,9 +356,66 @@
         "valueType": "string"
       },
       {
+        "component": "container",
+        "item": "submenu-item",
+        "label": "Submenu Items",
+        "name": "submenuItems"
+      }
+    ]
+  },
+  {
+    "id": "submenu-item",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Label",
+        "name": "label",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "blockmenu-item",
+        "label": "Blockmenu Items",
+        "name": "blockmenuItems"
+      }
+    ]
+  },
+  {
+    "id": "blockmenu-item",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Label",
+        "name": "label",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
         "component": "reference",
         "label": "Image",
         "name": "image",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "social-link",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
         "valueType": "string"
       }
     ]
@@ -677,19 +734,7 @@
     "id": "footer-mobile",
     "fields": [
       {
-        "component": "container",
-        "item": "social-link",
-        "label": "Social Links",
-        "name": "social-links"
-      },
-      {
-        "component": "container",
-        "item": "footer-link",
-        "label": "Footer Links",
-        "name": "footer-links"
-      },
-      {
-        "component": "text",
+        "component": "richtext",
         "label": "Copyright",
         "name": "copyright",
         "valueType": "string"
@@ -699,6 +744,18 @@
         "label": "Privacy Policy Link",
         "name": "privacy-policy-link",
         "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "footer-link",
+        "label": "Footer Links",
+        "name": "footer-links"
+      },
+      {
+        "component": "container",
+        "item": "footer-social-link",
+        "label": "Social Links",
+        "name": "footer-social-links"
       }
     ]
   },
@@ -720,14 +777,8 @@
     ]
   },
   {
-    "id": "social-link",
+    "id": "footer-social-link",
     "fields": [
-      {
-        "component": "text",
-        "label": "Icon Class",
-        "name": "icon-class",
-        "valueType": "string"
-      },
       {
         "component": "aem-content",
         "label": "URL",
@@ -737,84 +788,10 @@
     ]
   },
   {
-    "id": "footer",
-    "fields": [
-      {
-        "component": "reference",
-        "label": "Logo",
-        "name": "logo",
-        "valueType": "string"
-      },
-      {
-        "component": "container",
-        "item": "footer-link-group",
-        "label": "Link Groups",
-        "name": "linkGroups"
-      },
-      {
-        "component": "container",
-        "item": "footer-social-link",
-        "label": "Social Links",
-        "name": "socialLinks"
-      },
-      {
-        "component": "text",
-        "label": "Copyright",
-        "name": "copyright",
-        "valueType": "string"
-      },
-      {
-        "component": "aem-content",
-        "label": "Privacy Policy Link",
-        "name": "privacyPolicy",
-        "valueType": "string"
-      }
-    ]
+    "id": "footer"
   },
   {
-    "id": "footer-link-group",
-    "fields": [
-      {
-        "component": "text",
-        "label": "Group Title",
-        "name": "title",
-        "valueType": "string"
-      },
-      {
-        "component": "container",
-        "item": "footer-link",
-        "label": "Links",
-        "name": "links"
-      }
-    ]
-  },
-  {
-    "id": "footer-link",
-    "fields": [
-      {
-        "component": "aem-content",
-        "label": "Link",
-        "name": "link",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
-    "id": "footer-social-link",
-    "fields": [
-      {
-        "component": "aem-content",
-        "label": "Social Link",
-        "name": "link",
-        "valueType": "string"
-      },
-      {
-        "component": "reference",
-        "label": "Icon",
-        "name": "icon",
-        "valueType": "string"
-      }
-    ]
+    "id": "footer-column"
   },
   {
     "id": "fragment",
@@ -935,21 +912,21 @@
         "valueType": "string"
       },
       {
-        "component": "aem-content",
-        "label": "Breadcrumb",
-        "name": "breadcrumb",
-        "valueType": "string"
-      },
-      {
         "component": "text",
         "label": "Heading",
         "name": "heading",
         "valueType": "string"
       },
       {
-        "component": "richtext",
-        "label": "Description",
-        "name": "description",
+        "component": "aem-content",
+        "label": "Video Link",
+        "name": "video-link",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Video Icon",
+        "name": "video-icon",
         "valueType": "string"
       }
     ]
@@ -991,20 +968,20 @@
       },
       {
         "component": "reference",
-        "label": "Main Image Desktop",
-        "name": "main-image-desktop",
+        "label": "Hero Image Desktop",
+        "name": "hero-image-desktop",
         "valueType": "string"
       },
       {
         "component": "reference",
-        "label": "Main Image Mobile",
-        "name": "main-image-mobile",
+        "label": "Hero Image Mobile",
+        "name": "hero-image-mobile",
         "valueType": "string"
       },
       {
         "component": "reference",
-        "label": "Side Image",
-        "name": "side-image",
+        "label": "Image",
+        "name": "image",
         "valueType": "string"
       },
       {

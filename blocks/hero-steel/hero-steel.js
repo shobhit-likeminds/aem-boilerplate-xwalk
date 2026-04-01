@@ -5,12 +5,10 @@ export default function decorate(block) {
   const [
     imageDesktopRow,
     imageMobileRow,
-    breadcrumbRow,
     headingRow,
-    descriptionRow,
+    videoLinkRow,
+    videoIconRow,
   ] = [...block.children];
-
-  block.classList.add('op1');
 
   const figure = document.createElement('figure');
 
@@ -18,110 +16,76 @@ export default function decorate(block) {
   const desktopPicture = imageDesktopRow.querySelector('picture');
   if (desktopPicture) {
     const desktopImg = desktopPicture.querySelector('img');
-    if (desktopImg) {
-      const optimizedDesktopPic = createOptimizedPicture(desktopImg.src, desktopImg.alt, false, [{ width: '1440' }]);
-      const newDesktopImg = optimizedDesktopPic.querySelector('img');
-      moveInstrumentation(desktopImg, newDesktopImg);
-      newDesktopImg.classList.add('hidden-xs', 'lazyloaded');
-      figure.append(optimizedDesktopPic);
-    }
+    const optimizedDesktopPic = createOptimizedPicture(desktopImg.src, desktopImg.alt, false, [{ width: '1440' }]);
+    optimizedDesktopPic.querySelector('img').classList.add('hidden-xs', 'lazyloaded');
+    moveInstrumentation(desktopPicture, optimizedDesktopPic);
+    figure.append(optimizedDesktopPic);
   }
 
   // Image Mobile
-  const mobilePicture = mobileRow.querySelector('picture');
+  const mobilePicture = imageMobileRow.querySelector('picture');
   if (mobilePicture) {
     const mobileImg = mobilePicture.querySelector('img');
-    if (mobileImg) {
-      const optimizedMobilePic = createOptimizedPicture(mobileImg.src, mobileImg.alt, false, [{ width: '373' }]);
-      const newMobileImg = optimizedMobilePic.querySelector('img');
-      moveInstrumentation(mobileImg, newMobileImg);
-      newMobileImg.classList.add('visible-xs', 'lazyload');
-      figure.append(optimizedMobilePic);
-    }
+    const optimizedMobilePic = createOptimizedPicture(mobileImg.src, mobileImg.alt, false, [{ width: '373' }]);
+    optimizedMobilePic.querySelector('img').classList.add('visible-xs', 'lazyload');
+    moveInstrumentation(mobilePicture, optimizedMobilePic);
+    figure.append(optimizedMobilePic);
   }
 
-  block.append(figure);
+  const bannerInfo = document.createElement('div');
+  bannerInfo.classList.add('banner-info');
 
-  // Breadcrumbs
-  const containerDiv = document.createElement('div');
-  containerDiv.classList.add('container');
+  const container = document.createElement('div');
+  container.classList.add('container');
 
-  const breadcrumbsDiv = document.createElement('div');
-  breadcrumbsDiv.classList.add('breadcrumbs', 'hidden-sm', 'hidden-xs');
+  const bannerCard = document.createElement('div');
+  bannerCard.classList.add('banner-card', 'os-animation', 'animated', 'fadeIn');
+  bannerCard.setAttribute('data-os-animation', 'fadeIn');
 
-  const blockJswDiv = document.createElement('div');
-  blockJswDiv.classList.add('block', 'block-jsw');
+  const heading = document.createElement('h1');
+  heading.classList.add('os-animation', 'hd1', 'animated', 'fadeIn');
+  heading.setAttribute('data-os-animation', 'fadeIn');
+  heading.setAttribute('data-os-animation-delay', '.5s');
+  heading.style.animationDelay = '0.5s';
+  moveInstrumentation(headingRow.firstElementChild, heading);
+  heading.append(...headingRow.firstElementChild.children);
 
-  const contentDiv = document.createElement('div');
-  contentDiv.classList.add('content');
+  const emptyParagraph = document.createElement('p');
+  emptyParagraph.classList.add('os-animation', 'animated', 'fadeIn');
+  emptyParagraph.setAttribute('data-os-animation', 'fadeIn');
+  emptyParagraph.setAttribute('data-os-animation-delay', '.7s');
+  emptyParagraph.style.animationDelay = '0.7s';
 
-  const breadcrumbLink = breadcrumbRow.querySelector('a');
-  if (breadcrumbLink) {
-    const homeLink = document.createElement('a');
-    homeLink.href = '/'; // Assuming home link always goes to root
-    homeLink.textContent = 'Home';
-    contentDiv.append(homeLink);
+  const videoParagraph = document.createElement('p');
+  videoParagraph.classList.add('MT30', 'os-animation', 'animated', 'fadeIn');
+  videoParagraph.setAttribute('data-os-animation', 'fadeIn');
+  videoParagraph.setAttribute('data-os-animation-delay', '.9s');
+  videoParagraph.style.animationDelay = '0.9s';
 
-    const splitSpan = document.createElement('span');
-    splitSpan.classList.add('split');
-    const icon = document.createElement('i');
-    icon.classList.add('fa', 'fa-arrow-right');
-    splitSpan.append(icon);
-    contentDiv.append(splitSpan);
-
-    const currentLink = document.createElement('a');
-    currentLink.href = breadcrumbLink.href;
-    currentLink.textContent = breadcrumbLink.textContent;
-    moveInstrumentation(breadcrumbLink, currentLink);
-    contentDiv.append(currentLink);
+  const videoLink = document.createElement('a');
+  videoLink.classList.add('video-btn', 'fancybox-video');
+  const foundVideoLink = videoLinkRow.querySelector('a');
+  if (foundVideoLink) {
+    videoLink.href = foundVideoLink.href;
+    moveInstrumentation(foundVideoLink, videoLink);
   }
 
-  blockJswDiv.append(contentDiv);
-  breadcrumbsDiv.append(blockJswDiv);
-  containerDiv.append(breadcrumbsDiv);
-  block.append(containerDiv);
-
-  // Banner Info
-  const bannerInfoDiv = document.createElement('div');
-  bannerInfoDiv.classList.add('banner-info');
-
-  const bannerContainerDiv = document.createElement('div');
-  bannerContainerDiv.classList.add('container');
-
-  const bannerCardDiv = document.createElement('div');
-  bannerCardDiv.classList.add('banner-card', 'os-animation', 'animated', 'fadeIn');
-  bannerCardDiv.setAttribute('data-os-animation', 'fadeIn');
-
-  const headingEl = document.createElement('h1');
-  headingEl.classList.add('os-animation', 'hd1', 'animated', 'fadeIn');
-  headingEl.setAttribute('data-os-animation', 'fadeIn');
-  headingEl.setAttribute('data-os-animation-delay', '.5s');
-  const originalHeading = headingRow.querySelector('div > div'); // Find the content div
-  if (originalHeading) {
-    moveInstrumentation(originalHeading, headingEl);
-    headingEl.innerHTML = originalHeading.innerHTML;
+  const videoIconPicture = videoIconRow.querySelector('picture');
+  if (videoIconPicture) {
+    const videoIconImg = videoIconPicture.querySelector('img');
+    const optimizedVideoIconPic = createOptimizedPicture(videoIconImg.src, videoIconImg.alt, false, [{ width: '32' }]);
+    optimizedVideoIconPic.querySelector('img').classList.add('lazyloaded');
+    moveInstrumentation(videoIconPicture, optimizedVideoIconPic);
+    videoLink.append(optimizedVideoIconPic);
   }
-  bannerCardDiv.append(headingEl);
 
-  const descriptionEl = document.createElement('p');
-  descriptionEl.classList.add('os-animation', 'animated', 'fadeIn');
-  descriptionEl.setAttribute('data-os-animation', 'fadeIn');
-  descriptionEl.setAttribute('data-os-animation-delay', '.7s');
-  const originalDescription = descriptionRow.querySelector('div > div'); // Find the content div
-  if (originalDescription) {
-    moveInstrumentation(originalDescription, descriptionEl);
-    descriptionEl.innerHTML = originalDescription.innerHTML;
-  }
-  bannerCardDiv.append(descriptionEl);
+  videoParagraph.append(videoLink);
 
-  bannerContainerDiv.append(bannerCardDiv);
-  bannerInfoDiv.append(bannerContainerDiv);
-  block.append(bannerInfoDiv);
+  bannerCard.append(heading, emptyParagraph, videoParagraph);
+  container.append(bannerCard);
+  bannerInfo.append(container);
 
-  // Clear original block content
-  [...block.children].forEach((row) => {
-    if (row !== figure && row !== containerDiv && row !== bannerInfoDiv) {
-      row.remove();
-    }
-  });
+  block.textContent = '';
+  block.classList.add('op1');
+  block.append(figure, bannerInfo);
 }

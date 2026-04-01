@@ -1,0 +1,116 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  // Destructure block.children directly as per BlockJson model
+  const [
+    imageDesktopRow,
+    imageMobileRow,
+    breadcrumbRow,
+    headingRow,
+    descriptionRow,
+  ] = [...block.children];
+
+  // Create figure for images
+  const figure = document.createElement('figure');
+
+  // Process desktop image
+  const desktopImageCell = imageDesktopRow.querySelector('div');
+  if (desktopImageCell) {
+    const desktopPicture = desktopImageCell.querySelector('picture');
+    if (desktopPicture) {
+      const desktopImg = desktopPicture.querySelector('img');
+      if (desktopImg) {
+        const optimizedPic = createOptimizedPicture(desktopImg.src, desktopImg.alt, false, [{ width: '1440' }]);
+        optimizedPic.querySelector('img').classList.add('hidden-xs', 'lazyloaded');
+        moveInstrumentation(desktopImg, optimizedPic.querySelector('img'));
+        figure.append(optimizedPic);
+      }
+    }
+  }
+
+  // Process mobile image
+  const mobileImageCell = mobileImageRow.querySelector('div');
+  if (mobileImageCell) {
+    const mobilePicture = mobileImageCell.querySelector('picture');
+    if (mobilePicture) {
+      const mobileImg = mobilePicture.querySelector('img');
+      if (mobileImg) {
+        const optimizedPic = createOptimizedPicture(mobileImg.src, mobileImg.alt, false, [{ width: '373' }]);
+        optimizedPic.querySelector('img').classList.add('visible-xs', 'lazyload');
+        moveInstrumentation(mobileImg, optimizedPic.querySelector('img'));
+        figure.append(optimizedPic);
+      }
+    }
+  }
+
+  // Create container for breadcrumbs and banner info
+  const containerDiv = document.createElement('div');
+  containerDiv.classList.add('container');
+
+  // Process breadcrumb
+  const breadcrumbsDiv = document.createElement('div');
+  breadcrumbsDiv.classList.add('breadcrumbs', 'hidden-sm', 'hidden-xs');
+  const blockJswDiv = document.createElement('div');
+  blockJswDiv.classList.add('block', 'block-jsw');
+  const contentDiv = document.createElement('div');
+  contentDiv.classList.add('content');
+
+  const breadcrumbLink = breadcrumbRow.querySelector('a');
+  if (breadcrumbLink) {
+    const homeLink = document.createElement('a');
+    homeLink.href = 'https://jswsteelstaging.jsw.in/'; // Match original HTML home link
+    homeLink.textContent = 'Home';
+    contentDiv.append(homeLink);
+
+    const splitSpan = document.createElement('span');
+    splitSpan.classList.add('split');
+    const arrowIcon = document.createElement('i');
+    arrowIcon.classList.add('fa', 'fa-arrow-right');
+    splitSpan.append(arrowIcon);
+    contentDiv.append(splitSpan);
+
+    // The original HTML shows "TMT Bars" as plain text, not a link.
+    // Assuming breadcrumbLink.textContent is the final segment text.
+    const currentTextNode = document.createTextNode(breadcrumbLink.textContent);
+    contentDiv.append(currentTextNode);
+  }
+  moveInstrumentation(breadcrumbRow, contentDiv);
+  blockJswDiv.append(contentDiv);
+  breadcrumbsDiv.append(blockJswDiv);
+  containerDiv.append(breadcrumbsDiv);
+
+  // Create banner info section
+  const bannerInfoDiv = document.createElement('div');
+  bannerInfoDiv.classList.add('banner-info');
+  const bannerInfoContainer = document.createElement('div');
+  bannerInfoContainer.classList.add('container');
+  const bannerCardDiv = document.createElement('div');
+  bannerCardDiv.classList.add('banner-card', 'os-animation', 'animated', 'fadeIn');
+  bannerCardDiv.setAttribute('data-os-animation', 'fadeIn');
+
+  // Process heading
+  const headingEl = document.createElement('h1');
+  headingEl.classList.add('os-animation', 'hd1', 'animated', 'fadeIn');
+  headingEl.setAttribute('data-os-animation', 'fadeIn');
+  headingEl.setAttribute('data-os-animation-delay', '.5s');
+  moveInstrumentation(headingRow, headingEl);
+  while (headingRow.firstChild) headingEl.append(headingRow.firstChild);
+  bannerCardDiv.append(headingEl);
+
+  // Process description
+  const descriptionEl = document.createElement('p');
+  descriptionEl.classList.add('os-animation', 'animated', 'fadeIn');
+  descriptionEl.setAttribute('data-os-animation', 'fadeIn');
+  descriptionEl.setAttribute('data-os-animation-delay', '.7s');
+  moveInstrumentation(descriptionRow, descriptionEl);
+  while (descriptionRow.firstChild) descriptionEl.append(descriptionRow.firstChild);
+  bannerCardDiv.append(descriptionEl);
+
+  bannerInfoContainer.append(bannerCardDiv);
+  bannerInfoDiv.append(bannerInfoContainer);
+
+  block.textContent = '';
+  block.classList.add('op1');
+  block.append(figure, containerDiv, bannerInfoDiv);
+}

@@ -1,16 +1,16 @@
 {
   "definitions": [
     {
-      "title": "Manufactures",
-      "id": "manufactures",
+      "title": "Hero-Steel",
+      "id": "hero-steel",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block",
             "template": {
-              "filter": "manufactures",
-              "model": "manufactures",
-              "name": "Manufactures"
+              "filter": "hero-steel",
+              "model": "hero-steel",
+              "name": "Hero-Steel"
             }
           }
         }
@@ -19,30 +19,30 @@
   ],
   "models": [
     {
-      "id": "manufactures",
+      "id": "hero-steel",
       "fields": [
+        {
+          "component": "reference",
+          "label": "Image Desktop",
+          "name": "image-desktop",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Image Mobile",
+          "name": "image-mobile",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Breadcrumb",
+          "name": "breadcrumb",
+          "valueType": "string"
+        },
         {
           "component": "text",
           "label": "Heading",
           "name": "heading",
-          "valueType": "string"
-        },
-        {
-          "component": "reference",
-          "label": "Hero Image Desktop",
-          "name": "hero-image-desktop",
-          "valueType": "string"
-        },
-        {
-          "component": "reference",
-          "label": "Hero Image Mobile",
-          "name": "hero-image-mobile",
-          "valueType": "string"
-        },
-        {
-          "component": "reference",
-          "label": "Image",
-          "name": "image",
           "valueType": "string"
         },
         {
@@ -56,7 +56,7 @@
   ],
   "filters": [
     {
-      "id": "manufactures"
+      "id": "hero-steel"
     }
   ]
 }

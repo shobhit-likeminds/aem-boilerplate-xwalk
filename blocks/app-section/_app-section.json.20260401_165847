@@ -51,7 +51,7 @@
         {
           "component": "container",
           "item": "app-item",
-          "label": "Applications List",
+          "label": "Applications",
           "name": "applications"
         }
       ]

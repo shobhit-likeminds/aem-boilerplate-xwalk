@@ -2,7 +2,12 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const [headingRow, imageRow, ...appItemRows] = [...block.children];
+  // Block structure:
+  // block.children[0]: Heading row
+  // block.children[1]: Image row
+  // block.children[2...N]: Application item rows
+
+  const [headingRow, imageRow, ...applicationRows] = [...block.children];
 
   const container = document.createElement('div');
   container.classList.add('container');
@@ -10,72 +15,69 @@ export default function decorate(block) {
   const row = document.createElement('div');
   row.classList.add('row');
 
+  // Left column for heading and applications list
   const leftCol = document.createElement('div');
   leftCol.classList.add('col-md-6');
 
   // Heading
-  const headingEl = document.createElement('h3');
-  moveInstrumentation(headingRow, headingEl);
-  headingEl.classList.add('hd2', 'os-animation', 'animated', 'fadeInUp');
-  headingEl.setAttribute('data-os-animation', 'fadeInUp');
-  headingEl.setAttribute('data-os-animation-delay', '.2s');
-  // The headingRow contains a div, which contains the text. We need to append the text directly.
-  const headingTextDiv = headingRow.querySelector('div');
-  if (headingTextDiv) {
-    while (headingTextDiv.firstChild) headingEl.append(headingTextDiv.firstChild);
-  }
-  leftCol.append(headingEl);
+  // The heading row has only one cell: block.children[0].firstElementChild
+  const headingCell = headingRow.firstElementChild;
+  const h3 = document.createElement('h3');
+  moveInstrumentation(headingRow, h3);
+  h3.classList.add('hd2', 'os-animation', 'animated', 'fadeInUp');
+  h3.setAttribute('data-os-animation', 'fadeInUp');
+  h3.setAttribute('data-os-animation-delay', '.2s');
+  while (headingCell.firstChild) h3.append(headingCell.firstChild);
+  leftCol.append(h3);
 
-  // App List
-  const appList = document.createElement('ul');
-  appList.classList.add('app-list');
+  // Applications List
+  const ul = document.createElement('ul');
+  ul.classList.add('app-list');
 
-  appItemRows.forEach((rowEl) => {
+  applicationRows.forEach((appRow) => {
     const li = document.createElement('li');
-    moveInstrumentation(rowEl, li);
+    moveInstrumentation(appRow, li);
     li.classList.add('os-animation', 'animated', 'fadeInUp');
     li.setAttribute('data-os-animation', 'fadeInUp');
     li.setAttribute('data-os-animation-delay', '0.2s');
 
-    // Each app item row has one cell containing the text/link
-    const cells = [...rowEl.children];
-    const textCell = cells.find(cell => cell.textContent.trim() !== ''); // Find cell with text
-
-    if (textCell) {
-      const existingLink = textCell.querySelector('a');
-      if (existingLink) {
-        li.append(existingLink);
-      } else {
-        // If there's no link, create one and wrap the text
-        const link = document.createElement('a');
-        link.href = 'javascript:;'; // Use a placeholder for non-linked items
-        link.classList.add('nolink');
-        while (textCell.firstChild) link.append(textCell.firstChild);
-        li.append(link);
-      }
+    // Each appRow has only one cell: appRow.firstElementChild
+    const appTextCell = appRow.firstElementChild;
+    const foundLink = appTextCell.querySelector('a');
+    const link = document.createElement('a');
+    if (foundLink) {
+      link.href = foundLink.href;
+      link.classList.add('nolink');
+      moveInstrumentation(appTextCell, link);
+      while (appTextCell.firstChild) link.append(appTextCell.firstChild);
+    } else {
+      link.href = 'javascript:;'; // Default href if no link is found
+      link.classList.add('nolink');
+      moveInstrumentation(appTextCell, link);
+      while (appTextCell.firstChild) link.append(appTextCell.firstChild);
     }
-    appList.append(li);
+    li.append(link);
+    ul.append(li);
   });
-  leftCol.append(appList);
+  leftCol.append(ul);
   row.append(leftCol);
 
-  // Image Column
+  // Right column for image
   const rightCol = document.createElement('div');
   rightCol.classList.add('col-md-6', 'hidden-sm', 'hidden-xs', 'os-animation', 'animated', 'fadeInUp');
   rightCol.setAttribute('data-os-animation', 'fadeInUp');
   rightCol.setAttribute('data-os-animation-delay', '.2s');
 
-  // The imageRow contains a div, which contains the picture.
-  const imageCell = imageRow.querySelector('div');
-  const picture = imageCell ? imageCell.querySelector('picture') : null;
-
+  // The imageRow has only one cell: imageRow.firstElementChild
+  const imageCell = imageRow.firstElementChild;
+  const picture = imageCell.querySelector('picture');
   if (picture) {
     const img = picture.querySelector('img');
     if (img) {
       const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
       moveInstrumentation(img, optimizedPic.querySelector('img'));
       rightCol.append(optimizedPic);
-      optimizedPic.querySelector('img').classList.add('img-responsive'); // Apply class to the img inside picture
+      optimizedPic.querySelector('img').classList.add('img-responsive');
     }
   }
   row.append(rightCol);

@@ -34,21 +34,21 @@
           "valueType": "string"
         },
         {
-          "component": "aem-content",
-          "label": "Breadcrumb",
-          "name": "breadcrumb",
-          "valueType": "string"
-        },
-        {
           "component": "text",
           "label": "Heading",
           "name": "heading",
           "valueType": "string"
         },
         {
-          "component": "richtext",
-          "label": "Description",
-          "name": "description",
+          "component": "aem-content",
+          "label": "Video Link",
+          "name": "video-link",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Video Icon",
+          "name": "video-icon",
           "valueType": "string"
         }
       ]

@@ -1,0 +1,5 @@
+@import url("https://group.jsw.in/sites/all/themes/jsw_theme/styles/vendor.css?tcicge");
+
+@import url("https://group.jsw.in/sites/all/themes/jsw_theme/styles/main.css?tcicge");
+
+@import url("https://group.jsw.in/sites/all/themes/jsw_theme/styles/override.css?tcicge");

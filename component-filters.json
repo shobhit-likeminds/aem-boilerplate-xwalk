@@ -91,7 +91,8 @@
   {
     "id": "container-menu-top",
     "components": [
-      "menu-item"
+      "menu-item",
+      "social-link"
     ]
   },
   {
@@ -134,14 +135,13 @@
     "id": "footer-mobile",
     "components": [
       "footer-link",
-      "social-link"
+      "footer-social-link"
     ]
   },
   {
     "id": "footer",
     "components": [
-      "footer-link-group",
-      "footer-social-link"
+      "footer-column"
     ]
   },
   {
