@@ -1,0 +1,85 @@
+{
+  "definitions": [
+    {
+      "title": "Footer",
+      "id": "footer",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "footer",
+              "model": "footer",
+              "name": "Footer"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Footer-Column",
+      "id": "footer-column",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "footer-column",
+              "name": "Footer-Column"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "footer",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Logo",
+          "name": "logo",
+          "valueType": "string"
+        },
+        {
+          "component": "container",
+          "item": "footer-column",
+          "label": "Columns",
+          "name": "columns"
+        },
+        {
+          "component": "richtext",
+          "label": "Copyright",
+          "name": "copyright",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Privacy Policy Link",
+          "name": "privacy-policy-link",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "footer-column",
+      "fields": [
+        {
+          "component": "richtext",
+          "label": "Content",
+          "name": "content",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "footer",
+      "components": [
+        "footer-column"
+      ]
+    }
+  ]
+}

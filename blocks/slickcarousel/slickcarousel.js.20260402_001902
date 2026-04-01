@@ -1,0 +1,79 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  // The BlockJson model indicates an empty block.
+  // The original HTML also shows an empty block structure.
+  // Therefore, the decorate function should not attempt to build a carousel
+  // or process any children, as there are none expected by the model.
+
+  // If the intention was to have a carousel with content, the BlockJson
+  // and original HTML would need to define that structure.
+  // As per the provided BlockJson and HTML, the block is empty.
+
+  // If this block is intended to be a container for other blocks or content
+  // that is added dynamically *after* decorate runs, then this function
+  // might only need to add base classes.
+
+  // Based on the provided original HTML, the block already has these classes.
+  // The decorate function should not re-add classes that are already present
+  // in the initial HTML structure.
+  // block.classList.add('carousel', 'panelcontainer');
+
+  // The provided BlockJson has an empty 'fields' array and empty 'components' array.
+  // This means the block is not expected to contain any content that needs
+  // to be processed into carousel slides.
+
+  // The original HTML also shows an empty <div class="slick-track"></div>
+  // which further confirms there are no initial slides.
+
+  // Therefore, the extensive carousel construction logic and event listeners
+  // are not applicable based on the provided model and initial HTML.
+
+  // If the block is meant to be a wrapper for a pre-rendered carousel
+  // or a carousel that loads content dynamically from an API,
+  // then the decorate function might only need to ensure the top-level
+  // container is correctly set up.
+
+  // Given the BlockJson and original HTML, the block is already structured
+  // as a carousel container with no dynamic content processing needed
+  // from block.children.
+
+  // The only remaining part that might be relevant is image optimization
+  // if images are added to this block dynamically later.
+  // However, since the block is empty according to the model,
+  // this part is also unlikely to be needed immediately.
+  // If images are added dynamically, they would need to be processed
+  // at the time of their addition, not necessarily by this decorate function.
+
+  // For now, based strictly on the provided BlockJson and original HTML,
+  // the block is an empty container. No dynamic JS logic is required
+  // to build or manipulate its content.
+
+  // If the block is intended to be a client-side rendered carousel,
+  // the BlockJson and original HTML would need to reflect that
+  // by providing data attributes or a structure for the JS to consume.
+
+  // As the block is empty, no further action is needed.
+  // The provided JS was attempting to build a carousel from block.children,
+  // but block.children is empty according to the model.
+
+  // The original HTML already contains the full carousel structure,
+  // so the JS should not be rebuilding it.
+  // The only interactive elements are the prev/next buttons,
+  // but without content, they don't have a function.
+  // If content is added dynamically, the carousel logic would need to be
+  // re-evaluated to initialize *after* content is present.
+
+  // For now, based on the provided inputs, the block is a static container.
+  // No JS is needed to "decorate" it beyond what's already in the HTML.
+
+  // If there were any images added dynamically to this block *after*
+  // the initial load, this part would be relevant.
+  // However, since the block starts empty, this is not immediately applicable.
+  block.querySelectorAll('picture > img').forEach((img) => {
+    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+    moveInstrumentation(img, optimizedPic.querySelector('img'));
+    img.closest('picture').replaceWith(optimizedPic);
+  });
+}

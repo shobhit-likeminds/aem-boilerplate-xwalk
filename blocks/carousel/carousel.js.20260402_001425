@@ -1,0 +1,181 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  const carouselContainer = document.createElement('div');
+  // The original HTML has 'cmp-carousel' on the outer div, and 'cmp-carousel__container' on the inner div.
+  // The generated JS puts both on the inner div. Let's align with the original HTML structure.
+  // The outer div will get 'cmp-carousel' and the block classes.
+  // The inner div (carouselContainer) will get 'cmp-carousel__container' and slick classes.
+  carouselContainer.classList.add('cmp-carousel__container', 'slick-initialized', 'slick-slider', 'slick-dotted');
+  carouselContainer.setAttribute('data-component', 'carousel'); // This attribute is on the outer div in original HTML
+  carouselContainer.setAttribute('data-show-infinite-scroll', 'false');
+  carouselContainer.setAttribute('data-show-arrows', 'true');
+  carouselContainer.setAttribute('data-show-dots', 'true');
+  carouselContainer.setAttribute('data-item-count-per-slide', '1');
+  carouselContainer.setAttribute('data-auto-play-is-enabled', 'true');
+  carouselContainer.setAttribute('data-auto-play-speed-in-ms', '3000');
+  carouselContainer.setAttribute('data-reveal-next-item-partially', 'false');
+  carouselContainer.setAttribute('data-show-center-zoom', 'false');
+  carouselContainer.setAttribute('data-slides-to-scroll', '1');
+  carouselContainer.setAttribute('data-initialized', 'true');
+
+  const prevButton = document.createElement('button');
+  prevButton.classList.add('slick-prev', 'slick-arrow', 'slick-disabled');
+  prevButton.setAttribute('aria-label', 'Previous');
+  prevButton.setAttribute('type', 'button');
+  prevButton.setAttribute('aria-disabled', 'true');
+  prevButton.textContent = 'Previous';
+
+  const slickList = document.createElement('div');
+  slickList.classList.add('slick-list', 'draggable');
+
+  const slickTrack = document.createElement('div');
+  slickTrack.classList.add('slick-track');
+  slickTrack.style.opacity = '1';
+  // Removed hardcoded width and transform. These should be managed by a proper carousel library or dynamic JS.
+  // For a basic implementation, we'll let the slides dictate the width.
+  // slickTrack.style.width = '2088px';
+  // slickTrack.style.transform = 'translate3d(0px, 0px, 0px)';
+
+  slickList.append(slickTrack);
+
+  const nextButton = document.createElement('button');
+  nextButton.classList.add('slick-next', 'slick-arrow');
+  nextButton.setAttribute('aria-label', 'Next');
+  nextButton.setAttribute('type', 'button');
+  nextButton.setAttribute('aria-disabled', 'false');
+  nextButton.textContent = 'Next';
+
+  const slickDots = document.createElement('ul');
+  slickDots.classList.add('slick-dots');
+  slickDots.setAttribute('role', 'tablist');
+
+  // Move existing content into slickTrack and create dots
+  // No row.children[n] violation here as we are moving the entire row content.
+  [...block.children].forEach((row, index) => {
+    const slideDiv = document.createElement('div');
+    slideDiv.classList.add('slick-slide'); // Assuming each row is a slide
+    moveInstrumentation(row, slideDiv);
+
+    // Move all children from the row into the slideDiv
+    while (row.firstChild) {
+      slideDiv.append(row.firstChild);
+    }
+    slickTrack.append(slideDiv);
+
+    const dotLi = document.createElement('li');
+    dotLi.setAttribute('role', 'presentation');
+    if (index === 0) {
+      dotLi.classList.add('slick-active');
+    }
+
+    const dotButton = document.createElement('button');
+    dotButton.setAttribute('type', 'button');
+    dotButton.setAttribute('role', 'tab');
+    dotButton.setAttribute('id', `slick-slide-control${index}`);
+    dotButton.setAttribute('aria-controls', `slick-slide${index}`);
+    dotButton.setAttribute('aria-label', `${index + 1} of ${block.children.length}`);
+    dotButton.setAttribute('tabindex', index === 0 ? '0' : '-1');
+    dotButton.setAttribute('aria-selected', index === 0 ? 'true' : 'false');
+    dotButton.textContent = `${index + 1}`;
+    dotLi.append(dotButton);
+    slickDots.append(dotLi);
+  });
+
+  carouselContainer.append(prevButton, slickList, nextButton, slickDots);
+
+  // The original HTML structure has an outer div with 'cmp-carousel' and block classes,
+  // and an inner div with 'cmp-carousel__container' and slick classes.
+  // Let's create that outer div.
+  const outerCarouselDiv = document.createElement('div');
+  outerCarouselDiv.classList.add('cmp-carousel'); // From original HTML
+  outerCarouselDiv.append(carouselContainer);
+
+  block.textContent = '';
+  block.classList.add('slickcarousel', 'carousel', 'panelcontainer'); // These are block classes from original HTML
+  block.append(outerCarouselDiv); // Append the outer div containing the carousel structure
+
+  // Image optimization
+  block.querySelectorAll('picture > img').forEach((img) => {
+    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+    moveInstrumentation(img, optimizedPic.querySelector('img'));
+    img.closest('picture').replaceWith(optimizedPic);
+  });
+
+  // Basic carousel functionality (for demonstration, a full slick.js implementation is complex)
+  let currentIndex = 0;
+  const slides = [...slickTrack.children];
+  const totalSlides = slides.length;
+
+  const updateCarousel = () => {
+    slides.forEach((slide, i) => {
+      slide.style.display = (i === currentIndex) ? 'block' : 'none';
+      // For a proper carousel, you'd typically use transform for movement, not display.
+      // This is a simplified version.
+    });
+
+    [...slickDots.children].forEach((dot, i) => {
+      if (i === currentIndex) {
+        dot.classList.add('slick-active');
+        dot.querySelector('button').setAttribute('tabindex', '0');
+        dot.querySelector('button').setAttribute('aria-selected', 'true');
+      } else {
+        dot.classList.remove('slick-active');
+        dot.querySelector('button').setAttribute('tabindex', '-1');
+        dot.querySelector('button').setAttribute('aria-selected', 'false');
+      }
+    });
+
+    if (currentIndex === 0) {
+      prevButton.classList.add('slick-disabled');
+      prevButton.setAttribute('aria-disabled', 'true');
+    } else {
+      prevButton.classList.remove('slick-disabled');
+      prevButton.setAttribute('aria-disabled', 'false');
+    }
+
+    if (currentIndex === totalSlides - 1) {
+      nextButton.classList.add('slick-disabled');
+      nextButton.setAttribute('aria-disabled', 'true');
+    } else {
+      nextButton.classList.remove('slick-disabled');
+      nextButton.setAttribute('aria-disabled', 'false');
+    }
+  };
+
+  prevButton.addEventListener('click', () => {
+    // Check data-show-infinite-scroll for behavior
+    const infiniteScrollEnabled = carouselContainer.getAttribute('data-show-infinite-scroll') === 'true';
+    if (infiniteScrollEnabled) {
+      currentIndex = (currentIndex > 0) ? currentIndex - 1 : totalSlides - 1;
+    } else {
+      currentIndex = Math.max(0, currentIndex - 1);
+    }
+    updateCarousel();
+  });
+
+  nextButton.addEventListener('click', () => {
+    // Check data-show-infinite-scroll for behavior
+    const infiniteScrollEnabled = carouselContainer.getAttribute('data-show-infinite-scroll') === 'true';
+    if (infiniteScrollEnabled) {
+      currentIndex = (currentIndex < totalSlides - 1) ? currentIndex + 1 : 0;
+    } else {
+      currentIndex = Math.min(totalSlides - 1, currentIndex + 1);
+    }
+    updateCarousel();
+  });
+
+  slickDots.addEventListener('click', (event) => {
+    const targetButton = event.target.closest('button[role="tab"]');
+    if (targetButton) {
+      const dotIndex = [...slickDots.children].findIndex(li => li.contains(targetButton));
+      if (dotIndex !== -1) {
+        currentIndex = dotIndex;
+        updateCarousel();
+      }
+    }
+  });
+
+  updateCarousel(); // Initialize carousel display
+}

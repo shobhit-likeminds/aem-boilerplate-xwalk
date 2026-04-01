@@ -83,7 +83,16 @@
         "article-listing",
         "space-adder",
         "footer-brand",
-        "sticky-bottom-nav"
+        "sticky-bottom-nav",
+        "cmp-header",
+        "cmp-search",
+        "slickcarousel",
+        "productcategory",
+        "teaser",
+        "dynamiccardsvertwo",
+        "popular-products",
+        "footprint",
+        "cta-text"
       ]
     }
   ]

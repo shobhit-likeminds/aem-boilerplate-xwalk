@@ -1,0 +1,291 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  block.classList.add('carousel', 'panelcontainer', 'main-banner');
+
+  const carouselWrapper = document.createElement('div');
+  carouselWrapper.classList.add('cmp-carousel', 'cmp-carousel__container', 'slick-initialized', 'slick-slider', 'slick-dotted');
+  carouselWrapper.setAttribute('data-placeholder-text', 'false');
+  carouselWrapper.setAttribute('data-cmp-is', 'carousel');
+  carouselWrapper.setAttribute('data-show-infinite-scroll', 'false');
+  carouselWrapper.setAttribute('data-show-arrows', 'true');
+  carouselWrapper.setAttribute('data-show-dots', 'true');
+  carouselWrapper.setAttribute('data-item-count-per-slide', '1');
+  carouselWrapper.setAttribute('data-auto-play-is-enabled', 'false');
+  carouselWrapper.setAttribute('data-auto-play-speed-in-ms', '2000');
+  carouselWrapper.setAttribute('data-reveal-next-item-partially', 'false');
+  carouselWrapper.setAttribute('data-component', 'carousel');
+  carouselWrapper.setAttribute('aria-atomic', 'false');
+
+  const slickList = document.createElement('div');
+  slickList.classList.add('slick-list', 'draggable');
+  const slickTrack = document.createElement('div');
+  slickTrack.classList.add('slick-track');
+  slickTrack.style.opacity = '1';
+
+  const slides = [...block.children];
+  const totalSlides = slides.length;
+
+  const dots = document.createElement('ul');
+  dots.classList.add('slick-dots');
+  dots.setAttribute('role', 'tablist');
+
+  slides.forEach((row, index) => {
+    const cells = [...row.children];
+
+    // Content detection for cells
+    const logoImageCell = cells.find(cell => cell.querySelector('picture') && cell.textContent.trim() === '');
+    const logoAltCell = cells.find(cell => !cell.querySelector('picture') && !cell.querySelector('a') && cell.textContent.trim().includes('Logo Alt'));
+    const titleCell = cells.find(cell => !cell.querySelector('picture') && !cell.querySelector('a') && cell.textContent.trim().includes('Title'));
+    const subtitleCell = cells.find(cell => !cell.querySelector('picture') && !cell.querySelector('a') && cell.textContent.trim().includes('Subtitle'));
+    const backgroundImageCell = cells.find(cell => cell.querySelector('picture') && cell.textContent.trim() === '' && cell !== logoImageCell && cell.nextElementSibling?.querySelector('picture') !== logoImageCell); // Heuristic to distinguish from main image
+    const mainImageCell = cells.find(cell => cell.querySelector('picture') && cell.textContent.trim() === '' && cell !== logoImageCell && cell !== backgroundImageCell && cell.nextElementSibling?.querySelector('picture') !== logoImageCell); // Heuristic
+    const mainImageMobileCell = cells.find(cell => cell.querySelector('picture') && cell.textContent.trim() === '' && cell !== logoImageCell && cell !== backgroundImageCell && cell !== mainImageCell); // Last picture cell
+    const buttonLinkCell = cells.find(cell => cell.querySelector('a'));
+    const buttonTextCell = cells.find(cell => !cell.querySelector('picture') && !cell.querySelector('a') && cell.textContent.trim().includes('Button Text'));
+
+    const slideItem = document.createElement('div');
+    slideItem.classList.add('cmp-carousel__item', 'slick-slide');
+    if (index === 0) {
+      slideItem.classList.add('cmp-carousel__item--active', 'slick-current', 'slick-active');
+      slideItem.setAttribute('aria-hidden', 'false');
+      slideItem.setAttribute('tabindex', '0');
+    } else {
+      slideItem.setAttribute('aria-hidden', 'true');
+      slideItem.setAttribute('tabindex', '-1');
+    }
+    slideItem.setAttribute('id', `slick-slide0${index}`);
+    slideItem.setAttribute('role', 'tabpanel');
+    slideItem.setAttribute('aria-roledescription', 'slide');
+    slideItem.setAttribute('aria-label', `Slide ${index + 1} of ${totalSlides}`);
+    slideItem.setAttribute('data-cmp-hook-carousel', 'item');
+    slideItem.setAttribute('data-slick-index', index.toString());
+    slideItem.setAttribute('aria-describedby', `slick-slide-control0${index}`);
+
+    const bannerDiv = document.createElement('div');
+    bannerDiv.classList.add('banner', 'cmp-banner--logo');
+
+    const cmpBanner = document.createElement('div');
+    cmpBanner.classList.add('cmp-banner');
+    cmpBanner.setAttribute('data-component', 'banner');
+    cmpBanner.setAttribute('data-initialized', 'true');
+
+    if (backgroundImageCell) {
+      const backgroundImage = backgroundImageCell.querySelector('picture > img');
+      if (backgroundImage) {
+        cmpBanner.style.backgroundImage = `url("${backgroundImage.src}")`;
+      }
+    }
+
+    const cmpBannerContent = document.createElement('div');
+    cmpBannerContent.classList.add('cmp-banner__content');
+
+    const logoItemDiv = document.createElement('div');
+    logoItemDiv.classList.add('cmp-banner__item-logo');
+    if (logoImageCell) {
+      const logoImg = logoImageCell.querySelector('picture > img');
+      if (logoImg) {
+        const optimizedLogoPic = createOptimizedPicture(logoImg.src, logoAltCell?.textContent.trim() || '', false, [{ width: '750' }]);
+        moveInstrumentation(logoImg, optimizedLogoPic.querySelector('img'));
+        logoItemDiv.append(optimizedLogoPic);
+      }
+    }
+    cmpBannerContent.append(logoItemDiv);
+
+    if (titleCell) {
+      const titleEl = document.createElement('h2');
+      titleEl.classList.add('cmp-banner__title');
+      moveInstrumentation(titleCell, titleEl);
+      titleEl.textContent = titleCell.textContent.trim();
+      cmpBannerContent.append(titleEl);
+    }
+
+    if (subtitleCell) {
+      const subtitleEl = document.createElement('h3');
+      subtitleEl.classList.add('cmp-banner__sub-title');
+      moveInstrumentation(subtitleCell, subtitleEl);
+      subtitleEl.textContent = subtitleCell.textContent.trim();
+      cmpBannerContent.append(subtitleEl);
+    }
+
+    const mainImagePicture = document.createElement('picture');
+    mainImagePicture.classList.add('w-100', 'd-block');
+
+    let mobileSrc = '';
+    if (mainImageMobileCell) {
+      const mainImageMobile = mainImageMobileCell.querySelector('picture > img');
+      if (mainImageMobile) {
+        const sourceMobile = document.createElement('source');
+        sourceMobile.setAttribute('media', '(max-width: 600px)');
+        sourceMobile.setAttribute('srcset', mainImageMobile.src);
+        mainImagePicture.append(sourceMobile);
+        mobileSrc = mainImageMobile.src;
+      }
+    }
+
+    if (mainImageCell) {
+      const mainImage = mainImageCell.querySelector('picture > img');
+      if (mainImage) {
+        const imgEl = document.createElement('img');
+        imgEl.src = mainImage.src;
+        imgEl.alt = mainImage.alt;
+        imgEl.classList.add('cmp-banner__image', 'w-100', 'd-block');
+        imgEl.setAttribute('fetchpriority', 'high');
+        imgEl.setAttribute('data-desktop-src', mainImage.src);
+        if (mobileSrc) {
+          imgEl.setAttribute('data-mobile-src', mobileSrc);
+        }
+        const optimizedMainPic = createOptimizedPicture(imgEl.src, imgEl.alt, false, [{ width: '1366' }]);
+        moveInstrumentation(imgEl, optimizedMainPic.querySelector('img'));
+        mainImagePicture.append(optimizedMainPic);
+      }
+    }
+    cmpBannerContent.append(mainImagePicture);
+
+    const buttonDiv = document.createElement('div');
+    buttonDiv.classList.add('null', 'button', 'cmp-button--primary-anchor');
+    if (buttonLinkCell) {
+      const buttonLink = buttonLinkCell.querySelector('a');
+      if (buttonLink) {
+        const buttonAnchor = document.createElement('a');
+        buttonAnchor.classList.add('cmp-button');
+        buttonAnchor.href = buttonLink.href;
+        buttonAnchor.setAttribute('data-request', 'true');
+        buttonAnchor.setAttribute('tabindex', index === 0 ? '0' : '-1');
+
+        const buttonSpan = document.createElement('span');
+        buttonSpan.classList.add('cmp-button__text');
+        if (buttonTextCell) {
+          moveInstrumentation(buttonTextCell, buttonSpan);
+          buttonSpan.textContent = buttonTextCell.textContent.trim();
+        } else {
+          buttonSpan.textContent = buttonLink.textContent.trim(); // Fallback to link text
+        }
+        buttonAnchor.append(buttonSpan);
+        buttonDiv.append(buttonAnchor);
+      }
+    }
+    cmpBannerContent.append(buttonDiv);
+
+    cmpBanner.append(cmpBannerContent);
+    bannerDiv.append(cmpBanner);
+    slideItem.append(bannerDiv);
+    slickTrack.append(slideItem);
+
+    // Create slick dots
+    const dotLi = document.createElement('li');
+    dotLi.setAttribute('role', 'presentation');
+    if (index === 0) {
+      dotLi.classList.add('slick-active');
+    }
+    const dotButton = document.createElement('button');
+    dotButton.setAttribute('type', 'button');
+    dotButton.setAttribute('role', 'tab');
+    dotButton.setAttribute('id', `slick-slide-control0${index}`);
+    dotButton.setAttribute('aria-controls', `slick-slide0${index}`);
+    dotButton.setAttribute('aria-label', `${index + 1} of ${totalSlides}`);
+    dotButton.setAttribute('tabindex', index === 0 ? '0' : '-1');
+    if (index === 0) {
+      dotButton.setAttribute('aria-selected', 'true');
+    }
+    dotButton.textContent = (index + 1).toString();
+    dotLi.append(dotButton);
+    dots.append(dotLi);
+  });
+
+  slickList.append(slickTrack);
+  carouselWrapper.append(slickList);
+
+  const prevButton = document.createElement('button');
+  prevButton.classList.add('slick-prev', 'slick-arrow', 'slick-disabled');
+  prevButton.setAttribute('aria-label', 'Previous');
+  prevButton.setAttribute('type', 'button');
+  prevButton.setAttribute('aria-disabled', 'true');
+  prevButton.textContent = 'Previous';
+  carouselWrapper.prepend(prevButton);
+
+  const nextButton = document.createElement('button');
+  nextButton.classList.add('slick-next', 'slick-arrow');
+  nextButton.setAttribute('aria-label', 'Next');
+  nextButton.setAttribute('type', 'button');
+  nextButton.setAttribute('aria-disabled', 'false');
+  nextButton.textContent = 'Next';
+  carouselWrapper.append(nextButton);
+
+  carouselWrapper.append(dots);
+
+  block.textContent = '';
+  block.append(carouselWrapper);
+
+  // Add event listeners for navigation
+  let currentSlide = 0;
+
+  const updateCarousel = () => {
+    // Calculate transform percentage based on current slide and total slides
+    slickTrack.style.transform = `translate3d(-${currentSlide * 100}%, 0px, 0px)`;
+    [...slickTrack.children].forEach((item, i) => {
+      if (i === currentSlide) {
+        item.classList.add('cmp-carousel__item--active', 'slick-current', 'slick-active');
+        item.setAttribute('aria-hidden', 'false');
+        item.setAttribute('tabindex', '0');
+      } else {
+        item.classList.remove('cmp-carousel__item--active', 'slick-current', 'slick-active');
+        item.setAttribute('aria-hidden', 'true');
+        item.setAttribute('tabindex', '-1');
+      }
+    });
+
+    [...dots.children].forEach((dot, i) => {
+      if (i === currentSlide) {
+        dot.classList.add('slick-active');
+        dot.querySelector('button').setAttribute('aria-selected', 'true');
+        dot.querySelector('button').setAttribute('tabindex', '0');
+      } else {
+        dot.classList.remove('slick-active');
+        dot.querySelector('button').setAttribute('aria-selected', 'false');
+        dot.querySelector('button').setAttribute('tabindex', '-1');
+      }
+    });
+
+    if (currentSlide === 0) {
+      prevButton.classList.add('slick-disabled');
+      prevButton.setAttribute('aria-disabled', 'true');
+    } else {
+      prevButton.classList.remove('slick-disabled');
+      prevButton.setAttribute('aria-disabled', 'false');
+    }
+
+    if (currentSlide === totalSlides - 1) {
+      nextButton.classList.add('slick-disabled');
+      nextButton.setAttribute('aria-disabled', 'true');
+    } else {
+      nextButton.classList.remove('slick-disabled');
+      nextButton.setAttribute('aria-disabled', 'false');
+    }
+  };
+
+  prevButton.addEventListener('click', () => {
+    if (currentSlide > 0) {
+      currentSlide--;
+      updateCarousel();
+    }
+  });
+
+  nextButton.addEventListener('click', () => {
+    if (currentSlide < totalSlides - 1) {
+      currentSlide++;
+      updateCarousel();
+    }
+  });
+
+  [...dots.children].forEach((dot, index) => {
+    dot.querySelector('button').addEventListener('click', () => {
+      currentSlide = index;
+      updateCarousel();
+    });
+  });
+
+  // Initial update
+  updateCarousel();
+}

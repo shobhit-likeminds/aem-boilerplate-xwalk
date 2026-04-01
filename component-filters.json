@@ -48,7 +48,16 @@
       "article-listing",
       "space-adder",
       "footer-brand",
-      "sticky-bottom-nav"
+      "sticky-bottom-nav",
+      "cmp-header",
+      "cmp-search",
+      "slickcarousel",
+      "productcategory",
+      "teaser",
+      "dynamiccardsvertwo",
+      "popular-products",
+      "footprint",
+      "cta-text"
     ]
   },
   {
@@ -84,21 +93,35 @@
     ]
   },
   {
+    "id": "button"
+  },
+  {
     "id": "cards",
     "components": [
       "card"
     ]
   },
   {
-    "id": "carousel",
-    "components": [
-      "carouselItem"
-    ]
+    "id": "carousel"
   },
   {
     "id": "category-carousel",
     "components": [
       "category-carousel-item"
+    ]
+  },
+  {
+    "id": "cmp-header",
+    "components": [
+      "cmp-navigation-item",
+      "cmp-policy-link",
+      "cmp-social-link"
+    ]
+  },
+  {
+    "id": "cmp-search",
+    "components": [
+      "cmp-search-item"
     ]
   },
   {
@@ -124,9 +147,18 @@
     ]
   },
   {
+    "id": "cta-text"
+  },
+  {
     "id": "delightfulDelicacies",
     "components": [
       "category"
+    ]
+  },
+  {
+    "id": "dynamiccardsvertwo",
+    "components": [
+      "recipe-card"
     ]
   },
   {
@@ -184,7 +216,15 @@
   {
     "id": "footer",
     "components": [
-      "footer-column"
+      "footer-navigation-link",
+      "footer-social-link",
+      "footer-title-link"
+    ]
+  },
+  {
+    "id": "footprint",
+    "components": [
+      "footprint-item"
     ]
   },
   {
@@ -201,9 +241,21 @@
     "id": "manufactures"
   },
   {
+    "id": "popular-products",
+    "components": [
+      "popular-product"
+    ]
+  },
+  {
     "id": "product-list",
     "components": [
       "product"
+    ]
+  },
+  {
+    "id": "productcategory",
+    "components": [
+      "categorylist"
     ]
   },
   {
@@ -214,6 +266,12 @@
   },
   {
     "id": "search"
+  },
+  {
+    "id": "slickcarousel",
+    "components": [
+      "carousel-item"
+    ]
   },
   {
     "id": "spaceAdderVerticalPadding"
@@ -232,6 +290,12 @@
     "components": [
       "sticky-bottom-nav-item"
     ]
+  },
+  {
+    "id": "teaser"
+  },
+  {
+    "id": "text"
   },
   {
     "id": "video-banner"
