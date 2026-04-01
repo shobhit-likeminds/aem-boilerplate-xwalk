@@ -41,14 +41,14 @@
         },
         {
           "component": "reference",
-          "label": "Image Side",
-          "name": "image-side",
+          "label": "Image Box",
+          "name": "image-box",
           "valueType": "string"
         },
         {
           "component": "richtext",
-          "label": "Description",
-          "name": "description",
+          "label": "Manufac Info",
+          "name": "manufac-info",
           "valueType": "string"
         }
       ]

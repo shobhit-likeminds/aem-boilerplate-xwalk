@@ -169,8 +169,8 @@
     "fields": [
       {
         "component": "text",
-        "label": "Label",
-        "name": "label",
+        "label": "Application",
+        "name": "application",
         "valueType": "string"
       }
     ]
@@ -321,16 +321,22 @@
     "id": "container-menu-top",
     "fields": [
       {
-        "component": "container",
-        "item": "logo",
-        "label": "Logo",
-        "name": "logo"
+        "component": "reference",
+        "label": "Logo Image",
+        "name": "logo-image",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Logo Link",
+        "name": "logo-link",
+        "valueType": "string"
       },
       {
         "component": "container",
-        "item": "menu-link",
-        "label": "Menu Links",
-        "name": "menu-links"
+        "item": "menu-item",
+        "label": "Menu Items",
+        "name": "menu-items"
       },
       {
         "component": "container",
@@ -341,29 +347,12 @@
     ]
   },
   {
-    "id": "logo",
-    "fields": [
-      {
-        "component": "aem-content",
-        "label": "Logo Link",
-        "name": "link",
-        "valueType": "string"
-      },
-      {
-        "component": "reference",
-        "label": "Logo Image",
-        "name": "image",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
-    "id": "menu-link",
+    "id": "menu-item",
     "fields": [
       {
         "component": "text",
-        "label": "Label",
-        "name": "label",
+        "label": "Title",
+        "name": "title",
         "valueType": "string"
       },
       {
@@ -374,30 +363,13 @@
       },
       {
         "component": "container",
-        "item": "menu-sub-link",
-        "label": "Sub Links",
-        "name": "sub-links"
-      }
-    ]
-  },
-  {
-    "id": "menu-sub-link",
-    "fields": [
-      {
-        "component": "text",
-        "label": "Label",
-        "name": "label",
-        "valueType": "string"
-      },
-      {
-        "component": "aem-content",
-        "label": "Link",
-        "name": "link",
-        "valueType": "string"
+        "item": "menu-item",
+        "label": "Submenu Items",
+        "name": "submenu-items"
       },
       {
         "component": "reference",
-        "label": "Image",
+        "label": "Menu Image",
         "name": "image",
         "valueType": "string"
       }
@@ -408,7 +380,7 @@
     "fields": [
       {
         "component": "aem-content",
-        "label": "Social Link",
+        "label": "Link",
         "name": "link",
         "valueType": "string"
       }
@@ -729,15 +701,15 @@
     "fields": [
       {
         "component": "container",
-        "item": "social-link",
+        "item": "footer-social",
         "label": "Social Links",
-        "name": "socialLinks"
+        "name": "social"
       },
       {
         "component": "container",
         "item": "footer-link",
         "label": "Footer Links",
-        "name": "footerLinks"
+        "name": "links"
       },
       {
         "component": "text",
@@ -748,7 +720,7 @@
       {
         "component": "aem-content",
         "label": "Privacy Policy Link",
-        "name": "privacyPolicy",
+        "name": "privacy-policy",
         "valueType": "string"
       }
     ]
@@ -758,8 +730,8 @@
     "fields": [
       {
         "component": "text",
-        "label": "Text",
-        "name": "text",
+        "label": "Label",
+        "name": "label",
         "valueType": "string"
       },
       {
@@ -771,8 +743,14 @@
     ]
   },
   {
-    "id": "social-link",
+    "id": "footer-social",
     "fields": [
+      {
+        "component": "text",
+        "label": "Label",
+        "name": "label",
+        "valueType": "string"
+      },
       {
         "component": "aem-content",
         "label": "URL",
@@ -785,25 +763,19 @@
     "id": "footer",
     "fields": [
       {
+        "component": "reference",
+        "label": "Logo",
+        "name": "logo",
+        "valueType": "string"
+      },
+      {
         "component": "container",
         "item": "footer-column",
-        "label": "Footer Columns",
-        "name": "footer-columns"
+        "label": "Columns",
+        "name": "columns"
       },
       {
-        "component": "reference",
-        "label": "Logo Image",
-        "name": "logo-image",
-        "valueType": "string"
-      },
-      {
-        "component": "aem-content",
-        "label": "Logo Link",
-        "name": "logo-link",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
+        "component": "richtext",
         "label": "Copyright",
         "name": "copyright",
         "valueType": "string"
@@ -820,32 +792,9 @@
     "id": "footer-column",
     "fields": [
       {
-        "component": "text",
-        "label": "Title",
-        "name": "title",
-        "valueType": "string"
-      },
-      {
-        "component": "container",
-        "item": "footer-link",
-        "label": "Links",
-        "name": "links"
-      }
-    ]
-  },
-  {
-    "id": "footer-link",
-    "fields": [
-      {
-        "component": "text",
-        "label": "Text",
-        "name": "text",
-        "valueType": "string"
-      },
-      {
-        "component": "aem-content",
-        "label": "Link",
-        "name": "link",
+        "component": "richtext",
+        "label": "Content",
+        "name": "content",
         "valueType": "string"
       }
     ]
@@ -982,8 +931,8 @@
       },
       {
         "component": "reference",
-        "label": "Play Icon",
-        "name": "play-icon",
+        "label": "Video Icon",
+        "name": "video-icon",
         "valueType": "string"
       }
     ]
@@ -1037,14 +986,14 @@
       },
       {
         "component": "reference",
-        "label": "Image Box",
-        "name": "image-box",
+        "label": "Image Side",
+        "name": "image-side",
         "valueType": "string"
       },
       {
         "component": "richtext",
-        "label": "Manufac Info",
-        "name": "manufac-info",
+        "label": "Description",
+        "name": "description",
         "valueType": "string"
       }
     ]

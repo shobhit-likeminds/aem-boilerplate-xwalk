@@ -14,6 +14,15 @@
   font-display: swap;
 }
 
+.fa { 
+  display: inline-block;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+ }
+
 @-webkit-keyframes fa-spin {
   0% {
     -webkit-transform: rotate(0deg);
@@ -43,6 +52,10 @@
 :root .fa-flip-vertical {
   filter: none;
 }
+
+.fa-arrow-right:before { 
+  content: "\f061";
+ }
 
 #fancybox-loading { 
 	background-image: url('https://group.jsw.in/sites/all/themes/jsw_theme/styles/fancybox_sprite.png');
@@ -3583,6 +3596,10 @@ input[type="radio"][disabled], fieldset[disabled] input[type="radio"], input[typ
         display: none !important;
      } }
 
+@media (min-width: 768px) and (max-width: 991px) { .hidden-sm { 
+        display: none !important;
+     } }
+
 /*!
  *  Font Awesome 4.5.0 by @davegandy - http://fontawesome.io - @fontawesome
  *  License - http://fontawesome.io/license (Font: SIL OFL 1.1, CSS: MIT License)
@@ -3599,6 +3616,15 @@ input[type="radio"][disabled], fieldset[disabled] input[type="radio"], input[typ
     font-weight: normal;
     font-style: normal;
 }
+
+.fa { 
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+ }
 
 @-webkit-keyframes fa-spin {
     0% {
@@ -3630,6 +3656,10 @@ input[type="radio"][disabled], fieldset[disabled] input[type="radio"], input[typ
     -webkit-filter: none;
     filter: none;
 }
+
+.fa-arrow-right:before { 
+    content: "";
+ }
 
 @-webkit-keyframes ripple {
     0% {
@@ -3675,10 +3705,6 @@ input[type="radio"][disabled], fieldset[disabled] input[type="radio"], input[typ
 #fancybox-loading { 
     background-image: url('https://group.jsw.in/sites/all/themes/jsw_theme/images/fancybox_sprite@2x.png');
     background-size: 45px;
- }
-
-.MT30 { 
-    margin-top: 30px;
  }
 
 .block-has-video.op1 .video-btn,

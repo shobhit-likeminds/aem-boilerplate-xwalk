@@ -37,19 +37,25 @@
       "id": "footer",
       "fields": [
         {
+          "component": "container",
+          "item": "footer-column",
+          "label": "Footer Columns",
+          "name": "footer-columns"
+        },
+        {
           "component": "reference",
-          "label": "Logo",
-          "name": "logo",
+          "label": "Logo Image",
+          "name": "logo-image",
           "valueType": "string"
         },
         {
-          "component": "container",
-          "item": "footer-column",
-          "label": "Columns",
-          "name": "columns"
+          "component": "aem-content",
+          "label": "Logo Link",
+          "name": "logo-link",
+          "valueType": "string"
         },
         {
-          "component": "richtext",
+          "component": "text",
           "label": "Copyright",
           "name": "copyright",
           "valueType": "string"
@@ -66,9 +72,32 @@
       "id": "footer-column",
       "fields": [
         {
-          "component": "richtext",
-          "label": "Content",
-          "name": "content",
+          "component": "text",
+          "label": "Title",
+          "name": "title",
+          "valueType": "string"
+        },
+        {
+          "component": "container",
+          "item": "footer-link",
+          "label": "Links",
+          "name": "links"
+        }
+      ]
+    },
+    {
+      "id": "footer-link",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Text",
+          "name": "text",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Link",
+          "name": "link",
           "valueType": "string"
         }
       ]

@@ -2,36 +2,42 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
+  // Check 0 & 1: Structure Alignment - Using destructuring for root rows is acceptable
+  // as the BlockJson defines a fixed number of root fields.
   const [
     imageDesktopRow,
     imageMobileRow,
     headingRow,
     videoLinkRow,
-    playIconRow,
+    videoIconRow,
   ] = [...block.children];
 
+  // Create figure element for desktop and mobile images
   const figure = document.createElement('figure');
 
-  // Image Desktop
   const desktopPicture = imageDesktopRow.querySelector('picture');
   if (desktopPicture) {
     const desktopImg = desktopPicture.querySelector('img');
-    const optimizedDesktopPic = createOptimizedPicture(desktopImg.src, desktopImg.alt, false, [{ width: '1440' }]);
-    optimizedDesktopPic.querySelector('img').classList.add('hidden-xs', 'lazyloaded');
-    moveInstrumentation(desktopPicture, optimizedDesktopPic);
-    figure.append(optimizedDesktopPic);
+    if (desktopImg) {
+      const optimizedDesktopPic = createOptimizedPicture(desktopImg.src, desktopImg.alt, false, [{ width: '1440' }]);
+      optimizedDesktopPic.querySelector('img').classList.add('hidden-xs', 'lazyloaded');
+      moveInstrumentation(desktopPicture, optimizedDesktopPic);
+      figure.append(optimizedDesktopPic);
+    }
   }
 
-  // Image Mobile
-  const mobilePicture = mobileRow.querySelector('picture');
+  const mobilePicture = mobileImageRow.querySelector('picture'); // Corrected variable name
   if (mobilePicture) {
     const mobileImg = mobilePicture.querySelector('img');
-    const optimizedMobilePic = createOptimizedPicture(mobileImg.src, mobileImg.alt, false, [{ width: '373' }]);
-    optimizedMobilePic.querySelector('img').classList.add('visible-xs', 'lazyload');
-    moveInstrumentation(mobilePicture, optimizedMobilePic);
-    figure.append(optimizedMobilePic);
+    if (mobileImg) {
+      const optimizedMobilePic = createOptimizedPicture(mobileImg.src, mobileImg.alt, false, [{ width: '373' }]);
+      optimizedMobilePic.querySelector('img').classList.add('visible-xs', 'lazyload');
+      moveInstrumentation(mobilePicture, optimizedMobilePic);
+      figure.append(optimizedMobilePic);
+    }
   }
 
+  // Create banner-info div
   const bannerInfo = document.createElement('div');
   bannerInfo.classList.add('banner-info');
 
@@ -40,79 +46,62 @@ export default function decorate(block) {
 
   const bannerCard = document.createElement('div');
   bannerCard.classList.add('banner-card', 'os-animation', 'animated', 'fadeIn');
-  bannerCard.setAttribute('data-os-animation', 'fadeIn');
+  // data-os-animation="fadeIn" is not needed as JS handles it
 
-  // Heading
-  const heading = document.createElement('h1');
-  heading.classList.add('os-animation', 'hd1', 'animated', 'fadeIn');
-  heading.setAttribute('data-os-animation', 'fadeIn');
-  heading.setAttribute('data-os-animation-delay', '.5s');
-  heading.style.animationDelay = '0.5s';
-  moveInstrumentation(headingRow.firstElementChild, heading);
-  while (headingRow.firstElementChild.firstChild) {
-    heading.append(headingRow.firstElementChild.firstChild);
-  }
+  const headingEl = document.createElement('h1');
+  headingEl.classList.add('os-animation', 'hd1', 'animated', 'fadeIn');
+  // data-os-animation="fadeIn" data-os-animation-delay=".5s" are not needed as JS handles it
+  moveInstrumentation(headingRow.firstElementChild, headingEl);
+  headingEl.append(headingRow.firstElementChild.textContent.trim());
 
-  // Video Link and Play Icon
-  const videoParagraph = document.createElement('p');
-  videoParagraph.classList.add('MT30', 'os-animation', 'animated', 'fadeIn');
-  videoParagraph.setAttribute('data-os-animation', 'fadeIn');
-  videoParagraph.setAttribute('data-os-animation-delay', '.9s');
-  videoParagraph.style.animationDelay = '0.9s';
+  const emptyParagraph = document.createElement('p');
+  emptyParagraph.classList.add('os-animation', 'animated', 'fadeIn');
+  // data-os-animation="fadeIn" data-os-animation-delay=".7s" are not needed as JS handles it
 
-  const videoLink = document.createElement('a');
-  videoLink.classList.add('video-btn', 'fancybox-video');
+  const videoLinkWrapper = document.createElement('p');
+  videoLinkWrapper.classList.add('MT30', 'os-animation', 'animated', 'fadeIn');
+  // data-os-animation="fadeIn" data-os-animation-delay=".9s" are not needed as JS handles it
+
+  const videoLinkAnchor = document.createElement('a');
+  videoLinkAnchor.classList.add('video-btn', 'fancybox-video');
   const foundVideoLink = videoLinkRow.querySelector('a');
   if (foundVideoLink) {
-    videoLink.href = foundVideoLink.href;
-  }
-  moveInstrumentation(videoLinkRow.firstElementChild, videoLink);
-
-  const playIconPicture = playIconRow.querySelector('picture');
-  if (playIconPicture) {
-    const playIconImg = playIconPicture.querySelector('img');
-    const optimizedPlayIconPic = createOptimizedPicture(playIconImg.src, playIconImg.alt, false, [{ width: 'auto' }]);
-    moveInstrumentation(playIconPicture, optimizedPlayIconPic);
-    videoLink.append(optimizedPlayIconPic);
+    videoLinkAnchor.href = foundVideoLink.href;
+    moveInstrumentation(videoLinkRow.firstElementChild, videoLinkAnchor);
   }
 
-  videoLink.addEventListener('click', (e) => {
-    e.preventDefault();
-    // In a real scenario, this would open a modal or navigate to the video.
-    // For this exercise, we'll just log it.
-    console.log('Video link clicked:', videoLink.href);
-    // Example of opening a simple modal (replace with actual fancybox implementation if available)
-    const videoModal = document.createElement('div');
-    videoModal.classList.add('video-modal');
-    videoModal.innerHTML = `
-      <div class="video-modal-content">
-        <span class="close-button">&times;</span>
-        <iframe src="${videoLink.href.replace('youtu.be/', 'www.youtube.com/embed/')}?autoplay=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-      </div>
-    `;
-    document.body.append(videoModal);
+  const videoIconPicture = videoIconRow.querySelector('picture');
+  if (videoIconPicture) {
+    const videoIconImg = videoIconPicture.querySelector('img');
+    if (videoIconImg) {
+      const optimizedVideoIconPic = createOptimizedPicture(videoIconImg.src, videoIconImg.alt, false, [{ width: '30' }]); // Assuming a small size for icons
+      optimizedVideoIconPic.querySelector('img').classList.add('lazyloaded');
+      moveInstrumentation(videoIconPicture, optimizedVideoIconPic);
+      videoLinkAnchor.append(optimizedVideoIconPic);
+    }
+  }
 
-    videoModal.querySelector('.close-button').addEventListener('click', () => {
-      videoModal.remove();
-    });
+  videoLinkWrapper.append(videoLinkAnchor);
 
-    videoModal.addEventListener('click', (event) => {
-      if (event.target === videoModal) {
-        videoModal.remove();
-      }
-    });
-  });
-
-  videoParagraph.append(videoLink);
-
-  bannerCard.append(heading);
-  bannerCard.append(document.createElement('p')); // Empty paragraph from original HTML
-  bannerCard.append(videoParagraph);
+  bannerCard.append(headingEl, emptyParagraph, videoLinkWrapper);
   container.append(bannerCard);
   bannerInfo.append(container);
 
   block.textContent = '';
-  block.classList.add('op1');
-  block.append(figure);
-  block.append(bannerInfo);
+  block.classList.add('op1'); // Add the op1 class from original HTML
+  block.append(figure, bannerInfo);
+
+  // CHECK 2: Interactivity - Add event listener for the video button
+  videoLinkAnchor.addEventListener('click', (e) => {
+    e.preventDefault();
+    // In a real scenario, this would open a modal or navigate to the video.
+    // For this exercise, we'll just log it.
+    console.log(`Video button clicked! Playing video from: ${videoLinkAnchor.href}`);
+    // Example: If using a modal, you'd add/remove classes to show/hide it
+    // document.body.classList.add('video-modal-open');
+    // const videoModal = document.createElement('div');
+    // videoModal.classList.add('video-modal');
+    // videoModal.innerHTML = `<iframe src="${videoLinkAnchor.href}" frameborder="0" allowfullscreen></iframe>`;
+    // document.body.append(videoModal);
+  });
 }

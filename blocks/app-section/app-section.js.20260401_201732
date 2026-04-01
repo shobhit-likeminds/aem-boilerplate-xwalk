@@ -14,11 +14,11 @@ export default function decorate(block) {
   leftCol.classList.add('col-md-6');
 
   // Heading
-  const heading = document.createElement('h3');
-  heading.classList.add('hd2', 'os-animation', 'animated', 'fadeInUp');
-  moveInstrumentation(headingRow, heading);
-  while (headingRow.firstChild) heading.append(headingRow.firstChild);
-  leftCol.append(heading);
+  const headingEl = document.createElement('h3');
+  headingEl.classList.add('hd2', 'os-animation', 'animated', 'fadeInUp');
+  moveInstrumentation(headingRow.firstElementChild, headingEl);
+  headingEl.innerHTML = headingRow.firstElementChild.innerHTML;
+  leftCol.append(headingEl);
 
   // App List
   const appList = document.createElement('ul');
@@ -29,34 +29,31 @@ export default function decorate(block) {
     li.classList.add('os-animation', 'animated', 'fadeInUp');
     moveInstrumentation(rowEl, li);
 
-    // According to EDS BLOCK STRUCTURE, each app-item row has exactly one cell: cell[0]
-    const cell = rowEl.children[0];
-    if (cell) {
-      const link = document.createElement('a');
+    // Each app-item row has only one cell: label
+    const cell = rowEl.firstElementChild;
+    const link = cell.querySelector('a') || document.createElement('a');
+    if (!cell.querySelector('a')) { // If no link exists, create one and move content
       link.classList.add('nolink');
-      // Assuming the application text is directly in the cell
+      link.href = 'javascript:;'; // Placeholder href
       while (cell.firstChild) link.append(cell.firstChild);
-      li.append(link);
     }
+    li.append(link);
     appList.append(li);
   });
   leftCol.append(appList);
   row.append(leftCol);
 
-  // Image column
+  // Image
   const rightCol = document.createElement('div');
   rightCol.classList.add('col-md-6', 'hidden-sm', 'hidden-xs', 'os-animation', 'animated', 'fadeInUp');
-  moveInstrumentation(imageRow, rightCol);
 
   const picture = imageRow.querySelector('picture');
   if (picture) {
     const img = picture.querySelector('img');
-    if (img) {
-      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-      moveInstrumentation(img, optimizedPic.querySelector('img'));
-      optimizedPic.querySelector('img').classList.add('img-responsive');
-      rightCol.append(optimizedPic);
-    }
+    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+    optimizedPic.querySelector('img').classList.add('img-responsive');
+    moveInstrumentation(img, optimizedPic.querySelector('img'));
+    rightCol.append(optimizedPic);
   }
   row.append(rightCol);
 

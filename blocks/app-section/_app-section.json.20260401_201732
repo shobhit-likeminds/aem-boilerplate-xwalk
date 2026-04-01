@@ -61,8 +61,8 @@
       "fields": [
         {
           "component": "text",
-          "label": "Application",
-          "name": "application",
+          "label": "Label",
+          "name": "label",
           "valueType": "string"
         }
       ]

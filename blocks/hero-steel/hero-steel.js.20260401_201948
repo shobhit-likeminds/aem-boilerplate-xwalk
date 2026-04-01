@@ -1,0 +1,121 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  // Destructure block.children to access rows by their semantic meaning
+  // This is safe because the EDS BLOCK STRUCTURE guarantees the order and number of rows.
+  const [
+    imageDesktopRow,
+    imageMobileRow,
+    breadcrumbRow,
+    headingRow,
+    descriptionRow,
+  ] = [...block.children];
+
+  block.classList.add('op1');
+
+  const figure = document.createElement('figure');
+
+  // Image Desktop
+  const desktopPicture = imageDesktopRow.querySelector('picture');
+  if (desktopPicture) {
+    const desktopImg = desktopPicture.querySelector('img');
+    if (desktopImg) {
+      const optimizedDesktopPic = createOptimizedPicture(desktopImg.src, desktopImg.alt, false, [{ width: '1440' }]);
+      const newDesktopImg = optimizedDesktopPic.querySelector('img');
+      newDesktopImg.classList.add('hidden-xs', 'lazyloaded');
+      moveInstrumentation(desktopImg, newDesktopImg);
+      figure.append(optimizedDesktopPic);
+    }
+  }
+
+  // Image Mobile
+  const mobilePicture = mobileRow.querySelector('picture');
+  if (mobilePicture) {
+    const mobileImg = mobilePicture.querySelector('img');
+    if (mobileImg) {
+      const optimizedMobilePic = createOptimizedPicture(mobileImg.src, mobileImg.alt, false, [{ width: '373' }]);
+      const newMobileImg = optimizedMobilePic.querySelector('img');
+      newMobileImg.classList.add('visible-xs', 'lazyload');
+      moveInstrumentation(mobileImg, newMobileImg);
+      figure.append(optimizedMobilePic);
+    }
+  }
+
+  block.append(figure);
+
+  // Breadcrumbs
+  const breadcrumbContainer = document.createElement('div');
+  breadcrumbContainer.classList.add('container');
+  const breadcrumbsDiv = document.createElement('div');
+  breadcrumbsDiv.classList.add('breadcrumbs', 'hidden-sm', 'hidden-xs');
+  const blockJswDiv = document.createElement('div');
+  blockJswDiv.classList.add('block', 'block-jsw');
+  blockJswDiv.id = 'block-jsw-breadcrumb-block';
+  const contentDiv = document.createElement('div');
+  contentDiv.classList.add('content');
+
+  const breadcrumbLink = breadcrumbRow.querySelector('a');
+  if (breadcrumbLink) {
+    const homeLink = document.createElement('a');
+    homeLink.href = 'https://jswsteelstaging.jsw.in/'; // Hardcoded as per original HTML
+    homeLink.textContent = 'Home';
+    contentDiv.append(homeLink);
+
+    const splitSpan = document.createElement('span');
+    splitSpan.classList.add('split');
+    const icon = document.createElement('i');
+    icon.classList.add('fa', 'fa-arrow-right');
+    splitSpan.append(icon);
+    contentDiv.append(splitSpan);
+
+    const currentLinkText = document.createTextNode(breadcrumbLink.textContent);
+    moveInstrumentation(breadcrumbRow.firstElementChild, currentLinkText);
+    contentDiv.append(currentLinkText);
+  }
+
+  blockJswDiv.append(contentDiv);
+  breadcrumbsDiv.append(blockJswDiv);
+  breadcrumbContainer.append(breadcrumbsDiv);
+  block.append(breadcrumbContainer);
+
+  // Banner Info
+  const bannerInfo = document.createElement('div');
+  bannerInfo.classList.add('banner-info');
+  const bannerInfoContainer = document.createElement('div');
+  bannerInfoContainer.classList.add('container');
+  const bannerCard = document.createElement('div');
+  bannerCard.classList.add('banner-card', 'os-animation', 'animated', 'fadeIn');
+  bannerCard.setAttribute('data-os-animation', 'fadeIn');
+
+  // Heading
+  const h1 = document.createElement('h1');
+  h1.classList.add('os-animation', 'hd1', 'animated', 'fadeIn');
+  h1.setAttribute('data-os-animation', 'fadeIn');
+  h1.setAttribute('data-os-animation-delay', '.5s');
+  h1.style.animationDelay = '0.5s';
+  moveInstrumentation(headingRow.firstElementChild, h1);
+  while (headingRow.firstElementChild) h1.append(headingRow.firstElementChild);
+  bannerCard.append(h1);
+
+  // Description
+  const p = document.createElement('p');
+  p.classList.add('os-animation', 'animated', 'fadeIn');
+  p.setAttribute('data-os-animation', 'fadeIn');
+  p.setAttribute('data-os-animation-delay', '.7s');
+  p.style.animationDelay = '0.7s';
+  moveInstrumentation(descriptionRow.firstElementChild, p);
+  while (descriptionRow.firstElementChild) p.append(descriptionRow.firstElementChild);
+  bannerCard.append(p);
+
+  bannerInfoContainer.append(bannerCard);
+  bannerInfo.append(bannerInfoContainer);
+  block.append(bannerInfo);
+
+  // Remove original rows
+  imageDesktopRow.remove();
+  imageMobileRow.remove();
+  breadcrumbRow.remove();
+  headingRow.remove();
+  descriptionRow.remove();
+}
