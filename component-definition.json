@@ -330,6 +330,22 @@
           }
         },
         {
+          "title": "Elementor-Element",
+          "id": "elementor-element",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "elementor-element",
+                  "model": "elementor-element",
+                  "name": "Elementor-Element"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Elementor-Footer",
           "id": "elementor-footer",
           "plugins": {
@@ -376,6 +392,52 @@
           }
         },
         {
+          "title": "Elementor Header",
+          "id": "elementor-header",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "elementor-header",
+                  "model": "elementor-header",
+                  "name": "Elementor Header"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Nav Item",
+          "id": "nav-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "nav-item",
+                  "name": "Nav Item"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Icon List Item",
+          "id": "icon-list-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "icon-list-item",
+                  "name": "Icon List Item"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Elementor-Nav",
           "id": "elementor-nav",
           "plugins": {
@@ -416,6 +478,22 @@
                 "template": {
                   "model": "icon-list-item",
                   "name": "Icon-List-Item"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Elementor-Widget-Theme-Archive-Title",
+          "id": "elementor-widget-theme-archive-title",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "elementor-widget-theme-archive-title",
+                  "model": "elementor-widget-theme-archive-title",
+                  "name": "Elementor-Widget-Theme-Archive-Title"
                 }
               }
             }
@@ -637,7 +715,7 @@
           }
         },
         {
-          "title": "Product List",
+          "title": "Product-List",
           "id": "product-list",
           "plugins": {
             "xwalk": {
@@ -646,7 +724,7 @@
                 "template": {
                   "filter": "product-list",
                   "model": "product-list",
-                  "name": "Product List"
+                  "name": "Product-List"
                 }
               }
             }
@@ -693,6 +771,22 @@
                 "template": {
                   "model": "reasonCard",
                   "name": "Reason-Card"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Search",
+          "id": "search",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "search",
+                  "model": "search",
+                  "name": "Search"
                 }
               }
             }
@@ -787,6 +881,22 @@
                 "template": {
                   "model": "whyUsCard",
                   "name": "Why-Us-Card"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Woocommerce-Breadcrumb",
+          "id": "woocommerce-breadcrumb",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "woocommerce-breadcrumb",
+                  "model": "woocommerce-breadcrumb",
+                  "name": "Woocommerce-Breadcrumb"
                 }
               }
             }

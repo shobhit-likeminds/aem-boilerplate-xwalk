@@ -58,9 +58,9 @@
           "name": "footer-links"
         },
         {
-          "component": "text",
-          "label": "Follow Us Heading",
-          "name": "follow-us-heading",
+          "component": "richtext",
+          "label": "Follow Us",
+          "name": "follow-us",
           "valueType": "string"
         },
         {
@@ -71,8 +71,8 @@
         },
         {
           "component": "reference",
-          "label": "Site Logo",
-          "name": "site-logo",
+          "label": "Logo",
+          "name": "logo",
           "valueType": "string"
         }
       ]
@@ -81,15 +81,15 @@
       "id": "footer-link",
       "fields": [
         {
-          "component": "text",
-          "label": "Label",
-          "name": "label",
+          "component": "aem-content",
+          "label": "Link",
+          "name": "link",
           "valueType": "string"
         },
         {
-          "component": "aem-content",
-          "label": "URL",
-          "name": "url",
+          "component": "text",
+          "label": "Text",
+          "name": "text",
           "valueType": "string"
         }
       ]
@@ -97,6 +97,12 @@
     {
       "id": "social-icon",
       "fields": [
+        {
+          "component": "aem-content",
+          "label": "Link",
+          "name": "link",
+          "valueType": "string"
+        },
         {
           "component": "reference",
           "label": "Icon",
@@ -107,12 +113,6 @@
           "component": "text",
           "label": "Label",
           "name": "label",
-          "valueType": "string"
-        },
-        {
-          "component": "aem-content",
-          "label": "URL",
-          "name": "url",
           "valueType": "string"
         }
       ]

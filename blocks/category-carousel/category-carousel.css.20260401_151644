@@ -1,3 +1,26 @@
+/* Elementor Global CSS Variables - Extracted from source */
+:root {
+  /* Global Colors */
+  --e-global-color-primary: #7f54b3;
+  --e-global-color-secondary: #54595f;
+  --e-global-color-text: #333333;
+  --e-global-color-accent: #61ce70;
+  --e-global-color-5416eba: #ffffff;
+  --e-global-color-801e6a4: #e01b84;
+  
+  /* Typography */
+  --e-global-typography-primary-font-family: "Nunito Sans", Sans-serif;
+  --e-global-typography-primary-font-weight: 600;
+  --e-global-typography-secondary-font-family: "Roboto", Sans-serif;
+  --e-global-typography-secondary-font-weight: 400;
+  --e-global-typography-text-font-family: "Roboto", Sans-serif;
+  --e-global-typography-text-font-weight: 400;
+  --e-global-typography-accent-font-family: "Roboto", Sans-serif;
+  --e-global-typography-accent-font-weight: 500;
+}
+
+
+
 /* --------- CRESCI ---------- */
 @keyframes cresci { 
 	0% { transform: scale( 0 ); }
@@ -686,8 +709,6 @@ html :where(.is-position-sticky){--wp-admin--admin-bar--position-offset:var(--wp
 
 :root{--woocommerce:#720eec;--wc-green:#7ad03a;--wc-red:#a00;--wc-orange:#ffba00;--wc-blue:#2ea2cc;--wc-primary:#720eec;--wc-primary-text:#fcfbfe;--wc-secondary:#e9e6ed;--wc-secondary-text:#515151;--wc-highlight:#958e09;--wc-highligh-text:white;--wc-content-bg:#fff;--wc-subtext:#767676;--wc-form-border-color:rgba(32, 7, 7, 0.8);--wc-form-border-radius:4px;--wc-form-border-width:1px}
 
-.woocommerce img { height:auto;max-width:100% }
-
 :root{--woocommerce:#720eec;--wc-green:#7ad03a;--wc-red:#a00;--wc-orange:#ffba00;--wc-blue:#2ea2cc;--wc-primary:#720eec;--wc-primary-text:#fcfbfe;--wc-secondary:#e9e6ed;--wc-secondary-text:#515151;--wc-highlight:#958e09;--wc-highligh-text:white;--wc-content-bg:#fff;--wc-subtext:#767676;--wc-form-border-color:rgba(32, 7, 7, 0.8);--wc-form-border-radius:4px;--wc-form-border-width:1px}
 
 @charset "UTF-8";
@@ -699,42 +720,6 @@ html :where(.is-position-sticky){--wp-admin--admin-bar--position-offset:var(--wp
 @font-face{font-family:star;src:url(../fonts/WooCommerce.woff2) format("woff2"),url(../fonts/WooCommerce.woff) format("woff"),url(../fonts/WooCommerce.ttf) format("truetype");font-weight:400;font-style:normal}
 
 @font-face{font-family:WooCommerce;src:url(../fonts/WooCommerce.woff2) format("woff2"),url(../fonts/WooCommerce.woff) format("woff"),url(../fonts/WooCommerce.ttf) format("truetype");font-weight:400;font-style:normal}
-
-.woocommerce div.product { margin-bottom:0;position:relative }
-
-.woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) #respond input#submit, .woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) a.button, .woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) button.button, .woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) input.button, :where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce #respond input#submit, :where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce a.button, :where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce button.button, :where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce input.button { font-size:100%;margin:0;line-height:1;cursor:pointer;position:relative;text-decoration:none;overflow:visible;padding:.618em 1em;font-weight:700;border-radius:3px;left:auto;color:#515151;background-color:#e9e6ed;border:0;display:inline-block;background-image:none;box-shadow:none;text-shadow:none }
-
-.woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) #respond input#submit.loading, .woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) a.button.loading, .woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) button.button.loading, .woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) input.button.loading, :where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce #respond input#submit.loading, :where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce a.button.loading, :where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce button.button.loading, :where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce input.button.loading { opacity:.25;padding-right:2.618em }
-
-.woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) #respond input#submit.loading::after, .woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) a.button.loading::after, .woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) button.button.loading::after, .woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) input.button.loading::after, :where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce #respond input#submit.loading::after, :where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce a.button.loading::after, :where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce button.button.loading::after, :where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce input.button.loading::after { font-family:WooCommerce;content:"\e01c";vertical-align:top;font-weight:400;position:absolute;top:.618em;right:1em;animation:spin 2s linear infinite }
-
-.woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) #respond input#submit.added::after, .woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) a.button.added::after, .woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) button.button.added::after, .woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) input.button.added::after, :where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce #respond input#submit.added::after, :where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce a.button.added::after, :where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce button.button.added::after, :where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce input.button.added::after { font-family:WooCommerce;content:"\e017";margin-left:.53em;vertical-align:bottom }
-
-.woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) #respond input#submit:hover, .woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) a.button:hover, .woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) button.button:hover, .woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) input.button:hover, :where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce #respond input#submit:hover, :where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce a.button:hover, :where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce button.button:hover, :where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce input.button:hover { background-color:#dcd7e2;text-decoration:none;background-image:none;color:#515151 }
-
-.woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) #respond input#submit.alt, .woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) a.button.alt, .woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) button.button.alt, .woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) input.button.alt, :where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce #respond input#submit.alt, :where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce a.button.alt, :where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce button.button.alt, :where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce input.button.alt { background-color:#7f54b3;color:#fff;-webkit-font-smoothing:antialiased }
-
-.woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) #respond input#submit.alt:hover, .woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) a.button.alt:hover, .woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) button.button.alt:hover, .woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) input.button.alt:hover, :where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce #respond input#submit.alt:hover, :where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce a.button.alt:hover, :where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce button.button.alt:hover, :where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce input.button.alt:hover { background-color:#7249a4;color:#fff }
-
-.woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) #respond input#submit.alt.disabled, .woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) #respond input#submit.alt.disabled:hover, .woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) #respond input#submit.alt:disabled, .woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) #respond input#submit.alt:disabled:hover, .woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) #respond input#submit.alt:disabled[disabled], .woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) #respond input#submit.alt:disabled[disabled]:hover, .woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) a.button.alt.disabled, .woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) a.button.alt.disabled:hover, .woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) a.button.alt:disabled, .woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) a.button.alt:disabled:hover, .woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) a.button.alt:disabled[disabled], .woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) a.button.alt:disabled[disabled]:hover, .woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) button.button.alt.disabled, .woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) button.button.alt.disabled:hover, .woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) button.button.alt:disabled, .woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) button.button.alt:disabled:hover, .woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) button.button.alt:disabled[disabled], .woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) button.button.alt:disabled[disabled]:hover, .woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) input.button.alt.disabled, .woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) input.button.alt.disabled:hover, .woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) input.button.alt:disabled, .woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) input.button.alt:disabled:hover, .woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) input.button.alt:disabled[disabled], .woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) input.button.alt:disabled[disabled]:hover, :where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce #respond input#submit.alt.disabled, :where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce #respond input#submit.alt.disabled:hover, :where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce #respond input#submit.alt:disabled, :where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce #respond input#submit.alt:disabled:hover, :where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce #respond input#submit.alt:disabled[disabled], :where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce #respond input#submit.alt:disabled[disabled]:hover, :where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce a.button.alt.disabled, :where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce a.button.alt.disabled:hover, :where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce a.button.alt:disabled, :where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce a.button.alt:disabled:hover, :where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce a.button.alt:disabled[disabled], :where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce a.button.alt:disabled[disabled]:hover, :where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce button.button.alt.disabled, :where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce button.button.alt.disabled:hover, :where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce button.button.alt:disabled, :where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce button.button.alt:disabled:hover, :where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce button.button.alt:disabled[disabled], :where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce button.button.alt:disabled[disabled]:hover, :where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce input.button.alt.disabled, :where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce input.button.alt.disabled:hover, :where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce input.button.alt:disabled, :where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce input.button.alt:disabled:hover, :where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce input.button.alt:disabled[disabled], :where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce input.button.alt:disabled[disabled]:hover { background-color:#7f54b3;color:#fff }
-
-.woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) #respond input#submit.disabled, .woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) #respond input#submit:disabled, .woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) #respond input#submit:disabled[disabled], .woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) a.button.disabled, .woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) a.button:disabled, .woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) a.button:disabled[disabled], .woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) button.button.disabled, .woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) button.button:disabled, .woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) button.button:disabled[disabled], .woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) input.button.disabled, .woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) input.button:disabled, .woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) input.button:disabled[disabled], :where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce #respond input#submit.disabled, :where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce #respond input#submit:disabled, :where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce #respond input#submit:disabled[disabled], :where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce a.button.disabled, :where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce a.button:disabled, :where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce a.button:disabled[disabled], :where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce button.button.disabled, :where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce button.button:disabled, :where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce button.button:disabled[disabled], :where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce input.button.disabled, :where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce input.button:disabled, :where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce input.button:disabled[disabled] { color:inherit;cursor:not-allowed;opacity:.5;padding:.618em 1em }
-
-.woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) #respond input#submit.disabled:hover, .woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) #respond input#submit:disabled:hover, .woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) #respond input#submit:disabled[disabled]:hover, .woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) a.button.disabled:hover, .woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) a.button:disabled:hover, .woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) a.button:disabled[disabled]:hover, .woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) button.button.disabled:hover, .woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) button.button:disabled:hover, .woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) button.button:disabled[disabled]:hover, .woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) input.button.disabled:hover, .woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) input.button:disabled:hover, .woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) input.button:disabled[disabled]:hover, :where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce #respond input#submit.disabled:hover, :where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce #respond input#submit:disabled:hover, :where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce #respond input#submit:disabled[disabled]:hover, :where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce a.button.disabled:hover, :where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce a.button:disabled:hover, :where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce a.button:disabled[disabled]:hover, :where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce button.button.disabled:hover, :where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce button.button:disabled:hover, :where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce button.button:disabled[disabled]:hover, :where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce input.button.disabled:hover, :where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce input.button:disabled:hover, :where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce input.button:disabled[disabled]:hover { color:inherit;background-color:#e9e6ed }
-
-.woocommerce:where(body:not(.woocommerce-uses-block-theme)) .woocommerce-breadcrumb { font-size:.92em;color:#767676 }
-
-.woocommerce:where(body:not(.woocommerce-uses-block-theme)) .woocommerce-breadcrumb a { color:#767676 }
-
-.woocommerce:where(body:not(.woocommerce-uses-block-theme)) div.product p.price, .woocommerce:where(body:not(.woocommerce-uses-block-theme)) div.product span.price { color:#958e09;font-size:1.25em }
-
-.woocommerce:where(body:not(.woocommerce-uses-block-theme)) div.product .stock { color:#958e09 }
-
-.woocommerce:where(body:not(.woocommerce-uses-block-theme)) div.product .out-of-stock { color:var(--wc-red) }
-
-.woocommerce:where(body:not(.woocommerce-uses-block-theme)) ul.products li.product .price { color:#958e09 }
-
-.woocommerce:where(body:not(.woocommerce-uses-block-theme)) #reviews #comments ol.commentlist li .meta { color:#767676;font-size:.75em }
 
 #add_payment_method #payment { background:rgba(129,110,153,.14);border-radius:5px }
 
@@ -916,25 +901,11 @@ dd, dl, dt, li, ol, ul { background:transparent;border:0;font-size:100%;margin-b
 
 .elementor *,.elementor :after,.elementor :before{box-sizing:border-box}
 
-.elementor a { box-shadow:none;text-decoration:none }
-
-.elementor img { border:none;border-radius:0;box-shadow:none;height:auto;max-width:100% }
-
 .elementor-element { --flex-direction:initial;--flex-wrap:initial;--justify-content:initial;--align-items:initial;--align-content:initial;--gap:initial;--flex-basis:initial;--flex-grow:initial;--flex-shrink:initial;--order:initial;--align-self:initial;align-self:var(--align-self);flex-basis:var(--flex-basis);flex-grow:var(--flex-grow);flex-shrink:var(--flex-shrink);order:var(--order) }
 
 .elementor-element:where(.e-con-full, .elementor-widget) { align-content:var(--align-content);align-items:var(--align-items);flex-direction:var(--flex-direction);flex-wrap:var(--flex-wrap);gap:var(--row-gap) var(--column-gap);justify-content:var(--justify-content) }
 
-.elementor-align-center { text-align:center }
-
-.elementor-align-center .elementor-button { width:auto }
-
-@media (max-width:1024px) { .elementor-tablet-align-center { text-align:center }
-
-.elementor-tablet-align-center .elementor-button { width:auto } }
-
-@media (max-width:767px) { .elementor-mobile-align-center { text-align:center }
-
-.elementor-mobile-align-center .elementor-button { width:auto } }
+.elementor-align-justify .elementor-button { width:100% }
 
 :root{--page-title-display:block}
 
@@ -943,14 +914,6 @@ dd, dl, dt, li, ol, ul { background:transparent;border:0;font-size:100%;margin-b
 .elementor-widget { position:relative }
 
 .elementor-widget:not(:last-child) { margin-bottom:var(--kit-widget-spacing,20px) }
-
-.elementor-grid { display:grid;grid-column-gap:var(--grid-column-gap);grid-row-gap:var(--grid-row-gap) }
-
-.elementor-grid-3 .elementor-grid { grid-template-columns:repeat(3,1fr) }
-
-@media (max-width:1024px) { .elementor-grid-tablet-3 .elementor-grid { grid-template-columns:repeat(3,1fr) } }
-
-@media (max-width:767px) { .elementor-grid-mobile-2 .elementor-grid { grid-template-columns:repeat(2,1fr) } }
 
 @media (min-width:1025px) { #elementor-device-mode:after { content:"desktop" } }
 
@@ -1006,9 +969,11 @@ dd, dl, dt, li, ol, ul { background:transparent;border:0;font-size:100%;margin-b
 
 .e-con .elementor-widget { min-width:0 }
 
+.e-con .elementor-widget.e-widget-swiper { width:100% }
+
 .e-con>.e-con-inner>.elementor-widget>.elementor-widget-container, .e-con>.elementor-widget>.elementor-widget-container { height:100% }
 
-.e-con.e-con>.e-con-inner>.elementor-widget, .elementor.elementor .e-con>.elementor-widget { max-width:100% }
+.e-con.e-con>.e-con-inner>.elementor-widget { max-width:100% }
 
 .e-con .elementor-widget:not(:last-child) { --kit-widget-spacing:0px }
 
@@ -1016,11 +981,15 @@ dd, dl, dt, li, ol, ul { background:transparent;border:0;font-size:100%;margin-b
 
 .elementor-element:where(:not(.e-con)):where(:not(.e-div-block-base)) .elementor-widget-container, .elementor-element:where(:not(.e-con)):where(:not(.e-div-block-base)):not(:has(.elementor-widget-container)) { transition:background .3s,border .3s,border-radius .3s,box-shadow .3s,transform var(--e-transform-transition-duration,.4s) }
 
+.elementor-heading-title { line-height:1;margin:0;padding:0 }
+
 .elementor-button { background-color:#69727d;border-radius:3px;color:#fff;display:inline-block;font-size:15px;line-height:1;padding:12px 24px;fill:#fff;text-align:center;transition:all .3s }
 
 .elementor-button:focus, .elementor-button:hover, .elementor-button:visited { color:#fff }
 
 .elementor-button-content-wrapper { display:flex;flex-direction:row;gap:5px;justify-content:center }
+
+.elementor-button-icon { align-items:center;display:flex }
 
 .elementor-button-text { display:inline-block }
 
@@ -1054,17 +1023,13 @@ dd, dl, dt, li, ol, ul { background:transparent;border:0;font-size:100%;margin-b
 /*! elementor-pro - v3.30.0 - 01-07-2025 */
 .e-loop-item *{word-break:break-word}
 
-.elementor-widget-loop-grid { scroll-margin-top:var(--auto-scroll-offset,initial) }
-
-.elementor-widget-loop-grid .elementor-grid { grid-column-gap:var(--grid-column-gap,30px);grid-row-gap:var(--grid-row-gap,30px) }
-
 .elementor-widget-loop-grid.e-load-more-pagination-end:not(:has(>.elementor-widget-container))>.elementor-button-wrapper { display:none }
 
 .elementor-widget-loop-grid.e-load-more-pagination-end:not(:has(>.elementor-widget-container))>.e-load-more-message { display:block }
 
 .elementor-widget-loop-grid.e-load-more-no-spinner:not(:has(>.elementor-widget-container))>.elementor-button-wrapper .elementor-button-content-wrapper { visibility:visible }
 
-.elementor-widget-loop-grid:not(:has(>.elementor-widget-container)) .e-load-more-spinner, .elementor-widget-loop-grid>.elementor-widget-container .e-load-more-spinner { display:flex }
+.elementor-widget-loop-grid:not(:has(>.elementor-widget-container)) .e-load-more-spinner { display:flex }
 
 .elementor-widget-loop-grid:not(:has(>.elementor-widget-container)) .e-load-more-spinner i, .elementor-widget-loop-grid:not(:has(>.elementor-widget-container)) .e-load-more-spinner svg { display:none;margin:0 auto }
 
@@ -1079,8 +1044,6 @@ dd, dl, dt, li, ol, ul { background:transparent;border:0;font-size:100%;margin-b
 .elementor-widget-loop-grid:not(:has(>.elementor-widget-container))>.elementor-button-wrapper .e-load-more-spinner { left:50%;margin:inherit;position:absolute;top:50%;transform:translate(-50%,-50%) }
 
 .elementor-widget-loop-grid:not(:has(>.elementor-widget-container))>.elementor-button-wrapper .elementor-button { cursor:pointer;position:relative }
-
-.elementor-loop-container:not(.elementor-posts-masonry) { align-items:stretch }
 
 @keyframes loadingOpacityAnimation{0%,to{opacity:1}50%{opacity:.6}}
 
@@ -1100,21 +1063,78 @@ dd, dl, dt, li, ol, ul { background:transparent;border:0;font-size:100%;margin-b
 
 :root{--swiper-theme-color:#007aff}
 
+.swiper { margin-left:auto;margin-right:auto;position:relative;overflow:hidden;list-style:none;padding:0;z-index:1 }
+
+.swiper-wrapper { position:relative;width:100%;height:100%;z-index:1;display:flex;transition-property:transform;box-sizing:content-box }
+
+.swiper-wrapper { transform:translate3d(0px,0,0) }
+
+.swiper-pointer-events { touch-action:pan-y }
+
+.swiper-slide { flex-shrink:0;width:100%;height:100%;position:relative;transition-property:transform }
+
 :root{--swiper-navigation-size:44px}
+
+.swiper-pagination { position:absolute;text-align:center;transition:.3s opacity;transform:translate3d(0,0,0);z-index:10 }
+
+.swiper-pagination-bullets.swiper-pagination-horizontal { bottom:10px;left:0;width:100% }
+
+.swiper-pagination-bullet { width:var(--swiper-pagination-bullet-width,var(--swiper-pagination-bullet-size,8px));height:var(--swiper-pagination-bullet-height,var(--swiper-pagination-bullet-size,8px));display:inline-block;border-radius:50%;background:var(--swiper-pagination-bullet-inactive-color,#000);opacity:var(--swiper-pagination-bullet-inactive-opacity, .2) }
+
+.swiper-pagination-clickable .swiper-pagination-bullet { cursor:pointer }
+
+.swiper-pagination-bullet:only-child { display:none!important }
+
+.swiper-pagination-bullet-active { opacity:var(--swiper-pagination-bullet-opacity, 1);background:var(--swiper-pagination-color,var(--swiper-theme-color)) }
+
+.swiper-pagination-horizontal.swiper-pagination-bullets .swiper-pagination-bullet { margin:0 var(--swiper-pagination-bullet-horizontal-gap,4px) }
 
 @keyframes swiper-preloader-spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
 
+.swiper .swiper-notification { position:absolute;left:0;top:0;pointer-events:none;opacity:0;z-index:-1000 }
+
 .elementor-element { --swiper-theme-color:#000;--swiper-navigation-size:44px;--swiper-pagination-bullet-size:6px;--swiper-pagination-bullet-horizontal-gap:6px }
+
+.elementor-element .swiper .swiper-pagination-bullets.swiper-pagination-horizontal { bottom:5px }
+
+.elementor-element :where(.swiper-horizontal)~.swiper-pagination-bullets { bottom:5px;left:0;width:100% }
+
+.elementor-element :where(.swiper-horizontal)~.swiper-pagination-bullets .swiper-pagination-bullet { margin:0 var(--swiper-pagination-bullet-horizontal-gap,4px) }
+
+.elementor-element.elementor-pagination-position-outside .swiper { padding-bottom:30px }
+
+/*! elementor-pro - v3.30.0 - 01-07-2025 */
+.elementor-widget-n-carousel { --e-n-carousel-slides-to-show:3;--e-n-carousel-swiper-slides-gap:10px;--e-n-carousel-swiper-slides-to-display:3;--e-n-carousel-swiper-pagination-size:0;--e-n-carousel-swiper-pagination-spacing:10px;--e-n-carousel-swiper-offset-size:0;height:-moz-fit-content;height:fit-content;--e-n-carousel-arrow-prev-top-align:50%;--e-n-carousel-arrow-prev-top-position:0px;--e-n-carousel-arrow-prev-caption-spacing:15px;--e-n-carousel-arrow-next-top-align:50%;--e-n-carousel-arrow-next-top-position:0px;--e-n-carousel-arrow-next-caption-spacing:15px;--e-n-carousel-arrow-prev-left-align:0px;--e-n-carousel-arrow-prev-left-position:0px;--e-n-carousel-arrow-next-right-align:0px;--e-n-carousel-arrow-next-right-position:0px;--e-n-carousel-arrow-next-translate-x:0px;--e-n-carousel-arrow-next-translate-y:0px;--e-n-carousel-arrow-prev-translate-x:0px;--e-n-carousel-arrow-prev-translate-y:0px;--e-n-carousel-swiper-padding-bottom:calc(var(--e-n-carousel-swiper-pagination-size) + var(--e-n-carousel-swiper-pagination-spacing));--e-n-carousel-dots-vertical-position:100%;--e-n-carousel-dots-vertical-offset:0px;--e-n-carousel-dots-horizontal-position:50%;--e-n-carousel-dots-horizontal-offset:0px;--e-n-carousel-dots-horizontal-transform:-50%;--e-n-carousel-dots-vertical-transform:-100%;--e-n-carousel-fraction-vertical-position:100%;--e-n-carousel-fraction-vertical-offset:0px;--e-n-carousel-fraction-horizontal-position:50%;--e-n-carousel-fraction-horizontal-offset:0px;--e-n-carousel-fraction-horizontal-transform:-50%;--e-n-carousel-fraction-vertical-transform:-100%;--e-n-carousel-horizontal-transform-modifier:1 }
+
+.elementor-widget-n-carousel .e-n-carousel { display:flex;min-width:0 }
+
+.elementor-widget-n-carousel .e-n-carousel.offset-right { padding-inline-end:var(--e-n-carousel-swiper-offset-size,0) }
+
+.elementor-widget-n-carousel .e-n-carousel>.swiper-wrapper>.swiper-slide { flex-shrink:0;height:var(--e-n-carousel-slide-height,initial) }
+
+.elementor-widget-n-carousel .e-n-carousel>.swiper-wrapper>.swiper-slide>.e-con { height:var(--e-n-carousel-slide-container-height,initial);max-width:calc(100% - var(--margin-inline-start, var(--margin-left)) - var(--margin-inline-end, var(--margin-right))) }
 
 .elementor-widget-n-carousel.elementor-element :is(.swiper { right:calc(var(--e-n-carousel-arrow-next-right-align) + var(--e-n-carousel-arrow-next-right-position));top:calc(var(--e-n-carousel-arrow-next-top-align) + var(--e-n-carousel-arrow-next-top-position) - var(--e-n-carousel-arrow-next-caption-spacing));transform:translate(var(--e-n-carousel-arrow-next-translate-x),var(--e-n-carousel-arrow-next-translate-y)) }
 
 .elementor-widget-n-carousel.elementor-element :is(.swiper { left:calc(var(--e-n-carousel-arrow-prev-left-align) + var(--e-n-carousel-arrow-prev-left-position));top:calc(var(--e-n-carousel-arrow-prev-top-align) + var(--e-n-carousel-arrow-prev-top-position) - var(--e-n-carousel-arrow-prev-caption-spacing));transform:translate(var(--e-n-carousel-arrow-prev-translate-x),var(--e-n-carousel-arrow-prev-translate-y)) }
 
-.elementor-widget-n-carousel.elementor-pagination-position-outside:not(:has(>.elementor-widget-container))>.swiper, .elementor-widget-n-carousel.elementor-pagination-position-outside:not(:has(>.elementor-widget-container))>.swiper-container { padding-bottom:var(--e-n-carousel-swiper-padding-bottom) }
+.elementor-widget-n-carousel.elementor-pagination-type-bullets { --e-n-carousel-swiper-pagination-size:6px }
+
+.elementor-widget-n-carousel .swiper-pagination-bullet { background:var(--e-n-carousel-dots-normal-color,#000);height:var(--e-n-carousel-swiper-pagination-size);width:var(--e-n-carousel-swiper-pagination-size) }
+
+.elementor-widget-n-carousel .swiper-pagination-bullet:hover { background:var(--e-n-carousel-dots-hover-color,#000);opacity:1 }
+
+.elementor-widget-n-carousel .swiper-pagination, .elementor-widget-n-carousel .swiper-pagination-bullets.swiper-pagination-horizontal { font-size:var(--e-n-carousel-swiper-pagination-size);line-height:var(--e-n-carousel-swiper-pagination-size) }
+
+.elementor-widget-n-carousel.elementor-pagination-position-outside:not(:has(>.elementor-widget-container))>.swiper, .elementor-widget-n-carousel.elementor-pagination-position-outside:not(:has(>.elementor-widget-container))>.swiper-container, .elementor-widget-n-carousel.elementor-pagination-position-outside>.elementor-widget-container>.swiper { padding-bottom:var(--e-n-carousel-swiper-padding-bottom) }
 
 .elementor-widget-n-carousel.elementor-pagination-position-outside:not(:has(>.elementor-widget-container))>.swiper .elementor-background-slideshow, .elementor-widget-n-carousel.elementor-pagination-position-outside:not(:has(>.elementor-widget-container))>.swiper-container .elementor-background-slideshow { padding-bottom:0 }
 
-.elementor-widget-n-carousel.elementor-pagination-position-outside:not(:has(>.elementor-widget-container)) .swiper-pagination-bullet { vertical-align:top }
+.elementor-widget-n-carousel.elementor-pagination-position-outside:not(:has(>.elementor-widget-container)) .swiper-pagination-bullet, .elementor-widget-n-carousel.elementor-pagination-position-outside>.elementor-widget-container .swiper-pagination-bullet { vertical-align:top }
+
+.elementor-widget-n-carousel .swiper-pagination-bullets { height:-moz-max-content;height:max-content;left:calc(var(--e-n-carousel-dots-horizontal-position) + var(--e-n-carousel-dots-horizontal-offset));top:calc(var(--e-n-carousel-dots-vertical-position) + var(--e-n-carousel-dots-vertical-offset));transform:translate(calc(var(--e-n-carousel-dots-horizontal-transform) * var(--e-n-carousel-horizontal-transform-modifier)),var(--e-n-carousel-dots-vertical-transform));width:-moz-max-content;width:max-content;z-index:3 }
+
+.swiper:not(.swiper-initialized)>.swiper-wrapper { gap:var(--e-n-carousel-swiper-slides-gap);overflow:hidden }
 
 .e-con { --container-max-width:1140px; }
 
@@ -1137,6 +1157,8 @@ dd, dl, dt, li, ol, ul { background:transparent;border:0;font-size:100%;margin-b
 
 @media(max-width:767px){.elementor-30 .elementor-element.elementor-element-5fef5c1{--container-widget-width:38%;--container-widget-flex-grow:0;width:var( --container-widget-width, 38% );max-width:38%;}.elementor-30 .elementor-element.elementor-element-f6dc590{--container-widget-width:10%;--container-widget-flex-grow:0;width:var( --container-widget-width, 10% );max-width:10%;}}
 
+.elementor-widget-heading .elementor-heading-title { font-family:var( --e-global-typography-primary-font-family ), Sans-serif;font-weight:var( --e-global-typography-primary-font-weight );color:var( --e-global-color-primary ); }
+
 @media(max-width:1024px){.elementor-40 .elementor-element.elementor-element-fa8725a{--justify-content:space-between;--flex-wrap:wrap;}.elementor-40 .elementor-element.elementor-element-e403dbb{--justify-content:center;--align-items:center;--container-widget-width:calc( ( 1 - var( --container-widget-flex-grow ) ) * 100% );}.elementor-40 .elementor-element.elementor-element-2779fc3{--align-items:center;--container-widget-width:calc( ( 1 - var( --container-widget-flex-grow ) ) * 100% );}.elementor-40 .elementor-element.elementor-element-0a043e5{text-align:center;}.elementor-40 .elementor-element.elementor-element-0a043e5 img{width:70%;}}
 
 @media(max-width:767px){.elementor-40 .elementor-element.elementor-element-fa8725a{--padding-top:20px;--padding-bottom:20px;--padding-left:15px;--padding-right:15px;}.elementor-40 .elementor-element.elementor-element-dbd8f1f{--flex-direction:column;--container-widget-width:calc( ( 1 - var( --container-widget-flex-grow ) ) * 100% );--container-widget-height:initial;--container-widget-flex-grow:0;--container-widget-align-self:initial;--flex-wrap-mobile:wrap;--align-items:center;}.elementor-40 .elementor-element.elementor-element-e403dbb{border-width:1px 0px 1px 0px;--border-top-width:1px;--border-right-width:0px;--border-bottom-width:1px;--border-left-width:0px;}.elementor-40 .elementor-element.elementor-element-0a043e5 img{width:50%;}}
@@ -1145,7 +1167,7 @@ dd, dl, dt, li, ol, ul { background:transparent;border:0;font-size:100%;margin-b
 
 @media(max-width:1024px) and (min-width:768px){.elementor-40 .elementor-element.elementor-element-dbd8f1f{--width:30%;}}
 
-.elementor-widget-loop-grid .elementor-button { background-color:var( --e-global-color-accent );font-family:var( --e-global-typography-accent-font-family ), Sans-serif;font-weight:var( --e-global-typography-accent-font-weight ); }
+.elementor-widget-heading .elementor-heading-title { font-family:var( --e-global-typography-primary-font-family ), Sans-serif;font-weight:var( --e-global-typography-primary-font-weight );color:var( --e-global-color-primary ); }
 
 .elementor-widget-button .elementor-button { background-color:var( --e-global-color-accent );font-family:var( --e-global-typography-accent-font-family ), Sans-serif;font-weight:var( --e-global-typography-accent-font-weight ); }
 
@@ -1155,13 +1177,8 @@ dd, dl, dt, li, ol, ul { background:transparent;border:0;font-size:100%;margin-b
 
 @media(max-width:767px){.elementor-132 .elementor-element.elementor-element-f87ddb8 .woocommerce-breadcrumb{text-align:center;}.elementor-132 .elementor-element.elementor-element-d7872e4{--gap:20px 20px;--row-gap:20px;--column-gap:20px;--padding-top:0px;--padding-bottom:50px;--padding-left:15px;--padding-right:15px;}.elementor-132 .elementor-element.elementor-element-e5eeeb8{--grid-columns:2;}.elementor-132 .elementor-element.elementor-element-1c8724a2{--gap:20px 20px;--row-gap:20px;--column-gap:20px;--padding-top:40px;--padding-bottom:40px;--padding-left:0px;--padding-right:0px;}.elementor-132 .elementor-element.elementor-element-1b08eba{--justify-content:center;--align-items:center;--container-widget-width:calc( ( 1 - var( --container-widget-flex-grow ) ) * 100% );--gap:10px 10px;--row-gap:10px;--column-gap:10px;--padding-top:0px;--padding-bottom:10px;--padding-left:15px;--padding-right:15px;}.elementor-132 .elementor-element.elementor-element-4a5e4fe6{width:100%;max-width:100%;text-align:center;}.elementor-132 .elementor-element.elementor-element-4a5e4fe6 > .elementor-widget-container{padding:15px 0px 15px 0px;border-radius:10px 10px 10px 10px;}.elementor-132 .elementor-element.elementor-element-56e2d22b{--e-n-carousel-swiper-slides-to-display:1;--e-n-carousel-swiper-offset-size:75px;--e-n-carousel-swiper-slides-gap:0px;--e-n-carousel-swiper-pagination-size:10px;--e-n-carousel-swiper-pagination-spacing:20px;}.elementor-132 .elementor-element.elementor-element-56e2d22b .swiper-pagination-bullet{--swiper-pagination-bullet-horizontal-gap:4px;--swiper-pagination-bullet-vertical-gap:4px;}}
 
-/* Start custom CSS for loop-grid, class: .elementor-element-e5eeeb8 */.e-loop-item:nth-child(odd) .plp-image { 
+/* Start custom CSS for loop-grid { 
     background: #95E5EE;
-    border-radius: 15px;
- }
-
-.e-loop-item:nth-child(even) .plp-image { 
-    background: #FFFE7D;
     border-radius: 15px;
  }
 
@@ -1171,19 +1188,9 @@ dd, dl, dt, li, ol, ul { background:transparent;border:0;font-size:100%;margin-b
     border-radius: 15px;
  }
 
-.e-loop-item:nth-child(even) .plp-image { 
-    background: #FFFE7D;
-    border-radius: 15px;
- }
-
 /* End custom CSS */
 /* Start custom CSS for container, class: .elementor-element-49f5c6f0 */.e-loop-item:nth-child(odd) .plp-image { 
     background: #95E5EE;
-    border-radius: 15px;
- }
-
-.e-loop-item:nth-child(even) .plp-image { 
-    background: #FFFE7D;
     border-radius: 15px;
  }
 
@@ -1193,19 +1200,9 @@ dd, dl, dt, li, ol, ul { background:transparent;border:0;font-size:100%;margin-b
     border-radius: 15px;
  }
 
-.e-loop-item:nth-child(even) .plp-image { 
-    background: #FFFE7D;
-    border-radius: 15px;
- }
-
 /* End custom CSS */
 /* Start custom CSS for container, class: .elementor-element-689b1226 */.e-loop-item:nth-child(odd) .plp-image { 
     background: #95E5EE;
-    border-radius: 15px;
- }
-
-.e-loop-item:nth-child(even) .plp-image { 
-    background: #FFFE7D;
     border-radius: 15px;
  }
 
@@ -1215,19 +1212,9 @@ dd, dl, dt, li, ol, ul { background:transparent;border:0;font-size:100%;margin-b
     border-radius: 15px;
  }
 
-.e-loop-item:nth-child(even) .plp-image { 
-    background: #FFFE7D;
-    border-radius: 15px;
- }
-
 /* End custom CSS */
 /* Start custom CSS for container, class: .elementor-element-42a36b75 */.e-loop-item:nth-child(odd) .plp-image { 
     background: #95E5EE;
-    border-radius: 15px;
- }
-
-.e-loop-item:nth-child(even) .plp-image { 
-    background: #FFFE7D;
     border-radius: 15px;
  }
 
@@ -1237,19 +1224,9 @@ dd, dl, dt, li, ol, ul { background:transparent;border:0;font-size:100%;margin-b
     border-radius: 15px;
  }
 
-.e-loop-item:nth-child(even) .plp-image { 
-    background: #FFFE7D;
-    border-radius: 15px;
- }
-
 /* End custom CSS */
 /* Start custom CSS for container, class: .elementor-element-79d97b79 */.e-loop-item:nth-child(odd) .plp-image { 
     background: #95E5EE;
-    border-radius: 15px;
- }
-
-.e-loop-item:nth-child(even) .plp-image { 
-    background: #FFFE7D;
     border-radius: 15px;
  }
 
@@ -1259,19 +1236,9 @@ dd, dl, dt, li, ol, ul { background:transparent;border:0;font-size:100%;margin-b
     border-radius: 15px;
  }
 
-.e-loop-item:nth-child(even) .plp-image { 
-    background: #FFFE7D;
-    border-radius: 15px;
- }
-
 /* End custom CSS */
 /* Start custom CSS for container, class: .elementor-element-49f5c6f0 */.e-loop-item:nth-child(odd) .plp-image { 
     background: #95E5EE;
-    border-radius: 15px;
- }
-
-.e-loop-item:nth-child(even) .plp-image { 
-    background: #FFFE7D;
     border-radius: 15px;
  }
 
@@ -1281,19 +1248,9 @@ dd, dl, dt, li, ol, ul { background:transparent;border:0;font-size:100%;margin-b
     border-radius: 15px;
  }
 
-.e-loop-item:nth-child(even) .plp-image { 
-    background: #FFFE7D;
-    border-radius: 15px;
- }
-
 /* End custom CSS */
 /* Start custom CSS for container, class: .elementor-element-689b1226 */.e-loop-item:nth-child(odd) .plp-image { 
     background: #95E5EE;
-    border-radius: 15px;
- }
-
-.e-loop-item:nth-child(even) .plp-image { 
-    background: #FFFE7D;
     border-radius: 15px;
  }
 
@@ -1303,19 +1260,9 @@ dd, dl, dt, li, ol, ul { background:transparent;border:0;font-size:100%;margin-b
     border-radius: 15px;
  }
 
-.e-loop-item:nth-child(even) .plp-image { 
-    background: #FFFE7D;
-    border-radius: 15px;
- }
-
 /* End custom CSS */
 /* Start custom CSS for container, class: .elementor-element-42a36b75 */.e-loop-item:nth-child(odd) .plp-image { 
     background: #95E5EE;
-    border-radius: 15px;
- }
-
-.e-loop-item:nth-child(even) .plp-image { 
-    background: #FFFE7D;
     border-radius: 15px;
  }
 
@@ -1325,19 +1272,9 @@ dd, dl, dt, li, ol, ul { background:transparent;border:0;font-size:100%;margin-b
     border-radius: 15px;
  }
 
-.e-loop-item:nth-child(even) .plp-image { 
-    background: #FFFE7D;
-    border-radius: 15px;
- }
-
 /* End custom CSS */
 /* Start custom CSS for container, class: .elementor-element-79d97b79 */.e-loop-item:nth-child(odd) .plp-image { 
     background: #95E5EE;
-    border-radius: 15px;
- }
-
-.e-loop-item:nth-child(even) .plp-image { 
-    background: #FFFE7D;
     border-radius: 15px;
  }
 
@@ -1347,19 +1284,9 @@ dd, dl, dt, li, ol, ul { background:transparent;border:0;font-size:100%;margin-b
     border-radius: 15px;
  }
 
-.e-loop-item:nth-child(even) .plp-image { 
-    background: #FFFE7D;
-    border-radius: 15px;
- }
-
 /* End custom CSS */
 /* Start custom CSS for container, class: .elementor-element-49f5c6f0 */.e-loop-item:nth-child(odd) .plp-image { 
     background: #95E5EE;
-    border-radius: 15px;
- }
-
-.e-loop-item:nth-child(even) .plp-image { 
-    background: #FFFE7D;
     border-radius: 15px;
  }
 
@@ -1369,19 +1296,9 @@ dd, dl, dt, li, ol, ul { background:transparent;border:0;font-size:100%;margin-b
     border-radius: 15px;
  }
 
-.e-loop-item:nth-child(even) .plp-image { 
-    background: #FFFE7D;
-    border-radius: 15px;
- }
-
 /* End custom CSS */
 /* Start custom CSS for container, class: .elementor-element-689b1226 */.e-loop-item:nth-child(odd) .plp-image { 
     background: #95E5EE;
-    border-radius: 15px;
- }
-
-.e-loop-item:nth-child(even) .plp-image { 
-    background: #FFFE7D;
     border-radius: 15px;
  }
 
@@ -1391,19 +1308,9 @@ dd, dl, dt, li, ol, ul { background:transparent;border:0;font-size:100%;margin-b
     border-radius: 15px;
  }
 
-.e-loop-item:nth-child(even) .plp-image { 
-    background: #FFFE7D;
-    border-radius: 15px;
- }
-
 /* End custom CSS */
 /* Start custom CSS for container, class: .elementor-element-42a36b75 */.e-loop-item:nth-child(odd) .plp-image { 
     background: #95E5EE;
-    border-radius: 15px;
- }
-
-.e-loop-item:nth-child(even) .plp-image { 
-    background: #FFFE7D;
     border-radius: 15px;
  }
 
@@ -1413,19 +1320,9 @@ dd, dl, dt, li, ol, ul { background:transparent;border:0;font-size:100%;margin-b
     border-radius: 15px;
  }
 
-.e-loop-item:nth-child(even) .plp-image { 
-    background: #FFFE7D;
-    border-radius: 15px;
- }
-
 /* End custom CSS */
 /* Start custom CSS for container, class: .elementor-element-79d97b79 */.e-loop-item:nth-child(odd) .plp-image { 
     background: #95E5EE;
-    border-radius: 15px;
- }
-
-.e-loop-item:nth-child(even) .plp-image { 
-    background: #FFFE7D;
     border-radius: 15px;
  }
 
@@ -1435,19 +1332,9 @@ dd, dl, dt, li, ol, ul { background:transparent;border:0;font-size:100%;margin-b
     border-radius: 15px;
  }
 
-.e-loop-item:nth-child(even) .plp-image { 
-    background: #FFFE7D;
-    border-radius: 15px;
- }
-
 /* End custom CSS */
 /* Start custom CSS for container, class: .elementor-element-49f5c6f0 */.e-loop-item:nth-child(odd) .plp-image { 
     background: #95E5EE;
-    border-radius: 15px;
- }
-
-.e-loop-item:nth-child(even) .plp-image { 
-    background: #FFFE7D;
     border-radius: 15px;
  }
 
@@ -1457,19 +1344,9 @@ dd, dl, dt, li, ol, ul { background:transparent;border:0;font-size:100%;margin-b
     border-radius: 15px;
  }
 
-.e-loop-item:nth-child(even) .plp-image { 
-    background: #FFFE7D;
-    border-radius: 15px;
- }
-
 /* End custom CSS */
 /* Start custom CSS for container, class: .elementor-element-689b1226 */.e-loop-item:nth-child(odd) .plp-image { 
     background: #95E5EE;
-    border-radius: 15px;
- }
-
-.e-loop-item:nth-child(even) .plp-image { 
-    background: #FFFE7D;
     border-radius: 15px;
  }
 
@@ -1479,19 +1356,9 @@ dd, dl, dt, li, ol, ul { background:transparent;border:0;font-size:100%;margin-b
     border-radius: 15px;
  }
 
-.e-loop-item:nth-child(even) .plp-image { 
-    background: #FFFE7D;
-    border-radius: 15px;
- }
-
 /* End custom CSS */
 /* Start custom CSS for container, class: .elementor-element-42a36b75 */.e-loop-item:nth-child(odd) .plp-image { 
     background: #95E5EE;
-    border-radius: 15px;
- }
-
-.e-loop-item:nth-child(even) .plp-image { 
-    background: #FFFE7D;
     border-radius: 15px;
  }
 
@@ -1501,19 +1368,9 @@ dd, dl, dt, li, ol, ul { background:transparent;border:0;font-size:100%;margin-b
     border-radius: 15px;
  }
 
-.e-loop-item:nth-child(even) .plp-image { 
-    background: #FFFE7D;
-    border-radius: 15px;
- }
-
 /* End custom CSS */
 /* Start custom CSS for container, class: .elementor-element-79d97b79 */.e-loop-item:nth-child(odd) .plp-image { 
     background: #95E5EE;
-    border-radius: 15px;
- }
-
-.e-loop-item:nth-child(even) .plp-image { 
-    background: #FFFE7D;
     border-radius: 15px;
  }
 
@@ -1523,19 +1380,9 @@ dd, dl, dt, li, ol, ul { background:transparent;border:0;font-size:100%;margin-b
     border-radius: 15px;
  }
 
-.e-loop-item:nth-child(even) .plp-image { 
-    background: #FFFE7D;
-    border-radius: 15px;
- }
-
 /* End custom CSS */
 /* Start custom CSS for container, class: .elementor-element-49f5c6f0 */.e-loop-item:nth-child(odd) .plp-image { 
     background: #95E5EE;
-    border-radius: 15px;
- }
-
-.e-loop-item:nth-child(even) .plp-image { 
-    background: #FFFE7D;
     border-radius: 15px;
  }
 
@@ -1545,19 +1392,9 @@ dd, dl, dt, li, ol, ul { background:transparent;border:0;font-size:100%;margin-b
     border-radius: 15px;
  }
 
-.e-loop-item:nth-child(even) .plp-image { 
-    background: #FFFE7D;
-    border-radius: 15px;
- }
-
 /* End custom CSS */
 /* Start custom CSS for container, class: .elementor-element-689b1226 */.e-loop-item:nth-child(odd) .plp-image { 
     background: #95E5EE;
-    border-radius: 15px;
- }
-
-.e-loop-item:nth-child(even) .plp-image { 
-    background: #FFFE7D;
     border-radius: 15px;
  }
 
@@ -1567,19 +1404,9 @@ dd, dl, dt, li, ol, ul { background:transparent;border:0;font-size:100%;margin-b
     border-radius: 15px;
  }
 
-.e-loop-item:nth-child(even) .plp-image { 
-    background: #FFFE7D;
-    border-radius: 15px;
- }
-
 /* End custom CSS */
 /* Start custom CSS for container, class: .elementor-element-42a36b75 */.e-loop-item:nth-child(odd) .plp-image { 
     background: #95E5EE;
-    border-radius: 15px;
- }
-
-.e-loop-item:nth-child(even) .plp-image { 
-    background: #FFFE7D;
     border-radius: 15px;
  }
 
@@ -1589,19 +1416,9 @@ dd, dl, dt, li, ol, ul { background:transparent;border:0;font-size:100%;margin-b
     border-radius: 15px;
  }
 
-.e-loop-item:nth-child(even) .plp-image { 
-    background: #FFFE7D;
-    border-radius: 15px;
- }
-
 /* End custom CSS */
 /* Start custom CSS for container, class: .elementor-element-79d97b79 */.e-loop-item:nth-child(odd) .plp-image { 
     background: #95E5EE;
-    border-radius: 15px;
- }
-
-.e-loop-item:nth-child(even) .plp-image { 
-    background: #FFFE7D;
     border-radius: 15px;
  }
 
@@ -1611,19 +1428,9 @@ dd, dl, dt, li, ol, ul { background:transparent;border:0;font-size:100%;margin-b
     border-radius: 15px;
  }
 
-.e-loop-item:nth-child(even) .plp-image { 
-    background: #FFFE7D;
-    border-radius: 15px;
- }
-
 /* End custom CSS */
 /* Start custom CSS for container, class: .elementor-element-49f5c6f0 */.e-loop-item:nth-child(odd) .plp-image { 
     background: #95E5EE;
-    border-radius: 15px;
- }
-
-.e-loop-item:nth-child(even) .plp-image { 
-    background: #FFFE7D;
     border-radius: 15px;
  }
 
@@ -1633,19 +1440,9 @@ dd, dl, dt, li, ol, ul { background:transparent;border:0;font-size:100%;margin-b
     border-radius: 15px;
  }
 
-.e-loop-item:nth-child(even) .plp-image { 
-    background: #FFFE7D;
-    border-radius: 15px;
- }
-
 /* End custom CSS */
 /* Start custom CSS for container, class: .elementor-element-689b1226 */.e-loop-item:nth-child(odd) .plp-image { 
     background: #95E5EE;
-    border-radius: 15px;
- }
-
-.e-loop-item:nth-child(even) .plp-image { 
-    background: #FFFE7D;
     border-radius: 15px;
  }
 
@@ -1655,19 +1452,9 @@ dd, dl, dt, li, ol, ul { background:transparent;border:0;font-size:100%;margin-b
     border-radius: 15px;
  }
 
-.e-loop-item:nth-child(even) .plp-image { 
-    background: #FFFE7D;
-    border-radius: 15px;
- }
-
 /* End custom CSS */
 /* Start custom CSS for container, class: .elementor-element-42a36b75 */.e-loop-item:nth-child(odd) .plp-image { 
     background: #95E5EE;
-    border-radius: 15px;
- }
-
-.e-loop-item:nth-child(even) .plp-image { 
-    background: #FFFE7D;
     border-radius: 15px;
  }
 
@@ -1677,19 +1464,9 @@ dd, dl, dt, li, ol, ul { background:transparent;border:0;font-size:100%;margin-b
     border-radius: 15px;
  }
 
-.e-loop-item:nth-child(even) .plp-image { 
-    background: #FFFE7D;
-    border-radius: 15px;
- }
-
 /* End custom CSS */
 /* Start custom CSS for container, class: .elementor-element-79d97b79 */.e-loop-item:nth-child(odd) .plp-image { 
     background: #95E5EE;
-    border-radius: 15px;
- }
-
-.e-loop-item:nth-child(even) .plp-image { 
-    background: #FFFE7D;
     border-radius: 15px;
  }
 
@@ -1699,19 +1476,9 @@ dd, dl, dt, li, ol, ul { background:transparent;border:0;font-size:100%;margin-b
     border-radius: 15px;
  }
 
-.e-loop-item:nth-child(even) .plp-image { 
-    background: #FFFE7D;
-    border-radius: 15px;
- }
-
 /* End custom CSS */
 /* Start custom CSS for container, class: .elementor-element-49f5c6f0 */.e-loop-item:nth-child(odd) .plp-image { 
     background: #95E5EE;
-    border-radius: 15px;
- }
-
-.e-loop-item:nth-child(even) .plp-image { 
-    background: #FFFE7D;
     border-radius: 15px;
  }
 
@@ -1721,19 +1488,9 @@ dd, dl, dt, li, ol, ul { background:transparent;border:0;font-size:100%;margin-b
     border-radius: 15px;
  }
 
-.e-loop-item:nth-child(even) .plp-image { 
-    background: #FFFE7D;
-    border-radius: 15px;
- }
-
 /* End custom CSS */
 /* Start custom CSS for container, class: .elementor-element-689b1226 */.e-loop-item:nth-child(odd) .plp-image { 
     background: #95E5EE;
-    border-radius: 15px;
- }
-
-.e-loop-item:nth-child(even) .plp-image { 
-    background: #FFFE7D;
     border-radius: 15px;
  }
 
@@ -1743,19 +1500,9 @@ dd, dl, dt, li, ol, ul { background:transparent;border:0;font-size:100%;margin-b
     border-radius: 15px;
  }
 
-.e-loop-item:nth-child(even) .plp-image { 
-    background: #FFFE7D;
-    border-radius: 15px;
- }
-
 /* End custom CSS */
 /* Start custom CSS for container, class: .elementor-element-42a36b75 */.e-loop-item:nth-child(odd) .plp-image { 
     background: #95E5EE;
-    border-radius: 15px;
- }
-
-.e-loop-item:nth-child(even) .plp-image { 
-    background: #FFFE7D;
     border-radius: 15px;
  }
 
@@ -1765,19 +1512,9 @@ dd, dl, dt, li, ol, ul { background:transparent;border:0;font-size:100%;margin-b
     border-radius: 15px;
  }
 
-.e-loop-item:nth-child(even) .plp-image { 
-    background: #FFFE7D;
-    border-radius: 15px;
- }
-
 /* End custom CSS */
 /* Start custom CSS for container, class: .elementor-element-79d97b79 */.e-loop-item:nth-child(odd) .plp-image { 
     background: #95E5EE;
-    border-radius: 15px;
- }
-
-.e-loop-item:nth-child(even) .plp-image { 
-    background: #FFFE7D;
     border-radius: 15px;
  }
 
@@ -1787,19 +1524,9 @@ dd, dl, dt, li, ol, ul { background:transparent;border:0;font-size:100%;margin-b
     border-radius: 15px;
  }
 
-.e-loop-item:nth-child(even) .plp-image { 
-    background: #FFFE7D;
-    border-radius: 15px;
- }
-
 /* End custom CSS */
 /* Start custom CSS for container, class: .elementor-element-49f5c6f0 */.e-loop-item:nth-child(odd) .plp-image { 
     background: #95E5EE;
-    border-radius: 15px;
- }
-
-.e-loop-item:nth-child(even) .plp-image { 
-    background: #FFFE7D;
     border-radius: 15px;
  }
 
@@ -1809,19 +1536,9 @@ dd, dl, dt, li, ol, ul { background:transparent;border:0;font-size:100%;margin-b
     border-radius: 15px;
  }
 
-.e-loop-item:nth-child(even) .plp-image { 
-    background: #FFFE7D;
-    border-radius: 15px;
- }
-
 /* End custom CSS */
 /* Start custom CSS for container, class: .elementor-element-689b1226 */.e-loop-item:nth-child(odd) .plp-image { 
     background: #95E5EE;
-    border-radius: 15px;
- }
-
-.e-loop-item:nth-child(even) .plp-image { 
-    background: #FFFE7D;
     border-radius: 15px;
  }
 
@@ -1831,19 +1548,9 @@ dd, dl, dt, li, ol, ul { background:transparent;border:0;font-size:100%;margin-b
     border-radius: 15px;
  }
 
-.e-loop-item:nth-child(even) .plp-image { 
-    background: #FFFE7D;
-    border-radius: 15px;
- }
-
 /* End custom CSS */
 /* Start custom CSS for container, class: .elementor-element-42a36b75 */.e-loop-item:nth-child(odd) .plp-image { 
     background: #95E5EE;
-    border-radius: 15px;
- }
-
-.e-loop-item:nth-child(even) .plp-image { 
-    background: #FFFE7D;
     border-radius: 15px;
  }
 
@@ -1853,19 +1560,9 @@ dd, dl, dt, li, ol, ul { background:transparent;border:0;font-size:100%;margin-b
     border-radius: 15px;
  }
 
-.e-loop-item:nth-child(even) .plp-image { 
-    background: #FFFE7D;
-    border-radius: 15px;
- }
-
 /* End custom CSS */
 /* Start custom CSS for container, class: .elementor-element-79d97b79 */.e-loop-item:nth-child(odd) .plp-image { 
     background: #95E5EE;
-    border-radius: 15px;
- }
-
-.e-loop-item:nth-child(even) .plp-image { 
-    background: #FFFE7D;
     border-radius: 15px;
  }
 
@@ -1875,19 +1572,9 @@ dd, dl, dt, li, ol, ul { background:transparent;border:0;font-size:100%;margin-b
     border-radius: 15px;
  }
 
-.e-loop-item:nth-child(even) .plp-image { 
-    background: #FFFE7D;
-    border-radius: 15px;
- }
-
 /* End custom CSS */
 /* Start custom CSS for container, class: .elementor-element-49f5c6f0 */.e-loop-item:nth-child(odd) .plp-image { 
     background: #95E5EE;
-    border-radius: 15px;
- }
-
-.e-loop-item:nth-child(even) .plp-image { 
-    background: #FFFE7D;
     border-radius: 15px;
  }
 
@@ -1897,19 +1584,9 @@ dd, dl, dt, li, ol, ul { background:transparent;border:0;font-size:100%;margin-b
     border-radius: 15px;
  }
 
-.e-loop-item:nth-child(even) .plp-image { 
-    background: #FFFE7D;
-    border-radius: 15px;
- }
-
 /* End custom CSS */
 /* Start custom CSS for container, class: .elementor-element-689b1226 */.e-loop-item:nth-child(odd) .plp-image { 
     background: #95E5EE;
-    border-radius: 15px;
- }
-
-.e-loop-item:nth-child(even) .plp-image { 
-    background: #FFFE7D;
     border-radius: 15px;
  }
 
@@ -1919,19 +1596,9 @@ dd, dl, dt, li, ol, ul { background:transparent;border:0;font-size:100%;margin-b
     border-radius: 15px;
  }
 
-.e-loop-item:nth-child(even) .plp-image { 
-    background: #FFFE7D;
-    border-radius: 15px;
- }
-
 /* End custom CSS */
 /* Start custom CSS for container, class: .elementor-element-42a36b75 */.e-loop-item:nth-child(odd) .plp-image { 
     background: #95E5EE;
-    border-radius: 15px;
- }
-
-.e-loop-item:nth-child(even) .plp-image { 
-    background: #FFFE7D;
     border-radius: 15px;
  }
 
@@ -1941,19 +1608,9 @@ dd, dl, dt, li, ol, ul { background:transparent;border:0;font-size:100%;margin-b
     border-radius: 15px;
  }
 
-.e-loop-item:nth-child(even) .plp-image { 
-    background: #FFFE7D;
-    border-radius: 15px;
- }
-
 /* End custom CSS */
 /* Start custom CSS for container, class: .elementor-element-79d97b79 */.e-loop-item:nth-child(odd) .plp-image { 
     background: #95E5EE;
-    border-radius: 15px;
- }
-
-.e-loop-item:nth-child(even) .plp-image { 
-    background: #FFFE7D;
     border-radius: 15px;
  }
 
@@ -3400,35 +3057,13 @@ img:is([sizes=auto i], [sizes^="auto, " i]) { contain-intrinsic-size:3000px 1500
 						background-image: none !important;
 					} }
 
-.elementor-85 .elementor-element.elementor-element-dc6b024 { --display:flex;--justify-content:space-between;--align-items:stretch;--container-widget-width:calc( ( 1 - var( --container-widget-flex-grow ) ) * 100% );--gap:10px 10px;--row-gap:10px;--column-gap:10px;--padding-top:0px;--padding-bottom:0px;--padding-left:0px;--padding-right:0px; }
-
-.elementor-85 .elementor-element.elementor-element-bcbf0be { --display:flex;--justify-content:flex-start;--gap:0px 0px;--row-gap:0px;--column-gap:0px;--padding-top:0px;--padding-bottom:0px;--padding-left:0px;--padding-right:0px; }
-
-.elementor-85 .elementor-element.elementor-element-bcab75b > .elementor-widget-container { background-color:var( --e-global-color-accent ); }
-
-.elementor-85 .elementor-element.elementor-element-bcab75b img { border-style:solid;border-width:1px 1px 1px 1px;border-radius:0px 0px 0px 0px; }
-
-.elementor-widget-icon-box .elementor-icon-box-title { font-family:var( --e-global-typography-primary-font-family ), Sans-serif;font-weight:var( --e-global-typography-primary-font-weight ); }
-
-.elementor-widget-icon-box .elementor-icon-box-title { color:var( --e-global-color-primary ); }
-
-.elementor-widget-icon-box:has(:hover) .elementor-icon-box-title, .elementor-widget-icon-box:has(:focus) .elementor-icon-box-title { color:var( --e-global-color-primary ); }
-
-.elementor-85 .elementor-element.elementor-element-9468107 .elementor-icon-box-title { margin-bottom:0px;color:var( --e-global-color-text ); }
-
-.elementor-85 .elementor-element.elementor-element-9468107 .elementor-icon-box-title { font-size:18px;font-weight:700;text-transform:uppercase; }
-
 .elementor-widget-button .elementor-button { background-color:var( --e-global-color-accent );font-family:var( --e-global-typography-accent-font-family ), Sans-serif;font-weight:var( --e-global-typography-accent-font-weight ); }
-
-.elementor-85 .elementor-element.elementor-element-597d13a .elementor-button { background-color:var( --e-global-color-primary );fill:var( --e-global-color-5416eba );color:var( --e-global-color-5416eba );border-style:solid;border-width:1px 1px 1px 1px; }
-
-.elementor-85 .elementor-element.elementor-element-597d13a .elementor-button:hover, .elementor-85 .elementor-element.elementor-element-597d13a .elementor-button:focus { background-color:var( --e-global-color-801e6a4 );color:var( --e-global-color-5416eba ); }
 
 @media(max-width:1024px){.elementor-85 .elementor-element.elementor-element-dc6b024{--flex-direction:column;--container-widget-width:100%;--container-widget-height:initial;--container-widget-flex-grow:0;--container-widget-align-self:initial;--flex-wrap-mobile:wrap;--justify-content:space-between;}.elementor-85 .elementor-element.elementor-element-bcbf0be{--gap:0px 0px;--row-gap:0px;--column-gap:0px;--padding-top:0px;--padding-bottom:0px;--padding-left:0px;--padding-right:0px;}.elementor-85 .elementor-element.elementor-element-bcab75b img{border-width:1px 1px 1px 1px;}.elementor-85 .elementor-element.elementor-element-9468107 .elementor-icon-box-title{margin-bottom:0px;}.elementor-85 .elementor-element.elementor-element-597d13a .elementor-button{border-width:1px 1px 1px 1px;}}
 
 @media(max-width:767px){.elementor-85 .elementor-element.elementor-element-dc6b024{--justify-content:space-between;}.elementor-85 .elementor-element.elementor-element-bcbf0be{--justify-content:flex-start;--gap:0px 0px;--row-gap:0px;--column-gap:0px;}.elementor-85 .elementor-element.elementor-element-bcab75b img{border-width:1px 1px 1px 1px;}.elementor-85 .elementor-element.elementor-element-9468107 .elementor-icon-box-title, .elementor-85 .elementor-element.elementor-element-9468107 .elementor-icon-box-title a{font-size:14px;}.elementor-85 .elementor-element.elementor-element-9468107 .elementor-icon-box-description{font-size:12px;}.elementor-85 .elementor-element.elementor-element-597d13a .elementor-button{border-width:1px 1px 1px 1px;}}
 
-/* Start custom CSS for container, class: .elementor-element-dc6b024 */.product-category:nth-child(even) { 
+/* Start custom CSS for container { 
     
     /* Targets even numbered elements within the container */
 

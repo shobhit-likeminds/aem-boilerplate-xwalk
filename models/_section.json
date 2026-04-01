@@ -70,7 +70,12 @@
         "steel-stories",
         "app-section",
         "video-banner",
-        "footer-mobile"
+        "footer-mobile",
+        "elementor-header",
+        "elementor-element",
+        "elementor-widget-theme-archive-title",
+        "woocommerce-breadcrumb",
+        "search"
       ]
     }
   ]

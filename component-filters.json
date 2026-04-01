@@ -35,7 +35,12 @@
       "steel-stories",
       "app-section",
       "video-banner",
-      "footer-mobile"
+      "footer-mobile",
+      "elementor-header",
+      "elementor-element",
+      "elementor-widget-theme-archive-title",
+      "woocommerce-breadcrumb",
+      "search"
     ]
   },
   {
@@ -99,10 +104,20 @@
     "id": "elementor-element-7a30379"
   },
   {
+    "id": "elementor-element"
+  },
+  {
     "id": "elementor-footer",
     "components": [
       "footer-link",
       "social-icon"
+    ]
+  },
+  {
+    "id": "elementor-header",
+    "components": [
+      "nav-item",
+      "icon-list-item"
     ]
   },
   {
@@ -111,6 +126,9 @@
       "nav-menu-item",
       "icon-list-item"
     ]
+  },
+  {
+    "id": "elementor-widget-theme-archive-title"
   },
   {
     "id": "footer-mobile",
@@ -152,6 +170,9 @@
     ]
   },
   {
+    "id": "search"
+  },
+  {
     "id": "spaceAdderVerticalPadding"
   },
   {
@@ -168,5 +189,8 @@
     "components": [
       "whyUsCard"
     ]
+  },
+  {
+    "id": "woocommerce-breadcrumb"
   }
 ]

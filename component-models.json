@@ -270,7 +270,7 @@
       {
         "component": "container",
         "item": "category-carousel-item",
-        "label": "Categories",
+        "label": "Items",
         "name": "items"
       }
     ]
@@ -451,6 +451,29 @@
     ]
   },
   {
+    "id": "elementor-element",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Image",
+        "name": "image",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Breadcrumb",
+        "name": "breadcrumb",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "elementor-footer",
     "fields": [
       {
@@ -460,9 +483,9 @@
         "name": "footer-links"
       },
       {
-        "component": "richtext",
-        "label": "Follow Us",
-        "name": "follow-us",
+        "component": "text",
+        "label": "Follow Us Heading",
+        "name": "follow-us-heading",
         "valueType": "string"
       },
       {
@@ -473,8 +496,8 @@
       },
       {
         "component": "reference",
-        "label": "Logo",
-        "name": "logo",
+        "label": "Site Logo",
+        "name": "site-logo",
         "valueType": "string"
       }
     ]
@@ -483,15 +506,15 @@
     "id": "footer-link",
     "fields": [
       {
-        "component": "aem-content",
-        "label": "Link",
-        "name": "link",
+        "component": "text",
+        "label": "Label",
+        "name": "label",
         "valueType": "string"
       },
       {
-        "component": "text",
-        "label": "Text",
-        "name": "text",
+        "component": "aem-content",
+        "label": "URL",
+        "name": "url",
         "valueType": "string"
       }
     ]
@@ -499,12 +522,6 @@
   {
     "id": "social-icon",
     "fields": [
-      {
-        "component": "aem-content",
-        "label": "Link",
-        "name": "link",
-        "valueType": "string"
-      },
       {
         "component": "reference",
         "label": "Icon",
@@ -515,6 +532,75 @@
         "component": "text",
         "label": "Label",
         "name": "label",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "URL",
+        "name": "url",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "elementor-header",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Logo",
+        "name": "logo",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Logo Link",
+        "name": "logo-link",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "nav-item",
+        "label": "Navigation Items",
+        "name": "nav-items"
+      },
+      {
+        "component": "container",
+        "item": "icon-list-item",
+        "label": "Icon List Items",
+        "name": "icon-list-items"
+      }
+    ]
+  },
+  {
+    "id": "nav-item",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Text",
+        "name": "text",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "icon-list-item",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Text",
+        "name": "text",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
         "valueType": "string"
       }
     ]
@@ -572,6 +658,17 @@
         "component": "text",
         "label": "Label",
         "name": "label",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "elementor-widget-theme-archive-title",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
         "valueType": "string"
       }
     ]
@@ -946,8 +1043,8 @@
       },
       {
         "component": "aem-content",
-        "label": "Link",
-        "name": "link",
+        "label": "Product Link",
+        "name": "product-link",
         "valueType": "string"
       }
     ]
@@ -977,6 +1074,29 @@
         "component": "richtext",
         "label": "Description",
         "name": "description",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "search",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Placeholder",
+        "name": "placeholder",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Icon",
+        "name": "icon",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Input Icon",
+        "name": "input-icon",
         "valueType": "string"
       }
     ]
@@ -1072,6 +1192,17 @@
         "component": "richtext",
         "label": "Description",
         "name": "description",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "woocommerce-breadcrumb",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Breadcrumb",
+        "name": "breadcrumb",
         "valueType": "string"
       }
     ]

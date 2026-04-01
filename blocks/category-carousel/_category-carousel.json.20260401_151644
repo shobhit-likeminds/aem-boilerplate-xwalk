@@ -45,7 +45,7 @@
         {
           "component": "container",
           "item": "category-carousel-item",
-          "label": "Items",
+          "label": "Categories",
           "name": "items"
         }
       ]

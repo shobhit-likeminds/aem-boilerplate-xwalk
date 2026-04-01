@@ -1,7 +1,7 @@
 {
   "definitions": [
     {
-      "title": "Product-List",
+      "title": "Product List",
       "id": "product-list",
       "plugins": {
         "xwalk": {
@@ -10,7 +10,7 @@
             "template": {
               "filter": "product-list",
               "model": "product-list",
-              "name": "Product-List"
+              "name": "Product List"
             }
           }
         }
@@ -61,8 +61,8 @@
         },
         {
           "component": "aem-content",
-          "label": "Product Link",
-          "name": "product-link",
+          "label": "Link",
+          "name": "link",
           "valueType": "string"
         }
       ]

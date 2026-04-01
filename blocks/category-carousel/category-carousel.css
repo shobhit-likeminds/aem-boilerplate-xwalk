@@ -1,26 +1,3 @@
-/* Elementor Global CSS Variables - Extracted from source */
-:root {
-  /* Global Colors */
-  --e-global-color-primary: #7f54b3;
-  --e-global-color-secondary: #54595f;
-  --e-global-color-text: #333333;
-  --e-global-color-accent: #61ce70;
-  --e-global-color-5416eba: #ffffff;
-  --e-global-color-801e6a4: #e01b84;
-  
-  /* Typography */
-  --e-global-typography-primary-font-family: "Nunito Sans", Sans-serif;
-  --e-global-typography-primary-font-weight: 600;
-  --e-global-typography-secondary-font-family: "Roboto", Sans-serif;
-  --e-global-typography-secondary-font-weight: 400;
-  --e-global-typography-text-font-family: "Roboto", Sans-serif;
-  --e-global-typography-text-font-weight: 400;
-  --e-global-typography-accent-font-family: "Roboto", Sans-serif;
-  --e-global-typography-accent-font-weight: 500;
-}
-
-
-
 /* --------- CRESCI ---------- */
 @keyframes cresci { 
 	0% { transform: scale( 0 ); }
@@ -1095,11 +1072,7 @@ dd, dl, dt, li, ol, ul { background:transparent;border:0;font-size:100%;margin-b
 
 .elementor-element { --swiper-theme-color:#000;--swiper-navigation-size:44px;--swiper-pagination-bullet-size:6px;--swiper-pagination-bullet-horizontal-gap:6px }
 
-.elementor-element .swiper .swiper-pagination-bullets.swiper-pagination-horizontal { bottom:5px }
-
-.elementor-element :where(.swiper-horizontal)~.swiper-pagination-bullets { bottom:5px;left:0;width:100% }
-
-.elementor-element :where(.swiper-horizontal)~.swiper-pagination-bullets .swiper-pagination-bullet { margin:0 var(--swiper-pagination-bullet-horizontal-gap,4px) }
+.elementor-element .swiper~.swiper-pagination-bullets.swiper-pagination-horizontal { bottom:5px }
 
 .elementor-element.elementor-pagination-position-outside .swiper { padding-bottom:30px }
 

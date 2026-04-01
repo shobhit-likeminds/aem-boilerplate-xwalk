@@ -1,3 +1,26 @@
+/* Elementor Global CSS Variables - Extracted from source */
+:root {
+  /* Global Colors */
+  --e-global-color-primary: #7f54b3;
+  --e-global-color-secondary: #54595f;
+  --e-global-color-text: #333333;
+  --e-global-color-accent: #61ce70;
+  --e-global-color-5416eba: #ffffff;
+  --e-global-color-801e6a4: #e01b84;
+  
+  /* Typography */
+  --e-global-typography-primary-font-family: "Nunito Sans", Sans-serif;
+  --e-global-typography-primary-font-weight: 600;
+  --e-global-typography-secondary-font-family: "Roboto", Sans-serif;
+  --e-global-typography-secondary-font-weight: 400;
+  --e-global-typography-text-font-family: "Roboto", Sans-serif;
+  --e-global-typography-text-font-weight: 400;
+  --e-global-typography-accent-font-family: "Roboto", Sans-serif;
+  --e-global-typography-accent-font-weight: 500;
+}
+
+
+
 /* --------- CRESCI ---------- */
 @keyframes cresci { 
 	0% { transform: scale( 0 ); }
@@ -914,6 +937,8 @@ dd, dl, dt, li, ol, ul { background:transparent;border:0;font-size:100%;margin-b
 
 @media(max-width:992px){.site-header.menu-dropdown-tablet:not(.menu-layout-dropdown) .site-navigation{display:none!important}}
 
+.elementor-screen-only { height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute;top:-10000em;width:1px;clip:rect(0,0,0,0);border:0 }
+
 .elementor *,.elementor :after,.elementor :before{box-sizing:border-box}
 
 .elementor a { box-shadow:none;text-decoration:none }
@@ -1047,7 +1072,44 @@ dd, dl, dt, li, ol, ul { background:transparent;border:0;font-size:100%;margin-b
 
 .elementor-widget-social-icons.elementor-grid-0:not(:has(.elementor-widget-container)), .elementor-widget-social-icons.elementor-grid-mobile-0:not(:has(.elementor-widget-container)), .elementor-widget-social-icons.elementor-grid-tablet-0:not(:has(.elementor-widget-container)) { font-size:0;line-height:1 }
 
+/*! elementor-pro - v3.30.0 - 01-07-2025 */
+.elementor-widget-search { --e-search-white:#fff;--e-search-light-grey:#cdcdcd;--e-search-medium-grey:#515962;--e-search-dark-grey:#2d2d2d;--e-search-black:#000;--e-search-dark-red:#c36;--e-search-dark-purple:#336;--e-search-input-color:var(--e-search-medium-grey);--e-search-input-border-color:var(--e-search-light-grey);--e-search-input-border-radius:0;--e-search-input-gap:4px;--e-search-input-padding:16px;--e-search-input-padding-inline-start:16px;--e-search-input-padding-inline-end:16px;--e-search-input-padding-block-start:16px;--e-search-input-padding-block-end:16px;--e-search-input-transition:0.3s;--e-search-placeholder-color:var(--e-search-medium-grey);--e-search-icon-label-color:var(--e-search-medium-grey);--e-search-icon-label-size:24px;--e-search-icon-label-absolute-width:initial;--e-search-icon-clear-color:var(--e-search-light-grey);--e-search-icon-clear-size:12px;--e-search-icon-clear-absolute-width:initial;--e-search-icon-clear-transition:0.3s;--e-search-submit-color:var(--e-search-white);--e-search-submit-background-color:var(--e-search-dark-grey);--e-search-submit-border-color:none;--e-search-submit-border-type:none;--e-search-submit-border-radius:0;--e-search-submit-border-width:0px;--e-search-submit-padding:24px;--e-search-submit-margin-inline-start:8px;--e-search-submit-button-width:initial;--e-search-submit-button-flex-direction:row;--e-search-submit-hover-transition:0.3s;--e-search-pagination-numbers-padding-left:8px;--e-search-pagination-numbers-padding-right:8px;--e-search-icon-submit-color:var(--e-search-white);--e-search-submit-icon-gap:8px;--e-search-submit-icon-margin-inline-start:0px;--e-search-submit-icon-margin-inline-end:var(--e-search-submit-icon-gap);--e-search-icon-submit-size:24px;--e-search-submit-transition:0.3s;--e-search-results-background-color:var(--e-search-white);--e-search-results-border-color:var(--e-search-light-grey);--e-search-results-border-type:solid;--e-search-results-border-width:1px;--e-search-results-border-radius:0px;--e-search-results-padding:16px;--e-search-results-width:100%;--e-search-results-columns:1;--e-search-results-max-height:initial;--e-search-input-and-results-gap:8px;--e-search-results-transition:0.3s;--e-search-loop-item-equal-height:initial;--e-search-results-grid-auto-rows:initial;--e-search-results-inset-inline-start:initial;--e-search-results-inset-inline-end:initial;--e-search-results-transform:initial;--e-search-results-default-gap:16px;--e-search-results-column-gap:var(--e-search-results-default-gap);--e-search-results-row-gap:var(--e-search-results-default-gap);--e-search-pagination-inset-inline-start:initial;--e-search-pagination-inline-end:initial;--e-search-pagination-transform:initial;--e-search-pagination-border-radius:0px;--e-search-pagination-background-color:var(--e-search-black);--e-search-pagination-text-align:center;--e-search-pagination-justify-content:center;--e-search-pagination-color:var(--e-search-dark-red);--e-search-pagination-hover:var(--e-search-dark-purple);--e-search-pagination-current:var(--e-search-black);--e-search-pagination-page-numbers-gap:10px;--e-search-pagination-block-end-spacing:0px;--e-search-pagination-block-start-spacing:0px;--e-search-pagination-vertical-position:column;--e-search-nothing-found-padding-block-start:0;--e-search-nothing-found-padding-block-end:0;--e-search-nothing-found-results-columns:1;--e-search-nothing-found-message-color:var(--e-search-medium-grey);--e-search-nothing-found-message-alignment:center;--e-search-loader-icon-color:var(--e-search-black);--e-search-loader-icon-size:34px }
+
+.elementor-widget-search .e-search-form { display:flex }
+
+.elementor-widget-search .e-search-label { display:flex;position:relative;z-index:10 }
+
+.elementor-widget-search .e-search-input-wrapper { display:flex;flex:1;flex-direction:column;position:relative }
+
+.elementor-widget-search .e-search-input { --e-search-icons-min-height:max(var(--e-search-icon-clear-size),var(--e-search-icon-label-size));border-color:var(--e-search-input-border-color);border-radius:var(--e-search-input-border-radius);color:var(--e-search-input-color);height:100%;min-height:calc(var(--e-search-input-padding-block-end) + var(--e-search-input-padding-block-start) + var(--e-search-icons-min-height));padding-block-end:var(--e-search-input-padding-block-end);padding-block-start:var(--e-search-input-padding-block-start);padding-inline-end:calc(var(--e-search-input-padding-inline-end) + var(--e-search-icon-clear-absolute-width) + var(--e-search-input-gap));padding-inline-start:calc(var(--e-search-input-padding-inline-start) + var(--e-search-icon-label-absolute-width) + var(--e-search-input-gap));transition:padding-inline 0s }
+
+.elementor-widget-search .e-search-input::-moz-placeholder { color:var(--e-search-placeholder-color) }
+
+.elementor-widget-search .e-search-input::placeholder { color:var(--e-search-placeholder-color) }
+
+.elementor-widget-search .e-search-input:focus { outline:none;transition:var(--e-search-input-transition) }
+
+.elementor-widget-search .e-search-input::-ms-clear, .elementor-widget-search .e-search-input::-ms-reveal { display:none;height:0;width:0 }
+
+.elementor-widget-search .e-search-input::-webkit-search-cancel-button, .elementor-widget-search .e-search-input::-webkit-search-decoration, .elementor-widget-search .e-search-input::-webkit-search-results-button, .elementor-widget-search .e-search-input::-webkit-search-results-decoration { display:none }
+
+.elementor-widget-search .e-search-results-container { background-color:var(--e-search-results-background-color);border-radius:var(--e-search-results-border-radius);display:flex;height:-moz-fit-content;height:fit-content;inset-block-start:calc(100% + var(--e-search-input-and-results-gap));inset-inline-end:var(--e-search-results-inset-inline-end);inset-inline-start:var(--e-search-results-inset-inline-start);position:absolute;transform:var(--e-search-results-transform);width:var(--e-search-results-width);z-index:2000 }
+
+.elementor-widget-search .e-search-results-container>div { border:var(--e-search-results-border-type) var(--e-search-results-border-width) var(--e-search-results-border-color);border-radius:var(--e-search-results-border-radius);max-height:var(--e-search-results-max-height);overflow:auto;padding:var(--e-search-results-padding);width:100% }
+
+.elementor-widget-search .e-search-results-container>div:empty { display:none }
+
+.elementor-widget-search .e-search-results { display:none }
+
+.elementor-widget-search .e-search .e-search-submit { align-items:center;background-color:var(--e-search-submit-background-color);border-color:var(--e-search-submit-border-color);border-radius:var(--e-search-submit-border-radius);border-style:var(--e-search-submit-border-type);border-width:var(--e-search-submit-border-width);color:var(--e-search-submit-color);display:flex;flex-direction:var(--e-search-submit-button-flex-direction);font-size:var(--e-search-form-submit-icon-size);margin-inline-start:var(--e-search-submit-margin-inline-start);padding:var(--e-search-submit-padding);transition:var(--e-search-submit-hover-transition);width:var(--e-search-submit-button-width) }
+
+.elementor-widget-search .e-search .e-search-submit:focus { transition:--e-search-submit-transition }
+
+.elementor-widget-search .e-search .e-search-submit:focus:not(:focus-visible) { outline:none }
+
 .elementor-widget-search .e-search-input-wrapper,.elementor-widget-search .e-search-label *{transition:var(--e-search-input-transition)}
+
+.elementor-widget-search .hide-loader .e-search-results { display:flex;flex-direction:var(--e-search-pagination-vertical-position) }
 
 @keyframes rotate{0%{transform:rotate(0deg)}to{transform:rotate(1turn)}}
 
@@ -1144,6 +1206,8 @@ dd, dl, dt, li, ol, ul { background:transparent;border:0;font-size:100%;margin-b
 @media(min-width:768px){.elementor-40 .elementor-element.elementor-element-fa8725a{--content-width:1280px;}.elementor-40 .elementor-element.elementor-element-dbd8f1f{--width:50%;}.elementor-40 .elementor-element.elementor-element-e403dbb{--width:15%;}.elementor-40 .elementor-element.elementor-element-2779fc3{--width:15%;}}
 
 @media(max-width:1024px) and (min-width:768px){.elementor-40 .elementor-element.elementor-element-dbd8f1f{--width:30%;}}
+
+.elementor-widget-search { --e-search-input-color:var( --e-global-color-text ); }
 
 .elementor-widget-loop-grid .elementor-button { background-color:var( --e-global-color-accent );font-family:var( --e-global-typography-accent-font-family ), Sans-serif;font-weight:var( --e-global-typography-accent-font-weight ); }
 
