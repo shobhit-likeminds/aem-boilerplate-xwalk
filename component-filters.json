@@ -91,7 +91,8 @@
   {
     "id": "container-menu-top",
     "components": [
-      "menu-item",
+      "logo",
+      "menu-link",
       "social-link"
     ]
   },
@@ -135,7 +136,7 @@
     "id": "footer-mobile",
     "components": [
       "footer-link",
-      "footer-social-link"
+      "social-link"
     ]
   },
   {

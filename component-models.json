@@ -159,7 +159,7 @@
       {
         "component": "container",
         "item": "app-item",
-        "label": "Applications List",
+        "label": "Applications",
         "name": "applications"
       }
     ]
@@ -169,8 +169,8 @@
     "fields": [
       {
         "component": "text",
-        "label": "Text",
-        "name": "text",
+        "label": "Label",
+        "name": "label",
         "valueType": "string"
       }
     ]
@@ -321,27 +321,44 @@
     "id": "container-menu-top",
     "fields": [
       {
-        "component": "reference",
+        "component": "container",
+        "item": "logo",
         "label": "Logo",
-        "name": "logo",
-        "valueType": "string"
+        "name": "logo"
       },
       {
         "component": "container",
-        "item": "menu-item",
-        "label": "Menu Items",
-        "name": "menuItems"
+        "item": "menu-link",
+        "label": "Menu Links",
+        "name": "menu-links"
       },
       {
         "component": "container",
         "item": "social-link",
         "label": "Social Links",
-        "name": "socialLinks"
+        "name": "social-links"
       }
     ]
   },
   {
-    "id": "menu-item",
+    "id": "logo",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Logo Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Logo Image",
+        "name": "image",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "menu-link",
     "fields": [
       {
         "component": "text",
@@ -357,37 +374,14 @@
       },
       {
         "component": "container",
-        "item": "submenu-item",
-        "label": "Submenu Items",
-        "name": "submenuItems"
+        "item": "menu-sub-link",
+        "label": "Sub Links",
+        "name": "sub-links"
       }
     ]
   },
   {
-    "id": "submenu-item",
-    "fields": [
-      {
-        "component": "text",
-        "label": "Label",
-        "name": "label",
-        "valueType": "string"
-      },
-      {
-        "component": "aem-content",
-        "label": "Link",
-        "name": "link",
-        "valueType": "string"
-      },
-      {
-        "component": "container",
-        "item": "blockmenu-item",
-        "label": "Blockmenu Items",
-        "name": "blockmenuItems"
-      }
-    ]
-  },
-  {
-    "id": "blockmenu-item",
+    "id": "menu-sub-link",
     "fields": [
       {
         "component": "text",
@@ -414,7 +408,7 @@
     "fields": [
       {
         "component": "aem-content",
-        "label": "Link",
+        "label": "Social Link",
         "name": "link",
         "valueType": "string"
       }
@@ -734,7 +728,82 @@
     "id": "footer-mobile",
     "fields": [
       {
-        "component": "richtext",
+        "component": "container",
+        "item": "social-link",
+        "label": "Social Links",
+        "name": "socialLinks"
+      },
+      {
+        "component": "container",
+        "item": "footer-link",
+        "label": "Footer Links",
+        "name": "footerLinks"
+      },
+      {
+        "component": "text",
+        "label": "Copyright",
+        "name": "copyright",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Privacy Policy Link",
+        "name": "privacyPolicy",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "footer-link",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Text",
+        "name": "text",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "URL",
+        "name": "url",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "social-link",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "URL",
+        "name": "url",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "footer",
+    "fields": [
+      {
+        "component": "container",
+        "item": "footer-column",
+        "label": "Footer Columns",
+        "name": "footer-columns"
+      },
+      {
+        "component": "reference",
+        "label": "Logo Image",
+        "name": "logo-image",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Logo Link",
+        "name": "logo-link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
         "label": "Copyright",
         "name": "copyright",
         "valueType": "string"
@@ -744,18 +813,23 @@
         "label": "Privacy Policy Link",
         "name": "privacy-policy-link",
         "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "footer-column",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Title",
+        "name": "title",
+        "valueType": "string"
       },
       {
         "component": "container",
         "item": "footer-link",
-        "label": "Footer Links",
-        "name": "footer-links"
-      },
-      {
-        "component": "container",
-        "item": "footer-social-link",
-        "label": "Social Links",
-        "name": "footer-social-links"
+        "label": "Links",
+        "name": "links"
       }
     ]
   },
@@ -764,34 +838,17 @@
     "fields": [
       {
         "component": "text",
-        "label": "Label",
-        "name": "label",
+        "label": "Text",
+        "name": "text",
         "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "URL",
-        "name": "url",
+        "label": "Link",
+        "name": "link",
         "valueType": "string"
       }
     ]
-  },
-  {
-    "id": "footer-social-link",
-    "fields": [
-      {
-        "component": "aem-content",
-        "label": "URL",
-        "name": "url",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
-    "id": "footer"
-  },
-  {
-    "id": "footer-column"
   },
   {
     "id": "fragment",
@@ -925,8 +982,8 @@
       },
       {
         "component": "reference",
-        "label": "Video Icon",
-        "name": "video-icon",
+        "label": "Play Icon",
+        "name": "play-icon",
         "valueType": "string"
       }
     ]
@@ -968,26 +1025,26 @@
       },
       {
         "component": "reference",
-        "label": "Hero Image Desktop",
-        "name": "hero-image-desktop",
+        "label": "Image Desktop",
+        "name": "image-desktop",
         "valueType": "string"
       },
       {
         "component": "reference",
-        "label": "Hero Image Mobile",
-        "name": "hero-image-mobile",
+        "label": "Image Mobile",
+        "name": "image-mobile",
         "valueType": "string"
       },
       {
         "component": "reference",
-        "label": "Image",
-        "name": "image",
+        "label": "Image Box",
+        "name": "image-box",
         "valueType": "string"
       },
       {
         "component": "richtext",
-        "label": "Description",
-        "name": "description",
+        "label": "Manufac Info",
+        "name": "manufac-info",
         "valueType": "string"
       }
     ]

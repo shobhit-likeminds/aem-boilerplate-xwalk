@@ -51,7 +51,7 @@
         {
           "component": "container",
           "item": "app-item",
-          "label": "Applications",
+          "label": "Applications List",
           "name": "applications"
         }
       ]
@@ -61,8 +61,8 @@
       "fields": [
         {
           "component": "text",
-          "label": "Label",
-          "name": "label",
+          "label": "Text",
+          "name": "text",
           "valueType": "string"
         }
       ]

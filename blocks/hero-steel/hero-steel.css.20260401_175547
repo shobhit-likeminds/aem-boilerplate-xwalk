@@ -53,32 +53,8 @@
   filter: none;
 }
 
-.fa-search:before { 
-  content: "\f002";
- }
-
-.fa-home:before { 
-  content: "\f015";
- }
-
 .fa-arrow-right:before { 
   content: "\f061";
- }
-
-.fa-twitter:before { 
-  content: "\f099";
- }
-
-.fa-facebook:before { 
-  content: "\f09a";
- }
-
-.fa-linkedin:before { 
-  content: "\f0e1";
- }
-
-.fa-youtube:before { 
-  content: "\f167";
  }
 
 #fancybox-loading { 
@@ -1151,6 +1127,11 @@
     opacity: 1;
   }
 }
+
+.fadeIn { 
+  -webkit-animation-name: fadeIn;
+  animation-name: fadeIn;
+ }
 
 @-webkit-keyframes fadeInDown {
   from {
@@ -2791,6 +2772,3 @@
     transform: translate3d(0, -100%, 0);
   }
 }
-
-<!--/*--><![CDATA[/* ><!--*/
-body nav .menu-container li .sub-menu .block-menu>li {   margin: 0 10px; }

@@ -7,7 +7,7 @@ export default function decorate(block) {
     imageMobileRow,
     headingRow,
     videoLinkRow,
-    playIconRow,
+    videoIconRow,
   ] = [...block.children];
 
   const figure = document.createElement('figure');
@@ -23,7 +23,7 @@ export default function decorate(block) {
   }
 
   // Image Mobile
-  const mobilePicture = mobileRow.querySelector('picture');
+  const mobilePicture = imageMobileRow.querySelector('picture');
   if (mobilePicture) {
     const mobileImg = mobilePicture.querySelector('img');
     const optimizedMobilePic = createOptimizedPicture(mobileImg.src, mobileImg.alt, false, [{ width: '373' }]);
@@ -42,18 +42,20 @@ export default function decorate(block) {
   bannerCard.classList.add('banner-card', 'os-animation', 'animated', 'fadeIn');
   bannerCard.setAttribute('data-os-animation', 'fadeIn');
 
-  // Heading
   const heading = document.createElement('h1');
   heading.classList.add('os-animation', 'hd1', 'animated', 'fadeIn');
   heading.setAttribute('data-os-animation', 'fadeIn');
   heading.setAttribute('data-os-animation-delay', '.5s');
   heading.style.animationDelay = '0.5s';
   moveInstrumentation(headingRow.firstElementChild, heading);
-  while (headingRow.firstElementChild.firstChild) {
-    heading.append(headingRow.firstElementChild.firstChild);
-  }
+  heading.append(...headingRow.firstElementChild.children);
 
-  // Video Link and Play Icon
+  const emptyParagraph = document.createElement('p');
+  emptyParagraph.classList.add('os-animation', 'animated', 'fadeIn');
+  emptyParagraph.setAttribute('data-os-animation', 'fadeIn');
+  emptyParagraph.setAttribute('data-os-animation-delay', '.7s');
+  emptyParagraph.style.animationDelay = '0.7s';
+
   const videoParagraph = document.createElement('p');
   videoParagraph.classList.add('MT30', 'os-animation', 'animated', 'fadeIn');
   videoParagraph.setAttribute('data-os-animation', 'fadeIn');
@@ -65,54 +67,25 @@ export default function decorate(block) {
   const foundVideoLink = videoLinkRow.querySelector('a');
   if (foundVideoLink) {
     videoLink.href = foundVideoLink.href;
-  }
-  moveInstrumentation(videoLinkRow.firstElementChild, videoLink);
-
-  const playIconPicture = playIconRow.querySelector('picture');
-  if (playIconPicture) {
-    const playIconImg = playIconPicture.querySelector('img');
-    const optimizedPlayIconPic = createOptimizedPicture(playIconImg.src, playIconImg.alt, false, [{ width: 'auto' }]);
-    moveInstrumentation(playIconPicture, optimizedPlayIconPic);
-    videoLink.append(optimizedPlayIconPic);
+    moveInstrumentation(foundVideoLink, videoLink);
   }
 
-  videoLink.addEventListener('click', (e) => {
-    e.preventDefault();
-    // In a real scenario, this would open a modal or navigate to the video.
-    // For this exercise, we'll just log it.
-    console.log('Video link clicked:', videoLink.href);
-    // Example of opening a simple modal (replace with actual fancybox implementation if available)
-    const videoModal = document.createElement('div');
-    videoModal.classList.add('video-modal');
-    videoModal.innerHTML = `
-      <div class="video-modal-content">
-        <span class="close-button">&times;</span>
-        <iframe src="${videoLink.href.replace('youtu.be/', 'www.youtube.com/embed/')}?autoplay=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-      </div>
-    `;
-    document.body.append(videoModal);
-
-    videoModal.querySelector('.close-button').addEventListener('click', () => {
-      videoModal.remove();
-    });
-
-    videoModal.addEventListener('click', (event) => {
-      if (event.target === videoModal) {
-        videoModal.remove();
-      }
-    });
-  });
+  const videoIconPicture = videoIconRow.querySelector('picture');
+  if (videoIconPicture) {
+    const videoIconImg = videoIconPicture.querySelector('img');
+    const optimizedVideoIconPic = createOptimizedPicture(videoIconImg.src, videoIconImg.alt, false, [{ width: '32' }]);
+    optimizedVideoIconPic.querySelector('img').classList.add('lazyloaded');
+    moveInstrumentation(videoIconPicture, optimizedVideoIconPic);
+    videoLink.append(optimizedVideoIconPic);
+  }
 
   videoParagraph.append(videoLink);
 
-  bannerCard.append(heading);
-  bannerCard.append(document.createElement('p')); // Empty paragraph from original HTML
-  bannerCard.append(videoParagraph);
+  bannerCard.append(heading, emptyParagraph, videoParagraph);
   container.append(bannerCard);
   bannerInfo.append(container);
 
   block.textContent = '';
   block.classList.add('op1');
-  block.append(figure);
-  block.append(bannerInfo);
+  block.append(figure, bannerInfo);
 }

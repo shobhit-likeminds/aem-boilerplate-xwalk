@@ -32,15 +32,15 @@
       }
     },
     {
-      "title": "Social-Link",
-      "id": "social-link",
+      "title": "Footer-Social-Link",
+      "id": "footer-social-link",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "social-link",
-              "name": "Social-Link"
+              "model": "footer-social-link",
+              "name": "Footer-Social-Link"
             }
           }
         }
@@ -52,19 +52,7 @@
       "id": "footer-mobile",
       "fields": [
         {
-          "component": "container",
-          "item": "social-link",
-          "label": "Social Links",
-          "name": "socialLinks"
-        },
-        {
-          "component": "container",
-          "item": "footer-link",
-          "label": "Footer Links",
-          "name": "footerLinks"
-        },
-        {
-          "component": "text",
+          "component": "richtext",
           "label": "Copyright",
           "name": "copyright",
           "valueType": "string"
@@ -72,8 +60,20 @@
         {
           "component": "aem-content",
           "label": "Privacy Policy Link",
-          "name": "privacyPolicy",
+          "name": "privacy-policy-link",
           "valueType": "string"
+        },
+        {
+          "component": "container",
+          "item": "footer-link",
+          "label": "Footer Links",
+          "name": "footer-links"
+        },
+        {
+          "component": "container",
+          "item": "footer-social-link",
+          "label": "Social Links",
+          "name": "footer-social-links"
         }
       ]
     },
@@ -82,8 +82,8 @@
       "fields": [
         {
           "component": "text",
-          "label": "Text",
-          "name": "text",
+          "label": "Label",
+          "name": "label",
           "valueType": "string"
         },
         {
@@ -95,7 +95,7 @@
       ]
     },
     {
-      "id": "social-link",
+      "id": "footer-social-link",
       "fields": [
         {
           "component": "aem-content",
@@ -111,7 +111,7 @@
       "id": "footer-mobile",
       "components": [
         "footer-link",
-        "social-link"
+        "footer-social-link"
       ]
     }
   ]

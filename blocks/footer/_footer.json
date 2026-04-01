@@ -17,7 +17,7 @@
       }
     },
     {
-      "title": "Footer Column",
+      "title": "Footer-Column",
       "id": "footer-column",
       "plugins": {
         "xwalk": {
@@ -25,7 +25,7 @@
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
               "model": "footer-column",
-              "name": "Footer Column"
+              "name": "Footer-Column"
             }
           }
         }
@@ -34,10 +34,73 @@
   ],
   "models": [
     {
-      "id": "footer"
+      "id": "footer",
+      "fields": [
+        {
+          "component": "container",
+          "item": "footer-column",
+          "label": "Footer Columns",
+          "name": "footer-columns"
+        },
+        {
+          "component": "reference",
+          "label": "Logo Image",
+          "name": "logo-image",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Logo Link",
+          "name": "logo-link",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Copyright",
+          "name": "copyright",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Privacy Policy Link",
+          "name": "privacy-policy-link",
+          "valueType": "string"
+        }
+      ]
     },
     {
-      "id": "footer-column"
+      "id": "footer-column",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Title",
+          "name": "title",
+          "valueType": "string"
+        },
+        {
+          "component": "container",
+          "item": "footer-link",
+          "label": "Links",
+          "name": "links"
+        }
+      ]
+    },
+    {
+      "id": "footer-link",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Text",
+          "name": "text",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Link",
+          "name": "link",
+          "valueType": "string"
+        }
+      ]
     }
   ],
   "filters": [

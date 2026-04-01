@@ -2,13 +2,17 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
+  // Destructure block.children directly as per BlockJson model
   const [
     headingRow,
-    heroImageDesktopRow,
-    heroImageMobileRow,
-    imageRow,
-    descriptionRow,
+    imageDesktopRow,
+    imageMobileRow,
+    imageBoxRow,
+    manufacInfoRow,
   ] = [...block.children];
+
+  block.textContent = '';
+  block.classList.add('manufactures');
 
   const container = document.createElement('div');
   container.classList.add('container');
@@ -17,72 +21,62 @@ export default function decorate(block) {
   const headingEl = document.createElement('h3');
   moveInstrumentation(headingRow.firstElementChild, headingEl);
   headingEl.classList.add('hd4', 'CTR', 'os-animation', 'animated', 'fadeInUp');
-  // Ensure we append the actual content of the heading cell, not the cell itself
-  while (headingRow.firstElementChild.firstChild) {
-    headingEl.append(headingRow.firstElementChild.firstChild);
-  }
+  headingEl.innerHTML = headingRow.firstElementChild.innerHTML;
   container.append(headingEl);
 
-  // Hero Image
+  // Hero Image (Desktop and Mobile)
   const heroImgDiv = document.createElement('div');
   heroImgDiv.classList.add('hero-img', 'os-animation', 'animated', 'fadeInUp');
 
-  // Hero Image Desktop
-  const heroImageDesktopPicture = heroImageDesktopRow.firstElementChild.querySelector('picture');
-  if (heroImageDesktopPicture) {
-    const imgDesktop = heroImageDesktopPicture.querySelector('img');
-    const optimizedPicDesktop = createOptimizedPicture(imgDesktop.src, imgDesktop.alt, false, [{ width: '1145' }]);
-    optimizedPicDesktop.querySelector('img').classList.add('img-responsive', 'hidden-xs', 'lazyloaded');
-    moveInstrumentation(heroImageDesktopRow.firstElementChild, optimizedPicDesktop);
-    heroImgDiv.append(optimizedPicDesktop);
+  const desktopPicture = imageDesktopRow.querySelector('picture');
+  if (desktopPicture) {
+    const desktopImg = desktopPicture.querySelector('img');
+    const optimizedDesktopPic = createOptimizedPicture(desktopImg.src, desktopImg.alt, false, [{ width: '1145' }]);
+    optimizedDesktopPic.querySelector('img').classList.add('img-responsive', 'hidden-xs');
+    moveInstrumentation(desktopImg, optimizedDesktopPic.querySelector('img'));
+    heroImgDiv.append(optimizedDesktopPic);
   }
 
-  // Hero Image Mobile
-  const heroImageMobilePicture = heroImageMobileRow.firstElementChild.querySelector('picture');
-  if (heroImageMobilePicture) {
-    const imgMobile = heroImageMobilePicture.querySelector('img');
-    const optimizedPicMobile = createOptimizedPicture(imgMobile.src, imgMobile.alt, false, [{ width: '332' }]);
-    optimizedPicMobile.querySelector('img').classList.add('img-responsive', 'visible-xs', 'lazyload');
-    moveInstrumentation(heroImageMobileRow.firstElementChild, optimizedPicMobile);
-    heroImgDiv.append(optimizedPicMobile);
+  const mobilePicture = imageMobileRow.querySelector('picture');
+  if (mobilePicture) {
+    const mobileImg = mobilePicture.querySelector('img');
+    const optimizedMobilePic = createOptimizedPicture(mobileImg.src, mobileImg.alt, false, [{ width: '332' }]);
+    optimizedMobilePic.querySelector('img').classList.add('img-responsive', 'visible-xs');
+    moveInstrumentation(mobileImg, optimizedMobilePic.querySelector('img'));
+    heroImgDiv.append(optimizedMobilePic);
   }
   container.append(heroImgDiv);
 
-  // Row for image and description
+  // Row for Image Box and Manufac Info
   const rowDiv = document.createElement('div');
   rowDiv.classList.add('row');
 
-  // Image column
-  const colSm4 = document.createElement('div');
-  colSm4.classList.add('col-sm-4', 'col-sm-push-8');
-  const imgBox = document.createElement('div');
-  imgBox.classList.add('img-box', 'os-animation', 'animated', 'fadeInUp');
+  // Image Box
+  const colSm4Push8 = document.createElement('div');
+  colSm4Push8.classList.add('col-sm-4', 'col-sm-push-8');
+  const imgBoxDiv = document.createElement('div');
+  imgBoxDiv.classList.add('img-box', 'os-animation', 'animated', 'fadeInUp');
 
-  const imagePicture = imageRow.firstElementChild.querySelector('picture');
-  if (imagePicture) {
-    const img = imagePicture.querySelector('img');
-    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '280' }]);
-    optimizedPic.querySelector('img').classList.add('lazyloaded');
-    moveInstrumentation(imageRow.firstElementChild, optimizedPic);
-    imgBox.append(optimizedPic);
+  const imageBoxPicture = imageBoxRow.querySelector('picture');
+  if (imageBoxPicture) {
+    const imageBoxImg = imageBoxPicture.querySelector('img');
+    const optimizedImageBoxPic = createOptimizedPicture(imageBoxImg.src, imageBoxImg.alt, false, [{ width: '280' }]);
+    moveInstrumentation(imageBoxImg, optimizedImageBoxPic.querySelector('img'));
+    imgBoxDiv.append(optimizedImageBoxPic);
   }
-  colSm4.append(imgBox);
-  rowDiv.append(colSm4);
+  colSm4Push8.append(imgBoxDiv);
+  rowDiv.append(colSm4Push8);
 
-  // Description column
-  const colSm8 = document.createElement('div');
-  colSm8.classList.add('col-sm-8', 'col-sm-pull-4');
-  const manufacInfo = document.createElement('div');
-  manufacInfo.classList.add('manufac-info', 'os-animation', 'animated', 'fadeInUp');
-  moveInstrumentation(descriptionRow.firstElementChild, manufacInfo);
-  while (descriptionRow.firstElementChild.firstChild) {
-    manufacInfo.append(descriptionRow.firstElementChild.firstChild);
-  }
-  colSm8.append(manufacInfo);
-  rowDiv.append(colSm8);
+  // Manufac Info
+  const colSm8Pull4 = document.createElement('div');
+  colSm8Pull4.classList.add('col-sm-8', 'col-sm-pull-4');
+  const manufacInfoDiv = document.createElement('div');
+  manufacInfoDiv.classList.add('manufac-info', 'os-animation', 'animated', 'fadeInUp');
+  moveInstrumentation(manufacInfoRow.firstElementChild, manufacInfoDiv);
+  manufacInfoDiv.innerHTML = manufacInfoRow.firstElementChild.innerHTML;
+  colSm8Pull4.append(manufacInfoDiv);
+  rowDiv.append(colSm8Pull4);
 
   container.append(rowDiv);
-
-  block.textContent = '';
   block.append(container);
 }

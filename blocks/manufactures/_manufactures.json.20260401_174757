@@ -29,26 +29,26 @@
         },
         {
           "component": "reference",
-          "label": "Image Desktop",
-          "name": "image-desktop",
+          "label": "Hero Image Desktop",
+          "name": "hero-image-desktop",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Image Mobile",
-          "name": "image-mobile",
+          "label": "Hero Image Mobile",
+          "name": "hero-image-mobile",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Image Box",
-          "name": "image-box",
+          "label": "Image",
+          "name": "image",
           "valueType": "string"
         },
         {
           "component": "richtext",
-          "label": "Manufac Info",
-          "name": "manufac-info",
+          "label": "Description",
+          "name": "description",
           "valueType": "string"
         }
       ]

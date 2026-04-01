@@ -7,10 +7,10 @@ export default function decorate(block) {
   const container = document.createElement('div');
   container.classList.add('container');
 
-  const rowDiv = document.createElement('div');
-  rowDiv.classList.add('row');
+  const row = document.createElement('div');
+  row.classList.add('row');
 
-  // Left column for heading and image
+  // Left column: Heading and Image
   const leftCol = document.createElement('div');
   leftCol.classList.add('col-sm-6', 'os-animation', 'animated', 'fadeInLeft');
   leftCol.setAttribute('data-os-animation', 'fadeInLeft');
@@ -20,31 +20,33 @@ export default function decorate(block) {
   storiesSteelBox.classList.add('stories-steel-box');
 
   const heading = document.createElement('h2');
-  // Assuming heading text is directly in the first cell, move its content
-  if (headingRow.firstElementChild) {
+  const headingContent = headingRow.querySelector('h1, h2, h3, h4, h5, h6');
+  if (headingContent) {
+    moveInstrumentation(headingContent, heading);
+    heading.append(...headingContent.childNodes);
+  } else {
+    // Fallback if no specific heading tag is found, take all children of the first cell
     moveInstrumentation(headingRow.firstElementChild, heading);
-    while (headingRow.firstElementChild.firstChild) {
-      heading.append(headingRow.firstElementChild.firstChild);
-    }
+    heading.append(...headingRow.firstElementChild.childNodes);
   }
+  storiesSteelBox.append(heading);
 
   const figure = document.createElement('figure');
   figure.classList.add('MT30');
   const picture = imageRow.querySelector('picture');
   if (picture) {
     const img = picture.querySelector('img');
-    if (img) {
-      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-      moveInstrumentation(img, optimizedPic.querySelector('img'));
-      figure.append(optimizedPic);
-    }
+    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+    moveInstrumentation(img, optimizedPic.querySelector('img'));
+    picture.replaceWith(optimizedPic);
+    figure.append(optimizedPic);
   }
-  moveInstrumentation(imageRow, figure);
+  storiesSteelBox.append(figure);
 
-  storiesSteelBox.append(heading, figure);
   leftCol.append(storiesSteelBox);
+  row.append(leftCol);
 
-  // Right column for story list
+  // Right column: Story list
   const rightCol = document.createElement('div');
   rightCol.classList.add('col-sm-6', 'os-animation', 'ohidden', 'animated', 'fadeInRight');
   rightCol.setAttribute('data-os-animation', 'fadeInRight');
@@ -53,33 +55,29 @@ export default function decorate(block) {
   const ul = document.createElement('ul');
   ul.classList.add('story-list', 'op1');
 
-  storyRows.forEach((row, index) => {
+  storyRows.forEach((storyRow, index) => {
     const li = document.createElement('li');
-    moveInstrumentation(row, li);
+    moveInstrumentation(storyRow, li);
     li.classList.add('os-animation', 'animated', 'fadeInLeft');
+    const delay = 0.2 + index * 0.2;
     li.setAttribute('data-os-animation', 'fadeInLeft');
-    const delay = 0.2 + index * 0.2; // Calculate delay based on index
     li.setAttribute('data-os-animation-delay', `${delay.toFixed(1)}s`);
 
-    // Assuming each story row has one cell containing rich text
-    const textCell = row.firstElementChild;
-    if (textCell) {
-      // Create a new paragraph element and move content
-      const p = document.createElement('p');
-      moveInstrumentation(textCell, p);
-      while (textCell.firstChild) {
-        p.append(textCell.firstChild);
+    // Content detection for the story text cell
+    const storyTextCell = [...storyRow.children].find(cell => cell.textContent.trim() !== '');
+    if (storyTextCell) {
+      moveInstrumentation(storyTextCell, li);
+      while (storyTextCell.firstChild) {
+        li.append(storyTextCell.firstChild);
       }
-      li.append(p);
     }
     ul.append(li);
   });
 
   rightCol.append(ul);
+  row.append(rightCol);
 
-  rowDiv.append(leftCol, rightCol);
-  container.append(rowDiv);
-
+  container.append(row);
   block.textContent = '';
   block.append(container);
 }

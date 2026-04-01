@@ -1,0 +1,8 @@
+@import url("/sites/all/themes/jsw_theme/styles/vendor.css?tcicge");
+
+@import url("/sites/all/themes/jsw_theme/styles/main.css?tcicge");
+
+@import url("/sites/all/themes/jsw_theme/styles/override.css?tcicge");
+
+<!--/*--><![CDATA[/* ><!--*/
+body nav .menu-container li .sub-menu .block-menu>li {   margin: 0 10px; }

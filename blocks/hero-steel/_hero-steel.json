@@ -47,8 +47,8 @@
         },
         {
           "component": "reference",
-          "label": "Video Icon",
-          "name": "video-icon",
+          "label": "Play Icon",
+          "name": "play-icon",
           "valueType": "string"
         }
       ]

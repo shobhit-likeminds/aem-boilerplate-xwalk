@@ -17,45 +17,45 @@
       }
     },
     {
-      "title": "Menu-Link",
-      "id": "menu-link",
+      "title": "Menu-Item",
+      "id": "menu-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "menu-link",
-              "name": "Menu-Link"
+              "model": "menu-item",
+              "name": "Menu-Item"
             }
           }
         }
       }
     },
     {
-      "title": "Menu-Sub-Link",
-      "id": "menu-sub-link",
+      "title": "Submenu-Item",
+      "id": "submenu-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "menu-sub-link",
-              "name": "Menu-Sub-Link"
+              "model": "submenu-item",
+              "name": "Submenu-Item"
             }
           }
         }
       }
     },
     {
-      "title": "Logo",
-      "id": "logo",
+      "title": "Blockmenu-Item",
+      "id": "blockmenu-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "logo",
-              "name": "Logo"
+              "model": "blockmenu-item",
+              "name": "Blockmenu-Item"
             }
           }
         }
@@ -82,44 +82,27 @@
       "id": "container-menu-top",
       "fields": [
         {
-          "component": "container",
-          "item": "logo",
+          "component": "reference",
           "label": "Logo",
-          "name": "logo"
+          "name": "logo",
+          "valueType": "string"
         },
         {
           "component": "container",
-          "item": "menu-link",
-          "label": "Menu Links",
-          "name": "menu-links"
+          "item": "menu-item",
+          "label": "Menu Items",
+          "name": "menuItems"
         },
         {
           "component": "container",
           "item": "social-link",
           "label": "Social Links",
-          "name": "social-links"
+          "name": "socialLinks"
         }
       ]
     },
     {
-      "id": "logo",
-      "fields": [
-        {
-          "component": "aem-content",
-          "label": "Logo Link",
-          "name": "link",
-          "valueType": "string"
-        },
-        {
-          "component": "reference",
-          "label": "Logo Image",
-          "name": "image",
-          "valueType": "string"
-        }
-      ]
-    },
-    {
-      "id": "menu-link",
+      "id": "menu-item",
       "fields": [
         {
           "component": "text",
@@ -135,14 +118,37 @@
         },
         {
           "component": "container",
-          "item": "menu-sub-link",
-          "label": "Sub Links",
-          "name": "sub-links"
+          "item": "submenu-item",
+          "label": "Submenu Items",
+          "name": "submenuItems"
         }
       ]
     },
     {
-      "id": "menu-sub-link",
+      "id": "submenu-item",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Label",
+          "name": "label",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Link",
+          "name": "link",
+          "valueType": "string"
+        },
+        {
+          "component": "container",
+          "item": "blockmenu-item",
+          "label": "Blockmenu Items",
+          "name": "blockmenuItems"
+        }
+      ]
+    },
+    {
+      "id": "blockmenu-item",
       "fields": [
         {
           "component": "text",
@@ -169,7 +175,7 @@
       "fields": [
         {
           "component": "aem-content",
-          "label": "Social Link",
+          "label": "Link",
           "name": "link",
           "valueType": "string"
         }
@@ -180,8 +186,7 @@
     {
       "id": "container-menu-top",
       "components": [
-        "logo",
-        "menu-link",
+        "menu-item",
         "social-link"
       ]
     }
