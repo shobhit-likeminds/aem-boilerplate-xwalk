@@ -1459,12 +1459,6 @@
         "valueType": "string"
       },
       {
-        "component": "container",
-        "item": "footer-link-group",
-        "label": "Footer Link Groups",
-        "name": "footer-link-groups"
-      },
-      {
         "component": "reference",
         "label": "BSL Logo Image",
         "name": "bsl-logo-image",
@@ -1481,6 +1475,12 @@
         "label": "Copyright",
         "name": "copyright",
         "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "footer-link-group",
+        "label": "Footer Link Groups",
+        "name": "footer-link-groups"
       },
       {
         "component": "container",
@@ -1933,12 +1933,6 @@
         "valueType": "string"
       },
       {
-        "component": "container",
-        "item": "nav-item",
-        "label": "Navigation Items",
-        "name": "nav-items"
-      },
-      {
         "component": "reference",
         "label": "Home Icon",
         "name": "home-icon",
@@ -1955,6 +1949,12 @@
         "label": "Right Icon 2",
         "name": "right-icon-2",
         "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "nav-item",
+        "label": "Navigation Items",
+        "name": "nav-items"
       }
     ]
   },

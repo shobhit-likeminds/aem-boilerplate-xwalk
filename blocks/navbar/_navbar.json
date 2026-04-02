@@ -49,12 +49,6 @@
           "valueType": "string"
         },
         {
-          "component": "container",
-          "item": "nav-item",
-          "label": "Navigation Items",
-          "name": "nav-items"
-        },
-        {
           "component": "reference",
           "label": "Home Icon",
           "name": "home-icon",
@@ -71,6 +65,12 @@
           "label": "Right Icon 2",
           "name": "right-icon-2",
           "valueType": "string"
+        },
+        {
+          "component": "container",
+          "item": "nav-item",
+          "label": "Navigation Items",
+          "name": "nav-items"
         }
       ]
     },

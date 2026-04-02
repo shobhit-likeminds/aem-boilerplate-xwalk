@@ -79,12 +79,6 @@
           "valueType": "string"
         },
         {
-          "component": "container",
-          "item": "footer-link-group",
-          "label": "Footer Link Groups",
-          "name": "footer-link-groups"
-        },
-        {
           "component": "reference",
           "label": "BSL Logo Image",
           "name": "bsl-logo-image",
@@ -101,6 +95,12 @@
           "label": "Copyright",
           "name": "copyright",
           "valueType": "string"
+        },
+        {
+          "component": "container",
+          "item": "footer-link-group",
+          "label": "Footer Link Groups",
+          "name": "footer-link-groups"
         },
         {
           "component": "container",
