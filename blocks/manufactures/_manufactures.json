@@ -56,7 +56,8 @@
   ],
   "filters": [
     {
-      "id": "manufactures"
+      "id": "manufactures",
+      "components": []
     }
   ]
 }

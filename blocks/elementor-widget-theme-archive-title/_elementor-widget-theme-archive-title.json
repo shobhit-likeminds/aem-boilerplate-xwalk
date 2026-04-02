@@ -32,7 +32,8 @@
   ],
   "filters": [
     {
-      "id": "elementor-widget-theme-archive-title"
+      "id": "elementor-widget-theme-archive-title",
+      "components": []
     }
   ]
 }

@@ -108,7 +108,8 @@
     ]
   },
   {
-    "id": "button"
+    "id": "button",
+    "components": []
   },
   {
     "id": "cards",
@@ -117,7 +118,8 @@
     ]
   },
   {
-    "id": "carousel"
+    "id": "carousel",
+    "components": []
   },
   {
     "id": "category-carousel",
@@ -166,7 +168,8 @@
     "components": []
   },
   {
-    "id": "cta-text"
+    "id": "cta-text",
+    "components": []
   },
   {
     "id": "custom-search",
@@ -185,10 +188,12 @@
     ]
   },
   {
-    "id": "elementor-element-7a30379"
+    "id": "elementor-element-7a30379",
+    "components": []
   },
   {
-    "id": "elementor-element"
+    "id": "elementor-element",
+    "components": []
   },
   {
     "id": "elementor-footer",
@@ -212,7 +217,8 @@
     ]
   },
   {
-    "id": "elementor-widget-theme-archive-title"
+    "id": "elementor-widget-theme-archive-title",
+    "components": []
   },
   {
     "id": "family-health",
@@ -257,6 +263,10 @@
     ]
   },
   {
+    "id": "fragment",
+    "components": []
+  },
+  {
     "id": "headerSection",
     "components": [
       "navigationItem",
@@ -264,7 +274,12 @@
     ]
   },
   {
-    "id": "hero-steel"
+    "id": "hero-steel",
+    "components": []
+  },
+  {
+    "id": "hero",
+    "components": []
   },
   {
     "id": "main-nav",
@@ -273,7 +288,8 @@
     ]
   },
   {
-    "id": "manufactures"
+    "id": "manufactures",
+    "components": []
   },
   {
     "id": "mind-module-list",
@@ -299,7 +315,8 @@
     "components": []
   },
   {
-    "id": "page-intro"
+    "id": "page-intro",
+    "components": []
   },
   {
     "id": "popular-products",
@@ -332,7 +349,8 @@
     ]
   },
   {
-    "id": "search"
+    "id": "search",
+    "components": []
   },
   {
     "id": "service-directory-links",
@@ -373,10 +391,12 @@
     ]
   },
   {
-    "id": "teaser"
+    "id": "teaser",
+    "components": []
   },
   {
-    "id": "text"
+    "id": "text",
+    "components": []
   },
   {
     "id": "top-nav",
@@ -387,7 +407,8 @@
     ]
   },
   {
-    "id": "video-banner"
+    "id": "video-banner",
+    "components": []
   },
   {
     "id": "whyUs",
@@ -396,7 +417,8 @@
     ]
   },
   {
-    "id": "woocommerce-breadcrumb"
+    "id": "woocommerce-breadcrumb",
+    "components": []
   },
   {
     "id": "wp-block-columns",

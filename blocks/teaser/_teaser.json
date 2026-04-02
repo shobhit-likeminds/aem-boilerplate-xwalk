@@ -56,7 +56,8 @@
   ],
   "filters": [
     {
-      "id": "teaser"
+      "id": "teaser",
+      "components": []
     }
   ]
 }

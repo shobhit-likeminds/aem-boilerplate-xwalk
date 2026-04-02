@@ -25,7 +25,8 @@
   ],
   "filters": [
     {
-      "id": "carousel"
+      "id": "carousel",
+      "components": []
     }
   ]
 }

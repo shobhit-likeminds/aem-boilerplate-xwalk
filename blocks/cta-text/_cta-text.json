@@ -32,7 +32,8 @@
   ],
   "filters": [
     {
-      "id": "cta-text"
+      "id": "cta-text",
+      "components": []
     }
   ]
 }

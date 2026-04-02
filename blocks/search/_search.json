@@ -44,7 +44,8 @@
   ],
   "filters": [
     {
-      "id": "search"
+      "id": "search",
+      "components": []
     }
   ]
 }

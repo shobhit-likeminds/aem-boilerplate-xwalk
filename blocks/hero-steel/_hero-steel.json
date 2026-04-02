@@ -56,7 +56,8 @@
   ],
   "filters": [
     {
-      "id": "hero-steel"
+      "id": "hero-steel",
+      "components": []
     }
   ]
 }
