@@ -34,9 +34,6 @@
   ],
   "models": [
     {
-      "id": "cmp-search"
-    },
-    {
       "id": "cmp-search-item",
       "fields": [
         {

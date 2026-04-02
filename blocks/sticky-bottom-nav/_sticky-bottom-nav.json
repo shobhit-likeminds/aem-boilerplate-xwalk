@@ -34,9 +34,6 @@
   ],
   "models": [
     {
-      "id": "sticky-bottom-nav"
-    },
-    {
       "id": "sticky-bottom-nav-item",
       "fields": [
         {

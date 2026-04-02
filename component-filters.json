@@ -274,12 +274,6 @@
     ]
   },
   {
-    "id": "spaceAdderVerticalPadding"
-  },
-  {
-    "id": "space-adder"
-  },
-  {
     "id": "steel-stories",
     "components": [
       "story"
