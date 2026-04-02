@@ -47,15 +47,15 @@
       }
     },
     {
-      "title": "Footer Social Link",
-      "id": "footer-social-link",
+      "title": "Social Link",
+      "id": "social-link",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "footer-social-link",
-              "name": "Footer Social Link"
+              "model": "social-link",
+              "name": "Social Link"
             }
           }
         }
@@ -67,40 +67,46 @@
       "id": "footer",
       "fields": [
         {
+          "component": "reference",
+          "label": "Logo Image",
+          "name": "logo-image",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Logo Link",
+          "name": "logo-link",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "BSL Logo Image",
+          "name": "bsl-logo-image",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "BSL Logo Link",
+          "name": "bsl-logo-link",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Copyright",
+          "name": "copyright",
+          "valueType": "string"
+        },
+        {
           "component": "container",
           "item": "footer-link-group",
           "label": "Footer Link Groups",
           "name": "footer-link-groups"
         },
         {
-          "component": "richtext",
-          "label": "Contact Address",
-          "name": "contact-address",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Telephone",
-          "name": "telephone",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Fax",
-          "name": "fax",
-          "valueType": "string"
-        },
-        {
           "component": "container",
-          "item": "footer-social-link",
-          "label": "Footer Social Links",
-          "name": "footer-social-links"
-        },
-        {
-          "component": "richtext",
-          "label": "Footer Credit",
-          "name": "footer-credit",
-          "valueType": "string"
+          "item": "social-link",
+          "label": "Social Links",
+          "name": "social-links"
         }
       ]
     },
@@ -109,15 +115,15 @@
       "fields": [
         {
           "component": "text",
-          "label": "Heading",
-          "name": "heading",
+          "label": "Group Title",
+          "name": "group-title",
           "valueType": "string"
         },
         {
           "component": "container",
           "item": "footer-link",
-          "label": "Links",
-          "name": "links"
+          "label": "Footer Links",
+          "name": "footer-links"
         }
       ]
     },
@@ -125,32 +131,26 @@
       "id": "footer-link",
       "fields": [
         {
-          "component": "text",
-          "label": "Label",
-          "name": "label",
+          "component": "aem-content",
+          "label": "Link",
+          "name": "link",
           "valueType": "string"
         },
         {
-          "component": "aem-content",
-          "label": "URL",
-          "name": "url",
+          "component": "text",
+          "label": "Label",
+          "name": "label",
           "valueType": "string"
         }
       ]
     },
     {
-      "id": "footer-social-link",
+      "id": "social-link",
       "fields": [
         {
-          "component": "text",
-          "label": "Icon Class",
-          "name": "icon",
-          "valueType": "string"
-        },
-        {
           "component": "aem-content",
-          "label": "Social URL",
-          "name": "url",
+          "label": "Link",
+          "name": "link",
           "valueType": "string"
         }
       ]
@@ -161,7 +161,8 @@
       "id": "footer",
       "components": [
         "footer-link-group",
-        "footer-social-link"
+        "footer-link",
+        "social-link"
       ]
     }
   ]

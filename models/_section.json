@@ -107,7 +107,20 @@
         "wp-block-columns",
         "family-health",
         "mind-to-mind",
-        "mind-module-list"
+        "mind-module-list",
+        "search-box",
+        "bg_top",
+        "main-menu",
+        "mobile-menu",
+        "brands-inner-banner",
+        "inner-title",
+        "brands-bcrumbs-sec1",
+        "brands-det-1",
+        "brands-det-2",
+        "tv-commercial",
+        "tv-sec",
+        "parle-campaign",
+        "parle-social"
       ]
     }
   ]

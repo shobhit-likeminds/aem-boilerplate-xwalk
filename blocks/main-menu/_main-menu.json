@@ -1,0 +1,79 @@
+{
+  "definitions": [
+    {
+      "title": "Main-Menu",
+      "id": "main-menu",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "main-menu",
+              "model": "main-menu",
+              "name": "Main-Menu"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Menu-Item",
+      "id": "menu-item",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "menu-item",
+              "name": "Menu-Item"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "main-menu",
+      "fields": [
+        {
+          "component": "container",
+          "item": "menu-item",
+          "label": "Menu Items",
+          "name": "menu-items"
+        }
+      ]
+    },
+    {
+      "id": "menu-item",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Label",
+          "name": "label",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Link",
+          "name": "link",
+          "valueType": "string"
+        },
+        {
+          "component": "container",
+          "item": "menu-item",
+          "label": "Submenu Items",
+          "name": "submenu-items"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "main-menu",
+      "components": [
+        "menu-item"
+      ]
+    }
+  ]
+}

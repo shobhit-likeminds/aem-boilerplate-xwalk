@@ -72,7 +72,20 @@
       "wp-block-columns",
       "family-health",
       "mind-to-mind",
-      "mind-module-list"
+      "mind-module-list",
+      "search-box",
+      "bg_top",
+      "main-menu",
+      "mobile-menu",
+      "brands-inner-banner",
+      "inner-title",
+      "brands-bcrumbs-sec1",
+      "brands-det-1",
+      "brands-det-2",
+      "tv-commercial",
+      "tv-sec",
+      "parle-campaign",
+      "parle-social"
     ]
   },
   {
@@ -100,12 +113,37 @@
     ]
   },
   {
+    "id": "bg_top",
+    "components": [
+      "menu-link"
+    ]
+  },
+  {
     "id": "boing-header-footer",
     "components": [
       "sidebar-menu-item",
       "footer-list-link",
       "footer-social-link"
     ]
+  },
+  {
+    "id": "brands-bcrumbs-sec1",
+    "components": [
+      "breadcrumb",
+      "social-link"
+    ]
+  },
+  {
+    "id": "brands-det-1"
+  },
+  {
+    "id": "brands-det-2",
+    "components": [
+      "brand-product"
+    ]
+  },
+  {
+    "id": "brands-inner-banner"
   },
   {
     "id": "button",
@@ -252,8 +290,7 @@
     "id": "footer",
     "components": [
       "footer-link-group",
-      "footer-link",
-      "social-link"
+      "footer-social-link"
     ]
   },
   {
@@ -282,6 +319,15 @@
     "components": []
   },
   {
+    "id": "inner-title"
+  },
+  {
+    "id": "main-menu",
+    "components": [
+      "menu-item"
+    ]
+  },
+  {
     "id": "main-nav",
     "components": [
       "menu-item"
@@ -305,6 +351,12 @@
     ]
   },
   {
+    "id": "mobile-menu",
+    "components": [
+      "menu-item"
+    ]
+  },
+  {
     "id": "navbar",
     "components": [
       "nav-item"
@@ -317,6 +369,19 @@
   {
     "id": "page-intro",
     "components": []
+  },
+  {
+    "id": "parle-campaign",
+    "components": [
+      "campaign-video"
+    ]
+  },
+  {
+    "id": "parle-social",
+    "components": [
+      "social-item",
+      "instagram-image"
+    ]
   },
   {
     "id": "popular-products",
@@ -347,6 +412,9 @@
     "components": [
       "reasonCard"
     ]
+  },
+  {
+    "id": "search-box"
   },
   {
     "id": "search",
@@ -405,6 +473,15 @@
       "care",
       "social"
     ]
+  },
+  {
+    "id": "tv-commercial",
+    "components": [
+      "tv-commercial-item"
+    ]
+  },
+  {
+    "id": "tv-sec"
   },
   {
     "id": "video-banner",

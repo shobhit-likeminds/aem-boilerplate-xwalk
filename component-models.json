@@ -314,6 +314,40 @@
     ]
   },
   {
+    "id": "bg_top",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Logo",
+        "name": "logo",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "menu-link",
+        "label": "Menu Links",
+        "name": "menu_links"
+      }
+    ]
+  },
+  {
+    "id": "menu-link",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Icon",
+        "name": "icon",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "boing-header-footer",
     "fields": [
       {
@@ -455,6 +489,119 @@
         "component": "aem-content",
         "label": "Link",
         "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "brands-bcrumbs-sec1",
+    "fields": [
+      {
+        "component": "container",
+        "item": "breadcrumb",
+        "label": "Breadcrumbs",
+        "name": "breadcrumbs"
+      },
+      {
+        "component": "container",
+        "item": "social-link",
+        "label": "Social Links",
+        "name": "socialLinks"
+      }
+    ]
+  },
+  {
+    "id": "breadcrumb",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Label",
+        "name": "label",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "social-link",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "URL",
+        "name": "url",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "brands-det-1",
+    "fields": [
+      {
+        "component": "richtext",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Description",
+        "name": "description",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "brands-det-2",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "brand-product",
+        "label": "Brand Products",
+        "name": "brandProducts"
+      }
+    ]
+  },
+  {
+    "id": "brand-product",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Image",
+        "name": "image",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Label",
+        "name": "label",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "brands-inner-banner",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Mobile Image",
+        "name": "mobile-image",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Desktop Image",
+        "name": "desktop-image",
         "valueType": "string"
       }
     ]
@@ -1447,46 +1594,40 @@
     "id": "footer",
     "fields": [
       {
-        "component": "reference",
-        "label": "Logo Image",
-        "name": "logo-image",
-        "valueType": "string"
-      },
-      {
-        "component": "aem-content",
-        "label": "Logo Link",
-        "name": "logo-link",
-        "valueType": "string"
-      },
-      {
-        "component": "reference",
-        "label": "BSL Logo Image",
-        "name": "bsl-logo-image",
-        "valueType": "string"
-      },
-      {
-        "component": "aem-content",
-        "label": "BSL Logo Link",
-        "name": "bsl-logo-link",
-        "valueType": "string"
-      },
-      {
-        "component": "richtext",
-        "label": "Copyright",
-        "name": "copyright",
-        "valueType": "string"
-      },
-      {
         "component": "container",
         "item": "footer-link-group",
         "label": "Footer Link Groups",
         "name": "footer-link-groups"
       },
       {
+        "component": "richtext",
+        "label": "Contact Address",
+        "name": "contact-address",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Telephone",
+        "name": "telephone",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Fax",
+        "name": "fax",
+        "valueType": "string"
+      },
+      {
         "component": "container",
-        "item": "social-link",
-        "label": "Social Links",
-        "name": "social-links"
+        "item": "footer-social-link",
+        "label": "Footer Social Links",
+        "name": "footer-social-links"
+      },
+      {
+        "component": "richtext",
+        "label": "Footer Credit",
+        "name": "footer-credit",
+        "valueType": "string"
       }
     ]
   },
@@ -1495,15 +1636,15 @@
     "fields": [
       {
         "component": "text",
-        "label": "Group Title",
-        "name": "group-title",
+        "label": "Heading",
+        "name": "heading",
         "valueType": "string"
       },
       {
         "component": "container",
         "item": "footer-link",
-        "label": "Footer Links",
-        "name": "footer-links"
+        "label": "Links",
+        "name": "links"
       }
     ]
   },
@@ -1511,26 +1652,32 @@
     "id": "footer-link",
     "fields": [
       {
-        "component": "aem-content",
-        "label": "Link",
-        "name": "link",
-        "valueType": "string"
-      },
-      {
         "component": "text",
         "label": "Label",
         "name": "label",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "URL",
+        "name": "url",
         "valueType": "string"
       }
     ]
   },
   {
-    "id": "social-link",
+    "id": "footer-social-link",
     "fields": [
       {
+        "component": "text",
+        "label": "Icon Class",
+        "name": "icon",
+        "valueType": "string"
+      },
+      {
         "component": "aem-content",
-        "label": "Link",
-        "name": "link",
+        "label": "Social URL",
+        "name": "url",
         "valueType": "string"
       }
     ]
@@ -1734,6 +1881,51 @@
     ]
   },
   {
+    "id": "inner-title",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "main-menu",
+    "fields": [
+      {
+        "component": "container",
+        "item": "menu-item",
+        "label": "Menu Items",
+        "name": "menu-items"
+      }
+    ]
+  },
+  {
+    "id": "menu-item",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Label",
+        "name": "label",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "menu-item",
+        "label": "Submenu Items",
+        "name": "submenu-items"
+      }
+    ]
+  },
+  {
     "id": "main-nav",
     "fields": [
       {
@@ -1918,6 +2110,57 @@
     ]
   },
   {
+    "id": "mobile-menu",
+    "fields": [
+      {
+        "component": "container",
+        "item": "menu-item",
+        "label": "Menu Items",
+        "name": "menuItems"
+      }
+    ]
+  },
+  {
+    "id": "menu-item",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Label",
+        "name": "label",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "submenu-item",
+        "label": "Submenu Items",
+        "name": "submenuItems"
+      }
+    ]
+  },
+  {
+    "id": "submenu-item",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Label",
+        "name": "label",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "navbar",
     "fields": [
       {
@@ -2017,6 +2260,115 @@
         "component": "richtext",
         "label": "Description",
         "name": "description",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "parle-campaign",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "campaign-video",
+        "label": "Campaign Videos",
+        "name": "videos"
+      }
+    ]
+  },
+  {
+    "id": "campaign-video",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Video Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Thumbnail Image",
+        "name": "image",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Alt Text",
+        "name": "alt",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Video Title",
+        "name": "title",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "parle-social",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "social-item",
+        "label": "Social Items",
+        "name": "socialItems"
+      },
+      {
+        "component": "container",
+        "item": "instagram-image",
+        "label": "Instagram Images",
+        "name": "instagramImages"
+      }
+    ]
+  },
+  {
+    "id": "social-item",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Icon",
+        "name": "icon",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Platform",
+        "name": "platform",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Embed HTML",
+        "name": "embedHtml",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "instagram-image",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Instagram Post Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Image",
+        "name": "image",
         "valueType": "string"
       }
     ]
@@ -2218,6 +2570,29 @@
         "component": "richtext",
         "label": "Description",
         "name": "description",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "search-box",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Close Icon",
+        "name": "close-icon",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Search Placeholder",
+        "name": "search-placeholder",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Button Label",
+        "name": "button-label",
         "valueType": "string"
       }
     ]
@@ -2595,6 +2970,57 @@
         "component": "reference",
         "label": "Icon",
         "name": "icon",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "tv-commercial",
+    "fields": [
+      {
+        "component": "container",
+        "item": "tv-commercial-item",
+        "label": "Items",
+        "name": "items"
+      }
+    ]
+  },
+  {
+    "id": "tv-commercial-item",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Image 1",
+        "name": "image-1",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Image 2",
+        "name": "image-2",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Image 3",
+        "name": "image-3",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "tv-sec",
+    "fields": [
+      {
+        "component": "richtext",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Video Embed URL",
+        "name": "video-embed-url",
         "valueType": "string"
       }
     ]
