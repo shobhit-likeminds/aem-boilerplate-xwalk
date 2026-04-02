@@ -514,6 +514,22 @@
           }
         },
         {
+          "title": "Cookie-Consent",
+          "id": "cookie-consent",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "cookie-consent",
+                  "model": "cookie-consent",
+                  "name": "Cookie-Consent"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Cta-Text",
           "id": "cta-text",
           "plugins": {
@@ -524,6 +540,22 @@
                   "filter": "cta-text",
                   "model": "cta-text",
                   "name": "Cta-Text"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Custom-Search",
+          "id": "custom-search",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "custom-search",
+                  "model": "custom-search",
+                  "name": "Custom-Search"
                 }
               }
             }
@@ -778,6 +810,37 @@
           }
         },
         {
+          "title": "Family-Health",
+          "id": "family-health",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "family-health",
+                  "model": "family-health",
+                  "name": "Family-Health"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Family-Health-Item",
+          "id": "family-health-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "family-health-item",
+                  "name": "Family-Health-Item"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "FeatureCards",
           "id": "featurecards",
           "plugins": {
@@ -947,45 +1010,45 @@
           }
         },
         {
-          "title": "Footer-Navigation-Link",
-          "id": "footer-navigation-link",
+          "title": "Footer Link Group",
+          "id": "footer-link-group",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "footer-navigation-link",
-                  "name": "Footer-Navigation-Link"
+                  "model": "footer-link-group",
+                  "name": "Footer Link Group"
                 }
               }
             }
           }
         },
         {
-          "title": "Footer-Social-Link",
-          "id": "footer-social-link",
+          "title": "Footer Link",
+          "id": "footer-link",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "footer-social-link",
-                  "name": "Footer-Social-Link"
+                  "model": "footer-link",
+                  "name": "Footer Link"
                 }
               }
             }
           }
         },
         {
-          "title": "Footer-Title-Link",
-          "id": "footer-title-link",
+          "title": "Social Link",
+          "id": "social-link",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "footer-title-link",
-                  "name": "Footer-Title-Link"
+                  "model": "social-link",
+                  "name": "Social Link"
                 }
               }
             }
@@ -1156,6 +1219,130 @@
                   "filter": "manufactures",
                   "model": "manufactures",
                   "name": "Manufactures"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Mind-Module-List",
+          "id": "mind-module-list",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "mind-module-list",
+                  "model": "mind-module-list",
+                  "name": "Mind-Module-List"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Mind-Module",
+          "id": "mind-module",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "mind-module",
+                  "name": "Mind-Module"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Mind to Mind",
+          "id": "mind-to-mind",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "mind-to-mind",
+                  "model": "mind-to-mind",
+                  "name": "Mind to Mind"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Mind to Mind Link",
+          "id": "mind-to-mind-link",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "mind-to-mind-link",
+                  "name": "Mind to Mind Link"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Mind to Mind Video",
+          "id": "mind-to-mind-video",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "mind-to-mind-video",
+                  "name": "Mind to Mind Video"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Navbar",
+          "id": "navbar",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "navbar",
+                  "model": "navbar",
+                  "name": "Navbar"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Nav-Item",
+          "id": "nav-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "nav-item",
+                  "name": "Nav-Item"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Nhsuk-Hero",
+          "id": "nhsuk-hero",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "nhsuk-hero",
+                  "model": "nhsuk-hero",
+                  "name": "Nhsuk-Hero"
                 }
               }
             }
@@ -1349,6 +1536,37 @@
           }
         },
         {
+          "title": "Service-Directory-Links",
+          "id": "service-directory-links",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "service-directory-links",
+                  "model": "service-directory-links",
+                  "name": "Service-Directory-Links"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Service-Link",
+          "id": "service-link",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "service-link",
+                  "name": "Service-Link"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Site-Footer",
           "id": "site-footer",
           "plugins": {
@@ -1497,6 +1715,37 @@
                 "template": {
                   "model": "sticky-bottom-nav-item",
                   "name": "Sticky-Bottom-Nav-Item"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Symptom-Condition-Columns",
+          "id": "symptom-condition-columns",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "symptom-condition-columns",
+                  "model": "symptom-condition-columns",
+                  "name": "Symptom-Condition-Columns"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Symptom-Condition-Column",
+          "id": "symptom-condition-column",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "symptom-condition-column",
+                  "name": "Symptom-Condition-Column"
                 }
               }
             }
@@ -1653,6 +1902,37 @@
                   "filter": "woocommerce-breadcrumb",
                   "model": "woocommerce-breadcrumb",
                   "name": "Woocommerce-Breadcrumb"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Wp-Block-Columns",
+          "id": "wp-block-columns",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "wp-block-columns",
+                  "model": "wp-block-columns",
+                  "name": "Wp-Block-Columns"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Wp-Block-Column",
+          "id": "wp-block-column",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "wp-block-column",
+                  "name": "Wp-Block-Column"
                 }
               }
             }

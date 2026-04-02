@@ -17,45 +17,45 @@
       }
     },
     {
-      "title": "Footer Link Group",
-      "id": "footer-link-group",
+      "title": "Footer-Navigation-Link",
+      "id": "footer-navigation-link",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "footer-link-group",
-              "name": "Footer Link Group"
+              "model": "footer-navigation-link",
+              "name": "Footer-Navigation-Link"
             }
           }
         }
       }
     },
     {
-      "title": "Footer Link",
-      "id": "footer-link",
+      "title": "Footer-Social-Link",
+      "id": "footer-social-link",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "footer-link",
-              "name": "Footer Link"
+              "model": "footer-social-link",
+              "name": "Footer-Social-Link"
             }
           }
         }
       }
     },
     {
-      "title": "Social Link",
-      "id": "social-link",
+      "title": "Footer-Title-Link",
+      "id": "footer-title-link",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "social-link",
-              "name": "Social Link"
+              "model": "footer-title-link",
+              "name": "Footer-Title-Link"
             }
           }
         }
@@ -68,84 +68,66 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Logo Image",
-          "name": "logo-image",
+          "label": "Logo",
+          "name": "logo",
           "valueType": "string"
-        },
-        {
-          "component": "aem-content",
-          "label": "Logo Link",
-          "name": "logo-link",
-          "valueType": "string"
-        },
-        {
-          "component": "container",
-          "item": "footer-link-group",
-          "label": "Footer Link Groups",
-          "name": "footer-link-groups"
         },
         {
           "component": "reference",
-          "label": "BSL Logo Image",
-          "name": "bsl-logo-image",
-          "valueType": "string"
-        },
-        {
-          "component": "aem-content",
-          "label": "BSL Logo Link",
-          "name": "bsl-logo-link",
-          "valueType": "string"
-        },
-        {
-          "component": "richtext",
-          "label": "Copyright",
-          "name": "copyright",
+          "label": "FSSAI Logo",
+          "name": "fssai_logo",
           "valueType": "string"
         },
         {
           "component": "container",
-          "item": "social-link",
+          "item": "footer-navigation-link",
+          "label": "Navigation Links Left",
+          "name": "navigation_links_left"
+        },
+        {
+          "component": "container",
+          "item": "footer-navigation-link",
+          "label": "Navigation Links Right",
+          "name": "navigation_links_right"
+        },
+        {
+          "component": "container",
+          "item": "footer-title-link",
+          "label": "Titles",
+          "name": "titles"
+        },
+        {
+          "component": "container",
+          "item": "footer-social-link",
           "label": "Social Links",
-          "name": "social-links"
+          "name": "social_links"
         }
       ]
     },
     {
-      "id": "footer-link-group",
-      "fields": [
-        {
-          "component": "text",
-          "label": "Group Title",
-          "name": "group-title",
-          "valueType": "string"
-        },
-        {
-          "component": "container",
-          "item": "footer-link",
-          "label": "Footer Links",
-          "name": "footer-links"
-        }
-      ]
-    },
-    {
-      "id": "footer-link",
+      "id": "footer-navigation-link",
       "fields": [
         {
           "component": "aem-content",
           "label": "Link",
           "name": "link",
           "valueType": "string"
-        },
+        }
+      ]
+    },
+    {
+      "id": "footer-social-link",
+      "fields": [
         {
-          "component": "text",
-          "label": "Label",
-          "name": "label",
+          "component": "aem-content",
+          "label": "Link",
+          "name": "link",
           "valueType": "string"
         }
       ]
     },
     {
-      "id": "social-link",
+      "id": "footer-title-link",
       "fields": [
         {
           "component": "aem-content",
@@ -160,9 +142,9 @@
     {
       "id": "footer",
       "components": [
-        "footer-link-group",
-        "footer-link",
-        "social-link"
+        "footer-navigation-link",
+        "footer-social-link",
+        "footer-title-link"
       ]
     }
   ]

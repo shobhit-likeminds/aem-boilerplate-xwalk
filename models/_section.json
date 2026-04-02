@@ -97,7 +97,17 @@
         "main-nav",
         "page-intro",
         "products-list",
-        "site-footer"
+        "site-footer",
+        "cookie-consent",
+        "navbar",
+        "custom-search",
+        "nhsuk-hero",
+        "symptom-condition-columns",
+        "service-directory-links",
+        "wp-block-columns",
+        "family-health",
+        "mind-to-mind",
+        "mind-module-list"
       ]
     }
   ]

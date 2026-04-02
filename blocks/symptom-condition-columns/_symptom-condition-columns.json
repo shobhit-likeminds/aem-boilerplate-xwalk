@@ -1,0 +1,91 @@
+{
+  "definitions": [
+    {
+      "title": "Symptom-Condition-Columns",
+      "id": "symptom-condition-columns",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "symptom-condition-columns",
+              "model": "symptom-condition-columns",
+              "name": "Symptom-Condition-Columns"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Symptom-Condition-Column",
+      "id": "symptom-condition-column",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "symptom-condition-column",
+              "name": "Symptom-Condition-Column"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "symptom-condition-columns",
+      "fields": [
+        {
+          "component": "container",
+          "item": "symptom-condition-column",
+          "label": "Columns",
+          "name": "columns"
+        }
+      ]
+    },
+    {
+      "id": "symptom-condition-column",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Heading",
+          "name": "heading",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Description",
+          "name": "description",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Icon",
+          "name": "icon",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Link",
+          "name": "link",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Link Label",
+          "name": "link-label",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "symptom-condition-columns",
+      "components": [
+        "symptom-condition-column"
+      ]
+    }
+  ]
+}

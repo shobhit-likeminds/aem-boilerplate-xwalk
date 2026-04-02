@@ -2,352 +2,229 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const allRows = [...block.children];
+  const children = [...block.children];
 
-  // Separate logo and FSSAI logo rows using content detection
-  const logoRow = allRows.find(row => row.querySelector('.logo.image.cmp-footer__logo') || (row.children.length === 1 && row.querySelector('picture') && row.querySelector('a')));
-  const fssaiLogoRow = allRows.find(row => row !== logoRow && (row.querySelector('.logofssai.logo.image.cmp-footer__fssai_logo') || (row.children.length === 1 && row.querySelector('picture') && !row.querySelector('a'))));
+  const footer = document.createElement('div');
+  footer.classList.add('container');
 
-  // Filter out the logo and FSSAI logo rows from itemRows
-  const itemRows = allRows.filter(row => row !== logoRow && row !== fssaiLogoRow);
+  const mainRow = document.createElement('div');
+  mainRow.classList.add('row', 'border-dotted-bottom');
 
-  const footerDiv = document.createElement('div');
-  footerDiv.classList.add('cmp-footer');
+  const mainContentCol = document.createElement('div');
+  mainContentCol.classList.add('col-sm-12', 'col-md-10', 'col-lg-11');
 
-  const topContent = document.createElement('div');
-  topContent.classList.add('cmp-footer__top-content');
+  const mainContentRow = document.createElement('div');
+  mainContentRow.classList.add('row');
 
-  const navLogo = document.createElement('div');
-  navLogo.classList.add('cmp-footer__nav-logo');
+  const logoCol = document.createElement('div');
+  logoCol.classList.add('col-sm-12', 'col-md-2', 'footer_logo');
 
-  // Logo
-  if (logoRow) {
-    const logoDiv = document.createElement('div');
-    logoDiv.classList.add('logo', 'image', 'cmp-footer__logo');
-    const logoPicture = logoRow.querySelector('picture');
-    if (logoPicture) {
-      const logoLink = document.createElement('a');
-      logoLink.classList.add('cmp-image__link');
-      const existingLink = logoRow.querySelector('a');
-      if (existingLink) {
-        logoLink.href = existingLink.href;
-      } else {
-        logoLink.href = '/'; // Default link if not provided
-      }
+  // Find logo image and link rows using content detection
+  const logoImageRow = children.find(row => row.querySelector('picture') && !row.querySelector('a'));
+  const logoLinkRow = children.find(row => row.querySelector('a') && row.querySelector('a').href.includes('nhs24.scot')); // Specific link to distinguish from other links
 
-      const img = logoPicture.querySelector('img');
-      if (img) {
-        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-        moveInstrumentation(img, optimizedPic.querySelector('img'));
-        logoLink.append(optimizedPic);
-      }
-      logoDiv.append(logoLink);
-    }
-    moveInstrumentation(logoRow, logoDiv);
-    navLogo.append(logoDiv);
+  const logoPicture = logoImageRow?.querySelector('picture');
+  const logoLink = logoLinkRow?.querySelector('a');
+
+  if (logoPicture && logoLink) {
+    const figure = document.createElement('figure');
+    figure.classList.add('wp-block-image', 'size-large', 'is-resized');
+    const a = document.createElement('a');
+    a.href = logoLink.href;
+    a.target = '_blank';
+    a.rel = ' noreferrer noopener';
+    a.append(logoPicture);
+    figure.append(a);
+    logoCol.append(figure);
   }
+  if (logoImageRow) moveInstrumentation(logoImageRow, logoCol);
+  if (logoLinkRow) moveInstrumentation(logoLinkRow, logoCol);
 
+  const navCol = document.createElement('div');
+  navCol.classList.add('col-sm-12', 'col-md-10');
+  const h3 = document.createElement('h3');
+  h3.textContent = 'NHS inform';
+  navCol.append(h3);
 
-  // FSSAI Logo
-  if (fssaiLogoRow) {
-    const fssaiLogoDiv = document.createElement('div');
-    fssaiLogoDiv.classList.add('logofssai', 'logo', 'image', 'cmp-footer__fssai_logo');
-    const fssaiPicture = fssaiLogoRow.querySelector('picture');
-    if (fssaiPicture) {
-      const img = fssaiPicture.querySelector('img');
-      if (img) {
-        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-        moveInstrumentation(img, optimizedPic.querySelector('img'));
-        fssaiLogoDiv.append(optimizedPic);
-      }
-    }
-    moveInstrumentation(fssaiLogoRow, fssaiLogoDiv);
-    navLogo.append(fssaiLogoDiv);
+  const navRow = document.createElement('div');
+  navRow.classList.add('row');
+
+  mainContentRow.append(logoCol, navCol);
+  mainContentCol.append(mainContentRow);
+
+  const bslLogoCol = document.createElement('div');
+  bslLogoCol.classList.add('col-sm-12', 'col-md-2', 'col-lg-1', 'text-end', 'footer_logo2');
+
+  // Find BSL logo image and link rows using content detection
+  const bslLogoImageRow = children.find(row => row.querySelector('picture') && row.querySelector('img[alt="BSL Logo"]'));
+  const bslLogoLinkRow = children.find(row => row.querySelector('a') && row.querySelector('a').href.includes('contactscotland-bsl.org'));
+
+  const bslLogoPicture = bslLogoImageRow?.querySelector('picture');
+  const bslLogoLink = bslLogoLinkRow?.querySelector('a');
+
+  if (bslLogoPicture && bslLogoLink) {
+    const figure = document.createElement('figure');
+    figure.classList.add('wp-block-image', 'size-large');
+    const a = document.createElement('a');
+    a.href = bslLogoLink.href;
+    a.target = '_blank';
+    a.rel = ' noreferrer noopener';
+    a.append(bslLogoPicture);
+    figure.append(a);
+    bslLogoCol.append(figure);
   }
+  if (bslLogoImageRow) moveInstrumentation(bslLogoImageRow, bslLogoCol);
+  if (bslLogoLinkRow) moveInstrumentation(bslLogoLinkRow, bslLogoCol);
 
-  topContent.append(navLogo);
+  mainRow.append(mainContentCol, bslLogoCol);
+  footer.append(mainRow);
 
-  // Subscribe Now (static markup as per original HTML, not from EDS model)
-  const subscribeDiv = document.createElement('div');
-  subscribeDiv.classList.add('cmp-footer__nav-subscribe');
-  subscribeDiv.setAttribute('data-register-api-url', '/content/itc-foods-brands/servicespath/itcemail.register.json');
-  subscribeDiv.setAttribute('data-popup-success-message', 'Registered Successfully!!');
-  subscribeDiv.setAttribute('data-popup-failure-message', 'Registered Failed, Please try after some time.');
+  const copyrightSection = document.createElement('div');
+  copyrightSection.classList.add('copyright_section', 'mt-4');
+  const copyrightContainer = document.createElement('div');
+  copyrightContainer.classList.add('container');
+  const copyrightRow = document.createElement('div');
+  copyrightRow.classList.add('row');
 
-  const subscribeText = document.createElement('div');
-  subscribeText.classList.add('cmp-footer__nav-text');
-  const subscribeImg = document.createElement('img');
-  subscribeImg.src = '/content/dam/aemigrate/uploaded-folder/image/1775067352468.svg+xml'; // From original HTML
-  subscribeImg.alt = 'aashirvaad-logo';
-  subscribeImg.loading = 'lazy';
-  subscribeImg.fetchpriority = 'low';
-  subscribeText.append(subscribeImg);
-  const subscribeH3 = document.createElement('h3');
-  subscribeH3.textContent = 'in Your Inbox';
-  subscribeText.append(subscribeH3);
-  subscribeDiv.append(subscribeText);
+  const copyrightTextCol = document.createElement('div');
+  copyrightTextCol.classList.add('col-6');
 
-  const inputContainer = document.createElement('div');
-  inputContainer.classList.add('container', 'responsivegrid', 'cmp-input');
-  const emailDiv = document.createElement('div');
-  emailDiv.classList.add('text', 'aem-GridColumn', 'aem-GridColumn--default--12', 'cmp-input__email');
-  const formTextDiv = document.createElement('div');
-  formTextDiv.classList.add('cmp-form-text');
-  formTextDiv.setAttribute('data-cmp-required-message', 'This field is required');
-  formTextDiv.setAttribute('data-cmp-valid-email', 'Please enter valid email id');
-  const emailLabel = document.createElement('label');
-  emailLabel.htmlFor = 'form-text-2014401237';
-  formTextDiv.append(emailLabel);
-  const emailInput = document.createElement('input');
-  emailInput.classList.add('cmp-form-text__text');
-  emailInput.type = 'email';
-  emailInput.placeholder = 'Enter your Email ID';
-  emailInput.name = 'email';
-  formTextDiv.append(emailInput);
-  emailDiv.append(formTextDiv);
-  inputContainer.append(emailDiv);
-  subscribeDiv.append(inputContainer);
+  // Find the copyright row
+  const copyrightRowElement = children.find(row => row.textContent.includes('Copyright text content'));
+  const copyrightText = copyrightRowElement?.querySelector('div p');
+  if (copyrightText) {
+    copyrightTextCol.append(copyrightText);
+  }
+  if (copyrightRowElement) moveInstrumentation(copyrightRowElement, copyrightTextCol);
 
-  const errorMessage = document.createElement('div');
-  errorMessage.classList.add('cmp-footer__error-message');
-  subscribeDiv.append(errorMessage);
+  const socialLinksCol = document.createElement('div');
+  socialLinksCol.classList.add('col-6', 'text-end');
+  const socialList = document.createElement('ul');
+  socialList.classList.add('social-list');
+  socialLinksCol.append(socialList);
 
-  const consentDiv = document.createElement('div');
-  consentDiv.classList.add('cmp-footer__consent');
-  const consentCheckbox = document.createElement('input');
-  consentCheckbox.type = 'checkbox';
-  consentCheckbox.id = 'i_agree';
-  consentCheckbox.name = 'i_agree';
-  consentCheckbox.value = 'i_agree';
-  consentCheckbox.classList.add('cmp-footer__consent--checkbox');
-  consentDiv.append(consentCheckbox);
-  const consentLinkDiv = document.createElement('div');
-  consentLinkDiv.classList.add('cmp-footer__consent--link');
-  const consentP = document.createElement('p');
-  consentP.innerHTML = 'By clicking “Register Now”, you agree to the&nbsp;<a href="/conditions-policy/privacy-policy.html" target="_self" rel="noopener noreferrer">Privacy Policy</a>&nbsp;and to receive marketing emails from the Aashirvaad community';
-  consentLinkDiv.append(consentP);
-  consentDiv.append(consentLinkDiv);
-  subscribeDiv.append(consentDiv);
+  copyrightRow.append(copyrightTextCol, socialLinksCol);
+  copyrightContainer.append(copyrightRow);
+  copyrightSection.append(copyrightContainer);
+  footer.append(copyrightSection);
 
-  const buttonDiv = document.createElement('div');
-  buttonDiv.classList.add('button', 'cmp-button--primary', 'cmp-button--primary-anchor-dark');
-  const registerButton = document.createElement('button');
-  registerButton.type = 'button';
-  registerButton.id = 'button-fb2118d4d9';
-  registerButton.classList.add('cmp-button');
-  registerButton.setAttribute('data-request', 'true');
-  registerButton.disabled = true;
-  const buttonSpan = document.createElement('span');
-  buttonSpan.classList.add('cmp-button__text');
-  buttonSpan.textContent = 'Register Now';
-  registerButton.append(buttonSpan);
-  buttonDiv.append(registerButton);
-  subscribeDiv.append(buttonDiv);
-
-  topContent.append(subscribeDiv);
-
-  // Event Listeners for subscription form
-  const validateForm = () => {
-    const emailValid = emailInput.value.includes('@') && emailInput.value.includes('.');
-    const consentChecked = consentCheckbox.checked;
-    registerButton.disabled = !(emailValid && consentChecked);
-    if (!emailValid && emailInput.value.length > 0) {
-      errorMessage.textContent = formTextDiv.getAttribute('data-cmp-valid-email');
-    } else if (emailInput.value.length === 0 && consentChecked) {
-      errorMessage.textContent = formTextDiv.getAttribute('data-cmp-required-message');
-    } else {
-      errorMessage.textContent = '';
-    }
-  };
-
-  emailInput.addEventListener('input', validateForm);
-  consentCheckbox.addEventListener('change', validateForm);
-
-  registerButton.addEventListener('click', async () => {
-    if (!registerButton.disabled) {
-      const apiUrl = subscribeDiv.getAttribute('data-register-api-url');
-      const successMessage = subscribeDiv.getAttribute('data-popup-success-message');
-      const failureMessage = subscribeDiv.getAttribute('data-popup-failure-message');
-
-      try {
-        const response = await fetch(apiUrl, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ email: emailInput.value, i_agree: consentCheckbox.checked }),
-        });
-
-        if (response.ok) {
-          alert(successMessage);
-          emailInput.value = '';
-          consentCheckbox.checked = false;
-          validateForm(); // Reset button state
-        } else {
-          alert(failureMessage);
-        }
-      } catch (error) {
-        console.error('Subscription failed:', error);
-        alert(failureMessage);
-      }
-    }
-  });
-
-
-  // Navigation Links, Titles, Social Media
-  const navigationLinks = [];
-  const titleLinks = [];
+  const footerLinkGroups = [];
+  const footerLinks = [];
   const socialLinks = [];
 
+  // Filter out the known single-field rows (logo, bsl logo, copyright) to process item rows
+  const itemRows = children.filter(row => {
+    const cells = [...row.children];
+    const isLogoImageRow = row === logoImageRow;
+    const isLogoLinkRow = row === logoLinkRow;
+    const isBslLogoImageRow = row === bslLogoImageRow;
+    const isBslLogoLinkRow = row === bslLogoLinkRow;
+    const isCopyrightRow = row === copyrightRowElement;
+    return !isLogoImageRow && !isLogoLinkRow && !isBslLogoImageRow && !isBslLogoLinkRow && !isCopyrightRow;
+  });
+
+  // Separate item rows based on structure
   itemRows.forEach((row) => {
-    const link = row.querySelector('a');
-    if (link) {
-      // Heuristic to distinguish link types based on content or common patterns
-      const linkText = link.textContent.toLowerCase();
-      if (linkText.includes('instagram') || linkText.includes('facebook') || linkText.includes('twitter') || linkText.includes('youtube')) {
-        socialLinks.push(row);
-      } else if (link.parentElement.classList.contains('desc-1') || link.href.includes('itcportal.com')) { // Check for desc-1 class or specific href pattern
-        titleLinks.push(row);
-      } else {
-        navigationLinks.push(row);
+    const cells = [...row.children];
+    if (cells.length === 2) {
+      const groupTitle = cells[0].querySelector('div');
+      const footerLinkContainer = cells[1].querySelector('div');
+      // A footer link group has a text title and a container cell that does NOT contain a direct link
+      if (groupTitle && footerLinkContainer && !footerLinkContainer.querySelector('a')) {
+        footerLinkGroups.push(row);
+      } else if (cells[0].querySelector('a') && cells[1].querySelector('div')) {
+        // A footer link has a link in the first cell and a label in the second
+        footerLinks.push(row);
       }
+    } else if (cells.length === 1 && cells[0].querySelector('a')) {
+      // A social link has a single cell with a link
+      socialLinks.push(row);
     }
   });
 
-  // Navigation Links
-  const navDiv = document.createElement('div');
-  navDiv.classList.add('cmp-footer__nav');
+  footerLinkGroups.forEach((groupRow, index) => {
+    const groupTitleCell = groupRow.querySelector('div:first-child');
+    const groupLinksCell = groupRow.querySelector('div:last-child'); // This cell contains the text content to match against footerLinks
 
-  const leftNavItems = document.createElement('div');
-  leftNavItems.classList.add('cmp-footer__nav-items', 'cmp-navigation__group--left');
-  const leftNavigation = document.createElement('div');
-  leftNavigation.classList.add('navigation');
-  const leftNav = document.createElement('nav');
-  leftNav.classList.add('cmp-navigation');
-  leftNav.setAttribute('role', 'navigation');
-  const leftUl = document.createElement('ul');
-  leftUl.classList.add('cmp-navigation__group');
+    const groupDiv = document.createElement('div');
+    groupDiv.id = `nav_menu-${7 + index}`; // Based on original HTML pattern
+    groupDiv.classList.add('col-md-6', 'col-lg-3');
 
-  // Assuming first half of navigation links go to left, second half to right
-  const halfPoint = Math.ceil(navigationLinks.length / 2);
-  navigationLinks.slice(0, halfPoint).forEach((row) => {
-    const li = document.createElement('li');
-    li.classList.add('cmp-navigation__item', 'cmp-navigation__item--level-0');
-    const linkEl = document.createElement('a');
-    linkEl.classList.add('cmp-navigation__item-link');
-    const foundLink = row.querySelector('a');
-    if (foundLink) {
-      linkEl.href = foundLink.href;
-      linkEl.textContent = foundLink.textContent;
-    }
-    moveInstrumentation(row, li);
-    li.append(linkEl);
-    leftUl.append(li);
-  });
-  leftNav.append(leftUl);
-  leftNavigation.append(leftNav);
-  leftNavItems.append(leftNavigation);
-  navDiv.append(leftNavItems);
+    const menuContainer = document.createElement('div');
+    menuContainer.classList.add(`menu-footer-menu-${1 + index}-container`);
 
+    const ul = document.createElement('ul');
+    ul.id = `menu-footer-menu-${1 + index}`;
+    ul.classList.add('menu', 'nhsuk-list', 'nhsuk-body-s', 'no-margin');
 
-  const rightNavItems = document.createElement('div');
-  rightNavItems.classList.add('cmp-footer__nav-items', 'cmp-navigation__group--right');
-  const rightNavigation = document.createElement('div');
-  rightNavigation.classList.add('navigation');
-  const rightNav = document.createElement('nav');
-  rightNav.classList.add('cmp-navigation');
-  rightNav.setAttribute('role', 'navigation');
-  const rightUl = document.createElement('ul');
-  rightUl.classList.add('cmp-navigation__group');
+    const h3Element = document.createElement('h3');
+    h3Element.textContent = groupTitleCell.textContent;
+    groupDiv.prepend(h3Element);
 
-  navigationLinks.slice(halfPoint).forEach((row) => {
-    const li = document.createElement('li');
-    li.classList.add('cmp-navigation__item', 'cmp-navigation__item--level-0');
-    const linkEl = document.createElement('a');
-    linkEl.classList.add('cmp-navigation__item-link');
-    const foundLink = row.querySelector('a');
-    if (foundLink) {
-      linkEl.href = foundLink.href;
-      linkEl.textContent = foundLink.textContent;
-    }
-    moveInstrumentation(row, li);
-    li.append(linkEl);
-    rightUl.append(li);
-  });
-  rightNav.append(rightUl);
-  rightNavigation.append(rightNav);
-  rightNavItems.append(rightNavigation);
-  navDiv.append(rightNavItems);
+    // Filter footerLinks that belong to this group by matching their label text
+    const groupSpecificLinks = footerLinks.filter((linkRow) => {
+      const linkLabelCell = linkRow.querySelector('div:last-child');
+      return groupLinksCell.textContent.includes(linkLabelCell.textContent);
+    });
 
-  topContent.append(navDiv);
-  footerDiv.append(topContent);
+    groupSpecificLinks.forEach((linkRow, linkIndex) => {
+      const linkCell = linkRow.querySelector('div:first-child');
+      const labelCell = linkRow.querySelector('div:last-child');
 
-  // Bottom Content
-  const bottomContent = document.createElement('div');
-  bottomContent.classList.add('cmp-footer__bottom-content');
+      const li = document.createElement('li');
+      // IDs are generated based on the original HTML pattern, ensuring uniqueness
+      li.id = `menu-item-${1288 + index * 100 + linkIndex}`;
+      li.classList.add('menu-item', 'menu-item-type-post_type', 'menu-item-object-page', `menu-item-${1288 + index * 100 + linkIndex}`);
 
-  const bottomContainer = document.createElement('div');
-  bottomContainer.classList.add('cmp-footer__container');
-
-  // Titles
-  const itcTitles = document.createElement('div');
-  itcTitles.classList.add('cmp-footer__ITC-Titles');
-
-  titleLinks.forEach((row) => {
-    const linkEl = document.createElement('a');
-    linkEl.classList.add('desc-1');
-    const foundLink = row.querySelector('a');
-    if (foundLink) {
-      linkEl.href = foundLink.href;
-      linkEl.textContent = foundLink.textContent;
-      if (foundLink.target) linkEl.target = foundLink.target;
-    }
-    moveInstrumentation(row, linkEl);
-    itcTitles.append(linkEl);
-  });
-  bottomContainer.append(itcTitles);
-
-  // Social Media
-  const socialMediaDiv = document.createElement('div');
-  socialMediaDiv.classList.add('cmp-footer__social-media');
-
-  socialLinks.forEach((row) => {
-    const linkEl = document.createElement('a');
-    const foundLink = row.querySelector('a');
-    if (foundLink) {
-      linkEl.href = foundLink.href;
-      linkEl.target = '_blank';
-      const textContent = foundLink.textContent.toLowerCase();
-      if (textContent.includes('instagram')) {
-        linkEl.classList.add('icon-instagram');
-        linkEl.setAttribute('data-social', 'instagram');
-      } else if (textContent.includes('facebook')) {
-        linkEl.classList.add('icon-facebook'); // Corrected class name
-        linkEl.setAttribute('data-social', 'facebook');
-      } else if (textContent.includes('twitter')) {
-        linkEl.classList.add('icon-twitter');
-        linkEl.setAttribute('data-social', 'twitter');
-      } else if (textContent.includes('youtube')) {
-        linkEl.classList.add('icon-youtube');
-        linkEl.setAttribute('data-social', 'youtube');
+      const a = document.createElement('a');
+      const originalLink = linkCell.querySelector('a');
+      if (originalLink) {
+        a.href = originalLink.href;
+        a.textContent = labelCell.textContent;
       }
-    }
-    moveInstrumentation(row, linkEl);
-    socialMediaDiv.append(linkEl);
+      li.append(a);
+      ul.append(li);
+      moveInstrumentation(linkRow, li);
+    });
+
+    menuContainer.append(ul);
+    groupDiv.append(menuContainer);
+    navRow.append(groupDiv);
+    moveInstrumentation(groupRow, groupDiv);
   });
-  bottomContainer.append(socialMediaDiv);
+  navCol.append(navRow);
 
-  bottomContent.append(bottomContainer);
-  footerDiv.append(bottomContent);
+  socialLinks.forEach((socialLinkRow, index) => {
+    const socialLinkCell = socialLinkRow.querySelector('div a');
+    if (socialLinkCell) {
+      const li = document.createElement('li');
+      const a = document.createElement('a');
+      a.href = socialLinkCell.href;
+      a.target = '_blank';
 
-  // Optimization for all images
-  footerDiv.querySelectorAll('picture > img').forEach((img) => {
+      // Determine social icon class based on href
+      if (socialLinkCell.href.includes('facebook')) {
+        a.classList.add('social-icon', 'facebook');
+      } else if (socialLinkCell.href.includes('twitter')) {
+        a.classList.add('social-icon', 'twitter');
+      } else if (socialLinkCell.href.includes('youtube')) {
+        a.classList.add('social-icon', 'youtube');
+      }
+      const span = document.createElement('span');
+      span.classList.add('visuallyhidden');
+      a.append(span);
+      li.append(a);
+      socialList.append(li);
+      moveInstrumentation(socialLinkRow, li);
+    }
+  });
+
+  footer.querySelectorAll('picture > img').forEach((img) => {
     const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
     moveInstrumentation(img, optimizedPic.querySelector('img'));
     img.closest('picture').replaceWith(optimizedPic);
   });
 
   block.textContent = '';
-  block.classList.add('cmp-container'); // Add container class from original HTML
-  block.append(footerDiv);
+  block.append(footer);
 }

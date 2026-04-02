@@ -62,7 +62,17 @@
       "main-nav",
       "page-intro",
       "products-list",
-      "site-footer"
+      "site-footer",
+      "cookie-consent",
+      "navbar",
+      "custom-search",
+      "nhsuk-hero",
+      "symptom-condition-columns",
+      "service-directory-links",
+      "wp-block-columns",
+      "family-health",
+      "mind-to-mind",
+      "mind-module-list"
     ]
   },
   {
@@ -152,7 +162,13 @@
     ]
   },
   {
+    "id": "cookie-consent"
+  },
+  {
     "id": "cta-text"
+  },
+  {
+    "id": "custom-search"
   },
   {
     "id": "delightfulDelicacies",
@@ -197,6 +213,12 @@
     "id": "elementor-widget-theme-archive-title"
   },
   {
+    "id": "family-health",
+    "components": [
+      "family-health-item"
+    ]
+  },
+  {
     "id": "featurecards",
     "components": [
       "feature-card"
@@ -221,9 +243,9 @@
   {
     "id": "footer",
     "components": [
-      "footer-navigation-link",
-      "footer-social-link",
-      "footer-title-link"
+      "footer-link-group",
+      "footer-link",
+      "social-link"
     ]
   },
   {
@@ -250,6 +272,28 @@
   },
   {
     "id": "manufactures"
+  },
+  {
+    "id": "mind-module-list",
+    "components": [
+      "mind-module"
+    ]
+  },
+  {
+    "id": "mind-to-mind",
+    "components": [
+      "mind-to-mind-link",
+      "mind-to-mind-video"
+    ]
+  },
+  {
+    "id": "navbar",
+    "components": [
+      "nav-item"
+    ]
+  },
+  {
+    "id": "nhsuk-hero"
   },
   {
     "id": "page-intro"
@@ -288,6 +332,12 @@
     "id": "search"
   },
   {
+    "id": "service-directory-links",
+    "components": [
+      "service-link"
+    ]
+  },
+  {
     "id": "site-footer",
     "components": [
       "footer-link",
@@ -311,6 +361,12 @@
     "id": "sticky-bottom-nav",
     "components": [
       "sticky-bottom-nav-item"
+    ]
+  },
+  {
+    "id": "symptom-condition-columns",
+    "components": [
+      "symptom-condition-column"
     ]
   },
   {
@@ -338,5 +394,11 @@
   },
   {
     "id": "woocommerce-breadcrumb"
+  },
+  {
+    "id": "wp-block-columns",
+    "components": [
+      "wp-block-column"
+    ]
   }
 ]

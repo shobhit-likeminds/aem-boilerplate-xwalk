@@ -1,0 +1,80 @@
+{
+  "definitions": [
+    {
+      "title": "Cookie-Consent",
+      "id": "cookie-consent",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "cookie-consent",
+              "model": "cookie-consent",
+              "name": "Cookie-Consent"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "cookie-consent",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Icon Image",
+          "name": "icon-image",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Region Label",
+          "name": "region-label",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Dialog Title",
+          "name": "dialog-title",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Dialog Text",
+          "name": "dialog-text",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Accept Button Label",
+          "name": "accept-label",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Reject Button Label",
+          "name": "reject-label",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Settings Button Label",
+          "name": "settings-label",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Close Icon",
+          "name": "close-icon",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "cookie-consent"
+    }
+  ]
+}

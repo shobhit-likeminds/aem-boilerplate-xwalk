@@ -1,0 +1,101 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  const columnsContainer = document.createElement('div');
+  columnsContainer.classList.add('wp-block-columns', 'is-layout-flex', 'wp-container-core-columns-is-layout-9d6595d7', 'wp-block-columns-is-layout-flex');
+
+  [...block.children].forEach((row) => {
+    const column = document.createElement('div');
+    moveInstrumentation(row, column);
+    column.classList.add('wp-block-column', 'is-layout-flow', 'wp-block-column-is-layout-flow');
+
+    let headingEl;
+    let bodyEl;
+    let imageEl;
+    let linkEl; // This will hold the 'Link' text and href
+    let linkLabelEl; // This will hold the 'Link Label' href
+
+    // Use content detection instead of index access
+    const cells = [...row.children];
+
+    // Determine cell content based on the EDS Block Structure and content patterns
+    // The order of cells in the EDS structure is: Heading, Body, Image, Link, Link Label
+    // We need to find them based on their content, not their position.
+
+    // Heading: contains h1-h6
+    headingEl = cells.find(cell => cell.querySelector('h1, h2, h3, h4, h5, h6'))?.querySelector('h1, h2, h3, h4, h5, h6');
+    if (headingEl) {
+      headingEl.classList.add('wp-block-heading');
+    }
+
+    // Body: contains p
+    bodyEl = cells.find(cell => cell.querySelector('p'))?.querySelector('p');
+
+    // Image: contains picture
+    imageEl = cells.find(cell => cell.querySelector('picture'))?.querySelector('picture');
+
+    // Link and Link Label: Both contain 'a' tags.
+    // Link Label cell contains only the link href as text (e.g., <div><a href="...">https://example.com/link-label</a></div>)
+    // Link cell contains the actual link text (e.g., <div><a href="...">Link link</a></div>)
+    const linkCells = cells.filter(cell => cell.querySelector('a'));
+
+    // Find linkLabelEl first as it has a specific text content pattern
+    linkLabelEl = linkCells.find(cell => {
+      const anchor = cell.querySelector('a');
+      return anchor && cell.textContent.trim() === anchor.href;
+    })?.querySelector('a');
+
+    // Find linkEl from the remaining link cells
+    linkEl = linkCells.find(cell => {
+      const anchor = cell.querySelector('a');
+      return anchor && anchor !== linkLabelEl && cell.textContent.trim() !== anchor.href;
+    })?.querySelector('a');
+
+
+    if (headingEl) {
+      column.append(headingEl);
+    }
+
+    if (bodyEl) {
+      column.append(bodyEl);
+    }
+
+    // The original JS had a condition `if (linkEl && linkLabelEl)`.
+    // Based on the EDS structure, both 'link' and 'link-label' fields are present for each column.
+    // The `linkEl` provides the text and href for the action link, while `linkLabelEl` provides the href if it's different or for specific tracking.
+    // The current implementation uses `linkEl.href` for the action link.
+    // The `linkLabelEl` seems to be redundant for the current output structure, but we keep the logic for `linkEl` as it's used.
+    if (linkEl) { // Changed condition from `linkEl && linkLabelEl` to `linkEl` as `linkEl` provides the necessary href and text.
+      const nhsukActionLink = document.createElement('div');
+      nhsukActionLink.classList.add('nhsuk-action-link');
+
+      const actionLink = document.createElement('a');
+      actionLink.classList.add('nhsuk-action-link__link');
+      actionLink.href = linkEl.href; // Use href from linkEl
+      if (linkEl.target) actionLink.target = linkEl.target;
+
+      if (imageEl) {
+        const img = imageEl.querySelector('img');
+        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+        moveInstrumentation(img, optimizedPic.querySelector('img'));
+        actionLink.append(optimizedPic);
+      }
+
+      const span = document.createElement('span');
+      span.classList.add('nhsuk-action-link__text');
+      moveInstrumentation(linkEl, span);
+      // Move all children from linkEl (the anchor tag) to the span
+      while (linkEl.firstChild) span.append(linkEl.firstChild);
+      actionLink.append(span);
+
+      nhsukActionLink.append(actionLink);
+      column.append(nhsukActionLink);
+    }
+
+    columnsContainer.append(column);
+  });
+
+  block.textContent = '';
+  block.append(columnsContainer);
+}
