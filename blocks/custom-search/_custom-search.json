@@ -50,7 +50,8 @@
   ],
   "filters": [
     {
-      "id": "custom-search"
+      "id": "custom-search",
+      "components": []
     }
   ]
 }

@@ -34,7 +34,8 @@
   ],
   "models": [
     {
-      "id": "wp-block-columns"
+      "id": "wp-block-columns",
+      "fields": []
     },
     {
       "id": "wp-block-column",

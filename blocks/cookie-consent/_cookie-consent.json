@@ -74,7 +74,8 @@
   ],
   "filters": [
     {
-      "id": "cookie-consent"
+      "id": "cookie-consent",
+      "components": []
     }
   ]
 }

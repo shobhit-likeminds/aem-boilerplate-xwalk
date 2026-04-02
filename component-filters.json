@@ -162,13 +162,15 @@
     ]
   },
   {
-    "id": "cookie-consent"
+    "id": "cookie-consent",
+    "components": []
   },
   {
     "id": "cta-text"
   },
   {
-    "id": "custom-search"
+    "id": "custom-search",
+    "components": []
   },
   {
     "id": "delightfulDelicacies",
@@ -293,7 +295,8 @@
     ]
   },
   {
-    "id": "nhsuk-hero"
+    "id": "nhsuk-hero",
+    "components": []
   },
   {
     "id": "page-intro"

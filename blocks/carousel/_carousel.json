@@ -19,7 +19,8 @@
   ],
   "models": [
     {
-      "id": "carousel"
+      "id": "carousel",
+      "fields": []
     }
   ],
   "filters": [

@@ -496,7 +496,8 @@
     ]
   },
   {
-    "id": "carousel"
+    "id": "carousel",
+    "fields": []
   },
   {
     "id": "category-carousel",
@@ -2668,7 +2669,8 @@
     ]
   },
   {
-    "id": "wp-block-columns"
+    "id": "wp-block-columns",
+    "fields": []
   },
   {
     "id": "wp-block-column",
