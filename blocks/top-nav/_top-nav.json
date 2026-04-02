@@ -1,0 +1,139 @@
+{
+  "definitions": [
+    {
+      "title": "Top-Nav",
+      "id": "top-nav",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "top-nav",
+              "model": "top-nav",
+              "name": "Top-Nav"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Phone",
+      "id": "phone",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "phone",
+              "name": "Phone"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Care",
+      "id": "care",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "care",
+              "name": "Care"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Social",
+      "id": "social",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "social",
+              "name": "Social"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "top-nav",
+      "fields": [
+        {
+          "component": "container",
+          "item": "phone",
+          "label": "Phones",
+          "name": "phones"
+        },
+        {
+          "component": "container",
+          "item": "care",
+          "label": "Care",
+          "name": "cares"
+        },
+        {
+          "component": "container",
+          "item": "social",
+          "label": "Socials",
+          "name": "socials"
+        }
+      ]
+    },
+    {
+      "id": "phone",
+      "fields": [
+        {
+          "component": "aem-content",
+          "label": "Phone Link",
+          "name": "link",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "care",
+      "fields": [
+        {
+          "component": "aem-content",
+          "label": "Care Link",
+          "name": "link",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "social",
+      "fields": [
+        {
+          "component": "aem-content",
+          "label": "Social Link",
+          "name": "link",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Icon",
+          "name": "icon",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "top-nav",
+      "components": [
+        "phone",
+        "care",
+        "social"
+      ]
+    }
+  ]
+}

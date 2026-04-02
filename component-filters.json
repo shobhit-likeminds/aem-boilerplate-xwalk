@@ -57,7 +57,12 @@
       "dynamiccardsvertwo",
       "popular-products",
       "footprint",
-      "cta-text"
+      "cta-text",
+      "top-nav",
+      "main-nav",
+      "page-intro",
+      "products-list",
+      "site-footer"
     ]
   },
   {
@@ -238,7 +243,16 @@
     "id": "hero-steel"
   },
   {
+    "id": "main-nav",
+    "components": [
+      "menu-item"
+    ]
+  },
+  {
     "id": "manufactures"
+  },
+  {
+    "id": "page-intro"
   },
   {
     "id": "popular-products",
@@ -259,6 +273,12 @@
     ]
   },
   {
+    "id": "products-list",
+    "components": [
+      "product"
+    ]
+  },
+  {
     "id": "reasonCards",
     "components": [
       "reasonCard"
@@ -266,6 +286,14 @@
   },
   {
     "id": "search"
+  },
+  {
+    "id": "site-footer",
+    "components": [
+      "footer-link",
+      "footer-social",
+      "footer-brand"
+    ]
   },
   {
     "id": "slickcarousel",
@@ -290,6 +318,14 @@
   },
   {
     "id": "text"
+  },
+  {
+    "id": "top-nav",
+    "components": [
+      "phone",
+      "care",
+      "social"
+    ]
   },
   {
     "id": "video-banner"

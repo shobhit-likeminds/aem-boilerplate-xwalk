@@ -92,7 +92,12 @@
         "dynamiccardsvertwo",
         "popular-products",
         "footprint",
-        "cta-text"
+        "cta-text",
+        "top-nav",
+        "main-nav",
+        "page-intro",
+        "products-list",
+        "site-footer"
       ]
     }
   ]

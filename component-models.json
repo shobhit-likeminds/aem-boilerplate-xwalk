@@ -1581,6 +1581,58 @@
     ]
   },
   {
+    "id": "main-nav",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Logo",
+        "name": "logo",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Logo Link",
+        "name": "logo-link",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "menu-item",
+        "label": "Menu Items",
+        "name": "menu-items"
+      },
+      {
+        "component": "text",
+        "label": "Search Placeholder",
+        "name": "search-placeholder",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Search Action",
+        "name": "search-action",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "menu-item",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Label",
+        "name": "label",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "manufactures",
     "fields": [
       {
@@ -1605,6 +1657,29 @@
         "component": "reference",
         "label": "Image Side",
         "name": "image-side",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Description",
+        "name": "description",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "page-intro",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Image",
+        "name": "image",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
         "valueType": "string"
       },
       {
@@ -1748,6 +1823,46 @@
     ]
   },
   {
+    "id": "products-list",
+    "fields": [
+      {
+        "component": "container",
+        "item": "product",
+        "label": "Products",
+        "name": "products"
+      }
+    ]
+  },
+  {
+    "id": "product",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Title",
+        "name": "title",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Image",
+        "name": "image",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Product Id",
+        "name": "product-id",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "reasonCard",
     "fields": [
       {
@@ -1795,6 +1910,104 @@
         "component": "reference",
         "label": "Input Icon",
         "name": "input-icon",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "site-footer",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Logo",
+        "name": "logo",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Logo Link",
+        "name": "logo-link",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "footer-link",
+        "label": "Footer Links",
+        "name": "footer-links"
+      },
+      {
+        "component": "container",
+        "item": "footer-social",
+        "label": "Footer Social Icons",
+        "name": "footer-social"
+      },
+      {
+        "component": "container",
+        "item": "footer-brand",
+        "label": "Footer Brands",
+        "name": "footer-brands"
+      },
+      {
+        "component": "richtext",
+        "label": "Copyright",
+        "name": "copyright",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "footer-link",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Label",
+        "name": "label",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "footer-social",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Icon",
+        "name": "icon",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Alt Text",
+        "name": "alt",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "footer-brand",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Label",
+        "name": "label",
         "valueType": "string"
       }
     ]
@@ -1909,6 +2122,68 @@
         "component": "richtext",
         "label": "Text",
         "name": "text",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "top-nav",
+    "fields": [
+      {
+        "component": "container",
+        "item": "phone",
+        "label": "Phones",
+        "name": "phones"
+      },
+      {
+        "component": "container",
+        "item": "care",
+        "label": "Care",
+        "name": "cares"
+      },
+      {
+        "component": "container",
+        "item": "social",
+        "label": "Socials",
+        "name": "socials"
+      }
+    ]
+  },
+  {
+    "id": "phone",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Phone Link",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "care",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Care Link",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "social",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Social Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Icon",
+        "name": "icon",
         "valueType": "string"
       }
     ]
