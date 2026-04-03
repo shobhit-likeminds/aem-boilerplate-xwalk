@@ -49,10 +49,28 @@
           "valueType": "string"
         },
         {
+          "component": "reference",
+          "label": "Home Icon",
+          "name": "home-icon",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Right Icon 1",
+          "name": "right-icon-1",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Right Icon 2",
+          "name": "right-icon-2",
+          "valueType": "string"
+        },
+        {
           "component": "container",
           "item": "nav-item",
           "label": "Navigation Items",
-          "name": "navigation-items"
+          "name": "nav-items"
         }
       ]
     },
@@ -67,14 +85,8 @@
         },
         {
           "component": "text",
-          "label": "Label",
-          "name": "label",
-          "valueType": "string"
-        },
-        {
-          "component": "reference",
-          "label": "Icon",
-          "name": "icon",
+          "label": "Text",
+          "name": "text",
           "valueType": "string"
         }
       ]

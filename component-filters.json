@@ -91,7 +91,10 @@
       "make-right-shift",
       "cmp-text",
       "rs-cards",
-      "itc-footer-section"
+      "itc-footer-section",
+      "cookie-notification",
+      "symptom-checker-columns",
+      "columns-list"
     ]
   },
   {
@@ -189,6 +192,12 @@
     "id": "cmp-text"
   },
   {
+    "id": "columns-list",
+    "components": [
+      "column"
+    ]
+  },
+  {
     "id": "columns",
     "components": [
       "column"
@@ -215,12 +224,14 @@
     "components": []
   },
   {
+    "id": "cookie-notification"
+  },
+  {
     "id": "cta-text",
     "components": []
   },
   {
-    "id": "custom-search",
-    "components": []
+    "id": "custom-search"
   },
   {
     "id": "delightfulDelicacies",
@@ -270,7 +281,7 @@
   {
     "id": "family-health",
     "components": [
-      "family-health-item"
+      "family-health-link"
     ]
   },
   {
@@ -298,7 +309,7 @@
   {
     "id": "footer",
     "components": [
-      "footer-link-group",
+      "footer-menu-group",
       "footer-social-link"
     ]
   },
@@ -374,11 +385,7 @@
     ]
   },
   {
-    "id": "mind-to-mind",
-    "components": [
-      "mind-to-mind-link",
-      "mind-to-mind-video"
-    ]
+    "id": "mind-to-mind"
   },
   {
     "id": "mobile-menu",
@@ -393,8 +400,7 @@
     ]
   },
   {
-    "id": "nhsuk-hero",
-    "components": []
+    "id": "nhsuk-hero"
   },
   {
     "id": "page-intro",
@@ -495,6 +501,12 @@
     "id": "sticky-bottom-nav",
     "components": [
       "sticky-bottom-nav-item"
+    ]
+  },
+  {
+    "id": "symptom-checker-columns",
+    "components": [
+      "symptom-checker-column"
     ]
   },
   {

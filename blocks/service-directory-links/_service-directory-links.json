@@ -52,7 +52,7 @@
           "component": "container",
           "item": "service-link",
           "label": "Service Links",
-          "name": "service-links"
+          "name": "serviceLinks"
         }
       ]
     },

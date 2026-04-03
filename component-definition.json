@@ -609,6 +609,37 @@
           }
         },
         {
+          "title": "Columns-List",
+          "id": "columns-list",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "columns-list",
+                  "model": "columns-list",
+                  "name": "Columns-List"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Column",
+          "id": "column",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "column",
+                  "name": "Column"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Columns",
           "id": "columns",
           "plugins": {
@@ -680,6 +711,22 @@
                   "filter": "cookie-consent",
                   "model": "cookie-consent",
                   "name": "Cookie-Consent"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Cookie-Notification",
+          "id": "cookie-notification",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "cookie-notification",
+                  "model": "cookie-notification",
+                  "name": "Cookie-Notification"
                 }
               }
             }
@@ -982,15 +1029,15 @@
           }
         },
         {
-          "title": "Family-Health-Item",
-          "id": "family-health-item",
+          "title": "Family-Health-Link",
+          "id": "family-health-link",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "family-health-item",
-                  "name": "Family-Health-Item"
+                  "model": "family-health-link",
+                  "name": "Family-Health-Link"
                 }
               }
             }
@@ -1166,30 +1213,30 @@
           }
         },
         {
-          "title": "Footer Link Group",
-          "id": "footer-link-group",
+          "title": "Footer Menu Group",
+          "id": "footer-menu-group",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "footer-link-group",
-                  "name": "Footer Link Group"
+                  "model": "footer-menu-group",
+                  "name": "Footer Menu Group"
                 }
               }
             }
           }
         },
         {
-          "title": "Footer Link",
-          "id": "footer-link",
+          "title": "Footer Menu Link",
+          "id": "footer-menu-link",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "footer-link",
-                  "name": "Footer Link"
+                  "model": "footer-menu-link",
+                  "name": "Footer Menu Link"
                 }
               }
             }
@@ -1597,7 +1644,7 @@
           }
         },
         {
-          "title": "Mind to Mind",
+          "title": "Mind-to-Mind",
           "id": "mind-to-mind",
           "plugins": {
             "xwalk": {
@@ -1606,37 +1653,7 @@
                 "template": {
                   "filter": "mind-to-mind",
                   "model": "mind-to-mind",
-                  "name": "Mind to Mind"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Mind to Mind Link",
-          "id": "mind-to-mind-link",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block/item",
-                "template": {
-                  "model": "mind-to-mind-link",
-                  "name": "Mind to Mind Link"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Mind to Mind Video",
-          "id": "mind-to-mind-video",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block/item",
-                "template": {
-                  "model": "mind-to-mind-video",
-                  "name": "Mind to Mind Video"
+                  "name": "Mind-to-Mind"
                 }
               }
             }
@@ -2273,6 +2290,37 @@
                 "template": {
                   "model": "sticky-bottom-nav-item",
                   "name": "Sticky-Bottom-Nav-Item"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Symptom-Checker-Columns",
+          "id": "symptom-checker-columns",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "symptom-checker-columns",
+                  "model": "symptom-checker-columns",
+                  "name": "Symptom-Checker-Columns"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Symptom-Checker-Column",
+          "id": "symptom-checker-column",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "symptom-checker-column",
+                  "name": "Symptom-Checker-Column"
                 }
               }
             }

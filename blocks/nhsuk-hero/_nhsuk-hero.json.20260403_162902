@@ -34,7 +34,7 @@
           "valueType": "string"
         },
         {
-          "component": "text",
+          "component": "richtext",
           "label": "Description",
           "name": "description",
           "valueType": "string"
@@ -44,7 +44,8 @@
   ],
   "filters": [
     {
-      "id": "nhsuk-hero"
+      "id": "nhsuk-hero",
+      "components": []
     }
   ]
 }

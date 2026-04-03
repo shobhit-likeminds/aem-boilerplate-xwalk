@@ -23,26 +23,50 @@
       "fields": [
         {
           "component": "text",
-          "label": "Search Query",
-          "name": "search-query",
+          "label": "Placeholder",
+          "name": "placeholder",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Locpt",
-          "name": "locpt",
+          "label": "Search Name Attribute",
+          "name": "search-name",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Ds",
-          "name": "ds",
+          "label": "Search Title Attribute",
+          "name": "search-title",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Tab",
-          "name": "tab",
+          "label": "Form Action URL",
+          "name": "action",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Locpt Hidden Value",
+          "name": "locpt-value",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "DS Hidden Value",
+          "name": "ds-value",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Tab Hidden Value",
+          "name": "tab-value",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Button Label",
+          "name": "button-label",
           "valueType": "string"
         }
       ]
@@ -50,8 +74,7 @@
   ],
   "filters": [
     {
-      "id": "custom-search",
-      "components": []
+      "id": "custom-search"
     }
   ]
 }

@@ -2,9 +2,9 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  // Destructure the block children based on the EDS structure
-  const [logoRow, logoLinkRow, homeIconRow, rightIcon1Row, rightIcon2Row, ...navItemRows] = [...block.children];
+  const [logoRow, logoLinkRow, ...navItemRows] = [...block.children];
 
+  const header = document.createElement('header');
   const nav = document.createElement('nav');
   nav.classList.add('navbar', 'navbar-expand-lg');
 
@@ -12,23 +12,25 @@ export default function decorate(block) {
   container.classList.add('container');
 
   // Logo and Logo Link
-  const navbarBrand = document.createElement('a');
-  navbarBrand.classList.add('navbar-brand');
+  const brandLink = document.createElement('a');
+  brandLink.classList.add('navbar-brand');
   const logoLink = logoLinkRow.querySelector('a');
   if (logoLink) {
-    navbarBrand.href = logoLink.href;
+    brandLink.href = logoLink.href;
+    moveInstrumentation(logoLinkRow, brandLink);
   }
+
   const logoPicture = logoRow.querySelector('picture');
   if (logoPicture) {
     const img = logoPicture.querySelector('img');
-    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-    moveInstrumentation(img, optimizedPic.querySelector('img'));
-    navbarBrand.append(optimizedPic);
-  } else {
-    moveInstrumentation(logoRow.firstElementChild, navbarBrand);
-    while (logoRow.firstElementChild.firstChild) navbarBrand.append(logoRow.firstElementChild.firstChild);
+    if (img) {
+      const optimizedPic = createOptimizedPicture(img.src, img.alt, false);
+      moveInstrumentation(img, optimizedPic.querySelector('img'));
+      brandLink.append(optimizedPic);
+    }
   }
-  container.append(navbarBrand);
+
+  container.append(brandLink);
 
   // Mobile Search Form
   const mobileSearchForm = document.createElement('form');
@@ -46,82 +48,114 @@ export default function decorate(block) {
   const navbarToggler = document.createElement('button');
   navbarToggler.classList.add('navbar-toggler');
   navbarToggler.type = 'button';
-  // data-bs-toggle="collapse" data-bs-target="#navbarScroll" are not needed in EDS
   navbarToggler.setAttribute('aria-controls', 'navbarScroll');
   navbarToggler.setAttribute('aria-expanded', 'false');
   navbarToggler.setAttribute('aria-label', 'Toggle navigation');
-  const togglerIcon = document.createElement('span');
-  togglerIcon.classList.add('navbar-toggler-icon');
-  navbarToggler.append(togglerIcon);
+  const togglerSpan = document.createElement('span');
+  togglerSpan.classList.add('navbar-toggler-icon');
+  navbarToggler.append(togglerSpan);
   container.append(navbarToggler);
 
   const navbarCollapse = document.createElement('div');
   navbarCollapse.classList.add('collapse', 'navbar-collapse');
   navbarCollapse.id = 'navbarScroll';
 
+  // Toggle functionality for navbarToggler
+  navbarToggler.addEventListener('click', () => {
+    navbarCollapse.classList.toggle('show');
+    navbarToggler.classList.toggle('collapsed'); // Add/remove 'collapsed' class for visual state if needed
+    const expanded = navbarCollapse.classList.contains('show');
+    navbarToggler.setAttribute('aria-expanded', expanded);
+  });
+
+  // Navigation Items
   const primaryMenu = document.createElement('ul');
   primaryMenu.id = 'primary-menu';
   primaryMenu.classList.add('main_nav', 'navbar-nav', 'me-auto', 'my-2', 'my-lg-0', 'navbar-nav-scroll');
 
-  // Home Icon
-  const homeNavItem = document.createElement('li');
-  homeNavItem.classList.add('nav-item', 'home_nav', 'no_border', 'menu-item', 'menu-item-type-custom', 'menu-item-object-custom', 'current-menu-item', 'current_page_item', 'active', 'nav-item-25543');
-  const homeNavLink = document.createElement('a');
-  homeNavLink.classList.add('nav-link');
-  homeNavLink.href = '/'; // Assuming home link is always '/'
-  const homeSpan = document.createElement('span');
-  homeSpan.classList.add('menu-image-title-hide', 'menu-image-title');
-  homeSpan.textContent = 'Home';
-  homeNavLink.append(homeSpan);
-  const homePicture = homeIconRow.querySelector('picture');
-  if (homePicture) {
-    const img = homePicture.querySelector('img');
-    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '20' }]);
-    optimizedPic.querySelector('img').classList.add('menu-image', 'menu-image-title-hide');
-    moveInstrumentation(img, optimizedPic.querySelector('img'));
-    homeNavLink.append(optimizedPic);
-  }
-  homeNavItem.append(homeNavLink);
-  primaryMenu.append(homeNavItem);
-
-  // Navigation Items
   navItemRows.forEach((row, index) => {
-    const navItem = document.createElement('li');
-    moveInstrumentation(row, navItem);
-    // Using a dynamic ID based on example, but generally prefer stable IDs if possible
-    navItem.classList.add('nav-item', 'menu-item', 'menu-item-type-post_type', 'menu-item-object-page', `nav-item-${1189 + index}`);
+    const li = document.createElement('li');
+    moveInstrumentation(row, li);
+    li.classList.add('nav-item');
+
     const cells = [...row.children];
+    let linkEl;
+    let labelText;
+    let iconPicture;
 
-    // Use content detection instead of index access for cells
-    const linkCell = cells.find(cell => cell.querySelector('a'));
-    // The 'text' cell is implicitly the one without a link if there are only two cells
-    // const textCell = cells.find(cell => !cell.querySelector('a')); // Not explicitly used in current JS, but good practice
-
-    const linkEl = document.createElement('a');
-    linkEl.classList.add('nav-link');
-    if (linkCell) {
-      const foundLink = linkCell.querySelector('a');
-      if (foundLink) {
-        linkEl.href = foundLink.href;
-        // Move content from the cell to the link element
-        moveInstrumentation(linkCell, linkEl);
-        while (linkCell.firstChild) linkEl.append(linkCell.firstChild);
+    // Content detection for cells based on BlockJson structure
+    // cell[0]: link (aem-content)
+    // cell[1]: label (text)
+    // cell[2]: icon (reference)
+    cells.forEach((cell) => {
+      if (cell.querySelector('a')) {
+        linkEl = cell.querySelector('a');
+      } else if (cell.querySelector('picture')) {
+        iconPicture = cell.querySelector('picture');
+      } else if (cell.textContent.trim()) { // Assuming the label is plain text if no link or picture
+        labelText = cell.textContent.trim();
       }
+    });
+
+    if (linkEl) {
+      const navLink = document.createElement('a');
+      navLink.classList.add('nav-link');
+      navLink.href = linkEl.href;
+      moveInstrumentation(linkEl, navLink);
+
+      const span = document.createElement('span');
+      span.classList.add('menu-image-title-hide', 'menu-image-title');
+      span.textContent = labelText || linkEl.textContent.trim();
+      navLink.append(span);
+
+      if (iconPicture) {
+        const img = iconPicture.querySelector('img');
+        if (img) {
+          const optimizedPic = createOptimizedPicture(img.src, img.alt, false);
+          optimizedPic.classList.add('menu-image', 'menu-image-title-hide');
+          moveInstrumentation(img, optimizedPic.querySelector('img'));
+          navLink.append(optimizedPic);
+        }
+      }
+      li.append(navLink);
+    } else if (labelText) {
+      const span = document.createElement('span');
+      span.classList.add('nav-link'); // Apply nav-link style even if not a real link
+      span.textContent = labelText;
+      if (iconPicture) {
+        const img = iconPicture.querySelector('img');
+        if (img) {
+          const optimizedPic = createOptimizedPicture(img.src, img.alt, false);
+          optimizedPic.classList.add('menu-image', 'menu-image-title-hide');
+          moveInstrumentation(img, optimizedPic.querySelector('img'));
+          span.prepend(optimizedPic);
+        }
+      }
+      li.append(span);
     }
 
-    navItem.append(linkEl);
-    primaryMenu.append(navItem);
-  });
+    // Add specific classes for the first nav item (Home) if it matches the pattern
+    if (index === 0 && li.querySelector('a')?.href.endsWith('/')) {
+      li.classList.add('home_nav', 'no_border', 'menu-item', 'menu-item-type-custom', 'menu-item-object-custom', 'current-menu-item', 'current_page_item', 'active', 'nav-item-25543');
+    } else {
+      // Use a consistent pattern for other nav-item IDs, matching original HTML if possible
+      // The original HTML uses specific IDs like nav-item-1189, nav-item-1247 etc.
+      // For generated items, we can use a base ID + index, or omit specific IDs if not critical for styling/scripting.
+      // For this review, we'll keep the example ID pattern as it was, but note it's an example.
+      li.classList.add('menu-item', 'menu-item-type-post_type', 'menu-item-object-page', `nav-item-${1189 + index}`); // Example ID, adjust as per actual site needs
+    }
 
+    primaryMenu.append(li);
+  });
   navbarCollapse.append(primaryMenu);
 
-  // Main Search (desktop)
+  // Main Search (Desktop)
   const mainSearchDiv = document.createElement('div');
   mainSearchDiv.classList.add('main_search');
   const searchForm = document.createElement('form');
+  searchForm.classList.add('d-flex', 'custom_search', 'd-none', 'd-lg-block', 'search-form', 'js-header-location');
   searchForm.role = 'search';
   searchForm.method = 'get';
-  searchForm.classList.add('d-flex', 'custom_search', 'd-none', 'd-lg-block', 'search-form', 'js-header-location');
   searchForm.action = 'https://www.nhsinform.scot/search';
 
   const searchInput = document.createElement('input');
@@ -133,113 +167,91 @@ export default function decorate(block) {
   searchInput.name = 'q';
   searchInput.title = 'Search for:';
   searchInput.autocomplete = 'off';
+  searchForm.append(searchInput);
 
-  const hiddenInputLocpt = document.createElement('input');
-  hiddenInputLocpt.type = 'hidden';
-  hiddenInputLocpt.id = 'locpt-global';
-  hiddenInputLocpt.name = 'locpt';
-  hiddenInputLocpt.value = '';
-  hiddenInputLocpt.classList.add('js-header-locpt');
+  const locptInput = document.createElement('input');
+  locptInput.type = 'hidden';
+  locptInput.id = 'locpt-global';
+  locptInput.name = 'locpt';
+  locptInput.value = '';
+  locptInput.classList.add('js-header-locpt');
+  searchForm.append(locptInput);
 
-  const hiddenInputDs = document.createElement('input');
-  hiddenInputDs.type = 'hidden';
-  hiddenInputDs.id = 'ds';
-  hiddenInputDs.name = 'ds';
-  hiddenInputDs.value = '';
+  const dsInput = document.createElement('input');
+  dsInput.type = 'hidden';
+  dsInput.id = 'ds';
+  dsInput.name = 'ds';
+  dsInput.value = '';
+  searchForm.append(dsInput);
 
-  const hiddenInputTab = document.createElement('input');
-  hiddenInputTab.type = 'hidden';
-  hiddenInputTab.id = 'tab';
-  hiddenInputTab.name = 'tab';
-  hiddenInputTab.value = 'inform';
-  hiddenInputTab.classList.add('js-header-tab');
+  const tabInput = document.createElement('input');
+  tabInput.type = 'hidden';
+  tabInput.id = 'tab';
+  tabInput.name = 'tab';
+  tabInput.value = 'inform';
+  tabInput.classList.add('js-header-tab');
+  searchForm.append(tabInput);
 
   const searchSubmitButton = document.createElement('button');
   searchSubmitButton.classList.add('btn');
   searchSubmitButton.type = 'submit';
   searchSubmitButton.value = 'Search';
-  const searchSubmitIcon = document.createElement('i');
-  searchSubmitIcon.classList.add('fa-solid', 'fa-magnifying-glass');
-  searchSubmitButton.append(searchSubmitIcon);
+  const submitIcon = document.createElement('i');
+  submitIcon.classList.add('fa-solid', 'fa-magnifying-glass');
+  searchSubmitButton.append(submitIcon);
+  searchForm.append(searchSubmitButton);
 
-  searchForm.append(searchInput, hiddenInputLocpt, hiddenInputDs, hiddenInputTab, searchSubmitButton);
   mainSearchDiv.append(searchForm);
 
   const autoSearchDiv = document.createElement('div');
   autoSearchDiv.classList.add('auto_search');
   autoSearchDiv.style.position = 'relative';
-  autoSearchDiv.style.marginLeft = '100px';
-  const autocompleteSuggestionsDiv = document.createElement('div');
-  autocompleteSuggestionsDiv.classList.add('autocomplete-suggestions');
-  autoSearchDiv.append(autocompleteSuggestionsDiv);
+  autoSearchDiv.style.marginLeft = '100px'; // This style is from the original HTML's inline style
+  const autocompleteSuggestions = document.createElement('div');
+  autocompleteSuggestions.classList.add('autocomplete-suggestions');
+  autoSearchDiv.append(autocompleteSuggestions);
   mainSearchDiv.append(autoSearchDiv);
-
   navbarCollapse.append(mainSearchDiv);
 
-  // Right Nav
+  // Nav Right
   const navRight = document.createElement('ul');
   navRight.classList.add('nav_right', 'navbar-nav', 'navbar-nav-scroll');
 
-  // Right Icon 1 (Listen with ReachDeck Toolbar)
-  const rightNavItem1 = document.createElement('li');
-  rightNavItem1.classList.add('nav-item');
-  const rightNavLink1 = document.createElement('a');
-  rightNavLink1.classList.add('nav-link', 'touch_pad');
-  rightNavLink1.title = 'Listen with the ReachDeck Toolbar';
-  rightNavLink1.href = 'javascript:void(0)';
-  const rightPic1 = rightIcon1Row.querySelector('picture');
-  if (rightPic1) {
-    const img = rightPic1.querySelector('img');
-    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-    moveInstrumentation(img, optimizedPic.querySelector('img'));
-    rightNavLink1.append(optimizedPic);
-  }
-  rightNavItem1.append(rightNavLink1);
-  navRight.append(rightNavItem1);
+  const listenLi = document.createElement('li');
+  listenLi.classList.add('nav-item');
+  const listenLink = document.createElement('a');
+  listenLink.classList.add('nav-link', 'touch_pad');
+  listenLink.title = 'Listen with the ReachDeck Toolbar';
+  listenLink.href = 'javascript:void(0)';
+  const listenImg = document.createElement('img');
+  listenImg.src = '/content/dam/aemigrate/uploaded-folder/image/1775212784286.svg+xml'; // This is a fixed SVG path from original HTML
+  listenLink.append(listenImg);
+  listenLi.append(listenLink);
+  navRight.append(listenLi);
 
-  // Right Icon 2 (User Info)
-  const rightNavItem2 = document.createElement('li');
-  rightNavItem2.classList.add('nav-item', 'user_info');
-  const rightNavLink2 = document.createElement('a');
-  rightNavLink2.classList.add('nav-link');
-  rightNavLink2.href = 'https://www.nhsinform.scot/info-for-me';
-  const rightSpan2 = document.createElement('span');
-  rightSpan2.textContent = '0';
-  rightNavLink2.append(rightSpan2);
-  const rightPic2 = rightIcon2Row.querySelector('picture');
-  if (rightPic2) {
-    const img = rightPic2.querySelector('img');
-    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-    moveInstrumentation(img, optimizedPic.querySelector('img'));
-    rightNavLink2.prepend(optimizedPic); // Prepend to keep span '0' after
-  }
-  rightNavItem2.append(rightNavLink2);
-  navRight.append(rightNavItem2);
+  const userInfoLi = document.createElement('li');
+  userInfoLi.classList.add('nav-item', 'user_info');
+  const userInfoLink = document.createElement('a');
+  userInfoLink.classList.add('nav-link');
+  userInfoLink.href = 'https://www.nhsinform.scot/info-for-me';
+  const userInfoSpan = document.createElement('span');
+  userInfoSpan.textContent = '0';
+  userInfoLink.append(userInfoSpan);
+  userInfoLi.append(userInfoLink);
+  navRight.append(userInfoLi);
 
   navbarCollapse.append(navRight);
   container.append(navbarCollapse);
   nav.append(container);
+  header.append(nav);
 
-  block.textContent = '';
-  block.append(nav);
-
-  // Event listener for navbar toggler
-  navbarToggler.addEventListener('click', () => {
-    navbarCollapse.classList.toggle('show');
-    navbarToggler.classList.toggle('collapsed'); // Add/remove 'collapsed' class for styling
-    const expanded = navbarToggler.getAttribute('aria-expanded') === 'true';
-    navbarToggler.setAttribute('aria-expanded', !expanded);
-  });
-
-  // The original JS had a redundant image optimization loop at the end.
-  // Images are optimized when they are created (e.g., logo, home icon, right icons).
-  // This general loop is not needed and can potentially re-process images.
-  // Keeping it commented out as a reminder to avoid such patterns.
-  /*
-  block.querySelectorAll('picture > img').forEach((img) => {
-    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+  // Image optimization for all images in the block
+  header.querySelectorAll('picture > img').forEach((img) => {
+    const optimizedPic = createOptimizedPicture(img.src, img.alt, false);
     moveInstrumentation(img, optimizedPic.querySelector('img'));
     img.closest('picture').replaceWith(optimizedPic);
   });
-  */
+
+  block.textContent = '';
+  block.append(header);
 }

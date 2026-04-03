@@ -2,101 +2,96 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  // The block structure is:
-  // 0: Heading row (single cell with heading text)
-  // 1: Footer row (single cell with rich text)
-  // 2+: Service Link rows (each with a single cell containing an <a> tag)
-
-  // Separate the rows based on the BlockJson structure
+  // According to EDS BLOCK STRUCTURE and BLOCK JSON:
+  // block.children[0] is Heading
+  // block.children[1] is Footer
+  // block.children[2...] are Service Links
   const allRows = [...block.children];
   const headingRow = allRows[0];
   const footerRow = allRows[1];
   const serviceLinkRows = allRows.slice(2);
 
-  // Create the main container div
+  // Main container
   const mainContainer = document.createElement('div');
   mainContainer.classList.add('wp-block-uagb-container', 'uagb-block-1bb4371e', 'alignfull', 'uagb-is-root-container');
-
   const innerWrap = document.createElement('div');
   innerWrap.classList.add('uagb-container-inner-blocks-wrap');
   mainContainer.append(innerWrap);
 
-  // Heading section
+  // Heading
   if (headingRow) {
     const headingColumns = document.createElement('div');
     headingColumns.classList.add('wp-block-columns', 'is-layout-flex', 'wp-container-core-columns-is-layout-9d6595d7', 'wp-block-columns-is-layout-flex');
-    moveInstrumentation(headingRow, headingColumns);
-
     const headingColumn = document.createElement('div');
     headingColumn.classList.add('wp-block-column', 'is-layout-flow', 'wp-block-column-is-layout-flow');
-
     const h2 = document.createElement('h2');
     h2.classList.add('wp-block-heading');
-    // The heading content is in the first child of the headingRow
-    const headingCell = headingRow.firstElementChild;
-    if (headingCell) {
-      moveInstrumentation(headingCell, h2);
-      while (headingCell.firstChild) h2.append(headingCell.firstChild);
-    }
-
+    // Use firstElementChild as per BlockJson for single cell row
+    moveInstrumentation(headingRow.firstElementChild, h2);
+    while (headingRow.firstElementChild.firstChild) h2.append(headingRow.firstElementChild.firstChild);
     headingColumn.append(h2);
     headingColumns.append(headingColumn);
     innerWrap.append(headingColumns);
   }
 
-  // Service Links section
+  // Service Links
   if (serviceLinkRows.length > 0) {
     const serviceLinksColumns = document.createElement('div');
     serviceLinksColumns.classList.add('wp-block-columns', 'is-layout-flex', 'wp-container-core-columns-is-layout-9d6595d7', 'wp-block-columns-is-layout-flex');
 
-    // Divide links into two columns
-    const column1 = document.createElement('div');
-    column1.classList.add('wp-block-column', 'is-layout-flow', 'wp-block-column-is-layout-flow');
-    const column2 = document.createElement('div');
-    column2.classList.add('wp-block-column', 'is-layout-flow', 'wp-block-column-is-layout-flow');
+    // Split links into two columns for layout matching original HTML
+    const half = Math.ceil(serviceLinkRows.length / 2);
+    const firstColumnLinks = serviceLinkRows.slice(0, half);
+    const secondColumnLinks = serviceLinkRows.slice(half);
 
-    serviceLinkRows.forEach((row, index) => {
-      // Each serviceLinkRow has one cell containing the link
-      const linkCell = row.firstElementChild;
-      if (linkCell) {
-        const foundLink = linkCell.querySelector('a');
-        if (foundLink) {
-          const link = document.createElement('a');
-          link.classList.add('nhsuk-action-group__link');
-          link.href = foundLink.href;
-          moveInstrumentation(linkCell, link);
-          // Move all child nodes from linkCell to the new link element
-          while (foundLink.firstChild) link.append(foundLink.firstChild);
+    const createLinkColumn = (links) => {
+      const column = document.createElement('div');
+      column.classList.add('wp-block-column', 'is-layout-flow', 'wp-block-column-is-layout-flow');
+      links.forEach((row) => {
+        // Each service-link item row has only one cell: row.firstElementChild
+        const cell = row.firstElementChild;
+        if (cell) {
+          const foundLink = cell.querySelector('a');
+          if (foundLink) {
+            const link = document.createElement('a');
+            link.classList.add('nhsuk-action-group__link');
+            link.href = foundLink.href;
+            moveInstrumentation(foundLink, link);
+            while (foundLink.firstChild) link.append(foundLink.firstChild);
 
-          const icon = document.createElement('i');
-          icon.classList.add('fa-solid', 'fa-angle-right');
-          link.append(icon);
-
-          if (index % 2 === 0) {
-            column1.append(link);
-          } else {
-            column2.append(link);
+            const icon = document.createElement('i');
+            icon.classList.add('fa-solid', 'fa-angle-right');
+            link.append(icon);
+            column.append(link);
           }
         }
-      }
-    });
+      });
+      return column;
+    };
 
-    serviceLinksColumns.append(column1, column2);
+    serviceLinksColumns.append(createLinkColumn(firstColumnLinks));
+    if (secondColumnLinks.length > 0) {
+      serviceLinksColumns.append(createLinkColumn(secondColumnLinks));
+    }
     innerWrap.append(serviceLinksColumns);
   }
 
-  // Footer section
+  // Footer
   if (footerRow) {
-    const footerContent = document.createElement('p');
-    // The footer content is in the first child of the footerRow
-    const footerCell = footerRow.firstElementChild;
-    if (footerCell) {
-      moveInstrumentation(footerCell, footerContent);
-      while (footerCell.firstChild) footerContent.append(footerCell.firstChild);
-    }
-    innerWrap.append(footerContent);
+    const p = document.createElement('p');
+    // Use firstElementChild as per BlockJson for single cell row
+    moveInstrumentation(footerRow.firstElementChild, p);
+    while (footerRow.firstElementChild.firstChild) p.append(footerRow.firstElementChild.firstChild);
+    innerWrap.append(p);
   }
 
   block.textContent = '';
   block.append(mainContainer);
+
+  // Image optimization (no images in this block, but keeping the pattern for completeness)
+  block.querySelectorAll('picture > img').forEach((img) => {
+    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+    moveInstrumentation(img, optimizedPic.querySelector('img'));
+    img.closest('picture').replaceWith(optimizedPic);
+  });
 }

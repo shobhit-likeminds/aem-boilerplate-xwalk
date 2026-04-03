@@ -13,48 +13,51 @@ export default function decorate(block) {
     const linkEl = document.createElement('a');
     linkEl.classList.add('mind-module');
 
-    let imageDiv;
-    let titleEl;
-    let descriptionDiv;
-
-    // Use content detection to identify cells based on their content
     const cells = [...row.children];
-    const linkCell = cells.find(cell => cell.querySelector('a'));
-    const imageCell = cells.find(cell => cell.querySelector('picture'));
-    const titleContentCell = cells.find(cell => !cell.querySelector('a') && !cell.querySelector('picture') && !cell.querySelector('p') && cell.textContent.trim());
-    const descriptionCell = cells.find(cell => cell.querySelector('p'));
+    // Based on BlockJson model 'mind-module' fields: link, image, title, description
+    const linkCell = cells[0];
+    const imageCell = cells[1];
+    const titleCell = cells[2];
+    const descriptionCell = cells[3];
 
-    if (linkCell) {
-      const foundLink = linkCell.querySelector('a');
-      if (foundLink) {
-        linkEl.href = foundLink.href;
-      }
+    // Process Link
+    const foundLink = linkCell.querySelector('a');
+    if (foundLink) {
+      linkEl.href = foundLink.href;
     }
 
+    // Process Image
     if (imageCell) {
-      imageDiv = document.createElement('div');
+      const imageDiv = document.createElement('div');
       imageDiv.classList.add('mind-module-image');
       moveInstrumentation(imageCell, imageDiv);
       while (imageCell.firstChild) imageDiv.append(imageCell.firstChild);
+      linkEl.append(imageDiv);
     }
 
-    if (titleContentCell) {
-      titleEl = document.createElement('h3');
+    // Process Title
+    if (titleCell) {
+      const titleEl = document.createElement('h3');
       titleEl.classList.add('mind-module-title');
-      moveInstrumentation(titleContentCell, titleEl);
-      while (titleContentCell.firstChild) titleEl.append(titleContentCell.firstChild);
+      const heading = titleCell.querySelector('h1, h2, h3, h4, h5, h6');
+      if (heading) {
+        moveInstrumentation(heading, titleEl);
+        while (heading.firstChild) titleEl.append(heading.firstChild);
+      } else if (titleCell.textContent.trim()) {
+        moveInstrumentation(titleCell, titleEl);
+        titleEl.textContent = titleCell.textContent.trim();
+      }
+      linkEl.append(titleEl);
     }
 
+    // Process Description
     if (descriptionCell) {
-      descriptionDiv = document.createElement('div');
+      const descriptionDiv = document.createElement('div');
       descriptionDiv.classList.add('mind-module-description', 'block_mob_desc');
       moveInstrumentation(descriptionCell, descriptionDiv);
       while (descriptionCell.firstChild) descriptionDiv.append(descriptionCell.firstChild);
+      linkEl.append(descriptionDiv);
     }
-
-    if (imageDiv) linkEl.append(imageDiv);
-    if (titleEl) linkEl.append(titleEl);
-    if (descriptionDiv) linkEl.append(descriptionDiv);
 
     column.append(linkEl);
     columnsContainer.append(column);

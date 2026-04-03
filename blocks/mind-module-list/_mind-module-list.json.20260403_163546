@@ -1,31 +1,31 @@
 {
   "definitions": [
     {
-      "title": "Navbar",
-      "id": "navbar",
+      "title": "Mind-Module-List",
+      "id": "mind-module-list",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block",
             "template": {
-              "filter": "navbar",
-              "model": "navbar",
-              "name": "Navbar"
+              "filter": "mind-module-list",
+              "model": "mind-module-list",
+              "name": "Mind-Module-List"
             }
           }
         }
       }
     },
     {
-      "title": "Nav-Item",
-      "id": "nav-item",
+      "title": "Mind-Module",
+      "id": "mind-module",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "nav-item",
-              "name": "Nav-Item"
+              "model": "mind-module",
+              "name": "Mind-Module"
             }
           }
         }
@@ -34,30 +34,18 @@
   ],
   "models": [
     {
-      "id": "navbar",
+      "id": "mind-module-list",
       "fields": [
         {
-          "component": "reference",
-          "label": "Logo",
-          "name": "logo",
-          "valueType": "string"
-        },
-        {
-          "component": "aem-content",
-          "label": "Logo Link",
-          "name": "logo-link",
-          "valueType": "string"
-        },
-        {
           "component": "container",
-          "item": "nav-item",
-          "label": "Navigation Items",
-          "name": "navigation-items"
+          "item": "mind-module",
+          "label": "Mind Modules",
+          "name": "mind-modules"
         }
       ]
     },
     {
-      "id": "nav-item",
+      "id": "mind-module",
       "fields": [
         {
           "component": "aem-content",
@@ -66,15 +54,21 @@
           "valueType": "string"
         },
         {
-          "component": "text",
-          "label": "Label",
-          "name": "label",
+          "component": "reference",
+          "label": "Image",
+          "name": "image",
           "valueType": "string"
         },
         {
-          "component": "reference",
-          "label": "Icon",
-          "name": "icon",
+          "component": "text",
+          "label": "Title",
+          "name": "title",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Description",
+          "name": "description",
           "valueType": "string"
         }
       ]
@@ -82,9 +76,9 @@
   ],
   "filters": [
     {
-      "id": "navbar",
+      "id": "mind-module-list",
       "components": [
-        "nav-item"
+        "mind-module"
       ]
     }
   ]

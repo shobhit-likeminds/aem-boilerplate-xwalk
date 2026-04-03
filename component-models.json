@@ -795,6 +795,75 @@
     ]
   },
   {
+    "id": "columns-list",
+    "fields": [
+      {
+        "component": "container",
+        "item": "column",
+        "label": "Columns",
+        "name": "columns"
+      }
+    ]
+  },
+  {
+    "id": "column",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Description",
+        "name": "description",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "link",
+        "label": "Links",
+        "name": "links"
+      },
+      {
+        "component": "reference",
+        "label": "Action Image",
+        "name": "action-image",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Action Label",
+        "name": "action-label",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Action Link",
+        "name": "action-link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "link",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Label",
+        "name": "label",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "URL",
+        "name": "url",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "columns",
     "fields": [
       {
@@ -936,6 +1005,59 @@
     ]
   },
   {
+    "id": "cookie-notification",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Icon Image",
+        "name": "icon-image",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Aria Label",
+        "name": "aria-label",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Description",
+        "name": "description",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Accept Button Text",
+        "name": "accept-button-text",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Reject Button Text",
+        "name": "reject-button-text",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Settings Button Text",
+        "name": "settings-button-text",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Close Icon Image",
+        "name": "close-icon-image",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "cta-text",
     "fields": [
       {
@@ -951,26 +1073,50 @@
     "fields": [
       {
         "component": "text",
-        "label": "Search Query",
-        "name": "search-query",
+        "label": "Placeholder",
+        "name": "placeholder",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Locpt",
-        "name": "locpt",
+        "label": "Search Name Attribute",
+        "name": "search-name",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Ds",
-        "name": "ds",
+        "label": "Search Title Attribute",
+        "name": "search-title",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Tab",
-        "name": "tab",
+        "label": "Form Action URL",
+        "name": "action",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Locpt Hidden Value",
+        "name": "locpt-value",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "DS Hidden Value",
+        "name": "ds-value",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Tab Hidden Value",
+        "name": "tab-value",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Button Label",
+        "name": "button-label",
         "valueType": "string"
       }
     ]
@@ -1359,44 +1505,38 @@
         "valueType": "string"
       },
       {
-        "component": "container",
-        "item": "family-health-item",
-        "label": "Items",
-        "name": "items"
-      }
-    ]
-  },
-  {
-    "id": "family-health-item",
-    "fields": [
-      {
         "component": "richtext",
-        "label": "Description",
-        "name": "description",
-        "valueType": "string"
-      },
-      {
-        "component": "aem-content",
-        "label": "Link 1",
-        "name": "link-1",
-        "valueType": "string"
-      },
-      {
-        "component": "aem-content",
-        "label": "Link 2",
-        "name": "link-2",
-        "valueType": "string"
-      },
-      {
-        "component": "aem-content",
-        "label": "Link 3",
-        "name": "link-3",
+        "label": "Intro",
+        "name": "intro",
         "valueType": "string"
       },
       {
         "component": "reference",
         "label": "Image",
         "name": "image",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Image Link",
+        "name": "image-link",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "family-health-link",
+        "label": "Links",
+        "name": "links"
+      }
+    ]
+  },
+  {
+    "id": "family-health-link",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
         "valueType": "string"
       }
     ]
@@ -1617,46 +1757,17 @@
     "id": "footer",
     "fields": [
       {
-        "component": "container",
-        "item": "footer-link-group",
-        "label": "Footer Link Groups",
-        "name": "footer-link-groups"
-      },
-      {
-        "component": "richtext",
-        "label": "Contact Address",
-        "name": "contact-address",
+        "component": "reference",
+        "label": "Logo",
+        "name": "logo",
         "valueType": "string"
       },
       {
-        "component": "text",
-        "label": "Telephone",
-        "name": "telephone",
+        "component": "aem-content",
+        "label": "Logo Link",
+        "name": "logo-link",
         "valueType": "string"
       },
-      {
-        "component": "text",
-        "label": "Fax",
-        "name": "fax",
-        "valueType": "string"
-      },
-      {
-        "component": "container",
-        "item": "footer-social-link",
-        "label": "Footer Social Links",
-        "name": "footer-social-links"
-      },
-      {
-        "component": "richtext",
-        "label": "Footer Credit",
-        "name": "footer-credit",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
-    "id": "footer-link-group",
-    "fields": [
       {
         "component": "text",
         "label": "Heading",
@@ -1664,15 +1775,50 @@
         "valueType": "string"
       },
       {
+        "component": "reference",
+        "label": "Secondary Logo",
+        "name": "secondary-logo",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Secondary Logo Link",
+        "name": "secondary-logo-link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Copyright Text",
+        "name": "copyright",
+        "valueType": "string"
+      },
+      {
         "component": "container",
-        "item": "footer-link",
-        "label": "Links",
-        "name": "links"
+        "item": "footer-menu-group",
+        "label": "Menu Groups",
+        "name": "menu-groups"
+      },
+      {
+        "component": "container",
+        "item": "footer-social-link",
+        "label": "Social Links",
+        "name": "social-links"
       }
     ]
   },
   {
-    "id": "footer-link",
+    "id": "footer-menu-group",
+    "fields": [
+      {
+        "component": "container",
+        "item": "footer-menu-link",
+        "label": "Menu Links",
+        "name": "menu-links"
+      }
+    ]
+  },
+  {
+    "id": "footer-menu-link",
     "fields": [
       {
         "component": "text",
@@ -1692,14 +1838,8 @@
     "id": "footer-social-link",
     "fields": [
       {
-        "component": "text",
-        "label": "Icon Class",
-        "name": "icon",
-        "valueType": "string"
-      },
-      {
         "component": "aem-content",
-        "label": "Social URL",
+        "label": "URL",
         "name": "url",
         "valueType": "string"
       }
@@ -2273,7 +2413,7 @@
         "component": "container",
         "item": "mind-module",
         "label": "Mind Modules",
-        "name": "mind-modules"
+        "name": "mindModules"
       }
     ]
   },
@@ -2317,48 +2457,38 @@
       },
       {
         "component": "richtext",
-        "label": "Intro",
-        "name": "intro",
+        "label": "Description",
+        "name": "description",
         "valueType": "string"
       },
-      {
-        "component": "container",
-        "item": "mind-to-mind-link",
-        "label": "Links",
-        "name": "links"
-      },
-      {
-        "component": "container",
-        "item": "mind-to-mind-video",
-        "label": "Videos",
-        "name": "videos"
-      }
-    ]
-  },
-  {
-    "id": "mind-to-mind-link",
-    "fields": [
       {
         "component": "aem-content",
-        "label": "Link",
-        "name": "link",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
-    "id": "mind-to-mind-video",
-    "fields": [
-      {
-        "component": "text",
-        "label": "Video Source",
-        "name": "video-src",
+        "label": "Link 1",
+        "name": "link-1",
         "valueType": "string"
       },
       {
-        "component": "text",
-        "label": "Video Title",
-        "name": "video-title",
+        "component": "aem-content",
+        "label": "Link 2",
+        "name": "link-2",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link 3",
+        "name": "link-3",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link 4",
+        "name": "link-4",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Video Placeholder",
+        "name": "video-placeholder",
         "valueType": "string"
       }
     ]
@@ -2430,28 +2560,10 @@
         "valueType": "string"
       },
       {
-        "component": "reference",
-        "label": "Home Icon",
-        "name": "home-icon",
-        "valueType": "string"
-      },
-      {
-        "component": "reference",
-        "label": "Right Icon 1",
-        "name": "right-icon-1",
-        "valueType": "string"
-      },
-      {
-        "component": "reference",
-        "label": "Right Icon 2",
-        "name": "right-icon-2",
-        "valueType": "string"
-      },
-      {
         "component": "container",
         "item": "nav-item",
         "label": "Navigation Items",
-        "name": "nav-items"
+        "name": "navigation-items"
       }
     ]
   },
@@ -2466,8 +2578,14 @@
       },
       {
         "component": "text",
-        "label": "Text",
-        "name": "text",
+        "label": "Label",
+        "name": "label",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Icon",
+        "name": "icon",
         "valueType": "string"
       }
     ]
@@ -2488,7 +2606,7 @@
         "valueType": "string"
       },
       {
-        "component": "richtext",
+        "component": "text",
         "label": "Description",
         "name": "description",
         "valueType": "string"
@@ -2927,7 +3045,7 @@
         "component": "container",
         "item": "service-link",
         "label": "Service Links",
-        "name": "service-links"
+        "name": "serviceLinks"
       }
     ]
   },
@@ -3147,6 +3265,52 @@
         "component": "text",
         "label": "Label",
         "name": "label",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "symptom-checker-columns",
+    "fields": [
+      {
+        "component": "container",
+        "item": "symptom-checker-column",
+        "label": "Columns",
+        "name": "columns"
+      }
+    ]
+  },
+  {
+    "id": "symptom-checker-column",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Description",
+        "name": "description",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Link Text",
+        "name": "link-text",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link URL",
+        "name": "link-url",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Icon",
+        "name": "icon",
         "valueType": "string"
       }
     ]

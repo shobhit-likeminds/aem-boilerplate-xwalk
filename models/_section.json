@@ -126,7 +126,10 @@
         "make-right-shift",
         "cmp-text",
         "rs-cards",
-        "itc-footer-section"
+        "itc-footer-section",
+        "cookie-notification",
+        "symptom-checker-columns",
+        "columns-list"
       ]
     }
   ]
