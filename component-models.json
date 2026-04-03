@@ -232,31 +232,43 @@
     "fields": [
       {
         "component": "container",
-        "item": "banner",
-        "label": "Banners",
-        "name": "banners"
+        "item": "banner-slide",
+        "label": "Slides",
+        "name": "slides"
       }
     ]
   },
   {
-    "id": "banner",
+    "id": "banner-slide",
     "fields": [
       {
         "component": "reference",
-        "label": "Image",
-        "name": "image",
+        "label": "Desktop Image",
+        "name": "desktop-image",
         "valueType": "string"
       },
       {
         "component": "reference",
-        "label": "Video",
-        "name": "video",
+        "label": "Mobile Image",
+        "name": "mobile-image",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Description",
+        "name": "description",
         "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "Link",
-        "name": "link",
+        "label": "CTA Link",
+        "name": "cta-link",
         "valueType": "string"
       }
     ]
@@ -767,6 +779,17 @@
         "component": "text",
         "label": "Title",
         "name": "title",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "cmp-text",
+    "fields": [
+      {
+        "component": "richtext",
+        "label": "Text",
+        "name": "text",
         "valueType": "string"
       }
     ]
@@ -1892,6 +1915,179 @@
     ]
   },
   {
+    "id": "itc-footer-section",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "ITC Logo",
+        "name": "itc_logo",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "FSSAI Logo",
+        "name": "fssai_logo",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Grievance Officer Title",
+        "name": "grievance_officer_title",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Grievance Officer Name",
+        "name": "grievance_officer_name",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Grievance Officer Contact",
+        "name": "grievance_officer_contact",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Grievance Officer Hours",
+        "name": "grievance_officer_hours",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Copyright",
+        "name": "copyright",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "footer-link",
+        "label": "Footer Links",
+        "name": "footer_links"
+      },
+      {
+        "component": "container",
+        "item": "social-link",
+        "label": "Social Links",
+        "name": "social_links"
+      },
+      {
+        "component": "container",
+        "item": "footer-secondary-link",
+        "label": "Footer Secondary Links",
+        "name": "footer_secondary_links"
+      }
+    ]
+  },
+  {
+    "id": "footer-link",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Label",
+        "name": "label",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "URL",
+        "name": "url",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "social-link",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Icon",
+        "name": "icon",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "URL",
+        "name": "url",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "footer-secondary-link",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "URL",
+        "name": "url",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "itc-header-section",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Logo Image",
+        "name": "logo-image",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Logo Link",
+        "name": "logo-link",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "navigation-item",
+        "label": "Navigation Items",
+        "name": "navigation-items"
+      },
+      {
+        "component": "container",
+        "item": "country-option",
+        "label": "Country Options",
+        "name": "country-options"
+      }
+    ]
+  },
+  {
+    "id": "navigation-item",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Navigation Label",
+        "name": "label",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Navigation Link",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "country-option",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Country Flag Image",
+        "name": "flag-image",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Country Name",
+        "name": "country-name",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "main-menu",
     "fields": [
       {
@@ -1973,6 +2169,64 @@
         "component": "aem-content",
         "label": "Link",
         "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "make-right-shift",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Main Image",
+        "name": "main-image",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Subheading",
+        "name": "subheading",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Description",
+        "name": "description",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "CTA Link",
+        "name": "cta-link",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "why-shift-item",
+        "label": "Why Shift Items",
+        "name": "why-shift-items"
+      }
+    ]
+  },
+  {
+    "id": "why-shift-item",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Item Image",
+        "name": "item-image",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Item Link",
+        "name": "item-link",
         "valueType": "string"
       }
     ]
@@ -2575,6 +2829,40 @@
     ]
   },
   {
+    "id": "rs-cards",
+    "fields": [
+      {
+        "component": "container",
+        "item": "rs-card",
+        "label": "Cards",
+        "name": "cards"
+      }
+    ]
+  },
+  {
+    "id": "rs-card",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Image",
+        "name": "image",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Title",
+        "name": "title",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Description",
+        "name": "description",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "search-box",
     "fields": [
       {
@@ -2650,6 +2938,46 @@
         "component": "aem-content",
         "label": "Link",
         "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "shiftclub",
+    "fields": [
+      {
+        "component": "container",
+        "item": "carousel-item",
+        "label": "Carousel Items",
+        "name": "carousel-items"
+      }
+    ]
+  },
+  {
+    "id": "carousel-item",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Image",
+        "name": "image",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Alt Text",
+        "name": "alt-text",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Title",
+        "name": "title",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Description",
+        "name": "description",
         "valueType": "string"
       }
     ]
@@ -2762,6 +3090,9 @@
         "name": "carousel-items"
       }
     ]
+  },
+  {
+    "id": "space-adder"
   },
   {
     "id": "steel-stories",

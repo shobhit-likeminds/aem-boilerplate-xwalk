@@ -120,7 +120,13 @@
         "tv-commercial",
         "tv-sec",
         "parle-campaign",
-        "parle-social"
+        "parle-social",
+        "itc-header-section",
+        "shiftclub",
+        "make-right-shift",
+        "cmp-text",
+        "rs-cards",
+        "itc-footer-section"
       ]
     }
   ]
