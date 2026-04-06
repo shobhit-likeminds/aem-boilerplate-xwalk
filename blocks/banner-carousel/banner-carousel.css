@@ -6,8 +6,6 @@
 100%{transform:rotate(360deg)}
 }
 
-.aem-GridColumn { box-sizing:border-box;clear:both }
-
 @media(max-width:768px){.aem-Grid.aem-Grid--1>.aem-GridColumn.aem-GridColumn--phone--1{float:left;clear:none;width:100%}
 .aem-Grid.aem-Grid--1>.aem-GridColumn.aem-GridColumn--offset--phone--0{margin-left:0}
 .aem-Grid.aem-Grid--1>.aem-GridColumn.aem-GridColumn--offset--phone--1{margin-left:100%}
@@ -2224,43 +2222,43 @@ body{padding-top:78px !important}
 @media(max-width:400px){.itc-health-goal-section h2{padding:0 19vw;font-size:25px !important}
 }
 
-@font-face{font-family:'Urbanist';src:url('clientlib-rightshift/resources/fonts/Urbanist-Black.woff2') format('woff2'),url('clientlib-rightshift/resources/fonts/Urbanist-Black.woff') format('woff');font-weight:900;font-style:normal;font-display:swap}
+@font-face{font-family:'Urbanist';src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fkitchensofindia.com%2Fclientlib-rightshift%2Fresources%2Ffonts%2FUrbanist-Black.woff2') format('woff2'),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fkitchensofindia.com%2Fclientlib-rightshift%2Fresources%2Ffonts%2FUrbanist-Black.woff') format('woff');font-weight:900;font-style:normal;font-display:swap}
 
-@font-face{font-family:'Urbanist';src:url('clientlib-rightshift/resources/fonts/Urbanist-BlackItalic.woff2') format('woff2'),url('clientlib-rightshift/resources/fonts/Urbanist-BlackItalic.woff') format('woff');font-weight:900;font-style:italic;font-display:swap}
+@font-face{font-family:'Urbanist';src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fkitchensofindia.com%2Fclientlib-rightshift%2Fresources%2Ffonts%2FUrbanist-BlackItalic.woff2') format('woff2'),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fkitchensofindia.com%2Fclientlib-rightshift%2Fresources%2Ffonts%2FUrbanist-BlackItalic.woff') format('woff');font-weight:900;font-style:italic;font-display:swap}
 
-@font-face{font-family:'Urbanist';src:url('clientlib-rightshift/resources/fonts/Urbanist-Light.woff2') format('woff2'),url('clientlib-rightshift/resources/fonts/Urbanist-Light.woff') format('woff');font-weight:300;font-style:normal;font-display:swap}
+@font-face{font-family:'Urbanist';src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fkitchensofindia.com%2Fclientlib-rightshift%2Fresources%2Ffonts%2FUrbanist-Light.woff2') format('woff2'),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fkitchensofindia.com%2Fclientlib-rightshift%2Fresources%2Ffonts%2FUrbanist-Light.woff') format('woff');font-weight:300;font-style:normal;font-display:swap}
 
-@font-face{font-family:'Urbanist';src:url('clientlib-rightshift/resources/fonts/Urbanist-Regular.woff2') format('woff2'),url('clientlib-rightshift/resources/fonts/Urbanist-Regular.woff') format('woff');font-weight:normal;font-style:normal;font-display:swap}
+@font-face{font-family:'Urbanist';src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fkitchensofindia.com%2Fclientlib-rightshift%2Fresources%2Ffonts%2FUrbanist-Regular.woff2') format('woff2'),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fkitchensofindia.com%2Fclientlib-rightshift%2Fresources%2Ffonts%2FUrbanist-Regular.woff') format('woff');font-weight:normal;font-style:normal;font-display:swap}
 
-@font-face{font-family:'Urbanist';src:url('clientlib-rightshift/resources/fonts/Urbanist-ExtraBold.woff2') format('woff2'),url('clientlib-rightshift/resources/fonts/Urbanist-ExtraBold.woff') format('woff');font-weight:bold;font-style:normal;font-display:swap}
+@font-face{font-family:'Urbanist';src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fkitchensofindia.com%2Fclientlib-rightshift%2Fresources%2Ffonts%2FUrbanist-ExtraBold.woff2') format('woff2'),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fkitchensofindia.com%2Fclientlib-rightshift%2Fresources%2Ffonts%2FUrbanist-ExtraBold.woff') format('woff');font-weight:bold;font-style:normal;font-display:swap}
 
-@font-face{font-family:'Urbanist';src:url('clientlib-rightshift/resources/fonts/Urbanist-ExtraLight.woff2') format('woff2'),url('clientlib-rightshift/resources/fonts/Urbanist-ExtraLight.woff') format('woff');font-weight:200;font-style:normal;font-display:swap}
+@font-face{font-family:'Urbanist';src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fkitchensofindia.com%2Fclientlib-rightshift%2Fresources%2Ffonts%2FUrbanist-ExtraLight.woff2') format('woff2'),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fkitchensofindia.com%2Fclientlib-rightshift%2Fresources%2Ffonts%2FUrbanist-ExtraLight.woff') format('woff');font-weight:200;font-style:normal;font-display:swap}
 
-@font-face{font-family:'Urbanist';src:url('clientlib-rightshift/resources/fonts/Urbanist-ExtraBoldItalic.woff2') format('woff2'),url('clientlib-rightshift/resources/fonts/Urbanist-ExtraBoldItalic.woff') format('woff');font-weight:bold;font-style:italic;font-display:swap}
+@font-face{font-family:'Urbanist';src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fkitchensofindia.com%2Fclientlib-rightshift%2Fresources%2Ffonts%2FUrbanist-ExtraBoldItalic.woff2') format('woff2'),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fkitchensofindia.com%2Fclientlib-rightshift%2Fresources%2Ffonts%2FUrbanist-ExtraBoldItalic.woff') format('woff');font-weight:bold;font-style:italic;font-display:swap}
 
-@font-face{font-family:'Urbanist';src:url('clientlib-rightshift/resources/fonts/Urbanist-BoldItalic.woff2') format('woff2'),url('clientlib-rightshift/resources/fonts/Urbanist-BoldItalic.woff') format('woff');font-weight:bold;font-style:italic;font-display:swap}
+@font-face{font-family:'Urbanist';src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fkitchensofindia.com%2Fclientlib-rightshift%2Fresources%2Ffonts%2FUrbanist-BoldItalic.woff2') format('woff2'),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fkitchensofindia.com%2Fclientlib-rightshift%2Fresources%2Ffonts%2FUrbanist-BoldItalic.woff') format('woff');font-weight:bold;font-style:italic;font-display:swap}
 
-@font-face{font-family:'Urbanist';src:url('clientlib-rightshift/resources/fonts/Urbanist-MediumItalic.woff2') format('woff2'),url('clientlib-rightshift/resources/fonts/Urbanist-MediumItalic.woff') format('woff');font-weight:500;font-style:italic;font-display:swap}
+@font-face{font-family:'Urbanist';src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fkitchensofindia.com%2Fclientlib-rightshift%2Fresources%2Ffonts%2FUrbanist-MediumItalic.woff2') format('woff2'),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fkitchensofindia.com%2Fclientlib-rightshift%2Fresources%2Ffonts%2FUrbanist-MediumItalic.woff') format('woff');font-weight:500;font-style:italic;font-display:swap}
 
-@font-face{font-family:'Urbanist';src:url('clientlib-rightshift/resources/fonts/Urbanist-ExtraLightItalic.woff2') format('woff2'),url('clientlib-rightshift/resources/fonts/Urbanist-ExtraLightItalic.woff') format('woff');font-weight:200;font-style:italic;font-display:swap}
+@font-face{font-family:'Urbanist';src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fkitchensofindia.com%2Fclientlib-rightshift%2Fresources%2Ffonts%2FUrbanist-ExtraLightItalic.woff2') format('woff2'),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fkitchensofindia.com%2Fclientlib-rightshift%2Fresources%2Ffonts%2FUrbanist-ExtraLightItalic.woff') format('woff');font-weight:200;font-style:italic;font-display:swap}
 
-@font-face{font-family:'Urbanist';src:url('clientlib-rightshift/resources/fonts/Urbanist-LightItalic.woff2') format('woff2'),url('clientlib-rightshift/resources/fonts/Urbanist-LightItalic.woff') format('woff');font-weight:300;font-style:italic;font-display:swap}
+@font-face{font-family:'Urbanist';src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fkitchensofindia.com%2Fclientlib-rightshift%2Fresources%2Ffonts%2FUrbanist-LightItalic.woff2') format('woff2'),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fkitchensofindia.com%2Fclientlib-rightshift%2Fresources%2Ffonts%2FUrbanist-LightItalic.woff') format('woff');font-weight:300;font-style:italic;font-display:swap}
 
-@font-face{font-family:'Urbanist';src:url('clientlib-rightshift/resources/fonts/Urbanist-SemiBoldItalic.woff2') format('woff2'),url('clientlib-rightshift/resources/fonts/Urbanist-SemiBoldItalic.woff') format('woff');font-weight:600;font-style:italic;font-display:swap}
+@font-face{font-family:'Urbanist';src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fkitchensofindia.com%2Fclientlib-rightshift%2Fresources%2Ffonts%2FUrbanist-SemiBoldItalic.woff2') format('woff2'),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fkitchensofindia.com%2Fclientlib-rightshift%2Fresources%2Ffonts%2FUrbanist-SemiBoldItalic.woff') format('woff');font-weight:600;font-style:italic;font-display:swap}
 
-@font-face{font-family:'Urbanist';src:url('clientlib-rightshift/resources/fonts/Urbanist-Bold.woff2') format('woff2'),url('clientlib-rightshift/resources/fonts/Urbanist-Bold.woff') format('woff');font-weight:bold;font-style:normal;font-display:swap}
+@font-face{font-family:'Urbanist';src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fkitchensofindia.com%2Fclientlib-rightshift%2Fresources%2Ffonts%2FUrbanist-Bold.woff2') format('woff2'),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fkitchensofindia.com%2Fclientlib-rightshift%2Fresources%2Ffonts%2FUrbanist-Bold.woff') format('woff');font-weight:bold;font-style:normal;font-display:swap}
 
-@font-face{font-family:'Urbanist';src:url('clientlib-rightshift/resources/fonts/Urbanist-Thin.woff2') format('woff2'),url('clientlib-rightshift/resources/fonts/Urbanist-Thin.woff') format('woff');font-weight:100;font-style:normal;font-display:swap}
+@font-face{font-family:'Urbanist';src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fkitchensofindia.com%2Fclientlib-rightshift%2Fresources%2Ffonts%2FUrbanist-Thin.woff2') format('woff2'),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fkitchensofindia.com%2Fclientlib-rightshift%2Fresources%2Ffonts%2FUrbanist-Thin.woff') format('woff');font-weight:100;font-style:normal;font-display:swap}
 
-@font-face{font-family:'Urbanist';src:url('clientlib-rightshift/resources/fonts/Urbanist-Italic.woff2') format('woff2'),url('clientlib-rightshift/resources/fonts/Urbanist-Italic.woff') format('woff');font-weight:normal;font-style:italic;font-display:swap}
+@font-face{font-family:'Urbanist';src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fkitchensofindia.com%2Fclientlib-rightshift%2Fresources%2Ffonts%2FUrbanist-Italic.woff2') format('woff2'),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fkitchensofindia.com%2Fclientlib-rightshift%2Fresources%2Ffonts%2FUrbanist-Italic.woff') format('woff');font-weight:normal;font-style:italic;font-display:swap}
 
-@font-face{font-family:'Urbanist';src:url('clientlib-rightshift/resources/fonts/Urbanist-Medium.woff2') format('woff2'),url('clientlib-rightshift/resources/fonts/Urbanist-Medium.woff') format('woff');font-weight:500;font-style:normal;font-display:swap}
+@font-face{font-family:'Urbanist';src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fkitchensofindia.com%2Fclientlib-rightshift%2Fresources%2Ffonts%2FUrbanist-Medium.woff2') format('woff2'),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fkitchensofindia.com%2Fclientlib-rightshift%2Fresources%2Ffonts%2FUrbanist-Medium.woff') format('woff');font-weight:500;font-style:normal;font-display:swap}
 
-@font-face{font-family:'Urbanist';src:url('clientlib-rightshift/resources/fonts/Urbanist-ThinItalic.woff2') format('woff2'),url('clientlib-rightshift/resources/fonts/Urbanist-ThinItalic.woff') format('woff');font-weight:100;font-style:italic;font-display:swap}
+@font-face{font-family:'Urbanist';src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fkitchensofindia.com%2Fclientlib-rightshift%2Fresources%2Ffonts%2FUrbanist-ThinItalic.woff2') format('woff2'),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fkitchensofindia.com%2Fclientlib-rightshift%2Fresources%2Ffonts%2FUrbanist-ThinItalic.woff') format('woff');font-weight:100;font-style:italic;font-display:swap}
 
-@font-face{font-family:'Urbanist';src:url('clientlib-rightshift/resources/fonts/Urbanist-SemiBold.woff2') format('woff2'),url('clientlib-rightshift/resources/fonts/Urbanist-SemiBold.woff') format('woff');font-weight:600;font-style:normal;font-display:swap}
+@font-face{font-family:'Urbanist';src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fkitchensofindia.com%2Fclientlib-rightshift%2Fresources%2Ffonts%2FUrbanist-SemiBold.woff2') format('woff2'),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fkitchensofindia.com%2Fclientlib-rightshift%2Fresources%2Ffonts%2FUrbanist-SemiBold.woff') format('woff');font-weight:600;font-style:normal;font-display:swap}
 
-@font-face{font-family:'Paytone One';src:url('clientlib-rightshift/resources/fonts/PaytoneOne-Regular.woff2') format('woff2'),url('clientlib-rightshift/resources/fonts/PaytoneOne-Regular.woff') format('woff'),url('clientlib-rightshift/resources/fonts/aytoneOne-Regular.ttf') format('truetype'),url('clientlib-rightshift/resources/fonts/PaytoneOne-Regular.svg#PaytoneOne-Regular') format('svg');font-weight:normal;font-style:normal;font-display:swap}
+@font-face{font-family:'Paytone One';src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fkitchensofindia.com%2Fclientlib-rightshift%2Fresources%2Ffonts%2FPaytoneOne-Regular.woff2') format('woff2'),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fkitchensofindia.com%2Fclientlib-rightshift%2Fresources%2Ffonts%2FPaytoneOne-Regular.woff') format('woff'),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fkitchensofindia.com%2Fclientlib-rightshift%2Fresources%2Ffonts%2FaytoneOne-Regular.ttf') format('truetype'),url('clientlib-rightshift/resources/fonts/PaytoneOne-Regular.svg#PaytoneOne-Regular') format('svg');font-weight:normal;font-style:normal;font-display:swap}
 
 @media(max-width:1350px){.itc-right-shift-wrapper div:last-of-type{margin-left:461px !important}
 }
@@ -2473,7 +2471,7 @@ nav li.cmp-breadcrumb__item+li.cmp-breadcrumb__item::before{content:"<" !importa
 
 @charset 'UTF-8';
 
-@font-face{font-family:'slick';font-weight:normal;font-style:normal;font-display:swap;src:url('clientlib-rightshift/css/fonts/slick.eot');src:url('clientlib-rightshift/css/fonts/slick.eot?#iefix') format('embedded-opentype'),url('clientlib-rightshift/css/fonts/slick.woff') format('woff'),url('clientlib-rightshift/css/fonts/slick.ttf') format('truetype'),url('clientlib-rightshift/css/fonts/slick.svg#slick') format('svg')}
+@font-face{font-family:'slick';font-weight:normal;font-style:normal;font-display:swap;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fkitchensofindia.com%2Fclientlib-rightshift%2Fcss%2Ffonts%2Fslick.eot');src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fkitchensofindia.com%2Fclientlib-rightshift%2Fcss%2Ffonts%2Fslick.eot%3F%23iefix') format('embedded-opentype'),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fkitchensofindia.com%2Fclientlib-rightshift%2Fcss%2Ffonts%2Fslick.woff') format('woff'),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fkitchensofindia.com%2Fclientlib-rightshift%2Fcss%2Ffonts%2Fslick.ttf') format('truetype'),url('clientlib-rightshift/css/fonts/slick.svg#slick') format('svg')}
 
 @media(max-width:767.98px){.itc-tab .nav-pills .nav-link{font-size:3vw;padding:.5rem 0 .5rem 0}
 .itc-tab li.nav-item{white-space:nowrap !important}

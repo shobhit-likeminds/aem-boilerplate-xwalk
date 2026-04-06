@@ -6,8 +6,6 @@
 100%{transform:rotate(360deg)}
 }
 
-.aem-GridColumn { box-sizing:border-box;clear:both }
-
 @media(max-width:768px){.aem-Grid.aem-Grid--1>.aem-GridColumn.aem-GridColumn--phone--1{float:left;clear:none;width:100%}
 .aem-Grid.aem-Grid--1>.aem-GridColumn.aem-GridColumn--offset--phone--0{margin-left:0}
 .aem-Grid.aem-Grid--1>.aem-GridColumn.aem-GridColumn--offset--phone--1{margin-left:100%}
@@ -851,6 +849,8 @@ pre { display:block;font-size:87.5%;color:#212529 }
 
 pre code { font-size:inherit;color:inherit;word-break:normal }
 
+.container { width:100%;padding-right:15px;padding-left:15px;margin-right:auto;margin-left:auto }
+
 @media(min-width:576px){.container,.container-sm{max-width:540px}
 }
 
@@ -1315,6 +1315,10 @@ to{background-position:0 0}
 @media(prefers-reduced-motion:reduce){.spinner-border,.spinner-grow{-webkit-animation-duration:1.5s;animation-duration:1.5s}
 }
 
+.d-block { display:block !important }
+
+.d-flex { display:-ms-flexbox !important;display:flex !important }
+
 @media(min-width:576px){.d-sm-none{display:none !important}
 .d-sm-inline{display:inline !important}
 .d-sm-inline-block{display:inline-block !important}
@@ -1358,6 +1362,8 @@ to{background-position:0 0}
 .d-xl-flex{display:-ms-flexbox !important;display:flex !important}
 .d-xl-inline-flex{display:-ms-inline-flexbox !important;display:inline-flex !important}
 }
+
+.flex-wrap { -ms-flex-wrap:wrap !important;flex-wrap:wrap !important }
 
 @media(min-width:576px){.flex-sm-row{-ms-flex-direction:row !important;flex-direction:row !important}
 .flex-sm-column{-ms-flex-direction:column !important;flex-direction:column !important}
@@ -1525,6 +1531,12 @@ to{background-position:0 0}
 
 @supports((position:-webkit-sticky) or(position:sticky)){.sticky-top{position:-webkit-sticky;position:sticky;top:0;z-index:1020}
 }
+
+.mb-3 { margin-bottom:1rem !important }
+
+.pt-2 { padding-top:.5rem !important }
+
+.pb-4 { padding-bottom:1.5rem !important }
 
 @media(min-width:576px){.m-sm-0{margin:0 !important}
 .mt-sm-0,.my-sm-0{margin-top:0 !important}
@@ -1894,6 +1906,8 @@ to{background-position:0 0}
 .ml-xl-auto,.mx-xl-auto{margin-left:auto !important}
 }
 
+.text-center { text-align:center !important }
+
 @media(min-width:576px){.text-sm-left{text-align:left !important}
 .text-sm-right{text-align:right !important}
 .text-sm-center{text-align:center !important}
@@ -1914,6 +1928,8 @@ to{background-position:0 0}
 .text-xl-center{text-align:center !important}
 }
 
+.text-capitalize { text-transform:capitalize !important }
+
 @media print { *,::after,::before{text-shadow:none !important;box-shadow:none !important}
 
 abbr[title]::after { content:" (" attr(title) ")" }
@@ -1930,7 +1946,9 @@ h2, h3 { page-break-after:avoid }
 
 @page{size:a3}
 
-body{min-width:992px !important} }
+body{min-width:992px !important}
+
+.container { min-width:992px !important } }
 
 @media(min-width:1500px) and (max-width:1950px){.itc-carousel-section .carousel-indicators{left:0;justify-content:flex-start;margin-left:85px;margin-right:unset}
 }
@@ -2090,6 +2108,22 @@ body{padding-top:78px !important}
 .search-block{max-width:300px;position:relative;right:-60px;top:unset;transform:unset}
 }
 
+.itc-how-shift { background:#FFEDD6;display:flex;flex-direction:row;@media(max-width:767.98px){flex-direction:column}
+& .left-image-div{width:100%;& img{width:100%;height:100%}
+}
+& .read-more{padding:22px 30px;& .read-more-text{text-align:center;max-width:450px;margin:0 auto}
+& .how-shift-button{display:flex;justify-content:center;margin-top:40px;& a{background-color:var(--bg-dark) !important;padding:15px 66px;color:var(--color-light);border:transparent;border-radius:28px;font-weight:700;border-radius:28px}
+}
+}
+@media(max-width:767.98px){text-align:center}
+ }
+
+.itc-how-shift .itc-health-goal-wrapper { background-color:#2d2119 }
+
+.itc-how-shift h1 { padding-bottom:.5rem !important }
+
+.itc-how-shift p { margin:0 auto }
+
 @media(max-width:767.98px){.itc-how-shift .itc-health-goal-wrapper img{width:83px}
 .kitchens-of-india .itc-how-shift h1,.kitchens-of-india .itc-how-shift .read-more-text h2{font-size:1.5rem}
 }
@@ -2106,6 +2140,9 @@ body{padding-top:78px !important}
 @media(max-width:370px){.who-we-are-section h1{font-size:44vw}
 .who-we-are-section h3{margin-top:-64px}
 }
+
+.itc-health-goal-wrapper { display:flex;justify-content:center;align-items:center;border-radius:180%;min-height:unset !important;min-width:unset !important;align-items:center;background-color:var(--color-light);picture{height:158px;width:158px}
+ }
 
 @media(max-width:767.98px){.itc-health-goal-wrapper img{height:73px;width:73px}
 .itc-health-goal-wrapper{picture{height:128px;width:128px}
@@ -2159,6 +2196,8 @@ body{padding-top:78px !important}
 @font-face{font-family:'Urbanist';src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fkitchensofindia.com%2Fclientlib-rightshift%2Fresources%2Ffonts%2FUrbanist-SemiBold.woff2') format('woff2'),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fkitchensofindia.com%2Fclientlib-rightshift%2Fresources%2Ffonts%2FUrbanist-SemiBold.woff') format('woff');font-weight:600;font-style:normal;font-display:swap}
 
 @font-face{font-family:'Paytone One';src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fkitchensofindia.com%2Fclientlib-rightshift%2Fresources%2Ffonts%2FPaytoneOne-Regular.woff2') format('woff2'),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fkitchensofindia.com%2Fclientlib-rightshift%2Fresources%2Ffonts%2FPaytoneOne-Regular.woff') format('woff'),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fkitchensofindia.com%2Fclientlib-rightshift%2Fresources%2Ffonts%2FaytoneOne-Regular.ttf') format('truetype'),url('clientlib-rightshift/resources/fonts/PaytoneOne-Regular.svg#PaytoneOne-Regular') format('svg');font-weight:normal;font-style:normal;font-display:swap}
+
+.itc-health-goal-wrapper { display:flex;justify-content:center;border-radius:180%;min-height:160px;min-width:158px;background-color:var(--color-light) }
 
 @media(max-width:1350px){.itc-right-shift-wrapper div:last-of-type{margin-left:461px !important}
 }
@@ -2224,9 +2263,13 @@ body{padding-top:78px !important}
 
 body{font-family:var(--urbanist-font);padding-top:92px}
 
+.container { max-width:1470px;width:100%;padding:0;margin:0 auto }
+
 h1, h2, h3, h4, h5, h6 { font-family:'Paytone One' }
 
 p { font-weight:400 }
+
+span.cmp-link__screen-reader-only { display:none }
 
 #rs-video-model { overflow-y:hidden;margin-top:0 !important }
 
@@ -2321,6 +2364,8 @@ nav li.cmp-breadcrumb__item+li.cmp-breadcrumb__item::before{content:"<" !importa
 .itc-slick-slider .slick-slide:last-child{margin-right:0 !important}
 }
 
+.readMore { text-align:center;display:block }
+
 @media(max-width:767.98px){.itc-calculator-section{padding:10px !important}
 .itc-slick-slider.who-we-are-section.who-we .card-frame-1{top:-129px;left:-98px;width:371px !important;max-width:unset;height:unset !important;transform:rotate(-4deg)}
 .who-we-are-section sup{top:-107px;left:3px !important;font-size:35px !important}
@@ -2330,6 +2375,12 @@ nav li.cmp-breadcrumb__item+li.cmp-breadcrumb__item::before{content:"<" !importa
 .card-frame{position:absolute;top:-35px;width:80% !important;height:96% !important}
 .itc-slick-slider.who-we-are-section .card img{width:234px !important}
 }
+
+.why-shift-wrapper { max-width:700px;margin:0 auto;& .image-desc{max-width:200px;@media(max-width:767px){max-width:210px}
+}
+& .itc-health-goal-wrapper{margin:0 auto}
+& .image-label{text-decoration:none;color:#000;font-weight:500;font-size:16px}
+ }
 
 @media(max-width:991.98px){.who-we-are-section .col-3{max-width:100%;width:100%}
 .who-we-are-section h3{font-size:1.8rem !important}
@@ -2348,6 +2399,8 @@ nav li.cmp-breadcrumb__item+li.cmp-breadcrumb__item::before{content:"<" !importa
 .redirection p{font-size:8px}
 .who-we-are-section h3{margin-top:-80px}
 }
+
+.justify-content-evenly { justify-content:space-evenly !important }
 
 @charset 'UTF-8';
 
@@ -2386,9 +2439,6 @@ ul::-webkit-scrollbar{display:none}
 .itc-carousel h2{padding-top:0}
 .itc-carousel{padding-top:0 !important}
 }
-
-.padding-80 { padding-top:80px;@media(max-width:767.98px){padding-top:40px}
- }
 
 body{color:#2d2119}
 

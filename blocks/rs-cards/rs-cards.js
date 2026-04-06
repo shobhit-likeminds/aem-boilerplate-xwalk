@@ -5,81 +5,83 @@ export default function decorate(block) {
   const rowDiv = document.createElement('div');
   rowDiv.classList.add('row');
 
-  [...block.children].forEach((row) => {
+  [...block.children].forEach((cardRow) => {
     const colDiv = document.createElement('div');
-    moveInstrumentation(row, colDiv);
     colDiv.classList.add('col-xl-4', 'col-lg-6', 'pb-md-0', 'pb-4', 'row-gap-4', 'koi-rscard-padding');
+    moveInstrumentation(cardRow, colDiv);
 
-    const cardDiv = document.createElement('div');
-    cardDiv.classList.add('card', 'rs-card');
-
-    const cardBodyDiv = document.createElement('div');
-    cardBodyDiv.classList.add('card-body');
+    const card = document.createElement('div');
+    card.classList.add('card', 'rs-card');
 
     let imageEl = null;
-    let titleEl = null;
-    let descriptionEl = null;
-    let linkEl = null; // To capture the link if present in the original HTML
+    let altText = '';
+    let titleText = '';
+    let descriptionHtml = null;
 
-    // Find cells based on their content type as per BlockJson and EDS structure
-    const cells = [...row.children];
-    imageEl = cells[0]?.querySelector('picture'); // First cell is image
-    titleEl = cells[1]; // Second cell is title
-    descriptionEl = cells[2]; // Third cell is description
+    const cells = [...cardRow.children];
 
-    // Check for an anchor tag within the description cell or any other cell if it exists
-    // based on original HTML, it's inside card-body, but not explicitly in a cell in the block structure
-    // We'll look for it after the main elements are processed.
+    // Content detection for cells
+    const imageCell = cells.find((cell) => cell.querySelector('picture'));
+    const descriptionCell = cells.find((cell) => cell.querySelector('p'));
+    // Filter out image and description cells to find title and alt text
+    const textCells = cells.filter((cell) => !cell.querySelector('picture') && !cell.querySelector('p'));
+
+    // Assuming order for alt and title among remaining text cells, or more robust detection if needed
+    // Based on BlockJson: Image, Alt Text, Title, Description
+    // So, textCells[0] would be Alt Text, textCells[1] would be Title
+    // This assumes the order is consistent after filtering out image and description
+    if (imageCell) {
+      const picture = imageCell.querySelector('picture');
+      if (picture) {
+        imageEl = picture.querySelector('img');
+      }
+    }
+
+    if (textCells.length > 0) {
+      // Find alt text - it's the text content of the cell that is not the title
+      // This is a bit fragile if alt text and title can be empty or have similar content.
+      // A more robust solution might involve checking the original HTML structure for clues,
+      // or if the alt text is consistently shorter/longer than the title.
+      // For now, assuming the order from BlockJson (Alt Text then Title)
+      altText = textCells[0]?.textContent.trim() || '';
+      titleText = textCells[1]?.textContent.trim() || '';
+    }
+
+    if (descriptionCell) {
+      descriptionHtml = descriptionCell.querySelector('p');
+    }
 
     if (imageEl) {
-      const img = imageEl.querySelector('img');
-      const newImg = document.createElement('img');
-      newImg.classList.add('w-100', 'kitchens-image'); // Using kitchens-image as per original HTML
-      newImg.src = img.src;
-      newImg.alt = img.alt;
-      newImg.loading = 'lazy';
-      newImg.style.display = 'block'; // Ensure it's visible if it's the main image
-
-      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-      moveInstrumentation(img, optimizedPic.querySelector('img'));
-      cardDiv.append(optimizedPic); // Append the optimized picture directly
+      const optimizedPic = createOptimizedPicture(imageEl.src, altText, false, [{ width: '750' }]);
+      moveInstrumentation(imageEl, optimizedPic.querySelector('img'));
+      optimizedPic.querySelector('img').classList.add('w-100', 'kitchens-image');
+      card.append(optimizedPic);
     }
 
-    if (titleEl) {
-      const h5Title = document.createElement('h5');
-      h5Title.classList.add('blog-card-title'); // Using blog-card-title as per original HTML
-      h5Title.style.display = 'block';
-      moveInstrumentation(titleEl, h5Title);
-      while (titleEl.firstChild) h5Title.append(titleEl.firstChild);
-      cardBodyDiv.append(h5Title);
+    const cardBody = document.createElement('div');
+    cardBody.classList.add('card-body');
+
+    const title = document.createElement('h5');
+    title.classList.add('blog-card-title');
+    title.textContent = titleText;
+    cardBody.append(title);
+
+    if (descriptionHtml) {
+      const description = document.createElement('h5');
+      description.classList.add('card-title'); // This class is from original HTML
+      moveInstrumentation(descriptionHtml, description);
+      description.append(descriptionHtml);
+      cardBody.append(description);
     }
 
-    if (descriptionEl) {
-      const h5Description = document.createElement('h5');
-      h5Description.classList.add('card-title'); // Using card-title as per original HTML
-      moveInstrumentation(descriptionEl, h5Description);
-      while (descriptionEl.firstChild) h5Description.append(descriptionEl.firstChild);
-      cardBodyDiv.append(h5Description);
-    }
-
-    // Check for the interactive link from the original HTML
-    const originalLink = row.querySelector('a[id="explore-btn-hide-id"]');
-    if (originalLink) {
-      linkEl = originalLink.cloneNode(true); // Clone to avoid moving it from original row
-      linkEl.style.display = 'block'; // Ensure it's visible if it's meant to be
-      cardBodyDiv.prepend(linkEl); // Prepend it before the title as in original HTML
-      linkEl.addEventListener('click', (e) => {
-        // Add any specific interactive behavior here if needed
-        // For now, it just follows the link.
-        console.log('Link clicked:', linkEl.href);
-      });
-    }
-
-
-    cardDiv.append(cardBodyDiv);
-    colDiv.append(cardDiv);
+    card.append(cardBody);
+    colDiv.append(card);
     rowDiv.append(colDiv);
   });
+
+  const tabPara = document.createElement('div');
+  tabPara.classList.add('tab-para');
+  rowDiv.append(tabPara);
 
   block.textContent = '';
   block.append(rowDiv);

@@ -2,31 +2,26 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const wrapper = document.createElement('div');
-  wrapper.classList.add('container');
+  const carouselWrapper = document.createElement('div');
+  carouselWrapper.classList.add('carousel', 'slide', 'itc-club-carousel');
+  carouselWrapper.id = 'carousel';
 
-  const carousel = document.createElement('div');
-  carousel.classList.add('carousel', 'slide', 'itc-club-carousel');
-  carousel.id = 'carousel';
-  // data-ride="carousel" is for Bootstrap JS, which EDS does not load.
-  // We'll implement the carousel logic with event listeners.
-
-  const carouselShift = document.createElement('div');
-  carouselShift.classList.add('itc-carousel-shift');
+  const itcCarouselShift = document.createElement('div');
+  itcCarouselShift.classList.add('itc-carousel-shift');
+  carouselWrapper.append(itcCarouselShift);
 
   const carouselInner = document.createElement('div');
   carouselInner.classList.add('carousel-inner');
+  itcCarouselShift.append(carouselInner);
 
   const carouselIndicators = document.createElement('ol');
   carouselIndicators.classList.add('carousel-indicators');
+  carouselInner.append(carouselIndicators);
 
-  const carouselItems = [...block.children];
-
-  carouselItems.forEach((row, index) => {
+  [...block.children].forEach((row, index) => {
     // Create indicator
     const indicator = document.createElement('li');
-    // data-target and data-slide-to are for Bootstrap JS, which EDS does not load.
-    // We'll implement the carousel logic with event listeners.
+    indicator.setAttribute('data-target', '#carousel');
     indicator.setAttribute('data-slide-to', index);
     if (index === 0) {
       indicator.classList.add('active');
@@ -41,77 +36,75 @@ export default function decorate(block) {
     }
     moveInstrumentation(row, carouselItem);
 
-    const itemContentWrapper = document.createElement('div');
-    itemContentWrapper.classList.add('d-md-flex', 'd-block');
+    const flexWrapper = document.createElement('div');
+    flexWrapper.classList.add('d-md-flex', 'd-block');
+    carouselItem.append(flexWrapper);
 
-    let imageCell;
-    let altTextCell;
-    let titleCell;
-    let descriptionCell;
+    let imageEl = null;
+    let altText = '';
+    let titleText = '';
+    let descriptionEl = null;
+    let descriptionCell = null; // Store the cell for description content
 
     const cells = [...row.children];
-    imageCell = cells.find((cell) => cell.querySelector('picture'));
-    // Alt text is the cell immediately following the image, and it's plain text.
-    // Title is the cell immediately following alt text, and it's plain text.
-    // Description is the cell immediately following title, and it contains a <p>.
-    // This assumes a strict order and content type for these cells.
-    if (imageCell) {
-      const imageCellIndex = cells.indexOf(imageCell);
-      if (imageCellIndex !== -1 && cells[imageCellIndex + 1] && !cells[imageCellIndex + 1].querySelector('picture') && !cells[imageCellIndex + 1].querySelector('p')) {
-        altTextCell = cells[imageCellIndex + 1];
-      }
-      if (imageCellIndex !== -1 && cells[imageCellIndex + 2] && !cells[imageCellIndex + 2].querySelector('picture') && !cells[imageCellIndex + 2].querySelector('p')) {
-        titleCell = cells[imageCellIndex + 2];
-      }
-      if (imageCellIndex !== -1 && cells[imageCellIndex + 3] && cells[imageCellIndex + 3].querySelector('p')) {
-        descriptionCell = cells[imageCellIndex + 3];
-      }
-    }
 
+    // Find image, alt text, title, and description cells based on content
+    const imageCell = cells.find((cell) => cell.querySelector('picture'));
     if (imageCell) {
       const picture = imageCell.querySelector('picture');
       const img = picture ? picture.querySelector('img') : null;
       if (img) {
-        const optimizedPic = createOptimizedPicture(img.src, altTextCell?.textContent.trim() || img.alt, false, [{ width: '750' }]);
-        optimizedPic.classList.add('carousel__img', 'd-block', 'w-md-50', 'w-100');
-        moveInstrumentation(img, optimizedPic.querySelector('img'));
-        itemContentWrapper.append(optimizedPic);
+        imageEl = img;
+        altText = img.alt;
       }
     }
 
-    const rightWrapper = document.createElement('div');
-    rightWrapper.classList.add('w-md-50', 'w-100', 'itc-club-right-wrapper', 'read-more');
-
+    // Find title and description. Alt text is derived from the image.
+    // Assuming order is image, alt text, title, description.
+    // We need to be careful with textContent.trim() === altText as altText can be empty.
+    // Better to find cells based on their content type.
+    const titleCell = cells.find((cell) =>
+      !cell.querySelector('picture') && !cell.querySelector('p') && cell.textContent.trim() !== altText && cell.textContent.trim()
+    );
     if (titleCell) {
-      const title = document.createElement('h2');
-      title.classList.add('carousel-inner__title');
-      moveInstrumentation(titleCell, title);
-      while (titleCell.firstChild) title.append(titleCell.firstChild);
-      rightWrapper.append(title);
+      titleText = titleCell.textContent.trim();
+    }
+
+    descriptionCell = cells.find((cell) => cell.querySelector('p'));
+
+    if (imageEl) {
+      const imgTag = document.createElement('img');
+      imgTag.loading = 'lazy';
+      imgTag.src = imageEl.src;
+      imgTag.alt = altText;
+      imgTag.classList.add('carousel__img', 'd-block', 'w-md-50', 'w-100');
+      flexWrapper.append(imgTag);
     }
 
     if (descriptionCell) {
-      const description = document.createElement('p');
-      description.classList.add('carousel-inner__description');
-      moveInstrumentation(descriptionCell, description);
-      while (descriptionCell.firstChild) description.append(descriptionCell.firstChild);
-      rightWrapper.append(description);
+      descriptionEl = document.createElement('div');
+      descriptionEl.classList.add('w-md-50', 'w-100', 'itc-club-right-wrapper', 'read-more');
+      const h2 = document.createElement('h2');
+      h2.classList.add('carousel-inner__title');
+      h2.textContent = titleText;
+      descriptionEl.append(h2);
+      const p = document.createElement('p');
+      p.classList.add('carousel-inner__description');
+      moveInstrumentation(descriptionCell, p);
+      while (descriptionCell.firstChild) p.append(descriptionCell.firstChild);
+      descriptionEl.append(p);
+      flexWrapper.append(descriptionEl);
     }
 
-    itemContentWrapper.append(rightWrapper);
-    carouselItem.append(itemContentWrapper);
     carouselInner.append(carouselItem);
   });
 
-  carouselShift.append(carouselInner);
-
-  // Carousel controls
+  // Previous button
   const prevButton = document.createElement('button');
   prevButton.classList.add('carousel-control-prev');
   prevButton.type = 'button';
-  prevButton.addEventListener('click', () => {
-    navigateCarousel(-1);
-  });
+  prevButton.setAttribute('aria-label', 'Previous'); // Add aria-label for accessibility
+  itcCarouselShift.append(prevButton);
 
   const prevIcon = document.createElement('span');
   prevIcon.classList.add('carousel-control-prev-icon');
@@ -122,14 +115,13 @@ export default function decorate(block) {
   prevSrOnly.classList.add('sr-only');
   prevSrOnly.textContent = 'Previous';
   prevButton.append(prevSrOnly);
-  carouselShift.append(prevButton);
 
+  // Next button
   const nextButton = document.createElement('button');
   nextButton.classList.add('carousel-control-next');
   nextButton.type = 'button';
-  nextButton.addEventListener('click', () => {
-    navigateCarousel(1);
-  });
+  nextButton.setAttribute('aria-label', 'Next'); // Add aria-label for accessibility
+  itcCarouselShift.append(nextButton);
 
   const nextIcon = document.createElement('span');
   nextIcon.classList.add('carousel-control-next-icon');
@@ -140,42 +132,45 @@ export default function decorate(block) {
   nextSrOnly.classList.add('sr-only');
   nextSrOnly.textContent = 'Next';
   nextButton.append(nextSrOnly);
-  carouselShift.append(nextButton);
 
-  carousel.append(carouselIndicators, carouselShift);
-  wrapper.append(carousel);
-
-  block.textContent = '';
-  block.append(wrapper);
-
-  // Carousel navigation logic
+  // Add event listeners for carousel functionality
   let currentIndex = 0;
+  const carouselItems = [...carouselInner.querySelectorAll('.carousel-item')];
+  const indicators = [...carouselIndicators.querySelectorAll('li')];
   const totalItems = carouselItems.length;
 
   function updateCarousel() {
-    [...carouselInner.children].forEach((item, i) => {
+    carouselItems.forEach((item, i) => {
       item.classList.remove('active');
-      if (i === currentIndex) {
-        item.classList.add('active');
-      }
+      indicators[i].classList.remove('active');
     });
-    [...carouselIndicators.children].forEach((indicator, i) => {
-      indicator.classList.remove('active');
-      if (i === currentIndex) {
-        indicator.classList.add('active');
-      }
-    });
+    carouselItems[currentIndex].classList.add('active');
+    indicators[currentIndex].classList.add('active');
   }
 
-  function navigateCarousel(direction) {
-    currentIndex = (currentIndex + direction + totalItems) % totalItems;
+  prevButton.addEventListener('click', () => {
+    currentIndex = (currentIndex - 1 + totalItems) % totalItems;
     updateCarousel();
-  }
+  });
 
-  [...carouselIndicators.children].forEach((indicator, index) => {
+  nextButton.addEventListener('click', () => {
+    currentIndex = (currentIndex + 1) % totalItems;
+    updateCarousel();
+  });
+
+  indicators.forEach((indicator, index) => {
     indicator.addEventListener('click', () => {
       currentIndex = index;
       updateCarousel();
     });
   });
+
+  carouselWrapper.querySelectorAll('picture > img').forEach((img) => {
+    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+    moveInstrumentation(img, optimizedPic.querySelector('img'));
+    img.closest('picture').replaceWith(optimizedPic);
+  });
+
+  block.textContent = '';
+  block.append(carouselWrapper);
 }

@@ -42,13 +42,14 @@
       "make-right-shift",
       "cmp-text",
       "rs-cards",
-      "itc-footer-section"
+      "itc-footer-section",
+      "itc-how-shift"
     ]
   },
   {
     "id": "banner-carousel",
     "components": [
-      "banner"
+      "banner-slide"
     ]
   },
   {
@@ -146,7 +147,7 @@
     "id": "itc-footer-section",
     "components": [
       "footer-link",
-      "footer-list-item",
+      "footer-nav-item",
       "social-link"
     ]
   },
@@ -155,6 +156,12 @@
     "components": [
       "navigation-item",
       "country-option"
+    ]
+  },
+  {
+    "id": "itc-how-shift",
+    "components": [
+      "why-shift-item"
     ]
   },
   {
