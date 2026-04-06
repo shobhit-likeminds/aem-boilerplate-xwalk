@@ -49,7 +49,7 @@
   {
     "id": "banner-carousel",
     "components": [
-      "banner-slide"
+      "banner-carousel-item"
     ]
   },
   {
@@ -147,7 +147,6 @@
     "id": "itc-footer-section",
     "components": [
       "footer-link",
-      "footer-nav-item",
       "social-link"
     ]
   },

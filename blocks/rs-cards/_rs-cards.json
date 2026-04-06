@@ -39,8 +39,8 @@
         {
           "component": "container",
           "item": "rs-card",
-          "label": "Rs Cards",
-          "name": "rs-cards"
+          "label": "Cards",
+          "name": "cards"
         }
       ]
     },
@@ -55,20 +55,14 @@
         },
         {
           "component": "text",
-          "label": "Image Alt Text",
-          "name": "alt",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Title",
-          "name": "title",
+          "label": "Blog Card Title",
+          "name": "blog-card-title",
           "valueType": "string"
         },
         {
           "component": "richtext",
-          "label": "Description",
-          "name": "description",
+          "label": "Card Title",
+          "name": "card-title",
           "valueType": "string"
         }
       ]

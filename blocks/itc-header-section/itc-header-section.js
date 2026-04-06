@@ -2,178 +2,145 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const [
-    logoImageRow,
-    logoLinkRow,
-    flagImageInRow,
-    flagImageUsaRow,
-    ...itemRows
-  ] = [...block.children];
+  const [logoImageRow, logoLinkRow, ...itemRows] = [...block.children];
 
-  // Use content detection for navigation items (2 cells: link, label)
-  const navigationItems = itemRows.filter((row) => row.children.length === 2);
-  // Use content detection for country options (4 cells: flag, name, code, url)
-  const countryOptions = itemRows.filter((row) => row.children.length === 4);
-
-  block.textContent = '';
+  const header = document.createElement('header');
+  header.classList.add('itc-header-section');
 
   const container = document.createElement('div');
   container.classList.add('container');
+  header.append(container);
 
   const nav = document.createElement('nav');
-  nav.classList.add(
-    'navbar',
-    'navbar-expand-xl',
-    'navbar-light',
-    'bg-light',
-    'px-xl-5',
-    'd-flex',
-    'justify-content-between',
-    'align-items-center',
-  );
+  nav.classList.add('navbar', 'navbar-expand-xl', 'navbar-light', 'bg-light', 'px-xl-5', 'd-flex', 'justify-content-between', 'align-items-center');
+  container.append(nav);
 
   const navbarToggler = document.createElement('button');
   navbarToggler.classList.add('navbar-toggler', 'collapsed');
   navbarToggler.type = 'button';
-  // Original HTML uses data-target and data-toggle, but we'll use classList.toggle for vanilla JS
   navbarToggler.setAttribute('aria-controls', 'navbarSupportedContent');
   navbarToggler.setAttribute('aria-expanded', 'false');
   navbarToggler.setAttribute('aria-label', 'Toggle navigation');
   const togglerIcon = document.createElement('span');
   togglerIcon.classList.add('navbar-toggler-icon');
   navbarToggler.append(togglerIcon);
+  nav.append(navbarToggler);
 
-  const dXlNoneDiv = document.createElement('div');
-  dXlNoneDiv.classList.add('d-xl-none');
-  dXlNoneDiv.innerHTML = '&nbsp;';
+  const dXlNone = document.createElement('div');
+  dXlNone.classList.add('d-xl-none');
+  dXlNone.innerHTML = '&nbsp;';
+  nav.append(dXlNone);
 
   const logoDiv = document.createElement('div');
   logoDiv.classList.add('logo', 'image');
+  nav.append(logoDiv);
 
-  const logoLink = logoLinkRow.querySelector('a');
-  const logoLinkHref = logoLink ? logoLink.href : '#';
-
-  const logoAnchor = document.createElement('a');
-  logoAnchor.classList.add('cmp-image__link');
-  logoAnchor.href = logoLinkHref;
-  logoAnchor.target = '_blank';
+  const logoLink = document.createElement('a');
+  logoLink.classList.add('cmp-image__link');
+  const logoHref = logoLinkRow.querySelector('a') ? logoLinkRow.querySelector('a').href : '#';
+  logoLink.href = logoHref;
+  logoLink.target = '_blank';
+  moveInstrumentation(logoLinkRow, logoLink);
 
   const logoPicture = logoImageRow.querySelector('picture');
   if (logoPicture) {
     const logoImg = logoPicture.querySelector('img');
-    const optimizedLogoPic = createOptimizedPicture(
-      logoImg.src,
-      logoImg.alt,
-      false,
-      [{ width: '131' }],
-    );
+    const optimizedLogoPic = createOptimizedPicture(logoImg.src, logoImg.alt, false, [{ width: '131' }]);
     moveInstrumentation(logoImg, optimizedLogoPic.querySelector('img'));
-    logoAnchor.append(optimizedLogoPic);
-  } else {
-    // Fallback if no picture element is found
-    const img = document.createElement('img');
-    img.classList.add('cmp-image__image', 'itc-logo-image');
-    logoAnchor.append(img);
+    logoLink.append(optimizedLogoPic);
   }
-
-  const screenReaderSpan = document.createElement('span');
-  screenReaderSpan.classList.add('cmp-link__screen-reader-only');
-  screenReaderSpan.textContent = 'opens in a new tab';
-  logoAnchor.append(screenReaderSpan);
-  logoDiv.append(logoAnchor);
+  logoDiv.append(logoLink);
 
   const navbarCollapse = document.createElement('div');
   navbarCollapse.classList.add('collapse', 'navbar-collapse', 'justify-content-center');
   navbarCollapse.id = 'navbarSupportedContent';
+  nav.append(navbarCollapse);
 
   const navItemNavigation = document.createElement('div');
   navItemNavigation.classList.add('nav-item', 'navigation');
+  navbarCollapse.append(navItemNavigation);
 
   const cmpNavigation = document.createElement('nav');
   cmpNavigation.classList.add('cmp-navigation');
   cmpNavigation.setAttribute('role', 'navigation');
+  navItemNavigation.append(cmpNavigation);
 
   const cmpNavigationGroup = document.createElement('ul');
   cmpNavigationGroup.classList.add('cmp-navigation__group');
+  cmpNavigation.append(cmpNavigationGroup);
 
+  const navigationItems = itemRows.filter((row) => {
+    const cells = [...row.children];
+    return cells.length === 2 && cells.some(cell => cell.querySelector('a')); // Navigation items have a link
+  });
   navigationItems.forEach((row) => {
     const li = document.createElement('li');
-    moveInstrumentation(row, li);
     li.classList.add('cmp-navigation__item', 'cmp-navigation__item--level-0');
+    moveInstrumentation(row, li);
 
-    // Content detection for navigation-item cells
-    const cells = [...row.children];
-    const linkCell = cells.find(cell => cell.querySelector('a'));
-    const labelCell = cells.find(cell => !cell.querySelector('a')); // Assuming label is plain text
-
-    const foundLink = linkCell ? linkCell.querySelector('a') : null;
     const link = document.createElement('a');
     link.classList.add('cmp-navigation__item-link');
-    if (foundLink) link.href = foundLink.href;
-    if (labelCell) {
-      while (labelCell.firstChild) link.append(labelCell.firstChild);
+    const linkEl = row.querySelector('a');
+    if (linkEl) {
+      link.href = linkEl.href;
+      link.textContent = linkEl.textContent;
+    } else {
+      // Fallback if no <a> tag, though model implies it should exist
+      link.textContent = row.textContent.trim();
     }
     li.append(link);
     cmpNavigationGroup.append(li);
   });
 
-  cmpNavigation.append(cmpNavigationGroup);
-  navItemNavigation.append(cmpNavigation);
-  navbarCollapse.append(navItemNavigation);
-
   const headerSection = document.createElement('div');
   headerSection.classList.add('header-section', 'd-flex', 'align-items-center', 'justify-content-end');
+  navbarCollapse.append(headerSection);
 
-  const searchIconCountrySelectorTrigger = document.createElement('div');
-  searchIconCountrySelectorTrigger.classList.add(
-    'search-icon',
-    'country-selector-trigger',
-    'd-flex',
-    'align-items-center',
-  );
+  const countrySelectorTrigger = document.createElement('div');
+  countrySelectorTrigger.classList.add('search-icon', 'country-selector-trigger', 'd-flex', 'align-items-center');
+  headerSection.append(countrySelectorTrigger);
 
-  const countryCodeSpan = document.createElement('span');
-  countryCodeSpan.classList.add('country-code');
-  countryCodeSpan.textContent = 'IN'; // Default to IN as per original HTML
+  const countryCode = document.createElement('span');
+  countryCode.classList.add('country-code');
+  countryCode.textContent = 'IN'; // Default
+  countrySelectorTrigger.append(countryCode);
 
-  const flagImgIn = flagImageInRow.querySelector('img');
-  const headerCountryFlag = document.createElement('img');
-  headerCountryFlag.classList.add('header-country-flag');
-  if (flagImgIn) {
-    headerCountryFlag.src = flagImgIn.src;
-    headerCountryFlag.alt = flagImgIn.alt;
-  } else {
-    headerCountryFlag.alt = 'flag';
-  }
+  const countryFlag = document.createElement('img');
+  countryFlag.classList.add('header-country-flag');
+  countryFlag.src = '/content/dam/aemigrate/uploaded-folder/image/india-1-fmt-webp-alpha.webp'; // Default
+  countryFlag.alt = 'flag';
+  countrySelectorTrigger.append(countryFlag);
 
   const dropdownIcon = document.createElement('img');
+  dropdownIcon.classList.add('dropdown-icon');
   dropdownIcon.src = '/content/dam/aemigrate/uploaded-folder/image/dropdown-icon.png';
   dropdownIcon.alt = 'dropdown-icon';
-  dropdownIcon.classList.add('dropdown-icon');
-
-  searchIconCountrySelectorTrigger.append(countryCodeSpan, headerCountryFlag, dropdownIcon);
-  headerSection.append(searchIconCountrySelectorTrigger);
-  navbarCollapse.append(headerSection);
+  countrySelectorTrigger.append(dropdownIcon);
 
   const itcHeaderIconList = document.createElement('div');
   itcHeaderIconList.classList.add('itc-header-icon-list');
+  nav.append(itcHeaderIconList);
 
   const searchBlock = document.createElement('div');
   searchBlock.id = 'searchBlock';
   searchBlock.classList.add('search-block', 'hidden');
+  itcHeaderIconList.append(searchBlock);
 
   const searchBox = document.createElement('div');
   searchBox.id = 'searchBox';
   searchBox.classList.add('search-box');
+  searchBlock.append(searchBox);
 
   const searchContainer = document.createElement('div');
   searchContainer.id = 'searchContainer';
   searchContainer.classList.add('search-container', 'hidden');
+  searchBox.append(searchContainer);
 
   const searchInput = document.createElement('input');
   searchInput.type = 'text';
   searchInput.id = 'searchInput';
   searchInput.placeholder = 'Search';
+  searchContainer.append(searchInput);
 
   const searchButton = document.createElement('button');
   searchButton.id = 'searchButton';
@@ -182,245 +149,207 @@ export default function decorate(block) {
   searchButtonImg.src = '/content/dam/aemigrate/uploaded-folder/image/search-icon.png';
   searchButtonImg.alt = 'Search icon';
   searchButton.append(searchButtonImg);
-
-  searchContainer.append(searchInput, searchButton);
+  searchContainer.append(searchButton);
 
   const closeButton = document.createElement('img');
   closeButton.id = 'closeButton';
   closeButton.loading = 'lazy';
-  closeButton.src = '/content/dam/aemigrate/uploaded-folder/image/1775477576567.svg+xml';
+  closeButton.src = '/content/dam/aemigrate/uploaded-folder/image/1775484439305.svg+xml';
   closeButton.alt = 'Close icon';
-
-  searchBox.append(searchContainer, closeButton);
+  searchBox.append(closeButton);
 
   const searchResults = document.createElement('div');
   searchResults.id = 'searchResults';
   searchResults.classList.add('search-results', 'hidden');
+  searchBlock.append(searchResults);
 
-  const popularSuggestionsH4 = document.createElement('h4');
-  popularSuggestionsH4.classList.add('resultList');
-  popularSuggestionsH4.textContent = 'Popular Suggestions';
-  const suggestionsListUl = document.createElement('ul');
-  suggestionsListUl.id = 'suggestionsList';
+  const popularSuggestionsTitle = document.createElement('h4');
+  popularSuggestionsTitle.classList.add('resultList');
+  popularSuggestionsTitle.textContent = 'Popular Suggestions';
+  searchResults.append(popularSuggestionsTitle);
 
-  const pagesH4 = document.createElement('h4');
-  pagesH4.classList.add('resultList');
-  pagesH4.textContent = 'Pages';
-  const productsListUl = document.createElement('ul');
-  productsListUl.id = 'productsList';
-  productsListUl.classList.add('products');
+  const suggestionsList = document.createElement('ul');
+  suggestionsList.id = 'suggestionsList';
+  searchResults.append(suggestionsList);
+
+  const pagesTitle = document.createElement('h4');
+  pagesTitle.classList.add('resultList');
+  pagesTitle.textContent = 'Pages';
+  searchResults.append(pagesTitle);
+
+  const productsList = document.createElement('ul');
+  productsList.id = 'productsList';
+  productsList.classList.add('products');
+  searchResults.append(productsList);
 
   const viewAllButton = document.createElement('button');
   viewAllButton.id = 'viewAllButton';
   viewAllButton.textContent = 'VIEW ALL ITEMS';
+  searchResults.append(viewAllButton);
 
-  searchResults.append(
-    popularSuggestionsH4,
-    suggestionsListUl,
-    pagesH4,
-    productsListUl,
-    viewAllButton,
-  );
-  searchBlock.append(searchBox, searchResults);
+  const searchIconLink = document.createElement('a');
+  searchIconLink.classList.add('nav-link');
+  itcHeaderIconList.append(searchIconLink);
 
-  const searchNavLink = document.createElement('a');
-  searchNavLink.classList.add('nav-link');
   const searchIconImg = document.createElement('img');
   searchIconImg.loading = 'lazy';
   searchIconImg.id = 'searchIcon';
   searchIconImg.src = '/content/dam/aemigrate/uploaded-folder/image/search-icon.png';
   searchIconImg.alt = 'Search icon';
-  const searchSpan = document.createElement('span');
-  searchSpan.classList.add('d-block');
-  searchSpan.textContent = 'Search';
-  searchNavLink.append(searchIconImg, searchSpan);
+  searchIconLink.append(searchIconImg);
 
-  const navItemLi = document.createElement('li');
-  navItemLi.classList.add('nav-item');
-  const emptyNavLink = document.createElement('a');
-  emptyNavLink.classList.add('nav-link');
-  navItemLi.append(emptyNavLink);
+  const searchIconSpan = document.createElement('span');
+  searchIconSpan.classList.add('d-block');
+  searchIconSpan.textContent = 'Search';
+  searchIconLink.append(searchIconSpan);
 
-  itcHeaderIconList.append(searchBlock, searchNavLink, navItemLi);
-
-  nav.append(
-    navbarToggler,
-    dXlNoneDiv,
-    logoDiv,
-    navbarCollapse,
-    itcHeaderIconList,
-  );
-  container.append(nav);
-  block.append(container);
-
-  // Modal Structure
-  const countryModal = document.createElement('div');
-  countryModal.classList.add('modal', 'fade', 'itc-country-selector');
-  countryModal.id = 'countryModal';
-  countryModal.setAttribute('tabindex', '-1');
-  countryModal.setAttribute('role', 'dialog');
-  countryModal.setAttribute('aria-labelledby', 'countryModalLabel');
-  countryModal.setAttribute('aria-modal', 'true');
+  // Country Modal
+  const modal = document.createElement('div');
+  modal.classList.add('modal', 'fade', 'itc-country-selector');
+  modal.id = 'countryModal';
+  modal.setAttribute('tabindex', '-1');
+  modal.setAttribute('role', 'dialog');
+  modal.setAttribute('aria-labelledby', 'countryModalLabel');
+  modal.setAttribute('aria-modal', 'true');
+  header.append(modal);
 
   const modalDialog = document.createElement('div');
   modalDialog.classList.add('modal-dialog', 'modal-dialog-centered');
   modalDialog.setAttribute('role', 'document');
+  modal.append(modalDialog);
 
   const modalContent = document.createElement('div');
   modalContent.classList.add('modal-content');
+  modalDialog.append(modalContent);
 
   const modalHeader = document.createElement('div');
   modalHeader.classList.add('modal-header', 'border-0', 'text-center');
+  modalContent.append(modalHeader);
 
-  const modalHeaderW100 = document.createElement('div');
-  modalHeaderW100.classList.add('w-100');
+  const modalHeaderWrapper = document.createElement('div');
+  modalHeaderWrapper.classList.add('w-100');
+  modalHeader.append(modalHeaderWrapper);
 
   const modalTitle = document.createElement('h2');
   modalTitle.classList.add('modal-title');
   modalTitle.innerHTML = 'SELECT YOUR <br>KITCHENS OF INDIA';
+  modalHeaderWrapper.append(modalTitle);
 
   const experienceText = document.createElement('p');
   experienceText.classList.add('experience-text');
   experienceText.textContent = 'Experience';
-
-  modalHeaderW100.append(modalTitle, experienceText);
-  modalHeader.append(modalHeaderW100);
+  modalHeaderWrapper.append(experienceText);
 
   const modalBody = document.createElement('div');
   modalBody.classList.add('modal-body');
+  modalContent.append(modalBody);
 
   const countryOptionsDiv = document.createElement('div');
-  countryOptionsDiv.classList.add(
-    'country-options',
-    'd-flex',
-    'justify-content-center',
-    'align-items-center',
-  );
-
-  countryOptions.forEach((row) => {
-    // Content detection for country-option cells
-    const cells = [...row.children];
-    const flagCell = cells.find(cell => cell.querySelector('picture'));
-    const urlCell = cells.find(cell => cell.querySelector('a'));
-    const nameCell = cells.find(cell => !cell.querySelector('picture') && !cell.querySelector('a') && cell.textContent.trim().length > 0); // Assuming name is plain text
-    const codeCell = cells.find(cell => !cell.querySelector('picture') && !cell.querySelector('a') && cell !== nameCell); // Assuming code is also plain text and distinct from name
-
-    const countryOptionDiv = document.createElement('div');
-    countryOptionDiv.classList.add(
-      'country-option',
-      'mx-3',
-      'd-flex',
-      'flex-column',
-      'align-items-center',
-    );
-    if (codeCell) countryOptionDiv.setAttribute('data-country', codeCell.textContent.toLowerCase());
-    const foundUrl = urlCell ? urlCell.querySelector('a') : null;
-    if (foundUrl) countryOptionDiv.setAttribute('data-url', foundUrl.href);
-
-    const countryFlagPicture = flagCell ? flagCell.querySelector('picture') : null;
-    const countryFlagImg = document.createElement('img');
-    countryFlagImg.classList.add('country-flag');
-    countryFlagImg.alt = `${nameCell ? nameCell.textContent : ''} Flag`;
-    if (countryFlagPicture) {
-      const originalImg = countryFlagPicture.querySelector('img');
-      countryFlagImg.src = originalImg.src;
-      countryFlagImg.alt = originalImg.alt;
-    }
-
-    const countryNameP = document.createElement('p');
-    countryNameP.classList.add('country-name');
-    if (nameCell) countryNameP.textContent = nameCell.textContent;
-
-    countryOptionDiv.append(countryFlagImg, countryNameP);
-    countryOptionsDiv.append(countryOptionDiv);
-  });
-
+  countryOptionsDiv.classList.add('country-options', 'd-flex', 'justify-content-center', 'align-items-center');
   modalBody.append(countryOptionsDiv);
-  modalContent.append(modalHeader, modalBody);
-  modalDialog.append(modalContent);
-  countryModal.append(modalDialog);
-  block.append(countryModal);
 
-  // Event Listeners for interactivity
-  navbarToggler.addEventListener('click', () => {
-    navbarCollapse.classList.toggle('show');
-    navbarToggler.classList.toggle('collapsed');
-    const isExpanded = navbarToggler.classList.contains('collapsed') ? 'false' : 'true';
-    navbarToggler.setAttribute('aria-expanded', isExpanded);
+  const countryOptions = itemRows.filter((row) => {
+    const cells = [...row.children];
+    return cells.length === 3 && cells.some(cell => cell.querySelector('picture')) && cells.some(cell => cell.querySelector('a')); // Country options have picture, name, and URL
   });
+  countryOptions.forEach((row) => {
+    const countryOption = document.createElement('div');
+    countryOption.classList.add('country-option', 'mx-3', 'd-flex', 'flex-column', 'align-items-center');
+    moveInstrumentation(row, countryOption);
 
-  searchIconCountrySelectorTrigger.addEventListener('click', () => {
-    countryModal.classList.add('show');
-    countryModal.style.display = 'block';
-    countryModal.setAttribute('aria-modal', 'true');
-    countryModal.setAttribute('aria-hidden', 'false');
-    document.body.classList.add('modal-open'); // Add class to body to prevent scrolling
-  });
+    const flagImageCell = row.querySelector('picture');
+    const countryNameCell = [...row.children].find(cell => !cell.querySelector('picture') && !cell.querySelector('a'));
+    const countryUrlCell = row.querySelector('a');
 
-  countryModal.addEventListener('click', (e) => {
-    // Close modal if backdrop is clicked or if a close button/header area is clicked
-    if (e.target === countryModal || e.target.closest('.modal-header')) {
-      countryModal.classList.remove('show');
-      countryModal.style.display = 'none';
-      countryModal.setAttribute('aria-modal', 'false');
-      countryModal.setAttribute('aria-hidden', 'true');
-      document.body.classList.remove('modal-open');
+    if (flagImageCell) {
+      const flagImg = flagImageCell.querySelector('img');
+      const optimizedFlagPic = createOptimizedPicture(flagImg.src, flagImg.alt, false, [{ width: '750' }]);
+      moveInstrumentation(flagImg, optimizedFlagPic.querySelector('img'));
+      countryOption.append(optimizedFlagPic);
+      optimizedFlagPic.classList.add('country-flag');
+      if (flagImg.alt.toLowerCase().includes('india')) {
+        optimizedFlagPic.classList.add('india-flag');
+        countryOption.classList.add('selected');
+      } else if (flagImg.alt.toLowerCase().includes('usa')) {
+        optimizedFlagPic.classList.add('usa-flag');
+      }
     }
-  });
 
-  // Handle country option clicks
-  countryOptionsDiv.querySelectorAll('.country-option').forEach((option) => {
-    option.addEventListener('click', () => {
-      const url = option.getAttribute('data-url');
-      if (url) {
-        window.location.href = url;
+    if (countryNameCell) {
+      const countryName = document.createElement('p');
+      countryName.classList.add('country-name');
+      countryName.textContent = countryNameCell.textContent.trim();
+      countryOption.append(countryName);
+      countryOption.setAttribute('data-country', countryName.textContent.toLowerCase());
+    }
+
+    if (countryUrlCell) {
+      countryOption.setAttribute('data-url', countryUrlCell.href);
+    }
+    countryOptionsDiv.append(countryOption);
+
+    countryOption.addEventListener('click', () => {
+      const selectedCountryUrl = countryOption.getAttribute('data-url');
+      if (selectedCountryUrl) {
+        window.location.href = selectedCountryUrl;
       }
     });
   });
 
-  // Search functionality event listeners
-  const searchIcon = document.getElementById('searchIcon');
-  const searchContainerElement = document.getElementById('searchContainer');
-  const searchInputEl = document.getElementById('searchInput');
-  const searchButtonEl = document.getElementById('searchButton');
-  const closeButtonEl = document.getElementById('closeButton');
-  const searchResultsEl = document.getElementById('searchResults');
-  const searchBlockEl = document.getElementById('searchBlock');
+  // Event Listeners for interactive behavior
+  navbarToggler.addEventListener('click', () => {
+    navbarCollapse.classList.toggle('show');
+    navbarToggler.classList.toggle('collapsed');
+  });
 
-  searchIcon.addEventListener('click', () => {
-    searchBlockEl.classList.toggle('hidden');
-    searchContainerElement.classList.toggle('hidden');
-    if (!searchContainerElement.classList.contains('hidden')) {
-      searchInputEl.focus();
+  countrySelectorTrigger.addEventListener('click', () => {
+    modal.classList.add('show');
+    modal.style.display = 'block';
+  });
+
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      modal.classList.remove('show');
+      modal.style.display = 'none';
     }
   });
 
-  closeButtonEl.addEventListener('click', () => {
-    searchBlockEl.classList.add('hidden');
-    searchContainerElement.classList.add('hidden');
-    searchResultsEl.classList.add('hidden');
-    searchInputEl.value = ''; // Clear search input
+  searchIconLink.addEventListener('click', (e) => {
+    e.preventDefault();
+    searchBlock.classList.toggle('hidden');
+    searchContainer.classList.toggle('hidden');
+    searchResults.classList.add('hidden'); // Hide results when toggling search box
+    if (!searchBlock.classList.contains('hidden')) {
+      searchInput.focus();
+    }
   });
 
-  searchInputEl.addEventListener('input', () => {
-    // Implement search logic here. For now, just toggle search results visibility.
-    if (searchInputEl.value.trim().length > 0) {
-      searchResultsEl.classList.remove('hidden');
+  closeButton.addEventListener('click', () => {
+    searchBlock.classList.add('hidden');
+    searchContainer.classList.add('hidden');
+    searchResults.classList.add('hidden');
+    searchInput.value = ''; // Clear search input
+  });
+
+  searchInput.addEventListener('input', () => {
+    if (searchInput.value.length > 0) {
+      searchResults.classList.remove('hidden');
+      // In a real scenario, this would trigger a search API call
+      // For now, just show/hide the results section
     } else {
-      searchResultsEl.classList.add('hidden');
+      searchResults.classList.add('hidden');
     }
   });
 
-  searchButtonEl.addEventListener('click', () => {
-    // Trigger search action
-    console.log('Searching for:', searchInputEl.value);
-    // In a real scenario, this would trigger an API call or filter results
+  searchButton.addEventListener('click', () => {
+    // Implement actual search logic here
+    console.log('Searching for:', searchInput.value);
+    // For now, just ensure results are visible if input has value
+    if (searchInput.value.length > 0) {
+      searchResults.classList.remove('hidden');
+    }
   });
 
-  // Image optimization
-  block.querySelectorAll('picture > img').forEach((img) => {
-    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-    moveInstrumentation(img, optimizedPic.querySelector('img'));
-    img.closest('picture').replaceWith(optimizedPic);
-  });
+  block.textContent = '';
+  block.append(header);
 }

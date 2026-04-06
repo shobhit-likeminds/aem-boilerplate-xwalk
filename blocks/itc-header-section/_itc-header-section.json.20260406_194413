@@ -1,7 +1,7 @@
 {
   "definitions": [
     {
-      "title": "Itc-Header-Section",
+      "title": "ITC-Header-Section",
       "id": "itc-header-section",
       "plugins": {
         "xwalk": {
@@ -10,7 +10,7 @@
             "template": {
               "filter": "itc-header-section",
               "model": "itc-header-section",
-              "name": "Itc-Header-Section"
+              "name": "ITC-Header-Section"
             }
           }
         }
@@ -54,26 +54,38 @@
         {
           "component": "reference",
           "label": "Logo Image",
-          "name": "logo-image",
+          "name": "logo_image",
           "valueType": "string"
         },
         {
           "component": "aem-content",
           "label": "Logo Link",
-          "name": "logo-link",
+          "name": "logo_link",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Flag Image IN",
+          "name": "flag_image_in",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Flag Image USA",
+          "name": "flag_image_usa",
           "valueType": "string"
         },
         {
           "component": "container",
           "item": "navigation-item",
           "label": "Navigation Items",
-          "name": "navigation-items"
+          "name": "navigation_items"
         },
         {
           "component": "container",
           "item": "country-option",
           "label": "Country Options",
-          "name": "country-options"
+          "name": "country_options"
         }
       ]
     },
@@ -81,15 +93,15 @@
       "id": "navigation-item",
       "fields": [
         {
-          "component": "text",
-          "label": "Label",
-          "name": "label",
-          "valueType": "string"
-        },
-        {
           "component": "aem-content",
           "label": "Link",
           "name": "link",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Label",
+          "name": "label",
           "valueType": "string"
         }
       ]
@@ -99,20 +111,26 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Flag Image",
-          "name": "flag-image",
+          "label": "Country Flag",
+          "name": "country_flag",
           "valueType": "string"
         },
         {
           "component": "text",
           "label": "Country Name",
-          "name": "country-name",
+          "name": "country_name",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Country Code",
+          "name": "country_code",
           "valueType": "string"
         },
         {
           "component": "aem-content",
           "label": "Country URL",
-          "name": "country-url",
+          "name": "country_url",
           "valueType": "string"
         }
       ]

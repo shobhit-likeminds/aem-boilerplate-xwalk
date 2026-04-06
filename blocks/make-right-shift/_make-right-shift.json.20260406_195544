@@ -38,8 +38,8 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Left Image",
-          "name": "left-image",
+          "label": "Banner Image",
+          "name": "banner-image",
           "valueType": "string"
         },
         {
@@ -49,21 +49,9 @@
           "valueType": "string"
         },
         {
-          "component": "text",
+          "component": "richtext",
           "label": "Subheading",
           "name": "subheading",
-          "valueType": "string"
-        },
-        {
-          "component": "richtext",
-          "label": "Description",
-          "name": "description",
-          "valueType": "string"
-        },
-        {
-          "component": "aem-content",
-          "label": "View All Link",
-          "name": "view-all-link",
           "valueType": "string"
         },
         {
@@ -71,6 +59,12 @@
           "item": "why-shift-item",
           "label": "Why Shift Items",
           "name": "why-shift-items"
+        },
+        {
+          "component": "aem-content",
+          "label": "CTA Link",
+          "name": "cta-link",
+          "valueType": "string"
         }
       ]
     },

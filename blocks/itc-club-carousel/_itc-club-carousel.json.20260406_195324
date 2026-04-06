@@ -40,7 +40,7 @@
           "component": "container",
           "item": "carousel-item",
           "label": "Carousel Items",
-          "name": "items"
+          "name": "carouselItems"
         }
       ]
     },
@@ -51,6 +51,12 @@
           "component": "reference",
           "label": "Image",
           "name": "image",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Alt Text",
+          "name": "alt",
           "valueType": "string"
         },
         {
