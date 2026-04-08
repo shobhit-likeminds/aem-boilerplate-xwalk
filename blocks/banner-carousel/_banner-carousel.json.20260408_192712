@@ -49,26 +49,20 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Video",
-          "name": "video",
-          "valueType": "string"
-        },
-        {
-          "component": "reference",
           "label": "Image",
           "name": "image",
           "valueType": "string"
         },
         {
-          "component": "aem-content",
-          "label": "CTA Link",
-          "name": "ctaLink",
+          "component": "reference",
+          "label": "Video",
+          "name": "video",
           "valueType": "string"
         },
         {
-          "component": "text",
-          "label": "CTA Label",
-          "name": "ctaLinkLabel",
+          "component": "aem-content",
+          "label": "Link",
+          "name": "link",
           "valueType": "string"
         }
       ]

@@ -68,14 +68,14 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Header SVG Image",
-          "name": "headerSvg",
+          "label": "Header Left Image",
+          "name": "headerLeftImage",
           "valueType": "string"
         },
         {
           "component": "reference",
           "label": "Header Logo Image",
-          "name": "headerLogo",
+          "name": "headerLogoImage",
           "valueType": "string"
         },
         {
@@ -92,14 +92,20 @@
         },
         {
           "component": "aem-content",
-          "label": "Login Link",
-          "name": "loginLink",
+          "label": "Header Login Link",
+          "name": "headerLoginLink",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Login Link Label",
-          "name": "loginLinkLabel",
+          "label": "Header Login Link Label",
+          "name": "headerLoginLinkLabel",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Header Login Button Text",
+          "name": "headerLoginButtonText",
           "valueType": "string"
         },
         {
@@ -110,14 +116,14 @@
         },
         {
           "component": "reference",
-          "label": "Footer Logo 1",
-          "name": "footerLogo1",
+          "label": "Footer Primary Logo",
+          "name": "footerPrimaryLogo",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Footer Logo 2",
-          "name": "footerLogo2",
+          "label": "Footer Secondary Logo",
+          "name": "footerSecondaryLogo",
           "valueType": "string"
         },
         {
@@ -134,20 +140,20 @@
         },
         {
           "component": "aem-content",
-          "label": "Footer Left Link",
-          "name": "footerLeftLink",
+          "label": "Footer ITC Portal Link",
+          "name": "footerItcPortalLink",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Footer Left Link Label",
-          "name": "footerLeftLinkLabel",
+          "label": "Footer ITC Portal Link Label",
+          "name": "footerItcPortalLinkLabel",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Footer Copyright",
-          "name": "footerCopyright",
+          "label": "Footer Copyright Text",
+          "name": "footerCopyrightText",
           "valueType": "string"
         }
       ]
@@ -156,21 +162,21 @@
       "id": "sidebar-menu-item",
       "fields": [
         {
-          "component": "reference",
-          "label": "Menu Icon",
-          "name": "icon",
-          "valueType": "string"
-        },
-        {
           "component": "aem-content",
-          "label": "Menu Link",
+          "label": "Link",
           "name": "link",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Menu Link Label",
+          "label": "Link Label",
           "name": "linkLabel",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Icon",
+          "name": "icon",
           "valueType": "string"
         }
       ]
@@ -180,13 +186,13 @@
       "fields": [
         {
           "component": "aem-content",
-          "label": "Footer List Link",
+          "label": "Link",
           "name": "link",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Footer List Link Label",
+          "label": "Link Label",
           "name": "linkLabel",
           "valueType": "string"
         }
@@ -195,12 +201,6 @@
     {
       "id": "footer-social-item",
       "fields": [
-        {
-          "component": "reference",
-          "label": "Social Icon",
-          "name": "icon",
-          "valueType": "string"
-        },
         {
           "component": "aem-content",
           "label": "Social Link",
@@ -211,6 +211,12 @@
           "component": "text",
           "label": "Social Link Label",
           "name": "linkLabel",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Social Icon",
+          "name": "icon",
           "valueType": "string"
         }
       ]

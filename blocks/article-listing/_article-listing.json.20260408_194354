@@ -38,33 +38,21 @@
       "fields": [
         {
           "component": "text",
-          "label": "Heading",
-          "name": "heading",
+          "label": "Title",
+          "name": "title",
           "valueType": "string"
         },
         {
-          "component": "text",
+          "component": "richtext",
           "label": "Description",
           "name": "description",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "label": "CTA Link",
-          "name": "ctaLink",
+          "label": "Button Link",
+          "name": "button-link",
           "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "CTA Label",
-          "name": "ctaLinkLabel",
-          "valueType": "string"
-        },
-        {
-          "component": "container",
-          "item": "article-card",
-          "label": "Articles",
-          "name": "articles"
         }
       ]
     },
@@ -73,14 +61,8 @@
       "fields": [
         {
           "component": "aem-content",
-          "label": "Card Link",
-          "name": "cardLink",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Card Link Label",
-          "name": "cardLinkLabel",
+          "label": "Link",
+          "name": "link",
           "valueType": "string"
         },
         {
@@ -96,9 +78,9 @@
           "valueType": "string"
         },
         {
-          "component": "text",
-          "label": "Title",
-          "name": "title",
+          "component": "richtext",
+          "label": "Text",
+          "name": "text",
           "valueType": "string"
         }
       ]

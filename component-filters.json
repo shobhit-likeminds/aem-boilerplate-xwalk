@@ -85,7 +85,8 @@
       "tv-commercial",
       "tv-sec",
       "parle-campaign",
-      "parle-social"
+      "parle-social",
+      "feature-card-list"
     ]
   },
   {
@@ -107,10 +108,7 @@
     ]
   },
   {
-    "id": "banner",
-    "components": [
-      "banner-video"
-    ]
+    "id": "banner"
   },
   {
     "id": "bg_top",
@@ -122,8 +120,8 @@
     "id": "boing-header-footer",
     "components": [
       "sidebar-menu-item",
-      "footer-list-link",
-      "footer-social-link"
+      "footer-list-item",
+      "footer-social-item"
     ]
   },
   {
@@ -265,6 +263,12 @@
     ]
   },
   {
+    "id": "feature-card-list",
+    "components": [
+      "feature-card"
+    ]
+  },
+  {
     "id": "featurecards",
     "components": [
       "feature-card"
@@ -273,10 +277,8 @@
   {
     "id": "footer-brand",
     "components": [
-      "footer-brand-logo",
-      "footer-brand-link-group",
-      "footer-brand-link",
-      "footer-brand-social-link"
+      "footer-link",
+      "footer-social-link"
     ]
   },
   {
@@ -449,7 +451,7 @@
   {
     "id": "sticky-bottom-nav",
     "components": [
-      "sticky-bottom-nav-item"
+      "nav-item"
     ]
   },
   {

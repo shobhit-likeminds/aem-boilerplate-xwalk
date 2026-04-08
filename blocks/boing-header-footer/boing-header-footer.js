@@ -3,21 +3,25 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
   const [
-    appNameRow,
     headerSvgRow,
     headerLogoRow,
     headerLogoLinkRow,
-    loginLabelRow,
+    headerLogoLinkLabelRow,
     loginLinkRow,
+    loginLinkLabelRow,
     footerLogo1Row,
-    footerLogo1LinkRow,
     footerLogo2Row,
-    footerBrandLeftLinkRow,
-    copyrightRow,
+    footerLeftLinkRow,
+    footerLeftLinkLabelRow,
+    footerCopyrightRow,
     ...itemRows
   ] = [...block.children];
 
-  // Header
+  const sidebarMenuItems = itemRows.filter((row) => row.children.length === 3 && row.querySelector('picture'));
+  const footerListItems = itemRows.filter((row) => row.children.length === 2 && row.querySelector('a'));
+  const footerSocialItems = itemRows.filter((row) => row.children.length === 3 && row.querySelector('picture') && row.querySelector('a'));
+
+  // Create Header
   const header = document.createElement('header');
   header.classList.add('boing-container', 'header', 'd-flex', 'justify-content-between', 'align-items-center', 'h-15', 'px-5', 'py-2', 'fixed-top', 'w-100', 'bg-white');
 
@@ -33,23 +37,21 @@ export default function decorate(block) {
   const headerCenter = document.createElement('div');
   headerCenter.classList.add('d-flex', 'justify-content-center', 'w-25');
   const headerLogoLink = document.createElement('a');
-  const foundHeaderLogoLink = headerLogoLinkRow.querySelector('a');
-  if (foundHeaderLogoLink) {
-    headerLogoLink.href = foundHeaderLogoLink.href;
-    headerLogoLink.classList.add('analytics_cta_click');
-    headerLogoLink.setAttribute('data-ct', '');
+  headerLogoLink.classList.add('analytics_cta_click');
+  const headerLogoLinkFound = headerLogoLinkRow.querySelector('a');
+  if (headerLogoLinkFound) {
+    headerLogoLink.href = headerLogoLinkFound.href;
     headerLogoLink.setAttribute('a-label', 'header-logo-boing');
-    moveInstrumentation(headerLogoLinkRow.firstElementChild, headerLogoLink);
   }
   const headerLogoDiv = document.createElement('div');
   headerLogoDiv.classList.add('header__logo', 'd-flex', 'align-items-center');
   const headerLogoPicture = headerLogoRow.querySelector('picture');
   if (headerLogoPicture) {
-    const headerLogoImg = headerLogoPicture.querySelector('img');
-    if (headerLogoImg) {
-      headerLogoImg.classList.add('header__logo-img');
-      headerLogoImg.setAttribute('fetchpriority', 'high');
-      headerLogoImg.setAttribute('loading', 'eager');
+    const img = headerLogoPicture.querySelector('img');
+    if (img) {
+      img.classList.add('header__logo-img');
+      img.setAttribute('fetchpriority', 'high');
+      img.setAttribute('loading', 'eager');
     }
     moveInstrumentation(headerLogoRow.firstElementChild, headerLogoPicture);
     headerLogoDiv.append(headerLogoPicture);
@@ -61,24 +63,26 @@ export default function decorate(block) {
   const headerRight = document.createElement('div');
   headerRight.classList.add('d-flex', 'w-25', 'justify-content-end');
   const loginLinkWrapper = document.createElement('a');
-  const foundLoginLink = loginLinkRow.querySelector('a');
-  if (foundLoginLink) {
-    loginLinkWrapper.href = foundLoginLink.href;
-    loginLinkWrapper.classList.add('header__login-btn-wrapper', 'analytics_cta_click');
+  loginLinkWrapper.classList.add('header__login-btn-wrapper', 'analytics_cta_click');
+  const loginLinkFound = loginLinkRow.querySelector('a');
+  if (loginLinkFound) {
+    loginLinkWrapper.href = loginLinkFound.href;
     loginLinkWrapper.style.display = 'inline';
-    moveInstrumentation(loginLinkRow.firstElementChild, loginLinkWrapper);
   }
   const loginButton = document.createElement('button');
   loginButton.classList.add('header__login-btn', 'btn', 'text-boing-primary', 'bg-transparent', 'fw-semibold', 'rounded-4', 'btn-sm', 'py-3', 'px-4');
-  const loginLabel = loginLabelRow.querySelector('div')?.textContent.trim();
-  if (loginLabel) {
-    loginButton.textContent = loginLabel;
+  const loginLinkLabelFound = loginLinkLabelRow.firstElementChild; // Access first element for text content
+  if (loginLinkLabelFound) {
+    moveInstrumentation(loginLinkLabelRow.firstElementChild, loginButton);
+    loginButton.append(loginLinkLabelFound.textContent.trim());
+  } else {
+    loginButton.textContent = 'Login'; // Default text if label is missing
   }
   loginLinkWrapper.append(loginButton);
   headerRight.append(loginLinkWrapper);
   header.append(headerRight);
 
-  // Submenu container (Sidebar)
+  // Create Submenu Container (Sidebar)
   const submenuContainer = document.createElement('div');
   submenuContainer.classList.add('submenu-container', 'position-fixed', 'top-0', 'start-0', 'end-0', 'm-auto', 'overflow-hidden');
 
@@ -88,11 +92,6 @@ export default function decorate(block) {
   const sidebarMenu = document.createElement('ul');
   sidebarMenu.classList.add('sidebar__menu', 'list-unstyled', 'px-4');
 
-  const sidebarMenuItems = itemRows.filter((row) => {
-    const cells = [...row.children];
-    return cells.length === 3 && cells.some(cell => cell.querySelector('picture')) && cells.some(cell => cell.querySelector('a'));
-  });
-
   sidebarMenuItems.forEach((row) => {
     const li = document.createElement('li');
     moveInstrumentation(row, li);
@@ -101,261 +100,233 @@ export default function decorate(block) {
     const link = document.createElement('a');
     link.classList.add('sidebar__menu-link', 'd-flex', 'align-items-center', 'text-decoration-none', 'px-6', 'fw-medium', 'analytics_cta_click');
 
+    let menuIcon = null;
+    let menuLinkText = '';
+    let menuLinkHref = '';
+
     const cells = [...row.children];
     const iconCell = cells.find(cell => cell.querySelector('picture'));
     const linkCell = cells.find(cell => cell.querySelector('a'));
-    const labelCell = cells.find(cell => !cell.querySelector('picture') && !cell.querySelector('a'));
+    const linkLabelCell = cells.find(cell => !cell.querySelector('picture') && !cell.querySelector('a')); // Assuming linkLabel is plain text
 
-    if (linkCell && linkCell.querySelector('a')) {
-      const foundLink = linkCell.querySelector('a');
-      link.href = foundLink.href;
-      link.setAttribute('data-consent', 'false'); // Assuming default
-      link.setAttribute('data-link', foundLink.href); // Assuming link href is data-link
-      moveInstrumentation(linkCell, link);
-    }
-
-    if (iconCell && iconCell.querySelector('picture')) {
-      const iconPicture = iconCell.querySelector('picture');
-      const iconImg = iconPicture.querySelector('img');
-      if (iconImg) {
-        iconImg.classList.add('sidebar__menu-icon', 'me-4');
-        iconImg.setAttribute('loading', 'lazy');
+    if (iconCell) {
+      menuIcon = iconCell.querySelector('picture').querySelector('img');
+      if (menuIcon) {
+        menuIcon.classList.add('sidebar__menu-icon', 'me-4');
       }
-      moveInstrumentation(iconCell, iconPicture);
-      link.append(iconPicture);
+    }
+    if (linkCell) {
+      menuLinkHref = linkCell.querySelector('a').href;
+    }
+    if (linkLabelCell) { // Use linkLabelCell for text content
+      menuLinkText = linkLabelCell.textContent.trim();
     }
 
-    if (labelCell) {
-      link.append(labelCell.textContent.trim());
+
+    if (menuIcon) {
+      link.append(menuIcon);
     }
+    link.href = menuLinkHref;
+    link.textContent = menuLinkText;
     li.append(link);
     sidebarMenu.append(li);
   });
-
   sidebar.append(sidebarMenu);
 
   const sidebarCurve = document.createElement('div');
   sidebarCurve.classList.add('sidebar__curve');
   sidebar.append(sidebarCurve);
 
-  // Footer
+  // Create Footer
   const footerBrand = document.createElement('div');
   footerBrand.classList.add('footer-brand', 'w-100', 'bg-boing-neutral-gray-600');
-  footerBrand.setAttribute('data-isdoodlevariation', 'false');
 
   const footerBrandPrimary = document.createElement('section');
   footerBrandPrimary.classList.add('footer-brand__primary');
-  footerBrandPrimary.style.backgroundColor = ''; // Empty string as in original
-
-  const footerContainer = document.createElement('div');
-  footerContainer.classList.add('container');
-
+  const footerPrimaryContainer = document.createElement('div');
+  footerPrimaryContainer.classList.add('container');
   const footerPrimaryContent = document.createElement('div');
   footerPrimaryContent.classList.add('footer-brand__primary--content', 'd-flex', 'flex-column', 'flex-md-row', 'justify-content-md-between', 'align-items-center');
 
-  const footerBrandLeft = document.createElement('section');
-  footerBrandLeft.classList.add('footer-brand__left', 'd-flex', 'gap-16', 'px-10', 'align-items-center', 'justify-content-center');
+  const footerBrandLeftPrimary = document.createElement('section');
+  footerBrandLeftPrimary.classList.add('footer-brand__left', 'd-flex', 'gap-16', 'px-10', 'align-items-center', 'justify-content-center');
 
-  // Footer Logo 1
   const footerLogo1Link = document.createElement('a');
-  const foundFooterLogo1Link = footerLogo1LinkRow.querySelector('a');
-  if (foundFooterLogo1Link) {
-    footerLogo1Link.href = foundFooterLogo1Link.href;
-    footerLogo1Link.target = '_blank';
-    footerLogo1Link.classList.add('footer-brand__logo', 'd-inline-block', 'analytics_cta_click');
-    footerLogo1Link.setAttribute('data-cta-region', 'Footer');
-    footerLogo1Link.setAttribute('aria-label', 'ITC Logo');
-    moveInstrumentation(footerLogo1LinkRow.firstElementChild, footerLogo1Link);
-  }
+  footerLogo1Link.classList.add('footer-brand__logo', 'd-inline-block', 'analytics_cta_click');
+  footerLogo1Link.href = '#'; // Placeholder, as link is not in model
+  footerLogo1Link.setAttribute('aria-label', 'ITC Logo');
   const footerLogo1Picture = footerLogo1Row.querySelector('picture');
   if (footerLogo1Picture) {
-    const footerLogo1Img = footerLogo1Picture.querySelector('img');
-    if (footerLogo1Img) {
-      footerLogo1Img.classList.add('object-fit-contain', 'w-100', 'h-100', 'no-rendition');
-      footerLogo1Img.setAttribute('loading', 'lazy');
+    const img = footerLogo1Picture.querySelector('img');
+    if (img) {
+      img.classList.add('object-fit-contain', 'w-100', 'h-100', 'no-rendition');
     }
     moveInstrumentation(footerLogo1Row.firstElementChild, footerLogo1Picture);
     footerLogo1Link.append(footerLogo1Picture);
   }
-  footerBrandLeft.append(footerLogo1Link);
+  footerBrandLeftPrimary.append(footerLogo1Link);
 
-  // Footer Logo 2
   const footerLogo2Div = document.createElement('div');
   footerLogo2Div.classList.add('footer-brand__secondary--logo', 'd-inline-block');
   const footerLogo2Picture = footerLogo2Row.querySelector('picture');
   if (footerLogo2Picture) {
-    const footerLogo2Img = footerLogo2Picture.querySelector('img');
-    if (footerLogo2Img) {
-      footerLogo2Img.classList.add('object-fit-contain', 'w-100', 'no-rendition');
-      footerLogo2Img.setAttribute('loading', 'lazy');
+    const img = footerLogo2Picture.querySelector('img');
+    if (img) {
+      img.classList.add('object-fit-contain', 'w-100', 'no-rendition');
     }
     moveInstrumentation(footerLogo2Row.firstElementChild, footerLogo2Picture);
     footerLogo2Div.append(footerLogo2Picture);
   }
-  footerBrandLeft.append(footerLogo2Div);
-  footerPrimaryContent.append(footerBrandLeft);
+  footerBrandLeftPrimary.append(footerLogo2Div);
+  footerPrimaryContent.append(footerBrandLeftPrimary);
 
-  const footerBrandRight = document.createElement('section');
-  footerBrandRight.classList.add('footer-brand__right');
-  const footerBrandNavbar = document.createElement('nav');
-  footerBrandNavbar.classList.add('footer-brand__navbar', 'd-grid', 'd-md-flex');
-  footerBrandNavbar.setAttribute('aria-label', 'footer navbar');
+  const footerBrandRightPrimary = document.createElement('section');
+  footerBrandRightPrimary.classList.add('footer-brand__right');
+  const footerNavbar = document.createElement('nav');
+  footerNavbar.classList.add('footer-brand__navbar', 'd-grid', 'd-md-flex');
+  footerNavbar.setAttribute('aria-label', 'footer navbar');
 
   const footerNavbarLeft = document.createElement('div');
   footerNavbarLeft.classList.add('footer-brand__navbar--left', 'd-flex', 'flex-column', 'flex-md-row');
 
-  const footerListLinks = itemRows.filter((row) => {
-    const cells = [...row.children];
-    return cells.length === 2 && !cells.some(cell => cell.querySelector('picture')) && cells.some(cell => cell.querySelector('a'));
+  // Group footer list items into two columns (example, adjust as needed)
+  const footerListCol1 = document.createElement('div');
+  footerListCol1.classList.add('footerList');
+  const ul1 = document.createElement('ul');
+  ul1.classList.add('footer-list', 'd-flex', 'align-items-center', 'justify-content-center', 'align-items-md-start', 'flex-column');
+  footerListItems.slice(0, Math.ceil(footerListItems.length / 2)).forEach((row) => {
+    const li = document.createElement('li');
+    moveInstrumentation(row, li);
+    li.classList.add('footer-list__item');
+    const link = document.createElement('a');
+    link.classList.add('cta-analytics', 'analytics_cta_click', 'footer-list__item--link', 'd-inline-block');
+    const aFound = row.querySelector('a');
+    if (aFound) {
+      link.href = aFound.href;
+      link.textContent = aFound.textContent.trim();
+    }
+    li.append(link);
+    ul1.append(li);
   });
+  footerListCol1.append(ul1);
+  footerNavbarLeft.append(footerListCol1);
 
-  const footerListContainers = [];
-  for (let i = 0; i < footerListLinks.length; i += 3) { // Group into sets of 3 for two lists
-    const footerListDiv = document.createElement('div');
-    footerListDiv.classList.add('footerList');
-    const ul = document.createElement('ul');
-    ul.classList.add('footer-list', 'd-flex', 'align-items-center', 'justify-content-center', 'align-items-md-start', 'flex-column');
+  const footerListCol2 = document.createElement('div');
+  footerListCol2.classList.add('footerList');
+  const ul2 = document.createElement('ul');
+  ul2.classList.add('footer-list', 'd-flex', 'align-items-center', 'justify-content-center', 'align-items-md-start', 'flex-column');
+  footerListItems.slice(Math.ceil(footerListItems.length / 2)).forEach((row) => {
+    const li = document.createElement('li');
+    moveInstrumentation(row, li);
+    li.classList.add('footer-list__item');
+    const link = document.createElement('a');
+    link.classList.add('cta-analytics', 'analytics_cta_click', 'footer-list__item--link', 'd-inline-block');
+    const aFound = row.querySelector('a');
+    if (aFound) {
+      link.href = aFound.href;
+      link.textContent = aFound.textContent.trim();
+    }
+    li.append(link);
+    ul2.append(li);
+  });
+  footerListCol2.append(ul2);
+  footerNavbarLeft.append(footerListCol2);
+  footerNavbar.append(footerNavbarLeft);
 
-    footerListLinks.slice(i, i + 3).forEach((row) => {
-      const li = document.createElement('li');
-      moveInstrumentation(row, li);
-      li.classList.add('footer-list__item');
-
-      const cells = [...row.children];
-      const linkCell = cells.find(cell => cell.querySelector('a'));
-      const labelCell = cells.find(cell => !cell.querySelector('a'));
-
-      const link = document.createElement('a');
-      if (linkCell && linkCell.querySelector('a')) {
-        const foundLink = linkCell.querySelector('a');
-        link.href = foundLink.href;
-        link.classList.add('cta-analytics', 'analytics_cta_click', 'footer-list__item--link', 'd-inline-block');
-        link.setAttribute('data-link-region', 'Footer List');
-        link.textContent = labelCell ? labelCell.textContent.trim() : '';
-        moveInstrumentation(linkCell, link);
-      }
-      li.append(link);
-      ul.append(li);
-    });
-    footerListDiv.append(ul);
-    footerListContainers.push(footerListDiv);
-  }
-
-  // Append first two lists to footerNavbarLeft
-  if (footerListContainers[0]) footerNavbarLeft.append(footerListContainers[0]);
-  if (footerListContainers[1]) footerNavbarLeft.append(footerListContainers[1]);
-  footerBrandNavbar.append(footerNavbarLeft);
-
-  const footerNavbarRight = document.createElement('div');
-  footerNavbarRight.classList.add('footer-brand__navbar--right', 'd-flex', 'flex-column', 'flex-md-row');
-
-  // Append remaining lists to footerNavbarRight
-  if (footerListContainers[2]) footerNavbarRight.append(footerListContainers[2]);
-  if (footerListContainers[3]) footerNavbarRight.append(footerListContainers[3]);
-  footerBrandNavbar.append(footerNavbarRight);
-
-  footerBrandRight.append(footerBrandNavbar);
-  footerPrimaryContent.append(footerBrandRight);
-  footerContainer.append(footerPrimaryContent);
-  footerBrandPrimary.append(footerContainer);
+  footerBrandRightPrimary.append(footerNavbar);
+  footerPrimaryContent.append(footerBrandRightPrimary);
+  footerPrimaryContainer.append(footerPrimaryContent);
+  footerBrandPrimary.append(footerPrimaryContainer);
   footerBrand.append(footerBrandPrimary);
 
   const footerBrandSecondary = document.createElement('section');
   footerBrandSecondary.classList.add('footer-brand__secondary');
-  footerBrandSecondary.style.backgroundColor = '';
-
   const footerSecondaryContainer = document.createElement('div');
   footerSecondaryContainer.classList.add('container');
-
   const footerSecondaryContent = document.createElement('div');
   footerSecondaryContent.classList.add('footer-brand__secondary--content', 'd-flex', 'flex-column', 'justify-content-md-between', 'align-items-center');
 
-  const footerSocialSection = document.createElement('section');
-  footerSocialSection.classList.add('footer-brand__right', 'd-flex', 'flex-column', 'pb-5');
-  const socialTitle = document.createElement('h3');
-  socialTitle.classList.add('social_media--title');
-  socialTitle.textContent = 'Follow Us On';
-  footerSocialSection.append(socialTitle);
+  const footerBrandRightSecondary = document.createElement('section');
+  footerBrandRightSecondary.classList.add('footer-brand__right', 'd-flex', 'flex-column', 'pb-5');
+  const socialMediaTitle = document.createElement('h3');
+  socialMediaTitle.classList.add('social_media--title');
+  socialMediaTitle.textContent = 'Follow Us On';
+  footerBrandRightSecondary.append(socialMediaTitle);
 
   const socialList = document.createElement('ul');
   socialList.classList.add('footer-brand__right--list', 'd-flex', 'align-items-center', 'justify-content-center', 'px-10', 'flex-wrap');
 
-  const footerSocialLinks = itemRows.filter((row) => {
-    const cells = [...row.children];
-    return cells.length === 2 && cells.some(cell => cell.querySelector('picture')) && cells.some(cell => cell.querySelector('a'));
-  });
-
-  footerSocialLinks.forEach((row) => {
+  footerSocialItems.forEach((row) => {
     const li = document.createElement('li');
     moveInstrumentation(row, li);
     li.classList.add('footer-brand__right--item', 'd-flex', 'justify-content-center', 'align-items-center');
+
+    const link = document.createElement('a');
+    link.classList.add('footer-brand__right--link', 'd-flex', 'justify-content-center', 'align-items-center', 'analytics_cta_click');
+
+    let socialIcon = null;
+    let socialLinkHref = '';
 
     const cells = [...row.children];
     const iconCell = cells.find(cell => cell.querySelector('picture'));
     const linkCell = cells.find(cell => cell.querySelector('a'));
 
-    const link = document.createElement('a');
-    if (linkCell && linkCell.querySelector('a')) {
-      const foundLink = linkCell.querySelector('a');
-      link.href = foundLink.href;
-      link.target = '_blank';
-      link.classList.add('footer-brand__right--link', 'd-flex', 'justify-content-center', 'align-items-center', 'analytics_cta_click');
-      link.setAttribute('data-cta-region', 'Footer');
-      link.setAttribute('data-cta-label', `footer-${foundLink.href.includes('facebook') ? 'facebook' : foundLink.href.includes('instagram') ? 'instagram' : 'youtube'}`);
-      link.setAttribute('data-platform-name', foundLink.href.includes('facebook') ? 'facebook' : foundLink.href.includes('instagram') ? 'instagram' : 'youtube');
-      link.setAttribute('data-social-linktype', 'follow');
-      moveInstrumentation(linkCell, link);
+    if (iconCell) {
+      socialIcon = iconCell.querySelector('picture').querySelector('img');
+      if (socialIcon) {
+        socialIcon.classList.add('object-fit-contain', 'w-100', 'h-100', 'no-rendition');
+      }
+    }
+    if (linkCell) {
+      socialLinkHref = linkCell.querySelector('a').href;
     }
 
-    if (iconCell && iconCell.querySelector('picture')) {
-      const iconPicture = iconCell.querySelector('picture');
-      const iconImg = iconPicture.querySelector('img');
-      if (iconImg) {
-        iconImg.classList.add('object-fit-contain', 'w-100', 'h-100', 'no-rendition');
-        iconImg.setAttribute('loading', 'lazy');
-        iconImg.setAttribute('aria-label', iconImg.alt || '');
-      }
-      moveInstrumentation(iconCell, iconPicture);
-      link.append(iconPicture);
+    link.href = socialLinkHref;
+    link.target = '_blank';
+    if (socialIcon) {
+      link.append(socialIcon);
     }
     li.append(link);
     socialList.append(li);
   });
-  footerSocialSection.append(socialList);
-  footerSecondaryContent.append(footerSocialSection);
+  footerBrandRightSecondary.append(socialList);
+  footerSecondaryContent.append(footerBrandRightSecondary);
 
   const footerBrandLeftSecondary = document.createElement('section');
   footerBrandLeftSecondary.classList.add('footer-brand__left', 'py-5', 'd-flex', 'flex-column', 'gap-3');
+  const footerLeftList = document.createElement('ul');
+  footerLeftList.classList.add('footer-brand__left--list', 'd-flex', 'align-items-center', 'justify-content-center', 'flex-wrap');
 
-  const footerBrandLeftList = document.createElement('ul');
-  footerBrandLeftList.classList.add('footer-brand__left--list', 'd-flex', 'align-items-center', 'justify-content-center', 'flex-wrap');
-
-  const footerBrandLeftItem = document.createElement('li');
-  footerBrandLeftItem.classList.add('footer-brand__left--item', 'foot_link');
-  const footerBrandLeftLink = document.createElement('a');
-  const foundFooterBrandLeftLink = footerBrandLeftLinkRow.querySelector('a');
-  if (foundFooterBrandLeftLink) {
-    footerBrandLeftLink.href = foundFooterBrandLeftLink.href;
-    footerBrandLeftLink.target = '_blank';
-    footerBrandLeftLink.classList.add('footer-brand__left--link', 'analytics_cta_click');
-    footerBrandLeftLink.setAttribute('data-cta-region', 'Footer');
-    footerBrandLeftLink.textContent = 'ITC portal'; // Hardcoded as per original
-    moveInstrumentation(footerBrandLeftLinkRow.firstElementChild, footerBrandLeftLink);
+  const footerLeftListItem = document.createElement('li');
+  footerLeftListItem.classList.add('footer-brand__left--item', 'foot_link');
+  const footerLeftLink = document.createElement('a');
+  footerLeftLink.classList.add('footer-brand__left--link', 'analytics_cta_click');
+  const footerLeftLinkFound = footerLeftLinkRow.querySelector('a');
+  if (footerLeftLinkFound) {
+    footerLeftLink.href = footerLeftLinkFound.href;
+    footerLeftLink.textContent = footerLeftLinkFound.textContent.trim();
+    footerLeftLink.target = '_blank';
   }
-  footerBrandLeftItem.append(footerBrandLeftLink);
-  footerBrandLeftList.append(footerBrandLeftItem);
-  footerBrandLeftSecondary.append(footerBrandLeftList);
+  footerLeftList.append(footerLeftListItem);
+  footerBrandLeftSecondary.append(footerLeftList);
 
-  const copyrightDiv = document.createElement('div');
-  copyrightDiv.classList.add('footer-brand__left--copyright', 'text-center');
+  const footerLeftLinkLabelSpan = document.createElement('span'); // Create a span for the label
+  footerLeftLinkLabelSpan.classList.add('footer-brand__left--text', 'text-white'); // Apply appropriate classes
+  const footerLeftLinkLabelContent = footerLeftLinkLabelRow.firstElementChild; // Get the content from the row
+  if (footerLeftLinkLabelContent) {
+    moveInstrumentation(footerLeftLinkLabelRow.firstElementChild, footerLeftLinkLabelSpan);
+    footerLeftLinkLabelSpan.textContent = footerLeftLinkLabelContent.textContent.trim();
+  }
+  footerLeftListItem.append(footerLeftLinkLabelSpan); // Append the span to the list item
+
+  const footerCopyrightDiv = document.createElement('div');
+  footerCopyrightDiv.classList.add('footer-brand__left--copyright', 'text-center');
   const copyrightSpan = document.createElement('span');
   copyrightSpan.classList.add('footer-brand__left--text', 'text-white');
-  const copyrightText = copyrightRow.querySelector('div')?.textContent.trim();
-  if (copyrightText) {
-    copyrightSpan.textContent = copyrightText;
-  }
-  copyrightDiv.append(copyrightSpan);
-  footerBrandLeftSecondary.append(copyrightDiv);
+  moveInstrumentation(footerCopyrightRow.firstElementChild, copyrightSpan);
+  copyrightSpan.textContent = footerCopyrightRow.firstElementChild.textContent.trim();
+  footerCopyrightDiv.append(copyrightSpan);
+  footerBrandLeftSecondary.append(footerCopyrightDiv);
   footerSecondaryContent.append(footerBrandLeftSecondary);
 
   footerSecondaryContainer.append(footerSecondaryContent);
@@ -369,37 +340,39 @@ export default function decorate(block) {
   overlay.classList.add('overlay', 'position-absolute', 'top-0', 'start-0', 'w-100', 'h-100', 'bg-black', 'opacity-25');
   submenuContainer.append(overlay);
 
-  // App Name (hidden)
+  const section = document.createElement('section');
+  section.classList.add('position-relative', 'mb-15');
+
   const appNameSpan = document.createElement('span');
   appNameSpan.classList.add('d-none', 'app-name');
-  const appName = appNameRow.querySelector('div')?.textContent.trim();
-  if (appName) {
-    appNameSpan.setAttribute('data-app-name', appName);
-    appNameSpan.textContent = appName;
-  }
+  appNameSpan.setAttribute('data-app-name', 'boing');
+  appNameSpan.textContent = 'boing';
+  section.append(appNameSpan);
+  section.append(header);
+  section.append(submenuContainer);
 
-  // Toggle functionality for sidebar
-  const menuToggleBtn = document.createElement('button');
-  menuToggleBtn.classList.add('navbar-toggler'); // Add a class for styling if needed
-  menuToggleBtn.innerHTML = '<span class="navbar-toggler-icon"></span>'; // Example icon
-  menuToggleBtn.addEventListener('click', () => {
-    sidebar.classList.toggle('show'); // Or a class that makes it visible
-    overlay.classList.toggle('show'); // Or a class that makes it visible
-  });
+  block.textContent = '';
+  block.append(section);
 
-  overlay.addEventListener('click', () => {
-    sidebar.classList.remove('show');
-    overlay.classList.remove('show');
-  });
-
-  // Optimize images
   block.querySelectorAll('picture > img').forEach((img) => {
     const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
     moveInstrumentation(img, optimizedPic.querySelector('img'));
     img.closest('picture').replaceWith(optimizedPic);
   });
 
-  block.textContent = '';
-  block.classList.add('position-relative', 'mb-15'); // Add section classes to the block itself
-  block.append(appNameSpan, header, submenuContainer, menuToggleBtn); // Append menuToggleBtn to the block
+  // Toggle sidebar functionality
+  const menuToggle = document.createElement('button');
+  menuToggle.classList.add('navbar-toggler', 'd-md-none', 'ms-3'); // Example classes, adjust as needed
+  menuToggle.innerHTML = '<span class="navbar-toggler-icon"></span>';
+  headerLeft.prepend(menuToggle); // Add a toggle button to the header
+
+  menuToggle.addEventListener('click', () => {
+    sidebar.classList.toggle('show'); // Assuming 'show' class makes sidebar visible
+    overlay.classList.toggle('show'); // Assuming 'show' class makes overlay visible
+  });
+
+  overlay.addEventListener('click', () => {
+    sidebar.classList.remove('show');
+    overlay.classList.remove('show');
+  });
 }

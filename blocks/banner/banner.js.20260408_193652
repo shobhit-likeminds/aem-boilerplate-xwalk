@@ -1,0 +1,198 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  const [videoRow] = [...block.children];
+
+  const section = document.createElement('section');
+  section.classList.add('banner-section');
+
+  const wrapper = document.createElement('div');
+  wrapper.classList.add('position-relative', 'boing', 'banner-section__wrapper');
+
+  const videoWrapper = document.createElement('div');
+  videoWrapper.classList.add('video-wrapper');
+
+  const video = document.createElement('video');
+  video.classList.add('w-100', 'object-fit-cover', 'banner-media', 'banner-video');
+  video.setAttribute('title', 'Video');
+  video.setAttribute('aria-label', 'Video');
+  video.setAttribute('data-is-autoplay', 'true');
+  video.setAttribute('playsinline', '');
+  video.setAttribute('preload', 'metadata');
+  video.setAttribute('fetchpriority', 'high');
+  video.setAttribute('loop', 'false'); // Set to false initially, will be overridden by autoplay logic
+  video.setAttribute('muted', 'true');
+  video.setAttribute('autoplay', 'true');
+
+  const videoSource = document.createElement('source');
+  // Access the cell content correctly
+  const videoLink = videoRow.children[0].querySelector('a');
+  if (videoLink) {
+    videoSource.src = videoLink.href;
+  } else {
+    // Fallback if no link, though EDS should provide one for reference type
+    const picture = videoRow.children[0].querySelector('picture');
+    if (picture) {
+      const img = picture.querySelector('img');
+      if (img) {
+        videoSource.src = img.src.replace(/\.(jpeg|jpg|png|gif)(\?.*)?$/, '.mp4');
+      }
+    }
+  }
+  videoSource.type = 'video/mp4';
+  video.append(videoSource);
+
+  const controlsWrapper = document.createElement('div');
+  controlsWrapper.classList.add('position-absolute', 'w-100', 'h-100', 'start-0', 'top-0', 'd-flex', 'justify-content-center', 'align-items-center', 'cursor-pointer');
+
+  const playButton = document.createElement('button');
+  playButton.type = 'button';
+  playButton.classList.add('d-none', 'video-icon', 'icon-play', 'bg-transparent', 'd-flex', 'align-items-center', 'justify-content-center', 'cursor-pointer');
+  const playIcon = document.createElement('img');
+  playIcon.alt = 'svg file';
+  playIcon.src = '/content/dam/aemigrate/uploaded-folder/image/1775655819452.svg+xml'; // Placeholder, ideally from model
+  playButton.append(playIcon);
+
+  const pauseButton = document.createElement('button');
+  pauseButton.type = 'button';
+  pauseButton.classList.add('d-block', 'video-icon', 'icon-pause', 'bg-transparent', 'd-flex', 'align-items-center', 'justify-content-center', 'cursor-pointer');
+  const pauseIcon = document.createElement('img');
+  pauseIcon.alt = 'svg file';
+  pauseIcon.src = '/content/dam/aemigrate/uploaded-folder/image/1775655819751.svg+xml'; // Placeholder, ideally from model
+  pauseButton.append(pauseIcon);
+
+  controlsWrapper.append(playButton, pauseButton);
+
+  const muteIconWrapper = document.createElement('div');
+  muteIconWrapper.classList.add('position-absolute', 'z-2', 'd-flex', 'justify-content-center', 'align-items-center', 'cursor-pointer', 'mute-icon');
+
+  const muteButton = document.createElement('button');
+  muteButton.type = 'button';
+  muteButton.classList.add('video-icon-volume', 'icon-mute', 'bg-transparent', 'd-flex', 'align-items-center', 'justify-content-center', 'cursor-pointer', 'd-none');
+  const muteIcon = document.createElement('img');
+  muteIcon.alt = 'svg file';
+  muteIcon.src = '/content/dam/aemigrate/uploaded-folder/image/1775655819908.svg+xml'; // Placeholder, ideally from model
+  muteButton.append(muteIcon);
+
+  const unmuteButton = document.createElement('button');
+  unmuteButton.type = 'button';
+  unmuteButton.classList.add('video-icon-volume', 'icon-unmute', 'bg-transparent', 'd-flex', 'align-items-center', 'justify-content-center', 'cursor-pointer', 'd-none');
+  const unmuteIcon = document.createElement('img');
+  unmuteIcon.alt = 'svg file';
+  unmuteIcon.src = '/content/dam/aemigrate/uploaded-folder/image/1775655820102.svg+xml'; // Placeholder, ideally from model
+  unmuteButton.append(unmuteIcon);
+
+  const noAudioButton = document.createElement('button');
+  noAudioButton.type = 'button';
+  noAudioButton.classList.add('video-icon-volume', 'no-audio-icon', 'bg-transparent', 'd-flex', 'align-items-center', 'justify-content-center', 'cursor-pointer');
+  const noAudioIcon = document.createElement('img');
+  noAudioIcon.alt = 'svg file';
+  noAudioIcon.src = '/content/dam/aemigrate/uploaded-folder/image/1775655820272.svg+xml'; // Placeholder, ideally from model
+  noAudioButton.append(noAudioIcon);
+
+  muteIconWrapper.append(muteButton, unmuteButton, noAudioButton);
+
+  videoWrapper.append(video, controlsWrapper, muteIconWrapper);
+
+  const ctaWrapper = document.createElement('div');
+  ctaWrapper.classList.add('position-absolute', 'start-50', 'translate-middle-x', 'w-100', 'boing__banner--cta');
+  const bannerCta = document.createElement('div');
+  bannerCta.classList.add('banner-cta');
+  ctaWrapper.append(bannerCta);
+
+  wrapper.append(videoWrapper, ctaWrapper);
+  section.append(wrapper);
+
+  block.textContent = '';
+  block.append(section);
+
+  // Video interaction logic
+  let hasUserInteracted = false;
+
+  const togglePlayPause = () => {
+    if (video.paused) {
+      video.play();
+      playButton.classList.add('d-none');
+      pauseButton.classList.remove('d-none');
+    } else {
+      video.pause();
+      playButton.classList.remove('d-none');
+      pauseButton.classList.add('d-none');
+    }
+  };
+
+  const toggleMute = () => {
+    video.muted = !video.muted;
+    if (video.muted) {
+      muteButton.classList.add('d-none');
+      unmuteButton.classList.add('d-none');
+      noAudioButton.classList.remove('d-none');
+    } else {
+      muteButton.classList.remove('d-none');
+      unmuteButton.classList.add('d-none');
+      noAudioButton.classList.add('d-none');
+    }
+  };
+
+  controlsWrapper.addEventListener('click', () => {
+    if (!hasUserInteracted) {
+      hasUserInteracted = true;
+      video.muted = false; // Unmute on first interaction
+      video.loop = true; // Start looping after first interaction
+      noAudioButton.classList.add('d-none');
+      muteButton.classList.remove('d-none');
+    }
+    togglePlayPause();
+  });
+
+  muteIconWrapper.addEventListener('click', toggleMute);
+
+  video.addEventListener('play', () => {
+    playButton.classList.add('d-none');
+    pauseButton.classList.remove('d-none');
+  });
+
+  video.addEventListener('pause', () => {
+    playButton.classList.remove('d-none');
+    pauseButton.classList.add('d-none');
+  });
+
+  video.addEventListener('volumechange', () => {
+    if (video.muted) {
+      muteButton.classList.add('d-none');
+      unmuteButton.classList.add('d-none');
+      noAudioButton.classList.remove('d-none');
+    } else {
+      muteButton.classList.remove('d-none');
+      unmuteButton.classList.add('d-none');
+      noAudioButton.classList.add('d-none');
+    }
+  });
+
+  // Handle initial state if autoplay is true and muted
+  if (video.autoplay && video.muted) {
+    noAudioButton.classList.remove('d-none');
+    muteButton.classList.add('d-none');
+    unmuteButton.classList.add('d-none');
+  } else if (video.autoplay && !video.muted) {
+    noAudioButton.classList.add('d-none');
+    muteButton.classList.remove('d-none');
+    unmuteButton.classList.add('d-none');
+  }
+
+  // Optimize image if any picture element is present in the video row for poster
+  const picture = videoRow.children[0].querySelector('picture');
+  if (picture) {
+    const img = picture.querySelector('img');
+    if (img) {
+      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+      moveInstrumentation(img, optimizedPic.querySelector('img'));
+      // Set the poster attribute for the video
+      video.poster = optimizedPic.querySelector('img').src;
+      // Replace the original picture with the optimized one, but keep it hidden if not needed for display
+      // For this block, the picture is only used for the video poster, so we don't need to append it to the DOM directly.
+      // We just extract the src and let the video element handle the poster.
+    }
+  }
+}

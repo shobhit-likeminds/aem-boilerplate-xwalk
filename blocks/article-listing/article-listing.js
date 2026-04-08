@@ -2,126 +2,133 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const sectionWrapper = document.createElement('section');
-  sectionWrapper.classList.add('article_listing--wrapper');
+  const wrapper = document.createElement('section');
+  wrapper.classList.add('article_listing--wrapper');
 
-  const articleListingDiv = document.createElement('div');
-  articleListingDiv.classList.add('article_listing', 'position-relative');
-  sectionWrapper.append(articleListingDiv);
+  const articleListing = document.createElement('div');
+  articleListing.classList.add('article_listing', 'position-relative');
+  wrapper.append(articleListing);
 
-  const [titleRow, descriptionRow, buttonLinkRow, ...articleCardRows] = [...block.children];
+  const [headingRow, descriptionRow, ctaLinkRow, ctaLinkLabelRow, ...articleRows] = [...block.children];
 
   // First section
   const firstSection = document.createElement('div');
   firstSection.classList.add('article_listing_section--first', 'text-white', 'text-center');
 
-  const titleEl = document.createElement('h2');
-  titleEl.classList.add('article_listing--title', 'boing--text__heading-1', 'text-white', 'pb-3');
-  moveInstrumentation(titleRow, titleEl);
-  // Corrected: Use textContent.trim() directly from the row, as per block structure
-  titleEl.append(titleRow.textContent.trim());
-  firstSection.append(titleEl);
+  const heading = document.createElement('h2');
+  heading.classList.add('article_listing--title', 'boing--text__heading-1', 'text-white', 'pb-3');
+  moveInstrumentation(headingRow.firstElementChild, heading);
+  heading.append(...headingRow.firstElementChild.childNodes);
+  firstSection.append(heading);
 
-  const descriptionEl = document.createElement('p');
-  descriptionEl.classList.add('article_listing--desc', 'boing--text__body-2', 'pb-4');
-  moveInstrumentation(descriptionRow, descriptionEl);
-  // Corrected: Append all child nodes from the description row's first element
-  if (descriptionRow.firstElementChild) {
-    while (descriptionRow.firstElementChild.firstChild) {
-      descriptionEl.append(descriptionRow.firstElementChild.firstChild);
-    }
+  const description = document.createElement('p');
+  description.classList.add('article_listing--desc', 'boing--text__body-2', 'pb-4');
+  moveInstrumentation(descriptionRow.firstElementChild, description);
+  description.append(...descriptionRow.firstElementChild.childNodes);
+  firstSection.append(description);
+
+  const ctaWrapper = document.createElement('div');
+  ctaWrapper.classList.add('article_listing--btnWrapper');
+
+  const ctaLink = document.createElement('a');
+  const originalCtaLink = ctaLinkRow.querySelector('a');
+  const originalCtaLinkLabel = ctaLinkLabelRow.querySelector('a');
+
+  if (originalCtaLink) {
+    ctaLink.href = originalCtaLink.href;
+    // The original HTML shows the ctaLinkLabel is a URL, but the model says it's text.
+    // The JS was trying to use the textContent of the ctaLinkLabel for the title,
+    // which is correct for the model's intent.
+    ctaLink.title = originalCtaLinkLabel ? originalCtaLinkLabel.textContent.trim() : originalCtaLink.textContent.trim();
+    ctaLink.classList.add('boing--text__title-3', 'article_listing--btn', 'analytics_cta_click');
+    moveInstrumentation(originalCtaLink, ctaLink);
+    // The original HTML shows an SVG inside the CTA link, which is not handled here.
+    // For now, append the title as text content.
+    ctaLink.append(ctaLink.title);
   }
-  firstSection.append(descriptionEl);
-
-  const buttonWrapper = document.createElement('div');
-  buttonWrapper.classList.add('article_listing--btnWrapper');
-  const buttonLink = buttonLinkRow.querySelector('a');
-  if (buttonLink) {
-    const buttonEl = document.createElement('a');
-    buttonEl.href = buttonLink.href;
-    buttonEl.title = buttonLink.textContent.trim();
-    buttonEl.classList.add('boing--text__title-3', 'article_listing--btn', 'analytics_cta_click');
-    moveInstrumentation(buttonLinkRow, buttonEl);
-    buttonEl.append(buttonLink.textContent.trim());
-
-    // Check for an image inside the button link cell
-    const svgImg = buttonLinkRow.querySelector('img');
-    if (svgImg) {
-      const imgEl = document.createElement('img');
-      imgEl.alt = svgImg.alt;
-      imgEl.src = svgImg.src;
-      buttonEl.append(imgEl);
-    }
-    buttonWrapper.append(buttonEl);
-  }
-  firstSection.append(buttonWrapper);
-  articleListingDiv.append(firstSection);
+  ctaWrapper.append(ctaLink);
+  firstSection.append(ctaWrapper);
+  articleListing.append(firstSection);
 
   // Second section (article cards)
   const secondSection = document.createElement('div');
   secondSection.classList.add('article_listing_section--second', 'd-flex');
 
-  articleCardRows.forEach((row) => {
-    // No row.children[n] violations found here, content detection is used.
-    const linkEl = row.querySelector('a');
-    const imageEl = row.querySelector('picture');
-    const dateCell = [...row.children].find(cell => !cell.querySelector('a') && !cell.querySelector('picture') && cell.textContent.trim() !== '');
-    const textCell = [...row.children].find(cell => cell.querySelector('p'));
+  articleRows.forEach((row) => {
+    // Based on BLOCK JSON and EDS BLOCK STRUCTURE:
+    // cell[0]: field="cardLink" label="Card Link" type=aem-content (<a>)
+    // cell[1]: field="cardLinkLabel" label="Card Link Label" type=text (<a>, but content is label)
+    // cell[2]: field="image" label="Image" type=reference (<picture>)
+    // cell[3]: field="date" label="Date" type=text (text content)
+    // cell[4]: field="title" label="Title" type=text (text content)
+    const cells = [...row.children];
+    const cardLinkCell = cells[0];
+    const cardLinkLabelCell = cells[1];
+    const imageCell = cells[2];
+    const dateCell = cells[3];
+    const titleCell = cells[4];
 
-    if (linkEl) {
-      const cardWrapper = document.createElement('a');
-      cardWrapper.href = linkEl.href;
-      cardWrapper.classList.add('article_listing--cardWrapper', 'analytics_cta_click');
-      cardWrapper.setAttribute('data-cta-label', linkEl.textContent.trim());
-      moveInstrumentation(row, cardWrapper);
+    const cardLinkWrapper = document.createElement('a');
+    cardLinkWrapper.classList.add('article_listing--cardWrapper', 'analytics_cta_click');
+    moveInstrumentation(row, cardLinkWrapper);
 
-      const cardsDiv = document.createElement('div');
-      cardsDiv.classList.add('article_listing--cards');
+    const originalCardLink = cardLinkCell ? cardLinkCell.querySelector('a') : null;
+    const originalCardLinkLabel = cardLinkLabelCell ? cardLinkLabelCell.querySelector('a') : null;
 
-      if (imageEl) {
-        const cardImageWrapper = document.createElement('div');
-        cardImageWrapper.classList.add('article_listing--cardImageWrapper');
+    if (originalCardLink) {
+      cardLinkWrapper.href = originalCardLink.href;
+    }
+    if (originalCardLinkLabel) {
+      cardLinkWrapper.setAttribute('data-cta-label', originalCardLinkLabel.textContent.trim());
+    } else if (titleCell) {
+      cardLinkWrapper.setAttribute('data-cta-label', titleCell.textContent.trim());
+    }
 
-        const img = imageEl.querySelector('img');
+    const card = document.createElement('div');
+    card.classList.add('article_listing--cards');
+
+    if (imageCell) {
+      const cardImageWrapper = document.createElement('div');
+      cardImageWrapper.classList.add('article_listing--cardImageWrapper');
+      const picture = imageCell.querySelector('picture');
+      if (picture) {
+        const img = picture.querySelector('img');
         if (img) {
           const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+          moveInstrumentation(img, optimizedPic.querySelector('img'));
           optimizedPic.querySelector('img').classList.add('article_listing--cardImage', 'w-100', 'h-100');
-          moveInstrumentation(imageEl, optimizedPic.querySelector('img'));
           cardImageWrapper.append(optimizedPic);
         }
-        cardsDiv.append(cardImageWrapper);
       }
-
-      const contentWrapper = document.createElement('div');
-      contentWrapper.classList.add('cards_content--wrapper');
-
-      if (dateCell) {
-        const dateP = document.createElement('p');
-        dateP.classList.add('boing--text__body-5', 'p-0', 'm-0', 'mb-3', 'published_date');
-        dateP.textContent = dateCell.textContent.trim();
-        contentWrapper.append(dateP);
-      }
-
-      if (textCell) {
-        const textP = document.createElement('p');
-        textP.classList.add('boing--text__body-2', 'boing--text__body');
-        // Corrected: Append all child nodes from the text cell's first element
-        if (textCell.firstElementChild) {
-          while (textCell.firstElementChild.firstChild) {
-            textP.append(textCell.firstElementChild.firstChild);
-          }
-        }
-        contentWrapper.append(textP);
-      }
-
-      cardsDiv.append(contentWrapper);
-      cardWrapper.append(cardsDiv);
-      secondSection.append(cardWrapper);
+      card.append(cardImageWrapper);
     }
+
+    const contentWrapper = document.createElement('div');
+    contentWrapper.classList.add('cards_content--wrapper');
+
+    if (dateCell) {
+      const datePara = document.createElement('p');
+      datePara.classList.add('boing--text__body-5', 'p-0', 'm-0', 'mb-3', 'published_date');
+      moveInstrumentation(dateCell, datePara);
+      datePara.append(dateCell.textContent.trim());
+      contentWrapper.append(datePara);
+    }
+
+    if (titleCell) {
+      const titlePara = document.createElement('p');
+      titlePara.classList.add('boing--text__body-2', 'boing--text__body');
+      moveInstrumentation(titleCell, titlePara);
+      titlePara.append(titleCell.textContent.trim());
+      contentWrapper.append(titlePara);
+    }
+
+    card.append(contentWrapper);
+    cardLinkWrapper.append(card);
+    secondSection.append(cardLinkWrapper);
   });
 
-  articleListingDiv.append(secondSection);
+  articleListing.append(secondSection);
 
   block.textContent = '';
-  block.append(sectionWrapper);
+  block.append(wrapper);
 }

@@ -3710,6 +3710,18 @@ to{-webkit-transform:rotate(1turn);transform:rotate(1turn)}
 @media(min-width:540px){.banner-section__wrapper .boing__banner--cta .cmp-button__text{width:50% !important}
 }
 
+@media(max-width:580px){.cmp-container .unlockpop{bottom:-25pc;height:80vw !important;position:fixed}
+}
+
+@media(max-width:580px){.cmp-container .unlockdv{height:236px !important;top:46%}
+}
+
+@media(max-width:375px){.cmp-container .unlockdv{height:212px !important}
+}
+
+@media(max-width:370px){.cmp-container .unlockdv{height:206px !important}
+}
+
 @media(max-width:575.98px){.lets-doodle .primary-swiper .swiper-container .primary-swiper__buttonNext{display:none}
 }
 
@@ -4086,7 +4098,7 @@ body .boing-bg-wrapper{background-image:url(clientlib-boing/resources/images/sta
 
 button, input, optgroup, select, textarea { font:inherit }
 
-:root{
+:root {
       --bgimage: url(https:\2f\2fs7ap1.scene7.com\2fis\2fimage\2fitcportalprod\2f bgbxrect?fmt=webp-alpha);
       --activeastro: url(https:\2f\2fs7ap1.scene7.com\2fis\2fimage\2fitcportalprod\2f activeastro?fmt=webp-alpha);
       --sharebx: url(https:\2f\2fs7ap1.scene7.com\2fis\2fimage\2fitcportalprod\2fsharebx?fmt=webp-alpha);
