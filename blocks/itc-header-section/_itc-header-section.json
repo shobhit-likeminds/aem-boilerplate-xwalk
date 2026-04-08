@@ -1,0 +1,142 @@
+{
+  "definitions": [
+    {
+      "title": "ITC Header Section",
+      "id": "itc-header-section",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "itc-header-section",
+              "model": "itc-header-section",
+              "name": "ITC Header Section"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Navigation Item",
+      "id": "navigation-item",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "navigation-item",
+              "name": "Navigation Item"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Country Option",
+      "id": "country-option",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "country-option",
+              "name": "Country Option"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "itc-header-section",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Logo Image",
+          "name": "logoImage",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Logo Link",
+          "name": "logoLink",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Logo Link Label",
+          "name": "logoLinkLabel",
+          "valueType": "string"
+        },
+        {
+          "component": "container",
+          "item": "navigation-item",
+          "label": "Navigation Items",
+          "name": "navigationItems"
+        },
+        {
+          "component": "container",
+          "item": "country-option",
+          "label": "Country Options",
+          "name": "countryOptions"
+        }
+      ]
+    },
+    {
+      "id": "navigation-item",
+      "fields": [
+        {
+          "component": "aem-content",
+          "label": "Link",
+          "name": "link",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Link Label",
+          "name": "linkLabel",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "country-option",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Flag Image",
+          "name": "flagImage",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Country Name",
+          "name": "countryName",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Country URL",
+          "name": "countryUrl",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Country URL Label",
+          "name": "countryUrlLabel",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "itc-header-section",
+      "components": [
+        "navigation-item",
+        "country-option"
+      ]
+    }
+  ]
+}

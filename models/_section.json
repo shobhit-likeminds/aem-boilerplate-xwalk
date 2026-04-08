@@ -121,7 +121,12 @@
         "tv-sec",
         "parle-campaign",
         "parle-social",
-        "feature-card-list"
+        "feature-card-list",
+        "itc-header-section",
+        "itc-club-carousel",
+        "itc-how-shift",
+        "rs-cards",
+        "itc-footer-section"
       ]
     }
   ]
