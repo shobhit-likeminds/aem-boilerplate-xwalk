@@ -2,14 +2,21 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const [titleRow, descriptionRow, ctaLinkRow, ctaLinkLabelRow, ...articleRows] = [...block.children];
+  const [
+    titleRow,
+    descriptionRow,
+    viewAllLinkRow,
+    viewAllLinkLabelRow,
+    ...articleRows
+  ] = [...block.children];
+
+  block.textContent = '';
 
   const sectionWrapper = document.createElement('section');
   sectionWrapper.classList.add('article_listing--wrapper');
 
   const articleListing = document.createElement('div');
   articleListing.classList.add('article_listing', 'position-relative');
-  moveInstrumentation(block, articleListing);
 
   const firstSection = document.createElement('div');
   firstSection.classList.add('article_listing_section--first', 'text-white', 'text-center');
@@ -18,119 +25,116 @@ export default function decorate(block) {
   const title = document.createElement('h2');
   title.classList.add('article_listing--title', 'boing--text__heading-1', 'text-white', 'pb-3');
   moveInstrumentation(titleRow, title);
-  while (titleRow.firstChild) title.append(titleRow.firstChild);
+  title.textContent = titleRow.firstElementChild.textContent.trim();
   firstSection.append(title);
 
   // Description
   const description = document.createElement('p');
   description.classList.add('article_listing--desc', 'boing--text__body-2', 'pb-4');
   moveInstrumentation(descriptionRow, description);
-  while (descriptionRow.firstChild) description.append(descriptionRow.firstChild);
+  description.textContent = descriptionRow.firstElementChild.textContent.trim();
   firstSection.append(description);
 
-  // CTA
-  const ctaWrapper = document.createElement('div');
-  ctaWrapper.classList.add('article_listing--btnWrapper');
-  const ctaLink = document.createElement('a');
-  const originalCtaLink = ctaLinkRow.querySelector('a');
-  if (originalCtaLink) {
-    ctaLink.href = originalCtaLink.href;
+  // View All Link
+  const viewAllBtnWrapper = document.createElement('div');
+  viewAllBtnWrapper.classList.add('article_listing--btnWrapper');
+
+  const viewAllAnchor = document.createElement('a');
+  viewAllAnchor.classList.add('boing--text__title-3', 'article_listing--btn', 'analytics_cta_click');
+  const viewAllLink = viewAllLinkRow.querySelector('a');
+  if (viewAllLink) {
+    viewAllAnchor.href = viewAllLink.href;
+    viewAllAnchor.title = viewAllLinkLabelRow.firstElementChild.textContent.trim();
   }
-  // The ctaLinkLabelRow contains the text directly within its div, not a nested div.
-  // The original HTML also shows the text directly in the <a> tag.
-  ctaLink.textContent = ctaLinkLabelRow.textContent.trim();
-  
-  ctaLink.classList.add('boing--text__title-3', 'article_listing--btn', 'analytics_cta_click');
-  moveInstrumentation(ctaLinkRow, ctaLink);
-  moveInstrumentation(ctaLinkLabelRow, ctaLink);
+  viewAllAnchor.textContent = viewAllLinkLabelRow.firstElementChild.textContent.trim();
+  moveInstrumentation(viewAllLinkRow, viewAllAnchor);
+  moveInstrumentation(viewAllLinkLabelRow, viewAllAnchor);
 
-  // Add SVG image from original HTML
-  const ctaImage = document.createElement('img');
-  ctaImage.alt = 'svg file';
-  ctaImage.src = '/content/dam/aemigrate/uploaded-folder/image/1775730059444.svg+xml';
-  ctaLink.append(ctaImage);
+  // Append SVG icon if available in the original link cell
+  const originalLinkContent = viewAllLinkRow.firstElementChild;
+  const originalLinkImg = originalLinkContent ? originalLinkContent.querySelector('img') : null;
+  if (originalLinkImg) {
+    const img = document.createElement('img');
+    img.alt = originalLinkImg.alt;
+    img.src = originalLinkImg.src;
+    viewAllAnchor.append(img);
+  }
 
-  ctaWrapper.append(ctaLink);
-  firstSection.append(ctaWrapper);
+  viewAllBtnWrapper.append(viewAllAnchor);
+  firstSection.append(viewAllBtnWrapper);
   articleListing.append(firstSection);
 
-  // Article Cards
+  // Articles
   const secondSection = document.createElement('div');
   secondSection.classList.add('article_listing_section--second', 'd-flex');
 
   articleRows.forEach((row) => {
+    const cells = [...row.children];
+    // Content detection for article card cells
+    const cardLinkCell = cells.find(cell => cell.querySelector('a'));
+    const cardLinkLabelCell = cells.find(cell => !cell.querySelector('a') && cell.textContent.trim() !== '' && cells.indexOf(cell) === 1); // Assuming label is the second cell without a direct link
+    const imageCell = cells.find(cell => cell.querySelector('picture'));
+    const dateCell = cells.find(cell => !cell.querySelector('picture') && !cell.querySelector('a') && cells.indexOf(cell) === cells.length - 2); // Assuming date is second to last
+    const textCell = cells.find(cell => !cell.querySelector('picture') && !cell.querySelector('a') && cells.indexOf(cell) === cells.length - 1); // Assuming text is last
+
     const cardLink = document.createElement('a');
     cardLink.classList.add('article_listing--cardWrapper', 'analytics_cta_click');
     moveInstrumentation(row, cardLink);
 
-    const cardDiv = document.createElement('div');
-    cardDiv.classList.add('article_listing--cards');
-    cardLink.append(cardDiv);
+    const originalCardLink = cardLinkCell ? cardLinkCell.querySelector('a') : null;
+    if (originalCardLink) {
+      cardLink.href = originalCardLink.href;
+      cardLink.setAttribute('data-cta-label', cardLinkLabelCell ? cardLinkLabelCell.textContent.trim() : '');
+    }
+
+    const articleCard = document.createElement('div');
+    articleCard.classList.add('article_listing--cards');
 
     const cardImageWrapper = document.createElement('div');
     cardImageWrapper.classList.add('article_listing--cardImageWrapper');
-    cardDiv.append(cardImageWrapper);
 
-    const cardsContentWrapper = document.createElement('div');
-    cardsContentWrapper.classList.add('cards_content--wrapper');
-    cardDiv.append(cardsContentWrapper);
-
-    // Use content detection for cells based on BlockJson and original HTML
-    const cells = [...row.children];
-    const cardLinkCell = cells.find(cell => cell.querySelector('a'));
-    const imageCell = cells.find(cell => cell.querySelector('picture'));
-    const dateCell = cells.find(cell => cell.textContent.trim().match(/\d{2} \w+ \d{4}/));
-    const headlineCell = cells.find(cell => cell.querySelector('p') && !cell.textContent.trim().match(/\d{2} \w+ \d{4}/));
-
-    if (cardLinkCell) { // Card Link
-      const originalCardLink = cardLinkCell.querySelector('a');
-      if (originalCardLink) {
-        cardLink.href = originalCardLink.href;
-        cardLink.setAttribute('data-cta-label', originalCardLink.textContent.trim());
+    const picture = imageCell ? imageCell.querySelector('picture') : null;
+    if (picture) {
+      const img = picture.querySelector('img');
+      if (img) {
+        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+        moveInstrumentation(img, optimizedPic.querySelector('img'));
+        optimizedPic.classList.add('article_listing--cardImage', 'w-100', 'h-100');
+        cardImageWrapper.append(optimizedPic);
       }
     }
+    articleCard.append(cardImageWrapper);
 
-    if (imageCell) { // Image
-      const picture = imageCell.querySelector('picture');
-      if (picture) {
-        const img = picture.querySelector('img');
-        const newImg = document.createElement('img');
-        newImg.src = img.src;
-        newImg.alt = img.alt;
-        newImg.classList.add('article_listing--cardImage', 'w-100', 'h-100');
-        moveInstrumentation(imageCell, newImg);
-        cardImageWrapper.append(newImg);
+    const contentWrapper = document.createElement('div');
+    contentWrapper.classList.add('cards_content--wrapper');
+
+    const date = document.createElement('p');
+    date.classList.add('boing--text__body-5', 'p-0', 'm-0', 'mb-3', 'published_date');
+    moveInstrumentation(dateCell, date);
+    if (dateCell) {
+      date.textContent = dateCell.textContent.trim();
+      // Extract data-date attribute from the original HTML if available
+      const originalDateP = dateCell.querySelector('p[data-date]');
+      if (originalDateP) {
+        date.setAttribute('data-date', originalDateP.getAttribute('data-date'));
       }
     }
+    contentWrapper.append(date);
 
-    if (dateCell) { // Date
-      const dateP = document.createElement('p');
-      dateP.classList.add('boing--text__body-5', 'p-0', 'm-0', 'mb-3', 'published_date');
-      moveInstrumentation(dateCell, dateP);
-      while (dateCell.firstChild) dateP.append(dateCell.firstChild);
-      cardsContentWrapper.append(dateP);
+    const text = document.createElement('p');
+    text.classList.add('boing--text__body-2', 'boing--text__body');
+    moveInstrumentation(textCell, text);
+    if (textCell) {
+      text.textContent = textCell.textContent.trim();
     }
+    contentWrapper.append(text);
 
-    if (headlineCell) { // Headline
-      const headlineP = document.createElement('p');
-      headlineP.classList.add('boing--text__body-2', 'boing--text__body');
-      moveInstrumentation(headlineCell, headlineP);
-      while (headlineCell.firstChild) headlineP.append(headlineCell.firstChild);
-      cardsContentWrapper.append(headlineP);
-    }
-    
+    articleCard.append(contentWrapper);
+    cardLink.append(articleCard);
     secondSection.append(cardLink);
   });
 
   articleListing.append(secondSection);
   sectionWrapper.append(articleListing);
-
-  sectionWrapper.querySelectorAll('picture > img').forEach((img) => {
-    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-    moveInstrumentation(img, optimizedPic.querySelector('img'));
-    img.closest('picture').replaceWith(optimizedPic);
-  });
-
-  block.textContent = '';
   block.append(sectionWrapper);
 }

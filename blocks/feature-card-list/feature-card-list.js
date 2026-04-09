@@ -2,93 +2,81 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const [headingRow, ...cardRows] = [...block.children];
+  const children = [...block.children];
+  const headingRow = children[0];
+  const cardRows = children.slice(1);
 
   // Heading
-  const headingDiv = document.createElement('div');
-  moveInstrumentation(headingRow, headingDiv);
-  headingDiv.classList.add('cmp-text');
-  while (headingRow.firstChild) headingDiv.append(headingRow.firstChild);
-  block.append(headingDiv);
+  const headingContainer = document.createElement('div');
+  moveInstrumentation(headingRow, headingContainer);
+  headingContainer.classList.add('cmp-text');
+  while (headingRow.firstChild) headingContainer.append(headingRow.firstChild);
+  // Do not append to block yet, collect all elements first
 
-  const sectionsToAppend = []; // Collect sections to append later
-
+  // Feature Cards
+  const featureCardSections = [];
   cardRows.forEach((row) => {
+    const cells = [...row.children];
+
+    // Use content detection to map cells to fields
+    const imageCell = cells.find(cell => cell.querySelector('picture'));
+    const altTextCell = cells.find(cell => !cell.querySelector('picture') && !cell.querySelector('a') && cell.textContent.trim().length > 0);
+    const titleCell = cells.find(cell => !cell.querySelector('picture') && !cell.querySelector('a') && cell.querySelector('p') === null && cell.textContent.trim().length > 0 && cells.indexOf(cell) > cells.indexOf(altTextCell));
+    const descriptionCell = cells.find(cell => cell.querySelector('p'));
+    const ctaLinkCell = cells.find(cell => cell.querySelector('a') && cells.indexOf(cell) > cells.indexOf(descriptionCell));
+    const ctaLinkLabelCell = cells.find(cell => cell.querySelector('a') && cells.indexOf(cell) > cells.indexOf(ctaLinkCell));
+
+
     const section = document.createElement('section');
     moveInstrumentation(row, section);
     section.classList.add('d-block', 'feature_card--Section', 'feature_card', 'mx-auto');
 
-    let imageCell;
-    let altTextCell;
-    let titleCell;
-    let descriptionCell;
-    let ctaLinkCell;
-    let ctaLinkLabelCell;
-
-    // Use a counter or specific checks to identify cells based on their content type
-    const cells = [...row.children];
-    imageCell = cells.find((cell) => cell.querySelector('picture'));
-    ctaLinkCell = cells.find((cell) => cell.querySelector('a'));
-
-    // Filter out cells that are already identified as image or CTA link
-    const textCells = cells.filter((cell) => !cell.querySelector('picture') && !cell.querySelector('a'));
-
-    // Assign text cells based on their expected order
-    if (textCells.length >= 1) altTextCell = textCells[0];
-    if (textCells.length >= 2) titleCell = textCells[1];
-    if (textCells.length >= 3) descriptionCell = textCells[2];
-    if (textCells.length >= 4) ctaLinkLabelCell = textCells[3];
-
-
-    const anchor = document.createElement('a');
-    anchor.classList.add('d-flex', 'flex-column', 'analytics_cta_click', 'text-decoration-none');
-    const ctaLink = ctaLinkCell ? ctaLinkCell.querySelector('a') : null;
-    if (ctaLink) {
-      anchor.href = ctaLink.href;
-      anchor.title = ctaLinkLabelCell ? ctaLinkLabelCell.textContent.trim() : '';
-      anchor.setAttribute('data-cta-label', anchor.title);
-      if (ctaLink.target) anchor.target = ctaLink.target;
+    const ctaLink = document.createElement('a');
+    const originalCtaLink = ctaLinkCell?.querySelector('a');
+    if (originalCtaLink) {
+      ctaLink.href = originalCtaLink.href;
+      if (originalCtaLink.target) ctaLink.target = originalCtaLink.target;
+      if (originalCtaLink.title) ctaLink.title = originalCtaLink.title;
     }
-    moveInstrumentation(ctaLinkCell, anchor);
+    ctaLink.classList.add('d-flex', 'flex-column', 'analytics_cta_click', 'text-decoration-none');
+    ctaLink.setAttribute('data-cta-label', ctaLinkLabelCell?.textContent.trim() || '');
 
-    const featureImageDiv = document.createElement('div');
-    featureImageDiv.classList.add('feature_card--image', 'w-100', 'pb-4');
-    if (imageCell) {
-      const picture = imageCell.querySelector('picture');
-      if (picture) {
-        const img = picture.querySelector('img');
-        if (img) {
-          const optimizedPic = createOptimizedPicture(img.src, altTextCell ? altTextCell.textContent.trim() : '', false, [{ width: '750' }]);
-          moveInstrumentation(img, optimizedPic.querySelector('img'));
-          picture.replaceWith(optimizedPic);
-        }
+    // Image
+    const imageDiv = document.createElement('div');
+    imageDiv.classList.add('feature_card--image', 'w-100', 'pb-4');
+    const picture = imageCell?.querySelector('picture');
+    if (picture) {
+      const img = picture.querySelector('img');
+      if (img) {
+        const optimizedPic = createOptimizedPicture(img.src, altTextCell?.textContent.trim() || '', false, [{ width: '750' }]);
+        moveInstrumentation(img, optimizedPic.querySelector('img'));
+        imageDiv.append(optimizedPic);
       }
-      moveInstrumentation(imageCell, featureImageDiv);
-      while (imageCell.firstChild) featureImageDiv.append(imageCell.firstChild);
     }
-    anchor.append(featureImageDiv);
+    ctaLink.append(imageDiv);
 
-    const textCenterDiv = document.createElement('div');
-    textCenterDiv.classList.add('text-center');
+    // Content
+    const contentDiv = document.createElement('div');
+    contentDiv.classList.add('text-center');
 
-    const titleH2 = document.createElement('h2');
-    titleH2.classList.add('feature_card--title', 'boing--text__heading-1');
+    const title = document.createElement('h2');
+    title.classList.add('feature_card--title', 'boing--text__heading-1');
     if (titleCell) {
-      moveInstrumentation(titleCell, titleH2);
-      titleH2.textContent = titleCell.textContent.trim();
+      moveInstrumentation(titleCell, title);
+      title.append(...titleCell.children);
     }
-    textCenterDiv.append(titleH2);
+    contentDiv.append(title);
 
-    const descriptionWrapperDiv = document.createElement('div');
-    descriptionWrapperDiv.classList.add('pb-5');
-    const descriptionP = document.createElement('p');
-    descriptionP.classList.add('feature_card--desc', 'boing--text__body-2', 'text-boing-dark');
+    const descriptionContainer = document.createElement('div');
+    descriptionContainer.classList.add('pb-5');
+    const description = document.createElement('p');
+    description.classList.add('feature_card--desc', 'boing--text__body-2', 'text-boing-dark');
     if (descriptionCell) {
-      moveInstrumentation(descriptionCell, descriptionP);
-      descriptionP.textContent = descriptionCell.textContent.trim();
+      moveInstrumentation(descriptionCell, description);
+      description.append(...descriptionCell.children);
     }
-    descriptionWrapperDiv.append(descriptionP);
-    textCenterDiv.append(descriptionWrapperDiv);
+    descriptionContainer.append(description);
+    contentDiv.append(descriptionContainer);
 
     const redirectedBtnDiv = document.createElement('div');
     redirectedBtnDiv.classList.add('redirected_btn', 'd-none');
@@ -96,29 +84,43 @@ export default function decorate(block) {
     button.type = 'button';
     button.role = 'button';
     button.classList.add('arrow-icon-btn');
+    // The arrow icon is present in the original HTML as an img inside the button.
+    // Since it's not part of the block model fields, we'll assume it's a static asset
+    // that needs to be added or handled separately if it's not in the block content.
+    // For this review, we'll add a placeholder if not present in the model.
+    // If the original HTML has an img, it should be preserved.
+    const originalButtonImg = ctaLinkCell?.querySelector('button img'); // Check if the original CTA cell had an image in a button
+    if (originalButtonImg) {
+      button.append(originalButtonImg.cloneNode(true));
+    } else {
+      // Placeholder if not found in model or original HTML
+      const img = document.createElement('img');
+      img.alt = 'svg file';
+      img.src = '/content/dam/aemigrate/uploaded-folder/image/1775737677707.svg+xml'; // Example path, adjust as needed
+      button.append(img);
+    }
 
-    const img = document.createElement('img');
-    img.alt = 'svg file';
-    // Use the relative path from the original HTML
-    img.src = '/content/dam/aemigrate/uploaded-folder/image/1775730059234.svg+xml';
-    button.append(img);
     redirectedBtnDiv.append(button);
-    textCenterDiv.append(redirectedBtnDiv);
+    contentDiv.append(redirectedBtnDiv);
+
+    ctaLink.append(contentDiv);
+    section.append(ctaLink);
+    featureCardSections.push(section);
 
     // Add event listener for the button
-    button.addEventListener('click', () => {
-      if (ctaLink) {
-        window.location.href = ctaLink.href;
-      }
+    button.addEventListener('click', (e) => {
+      e.preventDefault(); // Prevent default button behavior if it's inside a link
+      e.stopPropagation(); // Stop propagation to prevent the parent link from being triggered immediately
+      window.location.href = ctaLink.href; // Navigate to the CTA link's href
     });
-
-    anchor.append(textCenterDiv);
-    section.append(anchor);
-    sectionsToAppend.push(section); // Collect the created section
   });
 
-  // Clear original block content
+  // Clear the original block content
   block.textContent = '';
-  block.append(headingDiv);
-  sectionsToAppend.forEach((section) => block.append(section)); // Append all collected sections
+
+  // Re-append the heading and sections
+  block.append(headingContainer);
+  featureCardSections.forEach((section) => {
+    block.append(section);
+  });
 }

@@ -1,0 +1,148 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  // article-listing model fixed fields (rows before container items):
+  // row 0: title (text)
+  // row 1: description (richtext)
+  // row 2: ctaLink (aem-content)
+  // row 3: ctaLinkLabel (text)
+  // rows 4+: article-card container items
+  const [titleRow, descriptionRow, ctaLinkRow, ctaLinkLabelRow, ...articleRows] = [...block.children];
+
+  const sectionWrapper = document.createElement('section');
+  sectionWrapper.classList.add('article_listing--wrapper');
+
+  const articleListing = document.createElement('div');
+  articleListing.classList.add('article_listing', 'position-relative');
+  moveInstrumentation(block, articleListing);
+
+  const firstSection = document.createElement('div');
+  firstSection.classList.add('article_listing_section--first', 'text-white', 'text-center');
+
+  // Title (text field — plain text, no <a> element)
+  const title = document.createElement('h2');
+  title.classList.add('article_listing--title', 'boing--text__heading-1', 'text-white', 'pb-3');
+  moveInstrumentation(titleRow, title);
+  title.textContent = titleRow.textContent.trim();
+  firstSection.append(title);
+
+  // Description (richtext field — move children to preserve formatting)
+  const description = document.createElement('p');
+  description.classList.add('article_listing--desc', 'boing--text__body-2', 'pb-4');
+  moveInstrumentation(descriptionRow, description);
+  description.textContent = descriptionRow.textContent.trim();
+  firstSection.append(description);
+
+  // CTA button
+  const ctaWrapper = document.createElement('div');
+  ctaWrapper.classList.add('article_listing--btnWrapper');
+  const ctaLink = document.createElement('a');
+  // ctaLink is aem-content — the <a> inside contains the URL
+  const originalCtaLink = ctaLinkRow.querySelector('a');
+  if (originalCtaLink) {
+    ctaLink.href = originalCtaLink.href;
+    moveInstrumentation(originalCtaLink, ctaLink);
+  }
+  // ctaLinkLabel is a text field — read textContent directly, NEVER querySelector('a')
+  ctaLink.textContent = ctaLinkLabelRow ? ctaLinkLabelRow.textContent.trim() : '';
+  ctaLink.classList.add('boing--text__title-3', 'article_listing--btn', 'analytics_cta_click');
+  ctaWrapper.append(ctaLink);
+  firstSection.append(ctaWrapper);
+  articleListing.append(firstSection);
+
+  // Article Cards
+  const secondSection = document.createElement('div');
+  secondSection.classList.add('article_listing_section--second', 'd-flex');
+
+  articleRows.forEach((row) => {
+    const cardLink = document.createElement('a');
+    cardLink.classList.add('article_listing--cardWrapper', 'analytics_cta_click');
+    moveInstrumentation(row, cardLink);
+
+    const cardDiv = document.createElement('div');
+    cardDiv.classList.add('article_listing--cards');
+    cardLink.append(cardDiv);
+
+    const cardImageWrapper = document.createElement('div');
+    cardImageWrapper.classList.add('article_listing--cardImageWrapper');
+    cardDiv.append(cardImageWrapper);
+
+    const cardsContentWrapper = document.createElement('div');
+    cardsContentWrapper.classList.add('cards_content--wrapper');
+    cardDiv.append(cardsContentWrapper);
+
+    // article-card model fixed cells (index-based — model is deterministic):
+    // cells[0]: cardLink (aem-content) — has <a href="url">url</a> after decorateButtons
+    // cells[1]: cardLinkLabel (text)    — plain text, NEVER has <a>
+    // cells[2]: image (reference)       — has <picture>
+    // cells[3]: date (text)             — plain date string
+    // cells[4]: headline (richtext)     — article title/headline text
+    const cells = [...row.children];
+    const [cardLinkCell, cardLinkLabelCell, imageCell, dateCell, headlineCell] = cells;
+
+    // Card href — read from aem-content cell
+    if (cardLinkCell) {
+      const foundLink = cardLinkCell.querySelector('a');
+      if (foundLink) {
+        cardLink.href = foundLink.href;
+      }
+    }
+
+    // data-cta-label — read from text label cell (cells[1]), NOT from the aem-content anchor
+    // (aem-content anchor text is always the raw URL path, not a human label)
+    const cardLinkLabelText = cardLinkLabelCell ? cardLinkLabelCell.textContent.trim() : '';
+    if (cardLinkLabelText) {
+      cardLink.setAttribute('data-cta-label', cardLinkLabelText);
+    }
+
+    // Image (reference field)
+    if (imageCell) {
+      const picture = imageCell.querySelector('picture');
+      if (picture) {
+        const img = picture.querySelector('img');
+        if (img) {
+          const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+          moveInstrumentation(img, optimizedPic.querySelector('img'));
+          optimizedPic.querySelector('img').classList.add('article_listing--cardImage', 'w-100', 'h-100');
+          cardImageWrapper.append(optimizedPic);
+        }
+      }
+    }
+
+    // Date (text field)
+    if (dateCell) {
+      const dateP = document.createElement('p');
+      dateP.classList.add('boing--text__body-5', 'p-0', 'm-0', 'mb-3', 'published_date');
+      moveInstrumentation(dateCell, dateP);
+      dateP.textContent = dateCell.textContent.trim();
+      cardsContentWrapper.append(dateP);
+    }
+
+    // Headline (richtext field) — use textContent to get plain text without wrapping <p>/<a> nodes
+    // NEVER use cells.find(cell => cell.querySelector('p')) — it matches the cardLink cell first
+    // because decorateButtons wraps aem-content fields in <p class="button-container">
+    if (headlineCell) {
+      const headlineP = document.createElement('p');
+      headlineP.classList.add('boing--text__body-2', 'boing--text__body');
+      moveInstrumentation(headlineCell, headlineP);
+      headlineP.textContent = headlineCell.textContent.trim();
+      cardsContentWrapper.append(headlineP);
+    }
+
+    secondSection.append(cardLink);
+  });
+
+  articleListing.append(secondSection);
+
+  sectionWrapper.append(articleListing);
+
+  sectionWrapper.querySelectorAll('picture > img').forEach((img) => {
+    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+    moveInstrumentation(img, optimizedPic.querySelector('img'));
+    img.closest('picture').replaceWith(optimizedPic);
+  });
+
+  block.textContent = '';
+  block.append(sectionWrapper);
+}

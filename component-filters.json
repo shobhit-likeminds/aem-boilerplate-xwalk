@@ -124,7 +124,7 @@
   {
     "id": "boing-header-footer",
     "components": [
-      "sidebar-menu-item",
+      "header-menu-item",
       "footer-list-item",
       "footer-social-link"
     ]

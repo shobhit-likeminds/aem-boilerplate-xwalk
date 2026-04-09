@@ -43,21 +43,21 @@
           "valueType": "string"
         },
         {
-          "component": "text",
+          "component": "richtext",
           "label": "Description",
           "name": "description",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "label": "View All Link",
-          "name": "viewAllLink",
+          "label": "CTA Link",
+          "name": "ctaLink",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "View All Label",
-          "name": "viewAllLinkLabel",
+          "label": "CTA Label",
+          "name": "ctaLinkLabel",
           "valueType": "string"
         },
         {
@@ -96,9 +96,9 @@
           "valueType": "string"
         },
         {
-          "component": "text",
-          "label": "Text",
-          "name": "text",
+          "component": "richtext",
+          "label": "Headline",
+          "name": "headline",
           "valueType": "string"
         }
       ]

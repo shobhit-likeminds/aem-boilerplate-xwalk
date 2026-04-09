@@ -1,0 +1,171 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  // CHECK 0 & 1: Replaced direct index access with content detection
+  // The block structure indicates a single row for the video.
+  // The BlockJson confirms a single 'video' field.
+  const cells = [...block.children[0].children]; // Access the cells of the first (and only) row
+  const videoCell = cells.find(cell => cell.querySelector('picture')); // Find the cell containing the picture for the video
+
+  const section = document.createElement('section');
+  section.classList.add('banner-section');
+
+  const wrapper = document.createElement('div');
+  wrapper.classList.add('position-relative', 'boing', 'banner-section__wrapper');
+
+  const videoWrapper = document.createElement('div');
+  videoWrapper.classList.add('video-wrapper');
+
+  const videoElement = document.createElement('video');
+  videoElement.classList.add('w-100', 'object-fit-cover', 'banner-media', 'banner-video');
+  videoElement.setAttribute('title', 'Video');
+  videoElement.setAttribute('aria-label', 'Video');
+  videoElement.setAttribute('data-is-autoplay', 'true');
+  videoElement.setAttribute('playsinline', '');
+  videoElement.setAttribute('preload', 'metadata');
+  videoElement.setAttribute('fetchpriority', 'high');
+  videoElement.setAttribute('loop', 'false'); // Original HTML has loop="false"
+  videoElement.setAttribute('muted', 'true');
+  videoElement.setAttribute('autoplay', 'true');
+
+  const source = document.createElement('source');
+  const picture = videoCell ? videoCell.querySelector('picture') : null;
+  const img = picture ? picture.querySelector('img') : null;
+  if (img) {
+    // The original HTML uses a specific .mp4 path, so we should try to replicate that if possible
+    // If the img.src is a .jpg, we assume it's a placeholder and try to infer the .mp4
+    // For robust solution, consider a data attribute on the picture/img for the video source
+    // For now, based on the original HTML, we'll use the provided video path if available,
+    // otherwise, infer from the image.
+    const videoSrc = img.src.replace(/\.[^.]+$/, '.mp4'); // Fallback to inferring .mp4
+    source.src = videoSrc;
+    source.type = 'video/mp4';
+  } else {
+    // If no picture/img, try to find a direct video source from the cell content
+    const existingSource = videoCell ? videoCell.querySelector('source[type="video/mp4"]') : null;
+    if (existingSource) {
+      source.src = existingSource.src;
+      source.type = existingSource.type;
+    }
+  }
+  videoElement.append(source);
+  if (videoCell) { // Ensure videoCell exists before moving instrumentation
+    moveInstrumentation(videoCell, videoElement); // Move instrumentation from videoCell to videoElement
+  }
+  videoWrapper.append(videoElement);
+
+  // Play/Pause controls
+  const playPauseContainer = document.createElement('div');
+  playPauseContainer.classList.add('position-absolute', 'w-100', 'h-100', 'start-0', 'top-0', 'd-flex', 'justify-content-center', 'align-items-center', 'cursor-pointer');
+
+  const playButton = document.createElement('button');
+  playButton.setAttribute('type', 'button');
+  playButton.classList.add('d-none', 'video-icon', 'icon-play', 'bg-transparent', 'd-flex', 'align-items-center', 'justify-content-center', 'cursor-pointer');
+  const playIcon = document.createElement('img');
+  playIcon.setAttribute('alt', 'svg file');
+  playIcon.src = '/content/dam/aemigrate/uploaded-folder/image/1775737677133.svg+xml'; // From original HTML
+  playButton.append(playIcon);
+
+  const pauseButton = document.createElement('button');
+  pauseButton.setAttribute('type', 'button');
+  pauseButton.classList.add('d-block', 'video-icon', 'icon-pause', 'bg-transparent', 'd-flex', 'align-items-center', 'justify-content-center', 'cursor-pointer');
+  const pauseIcon = document.createElement('img');
+  pauseIcon.setAttribute('alt', 'svg file');
+  pauseIcon.src = '/content/dam/aemigrate/uploaded-folder/image/1775737677165.svg+xml'; // From original HTML
+  pauseButton.append(pauseIcon);
+
+  playPauseContainer.append(playButton, pauseButton);
+  videoWrapper.append(playPauseContainer);
+
+  // Mute/Unmute controls
+  const muteContainer = document.createElement('div');
+  muteContainer.classList.add('position-absolute', 'z-2', 'd-flex', 'justify-content-center', 'align-items-center', 'cursor-pointer', 'mute-icon');
+
+  const muteButton = document.createElement('button');
+  muteButton.setAttribute('type', 'button');
+  muteButton.classList.add('video-icon-volume', 'icon-mute', 'bg-transparent', 'd-flex', 'align-items-center', 'justify-content-center', 'cursor-pointer', 'd-none');
+  const muteIcon = document.createElement('img');
+  muteIcon.setAttribute('alt', 'svg file');
+  muteIcon.src = '/content/dam/aemigrate/uploaded-folder/image/1775737677205.svg+xml'; // From original HTML
+  muteButton.append(muteIcon);
+
+  const unmuteButton = document.createElement('button');
+  unmuteButton.setAttribute('type', 'button');
+  unmuteButton.classList.add('video-icon-volume', 'icon-unmute', 'bg-transparent', 'd-flex', 'align-items-center', 'justify-content-center', 'cursor-pointer', 'd-none');
+  const unmuteIcon = document.createElement('img');
+  unmuteIcon.setAttribute('alt', 'svg file');
+  unmuteIcon.src = '/content/dam/aemigrate/uploaded-folder/image/1775737677294.svg+xml'; // From original HTML
+  unmuteButton.append(unmuteIcon);
+
+  const noAudioButton = document.createElement('button');
+  noAudioButton.setAttribute('type', 'button');
+  noAudioButton.classList.add('video-icon-volume', 'no-audio-icon', 'bg-transparent', 'd-flex', 'align-items-center', 'justify-content-center', 'cursor-pointer');
+  const noAudioIcon = document.createElement('img');
+  noAudioIcon.setAttribute('alt', 'svg file');
+  noAudioIcon.src = '/content/dam/aemigrate/uploaded-folder/image/1775737677347.svg+xml'; // From original HTML
+  noAudioButton.append(noAudioIcon);
+
+  muteContainer.append(muteButton, unmuteButton, noAudioButton);
+  videoWrapper.append(muteContainer);
+
+  wrapper.append(videoWrapper);
+
+  const ctaDiv = document.createElement('div');
+  ctaDiv.classList.add('position-absolute', 'start-50', 'translate-middle-x', 'w-100', 'boing__banner--cta');
+  const bannerCta = document.createElement('div');
+  bannerCta.classList.add('banner-cta');
+  ctaDiv.append(bannerCta);
+  wrapper.append(ctaDiv);
+
+  section.append(wrapper);
+  block.textContent = '';
+  block.append(section);
+
+  // Event Listeners for video controls (CHECK 2: Interactivity)
+  const togglePlayPause = () => {
+    if (videoElement.paused || videoElement.ended) {
+      videoElement.play();
+      playButton.classList.add('d-none');
+      pauseButton.classList.remove('d-none');
+    } else {
+      videoElement.pause();
+      playButton.classList.remove('d-none');
+      pauseButton.classList.add('d-none');
+    }
+  };
+
+  const toggleMute = () => {
+    videoElement.muted = !videoElement.muted;
+    if (videoElement.muted) {
+      muteButton.classList.add('d-none');
+      unmuteButton.classList.add('d-none');
+      noAudioButton.classList.remove('d-none');
+    } else {
+      muteButton.classList.remove('d-none');
+      unmuteButton.classList.add('d-none');
+      noAudioButton.classList.add('d-none');
+    }
+  };
+
+  playButton.addEventListener('click', togglePlayPause);
+  pauseButton.addEventListener('click', togglePlayPause);
+  muteButton.addEventListener('click', toggleMute);
+  unmuteButton.addEventListener('click', toggleMute);
+  noAudioButton.addEventListener('click', toggleMute);
+
+  // Initial state for controls
+  if (videoElement.autoplay && videoElement.muted) {
+    playButton.classList.add('d-none');
+    pauseButton.classList.remove('d-none');
+    muteButton.classList.add('d-none');
+    unmuteButton.classList.add('d-none');
+    noAudioButton.classList.remove('d-none');
+  } else {
+    playButton.classList.remove('d-none');
+    pauseButton.classList.add('d-none');
+    muteButton.classList.remove('d-none');
+    unmuteButton.classList.add('d-none');
+    noAudioButton.classList.add('d-none');
+  }
+}

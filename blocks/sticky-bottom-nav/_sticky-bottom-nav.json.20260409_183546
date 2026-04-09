@@ -39,7 +39,7 @@
         {
           "component": "container",
           "item": "sticky-bottom-nav-item",
-          "label": "Navigation Items",
+          "label": "Sticky Bottom Nav Items",
           "name": "items"
         }
       ]
@@ -61,14 +61,14 @@
         },
         {
           "component": "aem-content",
-          "label": "Navigation Link",
-          "name": "navLink",
+          "label": "Link",
+          "name": "link",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Navigation Label",
-          "name": "navLinkLabel",
+          "label": "Link Label",
+          "name": "linkLabel",
           "valueType": "string"
         }
       ]
