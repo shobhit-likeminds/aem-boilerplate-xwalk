@@ -1,0 +1,133 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  const allRows = [...block.children];
+
+  // Separate section rows from card rows based on cell count
+  // spirit-of-rise-section has 3 cells (heading, subheading, cards container - though cards container is empty)
+  // spirit-of-rise-card has 5 cells
+  const sectionRows = allRows.filter((row) => row.children.length === 3);
+  const cardRows = allRows.filter((row) => row.children.length === 5);
+
+  block.textContent = '';
+
+  sectionRows.forEach((sectionRow, sectionIndex) => {
+    const sectionHeader = document.createElement('div');
+    sectionHeader.classList.add('section-header', 'text-center', 'pb-3');
+    moveInstrumentation(sectionRow, sectionHeader);
+
+    // Use content detection for sectionRow children as per BlockJson model
+    const cells = [...sectionRow.children];
+    const headingCell = cells.find((cell) => cell.textContent.trim() !== '' && !cell.querySelector('picture') && !cell.querySelector('a'));
+    const subheadingCell = cells.find((cell) => cell !== headingCell && cell.textContent.trim() !== '' && !cell.querySelector('picture') && !cell.querySelector('a'));
+
+    const heading = document.createElement('h2');
+    heading.classList.add('heading', 'font-regular', 'aos-init', 'aos-animate');
+    heading.setAttribute('data-aos-easing', 'ease-in-out');
+    heading.setAttribute('data-aos', 'fade-up');
+    heading.setAttribute('data-aos-delay', '200');
+    if (headingCell) {
+      heading.textContent = headingCell.textContent.trim();
+    }
+    sectionHeader.append(heading);
+
+    const subheading = document.createElement('p');
+    subheading.classList.add('aos-init', 'aos-animate');
+    subheading.setAttribute('data-aos', 'fade-up');
+    subheading.setAttribute('data-aos-offset', '100');
+    subheading.setAttribute('data-aos-duration', '650');
+    subheading.setAttribute('data-aos-easing', 'ease-in-out');
+    if (subheadingCell) {
+      subheading.textContent = subheadingCell.textContent.trim();
+    }
+    sectionHeader.append(subheading);
+
+    block.append(sectionHeader);
+
+    const performanceDriven = document.createElement('div');
+    performanceDriven.classList.add('performance-driven', 'performace-driven-home'); // Corrected class name
+
+    const container = document.createElement('div');
+    container.classList.add('container');
+    performanceDriven.append(container);
+
+    const cardsWrapper = document.createElement('div');
+    cardsWrapper.classList.add('performace-driven-cards');
+    container.append(cardsWrapper);
+
+    // Assuming cards for each section are grouped in the original HTML,
+    // but in EDS they are flat. We need to associate cards with sections.
+    // For this specific block, the original HTML shows 3 cards per section.
+    // We will take 3 cards from the `cardRows` array for each section.
+    const cardsForSection = cardRows.splice(0, 3); // Take 3 cards for the current section
+
+    cardsForSection.forEach((cardRow) => {
+      // Destructuring is safe here because cardRows are filtered by length === 5
+      const [imageCell, mobileImageCell, textCell, cardLinkCell] = [...cardRow.children]; // cardLinkLabelCell is not used in rendering
+
+      const cardLink = document.createElement('a');
+      cardLink.classList.add('performace-driven-cards-link');
+      moveInstrumentation(cardRow, cardLink); // Move instrumentation from cardRow to cardLink
+
+      const foundLink = cardLinkCell.querySelector('a');
+      if (foundLink) {
+        cardLink.href = foundLink.href;
+        // The original HTML uses target="_blank" for these links
+        cardLink.target = '_blank';
+      }
+
+      const cardWrapper = document.createElement('div');
+      cardWrapper.classList.add('performace-driven-card-wrapper');
+      cardLink.append(cardWrapper);
+
+      const cardImageDiv = document.createElement('div');
+      cardImageDiv.classList.add('card-image');
+      cardWrapper.append(cardImageDiv);
+
+      const picture = imageCell.querySelector('picture');
+      const mobilePicture = mobileImageCell.querySelector('picture');
+
+      if (picture && mobilePicture) {
+        const img = picture.querySelector('img');
+        const mobileImg = mobilePicture.querySelector('img');
+
+        if (img && mobileImg) {
+          const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ media: '(max-width: 576px)', width: '576' }, { width: '750' }]);
+          const source = document.createElement('source');
+          source.setAttribute('media', '(max-width: 576px)');
+          source.setAttribute('srcset', mobileImg.src);
+          optimizedPic.prepend(source);
+          moveInstrumentation(picture, optimizedPic.querySelector('img'));
+          cardImageDiv.append(optimizedPic);
+        }
+      } else if (picture) {
+        const img = picture.querySelector('img');
+        if (img) {
+          const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+          moveInstrumentation(picture, optimizedPic.querySelector('img'));
+          cardImageDiv.append(optimizedPic);
+        }
+      }
+
+      const homeBoxCard = document.createElement('div');
+      homeBoxCard.classList.add('performace-driven-home-box-card');
+      cardWrapper.append(homeBoxCard);
+
+      const descP = document.createElement('p');
+      descP.classList.add('desc');
+      // The text content for the card comes from the 'text' field
+      descP.innerHTML = textCell.innerHTML; // Use innerHTML to preserve rich text formatting
+      homeBoxCard.append(descP);
+
+      cardsWrapper.append(cardLink);
+    });
+
+    block.append(performanceDriven);
+
+    // Apply grey-bg class to the second section if it exists
+    if (sectionIndex === 1) {
+      block.classList.add('grey-bg');
+    }
+  });
+}

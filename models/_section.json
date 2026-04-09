@@ -127,7 +127,16 @@
         "itc-how-shift",
         "rs-cards",
         "itc-footer-section",
-        "feature-cards"
+        "feature-cards",
+        "main-header",
+        "spotlight-home-wrap",
+        "what-we-do-wrap",
+        "purpose-led-grid",
+        "spirit-of-rise",
+        "latest-stories",
+        "work-with-us",
+        "faqs-section",
+        "footer-main"
       ]
     }
   ]

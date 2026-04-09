@@ -92,7 +92,16 @@
       "itc-how-shift",
       "rs-cards",
       "itc-footer-section",
-      "feature-cards"
+      "feature-cards",
+      "main-header",
+      "spotlight-home-wrap",
+      "what-we-do-wrap",
+      "purpose-led-grid",
+      "spirit-of-rise",
+      "latest-stories",
+      "work-with-us",
+      "faqs-section",
+      "footer-main"
     ]
   },
   {
@@ -269,6 +278,12 @@
     ]
   },
   {
+    "id": "faqs-section",
+    "components": [
+      "faq"
+    ]
+  },
+  {
     "id": "feature-card-list",
     "components": [
       "feature-card"
@@ -291,6 +306,15 @@
     "components": [
       "footer-nav-item",
       "footer-social-item"
+    ]
+  },
+  {
+    "id": "footer-main",
+    "components": [
+      "footer-social-link",
+      "footer-link-block",
+      "footer-link",
+      "footer-secondary-link"
     ]
   },
   {
@@ -359,6 +383,18 @@
     "id": "itc-how-shift",
     "components": [
       "why-shift-item"
+    ]
+  },
+  {
+    "id": "latest-stories",
+    "components": [
+      "story"
+    ]
+  },
+  {
+    "id": "main-header",
+    "components": [
+      "nav-item"
     ]
   },
   {
@@ -448,6 +484,12 @@
     ]
   },
   {
+    "id": "purpose-led-grid",
+    "components": [
+      "purpose-led-grid-item"
+    ]
+  },
+  {
     "id": "reasonCards",
     "components": [
       "reasonCard"
@@ -488,6 +530,19 @@
   },
   {
     "id": "space-adder"
+  },
+  {
+    "id": "spirit-of-rise",
+    "components": [
+      "spirit-of-rise-card"
+    ]
+  },
+  {
+    "id": "spotlight-home-wrap",
+    "components": [
+      "spotlight-slide",
+      "quick-link"
+    ]
   },
   {
     "id": "steel-stories",
@@ -537,6 +592,12 @@
     "components": []
   },
   {
+    "id": "what-we-do-wrap",
+    "components": [
+      "what-we-do-item"
+    ]
+  },
+  {
     "id": "whyUs",
     "components": [
       "whyUsCard"
@@ -545,6 +606,12 @@
   {
     "id": "woocommerce-breadcrumb",
     "components": []
+  },
+  {
+    "id": "work-with-us",
+    "components": [
+      "work-with-us-slide"
+    ]
   },
   {
     "id": "wp-block-columns",
