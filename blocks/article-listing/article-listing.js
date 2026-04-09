@@ -32,19 +32,14 @@ export default function decorate(block) {
 
   const ctaLink = document.createElement('a');
   const originalCtaLink = ctaLinkRow.querySelector('a');
-  const originalCtaLinkLabel = ctaLinkLabelRow.querySelector('a');
+  // ctaLinkLabel is a text field — it renders as <p>text</p>, NOT <a>. Read textContent directly.
+  const ctaLabelText = ctaLinkLabelRow?.firstElementChild?.textContent.trim() || '';
 
   if (originalCtaLink) {
     ctaLink.href = originalCtaLink.href;
-    // The original HTML shows the ctaLinkLabel is a URL, but the model says it's text.
-    // The JS was trying to use the textContent of the ctaLinkLabel for the title,
-    // which is correct for the model's intent.
-    ctaLink.title = originalCtaLinkLabel ? originalCtaLinkLabel.textContent.trim() : originalCtaLink.textContent.trim();
     ctaLink.classList.add('boing--text__title-3', 'article_listing--btn', 'analytics_cta_click');
     moveInstrumentation(originalCtaLink, ctaLink);
-    // The original HTML shows an SVG inside the CTA link, which is not handled here.
-    // For now, append the title as text content.
-    ctaLink.append(ctaLink.title);
+    ctaLink.textContent = ctaLabelText || originalCtaLink.textContent.trim();
   }
   ctaWrapper.append(ctaLink);
   firstSection.append(ctaWrapper);

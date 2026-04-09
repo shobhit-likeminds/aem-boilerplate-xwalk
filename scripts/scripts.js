@@ -86,12 +86,35 @@ export function decorateMain(main) {
 }
 
 /**
+ * Reads page-level wrapper/decorator classes stored as JCR properties and applies them.
+ * pageWrapperClasses → added to <body> (recreates the original site's root wrapper classes)
+ * pageDecoratorClasses → a standalone decorator div appended to <body>
+ */
+function applyPageWrapperClasses(doc) {
+  const wrapperMeta = doc.querySelector('meta[name="page-wrapper-classes"]');
+  if (wrapperMeta && wrapperMeta.content) {
+    wrapperMeta.content.split(' ').filter(Boolean).forEach((cls) => {
+      doc.body.classList.add(cls);
+    });
+  }
+  const decoratorMeta = doc.querySelector('meta[name="page-decorator-classes"]');
+  if (decoratorMeta && decoratorMeta.content) {
+    const decorator = doc.createElement('div');
+    decoratorMeta.content.split(' ').filter(Boolean).forEach((cls) => {
+      decorator.classList.add(cls);
+    });
+    doc.body.appendChild(decorator);
+  }
+}
+
+/**
  * Loads everything needed to get to LCP.
  * @param {Element} doc The container element
  */
 async function loadEager(doc) {
   document.documentElement.lang = 'en';
   decorateTemplateAndTheme();
+  applyPageWrapperClasses(doc);
   const main = doc.querySelector('main');
   if (main) {
     decorateMain(main);
