@@ -56,19 +56,19 @@
         {
           "component": "text",
           "label": "Icon Alt Text",
-          "name": "alt",
+          "name": "iconAlt",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "label": "Link",
-          "name": "link",
+          "label": "Navigation Link",
+          "name": "navLink",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Link Label",
-          "name": "linkLabel",
+          "label": "Navigation Label",
+          "name": "navLinkLabel",
           "valueType": "string"
         }
       ]

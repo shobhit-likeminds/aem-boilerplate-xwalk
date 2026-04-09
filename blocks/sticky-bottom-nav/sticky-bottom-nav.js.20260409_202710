@@ -1,0 +1,69 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  block.classList.add('position-fixed', 'bottom-0', 'p-3', 'd-flex', 'align-items-center', 'boing-container', 'bg-boing-primary');
+
+  const ul = document.createElement('ul');
+  ul.classList.add('sticky-bottom-nav__list', 'd-flex', 'justify-content-around', 'align-items-center', 'flex-grow-1');
+
+  [...block.children].forEach((row) => {
+    const li = document.createElement('li');
+    moveInstrumentation(row, li);
+    li.classList.add('sticky-bottom-nav__item', 'position-relative');
+
+    const cells = [...row.children];
+
+    // Content detection — iconAlt (text) may not be authored, so cell count varies (3 or 4).
+    // Three distinct cell types: picture (icon), aem-content with <a> (link), plain text (label).
+    // The label cell is the last non-picture non-link text cell.
+    const iconCell = cells.find((cell) => cell.querySelector('picture'));
+    const linkCell = cells.find((cell) => cell.querySelector('a'));
+    // Collect cells that are neither icon nor link to find the label (last text cell)
+    const textCells = cells.filter((cell) => cell !== iconCell && cell !== linkCell);
+    // If two text cells exist: first = iconAlt, last = label. If one: it's the label.
+    const labelCell = textCells[textCells.length - 1] || null;
+    const iconAltCell = textCells.length > 1 ? textCells[0] : null;
+
+    const navLink = document.createElement('a');
+    navLink.classList.add('sticky-bottom-nav__link', 'd-flex', 'flex-column', 'align-items-center', 'gap-1', 'analytics_cta_click');
+
+    if (linkCell) {
+      const foundLink = linkCell.querySelector('a');
+      if (foundLink) {
+        navLink.href = foundLink.href;
+        if (foundLink.dataset.consent) navLink.dataset.consent = foundLink.dataset.consent;
+        if (foundLink.dataset.link) navLink.dataset.link = foundLink.dataset.link;
+      }
+    }
+
+    if (iconCell) {
+      const picture = iconCell.querySelector('picture');
+      if (picture) {
+        const img = picture.querySelector('img');
+        if (img) {
+          // Use dedicated alt text cell if present, otherwise fall back to img.alt
+          const altText = (iconAltCell && iconAltCell.textContent.trim()) || img.alt || '';
+          const optimizedPic = createOptimizedPicture(img.src, altText, false, [{ width: '750' }]);
+          const optimizedImg = optimizedPic.querySelector('img');
+          optimizedImg.classList.add('sticky-bottom-nav__icon');
+          moveInstrumentation(img, optimizedImg);
+          navLink.append(optimizedPic);
+        }
+      }
+    }
+
+    if (labelCell && labelCell.textContent.trim()) {
+      const labelSpan = document.createElement('span');
+      labelSpan.classList.add('sticky-bottom-nav__label');
+      labelSpan.textContent = labelCell.textContent.trim();
+      navLink.append(labelSpan);
+    }
+
+    li.append(navLink);
+    ul.append(li);
+  });
+
+  block.textContent = '';
+  block.append(ul);
+}

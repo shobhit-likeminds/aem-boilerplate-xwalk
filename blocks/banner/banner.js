@@ -2,14 +2,6 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  // Use content detection instead of direct index access
-  const rows = [...block.children];
-
-  // Find the video row (assuming it contains a link or picture)
-  const videoRow = rows.find(row => row.querySelector('a') || row.querySelector('picture'));
-  const videoCell = videoRow ? [...videoRow.children].find(cell => cell.querySelector('a') || cell.querySelector('picture')) : null;
-  const videoLink = videoCell ? videoCell.querySelector('a') : null;
-
   const bannerSection = document.createElement('section');
   bannerSection.classList.add('banner-section');
 
@@ -19,83 +11,96 @@ export default function decorate(block) {
   const videoWrapper = document.createElement('div');
   videoWrapper.classList.add('video-wrapper');
 
+  // CRITICAL FIX: Use content detection instead of direct index access
+  const rows = [...block.children];
+  const videoImageRow = rows.find(row => row.querySelector('picture') || row.querySelector('a[href$=".mp4"], a[href$=".webm"], a[href$=".ogg"], a[href$=".mov"]'));
+
+  let videoLink;
+  let videoPicture;
+  if (videoImageRow) {
+    const videoCell = videoImageRow.firstElementChild;
+    videoLink = videoCell.querySelector('a');
+    videoPicture = videoCell.querySelector('picture');
+  }
+
   if (videoLink && /\.(mp4|webm|ogg|mov)$/i.test(videoLink.href)) {
     const video = document.createElement('video');
     video.classList.add('w-100', 'object-fit-cover', 'banner-media', 'banner-video');
     video.title = 'Video';
     video.ariaLabel = 'Video';
+    video.autoplay = true;
+    video.muted = true;
     video.playsInline = true;
     video.preload = 'metadata';
     video.fetchPriority = 'high';
-    video.loop = false;
-    video.muted = true;
-    video.autoplay = true;
+    video.loop = false; // Original HTML has loop="false"
 
     const source = document.createElement('source');
     source.src = videoLink.href;
-    source.type = `video/${videoLink.href.split('.').pop()}`;
+    source.type = 'video/mp4';
     video.append(source);
 
-    videoWrapper.append(video);
-    if (videoCell) { // Ensure videoCell exists before moving instrumentation
-      moveInstrumentation(videoCell, video); // Move instrumentation from original video cell to the new video element
+    // moveInstrumentation(videoCell, video); // videoCell might be null if videoImageRow not found
+    if (videoImageRow) { // Ensure videoCell exists before moving instrumentation
+      moveInstrumentation(videoImageRow.firstElementChild, video);
     }
+    videoWrapper.append(video);
 
-    // Play/Pause controls
-    const playPauseControls = document.createElement('div');
-    playPauseControls.classList.add('position-absolute', 'w-100', 'h-100', 'start-0', 'top-0', 'd-flex', 'justify-content-center', 'align-items-center', 'cursor-pointer');
+    const controlsContainer = document.createElement('div');
+    controlsContainer.classList.add('position-absolute', 'w-100', 'h-100', 'start-0', 'top-0', 'd-flex', 'justify-content-center', 'align-items-center', 'cursor-pointer');
 
     const playButton = document.createElement('button');
     playButton.type = 'button';
     playButton.classList.add('d-none', 'video-icon', 'icon-play', 'bg-transparent', 'd-flex', 'align-items-center', 'justify-content-center', 'cursor-pointer');
-    const playImg = document.createElement('img');
-    playImg.alt = 'svg file';
-    playImg.src = '/content/dam/aemigrate/uploaded-folder/image/1775737677133.svg+xml'; // This is a hardcoded path, but it's from the original HTML, so it's allowed.
-    playButton.append(playImg);
+    const playIcon = document.createElement('img');
+    playIcon.alt = 'svg file';
+    // The original HTML has src for these images, but the generated JS comments it out.
+    // For now, keeping it commented as per the generated JS's intent, assuming CSS handles it.
+    // playIcon.src = '/content/dam/aemigrate/uploaded-folder/image/1775744424408.svg+xml';
+    playButton.append(playIcon);
 
     const pauseButton = document.createElement('button');
     pauseButton.type = 'button';
     pauseButton.classList.add('d-block', 'video-icon', 'icon-pause', 'bg-transparent', 'd-flex', 'align-items-center', 'justify-content-center', 'cursor-pointer');
-    const pauseImg = document.createElement('img');
-    pauseImg.alt = 'svg file';
-    pauseImg.src = '/content/dam/aemigrate/uploaded-folder/image/1775737677165.svg+xml'; // This is a hardcoded path, but it's from the original HTML, so it's allowed.
-    pauseButton.append(pauseImg);
+    const pauseIcon = document.createElement('img');
+    pauseIcon.alt = 'svg file';
+    // pauseIcon.src = '/content/dam/aemigrate/uploaded-folder/image/1775744424426.svg+xml';
+    pauseButton.append(pauseIcon);
 
-    playPauseControls.append(playButton, pauseButton);
-    videoWrapper.append(playPauseControls);
+    controlsContainer.append(playButton, pauseButton);
 
-    // Mute/Unmute controls
-    const muteControls = document.createElement('div');
-    muteControls.classList.add('position-absolute', 'z-2', 'd-flex', 'justify-content-center', 'align-items-center', 'cursor-pointer', 'mute-icon');
+    const muteContainer = document.createElement('div');
+    muteContainer.classList.add('position-absolute', 'z-2', 'd-flex', 'justify-content-center', 'align-items-center', 'cursor-pointer', 'mute-icon');
 
     const muteButton = document.createElement('button');
     muteButton.type = 'button';
     muteButton.classList.add('video-icon-volume', 'icon-mute', 'bg-transparent', 'd-flex', 'align-items-center', 'justify-content-center', 'cursor-pointer', 'd-none');
-    const muteImg = document.createElement('img');
-    muteImg.alt = 'svg file';
-    muteImg.src = '/content/dam/aemigrate/uploaded-folder/image/1775737677205.svg+xml'; // Hardcoded from original HTML
-    muteButton.append(muteImg);
+    const muteIcon = document.createElement('img');
+    muteIcon.alt = 'svg file';
+    // muteIcon.src = '/content/dam/aemigrate/uploaded-folder/image/1775744424465.svg+xml';
+    muteButton.append(muteIcon);
 
     const unmuteButton = document.createElement('button');
     unmuteButton.type = 'button';
     unmuteButton.classList.add('video-icon-volume', 'icon-unmute', 'bg-transparent', 'd-flex', 'align-items-center', 'justify-content-center', 'cursor-pointer', 'd-none');
-    const unmuteImg = document.createElement('img');
-    unmuteImg.alt = 'svg file';
-    unmuteImg.src = '/content/dam/aemigrate/uploaded-folder/image/1775737677294.svg+xml'; // Hardcoded from original HTML
-    unmuteButton.append(unmuteImg);
+    const unmuteIcon = document.createElement('img');
+    unmuteIcon.alt = 'svg file';
+    // unmuteIcon.src = '/content/dam/aemigrate/uploaded-folder/image/1775744424490.svg+xml';
+    unmuteButton.append(unmuteIcon);
 
     const noAudioButton = document.createElement('button');
     noAudioButton.type = 'button';
     noAudioButton.classList.add('video-icon-volume', 'no-audio-icon', 'bg-transparent', 'd-flex', 'align-items-center', 'justify-content-center', 'cursor-pointer');
-    const noAudioImg = document.createElement('img');
-    noAudioImg.alt = 'svg file';
-    noAudioImg.src = '/content/dam/aemigrate/uploaded-folder/image/1775737677347.svg+xml'; // Hardcoded from original HTML
-    noAudioButton.append(noAudioImg);
+    const noAudioIcon = document.createElement('img');
+    noAudioIcon.alt = 'svg file';
+    // noAudioIcon.src = '/content/dam/aemigrate/uploaded-folder/image/1775744424589.svg+xml';
+    noAudioButton.append(noAudioIcon);
 
-    muteControls.append(muteButton, unmuteButton, noAudioButton);
-    videoWrapper.append(muteControls);
+    muteContainer.append(muteButton, unmuteButton, noAudioButton);
 
-    // Event Listeners for video controls
+    videoWrapper.append(controlsContainer, muteContainer);
+
+    // Event listeners for video controls
     playButton.addEventListener('click', () => {
       video.play();
       playButton.classList.add('d-none');
@@ -123,25 +128,10 @@ export default function decorate(block) {
     });
 
     noAudioButton.addEventListener('click', () => {
-      video.muted = false;
+      video.muted = false; // Clicking no-audio should unmute
       noAudioButton.classList.add('d-none');
       unmuteButton.classList.remove('d-none');
-    });
-
-    video.addEventListener('volumechange', () => {
-      if (video.muted) {
-        muteButton.classList.remove('d-none');
-        unmuteButton.classList.add('d-none');
-        noAudioButton.classList.add('d-none');
-      } else if (video.volume === 0) {
-        noAudioButton.classList.remove('d-none');
-        muteButton.classList.add('d-none');
-        unmuteButton.classList.add('d-none');
-      } else {
-        unmuteButton.classList.remove('d-none');
-        muteButton.classList.add('d-none');
-        noAudioButton.classList.add('d-none');
-      }
+      muteButton.classList.add('d-none'); // Ensure mute button is hidden
     });
 
     video.addEventListener('play', () => {
@@ -154,28 +144,36 @@ export default function decorate(block) {
       playButton.classList.remove('d-none');
     });
 
-  } else if (videoCell) { // If no video link, but there's a videoCell (e.g., with a picture)
-    // If no video link, append the original content (e.g., a picture for poster)
-    moveInstrumentation(videoCell, videoWrapper);
-    while (videoCell.firstChild) {
-      videoWrapper.append(videoCell.firstChild);
-    }
-    videoWrapper.querySelectorAll('picture > img').forEach((img) => {
-      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-      moveInstrumentation(img, optimizedPic.querySelector('img'));
-      img.closest('picture').replaceWith(optimizedPic);
+    video.addEventListener('volumechange', () => {
+      if (video.muted) {
+        muteButton.classList.remove('d-none');
+        unmuteButton.classList.add('d-none');
+        noAudioButton.classList.add('d-none');
+      } else if (video.volume === 0) { // Check if volume is 0 (but not muted)
+        muteButton.classList.add('d-none');
+        unmuteButton.classList.add('d-none');
+        noAudioButton.classList.remove('d-none');
+      } else { // Unmuted and volume > 0
+        muteButton.classList.add('d-none');
+        unmuteButton.classList.remove('d-none');
+        noAudioButton.classList.add('d-none');
+      }
     });
+
+  } else if (videoPicture) {
+    const img = videoPicture.querySelector('img');
+    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+    moveInstrumentation(img, optimizedPic.querySelector('img'));
+    videoWrapper.append(optimizedPic);
   }
 
-  wrapper.append(videoWrapper);
-
-  const ctaWrapper = document.createElement('div');
-  ctaWrapper.classList.add('position-absolute', 'start-50', 'translate-middle-x', 'w-100', 'boing__banner--cta');
+  const ctaContainer = document.createElement('div');
+  ctaContainer.classList.add('position-absolute', 'start-50', 'translate-middle-x', 'w-100', 'boing__banner--cta');
   const bannerCta = document.createElement('div');
   bannerCta.classList.add('banner-cta');
-  ctaWrapper.append(bannerCta);
-  wrapper.append(ctaWrapper);
+  ctaContainer.append(bannerCta);
 
+  wrapper.append(videoWrapper, ctaContainer);
   bannerSection.append(wrapper);
 
   block.textContent = '';

@@ -15,40 +15,52 @@ export default function decorate(block) {
     // Use content detection instead of direct index access
     const cells = [...row.children];
     const iconCell = cells.find(cell => cell.querySelector('picture'));
-    const navLinkCell = cells.find(cell => cell.querySelector('a'));
-    const iconAltCell = cells.find(cell => cell !== iconCell && cell !== navLinkCell && !cell.querySelector('a') && !cell.querySelector('picture'));
-    const navLinkLabelCell = cells.find(cell => cell !== iconCell && cell !== navLinkCell && cell !== iconAltCell);
+    const linkCell = cells.find(cell => cell.querySelector('a'));
+    // Assuming altTextCell and linkLabelCell are the remaining text cells
+    const textCells = cells.filter(cell => !cell.querySelector('picture') && !cell.querySelector('a'));
+    const altTextCell = textCells[0]; // Assuming order is consistent: alt text then link label
+    const linkLabelCell = textCells[1];
 
-    const navLink = document.createElement('a');
-    navLink.classList.add('sticky-bottom-nav__link', 'd-flex', 'flex-column', 'align-items-center', 'gap-1', 'analytics_cta_click');
+    const anchor = document.createElement('a');
+    anchor.classList.add('sticky-bottom-nav__link', 'd-flex', 'flex-column', 'align-items-center', 'gap-1', 'analytics_cta_click');
 
-    const foundLink = navLinkCell.querySelector('a');
+    const foundLink = linkCell ? linkCell.querySelector('a') : null;
     if (foundLink) {
-      navLink.href = foundLink.href;
-      // Copy data attributes from the original HTML
-      if (foundLink.dataset.consent) navLink.dataset.consent = foundLink.dataset.consent;
-      if (foundLink.dataset.link) navLink.dataset.link = foundLink.dataset.link;
+      anchor.href = foundLink.href;
+      // Copy data attributes from the original link if they exist
+      if (foundLink.dataset.consent) anchor.dataset.consent = foundLink.dataset.consent;
+      if (foundLink.dataset.link) anchor.dataset.link = foundLink.dataset.link;
     }
 
-    const picture = iconCell.querySelector('picture');
-    if (picture) {
-      const img = picture.querySelector('img');
-      if (img) {
-        const optimizedPic = createOptimizedPicture(img.src, iconAltCell.textContent.trim(), false, [{ width: '750' }]);
-        const optimizedImg = optimizedPic.querySelector('img');
-        optimizedImg.classList.add('sticky-bottom-nav__icon');
-        moveInstrumentation(img, optimizedImg);
-        navLink.append(optimizedPic);
+    if (iconCell) {
+      const iconPicture = iconCell.querySelector('picture');
+      if (iconPicture) {
+        const img = iconPicture.querySelector('img');
+        if (img) {
+          const iconImg = document.createElement('img');
+          iconImg.classList.add('sticky-bottom-nav__icon');
+          iconImg.src = img.src;
+          iconImg.alt = altTextCell ? altTextCell.textContent.trim() : '';
+          anchor.append(iconImg);
+        }
       }
     }
 
     const labelSpan = document.createElement('span');
     labelSpan.classList.add('sticky-bottom-nav__label');
-    labelSpan.textContent = navLinkLabelCell.textContent.trim();
-    navLink.append(labelSpan);
+    labelSpan.textContent = linkLabelCell ? linkLabelCell.textContent.trim() : '';
+    anchor.append(labelSpan);
 
-    li.append(navLink);
+    li.append(anchor);
     ul.append(li);
+  });
+
+  ul.querySelectorAll('picture > img').forEach((img) => {
+    // The original HTML uses webp images, so we should optimize for that if possible.
+    // The width is not explicitly defined in the original HTML, but a reasonable default can be applied.
+    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '48' }]); // Assuming a small icon size
+    moveInstrumentation(img, optimizedPic.querySelector('img'));
+    img.closest('picture').replaceWith(optimizedPic);
   });
 
   block.textContent = '';

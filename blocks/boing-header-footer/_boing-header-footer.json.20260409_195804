@@ -17,15 +17,15 @@
       }
     },
     {
-      "title": "Sidebar Menu Item",
-      "id": "sidebar-menu-item",
+      "title": "Header Menu Item",
+      "id": "header-menu-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "sidebar-menu-item",
-              "name": "Sidebar Menu Item"
+              "model": "header-menu-item",
+              "name": "Header Menu Item"
             }
           }
         }
@@ -47,15 +47,15 @@
       }
     },
     {
-      "title": "Social Link",
-      "id": "social-link",
+      "title": "Footer Social Link",
+      "id": "footer-social-link",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "social-link",
-              "name": "Social Link"
+              "model": "footer-social-link",
+              "name": "Footer Social Link"
             }
           }
         }
@@ -68,26 +68,14 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Header Left Image",
-          "name": "headerLeftImage",
+          "label": "Header Icon",
+          "name": "headerIcon",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Header Logo Image",
-          "name": "headerLogoImage",
-          "valueType": "string"
-        },
-        {
-          "component": "aem-content",
-          "label": "Header Logo Link",
-          "name": "headerLogoLink",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Header Logo Link Label",
-          "name": "headerLogoLinkLabel",
+          "label": "Header Logo",
+          "name": "headerLogo",
           "valueType": "string"
         },
         {
@@ -104,33 +92,9 @@
         },
         {
           "component": "container",
-          "item": "sidebar-menu-item",
-          "label": "Sidebar Menu Items",
-          "name": "sidebarMenuItems"
-        },
-        {
-          "component": "reference",
-          "label": "Footer Primary Left Logo",
-          "name": "footerPrimaryLeftLogo",
-          "valueType": "string"
-        },
-        {
-          "component": "aem-content",
-          "label": "Footer Primary Left Logo Link",
-          "name": "footerPrimaryLeftLogoLink",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Footer Primary Left Logo Link Label",
-          "name": "footerPrimaryLeftLogoLinkLabel",
-          "valueType": "string"
-        },
-        {
-          "component": "reference",
-          "label": "Footer Primary Secondary Logo",
-          "name": "footerPrimarySecondaryLogo",
-          "valueType": "string"
+          "item": "header-menu-item",
+          "label": "Header Menu Items",
+          "name": "headerMenuItems"
         },
         {
           "component": "container",
@@ -140,32 +104,14 @@
         },
         {
           "component": "container",
-          "item": "social-link",
-          "label": "Social Links",
-          "name": "socialLinks"
-        },
-        {
-          "component": "aem-content",
-          "label": "Footer Left Link",
-          "name": "footerLeftLink",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Footer Left Link Label",
-          "name": "footerLeftLinkLabel",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Footer Copyright",
-          "name": "footerCopyright",
-          "valueType": "string"
+          "item": "footer-social-link",
+          "label": "Footer Social Links",
+          "name": "footerSocialLinks"
         }
       ]
     },
     {
-      "id": "sidebar-menu-item",
+      "id": "header-menu-item",
       "fields": [
         {
           "component": "reference",
@@ -175,13 +121,13 @@
         },
         {
           "component": "aem-content",
-          "label": "Link",
+          "label": "Menu Link",
           "name": "link",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Link Label",
+          "label": "Menu Link Label",
           "name": "linkLabel",
           "valueType": "string"
         }
@@ -192,31 +138,31 @@
       "fields": [
         {
           "component": "aem-content",
-          "label": "Link",
+          "label": "Footer Link",
           "name": "link",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Link Label",
+          "label": "Footer Link Label",
           "name": "linkLabel",
           "valueType": "string"
         }
       ]
     },
     {
-      "id": "social-link",
+      "id": "footer-social-link",
       "fields": [
         {
           "component": "aem-content",
           "label": "Social Link",
-          "name": "link",
+          "name": "socialLink",
           "valueType": "string"
         },
         {
           "component": "text",
           "label": "Social Link Label",
-          "name": "linkLabel",
+          "name": "socialLinkLabel",
           "valueType": "string"
         },
         {
@@ -232,9 +178,9 @@
     {
       "id": "boing-header-footer",
       "components": [
-        "sidebar-menu-item",
+        "header-menu-item",
         "footer-list-item",
-        "social-link"
+        "footer-social-link"
       ]
     }
   ]

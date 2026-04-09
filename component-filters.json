@@ -91,7 +91,8 @@
       "itc-club-carousel",
       "itc-how-shift",
       "rs-cards",
-      "itc-footer-section"
+      "itc-footer-section",
+      "feature-cards"
     ]
   },
   {
@@ -124,9 +125,9 @@
   {
     "id": "boing-header-footer",
     "components": [
-      "header-menu-item",
+      "sidebar-menu-item",
       "footer-list-item",
-      "footer-social-link"
+      "social-link"
     ]
   },
   {
@@ -274,6 +275,12 @@
     ]
   },
   {
+    "id": "feature-cards",
+    "components": [
+      "feature-card"
+    ]
+  },
+  {
     "id": "featurecards",
     "components": [
       "feature-card"
@@ -282,8 +289,8 @@
   {
     "id": "footer-brand",
     "components": [
-      "footer-link",
-      "footer-social-link"
+      "footer-nav-item",
+      "footer-social-item"
     ]
   },
   {

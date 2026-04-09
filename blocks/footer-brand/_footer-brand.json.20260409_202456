@@ -17,30 +17,30 @@
       }
     },
     {
-      "title": "Footer-Nav-Item",
-      "id": "footer-nav-item",
+      "title": "Footer Link",
+      "id": "footer-link",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "footer-nav-item",
-              "name": "Footer-Nav-Item"
+              "model": "footer-link",
+              "name": "Footer Link"
             }
           }
         }
       }
     },
     {
-      "title": "Footer-Social-Item",
-      "id": "footer-social-item",
+      "title": "Footer Social Link",
+      "id": "footer-social-link",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "footer-social-item",
-              "name": "Footer-Social-Item"
+              "model": "footer-social-link",
+              "name": "Footer Social Link"
             }
           }
         }
@@ -58,80 +58,62 @@
           "valueType": "string"
         },
         {
-          "component": "aem-content",
-          "label": "Logo Link",
-          "name": "logoLink",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Logo Link Label",
-          "name": "logoLinkLabel",
-          "valueType": "string"
-        },
-        {
           "component": "reference",
           "label": "Secondary Logo Image",
           "name": "secondaryLogoImage",
           "valueType": "string"
         },
         {
-          "component": "richtext",
-          "label": "Social Title",
-          "name": "socialTitle",
-          "valueType": "string"
+          "component": "container",
+          "item": "footer-link",
+          "label": "Footer Links",
+          "name": "footerLinks"
         },
         {
-          "component": "reference",
-          "label": "Footer Left Logo Link",
-          "name": "footerLeftLogoLink",
+          "component": "container",
+          "item": "footer-social-link",
+          "label": "Footer Social Links",
+          "name": "footerSocialLinks"
+        },
+        {
+          "component": "aem-content",
+          "label": "Footer Left Link",
+          "name": "footerLeftLink",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Footer Left Logo Link Label",
-          "name": "footerLeftLogoLinkLabel",
+          "label": "Footer Left Link Label",
+          "name": "footerLeftLinkLabel",
           "valueType": "string"
         },
         {
-          "component": "richtext",
-          "label": "Copyright",
-          "name": "copyright",
+          "component": "text",
+          "label": "Footer Copyright Text",
+          "name": "footerCopyrightText",
           "valueType": "string"
-        },
-        {
-          "component": "container",
-          "item": "footer-nav-item",
-          "label": "Footer Nav Items",
-          "name": "footerNavItems"
-        },
-        {
-          "component": "container",
-          "item": "footer-social-item",
-          "label": "Footer Social Items",
-          "name": "footerSocialItems"
         }
       ]
     },
     {
-      "id": "footer-nav-item",
+      "id": "footer-link",
       "fields": [
         {
           "component": "aem-content",
-          "label": "Nav Link",
-          "name": "navLink",
+          "label": "Link",
+          "name": "link",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Nav Link Label",
-          "name": "navLinkLabel",
+          "label": "Link Label",
+          "name": "linkLabel",
           "valueType": "string"
         }
       ]
     },
     {
-      "id": "footer-social-item",
+      "id": "footer-social-link",
       "fields": [
         {
           "component": "aem-content",
@@ -158,8 +140,8 @@
     {
       "id": "footer-brand",
       "components": [
-        "footer-nav-item",
-        "footer-social-item"
+        "footer-link",
+        "footer-social-link"
       ]
     }
   ]
