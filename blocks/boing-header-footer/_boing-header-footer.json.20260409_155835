@@ -47,15 +47,15 @@
       }
     },
     {
-      "title": "Footer Social Link",
-      "id": "footer-social-link",
+      "title": "Footer Social Item",
+      "id": "footer-social-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "footer-social-link",
-              "name": "Footer Social Link"
+              "model": "footer-social-item",
+              "name": "Footer Social Item"
             }
           }
         }
@@ -68,14 +68,14 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Header Left Image",
-          "name": "headerLeftImage",
+          "label": "Header SVG Image",
+          "name": "headerSvg",
           "valueType": "string"
         },
         {
           "component": "reference",
           "label": "Header Logo Image",
-          "name": "headerLogoImage",
+          "name": "headerLogo",
           "valueType": "string"
         },
         {
@@ -110,45 +110,27 @@
         },
         {
           "component": "reference",
-          "label": "Footer Left Logo",
-          "name": "footerLeftLogo",
+          "label": "Footer Logo 1",
+          "name": "footerLogo1",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Footer Right Logo",
-          "name": "footerRightLogo",
+          "label": "Footer Logo 2",
+          "name": "footerLogo2",
           "valueType": "string"
         },
         {
           "component": "container",
           "item": "footer-list-item",
-          "label": "Footer List Column 1",
-          "name": "footerListCol1"
+          "label": "Footer List Items",
+          "name": "footerListItems"
         },
         {
           "component": "container",
-          "item": "footer-list-item",
-          "label": "Footer List Column 2",
-          "name": "footerListCol2"
-        },
-        {
-          "component": "container",
-          "item": "footer-list-item",
-          "label": "Footer List Column 3",
-          "name": "footerListCol3"
-        },
-        {
-          "component": "container",
-          "item": "footer-list-item",
-          "label": "Footer List Column 4",
-          "name": "footerListCol4"
-        },
-        {
-          "component": "container",
-          "item": "footer-social-link",
-          "label": "Footer Social Links",
-          "name": "footerSocialLinks"
+          "item": "footer-social-item",
+          "label": "Footer Social Items",
+          "name": "footerSocialItems"
         },
         {
           "component": "aem-content",
@@ -174,21 +156,21 @@
       "id": "sidebar-menu-item",
       "fields": [
         {
+          "component": "reference",
+          "label": "Menu Icon",
+          "name": "icon",
+          "valueType": "string"
+        },
+        {
           "component": "aem-content",
           "label": "Menu Link",
-          "name": "menuLink",
+          "name": "link",
           "valueType": "string"
         },
         {
           "component": "text",
           "label": "Menu Link Label",
-          "name": "menuLinkLabel",
-          "valueType": "string"
-        },
-        {
-          "component": "reference",
-          "label": "Menu Icon",
-          "name": "menuIcon",
+          "name": "linkLabel",
           "valueType": "string"
         }
       ]
@@ -198,37 +180,37 @@
       "fields": [
         {
           "component": "aem-content",
-          "label": "Footer Link",
-          "name": "footerLink",
+          "label": "Footer List Link",
+          "name": "link",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Footer Link Label",
-          "name": "footerLinkLabel",
+          "label": "Footer List Link Label",
+          "name": "linkLabel",
           "valueType": "string"
         }
       ]
     },
     {
-      "id": "footer-social-link",
+      "id": "footer-social-item",
       "fields": [
+        {
+          "component": "reference",
+          "label": "Social Icon",
+          "name": "icon",
+          "valueType": "string"
+        },
         {
           "component": "aem-content",
           "label": "Social Link",
-          "name": "socialLink",
+          "name": "link",
           "valueType": "string"
         },
         {
           "component": "text",
           "label": "Social Link Label",
-          "name": "socialLinkLabel",
-          "valueType": "string"
-        },
-        {
-          "component": "reference",
-          "label": "Social Icon",
-          "name": "socialIcon",
+          "name": "linkLabel",
           "valueType": "string"
         }
       ]
@@ -240,7 +222,7 @@
       "components": [
         "sidebar-menu-item",
         "footer-list-item",
-        "footer-social-link"
+        "footer-social-item"
       ]
     }
   ]

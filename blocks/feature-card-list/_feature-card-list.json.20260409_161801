@@ -1,7 +1,7 @@
 {
   "definitions": [
     {
-      "title": "Feature Card List",
+      "title": "Feature-Card-List",
       "id": "feature-card-list",
       "plugins": {
         "xwalk": {
@@ -10,14 +10,14 @@
             "template": {
               "filter": "feature-card-list",
               "model": "feature-card-list",
-              "name": "Feature Card List"
+              "name": "Feature-Card-List"
             }
           }
         }
       }
     },
     {
-      "title": "Feature Card",
+      "title": "Feature-Card",
       "id": "feature-card",
       "plugins": {
         "xwalk": {
@@ -25,7 +25,7 @@
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
               "model": "feature-card",
-              "name": "Feature Card"
+              "name": "Feature-Card"
             }
           }
         }
@@ -45,7 +45,7 @@
         {
           "component": "container",
           "item": "feature-card",
-          "label": "Cards",
+          "label": "Feature Cards",
           "name": "cards"
         }
       ]
@@ -61,8 +61,8 @@
         },
         {
           "component": "text",
-          "label": "Alt Text",
-          "name": "altText",
+          "label": "Image Alt Text",
+          "name": "imageAlt",
           "valueType": "string"
         },
         {

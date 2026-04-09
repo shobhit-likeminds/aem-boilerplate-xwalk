@@ -109,7 +109,7 @@
   {
     "id": "banner-carousel",
     "components": [
-      "slide"
+      "banner"
     ]
   },
   {
@@ -126,7 +126,7 @@
     "components": [
       "sidebar-menu-item",
       "footer-list-item",
-      "footer-social-item"
+      "footer-social-link"
     ]
   },
   {
@@ -491,7 +491,7 @@
   {
     "id": "sticky-bottom-nav",
     "components": [
-      "nav-item"
+      "sticky-bottom-nav-item"
     ]
   },
   {

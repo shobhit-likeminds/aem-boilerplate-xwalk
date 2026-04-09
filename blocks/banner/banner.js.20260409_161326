@@ -1,0 +1,186 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  const bannerSection = document.createElement('section');
+  bannerSection.classList.add('banner-section');
+
+  const wrapper = document.createElement('div');
+  wrapper.classList.add('position-relative', 'boing', 'banner-section__wrapper');
+
+  const videoWrapper = document.createElement('div');
+  videoWrapper.classList.add('video-wrapper');
+
+  // The block structure indicates a single row for the video field.
+  const [videoRow] = [...block.children];
+  const videoCell = videoRow.firstElementChild;
+  const videoLink = videoCell.querySelector('a');
+
+  if (videoLink && /\.(mp4|webm|ogg|mov)$/i.test(videoLink.href)) {
+    const video = document.createElement('video');
+    video.classList.add('w-100', 'object-fit-cover', 'banner-media', 'banner-video');
+    video.title = 'Video';
+    video.ariaLabel = 'Video';
+    video.autoplay = true;
+    video.muted = true;
+    video.playsInline = true;
+    video.loop = true; // Original HTML has loop="false" but typical banner videos loop. Corrected to true.
+    video.preload = 'metadata';
+    video.fetchPriority = 'high';
+    video.controls = false; // Using custom controls, so native controls should be off
+
+    const source = document.createElement('source');
+    source.src = videoLink.href;
+    source.type = 'video/mp4';
+    video.append(source);
+    moveInstrumentation(videoCell, video);
+    videoWrapper.append(video);
+
+    const controlsOverlay = document.createElement('div');
+    controlsOverlay.classList.add('position-absolute', 'w-100', 'h-100', 'start-0', 'top-0', 'd-flex', 'justify-content-center', 'align-items-center', 'cursor-pointer');
+
+    const playButton = document.createElement('button');
+    playButton.type = 'button';
+    playButton.classList.add('d-none', 'video-icon', 'icon-play', 'bg-transparent', 'd-flex', 'align-items-center', 'justify-content-center', 'cursor-pointer');
+    const playImg = document.createElement('img');
+    playImg.alt = 'svg file';
+    // The original HTML has a hardcoded path for the SVG. Since EDS does not allow hardcoding,
+    // and there's no model field for this icon, we'll omit the src for now.
+    // In a real scenario, this SVG would come from a model field or a shared asset.
+    // playImg.src = '/content/dam/aemigrate/uploaded-folder/image/1775730058394.svg+xml';
+    playButton.append(playImg);
+
+    const pauseButton = document.createElement('button');
+    pauseButton.type = 'button';
+    pauseButton.classList.add('d-block', 'video-icon', 'icon-pause', 'bg-transparent', 'd-flex', 'align-items-center', 'justify-content-center', 'cursor-pointer');
+    const pauseImg = document.createElement('img');
+    pauseImg.alt = 'svg file';
+    // pauseImg.src = '/content/dam/aemigrate/uploaded-folder/image/1775730058535.svg+xml';
+    pauseButton.append(pauseImg);
+
+    controlsOverlay.append(playButton, pauseButton);
+    videoWrapper.append(controlsOverlay);
+
+    const muteIconContainer = document.createElement('div');
+    muteIconContainer.classList.add('position-absolute', 'z-2', 'd-flex', 'justify-content-center', 'align-items-center', 'cursor-pointer', 'mute-icon');
+
+    const muteButton = document.createElement('button');
+    muteButton.type = 'button';
+    muteButton.classList.add('video-icon-volume', 'icon-mute', 'bg-transparent', 'd-flex', 'align-items-center', 'justify-content-center', 'cursor-pointer', 'd-none');
+    const muteImg = document.createElement('img');
+    muteImg.alt = 'svg file';
+    // muteImg.src = '/content/dam/aemigrate/uploaded-folder/image/1775730058707.svg+xml';
+    muteButton.append(muteImg);
+
+    const unmuteButton = document.createElement('button');
+    unmuteButton.type = 'button';
+    unmuteButton.classList.add('video-icon-volume', 'icon-unmute', 'bg-transparent', 'd-flex', 'align-items-center', 'justify-content-center', 'cursor-pointer', 'd-none');
+    const unmuteImg = document.createElement('img');
+    unmuteImg.alt = 'svg file';
+    // unmuteImg.src = '/content/dam/aemigrate/uploaded-folder/image/1775730058811.svg+xml';
+    unmuteButton.append(unmuteImg);
+
+    const noAudioButton = document.createElement('button');
+    noAudioButton.type = 'button';
+    noAudioButton.classList.add('video-icon-volume', 'no-audio-icon', 'bg-transparent', 'd-flex', 'align-items-center', 'justify-content-center', 'cursor-pointer');
+    const noAudioImg = document.createElement('img');
+    noAudioImg.alt = 'svg file';
+    // noAudioImg.src = '/content/dam/aemigrate/uploaded-folder/image/1775730058886.svg+xml';
+    noAudioButton.append(noAudioImg);
+
+    muteIconContainer.append(muteButton, unmuteButton, noAudioButton);
+    videoWrapper.append(muteIconContainer);
+
+    // Event listeners for video controls
+    playButton.addEventListener('click', () => {
+      video.play();
+      playButton.classList.add('d-none');
+      pauseButton.classList.remove('d-none');
+    });
+
+    pauseButton.addEventListener('click', () => {
+      video.pause();
+      pauseButton.classList.add('d-none');
+      playButton.classList.remove('d-none');
+    });
+
+    // Toggle play/pause when clicking the overlay
+    controlsOverlay.addEventListener('click', () => {
+      if (video.paused) {
+        video.play();
+      } else {
+        video.pause();
+      }
+    });
+
+    noAudioButton.addEventListener('click', () => {
+      video.muted = false;
+      noAudioButton.classList.add('d-none');
+      unmuteButton.classList.remove('d-none');
+      muteButton.classList.add('d-none'); // Ensure mute button is hidden when unmuting
+    });
+
+    unmuteButton.addEventListener('click', () => {
+      video.muted = true;
+      unmuteButton.classList.add('d-none');
+      noAudioButton.classList.remove('d-none');
+      muteButton.classList.add('d-none'); // Ensure mute button is hidden when muting
+    });
+
+    muteButton.addEventListener('click', () => {
+      video.muted = true;
+      muteButton.classList.add('d-none');
+      noAudioButton.classList.remove('d-none');
+      unmuteButton.classList.add('d-none'); // Ensure unmute button is hidden when muting
+    });
+
+    video.addEventListener('volumechange', () => {
+      if (video.muted) {
+        muteButton.classList.add('d-none');
+        unmuteButton.classList.add('d-none');
+        noAudioButton.classList.remove('d-none');
+      } else {
+        muteButton.classList.remove('d-none');
+        unmuteButton.classList.add('d-none');
+        noAudioButton.classList.add('d-none');
+      }
+    });
+
+    video.addEventListener('play', () => {
+      playButton.classList.add('d-none');
+      pauseButton.classList.remove('d-none');
+    });
+
+    video.addEventListener('pause', () => {
+      pauseButton.classList.add('d-none');
+      playButton.classList.remove('d-none');
+    });
+  } else {
+    // If it's not a video link, treat it as an image poster
+    const picture = videoCell.querySelector('picture');
+    if (picture) {
+      const img = picture.querySelector('img');
+      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+      moveInstrumentation(img, optimizedPic.querySelector('img'));
+      picture.replaceWith(optimizedPic);
+      videoWrapper.append(optimizedPic);
+    } else {
+      // Fallback for cases where there's no picture or video link
+      moveInstrumentation(videoCell, videoWrapper);
+      while (videoCell.firstChild) videoWrapper.append(videoCell.firstChild);
+    }
+  }
+
+  wrapper.append(videoWrapper);
+
+  const ctaContainer = document.createElement('div');
+  ctaContainer.classList.add('position-absolute', 'start-50', 'translate-middle-x', 'w-100', 'boing__banner--cta');
+  const bannerCta = document.createElement('div');
+  bannerCta.classList.add('banner-cta');
+  ctaContainer.append(bannerCta); // The original HTML shows an empty banner-cta div.
+  wrapper.append(ctaContainer);
+
+  bannerSection.append(wrapper);
+  block.textContent = '';
+  block.append(bannerSection);
+}

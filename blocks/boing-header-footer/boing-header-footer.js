@@ -2,87 +2,82 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const [
-    headerSvgRow,
-    headerLogoRow,
-    headerLogoLinkRow,
-    headerLogoLinkLabelRow,
-    loginLinkRow,
-    loginLinkLabelRow,
-    footerLogo1Row,
-    footerLogo2Row,
-    footerLeftLinkRow,
-    footerLeftLinkLabelRow,
-    footerCopyrightRow,
-    ...itemRows
-  ] = [...block.children];
+  const children = [...block.children];
 
-  const sidebarMenuItems = itemRows.filter((row) => row.children.length === 3 && row.querySelector('picture'));
-  const footerListItems = itemRows.filter((row) => row.children.length === 2 && row.querySelector('a'));
-  const footerSocialItems = itemRows.filter((row) => row.children.length === 3 && row.querySelector('picture') && row.querySelector('a'));
-
-  // Create Header
+  // Header
   const header = document.createElement('header');
   header.classList.add('boing-container', 'header', 'd-flex', 'justify-content-between', 'align-items-center', 'h-15', 'px-5', 'py-2', 'fixed-top', 'w-100', 'bg-white');
 
-  const headerLeft = document.createElement('div');
-  headerLeft.classList.add('d-flex', 'w-25');
-  const headerSvgPicture = headerSvgRow.querySelector('picture');
-  if (headerSvgPicture) {
-    moveInstrumentation(headerSvgRow.firstElementChild, headerSvgPicture);
-    headerLeft.append(headerSvgPicture);
+  const headerLeftDiv = document.createElement('div');
+  headerLeftDiv.classList.add('d-flex', 'w-25');
+  const headerLeftImageCell = children[0].firstElementChild; // headerLeftImage
+  if (headerLeftImageCell) {
+    moveInstrumentation(children[0], headerLeftDiv);
+    headerLeftDiv.append(headerLeftImageCell);
   }
-  header.append(headerLeft);
+  header.append(headerLeftDiv);
 
-  const headerCenter = document.createElement('div');
-  headerCenter.classList.add('d-flex', 'justify-content-center', 'w-25');
+  const headerLogoDiv = document.createElement('div');
+  headerLogoDiv.classList.add('d-flex', 'justify-content-center', 'w-25');
+
   const headerLogoLink = document.createElement('a');
   headerLogoLink.classList.add('analytics_cta_click');
-  const headerLogoLinkFound = headerLogoLinkRow.querySelector('a');
-  if (headerLogoLinkFound) {
-    headerLogoLink.href = headerLogoLinkFound.href;
-    headerLogoLink.setAttribute('a-label', 'header-logo-boing');
+  const headerLogoLinkRow = children[2]; // headerLogoLink
+  if (headerLogoLinkRow) {
+    const foundLink = headerLogoLinkRow.querySelector('a');
+    if (foundLink) {
+      headerLogoLink.href = foundLink.href;
+      headerLogoLink.setAttribute('a-label', 'header-logo-boing');
+      moveInstrumentation(headerLogoLinkRow, headerLogoLink);
+    }
   }
-  const headerLogoDiv = document.createElement('div');
-  headerLogoDiv.classList.add('header__logo', 'd-flex', 'align-items-center');
-  const headerLogoPicture = headerLogoRow.querySelector('picture');
-  if (headerLogoPicture) {
-    const img = headerLogoPicture.querySelector('img');
+
+  const headerLogoInnerDiv = document.createElement('div');
+  headerLogoInnerDiv.classList.add('header__logo', 'd-flex', 'align-items-center');
+
+  const headerLogoImageCell = children[1].firstElementChild; // headerLogoImage
+  if (headerLogoImageCell) {
+    const img = headerLogoImageCell.querySelector('img');
     if (img) {
       img.classList.add('header__logo-img');
       img.setAttribute('fetchpriority', 'high');
       img.setAttribute('loading', 'eager');
+      moveInstrumentation(children[1], headerLogoInnerDiv);
+      headerLogoInnerDiv.append(headerLogoImageCell);
     }
-    moveInstrumentation(headerLogoRow.firstElementChild, headerLogoPicture);
-    headerLogoDiv.append(headerLogoPicture);
   }
-  headerLogoLink.append(headerLogoDiv);
-  headerCenter.append(headerLogoLink);
-  header.append(headerCenter);
 
-  const headerRight = document.createElement('div');
-  headerRight.classList.add('d-flex', 'w-25', 'justify-content-end');
+  headerLogoLink.append(headerLogoInnerDiv);
+  headerLogoDiv.append(headerLogoLink);
+  header.append(headerLogoDiv);
+
+  const headerRightDiv = document.createElement('div');
+  headerRightDiv.classList.add('d-flex', 'w-25', 'justify-content-end');
+
   const loginLinkWrapper = document.createElement('a');
   loginLinkWrapper.classList.add('header__login-btn-wrapper', 'analytics_cta_click');
-  const loginLinkFound = loginLinkRow.querySelector('a');
-  if (loginLinkFound) {
-    loginLinkWrapper.href = loginLinkFound.href;
-    loginLinkWrapper.style.display = 'inline';
+  loginLinkWrapper.style.display = 'inline';
+  const loginLinkRow = children[4]; // loginLink
+  if (loginLinkRow) {
+    const foundLink = loginLinkRow.querySelector('a');
+    if (foundLink) {
+      loginLinkWrapper.href = foundLink.href;
+      moveInstrumentation(loginLinkRow, loginLinkWrapper);
+    }
   }
+
   const loginButton = document.createElement('button');
   loginButton.classList.add('header__login-btn', 'btn', 'text-boing-primary', 'bg-transparent', 'fw-semibold', 'rounded-4', 'btn-sm', 'py-3', 'px-4');
-  const loginLinkLabelFound = loginLinkLabelRow.firstElementChild; // Access first element for text content
-  if (loginLinkLabelFound) {
-    moveInstrumentation(loginLinkLabelRow.firstElementChild, loginButton);
-    loginButton.append(loginLinkLabelFound.textContent.trim());
-  } else {
-    loginButton.textContent = 'Login'; // Default text if label is missing
+  const loginLinkLabelCell = children[5].firstElementChild; // loginLinkLabel
+  if (loginLinkLabelCell) {
+    loginButton.textContent = loginLinkLabelCell.textContent.trim();
+    moveInstrumentation(children[5], loginButton);
   }
   loginLinkWrapper.append(loginButton);
-  headerRight.append(loginLinkWrapper);
-  header.append(headerRight);
+  headerRightDiv.append(loginLinkWrapper);
+  header.append(headerRightDiv);
 
-  // Create Submenu Container (Sidebar)
+  // Submenu container (for sidebar)
   const submenuContainer = document.createElement('div');
   submenuContainer.classList.add('submenu-container', 'position-fixed', 'top-0', 'start-0', 'end-0', 'm-auto', 'overflow-hidden');
 
@@ -92,96 +87,124 @@ export default function decorate(block) {
   const sidebarMenu = document.createElement('ul');
   sidebarMenu.classList.add('sidebar__menu', 'list-unstyled', 'px-4');
 
-  sidebarMenuItems.forEach((row) => {
-    const li = document.createElement('li');
-    moveInstrumentation(row, li);
-    li.classList.add('sidebar__menu-item', 'py-6', 'border-bottom', 'border-boing-neutral-gray-200');
+  // Fixed fields: headerLeftImage, headerLogoImage, headerLogoLink, headerLogoLinkLabel, loginLink, loginLinkLabel,
+  // footerLeftLogo, footerRightLogo, footerLeftLink, footerLeftLinkLabel, footerCopyright
+  // Total 11 fixed fields.
+  const fixedFieldCount = 11;
 
-    const link = document.createElement('a');
-    link.classList.add('sidebar__menu-link', 'd-flex', 'align-items-center', 'text-decoration-none', 'px-6', 'fw-medium', 'analytics_cta_click');
-
-    let menuIcon = null;
-    let menuLinkText = '';
-    let menuLinkHref = '';
-
+  // Sidebar Menu Items: 3 cells (menuLink, menuLinkLabel, menuIcon)
+  const sidebarMenuItems = children.slice(fixedFieldCount).filter((row) => {
     const cells = [...row.children];
-    const iconCell = cells.find(cell => cell.querySelector('picture'));
-    const linkCell = cells.find(cell => cell.querySelector('a'));
-    const linkLabelCell = cells.find(cell => !cell.querySelector('picture') && !cell.querySelector('a')); // Assuming linkLabel is plain text
+    return cells.length === 3 && cells.some(cell => cell.querySelector('picture')); // Check for picture to identify menuIcon
+  });
 
-    if (iconCell) {
-      menuIcon = iconCell.querySelector('picture').querySelector('img');
-      if (menuIcon) {
-        menuIcon.classList.add('sidebar__menu-icon', 'me-4');
+  sidebarMenuItems.forEach((row) => {
+    const cells = [...row.children];
+    const li = document.createElement('li');
+    li.classList.add('sidebar__menu-item', 'py-6', 'border-bottom', 'border-boing-neutral-gray-200');
+    moveInstrumentation(row, li);
+
+    const menuLinkCell = cells.find(cell => cell.querySelector('a'));
+    const menuIconCell = cells.find(cell => cell.querySelector('picture'));
+    const menuLinkLabelCell = cells.find(cell => !cell.querySelector('a') && !cell.querySelector('picture'));
+
+    const menuLink = document.createElement('a');
+    menuLink.classList.add('sidebar__menu-link', 'd-flex', 'align-items-center', 'text-decoration-none', 'px-6', 'fw-medium', 'analytics_cta_click');
+    if (menuLinkCell) {
+      const foundMenuLink = menuLinkCell.querySelector('a');
+      if (foundMenuLink) {
+        menuLink.href = foundMenuLink.href;
+        menuLink.setAttribute('data-consent', 'false');
+        menuLink.setAttribute('data-link', foundMenuLink.href);
       }
     }
-    if (linkCell) {
-      menuLinkHref = linkCell.querySelector('a').href;
-    }
-    if (linkLabelCell) { // Use linkLabelCell for text content
-      menuLinkText = linkLabelCell.textContent.trim();
+
+    if (menuIconCell) {
+      const menuIcon = menuIconCell.querySelector('picture');
+      if (menuIcon) {
+        const img = menuIcon.querySelector('img');
+        if (img) {
+          img.classList.add('sidebar__menu-icon', 'me-4');
+          img.setAttribute('loading', 'lazy');
+          menuLink.append(menuIcon);
+        }
+      }
     }
 
-
-    if (menuIcon) {
-      link.append(menuIcon);
+    if (menuLinkLabelCell) {
+      menuLink.append(menuLinkLabelCell.textContent.trim());
     }
-    link.href = menuLinkHref;
-    link.textContent = menuLinkText;
-    li.append(link);
+    li.append(menuLink);
     sidebarMenu.append(li);
   });
+
   sidebar.append(sidebarMenu);
 
   const sidebarCurve = document.createElement('div');
   sidebarCurve.classList.add('sidebar__curve');
   sidebar.append(sidebarCurve);
 
-  // Create Footer
+  // Footer
   const footerBrand = document.createElement('div');
   footerBrand.classList.add('footer-brand', 'w-100', 'bg-boing-neutral-gray-600');
+  footerBrand.setAttribute('data-isdoodlevariation', 'false');
 
-  const footerBrandPrimary = document.createElement('section');
-  footerBrandPrimary.classList.add('footer-brand__primary');
+  const footerPrimary = document.createElement('section');
+  footerPrimary.classList.add('footer-brand__primary');
+  footerPrimary.style.backgroundColor = '';
+
   const footerPrimaryContainer = document.createElement('div');
   footerPrimaryContainer.classList.add('container');
+
   const footerPrimaryContent = document.createElement('div');
   footerPrimaryContent.classList.add('footer-brand__primary--content', 'd-flex', 'flex-column', 'flex-md-row', 'justify-content-md-between', 'align-items-center');
 
-  const footerBrandLeftPrimary = document.createElement('section');
-  footerBrandLeftPrimary.classList.add('footer-brand__left', 'd-flex', 'gap-16', 'px-10', 'align-items-center', 'justify-content-center');
+  const footerBrandLeft = document.createElement('section');
+  footerBrandLeft.classList.add('footer-brand__left', 'd-flex', 'gap-16', 'px-10', 'align-items-center', 'justify-content-center');
 
-  const footerLogo1Link = document.createElement('a');
-  footerLogo1Link.classList.add('footer-brand__logo', 'd-inline-block', 'analytics_cta_click');
-  footerLogo1Link.href = '#'; // Placeholder, as link is not in model
-  footerLogo1Link.setAttribute('aria-label', 'ITC Logo');
-  const footerLogo1Picture = footerLogo1Row.querySelector('picture');
-  if (footerLogo1Picture) {
-    const img = footerLogo1Picture.querySelector('img');
-    if (img) {
-      img.classList.add('object-fit-contain', 'w-100', 'h-100', 'no-rendition');
+  const footerLeftLogoLink = document.createElement('a');
+  footerLeftLogoLink.classList.add('footer-brand__logo', 'd-inline-block', 'analytics_cta_click');
+  footerLeftLogoLink.setAttribute('data-cta-region', 'Footer');
+  footerLeftLogoLink.setAttribute('aria-label', 'ITC Logo');
+  footerLeftLogoLink.target = '_blank';
+  footerLeftLogoLink.href = 'https://www.itcportal.com/'; // Hardcoded from original HTML
+
+  const footerLeftLogoCell = children[6].firstElementChild; // footerLeftLogo
+  if (footerLeftLogoCell) {
+    const picture = footerLeftLogoCell.querySelector('picture');
+    if (picture) {
+      const img = picture.querySelector('img');
+      if (img) {
+        img.classList.add('object-fit-contain', 'w-100', 'h-100', 'no-rendition');
+        img.setAttribute('loading', 'lazy');
+        moveInstrumentation(children[6], footerLeftLogoLink);
+        footerLeftLogoLink.append(picture);
+      }
     }
-    moveInstrumentation(footerLogo1Row.firstElementChild, footerLogo1Picture);
-    footerLogo1Link.append(footerLogo1Picture);
   }
-  footerBrandLeftPrimary.append(footerLogo1Link);
+  footerBrandLeft.append(footerLeftLogoLink);
 
-  const footerLogo2Div = document.createElement('div');
-  footerLogo2Div.classList.add('footer-brand__secondary--logo', 'd-inline-block');
-  const footerLogo2Picture = footerLogo2Row.querySelector('picture');
-  if (footerLogo2Picture) {
-    const img = footerLogo2Picture.querySelector('img');
-    if (img) {
-      img.classList.add('object-fit-contain', 'w-100', 'no-rendition');
+  const footerRightLogoDiv = document.createElement('div');
+  footerRightLogoDiv.classList.add('footer-brand__secondary--logo', 'd-inline-block');
+  const footerRightLogoCell = children[7].firstElementChild; // footerRightLogo
+  if (footerRightLogoCell) {
+    const picture = footerRightLogoCell.querySelector('picture');
+    if (picture) {
+      const img = picture.querySelector('img');
+      if (img) {
+        img.classList.add('object-fit-contain', 'w-100', 'no-rendition');
+        img.setAttribute('loading', 'lazy');
+        moveInstrumentation(children[7], footerRightLogoDiv);
+        footerRightLogoDiv.append(picture);
+      }
     }
-    moveInstrumentation(footerLogo2Row.firstElementChild, footerLogo2Picture);
-    footerLogo2Div.append(footerLogo2Picture);
   }
-  footerBrandLeftPrimary.append(footerLogo2Div);
-  footerPrimaryContent.append(footerBrandLeftPrimary);
+  footerBrandLeft.append(footerRightLogoDiv);
+  footerPrimaryContent.append(footerBrandLeft);
 
-  const footerBrandRightPrimary = document.createElement('section');
-  footerBrandRightPrimary.classList.add('footer-brand__right');
+  const footerBrandRight = document.createElement('section');
+  footerBrandRight.classList.add('footer-brand__right');
+
   const footerNavbar = document.createElement('nav');
   footerNavbar.classList.add('footer-brand__navbar', 'd-grid', 'd-md-flex');
   footerNavbar.setAttribute('aria-label', 'footer navbar');
@@ -189,149 +212,187 @@ export default function decorate(block) {
   const footerNavbarLeft = document.createElement('div');
   footerNavbarLeft.classList.add('footer-brand__navbar--left', 'd-flex', 'flex-column', 'flex-md-row');
 
-  // Group footer list items into two columns (example, adjust as needed)
-  const footerListCol1 = document.createElement('div');
-  footerListCol1.classList.add('footerList');
-  const ul1 = document.createElement('ul');
-  ul1.classList.add('footer-list', 'd-flex', 'align-items-center', 'justify-content-center', 'align-items-md-start', 'flex-column');
-  footerListItems.slice(0, Math.ceil(footerListItems.length / 2)).forEach((row) => {
-    const li = document.createElement('li');
-    moveInstrumentation(row, li);
-    li.classList.add('footer-list__item');
-    const link = document.createElement('a');
-    link.classList.add('cta-analytics', 'analytics_cta_click', 'footer-list__item--link', 'd-inline-block');
-    const aFound = row.querySelector('a');
-    if (aFound) {
-      link.href = aFound.href;
-      link.textContent = aFound.textContent.trim();
-    }
-    li.append(link);
-    ul1.append(li);
+  // Footer List Items: 2 cells (footerLink, footerLinkLabel)
+  // These items appear after fixed fields AND sidebar menu items.
+  const footerListItems = children.slice(fixedFieldCount + sidebarMenuItems.length).filter((row) => {
+    const cells = [...row.children];
+    return cells.length === 2 && cells.some(cell => cell.querySelector('a')) && !cells.some(cell => cell.querySelector('picture')); // Check for link and absence of picture to distinguish from social links
   });
-  footerListCol1.append(ul1);
-  footerNavbarLeft.append(footerListCol1);
 
-  const footerListCol2 = document.createElement('div');
-  footerListCol2.classList.add('footerList');
-  const ul2 = document.createElement('ul');
-  ul2.classList.add('footer-list', 'd-flex', 'align-items-center', 'justify-content-center', 'align-items-md-start', 'flex-column');
-  footerListItems.slice(Math.ceil(footerListItems.length / 2)).forEach((row) => {
-    const li = document.createElement('li');
-    moveInstrumentation(row, li);
-    li.classList.add('footer-list__item');
-    const link = document.createElement('a');
-    link.classList.add('cta-analytics', 'analytics_cta_click', 'footer-list__item--link', 'd-inline-block');
-    const aFound = row.querySelector('a');
-    if (aFound) {
-      link.href = aFound.href;
-      link.textContent = aFound.textContent.trim();
-    }
-    li.append(link);
-    ul2.append(li);
-  });
-  footerListCol2.append(ul2);
-  footerNavbarLeft.append(footerListCol2);
+  const createFooterList = (items) => {
+    const footerListDiv = document.createElement('div');
+    footerListDiv.classList.add('footerList');
+    const ul = document.createElement('ul');
+    ul.classList.add('footer-list', 'd-flex', 'align-items-center', 'justify-content-center', 'align-items-md-start', 'flex-column');
+    items.forEach((itemRow) => {
+      const cells = [...itemRow.children];
+      const li = document.createElement('li');
+      li.classList.add('footer-list__item');
+      moveInstrumentation(itemRow, li);
+
+      const linkCell = cells.find(cell => cell.querySelector('a'));
+      const labelCell = cells.find(cell => !cell.querySelector('a'));
+
+      const link = document.createElement('a');
+      link.classList.add('cta-analytics', 'analytics_cta_click', 'footer-list__item--link', 'd-inline-block');
+      link.setAttribute('data-link-region', 'Footer List');
+
+      if (linkCell) {
+        const foundLink = linkCell.querySelector('a');
+        if (foundLink) {
+          link.href = foundLink.href;
+        }
+      }
+      if (labelCell) {
+        link.textContent = labelCell.textContent.trim();
+      }
+      li.append(link);
+      ul.append(li);
+    });
+    footerListDiv.append(ul);
+    return footerListDiv;
+  };
+
+  // Distribute footer list items into 4 columns
+  const numFooterListItems = footerListItems.length;
+  const itemsPerColumn = Math.ceil(numFooterListItems / 4);
+
+  let startIndex = 0;
+  if (itemsPerColumn > 0) {
+    footerNavbarLeft.append(createFooterList(footerListItems.slice(startIndex, startIndex + itemsPerColumn)));
+    startIndex += itemsPerColumn;
+    footerNavbarLeft.append(createFooterList(footerListItems.slice(startIndex, startIndex + itemsPerColumn)));
+    startIndex += itemsPerColumn;
+  }
+
   footerNavbar.append(footerNavbarLeft);
 
-  footerBrandRightPrimary.append(footerNavbar);
-  footerPrimaryContent.append(footerBrandRightPrimary);
-  footerPrimaryContainer.append(footerPrimaryContent);
-  footerBrandPrimary.append(footerPrimaryContainer);
-  footerBrand.append(footerBrandPrimary);
+  const footerNavbarRight = document.createElement('div');
+  footerNavbarRight.classList.add('footer-brand__navbar--right', 'd-flex', 'flex-column', 'flex-md-row');
 
-  const footerBrandSecondary = document.createElement('section');
-  footerBrandSecondary.classList.add('footer-brand__secondary');
+  if (itemsPerColumn > 0) {
+    footerNavbarRight.append(createFooterList(footerListItems.slice(startIndex, startIndex + itemsPerColumn)));
+    startIndex += itemsPerColumn;
+    footerNavbarRight.append(createFooterList(footerListItems.slice(startIndex, startIndex + itemsPerColumn)));
+  }
+  footerNavbar.append(footerNavbarRight);
+  footerBrandRight.append(footerNavbar);
+  footerPrimaryContent.append(footerBrandRight);
+  footerPrimaryContainer.append(footerPrimaryContent);
+  footerPrimary.append(footerPrimaryContainer);
+  footerBrand.append(footerPrimary);
+
+  const footerSecondary = document.createElement('section');
+  footerSecondary.classList.add('footer-brand__secondary');
+  footerSecondary.style.backgroundColor = '';
+
   const footerSecondaryContainer = document.createElement('div');
   footerSecondaryContainer.classList.add('container');
+
   const footerSecondaryContent = document.createElement('div');
   footerSecondaryContent.classList.add('footer-brand__secondary--content', 'd-flex', 'flex-column', 'justify-content-md-between', 'align-items-center');
 
-  const footerBrandRightSecondary = document.createElement('section');
-  footerBrandRightSecondary.classList.add('footer-brand__right', 'd-flex', 'flex-column', 'pb-5');
+  const footerSocialSection = document.createElement('section');
+  footerSocialSection.classList.add('footer-brand__right', 'd-flex', 'flex-column', 'pb-5');
+
   const socialMediaTitle = document.createElement('h3');
   socialMediaTitle.classList.add('social_media--title');
   socialMediaTitle.textContent = 'Follow Us On';
-  footerBrandRightSecondary.append(socialMediaTitle);
+  footerSocialSection.append(socialMediaTitle);
 
   const socialList = document.createElement('ul');
   socialList.classList.add('footer-brand__right--list', 'd-flex', 'align-items-center', 'justify-content-center', 'px-10', 'flex-wrap');
 
-  footerSocialItems.forEach((row) => {
-    const li = document.createElement('li');
-    moveInstrumentation(row, li);
-    li.classList.add('footer-brand__right--item', 'd-flex', 'justify-content-center', 'align-items-center');
-
-    const link = document.createElement('a');
-    link.classList.add('footer-brand__right--link', 'd-flex', 'justify-content-center', 'align-items-center', 'analytics_cta_click');
-
-    let socialIcon = null;
-    let socialLinkHref = '';
-
+  // Footer Social Links: 3 cells (socialLink, socialLinkLabel, socialIcon)
+  // These items appear after fixed fields, sidebar menu items, and footer list items.
+  const footerSocialLinks = children.slice(fixedFieldCount + sidebarMenuItems.length + footerListItems.length).filter((row) => {
     const cells = [...row.children];
-    const iconCell = cells.find(cell => cell.querySelector('picture'));
-    const linkCell = cells.find(cell => cell.querySelector('a'));
+    return cells.length === 3 && cells.some(cell => cell.querySelector('picture')); // Check for picture to identify socialIcon
+  });
 
-    if (iconCell) {
-      socialIcon = iconCell.querySelector('picture').querySelector('img');
-      if (socialIcon) {
-        socialIcon.classList.add('object-fit-contain', 'w-100', 'h-100', 'no-rendition');
+  footerSocialLinks.forEach((row) => {
+    const cells = [...row.children];
+    const li = document.createElement('li');
+    li.classList.add('footer-brand__right--item', 'd-flex', 'justify-content-center', 'align-items-center');
+    moveInstrumentation(row, li);
+
+    const socialLinkCell = cells.find(cell => cell.querySelector('a'));
+    const socialIconCell = cells.find(cell => cell.querySelector('picture'));
+    const socialLinkLabelCell = cells.find(cell => !cell.querySelector('a') && !cell.querySelector('picture'));
+
+    const socialLink = document.createElement('a');
+    socialLink.classList.add('footer-brand__right--link', 'd-flex', 'justify-content-center', 'align-items-center', 'analytics_cta_click');
+    socialLink.setAttribute('data-cta-region', 'Footer');
+    socialLink.target = '_blank';
+
+    if (socialLinkCell) {
+      const foundSocialLink = socialLinkCell.querySelector('a');
+      if (foundSocialLink && socialLinkLabelCell) {
+        socialLink.href = foundSocialLink.href;
+        socialLink.setAttribute('data-cta-label', `footer-${socialLinkLabelCell.textContent.trim().toLowerCase()}`);
+        socialLink.setAttribute('data-platform-name', socialLinkLabelCell.textContent.trim().toLowerCase());
+        socialLink.setAttribute('data-social-linktype', 'follow');
       }
     }
-    if (linkCell) {
-      socialLinkHref = linkCell.querySelector('a').href;
-    }
 
-    link.href = socialLinkHref;
-    link.target = '_blank';
-    if (socialIcon) {
-      link.append(socialIcon);
+    if (socialIconCell) {
+      const socialIcon = socialIconCell.querySelector('picture');
+      if (socialIcon && socialLinkLabelCell) {
+        const img = socialIcon.querySelector('img');
+        if (img) {
+          img.classList.add('object-fit-contain', 'w-100', 'h-100', 'no-rendition');
+          img.setAttribute('loading', 'lazy');
+          img.setAttribute('aria-label', socialLinkLabelCell.textContent.trim().toLowerCase());
+          moveInstrumentation(socialIconCell, socialLink);
+          socialLink.append(socialIcon);
+        }
+      }
     }
-    li.append(link);
+    li.append(socialLink);
     socialList.append(li);
   });
-  footerBrandRightSecondary.append(socialList);
-  footerSecondaryContent.append(footerBrandRightSecondary);
+  footerSocialSection.append(socialList);
+  footerSecondaryContent.append(footerSocialSection);
 
-  const footerBrandLeftSecondary = document.createElement('section');
-  footerBrandLeftSecondary.classList.add('footer-brand__left', 'py-5', 'd-flex', 'flex-column', 'gap-3');
+  const footerLeftSection = document.createElement('section');
+  footerLeftSection.classList.add('footer-brand__left', 'py-5', 'd-flex', 'flex-column', 'gap-3');
+
   const footerLeftList = document.createElement('ul');
   footerLeftList.classList.add('footer-brand__left--list', 'd-flex', 'align-items-center', 'justify-content-center', 'flex-wrap');
 
-  const footerLeftListItem = document.createElement('li');
-  footerLeftListItem.classList.add('footer-brand__left--item', 'foot_link');
+  const footerLeftLinkLi = document.createElement('li');
+  footerLeftLinkLi.classList.add('footer-brand__left--item', 'foot_link');
   const footerLeftLink = document.createElement('a');
   footerLeftLink.classList.add('footer-brand__left--link', 'analytics_cta_click');
-  const footerLeftLinkFound = footerLeftLinkRow.querySelector('a');
-  if (footerLeftLinkFound) {
-    footerLeftLink.href = footerLeftLinkFound.href;
-    footerLeftLink.textContent = footerLeftLinkFound.textContent.trim();
-    footerLeftLink.target = '_blank';
+  footerLeftLink.setAttribute('data-cta-region', 'Footer');
+  footerLeftLink.target = '_blank';
+  const footerLeftLinkContent = children[8].firstElementChild.querySelector('a'); // footerLeftLink
+  const footerLeftLinkLabelContent = children[9].firstElementChild; // footerLeftLinkLabel
+  if (footerLeftLinkContent && footerLeftLinkLabelContent) {
+    footerLeftLink.href = footerLeftLinkContent.href;
+    footerLeftLink.textContent = footerLeftLinkLabelContent.textContent.trim();
+    moveInstrumentation(children[8], footerLeftLink);
+    moveInstrumentation(children[9], footerLeftLink);
   }
-  footerLeftList.append(footerLeftListItem);
-  footerBrandLeftSecondary.append(footerLeftList);
-
-  const footerLeftLinkLabelSpan = document.createElement('span'); // Create a span for the label
-  footerLeftLinkLabelSpan.classList.add('footer-brand__left--text', 'text-white'); // Apply appropriate classes
-  const footerLeftLinkLabelContent = footerLeftLinkLabelRow.firstElementChild; // Get the content from the row
-  if (footerLeftLinkLabelContent) {
-    moveInstrumentation(footerLeftLinkLabelRow.firstElementChild, footerLeftLinkLabelSpan);
-    footerLeftLinkLabelSpan.textContent = footerLeftLinkLabelContent.textContent.trim();
-  }
-  footerLeftListItem.append(footerLeftLinkLabelSpan); // Append the span to the list item
+  footerLeftLinkLi.append(footerLeftLink);
+  footerLeftList.append(footerLeftLinkLi);
+  footerLeftSection.append(footerLeftList);
 
   const footerCopyrightDiv = document.createElement('div');
   footerCopyrightDiv.classList.add('footer-brand__left--copyright', 'text-center');
-  const copyrightSpan = document.createElement('span');
-  copyrightSpan.classList.add('footer-brand__left--text', 'text-white');
-  moveInstrumentation(footerCopyrightRow.firstElementChild, copyrightSpan);
-  copyrightSpan.textContent = footerCopyrightRow.firstElementChild.textContent.trim();
-  footerCopyrightDiv.append(copyrightSpan);
-  footerBrandLeftSecondary.append(footerCopyrightDiv);
-  footerSecondaryContent.append(footerBrandLeftSecondary);
-
+  const footerCopyrightSpan = document.createElement('span');
+  footerCopyrightSpan.classList.add('footer-brand__left--text', 'text-white');
+  const footerCopyrightCell = children[10].firstElementChild; // footerCopyright
+  if (footerCopyrightCell) {
+    footerCopyrightSpan.textContent = footerCopyrightCell.textContent.trim();
+    moveInstrumentation(children[10], footerCopyrightSpan);
+  }
+  footerCopyrightDiv.append(footerCopyrightSpan);
+  footerLeftSection.append(footerCopyrightDiv);
+  footerSecondaryContent.append(footerLeftSection);
   footerSecondaryContainer.append(footerSecondaryContent);
-  footerBrandSecondary.append(footerSecondaryContainer);
-  footerBrand.append(footerBrandSecondary);
+  footerSecondary.append(footerSecondaryContainer);
+  footerBrand.append(footerSecondary);
 
   sidebar.append(footerBrand);
   submenuContainer.append(sidebar);
@@ -340,20 +401,18 @@ export default function decorate(block) {
   overlay.classList.add('overlay', 'position-absolute', 'top-0', 'start-0', 'w-100', 'h-100', 'bg-black', 'opacity-25');
   submenuContainer.append(overlay);
 
-  const section = document.createElement('section');
-  section.classList.add('position-relative', 'mb-15');
-
+  // Append all created elements to the block
+  block.textContent = '';
+  block.classList.add('position-relative', 'mb-15'); // Add section classes to block wrapper
   const appNameSpan = document.createElement('span');
   appNameSpan.classList.add('d-none', 'app-name');
   appNameSpan.setAttribute('data-app-name', 'boing');
   appNameSpan.textContent = 'boing';
-  section.append(appNameSpan);
-  section.append(header);
-  section.append(submenuContainer);
+  block.append(appNameSpan);
+  block.append(header);
+  block.append(submenuContainer);
 
-  block.textContent = '';
-  block.append(section);
-
+  // Image optimization
   block.querySelectorAll('picture > img').forEach((img) => {
     const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
     moveInstrumentation(img, optimizedPic.querySelector('img'));
@@ -361,15 +420,13 @@ export default function decorate(block) {
   });
 
   // Toggle sidebar functionality
-  const menuToggle = document.createElement('button');
-  menuToggle.classList.add('navbar-toggler', 'd-md-none', 'ms-3'); // Example classes, adjust as needed
-  menuToggle.innerHTML = '<span class="navbar-toggler-icon"></span>';
-  headerLeft.prepend(menuToggle); // Add a toggle button to the header
-
-  menuToggle.addEventListener('click', () => {
-    sidebar.classList.toggle('show'); // Assuming 'show' class makes sidebar visible
-    overlay.classList.toggle('show'); // Assuming 'show' class makes overlay visible
-  });
+  const headerLeftImage = headerLeftDiv.querySelector('img');
+  if (headerLeftImage) {
+    headerLeftImage.addEventListener('click', () => {
+      sidebar.classList.toggle('show'); // Assuming 'show' class controls visibility
+      overlay.classList.toggle('show'); // Assuming 'show' class controls visibility
+    });
+  }
 
   overlay.addEventListener('click', () => {
     sidebar.classList.remove('show');

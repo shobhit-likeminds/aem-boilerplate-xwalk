@@ -2,8 +2,7 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const section = document.createElement('section');
-  section.classList.add('sticky-bottom-nav', 'position-fixed', 'bottom-0', 'p-3', 'd-flex', 'align-items-center', 'boing-container', 'bg-boing-primary');
+  block.classList.add('position-fixed', 'bottom-0', 'p-3', 'd-flex', 'align-items-center', 'boing-container', 'bg-boing-primary');
 
   const ul = document.createElement('ul');
   ul.classList.add('sticky-bottom-nav__list', 'd-flex', 'justify-content-around', 'align-items-center', 'flex-grow-1');
@@ -16,49 +15,61 @@ export default function decorate(block) {
     const link = document.createElement('a');
     link.classList.add('sticky-bottom-nav__link', 'd-flex', 'flex-column', 'align-items-center', 'gap-1', 'analytics_cta_click');
 
+    let iconImg = null;
+    let iconAltText = '';
     let linkHref = '';
     let linkLabelText = '';
-    let iconPicture = null;
 
-    // Find cells based on content, not index
     const cells = [...row.children];
-    const linkCell = cells.find(cell => cell.querySelector('a') && cell.textContent.trim() !== '' && !cell.querySelector('picture'));
-    const labelCell = cells.find(cell => cell.textContent.trim() !== '' && !cell.querySelector('a') && !cell.querySelector('picture'));
-    const iconCell = cells.find(cell => cell.querySelector('picture'));
 
-    if (linkCell) {
-      const a = linkCell.querySelector('a');
-      if (a && a.href) {
-        linkHref = a.href;
-      }
-      // If label text is also in the link cell, prioritize it from there
-      if (linkCell.textContent.trim() && !labelCell) {
-        linkLabelText = linkCell.textContent.trim();
+    // Based on BlockJson:
+    // cell[0]: field="icon" label="Icon" type=reference (picture)
+    // cell[1]: field="iconAlt" label="Icon Alt Text" type=text
+    // cell[2]: field="link" label="Link" type=aem-content (anchor)
+    // cell[3]: field="linkLabel" label="Link Label" type=text
+
+    const iconCell = cells[0];
+    const iconAltTextCell = cells[1];
+    const linkCell = cells[2];
+    const linkLabelCell = cells[3];
+
+    // Process Icon field
+    if (iconCell && iconCell.querySelector('picture')) {
+      const picture = iconCell.querySelector('picture');
+      iconImg = picture ? picture.querySelector('img') : null;
+    }
+
+    // Process Icon Alt Text field
+    if (iconAltTextCell) {
+      iconAltText = iconAltTextCell.textContent.trim();
+    }
+
+    // Process Link field
+    if (linkCell && linkCell.querySelector('a')) {
+      const foundLink = linkCell.querySelector('a');
+      if (foundLink) {
+        linkHref = foundLink.href;
+        // Check for data-consent and data-link attributes from original HTML
+        if (foundLink.dataset.consent) link.dataset.consent = foundLink.dataset.consent;
+        if (foundLink.dataset.link) link.dataset.link = foundLink.dataset.link;
       }
     }
 
-    if (labelCell) {
-      // If a separate label cell exists, use its text
-      linkLabelText = labelCell.textContent.trim();
-    }
-
-    if (iconCell) {
-      iconPicture = iconCell.querySelector('picture');
+    // Process Link Label field
+    if (linkLabelCell) {
+      linkLabelText = linkLabelCell.textContent.trim();
     }
 
     if (linkHref) {
       link.href = linkHref;
     }
 
-    if (iconPicture) {
-      const img = iconPicture.querySelector('img');
-      if (img) {
-        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-        moveInstrumentation(img, optimizedPic.querySelector('img'));
-        const iconImg = optimizedPic.querySelector('img'); // Get the actual img from the optimized picture
-        iconImg.classList.add('sticky-bottom-nav__icon');
-        link.append(optimizedPic);
-      }
+    if (iconImg) {
+      const img = document.createElement('img');
+      img.src = iconImg.src;
+      img.alt = iconAltText || iconImg.alt;
+      img.classList.add('sticky-bottom-nav__icon');
+      link.append(img);
     }
 
     if (linkLabelText) {
@@ -72,7 +83,13 @@ export default function decorate(block) {
     ul.append(li);
   });
 
-  section.append(ul);
+  // Optimize pictures after all elements are created
+  ul.querySelectorAll('picture > img').forEach((img) => {
+    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+    moveInstrumentation(img, optimizedPic.querySelector('img'));
+    img.closest('picture').replaceWith(optimizedPic);
+  });
+
   block.textContent = '';
-  block.append(section);
+  block.append(ul);
 }

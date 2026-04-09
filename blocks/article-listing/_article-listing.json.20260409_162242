@@ -38,12 +38,12 @@
       "fields": [
         {
           "component": "text",
-          "label": "Title",
-          "name": "title",
+          "label": "Heading",
+          "name": "heading",
           "valueType": "string"
         },
         {
-          "component": "richtext",
+          "component": "text",
           "label": "Description",
           "name": "description",
           "valueType": "string"
@@ -96,9 +96,9 @@
           "valueType": "string"
         },
         {
-          "component": "richtext",
-          "label": "Headline",
-          "name": "headline",
+          "component": "text",
+          "label": "Title",
+          "name": "title",
           "valueType": "string"
         }
       ]
