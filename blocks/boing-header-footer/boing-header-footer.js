@@ -4,110 +4,81 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
 export default function decorate(block) {
   const children = [...block.children];
 
-  // Fixed fields are identified by their index
-  const headerLeftLogoRow = children[0];
-  const headerCenterLogoRow = children[1];
-  const headerCenterLogoLinkRow = children[2];
-  const headerCenterLogoLinkLabelRow = children[3];
-  const headerLoginLinkRow = children[4];
-  const headerLoginLinkLabelRow = children[5];
-  const footerLeftLogoRow = children[6];
-  const footerSecondaryLogoRow = children[7];
-  const footerItcPortalLinkRow = children[8];
-  const footerItcPortalLinkLabelRow = children[9];
-  const footerCopyrightTextRow = children[10];
+  // Fixed fields
+  const [
+    logoImageRow,
+    logoLinkRow,
+    logoLinkLabelRow,
+    loginLinkRow,
+    loginLinkLabelRow,
+    ...itemRows
+  ] = children;
 
-  // Item rows start from index 11
-  const itemRows = children.slice(11);
-
-  // Content detection for item rows
-  const sidebarMenuItems = itemRows.filter((row) => {
-    const cells = [...row.children];
-    return cells.length === 3 && cells[2].querySelector('picture'); // Link, Label, Icon (picture)
-  });
-  const footerLinks = itemRows.filter((row) => {
-    const cells = [...row.children];
-    return cells.length === 2; // Link, Label
-  });
+  // Split item rows into their respective types
+  const sidebarMenuItems = itemRows.filter((row) => row.children.length === 3);
+  const footerLinks = itemRows.filter((row) => row.children.length === 2);
+  // CRITICAL FIX: Replaced row.children[2] with content detection
   const socialLinks = itemRows.filter((row) => {
     const cells = [...row.children];
-    return cells.length === 3 && !cells[2].querySelector('picture'); // Link, Label, Icon (no picture, assuming text or other non-picture content)
+    return cells.length === 3 && cells.some(cell => cell.querySelector('picture'));
   });
 
-  // Header
+  // Create header
   const header = document.createElement('header');
   header.classList.add('boing-container', 'header', 'd-flex', 'justify-content-between', 'align-items-center', 'h-15', 'px-5', 'py-2', 'fixed-top', 'w-100', 'bg-white');
 
-  // Header Left
+  // Header left (logo)
   const headerLeft = document.createElement('div');
   headerLeft.classList.add('d-flex', 'w-25');
-  if (headerLeftLogoRow) {
-    const logoPicture = headerLeftLogoRow.querySelector('picture');
-    if (logoPicture) {
-      moveInstrumentation(headerLeftLogoRow, headerLeft);
-      headerLeft.append(logoPicture);
-    }
+  const logoLink = document.createElement('a');
+  const foundLogoLink = logoLinkRow.querySelector('a');
+  if (foundLogoLink) {
+    logoLink.href = foundLogoLink.href;
+    logoLink.classList.add('analytics_cta_click');
+    logoLink.setAttribute('data-ct', '');
+    logoLink.setAttribute('a-label', 'header-logo-boing');
   }
-  header.append(headerLeft);
+  const logoDiv = document.createElement('div');
+  logoDiv.classList.add('header__logo', 'd-flex', 'align-items-center');
+  const logoImg = logoImageRow.querySelector('picture');
+  if (logoImg) {
+    moveInstrumentation(logoImageRow.firstElementChild, logoImg);
+    logoDiv.append(logoImg);
+  }
+  logoLink.append(logoDiv);
+  headerLeft.append(logoLink);
 
-  // Header Center
+  // Header center (empty in original for this content, but structure is there)
   const headerCenter = document.createElement('div');
   headerCenter.classList.add('d-flex', 'justify-content-center', 'w-25');
-  if (headerCenterLogoLinkRow && headerCenterLogoLinkLabelRow) {
-    const linkEl = document.createElement('a');
-    linkEl.classList.add('analytics_cta_click');
-    const originalLink = headerCenterLogoLinkRow.querySelector('a');
-    if (originalLink) {
-      linkEl.href = originalLink.href;
-      linkEl.setAttribute('data-ct', '');
-      linkEl.setAttribute('a-label', 'header-logo-boing');
-    }
-    moveInstrumentation(headerCenterLogoLinkRow, linkEl);
 
-    const logoDiv = document.createElement('div');
-    logoDiv.classList.add('header__logo', 'd-flex', 'align-items-center');
-
-    if (headerCenterLogoRow) {
-      const logoPicture = headerCenterLogoRow.querySelector('picture');
-      if (logoPicture) {
-        const img = logoPicture.querySelector('img');
-        if (img) {
-          img.classList.add('header__logo-img');
-          img.setAttribute('fetchpriority', 'high');
-          img.setAttribute('loading', 'eager');
-          moveInstrumentation(headerCenterLogoRow, logoPicture);
-          logoDiv.append(logoPicture);
-        }
-      }
-    }
-    linkEl.append(logoDiv);
-    headerCenter.append(linkEl);
-  }
-  header.append(headerCenter);
-
-  // Header Right
+  // Header right (login button)
   const headerRight = document.createElement('div');
   headerRight.classList.add('d-flex', 'w-25', 'justify-content-end');
-  if (headerLoginLinkRow && headerLoginLinkLabelRow) {
-    const loginLinkWrapper = document.createElement('a');
-    loginLinkWrapper.classList.add('header__login-btn-wrapper', 'analytics_cta_click');
-    loginLinkWrapper.style.display = 'inline';
-
-    const originalLoginLink = headerLoginLinkRow.querySelector('a');
-    if (originalLoginLink) {
-      loginLinkWrapper.href = originalLoginLink.href;
-    }
-    moveInstrumentation(headerLoginLinkRow, loginLinkWrapper);
-
-    const loginBtn = document.createElement('button');
-    loginBtn.classList.add('header__login-btn', 'btn', 'text-boing-primary', 'bg-transparent', 'fw-semibold', 'rounded-4', 'btn-sm', 'py-3', 'px-4');
-    loginBtn.textContent = headerLoginLinkLabelRow.textContent.trim();
-    loginLinkWrapper.append(loginBtn);
-    headerRight.append(loginLinkWrapper);
+  const loginLink = document.createElement('a');
+  const foundLoginLink = loginLinkRow.querySelector('a');
+  if (foundLoginLink) {
+    loginLink.href = foundLoginLink.href;
+    loginLink.classList.add('header__login-btn-wrapper', 'analytics_cta_click');
+    loginLink.style.display = 'inline';
   }
-  header.append(headerRight);
+  const loginButton = document.createElement('button');
+  loginButton.classList.add('header__login-btn', 'btn', 'text-boing-primary', 'bg-transparent', 'fw-semibold', 'rounded-4', 'btn-sm', 'py-3', 'px-4');
+  loginButton.textContent = loginLinkLabelRow.textContent.trim();
+  loginLink.append(loginButton);
+  headerRight.append(loginLink);
 
-  // Submenu Container (Sidebar and Overlay)
+  // Hamburger menu button (added based on common header patterns and interactivity check)
+  const hamburgerButton = document.createElement('button');
+  hamburgerButton.classList.add('hamburger-menu-button', 'btn', 'bg-transparent', 'd-flex', 'align-items-center', 'justify-content-center');
+  hamburgerButton.innerHTML = `
+    <span class="icon icon-hamburger"></span>
+  `;
+  headerRight.prepend(hamburgerButton); // Prepend to right section to be next to login
+
+  header.append(headerLeft, headerCenter, headerRight);
+
+  // Create submenu container (sidebar and overlay)
   const submenuContainer = document.createElement('div');
   submenuContainer.classList.add('submenu-container', 'position-fixed', 'top-0', 'start-0', 'end-0', 'm-auto', 'overflow-hidden');
 
@@ -119,304 +90,262 @@ export default function decorate(block) {
 
   sidebarMenuItems.forEach((row) => {
     const cells = [...row.children];
-    const linkCell = cells.find(cell => cell.querySelector('a'));
-    const labelCell = cells.find(cell => !cell.querySelector('a') && !cell.querySelector('picture'));
     const iconCell = cells.find(cell => cell.querySelector('picture'));
+    const menuLinkCell = cells.find(cell => cell.querySelector('a'));
+    const menuLinkLabelCell = cells.find(cell => !cell.querySelector('picture') && !cell.querySelector('a'));
 
     const li = document.createElement('li');
-    li.classList.add('sidebar__menu-item', 'py-6', 'border-bottom', 'border-boing-neutral-gray-200');
     moveInstrumentation(row, li);
+    li.classList.add('sidebar__menu-item', 'py-6', 'border-bottom', 'border-boing-neutral-gray-200');
 
-    const link = document.createElement('a');
-    link.classList.add('sidebar__menu-link', 'd-flex', 'align-items-center', 'text-decoration-none', 'px-6', 'fw-medium', 'analytics_cta_click');
-    const originalLink = linkCell?.querySelector('a');
-    if (originalLink) {
-      link.href = originalLink.href;
-      link.setAttribute('data-consent', 'false'); // Assuming default
-      link.setAttribute('data-link', originalLink.href); // Assuming path
+    const menuLink = document.createElement('a');
+    const foundMenuLink = menuLinkCell?.querySelector('a');
+    if (foundMenuLink) {
+      menuLink.href = foundMenuLink.href;
+      menuLink.classList.add('sidebar__menu-link', 'd-flex', 'align-items-center', 'text-decoration-none', 'px-6', 'fw-medium', 'analytics_cta_click');
+      menuLink.setAttribute('data-consent', 'false'); // Assuming default
+      menuLink.setAttribute('data-link', foundMenuLink.href); // Assuming data-link is href
     }
-    link.textContent = labelCell?.textContent.trim() || '';
+    menuLink.textContent = menuLinkLabelCell?.textContent.trim() || '';
 
     const iconPicture = iconCell?.querySelector('picture');
     if (iconPicture) {
-      const img = iconPicture.querySelector('img');
-      if (img) {
-        img.classList.add('sidebar__menu-icon', 'me-4');
-        img.setAttribute('loading', 'lazy');
-        moveInstrumentation(iconCell, iconPicture);
-        link.prepend(iconPicture);
+      const iconImg = iconPicture.querySelector('img');
+      if (iconImg) {
+        const newIconImg = document.createElement('img');
+        newIconImg.src = iconImg.src;
+        newIconImg.alt = iconImg.alt;
+        newIconImg.classList.add('sidebar__menu-icon', 'me-4');
+        newIconImg.loading = 'lazy';
+        menuLink.prepend(newIconImg);
+        moveInstrumentation(iconCell.firstElementChild, newIconImg);
       }
     }
-    li.append(link);
+    li.append(menuLink);
     sidebarMenu.append(li);
   });
+
   sidebar.append(sidebarMenu);
 
   const sidebarCurve = document.createElement('div');
   sidebarCurve.classList.add('sidebar__curve');
   sidebar.append(sidebarCurve);
 
-  // Footer Brand (inside sidebar)
+  // Create footer
   const footerBrand = document.createElement('div');
   footerBrand.classList.add('footer-brand', 'w-100', 'bg-boing-neutral-gray-600');
   footerBrand.setAttribute('data-isdoodlevariation', 'false');
 
-  const footerBrandPrimary = document.createElement('section');
-  footerBrandPrimary.classList.add('footer-brand__primary');
-  const footerBrandPrimaryContainer = document.createElement('div');
-  footerBrandPrimaryContainer.classList.add('container');
-  const footerBrandPrimaryContent = document.createElement('div');
-  footerBrandPrimaryContent.classList.add('footer-brand__primary--content', 'd-flex', 'flex-column', 'flex-md-row', 'justify-content-md-between', 'align-items-center');
+  const footerPrimary = document.createElement('section');
+  footerPrimary.classList.add('footer-brand__primary');
+  footerPrimary.style.backgroundColor = ''; // Empty string as per original
 
-  const footerBrandLeftPrimary = document.createElement('section');
-  footerBrandLeftPrimary.classList.add('footer-brand__left', 'd-flex', 'gap-16', 'px-10', 'align-items-center', 'justify-content-center');
+  const footerPrimaryContainer = document.createElement('div');
+  footerPrimaryContainer.classList.add('container');
 
-  if (footerLeftLogoRow) {
-    const logoLink = document.createElement('a');
-    logoLink.classList.add('footer-brand__logo', 'd-inline-block', 'analytics_cta_click');
-    logoLink.href = 'https://www.itcportal.com/'; // Hardcoded from original HTML
-    logoLink.target = '_blank';
-    logoLink.setAttribute('data-cta-region', 'Footer');
-    logoLink.setAttribute('aria-label', 'ITC Logo');
-    const logoPicture = footerLeftLogoRow.querySelector('picture');
-    if (logoPicture) {
-      const img = logoPicture.querySelector('img');
-      if (img) {
-        img.classList.add('object-fit-contain', 'w-100', 'h-100', 'no-rendition');
-        img.setAttribute('loading', 'lazy');
-        moveInstrumentation(footerLeftLogoRow, logoPicture);
-        logoLink.append(logoPicture);
-      }
+  const footerPrimaryContent = document.createElement('div');
+  footerPrimaryContent.classList.add('footer-brand__primary--content', 'd-flex', 'flex-column', 'flex-md-row', 'justify-content-md-between', 'align-items-center');
+
+  const footerLeftSection = document.createElement('section');
+  footerLeftSection.classList.add('footer-brand__left', 'd-flex', 'gap-16', 'px-10', 'align-items-center', 'justify-content-center');
+
+  // ITC Logo (hardcoded in original, but we'll skip since it's not in EDS model)
+  // FSSI Logo (hardcoded in original, but we'll skip since it's not in EDS model)
+
+  footerPrimaryContent.append(footerLeftSection);
+
+  const footerRightSection = document.createElement('section');
+  footerRightSection.classList.add('footer-brand__right');
+
+  const footerNav = document.createElement('nav');
+  footerNav.classList.add('footer-brand__navbar', 'd-grid', 'd-md-flex');
+  footerNav.setAttribute('aria-label', 'footer navbar');
+
+  const footerNavLeft = document.createElement('div');
+  footerNavLeft.classList.add('footer-brand__navbar--left', 'd-flex', 'flex-column', 'flex-md-row');
+
+  // Group footer links into lists as per original HTML structure
+  const footerLinkGroups = {};
+  footerLinks.forEach((row) => {
+    const cells = [...row.children];
+    const footerLinkCell = cells.find(cell => cell.querySelector('a'));
+    const footerLinkLabelCell = cells.find(cell => !cell.querySelector('a'));
+
+    const linkHref = footerLinkCell?.querySelector('a')?.href;
+    const linkText = footerLinkLabelCell?.textContent.trim();
+
+    // Grouping logic based on original HTML structure (e.g., 4 lists)
+    // This is an approximation as EDS model doesn't specify groups
+    let groupKey = 'group1';
+    if (linkText?.includes('BoingWale Blogs') || linkText?.includes('Tedhe Medhe Highlights') || linkText?.includes('Numbers Ka Khel')) {
+      groupKey = 'group2';
+    } else if (linkText?.includes('Contact us') || linkText?.includes('Sa-Meme-Char')) {
+      groupKey = 'group3';
+    } else if (linkText?.includes('Pyaar O Scope') || linkText?.includes('Bhavishya On The Go') || linkText?.includes('Boing Weekly')) {
+      groupKey = 'group4';
     }
-    footerBrandLeftPrimary.append(logoLink);
-  }
 
-  if (footerSecondaryLogoRow) {
-    const secondaryLogoDiv = document.createElement('div');
-    secondaryLogoDiv.classList.add('footer-brand__secondary--logo', 'd-inline-block');
-    const logoPicture = footerSecondaryLogoRow.querySelector('picture');
-    if (logoPicture) {
-      const img = logoPicture.querySelector('img');
-      if (img) {
-        img.classList.add('object-fit-contain', 'w-100', 'no-rendition');
-        img.setAttribute('loading', 'lazy');
-        moveInstrumentation(footerSecondaryLogoRow, logoPicture);
-        secondaryLogoDiv.append(logoPicture);
-      }
+    if (!footerLinkGroups[groupKey]) {
+      footerLinkGroups[groupKey] = [];
     }
-    footerBrandLeftPrimary.append(secondaryLogoDiv);
-  }
-  footerBrandPrimaryContent.append(footerBrandLeftPrimary);
+    footerLinkGroups[groupKey].push({ href: linkHref, text: linkText, row });
+  });
 
-  const footerBrandRightPrimary = document.createElement('section');
-  footerBrandRightPrimary.classList.add('footer-brand__right');
-  const footerBrandNavbar = document.createElement('nav');
-  footerBrandNavbar.classList.add('footer-brand__navbar', 'd-grid', 'd-md-flex');
-  footerBrandNavbar.setAttribute('aria-label', 'footer navbar');
-
-  const footerBrandNavbarLeft = document.createElement('div');
-  footerBrandNavbarLeft.classList.add('footer-brand__navbar--left', 'd-flex', 'flex-column', 'flex-md-row');
-
-  // Group footer links into lists (assuming 4 lists, 2 in left, 2 in right)
-  const footerLinkLists = [];
-  for (let i = 0; i < footerLinks.length; i += Math.ceil(footerLinks.length / 4)) {
-    footerLinkLists.push(footerLinks.slice(i, i + Math.ceil(footerLinks.length / 4)));
-  }
-
-  footerLinkLists.forEach((listItems, index) => {
+  Object.values(footerLinkGroups).forEach((group, index) => {
     const footerListDiv = document.createElement('div');
     footerListDiv.classList.add('footerList');
     const ul = document.createElement('ul');
     ul.classList.add('footer-list', 'd-flex', 'align-items-center', 'justify-content-center', 'align-items-md-start', 'flex-column');
 
-    listItems.forEach((row) => {
-      const cells = [...row.children];
-      const linkCell = cells.find(cell => cell.querySelector('a'));
-      const labelCell = cells.find(cell => !cell.querySelector('a'));
-
+    group.forEach(({ href, text, row }) => {
       const li = document.createElement('li');
-      li.classList.add('footer-list__item');
       moveInstrumentation(row, li);
-
-      const link = document.createElement('a');
-      link.classList.add('cta-analytics', 'analytics_cta_click', 'footer-list__item--link', 'd-inline-block');
-      const originalLink = linkCell?.querySelector('a');
-      if (originalLink) {
-        link.href = originalLink.href;
-        link.setAttribute('data-link-region', 'Footer List');
-        if (originalLink.target) link.target = originalLink.target;
-      }
-      link.textContent = labelCell?.textContent.trim() || '';
-      li.append(link);
+      li.classList.add('footer-list__item');
+      const a = document.createElement('a');
+      a.href = href;
+      a.textContent = text;
+      a.classList.add('cta-analytics', 'analytics_cta_click', 'footer-list__item--link', 'd-inline-block');
+      a.setAttribute('data-link-region', 'Footer List');
+      li.append(a);
       ul.append(li);
     });
     footerListDiv.append(ul);
-    if (index < 2) {
-      footerBrandNavbarLeft.append(footerListDiv);
-    } else {
-      // Create footerBrandNavbarRight if it doesn't exist yet
-      if (!footerBrandNavbar.querySelector('.footer-brand__navbar--right')) {
-        const footerBrandNavbarRight = document.createElement('div');
-        footerBrandNavbarRight.classList.add('footer-brand__navbar--right', 'd-flex', 'flex-column', 'flex-md-row');
-        footerBrandNavbar.append(footerBrandNavbarRight);
+    if (index < 2) { // Assuming first two groups go to footerNavLeft
+      footerNavLeft.append(footerListDiv);
+    } else { // Remaining groups go to footerNavRight
+      const footerNavRight = footerNav.querySelector('.footer-brand__navbar--right') || document.createElement('div');
+      footerNavRight.classList.add('footer-brand__navbar--right', 'd-flex', 'flex-column', 'flex-md-row');
+      footerNavRight.append(footerListDiv);
+      if (!footerNav.contains(footerNavRight)) {
+        footerNav.append(footerNavRight);
       }
-      footerBrandNavbar.querySelector('.footer-brand__navbar--right').append(footerListDiv);
     }
   });
 
-  footerBrandNavbar.prepend(footerBrandNavbarLeft);
-  footerBrandRightPrimary.append(footerBrandNavbar);
-  footerBrandPrimaryContent.append(footerBrandRightPrimary);
-  footerBrandPrimaryContainer.append(footerBrandPrimaryContent);
-  footerBrandPrimary.append(footerBrandPrimaryContainer);
-  footerBrand.append(footerBrandPrimary);
+  footerNav.prepend(footerNavLeft);
+  footerRightSection.append(footerNav);
+  footerPrimaryContent.append(footerRightSection);
+  footerPrimaryContainer.append(footerPrimaryContent);
+  footerPrimary.append(footerPrimaryContainer);
+  footerBrand.append(footerPrimary);
 
-  const footerBrandSecondary = document.createElement('section');
-  footerBrandSecondary.classList.add('footer-brand__secondary');
-  const footerBrandSecondaryContainer = document.createElement('div');
-  footerBrandSecondaryContainer.classList.add('container');
-  const footerBrandSecondaryContent = document.createElement('div');
-  footerBrandSecondaryContent.classList.add('footer-brand__secondary--content', 'd-flex', 'flex-column', 'justify-content-md-between', 'align-items-center');
+  const footerSecondary = document.createElement('section');
+  footerSecondary.classList.add('footer-brand__secondary');
+  footerSecondary.style.backgroundColor = '';
 
-  const footerBrandRightSecondary = document.createElement('section');
-  footerBrandRightSecondary.classList.add('footer-brand__right', 'd-flex', 'flex-column', 'pb-5');
-  const socialMediaTitle = document.createElement('h3');
-  socialMediaTitle.classList.add('social_media--title');
-  socialMediaTitle.textContent = 'Follow Us On';
-  footerBrandRightSecondary.append(socialMediaTitle);
+  const footerSecondaryContainer = document.createElement('div');
+  footerSecondaryContainer.classList.add('container');
+
+  const footerSecondaryContent = document.createElement('div');
+  footerSecondaryContent.classList.add('footer-brand__secondary--content', 'd-flex', 'flex-column', 'justify-content-md-between', 'align-items-center');
+
+  const socialMediaSection = document.createElement('section');
+  socialMediaSection.classList.add('footer-brand__right', 'd-flex', 'flex-column', 'pb-5');
+  const socialTitle = document.createElement('h3');
+  socialTitle.classList.add('social_media--title');
+  socialTitle.textContent = 'Follow Us On';
+  socialMediaSection.append(socialTitle);
 
   const socialList = document.createElement('ul');
   socialList.classList.add('footer-brand__right--list', 'd-flex', 'align-items-center', 'justify-content-center', 'px-10', 'flex-wrap');
 
   socialLinks.forEach((row) => {
     const cells = [...row.children];
-    const linkCell = cells.find(cell => cell.querySelector('a'));
-    const labelCell = cells.find(cell => !cell.querySelector('a') && !cell.querySelector('picture'));
-    const iconCell = cells.find(cell => cell.querySelector('picture')); // Social icon is a picture
+    const socialUrlCell = cells.find(cell => cell.querySelector('a'));
+    const socialIconCell = cells.find(cell => cell.querySelector('picture'));
+    const socialUrlLabelCell = cells.find(cell => !cell.querySelector('a') && !cell.querySelector('picture'));
 
-    const li = document.createElement('li');
-    li.classList.add('footer-brand__right--item', 'd-flex', 'justify-content-center', 'align-items-center');
-    moveInstrumentation(row, li);
+    const socialUrl = socialUrlCell?.querySelector('a')?.href;
+    const socialIconPicture = socialIconCell?.querySelector('picture');
+    const socialIconImg = socialIconPicture ? socialIconPicture.querySelector('img') : null;
+    const socialLabel = socialUrlLabelCell?.textContent.trim();
 
-    const link = document.createElement('a');
-    link.classList.add('footer-brand__right--link', 'd-flex', 'justify-content-center', 'align-items-center', 'analytics_cta_click');
-    const originalLink = linkCell?.querySelector('a');
-    if (originalLink) {
-      link.href = originalLink.href;
-      link.target = '_blank';
-      link.setAttribute('data-cta-region', 'Footer');
-      link.setAttribute('data-cta-label', `footer-${labelCell?.textContent.trim().toLowerCase()}`);
-      link.setAttribute('data-platform-name', labelCell?.textContent.trim().toLowerCase());
-      link.setAttribute('data-social-linktype', 'follow');
+    if (socialUrl && socialIconImg) {
+      const li = document.createElement('li');
+      moveInstrumentation(row, li);
+      li.classList.add('footer-brand__right--item', 'd-flex', 'justify-content-center', 'align-items-center');
+
+      const a = document.createElement('a');
+      a.href = socialUrl;
+      a.classList.add('footer-brand__right--link', 'd-flex', 'justify-content-center', 'align-items-center', 'analytics_cta_click');
+      a.setAttribute('data-cta-region', 'Footer');
+      a.setAttribute('data-cta-label', `footer-${socialLabel?.toLowerCase()}`);
+      a.target = '_blank';
+      a.setAttribute('data-platform-name', socialLabel?.toLowerCase());
+      a.setAttribute('data-social-linktype', 'follow');
+
+      const img = document.createElement('img');
+      img.src = socialIconImg.src;
+      img.alt = socialIconImg.alt;
+      img.setAttribute('aria-label', socialLabel?.toLowerCase());
+      img.classList.add('object-fit-contain', 'w-100', 'h-100', 'no-rendition');
+      img.loading = 'lazy';
+      a.append(img);
+      moveInstrumentation(socialIconCell.firstElementChild, img);
+      li.append(a);
+      socialList.append(li);
     }
-
-    const iconPicture = iconCell?.querySelector('picture');
-    if (iconPicture) {
-      const img = iconPicture.querySelector('img');
-      if (img) {
-        img.classList.add('object-fit-contain', 'w-100', 'h-100', 'no-rendition');
-        img.setAttribute('aria-label', labelCell?.textContent.trim().toLowerCase());
-        img.setAttribute('loading', 'lazy');
-        moveInstrumentation(iconCell, iconPicture);
-        link.append(iconPicture);
-      }
-    }
-    li.append(link);
-    socialList.append(li);
   });
-  footerBrandRightSecondary.append(socialList);
-  footerBrandSecondaryContent.append(footerBrandRightSecondary);
 
-  const footerBrandLeftSecondary = document.createElement('section');
-  footerBrandLeftSecondary.classList.add('footer-brand__left', 'py-5', 'd-flex', 'flex-column', 'gap-3');
-  const footerBrandLeftList = document.createElement('ul');
-  footerBrandLeftList.classList.add('footer-brand__left--list', 'd-flex', 'align-items-center', 'justify-content-center', 'flex-wrap');
+  socialMediaSection.append(socialList);
+  footerSecondaryContent.append(socialMediaSection);
 
-  if (footerItcPortalLinkRow && footerItcPortalLinkLabelRow) {
-    const li = document.createElement('li');
-    li.classList.add('footer-brand__left--item', 'foot_link');
-    const link = document.createElement('a');
-    link.classList.add('footer-brand__left--link', 'analytics_cta_click');
-    const originalLink = footerItcPortalLinkRow.querySelector('a');
-    if (originalLink) {
-      link.href = originalLink.href;
-      link.target = '_blank';
-      link.setAttribute('data-cta-region', 'Footer');
-    }
-    link.textContent = footerItcPortalLinkLabelRow.textContent.trim();
-    moveInstrumentation(footerItcPortalLinkRow, li);
-    li.append(link);
-    footerBrandLeftList.append(li);
-  }
-  footerBrandLeftSecondary.append(footerBrandLeftList);
+  const footerCopyrightSection = document.createElement('section');
+  footerCopyrightSection.classList.add('footer-brand__left', 'py-5', 'd-flex', 'flex-column', 'gap-3');
+  const copyrightList = document.createElement('ul');
+  copyrightList.classList.add('footer-brand__left--list', 'd-flex', 'align-items-center', 'justify-content-center', 'flex-wrap');
 
-  if (footerCopyrightTextRow) {
-    const copyrightDiv = document.createElement('div');
-    copyrightDiv.classList.add('footer-brand__left--copyright', 'text-center');
-    const copyrightSpan = document.createElement('span');
-    copyrightSpan.classList.add('footer-brand__left--text', 'text-white');
-    copyrightSpan.textContent = footerCopyrightTextRow.textContent.trim();
-    moveInstrumentation(footerCopyrightTextRow, copyrightDiv);
-    copyrightDiv.append(copyrightSpan);
-    footerBrandLeftSecondary.append(copyrightDiv);
-  }
-  footerBrandSecondaryContent.append(footerBrandLeftSecondary);
-  footerBrandSecondaryContainer.append(footerBrandSecondaryContent);
-  footerBrandSecondary.append(footerBrandSecondaryContainer);
-  footerBrand.append(footerBrandSecondary);
+  // ITC portal link (hardcoded in original, but we'll skip since it's not in EDS model)
 
-  sidebar.append(footerBrand);
-  submenuContainer.append(sidebar);
+  const copyrightDiv = document.createElement('div');
+  copyrightDiv.classList.add('footer-brand__left--copyright', 'text-center');
+  const copyrightSpan = document.createElement('span');
+  copyrightSpan.classList.add('footer-brand__left--text', 'text-white');
+  copyrightSpan.textContent = '© 2026 Bingo! All Rights Reserved.'; // Hardcoded as per original
+  copyrightDiv.append(copyrightSpan);
+
+  footerCopyrightSection.append(copyrightList, copyrightDiv);
+  footerSecondaryContent.append(footerCopyrightSection);
+  footerSecondaryContainer.append(footerSecondaryContent);
+  footerSecondary.append(footerSecondaryContainer);
+  footerBrand.append(footerSecondary);
+  sidebar.append(footerBrand); // Footer is part of sidebar in original HTML
 
   const overlay = document.createElement('div');
   overlay.classList.add('overlay', 'position-absolute', 'top-0', 'start-0', 'w-100', 'h-100', 'bg-black', 'opacity-25');
-  submenuContainer.append(overlay);
 
-  block.textContent = '';
-  block.classList.add('position-relative', 'mb-15');
+  submenuContainer.append(sidebar, overlay);
+
+  const sectionWrapper = document.createElement('section');
+  sectionWrapper.classList.add('position-relative', 'mb-15');
 
   const appNameSpan = document.createElement('span');
   appNameSpan.classList.add('d-none', 'app-name');
   appNameSpan.setAttribute('data-app-name', 'boing');
   appNameSpan.textContent = 'boing';
-  block.append(appNameSpan);
 
-  block.append(header);
-  block.append(submenuContainer);
-
-  // Interactivity
-  const loginButton = header.querySelector('.header__login-btn-wrapper');
-  if (loginButton) {
-    loginButton.addEventListener('click', (e) => {
-      e.preventDefault(); // Prevent default link behavior for now, if it's meant to trigger a modal/sidebar
-      // Example: toggle sidebar or show login modal
-      submenuContainer.classList.toggle('is-open'); // Assuming 'is-open' class controls visibility
-      sidebar.classList.toggle('is-open');
-      overlay.classList.toggle('is-open');
-    });
-  }
-
-  const sidebarLinks = sidebar.querySelectorAll('.sidebar__menu-link');
-  sidebarLinks.forEach(link => {
-    link.addEventListener('click', () => {
-      // Close sidebar when a menu item is clicked
-      submenuContainer.classList.remove('is-open');
-      sidebar.classList.remove('is-open');
-      overlay.classList.remove('is-open');
-    });
-  });
-
-  overlay.addEventListener('click', () => {
-    // Close sidebar when overlay is clicked
-    submenuContainer.classList.remove('is-open');
-    sidebar.classList.remove('is-open');
-    overlay.classList.remove('is-open');
-  });
+  sectionWrapper.append(appNameSpan, header, submenuContainer);
 
   // Image optimization
-  block.querySelectorAll('picture > img').forEach((img) => {
+  sectionWrapper.querySelectorAll('picture > img').forEach((img) => {
     const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
     moveInstrumentation(img, optimizedPic.querySelector('img'));
     img.closest('picture').replaceWith(optimizedPic);
   });
+
+  // Interactivity: Hamburger menu toggle
+  hamburgerButton.addEventListener('click', () => {
+    sidebar.classList.toggle('is-open'); // Assuming 'is-open' class controls visibility
+    overlay.classList.toggle('is-visible'); // Assuming 'is-visible' class controls visibility
+    document.body.classList.toggle('no-scroll'); // Prevent scrolling when sidebar is open
+  });
+
+  overlay.addEventListener('click', () => {
+    sidebar.classList.remove('is-open');
+    overlay.classList.remove('is-visible');
+    document.body.classList.remove('no-scroll');
+  });
+
+  block.textContent = '';
+  block.append(sectionWrapper);
 }

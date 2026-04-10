@@ -4068,6 +4068,10 @@ to{-webkit-transform:rotate(1turn);transform:rotate(1turn)}
 
 .curve-container { background-color:#fff;border-radius:0 0 2rem 2rem;bottom:-3.6875rem;height:6.25rem;overflow:hidden;position:absolute;right:0;-webkit-transform:skewY(-6.2deg);transform:skewY(-6.2deg);width:100%;z-index:10 }
 
+.featureCards { padding:1.5rem 1rem 1rem;position:relative }
+
+.featureCards .cmp-text { font-family:Barlow;font-size:1.5rem;font-weight:700;line-height:1.75rem;padding-bottom:1rem }
+
 @media(max-width:575.98px){.gridCards__section--wrapper{grid-template-columns:repeat(2,auto)}
 }
 
@@ -4147,8 +4151,6 @@ to{-webkit-transform:rotate(1turn);transform:rotate(1turn)}
 #edit-profile_picture-offcanvas-bottom { border-radius:.625rem .625rem 0 0 }
 
 #edit-profile_picture-offcanvas-bottom button { cursor:pointer }
-
-.spaceAdder { position:relative }
 
 .sticky-bottom-nav { border-radius:1rem 1rem 0 0;-webkit-box-shadow:.125rem -.25rem 1rem 0 rgba(0,0,0,.431);box-shadow:.125rem -.25rem 1rem 0 rgba(0,0,0,.431);height:4.375rem;padding:.625rem 0;z-index:997 }
 

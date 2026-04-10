@@ -38,12 +38,12 @@
       "fields": [
         {
           "component": "text",
-          "label": "Heading",
-          "name": "heading",
+          "label": "Title",
+          "name": "title",
           "valueType": "string"
         },
         {
-          "component": "text",
+          "component": "richtext",
           "label": "Description",
           "name": "description",
           "valueType": "string"
@@ -63,32 +63,14 @@
         {
           "component": "container",
           "item": "article-card",
-          "label": "Article Cards",
-          "name": "cards"
+          "label": "Articles",
+          "name": "articles"
         }
       ]
     },
     {
       "id": "article-card",
       "fields": [
-        {
-          "component": "reference",
-          "label": "Image",
-          "name": "image",
-          "valueType": "string"
-        },
-        {
-          "component": "date-time",
-          "label": "Date",
-          "name": "date",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Title",
-          "name": "title",
-          "valueType": "string"
-        },
         {
           "component": "aem-content",
           "label": "Card Link",
@@ -99,6 +81,24 @@
           "component": "text",
           "label": "Card Link Label",
           "name": "cardLinkLabel",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Image",
+          "name": "image",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Date",
+          "name": "date",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Card Text",
+          "name": "cardText",
           "valueType": "string"
         }
       ]

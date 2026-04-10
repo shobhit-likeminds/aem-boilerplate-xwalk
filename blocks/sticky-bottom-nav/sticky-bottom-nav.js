@@ -12,11 +12,13 @@ export default function decorate(block) {
     moveInstrumentation(row, li);
     li.classList.add('sticky-bottom-nav__item', 'position-relative');
 
-    // Use content detection instead of fragile index access
+    // Use content detection instead of index access
     const cells = [...row.children];
-    const iconCell = cells.find(cell => cell.querySelector('picture'));
     const linkCell = cells.find(cell => cell.querySelector('a'));
-    const labelCell = cells.find(cell => !cell.querySelector('picture') && !cell.querySelector('a')); // Assuming label is the remaining cell
+    // linkLabelCell is not directly used for content, but its presence is implied by the structure
+    // const linkLabelCell = cells.find(cell => !cell.querySelector('a') && !cell.querySelector('picture') && cell.textContent.trim().startsWith('https://')); // This is a guess, better to rely on order if it's consistent
+    const iconCell = cells.find(cell => cell.querySelector('picture'));
+    const labelCell = cells.find(cell => !cell.querySelector('a') && !cell.querySelector('picture') && cell !== linkCell); // Assuming label is the remaining text cell
 
     const anchor = document.createElement('a');
     anchor.classList.add('sticky-bottom-nav__link', 'd-flex', 'flex-column', 'align-items-center', 'gap-1', 'analytics_cta_click');
@@ -24,32 +26,26 @@ export default function decorate(block) {
     const foundLink = linkCell ? linkCell.querySelector('a') : null;
     if (foundLink) {
       anchor.href = foundLink.href;
-      // Copy data attributes from the original link if present
-      [...foundLink.attributes].forEach(attr => {
-        if (attr.name.startsWith('data-')) {
-          anchor.setAttribute(attr.name, attr.value);
-        }
-      });
+      // Copy data attributes from the original link if present, e.g., data-consent, data-link
+      if (foundLink.dataset.consent) anchor.dataset.consent = foundLink.dataset.consent;
+      if (foundLink.dataset.link) anchor.dataset.link = foundLink.dataset.link;
     }
 
-    if (iconCell) {
-      const picture = iconCell.querySelector('picture');
-      if (picture) {
-        const img = picture.querySelector('img');
-        if (img) {
-          const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '40' }]); // Assuming a small icon size
-          const optimizedImg = optimizedPic.querySelector('img');
-          optimizedImg.classList.add('sticky-bottom-nav__icon');
-          moveInstrumentation(img, optimizedImg);
-          anchor.append(optimizedPic);
-        }
+    const iconPicture = iconCell ? iconCell.querySelector('picture') : null;
+    if (iconPicture) {
+      const img = iconPicture.querySelector('img');
+      if (img) {
+        const icon = createOptimizedPicture(img.src, img.alt, false, [{ width: '48' }]); // Assuming a small icon size
+        icon.querySelector('img').classList.add('sticky-bottom-nav__icon');
+        moveInstrumentation(img, icon.querySelector('img'));
+        anchor.append(icon);
       }
     }
 
-    const span = document.createElement('span');
-    span.classList.add('sticky-bottom-nav__label');
-    span.textContent = labelCell ? labelCell.textContent.trim() : '';
-    anchor.append(span);
+    const labelSpan = document.createElement('span');
+    labelSpan.classList.add('sticky-bottom-nav__label');
+    labelSpan.textContent = labelCell ? labelCell.textContent.trim() : '';
+    anchor.append(labelSpan);
 
     li.append(anchor);
     ul.append(li);

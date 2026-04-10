@@ -316,8 +316,7 @@
     "id": "footer-brand",
     "components": [
       "footer-link",
-      "footer-social-link",
-      "footer-small-link"
+      "social-link"
     ]
   },
   {

@@ -68,32 +68,38 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Logo Image",
-          "name": "logoImage",
+          "label": "Header Left Logo",
+          "name": "headerLeftLogo",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Header Center Logo",
+          "name": "headerCenterLogo",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "label": "Logo Link",
-          "name": "logoLink",
+          "label": "Header Center Logo Link",
+          "name": "headerCenterLogoLink",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Logo Link Label",
-          "name": "logoLinkLabel",
+          "label": "Header Center Logo Link Label",
+          "name": "headerCenterLogoLinkLabel",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "label": "Login Link",
-          "name": "loginLink",
+          "label": "Header Login Link",
+          "name": "headerLoginLink",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Login Link Label",
-          "name": "loginLinkLabel",
+          "label": "Header Login Link Label",
+          "name": "headerLoginLinkLabel",
           "valueType": "string"
         },
         {
@@ -101,6 +107,18 @@
           "item": "sidebar-menu-item",
           "label": "Sidebar Menu Items",
           "name": "sidebarMenuItems"
+        },
+        {
+          "component": "reference",
+          "label": "Footer Left Logo",
+          "name": "footerLeftLogo",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Footer Secondary Logo",
+          "name": "footerSecondaryLogo",
+          "valueType": "string"
         },
         {
           "component": "container",
@@ -113,6 +131,24 @@
           "item": "social-link",
           "label": "Social Links",
           "name": "socialLinks"
+        },
+        {
+          "component": "aem-content",
+          "label": "Footer ITC Portal Link",
+          "name": "footerItcPortalLink",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Footer ITC Portal Link Label",
+          "name": "footerItcPortalLinkLabel",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Footer Copyright Text",
+          "name": "footerCopyrightText",
+          "valueType": "string"
         }
       ]
     },
@@ -120,21 +156,21 @@
       "id": "sidebar-menu-item",
       "fields": [
         {
-          "component": "reference",
-          "label": "Icon",
-          "name": "icon",
-          "valueType": "string"
-        },
-        {
           "component": "aem-content",
-          "label": "Menu Link",
-          "name": "menuLink",
+          "label": "Menu Item Link",
+          "name": "link",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Menu Link Label",
-          "name": "menuLinkLabel",
+          "label": "Menu Item Label",
+          "name": "linkLabel",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Menu Item Icon",
+          "name": "icon",
           "valueType": "string"
         }
       ]
@@ -145,13 +181,13 @@
         {
           "component": "aem-content",
           "label": "Footer Link",
-          "name": "footerLink",
+          "name": "link",
           "valueType": "string"
         },
         {
           "component": "text",
           "label": "Footer Link Label",
-          "name": "footerLinkLabel",
+          "name": "linkLabel",
           "valueType": "string"
         }
       ]
@@ -161,20 +197,20 @@
       "fields": [
         {
           "component": "aem-content",
-          "label": "Social URL",
-          "name": "socialUrl",
+          "label": "Social Link",
+          "name": "link",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Social URL Label",
-          "name": "socialUrlLabel",
+          "label": "Social Link Label",
+          "name": "linkLabel",
           "valueType": "string"
         },
         {
           "component": "reference",
           "label": "Social Icon",
-          "name": "socialIcon",
+          "name": "icon",
           "valueType": "string"
         }
       ]

@@ -39,7 +39,7 @@
         {
           "component": "container",
           "item": "sticky-bottom-nav-item",
-          "label": "Items",
+          "label": "Nav Items",
           "name": "items"
         }
       ]
@@ -47,6 +47,12 @@
     {
       "id": "sticky-bottom-nav-item",
       "fields": [
+        {
+          "component": "reference",
+          "label": "Icon",
+          "name": "icon",
+          "valueType": "string"
+        },
         {
           "component": "aem-content",
           "label": "Link",
@@ -57,18 +63,6 @@
           "component": "text",
           "label": "Link Label",
           "name": "linkLabel",
-          "valueType": "string"
-        },
-        {
-          "component": "reference",
-          "label": "Icon",
-          "name": "icon",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Label",
-          "name": "label",
           "valueType": "string"
         }
       ]

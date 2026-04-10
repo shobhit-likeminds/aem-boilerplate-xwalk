@@ -1365,37 +1365,29 @@
 
 .ratio>*{height:100%;left:0;position:absolute;top:0;width:100%}
 
-.object-fit-cover { -o-object-fit:cover !important;object-fit:cover !important }
-
-.d-block { display:block !important }
-
 .d-flex { display:-webkit-box !important;display:-ms-flexbox !important;display:flex !important }
-
-.d-none { display:none !important }
 
 .position-relative { position:relative !important }
 
-.position-absolute { position:absolute !important }
+.position-fixed { position:fixed !important }
 
-.top-0 { top:0 !important }
+.bottom-0 { bottom:0 !important }
 
-.start-0 { left:0 !important }
+.flex-column { -webkit-box-direction:normal !important }
 
-.start-50 { left:50% !important }
+.flex-column { -webkit-box-orient:vertical !important;-ms-flex-direction:column !important;flex-direction:column !important }
 
-.translate-middle-x { -webkit-transform:translateX(-50%) !important;transform:translateX(-50%) !important }
+.flex-grow-1 { -webkit-box-flex:1 !important;-ms-flex-positive:1 !important;flex-grow:1 !important }
 
-.w-100 { width:100% !important }
-
-.h-100 { height:100% !important }
-
-.justify-content-center { -webkit-box-pack:center !important;-ms-flex-pack:center !important;justify-content:center !important }
+.justify-content-around { -ms-flex-pack:distribute !important;justify-content:space-around !important }
 
 .align-items-center { -webkit-box-align:center !important;-ms-flex-align:center !important;align-items:center !important }
 
-.bg-transparent { --bs-bg-opacity:1;background-color:transparent !important }
+.p-3 { padding:.5rem !important }
 
-.z-2 { z-index:2 !important }
+.gap-1 { gap:.125rem !important }
+
+.bg-boing-primary { --bs-bg-opacity:1;background-color:#aa1f30 !important }
 
 @media(min-width:576px){.float-sm-start{float:left !important}
 .float-sm-end{float:right !important}
@@ -3627,22 +3619,10 @@ to{-webkit-transform:rotate(1turn);transform:rotate(1turn)}
 @media(min-width:426px){.vertical-alignment .recipe-category__card-image{max-height:20.625rem}
 }
 
-.banner-section .banner-media { border-radius:.5rem;-o-object-position:center;object-position:center }
-
-.banner-section__wrapper { padding-inline:.046875rem }
-
-.banner-section__wrapper .boing__banner--cta { bottom:1.875rem }
+.boing-container { --bs-gutter-x:0;--bs-gutter-y:0;margin-left:auto;margin-right:auto;max-width:33.75rem;padding-left:calc(var(--bs-gutter-x)*.5);padding-right:calc(var(--bs-gutter-x)*.5);width:100% }
 
 @media(min-width:540px){.banner-section__wrapper .boing__banner--cta .cmp-button__text{width:50% !important}
 }
-
-.banner-section .video-wrapper .banner-video { border-radius:.5rem }
-
-.banner-section .video-wrapper .video-icon { display:none;height:3rem;width:3rem }
-
-.banner-section .video-wrapper .mute-icon { bottom:.8125rem;display:none;right:.6875rem }
-
-.banner-section .video-wrapper .video-icon-volume { height:1.5rem;width:1.5rem }
 
 @media(max-width:580px){.cmp-container .unlockpop{bottom:-25pc;height:80vw !important;position:fixed}
 }
@@ -3803,6 +3783,18 @@ to{-webkit-transform:rotate(1turn);transform:rotate(1turn)}
 #edit-profile_picture-offcanvas-bottom { border-radius:.625rem .625rem 0 0 }
 
 #edit-profile_picture-offcanvas-bottom button { cursor:pointer }
+
+.sticky-bottom-nav { border-radius:1rem 1rem 0 0;-webkit-box-shadow:.125rem -.25rem 1rem 0 rgba(0,0,0,.431);box-shadow:.125rem -.25rem 1rem 0 rgba(0,0,0,.431);height:4.375rem;padding:.625rem 0;z-index:997 }
+
+.sticky-bottom-nav__list { list-style:none }
+
+.sticky-bottom-nav__item { -webkit-box-flex:1;-ms-flex:1;flex:1;text-align:center }
+
+.sticky-bottom-nav__link { color:#fff;display:block;text-decoration:none;-webkit-transition:color .3s ease;transition:color .3s ease }
+
+.sticky-bottom-nav__icon { display:block;height:1.125rem;-webkit-transition:-webkit-filter .3s ease;transition:-webkit-filter .3s ease;transition:filter .3s ease;transition:filter .3s ease,-webkit-filter .3s ease;width:1.125rem }
+
+.sticky-bottom-nav__label { color:#fff;display:block;font-size:.75rem;font-weight:400;line-height:.9rem }
 
 @media(max-width:480px){.text.gated-text{height:315px !important}
 .text.gated-text .unlockdv:before{top:285px !important}

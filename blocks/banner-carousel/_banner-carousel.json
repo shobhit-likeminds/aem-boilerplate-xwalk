@@ -49,14 +49,14 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Image",
-          "name": "image",
+          "label": "Video",
+          "name": "video",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Video",
-          "name": "video",
+          "label": "Image",
+          "name": "image",
           "valueType": "string"
         },
         {

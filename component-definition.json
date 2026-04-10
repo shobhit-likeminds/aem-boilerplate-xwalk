@@ -1168,30 +1168,15 @@
           }
         },
         {
-          "title": "Footer Social Link",
-          "id": "footer-social-link",
+          "title": "Social Link",
+          "id": "social-link",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "footer-social-link",
-                  "name": "Footer Social Link"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Footer Small Link",
-          "id": "footer-small-link",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block/item",
-                "template": {
-                  "model": "footer-small-link",
-                  "name": "Footer Small Link"
+                  "model": "social-link",
+                  "name": "Social Link"
                 }
               }
             }

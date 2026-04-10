@@ -4,61 +4,52 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
 export default function decorate(block) {
   const [headingRow, ...cardRows] = [...block.children];
 
+  // Heading
   const headingContainer = document.createElement('div');
-  headingContainer.classList.add('cmp-text');
   moveInstrumentation(headingRow, headingContainer);
-  while (headingRow.firstChild) headingContainer.append(headingRow.firstChild);
-
-  const headingText = headingContainer.querySelector('p');
-  if (headingText) {
-    const h1 = document.createElement('h1');
-    h1.innerHTML = headingText.innerHTML;
-    headingContainer.replaceChildren(h1);
+  headingContainer.classList.add('cmp-text');
+  while (headingRow.firstChild) {
+    headingContainer.append(headingRow.firstChild);
   }
+  block.append(headingContainer);
 
-  const sectionsContainer = document.createElement('div');
-  sectionsContainer.classList.add('featureCards', 'aem-GridColumn', 'aem-GridColumn--default--12');
-  sectionsContainer.append(headingContainer);
+  // Cards section
+  const section = document.createElement('section');
+  section.classList.add('d-block', 'feature_card--Section', 'feature_card', 'mx-auto');
 
   cardRows.forEach((row) => {
-    // Use content detection instead of direct index access
     const cells = [...row.children];
+    // Use content detection instead of index access for robustness
     const imageCell = cells.find(cell => cell.querySelector('picture'));
-    const titleCell = cells.find(cell => !cell.querySelector('picture') && cell.textContent.trim() !== '' && !cell.querySelector('a'));
-    const descriptionCell = cells.find(cell => cell.querySelector('p'));
-    const ctaLinkCell = cells.find(cell => cell.querySelector('a') && cell.querySelector('a').href.includes('http'));
-    const ctaLinkLabelCell = cells.find(cell => cell.querySelector('a') && !cell.querySelector('a').href.includes('http')); // Assuming ctaLinkLabel is the cell with an anchor that doesn't look like a direct link
+    const ctaLinkCell = cells.find(cell => cell.querySelector('a'));
+    const ctaLinkLabelCell = cells.find(cell => cell.textContent.trim() === ctaLinkCell.textContent.trim() && cell !== ctaLinkCell); // Find the cell that contains the CTA Label text, which might be the same as CTA Link text initially
+    const titleCell = cells.find(cell => cell.querySelector('div') && !cell.querySelector('picture') && !cell.querySelector('a') && cell.textContent.trim().length > 0 && cell !== ctaLinkLabelCell);
+    const descriptionCell = cells.find(cell => cell.querySelector('div') && !cell.querySelector('picture') && !cell.querySelector('a') && cell.textContent.trim().length > 0 && cell !== titleCell && cell !== ctaLinkLabelCell);
 
-    const section = document.createElement('section');
-    section.classList.add('d-block', 'feature_card--Section', 'feature_card', 'mx-auto');
-    moveInstrumentation(row, section);
-
-    const anchor = document.createElement('a');
-    anchor.classList.add('d-flex', 'flex-column', 'analytics_cta_click', 'text-decoration-none');
-
-    const foundLink = ctaLinkCell?.querySelector('a');
-    if (foundLink) {
-      anchor.href = foundLink.href;
-      if (foundLink.target) {
-        anchor.target = foundLink.target;
-      }
+    const ctaLink = ctaLinkCell ? ctaLinkCell.querySelector('a') : null;
+    const cardAnchor = document.createElement('a');
+    cardAnchor.classList.add('d-flex', 'flex-column', 'analytics_cta_click', 'text-decoration-none');
+    if (ctaLink) {
+      cardAnchor.href = ctaLink.href;
+      if (ctaLink.target) cardAnchor.target = ctaLink.target;
+      if (ctaLink.title) cardAnchor.title = ctaLink.title;
+      cardAnchor.setAttribute('data-cta-label', ctaLinkLabelCell ? ctaLinkLabelCell.textContent.trim() : ctaLink.textContent.trim());
     }
-    anchor.title = ctaLinkLabelCell?.textContent.trim() || '';
-    anchor.setAttribute('data-cta-label', ctaLinkLabelCell?.textContent.trim() || '');
+    moveInstrumentation(row, cardAnchor);
 
     const imageWrapper = document.createElement('div');
     imageWrapper.classList.add('feature_card--image', 'w-100', 'pb-4');
-    if (imageCell) {
-      moveInstrumentation(imageCell, imageWrapper);
-      while (imageCell.firstChild) imageWrapper.append(imageCell.firstChild);
-      imageWrapper.querySelectorAll('picture > img').forEach((img) => {
+    const picture = imageCell ? imageCell.querySelector('picture') : null;
+    if (picture) {
+      const img = picture.querySelector('img');
+      if (img) {
         const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
         moveInstrumentation(img, optimizedPic.querySelector('img'));
-        img.closest('picture').replaceWith(optimizedPic);
-        optimizedPic.querySelector('img').classList.add('w-100', 'h-100');
-      });
+        picture.replaceWith(optimizedPic);
+        imageWrapper.append(optimizedPic);
+      }
     }
-    anchor.append(imageWrapper);
+    cardAnchor.append(imageWrapper);
 
     const textCenter = document.createElement('div');
     textCenter.classList.add('text-center');
@@ -66,8 +57,7 @@ export default function decorate(block) {
     const title = document.createElement('h2');
     title.classList.add('feature_card--title', 'boing--text__heading-1');
     if (titleCell) {
-      moveInstrumentation(titleCell, title);
-      while (titleCell.firstChild) title.append(titleCell.firstChild);
+      title.textContent = titleCell.textContent.trim();
     }
     textCenter.append(title);
 
@@ -76,8 +66,7 @@ export default function decorate(block) {
     const description = document.createElement('p');
     description.classList.add('feature_card--desc', 'boing--text__body-2', 'text-boing-dark');
     if (descriptionCell) {
-      moveInstrumentation(descriptionCell, description);
-      while (descriptionCell.firstChild) description.append(descriptionCell.firstChild);
+      description.textContent = descriptionCell.textContent.trim();
     }
     descriptionWrapper.append(description);
     textCenter.append(descriptionWrapper);
@@ -88,30 +77,34 @@ export default function decorate(block) {
     button.type = 'button';
     button.role = 'button';
     button.classList.add('arrow-icon-btn');
-    // Original HTML has an img inside the button, which is an icon.
-    // Since the block model doesn't have an icon field, we skip it.
-    // If the model had an icon field, we would create an img from that field.
     // Add event listener for the button
     button.addEventListener('click', (e) => {
       e.preventDefault(); // Prevent default button behavior if it's inside an anchor
-      e.stopPropagation(); // Stop propagation to prevent anchor click
-      if (anchor.href) {
-        if (anchor.target === '_blank') {
-          window.open(anchor.href, '_blank');
+      e.stopPropagation(); // Stop propagation to prevent the cardAnchor's click from firing
+      if (cardAnchor.href) {
+        if (cardAnchor.target === '_blank') {
+          window.open(cardAnchor.href, '_blank');
         } else {
-          window.location.href = anchor.href;
+          window.location.href = cardAnchor.href;
         }
       }
     });
 
+    // Assuming the SVG image is not part of the model, so it's not added here.
+    // If it were in the model, it would be handled via a reference field.
+    // Based on ORIGINAL HTML, the SVG is directly inside the button.
+    const svgImg = document.createElement('img');
+    svgImg.alt = 'svg file';
+    svgImg.src = '/content/dam/aemigrate/uploaded-folder/image/1775815894002.svg+xml'; // Hardcoded from ORIGINAL HTML
+    button.append(svgImg);
+
     redirectedBtn.append(button);
     textCenter.append(redirectedBtn);
 
-    anchor.append(textCenter);
-    section.append(anchor);
-    sectionsContainer.append(section);
+    cardAnchor.append(textCenter);
+    section.append(cardAnchor);
   });
 
   block.textContent = '';
-  block.append(sectionsContainer);
+  block.append(headingContainer, section);
 }
