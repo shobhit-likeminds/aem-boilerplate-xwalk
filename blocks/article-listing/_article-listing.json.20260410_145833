@@ -43,7 +43,7 @@
           "valueType": "string"
         },
         {
-          "component": "richtext",
+          "component": "text",
           "label": "Description",
           "name": "description",
           "valueType": "string"
@@ -58,6 +58,12 @@
           "component": "text",
           "label": "CTA Label",
           "name": "ctaLinkLabel",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "CTA Icon",
+          "name": "ctaIcon",
           "valueType": "string"
         },
         {
@@ -96,9 +102,9 @@
           "valueType": "string"
         },
         {
-          "component": "richtext",
-          "label": "Card Text",
-          "name": "cardText",
+          "component": "text",
+          "label": "Title",
+          "name": "title",
           "valueType": "string"
         }
       ]

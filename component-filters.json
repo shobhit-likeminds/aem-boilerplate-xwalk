@@ -101,7 +101,9 @@
       "latest-stories",
       "work-with-us",
       "faqs-section",
-      "footer-main"
+      "footer-main",
+      "banner-section",
+      "bolte-sitare-card-list"
     ]
   },
   {
@@ -123,6 +125,9 @@
     ]
   },
   {
+    "id": "banner-section"
+  },
+  {
     "id": "banner"
   },
   {
@@ -135,8 +140,14 @@
     "id": "boing-header-footer",
     "components": [
       "sidebar-menu-item",
-      "footer-list-item",
+      "footer-link",
       "social-link"
+    ]
+  },
+  {
+    "id": "bolte-sitare-card-list",
+    "components": [
+      "bolte-sitare-card"
     ]
   },
   {
@@ -304,8 +315,9 @@
   {
     "id": "footer-brand",
     "components": [
-      "footer-nav-item",
-      "footer-social-item"
+      "footer-link",
+      "footer-social-link",
+      "footer-small-link"
     ]
   },
   {

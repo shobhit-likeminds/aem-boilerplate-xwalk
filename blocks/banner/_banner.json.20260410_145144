@@ -19,7 +19,15 @@
   ],
   "models": [
     {
-      "id": "banner"
+      "id": "banner",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Video",
+          "name": "video",
+          "valueType": "string"
+        }
+      ]
     }
   ],
   "filters": [

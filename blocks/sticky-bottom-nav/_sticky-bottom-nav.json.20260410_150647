@@ -39,7 +39,7 @@
         {
           "component": "container",
           "item": "sticky-bottom-nav-item",
-          "label": "Nav Items",
+          "label": "Navigation Items",
           "name": "items"
         }
       ]
@@ -51,6 +51,12 @@
           "component": "reference",
           "label": "Icon",
           "name": "icon",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Icon Alt Text",
+          "name": "alt",
           "valueType": "string"
         },
         {

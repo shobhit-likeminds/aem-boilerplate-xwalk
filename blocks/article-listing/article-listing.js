@@ -2,106 +2,91 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const wrapper = document.createElement('section');
-  wrapper.classList.add('article_listing--wrapper');
+  const children = [...block.children];
+
+  const sectionWrapper = document.createElement('section');
+  sectionWrapper.classList.add('article_listing--wrapper');
 
   const articleListing = document.createElement('div');
   articleListing.classList.add('article_listing', 'position-relative');
-  wrapper.append(articleListing);
+  sectionWrapper.append(articleListing);
 
-  const [
-    titleRow,
-    descriptionRow,
-    ctaLinkRow,
-    ctaLinkLabelRow,
-    ctaIconRow,
-    ...articleCardRows
-  ] = [...block.children];
+  // First section: Title, Description, CTA
+  const firstSection = document.createElement('div');
+  firstSection.classList.add('article_listing_section--first', 'text-white', 'text-center');
+  articleListing.append(firstSection);
 
-  // Section First
-  const sectionFirst = document.createElement('div');
-  sectionFirst.classList.add('article_listing_section--first', 'text-white', 'text-center');
-  articleListing.append(sectionFirst);
+  const [titleRow, descriptionRow, ctaLinkRow, ctaLinkLabelRow, ...articleRows] = children;
 
   // Title
   const title = document.createElement('h2');
   title.classList.add('article_listing--title', 'boing--text__heading-1', 'text-white', 'pb-3');
   moveInstrumentation(titleRow, title);
-  title.textContent = titleRow.firstElementChild?.textContent.trim() || '';
-  sectionFirst.append(title);
+  title.append(titleRow.firstElementChild.textContent.trim());
+  firstSection.append(title);
 
   // Description
   const description = document.createElement('p');
   description.classList.add('article_listing--desc', 'boing--text__body-2', 'pb-4');
   moveInstrumentation(descriptionRow, description);
-  description.textContent = descriptionRow.firstElementChild?.textContent.trim() || '';
-  sectionFirst.append(description);
+  // Description is richtext, so append its children directly
+  while (descriptionRow.firstElementChild.firstChild) {
+    description.append(descriptionRow.firstElementChild.firstChild);
+  }
+  firstSection.append(description);
 
-  // CTA Button Wrapper
+  // CTA Link and Label
   const ctaBtnWrapper = document.createElement('div');
   ctaBtnWrapper.classList.add('article_listing--btnWrapper');
-  sectionFirst.append(ctaBtnWrapper);
+  firstSection.append(ctaBtnWrapper);
 
-  // CTA Link
-  const ctaLink = document.createElement('a');
-  ctaLink.classList.add('boing--text__title-3', 'article_listing--btn', 'analytics_cta_click');
+  const ctaLinkAnchor = document.createElement('a');
+  ctaLinkAnchor.classList.add('boing--text__title-3', 'article_listing--btn', 'analytics_cta_click');
+  moveInstrumentation(ctaLinkRow, ctaLinkAnchor);
+
   const foundCtaLink = ctaLinkRow.querySelector('a');
   if (foundCtaLink) {
-    ctaLink.href = foundCtaLink.href;
-    ctaLink.title = ctaLinkLabelRow.firstElementChild?.textContent.trim() || foundCtaLink.textContent.trim();
-    ctaLink.textContent = ctaLinkLabelRow.firstElementChild?.textContent.trim() || foundCtaLink.textContent.trim();
+    ctaLinkAnchor.href = foundCtaLink.href;
+    // The ctaLinkLabelRow contains the text directly, not nested in another element
+    ctaLinkAnchor.title = ctaLinkLabelRow.textContent.trim();
+    ctaLinkAnchor.textContent = ctaLinkLabelRow.textContent.trim();
   }
-  moveInstrumentation(ctaLinkRow, ctaLink);
-  moveInstrumentation(ctaLinkLabelRow, ctaLink);
-  ctaBtnWrapper.append(ctaLink);
+  ctaBtnWrapper.append(ctaLinkAnchor);
 
-  // CTA Icon
-  const ctaIconPicture = ctaIconRow.querySelector('picture');
-  if (ctaIconPicture) {
-    const ctaIconImg = ctaIconPicture.querySelector('img');
-    if (ctaIconImg) {
-      const optimizedPic = createOptimizedPicture(ctaIconImg.src, ctaIconImg.alt, false, [{ width: '40' }]);
-      moveInstrumentation(ctaIconImg, optimizedPic.querySelector('img'));
-      ctaLink.append(optimizedPic);
-    }
-  }
-  moveInstrumentation(ctaIconRow, ctaLink);
+  // Second section: Article Cards
+  const secondSection = document.createElement('div');
+  secondSection.classList.add('article_listing_section--second', 'd-flex');
+  articleListing.append(secondSection);
 
-  // Section Second (Article Cards)
-  const sectionSecond = document.createElement('div');
-  sectionSecond.classList.add('article_listing_section--second', 'd-flex');
-  articleListing.append(sectionSecond);
-
-  articleCardRows.forEach((row) => {
+  articleRows.forEach((row) => {
     const cells = [...row.children];
-    // Use content detection instead of index access for robustness
-    const cardLinkCell = cells.find(cell => cell.querySelector('a'));
-    const imageCell = cells.find(cell => cell.querySelector('picture'));
-    const dateCell = cells.find(cell => !cell.querySelector('a') && !cell.querySelector('picture') && cell.textContent.trim().match(/\d{1,2}\s\w+\s\d{4}/)); // Basic date format detection
-    const titleCell = cells.find(cell => !cell.querySelector('a') && !cell.querySelector('picture') && cell !== dateCell);
-    const cardLinkLabelCell = cells.find(cell => cell !== cardLinkCell && cell !== imageCell && cell !== dateCell && cell !== titleCell);
+    // Use content detection for cells, though destructuring works here due to fixed order
+    const cardLinkCell = cells[0];
+    const cardLinkLabelCell = cells[1];
+    const imageCell = cells[2];
+    const dateCell = cells[3];
+    const cardTextCell = cells[4];
 
+    const cardLinkAnchor = document.createElement('a');
+    cardLinkAnchor.classList.add('article_listing--cardWrapper', 'analytics_cta_click');
+    moveInstrumentation(row, cardLinkAnchor); // Move instrumentation from the row to the new anchor
 
-    const cardWrapper = document.createElement('a');
-    cardWrapper.classList.add('article_listing--cardWrapper', 'analytics_cta_click');
-    moveInstrumentation(row, cardWrapper);
-
-    const foundCardLink = cardLinkCell?.querySelector('a');
+    const foundCardLink = cardLinkCell.querySelector('a');
     if (foundCardLink) {
-      cardWrapper.href = foundCardLink.href;
-      cardWrapper.setAttribute('data-cta-label', cardLinkLabelCell?.firstElementChild?.textContent.trim() || foundCardLink.textContent.trim());
+      cardLinkAnchor.href = foundCardLink.href;
+      cardLinkAnchor.setAttribute('data-cta-label', cardLinkLabelCell.textContent.trim());
     }
 
-    const cards = document.createElement('div');
-    cards.classList.add('article_listing--cards');
-    cardWrapper.append(cards);
+    const articleCard = document.createElement('div');
+    articleCard.classList.add('article_listing--cards');
+    cardLinkAnchor.append(articleCard);
 
-    // Card Image
+    // Image
     const cardImageWrapper = document.createElement('div');
     cardImageWrapper.classList.add('article_listing--cardImageWrapper');
-    cards.append(cardImageWrapper);
+    articleCard.append(cardImageWrapper);
 
-    const picture = imageCell?.querySelector('picture');
+    const picture = imageCell.querySelector('picture');
     if (picture) {
       const img = picture.querySelector('img');
       if (img) {
@@ -112,30 +97,31 @@ export default function decorate(block) {
       }
     }
 
-    // Cards Content
+    // Content Wrapper
     const cardsContentWrapper = document.createElement('div');
     cardsContentWrapper.classList.add('cards_content--wrapper');
-    cards.append(cardsContentWrapper);
+    articleCard.append(cardsContentWrapper);
 
     // Date
-    const date = document.createElement('p');
-    date.classList.add('boing--text__body-5', 'p-0', 'm-0', 'mb-3', 'published_date');
-    moveInstrumentation(dateCell, date);
-    date.textContent = dateCell?.firstElementChild?.textContent.trim() || '';
-    // Add data-date attribute if needed, parse from dateCell.firstElementChild?.textContent
-    // For now, just setting textContent as per original HTML format
-    cardsContentWrapper.append(date);
+    const dateP = document.createElement('p');
+    dateP.classList.add('boing--text__body-5', 'p-0', 'm-0', 'mb-3', 'published_date');
+    moveInstrumentation(dateCell, dateP);
+    dateP.textContent = dateCell.textContent.trim();
+    cardsContentWrapper.append(dateP);
 
-    // Title
-    const cardTitle = document.createElement('p');
-    cardTitle.classList.add('boing--text__body-2', 'boing--text__body');
-    moveInstrumentation(titleCell, cardTitle);
-    cardTitle.textContent = titleCell?.firstElementChild?.textContent.trim() || '';
-    cardsContentWrapper.append(cardTitle);
+    // Card Text
+    const cardTextP = document.createElement('p');
+    cardTextP.classList.add('boing--text__body-2', 'boing--text__body');
+    moveInstrumentation(cardTextCell, cardTextP);
+    // CardText is richtext, so append its children directly
+    while (cardTextCell.firstElementChild.firstChild) {
+      cardTextP.append(cardTextCell.firstElementChild.firstChild);
+    }
+    cardsContentWrapper.append(cardTextP);
 
-    sectionSecond.append(cardWrapper);
+    secondSection.append(cardLinkAnchor);
   });
 
   block.textContent = '';
-  block.append(wrapper);
+  block.append(sectionWrapper);
 }

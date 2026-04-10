@@ -12,14 +12,11 @@ export default function decorate(block) {
     moveInstrumentation(row, li);
     li.classList.add('sticky-bottom-nav__item', 'position-relative');
 
-    // Use content detection instead of direct index access
+    // Use content detection instead of fragile index access
     const cells = [...row.children];
     const iconCell = cells.find(cell => cell.querySelector('picture'));
     const linkCell = cells.find(cell => cell.querySelector('a'));
-    // Assuming altTextCell and linkLabelCell are the remaining text cells
-    const textCells = cells.filter(cell => !cell.querySelector('picture') && !cell.querySelector('a'));
-    const altTextCell = textCells[0]; // Assuming order is consistent: alt text then link label
-    const linkLabelCell = textCells[1];
+    const labelCell = cells.find(cell => !cell.querySelector('picture') && !cell.querySelector('a')); // Assuming label is the remaining cell
 
     const anchor = document.createElement('a');
     anchor.classList.add('sticky-bottom-nav__link', 'd-flex', 'flex-column', 'align-items-center', 'gap-1', 'analytics_cta_click');
@@ -27,40 +24,35 @@ export default function decorate(block) {
     const foundLink = linkCell ? linkCell.querySelector('a') : null;
     if (foundLink) {
       anchor.href = foundLink.href;
-      // Copy data attributes from the original link if they exist
-      if (foundLink.dataset.consent) anchor.dataset.consent = foundLink.dataset.consent;
-      if (foundLink.dataset.link) anchor.dataset.link = foundLink.dataset.link;
+      // Copy data attributes from the original link if present
+      [...foundLink.attributes].forEach(attr => {
+        if (attr.name.startsWith('data-')) {
+          anchor.setAttribute(attr.name, attr.value);
+        }
+      });
     }
 
     if (iconCell) {
-      const iconPicture = iconCell.querySelector('picture');
-      if (iconPicture) {
-        const img = iconPicture.querySelector('img');
+      const picture = iconCell.querySelector('picture');
+      if (picture) {
+        const img = picture.querySelector('img');
         if (img) {
-          const iconImg = document.createElement('img');
-          iconImg.classList.add('sticky-bottom-nav__icon');
-          iconImg.src = img.src;
-          iconImg.alt = altTextCell ? altTextCell.textContent.trim() : '';
-          anchor.append(iconImg);
+          const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '40' }]); // Assuming a small icon size
+          const optimizedImg = optimizedPic.querySelector('img');
+          optimizedImg.classList.add('sticky-bottom-nav__icon');
+          moveInstrumentation(img, optimizedImg);
+          anchor.append(optimizedPic);
         }
       }
     }
 
-    const labelSpan = document.createElement('span');
-    labelSpan.classList.add('sticky-bottom-nav__label');
-    labelSpan.textContent = linkLabelCell ? linkLabelCell.textContent.trim() : '';
-    anchor.append(labelSpan);
+    const span = document.createElement('span');
+    span.classList.add('sticky-bottom-nav__label');
+    span.textContent = labelCell ? labelCell.textContent.trim() : '';
+    anchor.append(span);
 
     li.append(anchor);
     ul.append(li);
-  });
-
-  ul.querySelectorAll('picture > img').forEach((img) => {
-    // The original HTML uses webp images, so we should optimize for that if possible.
-    // The width is not explicitly defined in the original HTML, but a reasonable default can be applied.
-    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '48' }]); // Assuming a small icon size
-    moveInstrumentation(img, optimizedPic.querySelector('img'));
-    img.closest('picture').replaceWith(optimizedPic);
   });
 
   block.textContent = '';

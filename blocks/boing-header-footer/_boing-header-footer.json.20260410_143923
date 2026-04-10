@@ -32,15 +32,15 @@
       }
     },
     {
-      "title": "Footer Link",
-      "id": "footer-link",
+      "title": "Footer List Item",
+      "id": "footer-list-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "footer-link",
-              "name": "Footer Link"
+              "model": "footer-list-item",
+              "name": "Footer List Item"
             }
           }
         }
@@ -68,38 +68,38 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Header Left Logo",
-          "name": "headerLeftLogo",
+          "label": "Header Left Image",
+          "name": "headerLeftImage",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Header Center Logo",
-          "name": "headerCenterLogo",
+          "label": "Header Logo Image",
+          "name": "headerLogoImage",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "label": "Header Center Logo Link",
-          "name": "headerCenterLogoLink",
+          "label": "Header Logo Link",
+          "name": "headerLogoLink",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Header Center Logo Link Label",
-          "name": "headerCenterLogoLinkLabel",
+          "label": "Header Logo Link Label",
+          "name": "headerLogoLinkLabel",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "label": "Header Login Link",
-          "name": "headerLoginLink",
+          "label": "Login Link",
+          "name": "loginLink",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Header Login Link Label",
-          "name": "headerLoginLinkLabel",
+          "label": "Login Link Label",
+          "name": "loginLinkLabel",
           "valueType": "string"
         },
         {
@@ -110,21 +110,33 @@
         },
         {
           "component": "reference",
-          "label": "Footer Left Logo",
-          "name": "footerLeftLogo",
+          "label": "Footer Primary Left Logo",
+          "name": "footerPrimaryLeftLogo",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Footer Primary Left Logo Link",
+          "name": "footerPrimaryLeftLogoLink",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Footer Primary Left Logo Link Label",
+          "name": "footerPrimaryLeftLogoLinkLabel",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Footer Secondary Logo",
-          "name": "footerSecondaryLogo",
+          "label": "Footer Primary Secondary Logo",
+          "name": "footerPrimarySecondaryLogo",
           "valueType": "string"
         },
         {
           "component": "container",
-          "item": "footer-link",
-          "label": "Footer Links",
-          "name": "footerLinks"
+          "item": "footer-list-item",
+          "label": "Footer List Items",
+          "name": "footerListItems"
         },
         {
           "component": "container",
@@ -134,20 +146,20 @@
         },
         {
           "component": "aem-content",
-          "label": "Footer ITC Portal Link",
-          "name": "footerItcPortalLink",
+          "label": "Footer Left Link",
+          "name": "footerLeftLink",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Footer ITC Portal Link Label",
-          "name": "footerItcPortalLinkLabel",
+          "label": "Footer Left Link Label",
+          "name": "footerLeftLinkLabel",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Footer Copyright Text",
-          "name": "footerCopyrightText",
+          "label": "Footer Copyright",
+          "name": "footerCopyright",
           "valueType": "string"
         }
       ]
@@ -156,37 +168,37 @@
       "id": "sidebar-menu-item",
       "fields": [
         {
+          "component": "reference",
+          "label": "Icon",
+          "name": "icon",
+          "valueType": "string"
+        },
+        {
           "component": "aem-content",
-          "label": "Menu Item Link",
+          "label": "Link",
           "name": "link",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Menu Item Label",
+          "label": "Link Label",
           "name": "linkLabel",
-          "valueType": "string"
-        },
-        {
-          "component": "reference",
-          "label": "Menu Item Icon",
-          "name": "icon",
           "valueType": "string"
         }
       ]
     },
     {
-      "id": "footer-link",
+      "id": "footer-list-item",
       "fields": [
         {
           "component": "aem-content",
-          "label": "Footer Link",
+          "label": "Link",
           "name": "link",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Footer Link Label",
+          "label": "Link Label",
           "name": "linkLabel",
           "valueType": "string"
         }
@@ -221,7 +233,7 @@
       "id": "boing-header-footer",
       "components": [
         "sidebar-menu-item",
-        "footer-link",
+        "footer-list-item",
         "social-link"
       ]
     }
