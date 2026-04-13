@@ -138,7 +138,28 @@
         "faqs-section",
         "footer-main",
         "banner-section",
-        "bolte-sitare-card-list"
+        "bolte-sitare-card-list",
+        "top-band",
+        "header-navigation",
+        "floating-product",
+        "home-slider",
+        "search-body",
+        "saving-act",
+        "personal-crsl-wo-img",
+        "business-banking-carousel",
+        "nri-banking-carousel",
+        "showcases",
+        "modal",
+        "chat-modal",
+        "searchmodal",
+        "backtop",
+        "sliding-popup",
+        "loan-modal",
+        "microloan-modal",
+        "transactionbanking-modal",
+        "small-businesses-modal",
+        "insurance-modal",
+        "exclusive-offers-modal"
       ]
     }
   ]

@@ -246,6 +246,29 @@
     ]
   },
   {
+    "id": "backtop",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Image",
+        "name": "image",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Link Label",
+        "name": "linkLabel",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "banner-carousel",
     "fields": [
       {
@@ -641,6 +664,100 @@
     ]
   },
   {
+    "id": "business-banking-carousel",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Background Image",
+        "name": "backgroundImage",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Section Title",
+        "name": "sectionTitle",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Description",
+        "name": "description",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "View All Link",
+        "name": "viewAllLink",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "View All Link Label",
+        "name": "viewAllLinkLabel",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "carousel-item",
+        "label": "Carousel Items",
+        "name": "carouselItems"
+      }
+    ]
+  },
+  {
+    "id": "carousel-item",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Icon",
+        "name": "icon",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Title",
+        "name": "title",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Text",
+        "name": "text",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Primary CTA Link",
+        "name": "primaryCtaLink",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Primary CTA Label",
+        "name": "primaryCtaLinkLabel",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Secondary CTA Link",
+        "name": "secondaryCtaLink",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Secondary CTA Label",
+        "name": "secondaryCtaLinkLabel",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "button",
     "fields": [
       {
@@ -716,6 +833,52 @@
         "component": "text",
         "label": "Label",
         "name": "label",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "chat-modal",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Modal Title",
+        "name": "modalTitle",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Close Icon",
+        "name": "closeIcon",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Welcome Text",
+        "name": "welcomeText",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "chat-option",
+        "label": "Chat Options",
+        "name": "chatOptions"
+      }
+    ]
+  },
+  {
+    "id": "chat-option",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Option Title",
+        "name": "optionTitle",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Option Subtitle",
+        "name": "optionSubtitle",
         "valueType": "string"
       }
     ]
@@ -1361,6 +1524,35 @@
     ]
   },
   {
+    "id": "exclusive-offers-modal",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Title",
+        "name": "title",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Disclaimer",
+        "name": "disclaimer",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "CTA Link",
+        "name": "ctaLink",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "CTA Label",
+        "name": "ctaLinkLabel",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "family-health",
     "fields": [
       {
@@ -1604,6 +1796,70 @@
         "component": "aem-content",
         "label": "Link",
         "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "floating-product",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Outer Button Label",
+        "name": "outerButtonLabel",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Inner Button Label",
+        "name": "innerButtonLabel",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "product",
+        "label": "Products",
+        "name": "products"
+      }
+    ]
+  },
+  {
+    "id": "product",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Description",
+        "name": "description",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "CTA Link",
+        "name": "ctaLink",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "CTA Label",
+        "name": "ctaLinkLabel",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Conditions",
+        "name": "conditions",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Terms",
+        "name": "terms",
         "valueType": "string"
       }
     ]
@@ -1890,72 +2146,89 @@
     "fields": [
       {
         "component": "container",
-        "item": "footer-link-group",
-        "label": "Footer Link Groups",
-        "name": "footer-link-groups"
-      },
-      {
-        "component": "richtext",
-        "label": "Contact Address",
-        "name": "contact-address",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Telephone",
-        "name": "telephone",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Fax",
-        "name": "fax",
-        "valueType": "string"
+        "item": "footer-accordion-section",
+        "label": "Accordion Sections",
+        "name": "accordionSections"
       },
       {
         "component": "container",
         "item": "footer-social-link",
-        "label": "Footer Social Links",
-        "name": "footer-social-links"
+        "label": "Social Links",
+        "name": "socialLinks"
       },
       {
-        "component": "richtext",
-        "label": "Footer Credit",
-        "name": "footer-credit",
-        "valueType": "string"
+        "component": "container",
+        "item": "footer-app-link",
+        "label": "App Links",
+        "name": "appLinks"
+      },
+      {
+        "component": "container",
+        "item": "footer-term-link",
+        "label": "Term Links",
+        "name": "termLinks"
       }
     ]
   },
   {
-    "id": "footer-link-group",
+    "id": "footer-accordion-section",
     "fields": [
       {
         "component": "text",
-        "label": "Heading",
-        "name": "heading",
+        "label": "Section Title",
+        "name": "sectionTitle",
         "valueType": "string"
       },
       {
         "component": "container",
-        "item": "footer-link",
-        "label": "Links",
-        "name": "links"
+        "item": "footer-accordion-item",
+        "label": "Accordion Items",
+        "name": "accordionItems"
       }
     ]
   },
   {
-    "id": "footer-link",
+    "id": "footer-accordion-item",
     "fields": [
       {
         "component": "text",
-        "label": "Label",
-        "name": "label",
+        "label": "Item Title",
+        "name": "itemTitle",
         "valueType": "string"
       },
       {
+        "component": "container",
+        "item": "footer-accordion-link",
+        "label": "Links",
+        "name": "links"
+      },
+      {
+        "component": "reference",
+        "label": "Image",
+        "name": "image",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Extra Text",
+        "name": "extraText",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "footer-accordion-link",
+    "fields": [
+      {
         "component": "aem-content",
-        "label": "URL",
-        "name": "url",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Link Label",
+        "name": "linkLabel",
         "valueType": "string"
       }
     ]
@@ -1964,15 +2237,61 @@
     "id": "footer-social-link",
     "fields": [
       {
-        "component": "text",
-        "label": "Icon Class",
-        "name": "icon",
+        "component": "aem-content",
+        "label": "Social Link",
+        "name": "socialLink",
         "valueType": "string"
       },
       {
+        "component": "text",
+        "label": "Social Link Label",
+        "name": "socialLinkLabel",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Icon",
+        "name": "icon",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "footer-app-link",
+    "fields": [
+      {
         "component": "aem-content",
-        "label": "Social URL",
-        "name": "url",
+        "label": "App Link",
+        "name": "appLink",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "App Link Label",
+        "name": "appLinkLabel",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Icon",
+        "name": "icon",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "footer-term-link",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Term Link",
+        "name": "termLink",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Term Link Label",
+        "name": "termLinkLabel",
         "valueType": "string"
       }
     ]
@@ -2018,6 +2337,139 @@
         "component": "aem-content",
         "name": "reference",
         "label": "Reference"
+      }
+    ]
+  },
+  {
+    "id": "header-navigation",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Logo Light",
+        "name": "logoLight",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Logo Dark",
+        "name": "logoDark",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Copyright",
+        "name": "copyright",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "mainnav-item",
+        "label": "Main Navigation Items",
+        "name": "mainnav"
+      },
+      {
+        "component": "container",
+        "item": "hfootlink-item",
+        "label": "Footer Links",
+        "name": "hfootlinks"
+      },
+      {
+        "component": "container",
+        "item": "sociallink-item",
+        "label": "Social Links",
+        "name": "sociallinks"
+      },
+      {
+        "component": "container",
+        "item": "topaction-item",
+        "label": "Top Actions",
+        "name": "topactions"
+      }
+    ]
+  },
+  {
+    "id": "mainnav-item",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Icon",
+        "name": "icon",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Link Label",
+        "name": "linkLabel",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "hfootlink-item",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Link Label",
+        "name": "linkLabel",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "sociallink-item",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Icon",
+        "name": "icon",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Link Label",
+        "name": "linkLabel",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "topaction-item",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Icon",
+        "name": "icon",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Link Label",
+        "name": "linkLabel",
+        "valueType": "string"
       }
     ]
   },
@@ -2176,12 +2628,116 @@
     ]
   },
   {
+    "id": "home-slider",
+    "fields": [
+      {
+        "component": "container",
+        "item": "home-slider-item",
+        "label": "Slides",
+        "name": "slides"
+      }
+    ]
+  },
+  {
+    "id": "home-slider-item",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Desktop Image",
+        "name": "desktopImage",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Mobile Portrait Image",
+        "name": "mobilePortraitImage",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Mobile Landscape Image",
+        "name": "mobileLandscapeImage",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Slide Link",
+        "name": "slideLink",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Slide Link Label",
+        "name": "slideLinkLabel",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "inner-title",
     "fields": [
       {
         "component": "text",
         "label": "Heading",
         "name": "heading",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "insurance-modal",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Title",
+        "name": "title",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "insurance-option",
+        "label": "Insurance Options",
+        "name": "insuranceOptions"
+      }
+    ]
+  },
+  {
+    "id": "insurance-option",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Title",
+        "name": "title",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Description",
+        "name": "description",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Icon",
+        "name": "icon",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "CTA Link",
+        "name": "ctaLink",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "CTA Label",
+        "name": "ctaLinkLabel",
         "valueType": "string"
       }
     ]
@@ -2565,6 +3121,64 @@
     ]
   },
   {
+    "id": "loan-modal",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Modal Title",
+        "name": "modalTitle",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "loan-card",
+        "label": "Loan Cards",
+        "name": "loanCards"
+      }
+    ]
+  },
+  {
+    "id": "loan-card",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Icon Image",
+        "name": "icon",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Title",
+        "name": "title",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Description",
+        "name": "description",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Loan Link",
+        "name": "loanLink",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Loan Link Label",
+        "name": "loanLinkLabel",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "main-header",
     "fields": [
       {
@@ -2756,6 +3370,9 @@
     ]
   },
   {
+    "id": "microloan-modal"
+  },
+  {
     "id": "mind-module-list",
     "fields": [
       {
@@ -2904,6 +3521,23 @@
     ]
   },
   {
+    "id": "modal",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Image Desktop",
+        "name": "imageDesktop",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Image Mobile",
+        "name": "imageMobile",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "navbar",
     "fields": [
       {
@@ -2980,6 +3614,100 @@
         "component": "richtext",
         "label": "Description",
         "name": "description",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "nri-banking-carousel",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Background Image",
+        "name": "backgroundImage",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Title",
+        "name": "title",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Description",
+        "name": "description",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "View All Link",
+        "name": "viewAllLink",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "View All Label",
+        "name": "viewAllLinkLabel",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "nri-banking-carousel-item",
+        "label": "Carousel Items",
+        "name": "carouselItems"
+      }
+    ]
+  },
+  {
+    "id": "nri-banking-carousel-item",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Icon",
+        "name": "icon",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Title",
+        "name": "title",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Description",
+        "name": "description",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Primary CTA Link",
+        "name": "primaryCtaLink",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Primary CTA Label",
+        "name": "primaryCtaLinkLabel",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Secondary CTA Link",
+        "name": "secondaryCtaLink",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Secondary CTA Label",
+        "name": "secondaryCtaLinkLabel",
         "valueType": "string"
       }
     ]
@@ -3112,6 +3840,100 @@
         "component": "reference",
         "label": "Image",
         "name": "image",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "personal-crsl-wo-img",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Background Image",
+        "name": "backgroundImage",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Title",
+        "name": "title",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Description",
+        "name": "description",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "View All Link",
+        "name": "viewAllLink",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "View All Link Label",
+        "name": "viewAllLinkLabel",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "personal-crsl-item",
+        "label": "Carousel Items",
+        "name": "carouselItems"
+      }
+    ]
+  },
+  {
+    "id": "personal-crsl-item",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Icon",
+        "name": "icon",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Title",
+        "name": "title",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Description",
+        "name": "description",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Primary CTA Link",
+        "name": "primaryCtaLink",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Primary CTA Link Label",
+        "name": "primaryCtaLinkLabel",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Secondary CTA Link",
+        "name": "secondaryCtaLink",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Secondary CTA Link Label",
+        "name": "secondaryCtaLinkLabel",
         "valueType": "string"
       }
     ]
@@ -3410,6 +4232,52 @@
     ]
   },
   {
+    "id": "saving-act",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Image",
+        "name": "image",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Heading 1",
+        "name": "heading1",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Heading 2",
+        "name": "heading2",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "CTA Link",
+        "name": "ctaLink",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "CTA Label",
+        "name": "ctaLinkLabel",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "search-body",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "search-box",
     "fields": [
       {
@@ -3456,6 +4324,9 @@
     ]
   },
   {
+    "id": "searchmodal"
+  },
+  {
     "id": "service-directory-links",
     "fields": [
       {
@@ -3485,6 +4356,64 @@
         "component": "aem-content",
         "label": "Link",
         "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "showcases",
+    "fields": [
+      {
+        "component": "container",
+        "item": "showcase-item",
+        "label": "Showcase Items",
+        "name": "showcaseItems"
+      }
+    ]
+  },
+  {
+    "id": "showcase-item",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Image",
+        "name": "image",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Title",
+        "name": "title",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Description",
+        "name": "description",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Primary Link",
+        "name": "primaryLink",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Primary Link Label",
+        "name": "primaryLinkLabel",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Secondary Link",
+        "name": "secondaryLink",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Secondary Link Label",
+        "name": "secondaryLinkLabel",
         "valueType": "string"
       }
     ]
@@ -3595,6 +4524,93 @@
         "item": "carousel-item",
         "label": "Carousel Items",
         "name": "carousel-items"
+      }
+    ]
+  },
+  {
+    "id": "sliding-popup",
+    "fields": [
+      {
+        "component": "richtext",
+        "label": "Message",
+        "name": "message",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Policy Link",
+        "name": "policyLink",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Policy Link Label",
+        "name": "policyLinkLabel",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Close Button Label",
+        "name": "closeButtonLabel",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "small-businesses-modal",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Modal Title",
+        "name": "modalTitle",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "loan-card",
+        "label": "Loan Cards",
+        "name": "loanCards"
+      }
+    ]
+  },
+  {
+    "id": "loan-card",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Icon Image",
+        "name": "icon",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Loan Title",
+        "name": "title",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Description",
+        "name": "description",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Loan Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Loan Link Label",
+        "name": "linkLabel",
+        "valueType": "string"
       }
     ]
   },
@@ -3901,6 +4917,9 @@
     ]
   },
   {
+    "id": "top-band"
+  },
+  {
     "id": "top-nav",
     "fields": [
       {
@@ -3958,6 +4977,64 @@
         "component": "reference",
         "label": "Icon",
         "name": "icon",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "transactionbanking-modal",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Title",
+        "name": "title",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "loancard",
+        "label": "Loancards",
+        "name": "loancards"
+      }
+    ]
+  },
+  {
+    "id": "loancard",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Icon",
+        "name": "icon",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Title",
+        "name": "title",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Description",
+        "name": "description",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Link Label",
+        "name": "linkLabel",
         "valueType": "string"
       }
     ]

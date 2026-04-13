@@ -1,0 +1,62 @@
+{
+  "definitions": [
+    {
+      "title": "Saving-Act",
+      "id": "saving-act",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "saving-act",
+              "model": "saving-act",
+              "name": "Saving-Act"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "saving-act",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Image",
+          "name": "image",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Heading 1",
+          "name": "heading1",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Heading 2",
+          "name": "heading2",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "CTA Link",
+          "name": "ctaLink",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "CTA Label",
+          "name": "ctaLinkLabel",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "saving-act"
+    }
+  ]
+}

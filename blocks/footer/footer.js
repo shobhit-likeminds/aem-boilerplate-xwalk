@@ -2,179 +2,336 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  // Reordered to match the BlockJson and EDS structure
-  const [
-    contactAddressRow,
-    telephoneRow,
-    faxRow,
-    footerCreditRow,
-    ...itemRows
-  ] = [...block.children];
+  const children = [...block.children];
 
-  const footerLinkGroups = [];
-  const footerSocialLinks = [];
-
-  itemRows.forEach((row) => {
+  // Filtering root rows based on content detection
+  const accordionSections = children.filter((row) => {
     const cells = [...row.children];
-    // Detect footer-link-group by having 2 cells where the first cell is text and the second is a container
-    if (cells.length === 2 && !cells[0].querySelector('a') && !cells[0].querySelector('picture') && !cells[1].querySelector('a') && !cells[1].querySelector('picture')) {
-      footerLinkGroups.push(row);
-    }
-    // Detect footer-social-link by having 2 cells where the second cell contains a link
-    else if (cells.length === 2 && cells[1].querySelector('a')) {
-      footerSocialLinks.push(row);
-    }
+    return cells.length === 2 && !cells[0].querySelector('picture') && !cells[0].querySelector('a');
   });
 
-  const footer = document.createElement('footer');
-  moveInstrumentation(block, footer);
+  const socialLinks = children.filter((row) => {
+    const cells = [...row.children];
+    return cells.length === 3 && cells[0].querySelector('a') && cells[2].querySelector('picture') && !cells[0].textContent.includes('App Link');
+  });
 
-  const container = document.createElement('div');
-  container.classList.add('container');
+  const appLinks = children.filter((row) => {
+    const cells = [...row.children];
+    return cells.length === 3 && cells[0].querySelector('a') && cells[2].querySelector('picture') && cells[0].textContent.includes('App Link');
+  });
 
-  const mainRow = document.createElement('div');
-  mainRow.classList.add('row');
+  const termLinks = children.filter((row) => {
+    const cells = [...row.children];
+    return cells.length === 2 && cells[0].querySelector('a') && !cells[1].querySelector('picture');
+  });
 
-  const colMd7 = document.createElement('div');
-  colMd7.classList.add('col-md-7');
+  const footerLight = document.createElement('div');
+  footerLight.classList.add('footer-light');
 
-  const linkGroupsRow = document.createElement('div');
-  linkGroupsRow.classList.add('row');
+  const containerFluid = document.createElement('div');
+  containerFluid.classList.add('container-fluid');
+  footerLight.append(containerFluid);
 
-  footerLinkGroups.forEach((groupRow) => {
-    const groupCells = [...groupRow.children];
-    const colMd3 = document.createElement('div');
-    colMd3.classList.add('col-md-3');
+  const rowAccordion = document.createElement('div');
+  rowAccordion.classList.add('row', 'accordion');
+  rowAccordion.id = 'fl-acc-one';
+  containerFluid.append(rowAccordion);
 
-    const heading = document.createElement('h4');
-    moveInstrumentation(groupCells[0], heading);
-    heading.append(...groupCells[0].childNodes);
+  // Accordion Sections
+  const allYouMayWantToKnowCol = document.createElement('div');
+  allYouMayWantToKnowCol.classList.add('col-12', 'accblock', 'col-lg-6', 'col-xl-5');
+  rowAccordion.append(allYouMayWantToKnowCol);
+
+  const fLinksWantToKnow = document.createElement('div');
+  fLinksWantToKnow.classList.add('f-links');
+  allYouMayWantToKnowCol.append(fLinksWantToKnow);
+
+  const flheadWantToKnow = document.createElement('div');
+  flheadWantToKnow.classList.add('flhead', 'font-italic');
+  flheadWantToKnow.textContent = 'All you may want to know';
+  fLinksWantToKnow.append(flheadWantToKnow);
+
+  const flbodyWantToKnow = document.createElement('div');
+  flbodyWantToKnow.classList.add('flbody');
+  fLinksWantToKnow.append(flbodyWantToKnow);
+
+  const dXlFlexWantToKnow = document.createElement('div');
+  dXlFlexWantToKnow.classList.add('d-xl-flex');
+  flbodyWantToKnow.append(dXlFlexWantToKnow);
+
+  accordionSections.forEach((row, index) => {
+    const cells = [...row.children];
+    const sectionTitleCell = cells.find(cell => !cell.querySelector('a') && !cell.querySelector('picture'));
+    const accordionItemsCell = cells.find(cell => cell.children.length > 0 && !cell.querySelector('a') && !cell.querySelector('picture'));
+
+    const card = document.createElement('div');
+    card.classList.add('card');
+    dXlFlexWantToKnow.append(card);
+
+    const cardHeader = document.createElement('div');
+    cardHeader.classList.add('card-header');
+    cardHeader.id = `flheading${index + 1}`;
+    card.append(cardHeader);
+
+    const h2 = document.createElement('h2');
+    h2.classList.add('mb-0');
+    cardHeader.append(h2);
+
+    const button = document.createElement('button');
+    button.classList.add('btn', 'btn-link', 'btn-block', 'text-left');
+    button.type = 'button';
+    button.setAttribute('aria-expanded', index === 0 ? 'true' : 'false');
+    button.setAttribute('aria-controls', `flcollapse${index + 1}`);
+    button.textContent = sectionTitleCell ? sectionTitleCell.textContent.trim() : '';
+    h2.append(button);
+
+    const faDiv = document.createElement('div');
+    faDiv.classList.add('fa', index === 0 ? 'fa-minus' : 'fa-plus');
+    cardHeader.append(faDiv);
+
+    const plusDiv = document.createElement('div');
+    plusDiv.classList.add('plus');
+    plusDiv.textContent = '+';
+    faDiv.append(plusDiv);
+
+    const minusDiv = document.createElement('div');
+    minusDiv.classList.add('minus');
+    minusDiv.textContent = '_';
+    faDiv.append(minusDiv);
+
+    const collapseDiv = document.createElement('div');
+    collapseDiv.id = `flcollapse${index + 1}`;
+    collapseDiv.classList.add('collapse', 'bbbb', `${index + 1}`);
+    if (index === 0) {
+      collapseDiv.classList.add('show');
+    }
+    collapseDiv.setAttribute('aria-labelledby', `flheading${index + 1}`);
+    collapseDiv.setAttribute('data-parent', '#fl-acc-one');
+    card.append(collapseDiv);
+
+    const cardBody = document.createElement('div');
+    cardBody.classList.add('card-body');
+    collapseDiv.append(cardBody);
 
     const ul = document.createElement('ul');
-    const linksDiv = groupCells[1];
-    moveInstrumentation(linksDiv, ul);
-    [...linksDiv.children].forEach((linkRow) => {
-      const li = document.createElement('li');
-      moveInstrumentation(linkRow, li);
-      const link = linkRow.querySelector('a');
-      if (link) {
-        const newLink = document.createElement('a');
-        newLink.href = link.href;
-        newLink.textContent = link.textContent;
-        li.append(newLink);
-      } else {
-        li.append(...linkRow.childNodes);
-      }
-      ul.append(li);
-    });
+    cardBody.append(ul);
 
-    colMd3.append(heading, ul);
-    linkGroupsRow.append(colMd3);
-  });
+    // Accordion Items (links)
+    if (accordionItemsCell) {
+      const accordionItems = [...accordionItemsCell.children];
+      accordionItems.forEach((itemRow) => {
+        const itemCells = [...itemRow.children];
+        const linkFieldCell = itemCells.find(cell => cell.querySelector('a'));
+        const linkLabelCell = itemCells.find(cell => !cell.querySelector('a'));
 
-  colMd7.append(linkGroupsRow);
-  mainRow.append(colMd7);
-
-  const colMd5 = document.createElement('div');
-  colMd5.classList.add('col-md-5');
-
-  const contactSocialRow = document.createElement('div');
-  contactSocialRow.classList.add('row');
-
-  const contactCol = document.createElement('div');
-  contactCol.classList.add('col-md-6');
-  contactCol.id = 'contact-footer';
-
-  const contactHeading = document.createElement('h4');
-  contactHeading.textContent = 'Contact Us';
-  contactCol.append(contactHeading);
-
-  const addressP = document.createElement('p');
-  // Changed from firstElementChild to children[0] for consistency
-  moveInstrumentation(contactAddressRow.children[0], addressP);
-  addressP.append(...contactAddressRow.children[0].childNodes);
-  contactCol.append(addressP);
-
-  const telNoUl = document.createElement('ul');
-  telNoUl.classList.add('tel-no');
-
-  const telLi = document.createElement('li');
-  const telLink = document.createElement('a');
-  // Changed from firstElementChild to children[0] for consistency
-  const telephoneValue = telephoneRow.children[0].textContent.trim();
-  telLink.href = `tel:${telephoneValue.replace(/[^0-9+]/g, '')}`;
-  telLink.textContent = `Tel: ${telephoneValue}`;
-  // Changed from firstElementChild to children[0] for consistency
-  moveInstrumentation(telephoneRow.children[0], telLink);
-  telLi.append(telLink);
-  telNoUl.append(telLi);
-
-  const faxLi = document.createElement('li');
-  // Changed from firstElementChild to children[0] for consistency
-  const faxValue = faxRow.children[0].textContent.trim();
-  faxLi.textContent = `Fax: ${faxValue}`;
-  // Changed from firstElementChild to children[0] for consistency
-  moveInstrumentation(faxRow.children[0], faxLi);
-  telNoUl.append(faxLi);
-  contactCol.append(telNoUl);
-  contactSocialRow.append(contactCol);
-
-  const socialCol = document.createElement('div');
-  socialCol.classList.add('col-md-6');
-
-  const socialInfoDiv = document.createElement('div');
-  socialInfoDiv.classList.add('social-info');
-
-  const followUsHeading = document.createElement('h4');
-  followUsHeading.textContent = 'Follow Us';
-  socialInfoDiv.append(followUsHeading);
-
-  const socialUl = document.createElement('ul');
-
-  footerSocialLinks.forEach((socialRow) => {
-    const socialCells = [...socialRow.children];
-    const li = document.createElement('li');
-    moveInstrumentation(socialRow, li);
-
-    const iconClass = socialCells[0].textContent.trim();
-    const socialLink = socialCells[1].querySelector('a');
-
-    // Updated to use classList.add with the exact class names from the allowlist
-    if (iconClass.includes('fa-facebook-f')) li.classList.add('fb');
-    else if (iconClass.includes('fa-twitter')) li.classList.add('twit');
-    else if (iconClass.includes('fa-youtube')) li.classList.add('you-t');
-    else if (iconClass.includes('fa-instagram')) li.classList.add('insta');
-    else if (iconClass.includes('fa-linkedin-in')) li.classList.add('linked');
-
-    if (socialLink) {
-      const newSocialLink = document.createElement('a');
-      newSocialLink.href = socialLink.href;
-      newSocialLink.target = '_blank';
-      newSocialLink.setAttribute('aria-label', iconClass.replace('fab fa-', ''));
-
-      const icon = document.createElement('i');
-      icon.classList.add('fab', iconClass.replace('fab ', ''));
-      icon.setAttribute('aria-hidden', 'true');
-      newSocialLink.append(icon);
-      li.append(newSocialLink);
+        const li = document.createElement('li');
+        const a = document.createElement('a');
+        const foundLink = linkFieldCell ? linkFieldCell.querySelector('a') : null;
+        if (foundLink) {
+          a.href = foundLink.href;
+        }
+        a.textContent = linkLabelCell ? linkLabelCell.textContent.trim() : '';
+        li.append(a);
+        ul.append(li);
+        moveInstrumentation(itemRow, li);
+      });
     }
-    socialUl.append(li);
+
+    button.addEventListener('click', () => {
+      const isExpanded = button.getAttribute('aria-expanded') === 'true';
+      button.setAttribute('aria-expanded', String(!isExpanded));
+      collapseDiv.classList.toggle('show');
+      faDiv.classList.toggle('fa-minus', !isExpanded);
+      faDiv.classList.toggle('fa-plus', isExpanded);
+    });
+    moveInstrumentation(row, card);
   });
-  socialInfoDiv.append(socialUl);
 
-  const creditP = document.createElement('p');
-  // Changed from firstElementChild to children[0] for consistency
-  moveInstrumentation(footerCreditRow.children[0], creditP);
-  creditP.append(...footerCreditRow.children[0].childNodes);
-  socialInfoDiv.append(creditP);
+  // Social Links
+  const socialLinksCol = document.createElement('div');
+  socialLinksCol.classList.add('col-12', 'col-xl-2');
+  rowAccordion.append(socialLinksCol);
 
-  socialCol.append(socialInfoDiv);
-  contactSocialRow.append(socialCol);
-  colMd5.append(contactSocialRow);
-  mainRow.append(colMd5);
-  container.append(mainRow);
-  footer.append(container);
+  const sociallinksDiv = document.createElement('div');
+  sociallinksDiv.classList.add('sociallinks');
+  socialLinksCol.append(sociallinksDiv);
+
+  const fLinksSocial = document.createElement('div');
+  fLinksSocial.classList.add('f-links');
+  sociallinksDiv.append(fLinksSocial);
+
+  const flheadSocial = document.createElement('div');
+  flheadSocial.classList.add('flhead', 'font-italic');
+  flheadSocial.textContent = "Let's get social";
+  fLinksSocial.append(flheadSocial);
+
+  const socialNavDiv = document.createElement('div');
+  sociallinksDiv.append(socialNavDiv);
+
+  const socialNav = document.createElement('nav');
+  socialNav.setAttribute('role', 'navigation');
+  socialNav.setAttribute('aria-labelledby', 'block-socialmedialinks-menu');
+  socialNav.id = 'block-socialmedialinks';
+  socialNavDiv.append(socialNav);
+
+  const socialH2 = document.createElement('h2');
+  socialH2.classList.add('visually-hidden');
+  socialH2.id = 'block-socialmedialinks-menu';
+  socialH2.textContent = 'social media links';
+  socialNav.append(socialH2);
+
+  socialLinks.forEach((row) => {
+    const cells = [...row.children];
+    const socialLinkCell = cells.find(cell => cell.querySelector('a'));
+    const iconCell = cells.find(cell => cell.querySelector('picture'));
+
+    const a = document.createElement('a');
+    const foundLink = socialLinkCell ? socialLinkCell.querySelector('a') : null;
+    if (foundLink) {
+      a.href = foundLink.href;
+      if (foundLink.textContent.includes('facebook')) a.classList.add('fb');
+      if (foundLink.textContent.includes('twitter')) a.classList.add('tw');
+      if (foundLink.textContent.includes('youtube')) a.classList.add('yt');
+      if (foundLink.textContent.includes('linkedin')) a.classList.add('lin');
+      if (foundLink.textContent.includes('instagram')) a.classList.add('yt'); // Original HTML uses 'yt' for instagram
+      a.target = '_blank';
+    }
+
+    const picture = iconCell ? iconCell.querySelector('picture') : null;
+    if (picture) {
+      const img = picture.querySelector('img');
+      if (img) {
+        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '30' }]);
+        moveInstrumentation(img, optimizedPic.querySelector('img'));
+        a.append(optimizedPic);
+      }
+    }
+    socialNav.append(a);
+    moveInstrumentation(row, a);
+  });
+
+  // App Links
+  const appLinksDiv = document.createElement('div');
+  appLinksDiv.classList.add('sociallinks');
+  socialLinksCol.append(appLinksDiv);
+
+  const appNavDiv = document.createElement('div');
+  appLinksDiv.append(appNavDiv);
+
+  const appNav = document.createElement('nav');
+  appNav.setAttribute('role', 'navigation');
+  appNav.setAttribute('aria-labelledby', 'block-mobileappdownload-menu');
+  appNav.id = 'block-mobileappdownload';
+  appNavDiv.append(appNav);
+
+  const appH2 = document.createElement('h2');
+  appH2.classList.add('visually-hidden');
+  appH2.id = 'block-mobileappdownload-menu';
+  appH2.textContent = 'Mobile App download';
+  appNav.append(appH2);
+
+  const fLinksApp = document.createElement('div');
+  fLinksApp.classList.add('f-links');
+  appNav.append(fLinksApp);
+
+  const flheadApp = document.createElement('div');
+  flheadApp.classList.add('flhead', 'font-italic', 'nowrap');
+  flheadApp.textContent = 'Download mBandhan 2.0 app';
+  fLinksApp.append(flheadApp);
+
+  appLinks.forEach((row) => {
+    const cells = [...row.children];
+    const appLinkCell = cells.find(cell => cell.querySelector('a'));
+    const iconCell = cells.find(cell => cell.querySelector('picture'));
+
+    const a = document.createElement('a');
+    const foundLink = appLinkCell ? appLinkCell.querySelector('a') : null;
+    if (foundLink) {
+      a.href = foundLink.href;
+      a.classList.add('apps');
+      a.target = '_blank';
+    }
+
+    const picture = iconCell ? iconCell.querySelector('picture') : null;
+    if (picture) {
+      const img = picture.querySelector('img');
+      if (img) {
+        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: 'auto' }]);
+        moveInstrumentation(img, optimizedPic.querySelector('img'));
+        a.append(optimizedPic);
+      }
+    }
+    appNav.append(a);
+    moveInstrumentation(row, a);
+  });
+
+  // Footer Dark
+  const footerDark = document.createElement('div');
+  footerDark.classList.add('footer-dark');
+  block.append(footerDark);
+
+  const darkContainerFluid = document.createElement('div');
+  darkContainerFluid.classList.add('container-fluid');
+  footerDark.append(darkContainerFluid);
+
+  const darkRow = document.createElement('div');
+  darkRow.classList.add('row');
+  darkContainerFluid.append(darkRow);
+
+  const darkCol = document.createElement('div');
+  darkCol.classList.add('col-12');
+  darkRow.append(darkCol);
+
+  const flinksDark = document.createElement('div');
+  flinksDark.classList.add('flinks');
+  darkCol.append(flinksDark);
+
+  const flheadTerms = document.createElement('div');
+  flheadTerms.classList.add('flhead');
+  flheadTerms.textContent = 'Terms, Polices & Regulations';
+  flinksDark.append(flheadTerms);
+
+  const flbodyTerms = document.createElement('div');
+  flbodyTerms.classList.add('flbody');
+  flinksDark.append(flbodyTerms);
+
+  const cloudlinks = document.createElement('div');
+  cloudlinks.classList.add('cloudlinks', 'clearfix');
+  flbodyTerms.append(cloudlinks);
+
+  termLinks.forEach((row) => {
+    const cells = [...row.children];
+    const termLinkCell = cells.find(cell => cell.querySelector('a'));
+    const termLinkLabelCell = cells.find(cell => !cell.querySelector('a'));
+
+    const a = document.createElement('a');
+    const foundLink = termLinkCell ? termLinkCell.querySelector('a') : null;
+    if (foundLink) {
+      a.href = foundLink.href;
+      if (foundLink.target) {
+        a.target = foundLink.target;
+      }
+    }
+    a.textContent = termLinkLabelCell ? termLinkLabelCell.textContent.trim() : '';
+    cloudlinks.append(a);
+    moveInstrumentation(row, a);
+  });
+
+  const copyrightsDiv = document.createElement('div');
+  copyrightsDiv.classList.add('copyrights');
+  darkCol.append(copyrightsDiv);
+
+  const p = document.createElement('p');
+  p.innerHTML = `Bandhan Bank is <a href="/iso-certification" rel="noopener noreferrer" target="_blank">ISO27001:2022 &amp; ISO 22301:2019 certified</a><br>
+© 2026&nbsp;Bandhan Bank. All Rights Reserved`;
+  copyrightsDiv.append(p);
 
   block.textContent = '';
-  block.append(footer);
+  block.append(footerLight, footerDark);
+
+  block.querySelectorAll('picture > img').forEach((img) => {
+    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+    moveInstrumentation(img, optimizedPic.querySelector('img'));
+    img.closest('picture').replaceWith(optimizedPic);
+  });
 }

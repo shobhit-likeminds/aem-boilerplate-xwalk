@@ -1,0 +1,44 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  const section = document.createElement('section');
+  section.classList.add('search-body', 'bg-light-skyblue', 'mb-1', 'mbpb-0');
+  moveInstrumentation(block, section);
+
+  const container = document.createElement('div');
+  container.classList.add('container-fluid');
+  section.append(container);
+
+  const row = document.createElement('div');
+  row.classList.add('row');
+  container.append(row);
+
+  const col = document.createElement('div');
+  col.classList.add('col-lg-12', 'col-md-12', 'text-center', 'mb40');
+  row.append(col);
+
+  // Use content detection instead of direct index access
+  const cells = [...block.children].map((child) => child.firstElementChild);
+  const headingCell = cells[0]; // Based on BlockJson, first cell is heading
+  const subheadingCell = cells[1]; // Based on BlockJson, second cell is subheading
+
+  if (headingCell) {
+    const heading = document.createElement('h2');
+    heading.classList.add('heading', 'mt-2', 'h-title');
+    moveInstrumentation(headingCell, heading);
+    heading.textContent = headingCell.textContent.trim();
+    col.append(heading);
+  }
+
+  if (subheadingCell) {
+    const subheading = document.createElement('h4');
+    subheading.classList.add('text-center', 'pt-5');
+    moveInstrumentation(subheadingCell, subheading);
+    subheading.textContent = subheadingCell.textContent.trim();
+    col.append(subheading);
+  }
+
+  block.textContent = '';
+  block.append(section);
+}

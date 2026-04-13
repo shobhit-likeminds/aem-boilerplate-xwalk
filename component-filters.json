@@ -103,7 +103,28 @@
       "faqs-section",
       "footer-main",
       "banner-section",
-      "bolte-sitare-card-list"
+      "bolte-sitare-card-list",
+      "top-band",
+      "header-navigation",
+      "floating-product",
+      "home-slider",
+      "search-body",
+      "saving-act",
+      "personal-crsl-wo-img",
+      "business-banking-carousel",
+      "nri-banking-carousel",
+      "showcases",
+      "modal",
+      "chat-modal",
+      "searchmodal",
+      "backtop",
+      "sliding-popup",
+      "loan-modal",
+      "microloan-modal",
+      "transactionbanking-modal",
+      "small-businesses-modal",
+      "insurance-modal",
+      "exclusive-offers-modal"
     ]
   },
   {
@@ -117,6 +138,9 @@
     "components": [
       "article-card"
     ]
+  },
+  {
+    "id": "backtop"
   },
   {
     "id": "banner-carousel",
@@ -170,6 +194,12 @@
     "id": "brands-inner-banner"
   },
   {
+    "id": "business-banking-carousel",
+    "components": [
+      "carousel-item"
+    ]
+  },
+  {
     "id": "button",
     "components": []
   },
@@ -187,6 +217,12 @@
     "id": "category-carousel",
     "components": [
       "category-carousel-item"
+    ]
+  },
+  {
+    "id": "chat-modal",
+    "components": [
+      "chat-option"
     ]
   },
   {
@@ -283,6 +319,9 @@
     "components": []
   },
   {
+    "id": "exclusive-offers-modal"
+  },
+  {
     "id": "family-health",
     "components": [
       "family-health-item"
@@ -313,6 +352,12 @@
     ]
   },
   {
+    "id": "floating-product",
+    "components": [
+      "product"
+    ]
+  },
+  {
     "id": "footer-brand",
     "components": [
       "footer-link",
@@ -338,8 +383,10 @@
   {
     "id": "footer",
     "components": [
-      "footer-link-group",
-      "footer-social-link"
+      "footer-accordion-section",
+      "footer-social-link",
+      "footer-app-link",
+      "footer-term-link"
     ]
   },
   {
@@ -351,6 +398,15 @@
   {
     "id": "fragment",
     "components": []
+  },
+  {
+    "id": "header-navigation",
+    "components": [
+      "mainnav-item",
+      "hfootlink-item",
+      "sociallink-item",
+      "topaction-item"
+    ]
   },
   {
     "id": "headerSection",
@@ -368,7 +424,19 @@
     "components": []
   },
   {
+    "id": "home-slider",
+    "components": [
+      "home-slider-item"
+    ]
+  },
+  {
     "id": "inner-title"
+  },
+  {
+    "id": "insurance-modal",
+    "components": [
+      "insurance-option"
+    ]
   },
   {
     "id": "itc-club-carousel",
@@ -403,6 +471,12 @@
     ]
   },
   {
+    "id": "loan-modal",
+    "components": [
+      "loan-card"
+    ]
+  },
+  {
     "id": "main-header",
     "components": [
       "nav-item"
@@ -425,6 +499,9 @@
     "components": []
   },
   {
+    "id": "microloan-modal"
+  },
+  {
     "id": "mind-module-list",
     "components": [
       "mind-module"
@@ -444,6 +521,9 @@
     ]
   },
   {
+    "id": "modal"
+  },
+  {
     "id": "navbar",
     "components": [
       "nav-item"
@@ -452,6 +532,12 @@
   {
     "id": "nhsuk-hero",
     "components": []
+  },
+  {
+    "id": "nri-banking-carousel",
+    "components": [
+      "nri-banking-carousel-item"
+    ]
   },
   {
     "id": "page-intro",
@@ -468,6 +554,12 @@
     "components": [
       "social-item",
       "instagram-image"
+    ]
+  },
+  {
+    "id": "personal-crsl-wo-img",
+    "components": [
+      "personal-crsl-item"
     ]
   },
   {
@@ -513,6 +605,12 @@
     ]
   },
   {
+    "id": "saving-act"
+  },
+  {
+    "id": "search-body"
+  },
+  {
     "id": "search-box"
   },
   {
@@ -520,9 +618,18 @@
     "components": []
   },
   {
+    "id": "searchmodal"
+  },
+  {
     "id": "service-directory-links",
     "components": [
       "service-link"
+    ]
+  },
+  {
+    "id": "showcases",
+    "components": [
+      "showcase-item"
     ]
   },
   {
@@ -537,6 +644,15 @@
     "id": "slickcarousel",
     "components": [
       "carousel-item"
+    ]
+  },
+  {
+    "id": "sliding-popup"
+  },
+  {
+    "id": "small-businesses-modal",
+    "components": [
+      "loan-card"
     ]
   },
   {
@@ -581,11 +697,20 @@
     "id": "text"
   },
   {
+    "id": "top-band"
+  },
+  {
     "id": "top-nav",
     "components": [
       "phone",
       "care",
       "social"
+    ]
+  },
+  {
+    "id": "transactionbanking-modal",
+    "components": [
+      "loancard"
     ]
   },
   {

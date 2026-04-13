@@ -1,0 +1,111 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  const homeSliderContainer = document.createElement('section');
+  homeSliderContainer.classList.add('home-slider-container');
+
+  const homeSlider = document.createElement('div');
+  homeSlider.classList.add('home-slider'); // slick-initialized slick-slider slick-dotted will be added by slick.js
+
+  const slickList = document.createElement('div');
+  slickList.classList.add('slick-list', 'draggable');
+
+  const slickTrack = document.createElement('div');
+  slickTrack.classList.add('slick-track');
+
+  [...block.children].forEach((row) => {
+    const cells = [...row.children];
+
+    // Content detection for image cells
+    const desktopImageCell = cells.find(cell => cell.querySelector('picture img[alt="Desktop Image"]'));
+    const mobilePortraitImageCell = cells.find(cell => cell.querySelector('picture img[alt="Mobile Portrait Image"]'));
+    const mobileLandscapeImageCell = cells.find(cell => cell.querySelector('picture img[alt="Mobile Landscape Image"]'));
+    
+    // Explicitly find link and label cells based on their content/position
+    // Assuming slideLinkCell contains an <a> tag and slideLinkLabelCell contains the text content for the link
+    // Based on the BlockJson and structure, slideLink is aem-content (<a>) and slideLinkLabel is text (<a> with text content)
+    const slideLinkCell = cells.find(cell => cell.querySelector('a') && cell.textContent.includes('Slide Link link'));
+    const slideLinkLabelCell = cells.find(cell => cell.querySelector('a') && cell.textContent.includes('https://example.com/slidelinklabel'));
+
+
+    const slickSlide = document.createElement('div');
+    slickSlide.classList.add('slick-slide');
+    moveInstrumentation(row, slickSlide);
+
+    // Removed 'home-slider-item-wrapper' as it was an invented class not in the original HTML
+    // The original HTML structure directly appends the <a> tag to the slick-slide div,
+    // or the <a> tag contains the image containers directly.
+    // Let's adapt to the original HTML structure where the <a> tag directly contains the image divs.
+
+    const linkEl = document.createElement('a');
+    const foundLink = slideLinkCell?.querySelector('a'); // Use optional chaining for safety
+    if (foundLink) {
+      linkEl.href = foundLink.href;
+      if (foundLink.title) linkEl.title = foundLink.title;
+      if (foundLink.target) linkEl.target = foundLink.target;
+    }
+    // Use slideLinkLabelCell for anchor text, not the raw URL from slideLinkCell
+    // The original HTML shows the <a> tag wrapping the image containers, and no separate text label.
+    // So, the linkEl should not have textContent from slideLinkLabelCell.
+    // Instead, the images themselves act as the clickable area.
+    // If a text label is needed *inside* the link but separate from images, it would need a specific div.
+    // Based on original HTML, the <a> tag wraps the image divs.
+    // linkEl.textContent = slideLinkLabelCell ? slideLinkLabelCell.textContent.trim() : ''; // Removed this line
+    
+    if (slideLinkCell) moveInstrumentation(slideLinkCell, linkEl);
+    if (slideLinkLabelCell) moveInstrumentation(slideLinkLabelCell, linkEl); // Move instrumentation from label cell too
+
+    const desktopImageContainer = document.createElement('div');
+    desktopImageContainer.classList.add('slider-image-desktop-container', 'home-slider-item');
+    const desktopPicture = desktopImageCell?.querySelector('picture'); // Use optional chaining
+    if (desktopPicture) {
+      const img = desktopPicture.querySelector('img');
+      if (img) {
+        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '1920' }]);
+        moveInstrumentation(img, optimizedPic.querySelector('img'));
+        desktopImageContainer.append(optimizedPic);
+      }
+    }
+
+    const mobilePortraitImageContainer = document.createElement('div');
+    mobilePortraitImageContainer.classList.add('slider-image-mobile-portrait-container', 'home-slider-item');
+    const mobilePortraitPicture = mobilePortraitImageCell?.querySelector('picture'); // Use optional chaining
+    if (mobilePortraitPicture) {
+      const img = mobilePortraitPicture.querySelector('img');
+      if (img) {
+        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '600' }]);
+        moveInstrumentation(img, optimizedPic.querySelector('img'));
+        mobilePortraitImageContainer.append(optimizedPic);
+      }
+    }
+
+    const mobileLandscapeImageContainer = document.createElement('div');
+    mobileLandscapeImageContainer.classList.add('slider-image-mobile-landscape-container', 'home-slider-item');
+    const mobileLandscapePicture = mobileLandscapeImageCell?.querySelector('picture'); // Use optional chaining
+    if (mobileLandscapePicture) {
+      const img = mobileLandscapePicture.querySelector('img');
+      if (img) {
+        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '600' }]);
+        moveInstrumentation(img, optimizedPic.querySelector('img'));
+        mobileLandscapeImageContainer.append(optimizedPic);
+      }
+    }
+
+    linkEl.append(desktopImageContainer, mobilePortraitImageContainer, mobileLandscapeImageContainer);
+    // slideContentWrapper.append(linkEl); // Removed, as slideContentWrapper is removed
+    slickSlide.append(linkEl); // Append linkEl directly to slickSlide as per original HTML structure
+    slickTrack.append(slickSlide);
+  });
+
+  slickList.append(slickTrack);
+  homeSlider.append(slickList);
+  homeSliderContainer.append(homeSlider);
+
+  block.textContent = '';
+  block.append(homeSliderContainer);
+
+  // No interactive elements found in the original HTML that require addEventListener
+  // beyond what Slick.js would handle. The JS does not attempt to initialize Slick.js,
+  // which is correct for EDS blocks.
+}

@@ -1,0 +1,81 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  const [bodyTextRow, doneCtaLinkRow, doneCtaLinkLabelRow] = [...block.children];
+
+  // Create the main modal structure
+  const modalDialog = document.createElement('div');
+  modalDialog.classList.add('modal-dialog', 'modal-dialog-centered', 'modal-sm', 'transp-modal');
+
+  const modalContent = document.createElement('div');
+  modalContent.classList.add('modal-content');
+
+  const modalBody = document.createElement('div');
+  modalBody.classList.add('modal-body', 'text-center');
+
+  // Body Text
+  const transparentModalBox = document.createElement('div');
+  transparentModalBox.classList.add('transparent-modal-box');
+  moveInstrumentation(bodyTextRow, transparentModalBox);
+  const bodyTextCell = bodyTextRow.firstElementChild; // Corrected: use firstElementChild
+  if (bodyTextCell) {
+    const p = bodyTextCell.querySelector('p');
+    if (p) {
+      p.classList.add('mb-0');
+    }
+    while (bodyTextCell.firstChild) {
+      transparentModalBox.append(bodyTextCell.firstChild);
+    }
+  }
+  modalBody.append(transparentModalBox);
+
+  // Done CTA
+  const ctaContainer = document.createElement('div');
+  const doneCtaButton = document.createElement('button');
+  doneCtaButton.setAttribute('type', 'button');
+  doneCtaButton.classList.add('btn', 'btn-primary');
+
+  // Set button text from doneCtaLinkLabel
+  const doneCtaLinkLabelCell = doneCtaLinkLabelRow.firstElementChild; // Corrected: use firstElementChild
+  if (doneCtaLinkLabelCell) {
+    doneCtaButton.textContent = doneCtaLinkLabelCell.textContent.trim();
+    moveInstrumentation(doneCtaLinkLabelRow, doneCtaButton);
+  }
+
+  // Add click listener to close modal
+  doneCtaButton.addEventListener('click', () => {
+    block.classList.remove('show');
+    block.setAttribute('aria-hidden', 'true');
+    block.removeAttribute('aria-modal');
+    block.style.display = 'none';
+    document.body.classList.remove('modal-open'); // Ensure modal-open is removed
+  });
+
+  ctaContainer.append(doneCtaButton);
+  modalBody.append(ctaContainer);
+
+  modalContent.append(modalBody);
+  modalDialog.append(modalContent);
+
+  // Set block attributes for initial hidden state
+  block.classList.add('modal');
+  block.setAttribute('tabindex', '-1');
+  block.setAttribute('role', 'dialog');
+  block.setAttribute('aria-hidden', 'true');
+  block.style.display = 'none'; // Initially hide the modal
+
+  // Event listener to close modal when clicking outside
+  block.addEventListener('click', (e) => {
+    if (e.target === block) {
+      block.classList.remove('show');
+      block.setAttribute('aria-hidden', 'true');
+      block.removeAttribute('aria-modal');
+      block.style.display = 'none';
+      document.body.classList.remove('modal-open'); // Ensure modal-open is removed
+    }
+  });
+
+  block.textContent = '';
+  block.append(modalDialog);
+}

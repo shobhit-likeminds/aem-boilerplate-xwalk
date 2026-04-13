@@ -1,0 +1,139 @@
+{
+  "definitions": [
+    {
+      "title": "Personal-Crsl-Wo-Img",
+      "id": "personal-crsl-wo-img",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "personal-crsl-wo-img",
+              "model": "personal-crsl-wo-img",
+              "name": "Personal-Crsl-Wo-Img"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Personal-Crsl-Item",
+      "id": "personal-crsl-item",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "personal-crsl-item",
+              "name": "Personal-Crsl-Item"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "personal-crsl-wo-img",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Background Image",
+          "name": "backgroundImage",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Title",
+          "name": "title",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Heading",
+          "name": "heading",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Description",
+          "name": "description",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "View All Link",
+          "name": "viewAllLink",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "View All Link Label",
+          "name": "viewAllLinkLabel",
+          "valueType": "string"
+        },
+        {
+          "component": "container",
+          "item": "personal-crsl-item",
+          "label": "Carousel Items",
+          "name": "carouselItems"
+        }
+      ]
+    },
+    {
+      "id": "personal-crsl-item",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Icon",
+          "name": "icon",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Title",
+          "name": "title",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Description",
+          "name": "description",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Primary CTA Link",
+          "name": "primaryCtaLink",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Primary CTA Link Label",
+          "name": "primaryCtaLinkLabel",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Secondary CTA Link",
+          "name": "secondaryCtaLink",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Secondary CTA Link Label",
+          "name": "secondaryCtaLinkLabel",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "personal-crsl-wo-img",
+      "components": [
+        "personal-crsl-item"
+      ]
+    }
+  ]
+}

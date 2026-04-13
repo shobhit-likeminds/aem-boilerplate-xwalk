@@ -1,0 +1,226 @@
+{
+  "definitions": [
+    {
+      "title": "Header-Navigation",
+      "id": "header-navigation",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "header-navigation",
+              "model": "header-navigation",
+              "name": "Header-Navigation"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Mainnav-Item",
+      "id": "mainnav-item",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "mainnav-item",
+              "name": "Mainnav-Item"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Hfootlink-Item",
+      "id": "hfootlink-item",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "hfootlink-item",
+              "name": "Hfootlink-Item"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Sociallink-Item",
+      "id": "sociallink-item",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "sociallink-item",
+              "name": "Sociallink-Item"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Topaction-Item",
+      "id": "topaction-item",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "topaction-item",
+              "name": "Topaction-Item"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "header-navigation",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Logo Light",
+          "name": "logoLight",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Logo Dark",
+          "name": "logoDark",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Copyright",
+          "name": "copyright",
+          "valueType": "string"
+        },
+        {
+          "component": "container",
+          "item": "mainnav-item",
+          "label": "Main Navigation Items",
+          "name": "mainnav"
+        },
+        {
+          "component": "container",
+          "item": "hfootlink-item",
+          "label": "Footer Links",
+          "name": "hfootlinks"
+        },
+        {
+          "component": "container",
+          "item": "sociallink-item",
+          "label": "Social Links",
+          "name": "sociallinks"
+        },
+        {
+          "component": "container",
+          "item": "topaction-item",
+          "label": "Top Actions",
+          "name": "topactions"
+        }
+      ]
+    },
+    {
+      "id": "mainnav-item",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Icon",
+          "name": "icon",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Link",
+          "name": "link",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Link Label",
+          "name": "linkLabel",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "hfootlink-item",
+      "fields": [
+        {
+          "component": "aem-content",
+          "label": "Link",
+          "name": "link",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Link Label",
+          "name": "linkLabel",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "sociallink-item",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Icon",
+          "name": "icon",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Link",
+          "name": "link",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Link Label",
+          "name": "linkLabel",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "topaction-item",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Icon",
+          "name": "icon",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Link",
+          "name": "link",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Link Label",
+          "name": "linkLabel",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "header-navigation",
+      "components": [
+        "mainnav-item",
+        "hfootlink-item",
+        "sociallink-item",
+        "topaction-item"
+      ]
+    }
+  ]
+}

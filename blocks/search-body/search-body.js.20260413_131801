@@ -1,0 +1,81 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  // Destructuring block.children is fine here as the BlockJson defines exactly 3 root fields.
+  const [offersLinkRow, offersLinkLabelRow, offersLinkImageRow] = [...block.children];
+
+  const section = document.createElement('section');
+  section.classList.add('search-body', 'bg-light-gray', 'pd75');
+  moveInstrumentation(block, section);
+
+  const container = document.createElement('div');
+  container.classList.add('container-fluid');
+  section.append(container);
+
+  const mainRow = document.createElement('div');
+  mainRow.classList.add('row');
+  container.append(mainRow);
+
+  const offerCol = document.createElement('div');
+  offerCol.classList.add('col-md-12', 'offer');
+  mainRow.append(offerCol);
+
+  const slickerDiv = document.createElement('div');
+  slickerDiv.classList.add('row', 'slicker-four', 'slick-initialized', 'slick-slider');
+  offerCol.append(slickerDiv);
+
+  const slickList = document.createElement('div');
+  slickList.classList.add('slick-list', 'draggable');
+  slickerDiv.append(slickList);
+
+  const slickTrack = document.createElement('div');
+  slickTrack.classList.add('slick-track');
+  slickList.append(slickTrack);
+
+  const textCenterCol = document.createElement('div');
+  textCenterCol.classList.add('col-md-12', 'text-center', 'mt-3');
+  mainRow.append(textCenterCol);
+
+  const viewallDiv = document.createElement('div');
+  viewallDiv.classList.add('viewall', 'offer');
+  textCenterCol.append(viewallDiv);
+
+  const offersLink = document.createElement('a');
+  // Use content detection for offersLinkRow
+  const originalLink = offersLinkRow.querySelector('div > a'); // Correctly target the 'a' tag within the div
+  if (originalLink) {
+    offersLink.href = originalLink.href;
+    moveInstrumentation(offersLinkRow, offersLink);
+  }
+  viewallDiv.append(offersLink);
+
+  const spanLabel = document.createElement('span');
+  spanLabel.classList.add('d-inline-block', 'align-middle');
+  // Use content detection for offersLinkLabelRow
+  const labelTextElement = offersLinkLabelRow.querySelector('div'); // Get the div containing the text
+  if (labelTextElement) {
+    spanLabel.textContent = labelTextElement.textContent.trim();
+    moveInstrumentation(offersLinkLabelRow, spanLabel);
+  }
+  offersLink.append(spanLabel);
+
+  const spanImage = document.createElement('span');
+  spanImage.classList.add('d-inline-block', 'align-middle');
+  offersLink.append(spanImage);
+
+  // Use content detection for offersLinkImageRow
+  const picture = offersLinkImageRow.querySelector('div > picture'); // Correctly target the 'picture' tag within the div
+  if (picture) {
+    const img = picture.querySelector('img');
+    if (img) {
+      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+      moveInstrumentation(img, optimizedPic.querySelector('img'));
+      spanImage.append(optimizedPic);
+    }
+    moveInstrumentation(offersLinkImageRow, spanImage);
+  }
+
+  block.textContent = '';
+  block.append(section);
+}
