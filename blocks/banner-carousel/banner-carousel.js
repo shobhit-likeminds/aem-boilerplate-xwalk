@@ -20,10 +20,23 @@ export default function decorate(block) {
     // Indicators
     const indicator = document.createElement('li');
     indicator.setAttribute('data-target', '#carouselExampleSlidesOnly');
-    indicator.setAttribute('data-slide-to', index.toString());
+    indicator.setAttribute('data-slide-to', index);
     if (index === 0) {
       indicator.classList.add('active');
     }
+    indicator.addEventListener('click', (e) => {
+      e.preventDefault();
+      const slideTo = parseInt(e.target.getAttribute('data-slide-to'), 10);
+      const currentActiveItem = carouselInner.querySelector('.carousel-item.active');
+      const currentActiveIndicator = carouselIndicators.querySelector('.active');
+      const targetItem = carouselInner.children[slideTo];
+      const targetIndicator = carouselIndicators.children[slideTo];
+
+      if (currentActiveItem) currentActiveItem.classList.remove('active');
+      if (currentActiveIndicator) currentActiveIndicator.classList.remove('active');
+      if (targetItem) targetItem.classList.add('active');
+      if (targetIndicator) targetIndicator.classList.add('active');
+    });
     carouselIndicators.append(indicator);
 
     // Carousel Item
@@ -34,32 +47,28 @@ export default function decorate(block) {
     }
     moveInstrumentation(row, carouselItem);
 
-    // Use content detection instead of index access for robustness
+    // Use content detection instead of index access
     const cells = [...row.children];
-    const desktopImageCell = cells.find((cell) => cell.querySelector('picture') && !cell.nextElementSibling?.querySelector('picture'));
-    const mobileImageCell = cells.find((cell) => cell.querySelector('picture') && cell.previousElementSibling?.querySelector('picture'));
-    const headingCell = cells.find((cell) => cell.querySelector('h1') || (cell.textContent.trim() && !cell.querySelector('picture') && !cell.querySelector('a')));
-    const descriptionCell = cells.find((cell) => cell.querySelector('p') && !cell.querySelector('picture') && !cell.querySelector('a'));
-    const ctaLinkCell = cells.find((cell) => cell.querySelector('a') && cell.querySelector('a').href && !cell.nextElementSibling?.querySelector('a'));
-    const ctaLinkLabelCell = cells.find((cell) => cell.querySelector('a') && cell.querySelector('a').href && cell.previousElementSibling?.querySelector('a'));
-
+    const desktopImageCell = cells.find(cell => cell.querySelector('picture') && cell.textContent.trim() === ''); // Assuming desktop image is the first picture cell
+    const mobileImageCell = cells.find(cell => cell.querySelector('picture') && cell !== desktopImageCell); // Assuming mobile image is the second picture cell
+    const headingCell = cells.find(cell => cell.querySelector('h1') || (cell.textContent.trim() !== '' && !cell.querySelector('picture') && !cell.querySelector('a') && !cell.querySelector('p'))); // Assuming heading is a text cell, potentially with h1
+    const descriptionCell = cells.find(cell => cell.querySelector('p') && cell !== headingCell); // Assuming description is a richtext cell with p tags
+    const ctaLinkCell = cells.find(cell => cell.querySelector('a') && cell.textContent.trim() !== '' && cell.children.length === 1); // Assuming CTA link is an anchor cell
+    const ctaLinkLabelCell = cells.find(cell => cell.textContent.trim() !== '' && !cell.querySelector('a') && !cell.querySelector('picture') && cell !== headingCell && cell !== descriptionCell); // Assuming CTA label is a text cell without other elements
 
     // Desktop Image
     if (desktopImageCell) {
       const desktopPicture = desktopImageCell.querySelector('picture');
       if (desktopPicture) {
         const desktopImg = desktopPicture.querySelector('img');
-        const optimizedDesktopPic = createOptimizedPicture(desktopImg.src, desktopImg.alt, index === 0, [{ width: '2000' }]);
-        optimizedDesktopPic.querySelector('img').classList.add('d-none', 'd-sm-block', 'w-100', 'desktop-image');
-        if (index === 0) {
-          optimizedDesktopPic.querySelector('img').setAttribute('loading', 'eager');
-          optimizedDesktopPic.querySelector('img').setAttribute('fetchpriority', 'high');
-        } else {
-          optimizedDesktopPic.querySelector('img').setAttribute('loading', 'lazy');
-          optimizedDesktopPic.querySelector('img').setAttribute('fetchpriority', 'low');
+        if (desktopImg) {
+          const optimizedPic = createOptimizedPicture(desktopImg.src, desktopImg.alt, index === 0, [{ width: '2000' }]);
+          optimizedPic.classList.add('d-none', 'd-sm-block', 'w-100', 'desktop-image');
+          optimizedPic.querySelector('img').setAttribute('loading', index === 0 ? 'eager' : 'lazy');
+          optimizedPic.querySelector('img').setAttribute('fetchpriority', index === 0 ? 'high' : 'low');
+          moveInstrumentation(desktopImg, optimizedPic.querySelector('img'));
+          carouselItem.append(optimizedPic);
         }
-        moveInstrumentation(desktopImageCell, optimizedDesktopPic);
-        carouselItem.append(optimizedDesktopPic);
       }
     }
 
@@ -68,62 +77,50 @@ export default function decorate(block) {
       const mobilePicture = mobileImageCell.querySelector('picture');
       if (mobilePicture) {
         const mobileImg = mobilePicture.querySelector('img');
-        const optimizedMobilePic = createOptimizedPicture(mobileImg.src, mobileImg.alt, index === 0, [{ width: '750' }]);
-        optimizedMobilePic.querySelector('img').classList.add('d-block', 'd-sm-none', 'w-100', 'mobile-image');
-        if (index === 0) {
-          optimizedMobilePic.querySelector('img').setAttribute('loading', 'eager');
-          optimizedMobilePic.querySelector('img').setAttribute('fetchpriority', 'high');
-        } else {
-          optimizedMobilePic.querySelector('img').setAttribute('loading', 'lazy');
-          optimizedMobilePic.querySelector('img').setAttribute('fetchpriority', 'low');
+        if (mobileImg) {
+          const optimizedPic = createOptimizedPicture(mobileImg.src, mobileImg.alt, index === 0, [{ width: '750' }]);
+          optimizedPic.classList.add('d-block', 'd-sm-none', 'w-100', 'mobile-image');
+          optimizedPic.querySelector('img').setAttribute('loading', index === 0 ? 'eager' : 'lazy');
+          optimizedPic.querySelector('img').setAttribute('fetchpriority', index === 0 ? 'high' : 'low');
+          moveInstrumentation(mobileImg, optimizedPic.querySelector('img'));
+          carouselItem.append(optimizedPic);
         }
-        moveInstrumentation(mobileImageCell, optimizedMobilePic);
-        carouselItem.append(optimizedMobilePic);
       }
     }
 
-    // Content Wrapper
     const bannerContentWrapper = document.createElement('div');
     bannerContentWrapper.classList.add('banner-content-wrapper', 'position-absolute');
 
     // Heading
-    if (headingCell && headingCell.textContent.trim()) {
-      const heading = document.createElement('h1');
-      heading.classList.add('koi-carousel-heading', 'text-sm-left');
-      moveInstrumentation(headingCell, heading);
-      heading.textContent = headingCell.textContent.trim();
-      bannerContentWrapper.append(heading);
+    if (headingCell) {
+      const h1 = document.createElement('h1');
+      h1.classList.add('koi-carousel-heading', 'text-sm-left');
+      moveInstrumentation(headingCell, h1);
+      h1.innerHTML = headingCell.innerHTML;
+      bannerContentWrapper.append(h1);
     }
 
     // Description
-    if (descriptionCell && descriptionCell.textContent.trim()) {
-      const description = document.createElement('div');
-      description.classList.add('koi-carousel-description');
-      moveInstrumentation(descriptionCell, description);
-      while (descriptionCell.firstChild) {
-        description.append(descriptionCell.firstChild);
-      }
-      bannerContentWrapper.append(description);
+    if (descriptionCell) {
+      const descriptionDiv = document.createElement('div');
+      descriptionDiv.classList.add('koi-carousel-description');
+      moveInstrumentation(descriptionCell, descriptionDiv);
+      descriptionDiv.innerHTML = descriptionCell.innerHTML;
+      bannerContentWrapper.append(descriptionDiv);
     }
 
     // CTA Link
-    if (ctaLinkCell) {
-      const ctaLinkFound = ctaLinkCell.querySelector('a');
-      if (ctaLinkFound) {
-        const cta = document.createElement('a');
-        cta.classList.add('koi-carousel-cta', 'btn', 'btn-primary', 'btn-start-now');
-        cta.href = ctaLinkFound.href;
-        cta.alt = (ctaLinkLabelCell && ctaLinkLabelCell.textContent.trim()) || ctaLinkFound.textContent.trim();
-        cta.target = '_blank'; // Assuming all CTAs open in new tab from original HTML
-        cta.textContent = (ctaLinkLabelCell && ctaLinkLabelCell.textContent.trim()) || ctaLinkFound.textContent.trim();
+    if (ctaLinkCell || ctaLinkLabelCell) {
+      const ctaLink = ctaLinkCell ? ctaLinkCell.querySelector('a') : null;
+      const ctaLabel = ctaLinkLabelCell ? ctaLinkLabelCell.textContent.trim() : (ctaLink ? ctaLink.textContent.trim() : '');
 
-        const screenReaderSpan = document.createElement('span');
-        screenReaderSpan.classList.add('cmp-link__screen-reader-only');
-        screenReaderSpan.textContent = 'opens in a new tab';
-        cta.append(screenReaderSpan);
-
-        moveInstrumentation(ctaLinkCell, cta);
-        bannerContentWrapper.append(cta);
+      if (ctaLink) {
+        const anchor = document.createElement('a');
+        anchor.href = ctaLink.href;
+        anchor.classList.add('koi-carousel-cta', 'btn', 'btn-primary', 'btn-start-now');
+        anchor.textContent = ctaLabel;
+        moveInstrumentation(ctaLinkCell, anchor);
+        bannerContentWrapper.append(anchor);
       }
     }
 
@@ -133,14 +130,29 @@ export default function decorate(block) {
 
   carouselWrapper.append(carouselIndicators, carouselInner);
 
-  // Next and Previous Buttons
+  // Next and previous buttons
   const nextCarouselBtn = document.createElement('div');
   nextCarouselBtn.classList.add('next-carousel-btn');
 
-  const prevButton = document.createElement('a');
-  prevButton.classList.add('carousel-control-prev');
-  prevButton.href = '#carouselExampleSlidesOnly';
-  prevButton.setAttribute('role', 'button');
+  const prevControl = document.createElement('a');
+  prevControl.classList.add('carousel-control-prev');
+  prevControl.href = '#carouselExampleSlidesOnly';
+  prevControl.setAttribute('role', 'button');
+  prevControl.addEventListener('click', (e) => {
+    e.preventDefault();
+    const activeItem = carouselInner.querySelector('.carousel-item.active');
+    const prevItem = activeItem.previousElementSibling || carouselInner.lastElementChild;
+    if (activeItem && prevItem) {
+      activeItem.classList.remove('active');
+      prevItem.classList.add('active');
+      const activeIndicator = carouselIndicators.querySelector('.active');
+      const prevIndicator = activeIndicator.previousElementSibling || carouselIndicators.lastElementChild;
+      if (activeIndicator && prevIndicator) {
+        activeIndicator.classList.remove('active');
+        prevIndicator.classList.add('active');
+      }
+    }
+  });
 
   const prevIcon = document.createElement('span');
   prevIcon.classList.add('carousel-control-prev-icon');
@@ -148,12 +160,27 @@ export default function decorate(block) {
   const prevSrOnly = document.createElement('span');
   prevSrOnly.classList.add('sr-only');
   prevSrOnly.textContent = 'Previous';
-  prevButton.append(prevIcon, prevSrOnly);
+  prevControl.append(prevIcon, prevSrOnly);
 
-  const nextButton = document.createElement('a');
-  nextButton.classList.add('carousel-control-next');
-  nextButton.href = '#carouselExampleSlidesOnly';
-  nextButton.setAttribute('role', 'button');
+  const nextControl = document.createElement('a');
+  nextControl.classList.add('carousel-control-next');
+  nextControl.href = '#carouselExampleSlidesOnly';
+  nextControl.setAttribute('role', 'button');
+  nextControl.addEventListener('click', (e) => {
+    e.preventDefault();
+    const activeItem = carouselInner.querySelector('.carousel-item.active');
+    const nextItem = activeItem.nextElementSibling || carouselInner.firstElementChild;
+    if (activeItem && nextItem) {
+      activeItem.classList.remove('active');
+      nextItem.classList.add('active');
+      const activeIndicator = carouselIndicators.querySelector('.active');
+      const nextIndicator = activeIndicator.nextElementSibling || carouselIndicators.firstElementChild;
+      if (activeIndicator && nextIndicator) {
+        activeIndicator.classList.remove('active');
+        nextIndicator.classList.add('active');
+      }
+    }
+  });
 
   const nextIcon = document.createElement('span');
   nextIcon.classList.add('carousel-control-next-icon');
@@ -161,47 +188,13 @@ export default function decorate(block) {
   const nextSrOnly = document.createElement('span');
   nextSrOnly.classList.add('sr-only');
   nextSrOnly.textContent = 'Next';
-  nextButton.append(nextIcon, nextSrOnly);
+  nextControl.append(nextIcon, nextSrOnly);
 
-  nextCarouselBtn.append(prevButton, nextButton);
+  nextCarouselBtn.append(prevControl, nextControl);
   carouselWrapper.append(nextCarouselBtn);
 
   section.append(carouselWrapper);
+
   block.textContent = '';
   block.append(section);
-
-  // Implement carousel functionality manually
-  const carouselItems = carouselInner.querySelectorAll('.carousel-item');
-  let currentSlide = 0;
-
-  function showSlide(index) {
-    carouselItems.forEach((item, i) => {
-      item.classList.remove('active');
-      carouselIndicators.children[i].classList.remove('active');
-      if (i === index) {
-        item.classList.add('active');
-        carouselIndicators.children[i].classList.add('active');
-      }
-    });
-  }
-
-  prevButton.addEventListener('click', (e) => {
-    e.preventDefault();
-    currentSlide = (currentSlide - 1 + carouselItems.length) % carouselItems.length;
-    showSlide(currentSlide);
-  });
-
-  nextButton.addEventListener('click', (e) => {
-    e.preventDefault();
-    currentSlide = (currentSlide + 1) % carouselItems.length;
-    showSlide(currentSlide);
-  });
-
-  carouselIndicators.querySelectorAll('li').forEach((indicator, index) => {
-    indicator.addEventListener('click', (e) => {
-      e.preventDefault();
-      currentSlide = index;
-      showSlide(currentSlide);
-    });
-  });
 }

@@ -269,18 +269,10 @@
     ]
   },
   {
-    "id": "banner-carousel",
-    "fields": [
-      {
-        "component": "container",
-        "item": "banner-carousel-slide",
-        "label": "Slides",
-        "name": "slides"
-      }
-    ]
+    "id": "banner-carousel"
   },
   {
-    "id": "banner-carousel-slide",
+    "id": "carousel-slide",
     "fields": [
       {
         "component": "reference",
@@ -964,6 +956,17 @@
         "component": "text",
         "label": "Title",
         "name": "title",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "cmp-text",
+    "fields": [
+      {
+        "component": "richtext",
+        "label": "Text",
+        "name": "text",
         "valueType": "string"
       }
     ]
@@ -3023,8 +3026,8 @@
       {
         "component": "container",
         "item": "carousel-item",
-        "label": "Slides",
-        "name": "slides"
+        "label": "Carousel Items",
+        "name": "carouselItems"
       }
     ]
   },
@@ -3035,12 +3038,6 @@
         "component": "reference",
         "label": "Image",
         "name": "image",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Image Alt Text",
-        "name": "alt",
         "valueType": "string"
       },
       {
@@ -3062,8 +3059,8 @@
     "fields": [
       {
         "component": "reference",
-        "label": "ITC Logo Image",
-        "name": "itcLogoImage",
+        "label": "ITC Logo",
+        "name": "itcLogo",
         "valueType": "string"
       },
       {
@@ -3080,14 +3077,8 @@
       },
       {
         "component": "reference",
-        "label": "Fssai Logo Image",
-        "name": "fssaiLogoImage",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Grievance Officer Title",
-        "name": "grievanceOfficerTitle",
+        "label": "FSSAI Logo",
+        "name": "fssaiLogo",
         "valueType": "string"
       },
       {
@@ -3104,14 +3095,14 @@
       },
       {
         "component": "text",
-        "label": "Grievance Officer Hours",
-        "name": "grievanceOfficerHours",
+        "label": "Grievance Officer Timing",
+        "name": "grievanceOfficerTiming",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Copyright Text",
-        "name": "copyrightText",
+        "label": "Copyright",
+        "name": "copyright",
         "valueType": "string"
       },
       {
@@ -3125,6 +3116,12 @@
         "item": "social-link",
         "label": "Social Links",
         "name": "socialLinks"
+      },
+      {
+        "component": "container",
+        "item": "footer-secondary-link",
+        "label": "Footer Secondary Links",
+        "name": "footerSecondaryLinks"
       }
     ]
   },
@@ -3162,8 +3159,25 @@
       },
       {
         "component": "reference",
-        "label": "Icon Image",
-        "name": "iconImage",
+        "label": "Icon",
+        "name": "icon",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "footer-secondary-link",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Secondary Link",
+        "name": "secondaryLink",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Secondary Link Label",
+        "name": "secondaryLinkLabel",
         "valueType": "string"
       }
     ]
@@ -3190,28 +3204,10 @@
         "valueType": "string"
       },
       {
-        "component": "reference",
-        "label": "Secondary Logo Image",
-        "name": "secondaryLogoImage",
-        "valueType": "string"
-      },
-      {
-        "component": "aem-content",
-        "label": "Secondary Logo Link",
-        "name": "secondaryLogoLink",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Secondary Logo Link Label",
-        "name": "secondaryLogoLinkLabel",
-        "valueType": "string"
-      },
-      {
         "component": "container",
-        "item": "navigation-link",
-        "label": "Navigation Links",
-        "name": "navigationLinks"
+        "item": "navigation-item",
+        "label": "Navigation Items",
+        "name": "navigationItems"
       },
       {
         "component": "container",
@@ -3222,7 +3218,7 @@
     ]
   },
   {
-    "id": "navigation-link",
+    "id": "navigation-item",
     "fields": [
       {
         "component": "aem-content",
@@ -3255,14 +3251,14 @@
       },
       {
         "component": "aem-content",
-        "label": "Country URL",
-        "name": "countryUrl",
+        "label": "Country Link",
+        "name": "countryLink",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Country URL Label",
-        "name": "countryUrlLabel",
+        "label": "Country Link Label",
+        "name": "countryLinkLabel",
         "valueType": "string"
       }
     ]
@@ -3272,8 +3268,8 @@
     "fields": [
       {
         "component": "reference",
-        "label": "Main Image",
-        "name": "mainImage",
+        "label": "Left Image",
+        "name": "leftImage",
         "valueType": "string"
       },
       {
@@ -3308,14 +3304,14 @@
       },
       {
         "component": "container",
-        "item": "itc-how-shift-item",
-        "label": "Items",
-        "name": "items"
+        "item": "why-shift-item",
+        "label": "Why Shift Items",
+        "name": "whyShiftItems"
       }
     ]
   },
   {
-    "id": "itc-how-shift-item",
+    "id": "why-shift-item",
     "fields": [
       {
         "component": "reference",
@@ -4596,18 +4592,6 @@
         "valueType": "string"
       },
       {
-        "component": "text",
-        "label": "Headline",
-        "name": "headline",
-        "valueType": "string"
-      },
-      {
-        "component": "richtext",
-        "label": "Description",
-        "name": "description",
-        "valueType": "string"
-      },
-      {
         "component": "aem-content",
         "label": "CTA Link",
         "name": "ctaLink",
@@ -4617,6 +4601,18 @@
         "component": "text",
         "label": "CTA Label",
         "name": "ctaLinkLabel",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Title",
+        "name": "title",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Description",
+        "name": "description",
         "valueType": "string"
       }
     ]

@@ -1,7 +1,7 @@
 {
   "definitions": [
     {
-      "title": "Itc-How-Shift",
+      "title": "ITC-How-Shift",
       "id": "itc-how-shift",
       "plugins": {
         "xwalk": {
@@ -10,22 +10,22 @@
             "template": {
               "filter": "itc-how-shift",
               "model": "itc-how-shift",
-              "name": "Itc-How-Shift"
+              "name": "ITC-How-Shift"
             }
           }
         }
       }
     },
     {
-      "title": "Why-Shift-Item",
-      "id": "why-shift-item",
+      "title": "ITC-How-Shift-Item",
+      "id": "itc-how-shift-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "why-shift-item",
-              "name": "Why-Shift-Item"
+              "model": "itc-how-shift-item",
+              "name": "ITC-How-Shift-Item"
             }
           }
         }
@@ -38,8 +38,8 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Left Image",
-          "name": "leftImage",
+          "label": "Main Image",
+          "name": "mainImage",
           "valueType": "string"
         },
         {
@@ -74,14 +74,14 @@
         },
         {
           "component": "container",
-          "item": "why-shift-item",
-          "label": "Why Shift Items",
-          "name": "whyShiftItems"
+          "item": "itc-how-shift-item",
+          "label": "Items",
+          "name": "items"
         }
       ]
     },
     {
-      "id": "why-shift-item",
+      "id": "itc-how-shift-item",
       "fields": [
         {
           "component": "reference",
@@ -108,7 +108,7 @@
     {
       "id": "itc-how-shift",
       "components": [
-        "why-shift-item"
+        "itc-how-shift-item"
       ]
     }
   ]

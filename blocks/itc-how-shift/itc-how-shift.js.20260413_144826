@@ -3,64 +3,70 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
   const [
-    leftImageRow,
+    mainImageRow,
     headingRow,
     subheadingRow,
     descriptionRow,
     ctaLinkRow,
     ctaLinkLabelRow,
-    ...whyShiftItemRows
+    ...itemRows
   ] = [...block.children];
 
-  block.classList.add('itc-how-shift');
   block.textContent = '';
+  block.classList.add('itc-how-shift');
 
-  // Left Image
+  // Left Image Div
   const leftImageDiv = document.createElement('div');
   leftImageDiv.classList.add('left-image-div');
-  moveInstrumentation(leftImageRow, leftImageDiv);
-  const leftPicture = leftImageRow.querySelector('picture');
-  if (leftPicture) {
-    const img = leftPicture.querySelector('img');
+  moveInstrumentation(mainImageRow, leftImageDiv);
+  const mainImagePicture = mainImageRow.querySelector('picture');
+  if (mainImagePicture) {
+    const img = mainImagePicture.querySelector('img');
     const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
     moveInstrumentation(img, optimizedPic.querySelector('img'));
     leftImageDiv.append(optimizedPic);
   }
   block.append(leftImageDiv);
 
-  const containerDiv = document.createElement('div');
-  containerDiv.classList.add('container', 'read-more');
+  // Container Read More
+  const containerReadMore = document.createElement('div');
+  containerReadMore.classList.add('container', 'read-more');
 
   // Heading
   const heading = document.createElement('h1');
   heading.classList.add('text-center', 'pb-4', 'rs-heading');
   moveInstrumentation(headingRow, heading);
   heading.textContent = headingRow.textContent.trim();
-  containerDiv.append(heading);
+  containerReadMore.append(heading);
 
   // Subheading and Description
-  const readMoreTextDiv = document.createElement('div');
-  readMoreTextDiv.classList.add('read-more-text');
-  moveInstrumentation(subheadingRow, readMoreTextDiv);
-  while (subheadingRow.firstChild) readMoreTextDiv.append(subheadingRow.firstChild);
-  moveInstrumentation(descriptionRow, readMoreTextDiv);
-  while (descriptionRow.firstChild) readMoreTextDiv.append(descriptionRow.firstChild);
-  containerDiv.append(readMoreTextDiv);
+  const readMoreText = document.createElement('div');
+  readMoreText.classList.add('read-more-text');
+  moveInstrumentation(subheadingRow, readMoreText);
+  while (subheadingRow.firstChild) readMoreText.append(subheadingRow.firstChild);
+  moveInstrumentation(descriptionRow, readMoreText);
+  while (descriptionRow.firstChild) readMoreText.append(descriptionRow.firstChild);
+  containerReadMore.append(readMoreText);
 
   const readMoreSpan = document.createElement('span');
   readMoreSpan.classList.add('readMore');
-  containerDiv.append(readMoreSpan);
+  containerReadMore.append(readMoreSpan);
 
-  // Why Shift Items
+  // Interactivity: Read More toggle
+  readMoreSpan.addEventListener('click', () => {
+    containerReadMore.classList.toggle('expanded');
+  });
+
+  // Items Wrapper
   const whyShiftWrapper = document.createElement('div');
   whyShiftWrapper.classList.add('d-flex', 'justify-content-evenly', 'flex-wrap', 'why-shift-wrapper');
 
-  whyShiftItemRows.forEach((row) => {
-    // Use content detection instead of index access
+  itemRows.forEach((row) => {
     const cells = [...row.children];
+    // Content detection for item cells
     const imageCell = cells.find(cell => cell.querySelector('picture'));
-    const linkCell = cells.find(cell => cell.querySelector('a') && cell.querySelector('a').href.startsWith('https://')); // Link cell contains an actual link
-    const linkLabelCell = cells.find(cell => cell.querySelector('a') && !cell.querySelector('a').href.startsWith('https://')); // Link label cell contains text that might be a link but is used as label
+    const linkCell = cells.find(cell => cell.querySelector('a') && cell.textContent.trim() !== '');
+    const linkLabelCell = cells.find(cell => !cell.querySelector('picture') && cell.textContent.trim() !== '' && cell !== linkCell);
 
     const itemDiv = document.createElement('div');
     itemDiv.classList.add('mb-md-0', 'mb-3', 'text-center');
@@ -83,65 +89,64 @@ export default function decorate(block) {
     const anchor = document.createElement('a');
     anchor.classList.add('text-center', 'd-block', 'text-capitalize', 'pt-2', 'image-label');
     if (linkCell) {
-      moveInstrumentation(linkCell, anchor);
       const foundLink = linkCell.querySelector('a');
       if (foundLink) {
         anchor.href = foundLink.href;
-        // Original HTML has alt attribute on <a>, copy it if present
-        if (foundLink.alt) anchor.alt = foundLink.alt;
+        anchor.alt = linkLabelCell ? linkLabelCell.textContent.trim() : ''; // Use linkLabelCell for alt
+        anchor.textContent = linkLabelCell ? linkLabelCell.textContent.trim() : ''; // Use linkLabelCell for text content
       }
+      moveInstrumentation(linkCell, anchor);
     }
-    // Set textContent from linkLabelCell
-    anchor.textContent = linkLabelCell ? linkLabelCell.textContent.trim() : '';
-
+    if (linkLabelCell) {
+      moveInstrumentation(linkLabelCell, anchor);
+    }
     itemDiv.append(anchor);
+
     whyShiftWrapper.append(itemDiv);
   });
-  containerDiv.append(whyShiftWrapper);
+
+  containerReadMore.append(whyShiftWrapper);
 
   const dMdNoneDiv = document.createElement('div');
   dMdNoneDiv.classList.add('d-md-none', 'd-block');
-  containerDiv.append(dMdNoneDiv);
+  containerReadMore.append(dMdNoneDiv);
 
-  // CTA Link
+  // CTA Button
   const buttonDiv = document.createElement('div');
   buttonDiv.classList.add('button', 'how-shift-button');
-  moveInstrumentation(ctaLinkRow, buttonDiv);
 
   const ctaAnchor = document.createElement('a');
   ctaAnchor.classList.add('cmp-button');
   const foundCtaLink = ctaLinkRow.querySelector('a');
   if (foundCtaLink) {
     ctaAnchor.href = foundCtaLink.href;
-    // Original HTML has alt attribute on <a>, copy it if present
-    if (foundCtaLink.alt) ctaAnchor.alt = foundCtaLink.alt;
-    // Original HTML has target="_blank"
-    ctaAnchor.target = '_blank';
+    // The alt attribute for the CTA button should come from the ctaLinkLabelRow's text content,
+    // not from the href. The original HTML shows "View All" as alt.
+    ctaAnchor.alt = ctaLinkLabelRow.textContent.trim();
   }
+  moveInstrumentation(ctaLinkRow, ctaAnchor);
 
-  const spanText = document.createElement('span');
-  spanText.classList.add('cmp-button__text');
-  spanText.textContent = ctaLinkLabelRow ? ctaLinkLabelRow.textContent.trim() : '';
-  ctaAnchor.append(spanText);
+  const ctaSpanText = document.createElement('span');
+  ctaSpanText.classList.add('cmp-button__text');
+  ctaSpanText.textContent = ctaLinkLabelRow.textContent.trim();
+  moveInstrumentation(ctaLinkLabelRow, ctaSpanText);
+  ctaAnchor.append(ctaSpanText);
 
-  const spanScreenReader = document.createElement('span');
-  spanScreenReader.classList.add('cmp-link__screen-reader-only');
-  spanScreenReader.textContent = 'opens in a new tab';
-  ctaAnchor.append(spanScreenReader);
+  // Add screen reader only text if present in original HTML
+  const screenReaderOnlySpan = document.createElement('span');
+  screenReaderOnlySpan.classList.add('cmp-link__screen-reader-only');
+  screenReaderOnlySpan.textContent = 'opens in a new tab'; // Hardcoded based on original HTML
+  ctaAnchor.append(screenReaderOnlySpan);
 
   buttonDiv.append(ctaAnchor);
-  containerDiv.append(buttonDiv);
+  containerReadMore.append(buttonDiv);
 
-  block.append(containerDiv);
-
-  // Add event listener for the readMore span
-  readMoreSpan.addEventListener('click', () => {
-    containerDiv.classList.toggle('expanded');
-    // You might want to change the text of the span here too
-    // e.g., readMoreSpan.textContent = containerDiv.classList.contains('expanded') ? 'Read Less' : 'Read More';
-  });
+  block.append(containerReadMore);
 
   // Optimize all images within the block
+  // This part is redundant if createOptimizedPicture is used directly when appending images.
+  // Keeping it for now as it's in the original generated code, but ideally should be removed
+  // if all images are handled by createOptimizedPicture during their initial creation.
   block.querySelectorAll('picture > img').forEach((img) => {
     const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
     moveInstrumentation(img, optimizedPic.querySelector('img'));

@@ -169,7 +169,8 @@
         "stat-list",
         "featured-layered-image",
         "image-cta-card",
-        "image-text-cta"
+        "image-text-cta",
+        "cmp-text"
       ]
     }
   ]

@@ -134,7 +134,8 @@
       "stat-list",
       "featured-layered-image",
       "image-cta-card",
-      "image-text-cta"
+      "image-text-cta",
+      "cmp-text"
     ]
   },
   {
@@ -155,7 +156,7 @@
   {
     "id": "banner-carousel",
     "components": [
-      "banner-carousel-slide"
+      "carousel-slide"
     ]
   },
   {
@@ -248,6 +249,9 @@
     "components": [
       "cmp-search-item"
     ]
+  },
+  {
+    "id": "cmp-text"
   },
   {
     "id": "columns",
@@ -482,20 +486,21 @@
     "id": "itc-footer-section",
     "components": [
       "footer-link",
-      "social-link"
+      "social-link",
+      "footer-secondary-link"
     ]
   },
   {
     "id": "itc-header-section",
     "components": [
-      "navigation-link",
+      "navigation-item",
       "country-option"
     ]
   },
   {
     "id": "itc-how-shift",
     "components": [
-      "itc-how-shift-item"
+      "why-shift-item"
     ]
   },
   {
