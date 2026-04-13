@@ -1817,8 +1817,8 @@
       },
       {
         "component": "text",
-        "label": "Heading",
-        "name": "heading",
+        "label": "Title",
+        "name": "title",
         "valueType": "string"
       },
       {

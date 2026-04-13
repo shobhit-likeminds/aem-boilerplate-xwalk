@@ -2,27 +2,28 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  // Destructure block.children based on the EDS BLOCK STRUCTURE and BlockJson model.
-  // Each element in block.children corresponds to a root field in the BlockJson.
+  // Destructure block.children directly as per EDS BLOCK STRUCTURE
   const [
     imageRow,
     imageAltRow,
-    headingRow,
+    titleRow,
     textRow,
     ctaLinkRow,
-    ctaLinkLabelRow, // This row contains the CTA label text.
+    ctaLinkLabelRow,
     imageCreditRow,
   ] = [...block.children];
 
+  // Main container div
   const container = document.createElement('div');
   container.classList.add('container');
 
-  const grid = document.createElement('div');
-  grid.classList.add('grid', 'grid-full', 'md:gap-grid-gutter', 'justify-center', 'items-center');
+  // Grid wrapper for image and content
+  const gridWrapper = document.createElement('div');
+  gridWrapper.classList.add('grid', 'grid-full', 'md:gap-grid-gutter', 'justify-center', 'items-center');
 
   // Image section
-  const imageWrapper = document.createElement('div');
-  imageWrapper.classList.add(
+  const imageSection = document.createElement('div');
+  imageSection.classList.add(
     'order-1',
     'md:order-2',
     'relative',
@@ -35,28 +36,30 @@ export default function decorate(block) {
     'md:row-start-1',
     'md:row-end-1',
   );
-  imageWrapper.setAttribute('data-testid', 'featured-cta-image');
+  imageSection.setAttribute('data-testid', 'featured-cta-image');
 
-  const imageAspect = document.createElement('div');
-  imageAspect.classList.add('aspect-4/3', 'max-w-[672px]', 'w-full', 'mx-auto');
+  const imageAspectWrapper = document.createElement('div');
+  imageAspectWrapper.classList.add('aspect-4/3', 'max-w-[672px]', 'w-full', 'mx-auto');
 
-  const picture = imageRow.querySelector('picture');
+  // Access content from the first child element of the row
+  const picture = imageRow.firstElementChild.querySelector('picture');
   if (picture) {
     const img = picture.querySelector('img');
     if (img) {
-      // Use the imageAltRow for the alt text
-      const optimizedPic = createOptimizedPicture(img.src, imageAltRow.textContent.trim(), false, [{ width: '672' }]);
+      const optimizedPic = createOptimizedPicture(img.src, imageAltRow.firstElementChild.textContent.trim(), false, [{ width: '672' }]);
       moveInstrumentation(img, optimizedPic.querySelector('img'));
       optimizedPic.querySelector('img').classList.add('rounded-t-sm', 'md:rounded-sm', 'overflow-hidden', 'w-full', 'h-auto');
-      imageAspect.append(optimizedPic);
+      optimizedPic.querySelector('img').setAttribute('width', '672');
+      optimizedPic.querySelector('img').setAttribute('height', '504');
+      imageAspectWrapper.append(optimizedPic);
     }
   }
-  imageWrapper.append(imageAspect);
-  grid.append(imageWrapper);
+  imageSection.append(imageAspectWrapper);
+  gridWrapper.append(imageSection);
 
   // Content section
-  const contentWrapper = document.createElement('div');
-  contentWrapper.classList.add(
+  const contentSection = document.createElement('div');
+  contentSection.classList.add(
     'order-2',
     'md:order-1',
     'relative',
@@ -78,52 +81,53 @@ export default function decorate(block) {
     'space-y-2xs',
     'p-6',
     'xl:p-lg',
-    'md:row-start-1',
-    'md:row-end-1',
   );
 
-  const heading = document.createElement('h4');
-  heading.classList.add('text-h4', 'font-bold');
-  heading.setAttribute('data-testid', 'featured-cta-title');
-  moveInstrumentation(headingRow, heading);
-  // The heading content is directly in headingRow
-  heading.textContent = headingRow.textContent.trim();
-  contentWrapper.append(heading);
+  // Title
+  const title = document.createElement('h4');
+  title.classList.add('text-h4', 'font-bold');
+  title.setAttribute('data-testid', 'featured-cta-title');
+  moveInstrumentation(titleRow.firstElementChild, title);
+  title.textContent = titleRow.firstElementChild.textContent.trim();
+  contentSection.append(title);
 
+  // Text
   const textDiv = document.createElement('div');
   textDiv.classList.add('prose', 'theme-dark:prose-tm', 'theme-medium:prose-td', 'max-w-none');
   textDiv.setAttribute('data-testid', 'featured-cta-text');
-  moveInstrumentation(textRow, textDiv);
-  // The text content can contain rich text, so append its children
-  while (textRow.firstChild) textDiv.append(textRow.firstChild);
-  contentWrapper.append(textDiv);
+  moveInstrumentation(textRow.firstElementChild, textDiv);
+  // Move all child nodes from the original text cell to the new textDiv
+  while (textRow.firstElementChild.firstChild) {
+    textDiv.append(textRow.firstElementChild.firstChild);
+  }
+  contentSection.append(textDiv);
 
-  const linksWrapper = document.createElement('div');
-  linksWrapper.classList.add('flex', 'flex-wrap', 'gap-xs', 'mt-6');
-  linksWrapper.setAttribute('data-testid', 'featured-cta-links');
+  // CTA Link
+  const ctaLinksWrapper = document.createElement('div');
+  ctaLinksWrapper.classList.add('flex', 'flex-wrap', 'gap-xs', 'mt-6');
+  ctaLinksWrapper.setAttribute('data-testid', 'featured-cta-links');
 
   const ctaLink = document.createElement('a');
-  ctaLink.classList.add('w-full', 'md:w-auto', 'button', 'button--dark', 'theme-medium:button--light');
-  ctaLink.setAttribute('data-testid', 'featured-cta-link-primary');
-  const originalCtaLink = ctaLinkRow.querySelector('a');
+  const originalCtaLink = ctaLinkRow.firstElementChild.querySelector('a');
   if (originalCtaLink) {
     ctaLink.href = originalCtaLink.href;
   }
-  moveInstrumentation(ctaLinkRow, ctaLink);
-  // The CTA label text is in ctaLinkLabelRow
-  ctaLink.textContent = ctaLinkLabelRow.textContent.trim();
-  linksWrapper.append(ctaLink);
-  contentWrapper.append(linksWrapper);
+  ctaLink.classList.add('w-full', 'md:w-auto', 'button', 'button--dark', 'theme-medium:button--light');
+  ctaLink.setAttribute('data-testid', 'featured-cta-link-primary');
+  moveInstrumentation(ctaLinkRow.firstElementChild, ctaLink); // Instrument the original cell's content
+  ctaLink.textContent = ctaLinkLabelRow.firstElementChild.textContent.trim(); // Get text from the ctaLinkLabelRow's first child
+  ctaLinksWrapper.append(ctaLink);
+  contentSection.append(ctaLinksWrapper);
 
-  grid.append(contentWrapper);
-  container.append(grid);
+  gridWrapper.append(contentSection);
+  container.append(gridWrapper);
 
-  // Image Credit section
-  const creditGrid = document.createElement('div');
-  creditGrid.classList.add('grid-full', 'grid-centered-12');
+  // Image Credit
+  const imageCreditGridWrapper = document.createElement('div');
+  imageCreditGridWrapper.classList.add('grid-full', 'grid-centered-12');
 
-  const creditWrapper = document.createElement('div');
-  creditWrapper.classList.add(
+  const imageCreditDiv = document.createElement('div');
+  imageCreditDiv.classList.add(
     'md:text-end',
     'order-1',
     'md:order-2',
@@ -138,19 +142,28 @@ export default function decorate(block) {
     'md:row-end-1',
   );
 
-  const creditDiv = document.createElement('div');
-  creditDiv.classList.add('mt-2xs');
+  const imageCreditTextWrapper = document.createElement('div');
+  imageCreditTextWrapper.classList.add('mt-2xs');
 
-  const creditText = document.createElement('p');
-  creditText.classList.add('z-1', 'relative', 'text-caption-size', 'theme-dark:text-foreground-colored-muted', 'text-foreground-muted');
-  moveInstrumentation(imageCreditRow, creditText);
-  // The image credit text is in imageCreditRow
-  creditText.textContent = imageCreditRow.textContent.trim();
-  creditDiv.append(creditText);
-  creditWrapper.append(creditDiv);
-  creditGrid.append(creditWrapper);
-  container.append(creditGrid);
+  const imageCreditParagraph = document.createElement('p');
+  imageCreditParagraph.classList.add(
+    'z-1',
+    'relative',
+    'text-caption-size',
+    'theme-dark:text-foreground-colored-muted',
+    'text-foreground-muted',
+  );
+  moveInstrumentation(imageCreditRow.firstElementChild, imageCreditParagraph);
+  imageCreditParagraph.textContent = imageCreditRow.firstElementChild.textContent.trim();
+  imageCreditTextWrapper.append(imageCreditParagraph);
+  imageCreditDiv.append(imageCreditTextWrapper);
+  imageCreditGridWrapper.append(imageCreditDiv);
+  container.append(imageCreditGridWrapper);
 
   block.textContent = '';
   block.append(container);
+
+  // Apply section classes to the block itself
+  block.classList.add('theme-light', 'theme-bg', 'theme-section-spacing');
+  block.setAttribute('data-testid', 'featured-cta-rectangle');
 }
