@@ -239,6 +239,37 @@
           }
         },
         {
+          "title": "Banner-With-Form-Carousel",
+          "id": "banner-with-form-carousel",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "banner-with-form-carousel",
+                  "model": "banner-with-form-carousel",
+                  "name": "Banner-With-Form-Carousel"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Banner-With-Form-Slide",
+          "id": "banner-with-form-slide",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "banner-with-form-slide",
+                  "name": "Banner-With-Form-Slide"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Banner",
           "id": "banner",
           "plugins": {
@@ -286,7 +317,7 @@
           }
         },
         {
-          "title": "Bhartiaxa-Header",
+          "title": "Bhartiaxa Header",
           "id": "bhartiaxa-header",
           "plugins": {
             "xwalk": {
@@ -295,7 +326,7 @@
                 "template": {
                   "filter": "bhartiaxa-header",
                   "model": "bhartiaxa-header",
-                  "name": "Bhartiaxa-Header"
+                  "name": "Bhartiaxa Header"
                 }
               }
             }
@@ -311,6 +342,51 @@
                 "template": {
                   "model": "nav-item",
                   "name": "Nav Item"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Popover Item",
+          "id": "popover-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "popover-item",
+                  "name": "Popover Item"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Mobile Accordion Item",
+          "id": "mobile-accordion-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "mobile-accordion-item",
+                  "name": "Mobile Accordion Item"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Mobile Contact",
+          "id": "mobile-contact",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "mobile-contact",
+                  "name": "Mobile Contact"
                 }
               }
             }
@@ -2962,15 +3038,15 @@
           }
         },
         {
-          "title": "Plan-Possibility-Box",
-          "id": "plan-possibility-box",
+          "title": "Plan Possibility",
+          "id": "plan-possibility",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "plan-possibility-box",
-                  "name": "Plan-Possibility-Box"
+                  "model": "plan-possibility",
+                  "name": "Plan Possibility"
                 }
               }
             }
@@ -3148,15 +3224,15 @@
           }
         },
         {
-          "title": "Product-Offer-Card",
-          "id": "product-offer-card",
+          "title": "Product Offer",
+          "id": "product-offer",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "product-offer-card",
-                  "name": "Product-Offer-Card"
+                  "model": "product-offer",
+                  "name": "Product Offer"
                 }
               }
             }
@@ -3957,15 +4033,15 @@
           }
         },
         {
-          "title": "Trending Item",
-          "id": "trending-item",
+          "title": "Trending-Now-Item",
+          "id": "trending-now-item",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "trending-item",
-                  "name": "Trending Item"
+                  "model": "trending-now-item",
+                  "name": "Trending-Now-Item"
                 }
               }
             }

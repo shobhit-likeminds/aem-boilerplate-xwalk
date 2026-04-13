@@ -17,15 +17,15 @@
       }
     },
     {
-      "title": "Plan Possibility",
-      "id": "plan-possibility",
+      "title": "Plan-Possibility-Box",
+      "id": "plan-possibility-box",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "plan-possibility",
-              "name": "Plan Possibility"
+              "model": "plan-possibility-box",
+              "name": "Plan-Possibility-Box"
             }
           }
         }
@@ -44,29 +44,21 @@
         },
         {
           "component": "container",
-          "item": "plan-possibility",
+          "item": "plan-possibility-box",
           "label": "Plans",
           "name": "plans"
         }
       ]
     },
     {
-      "id": "plan-possibility",
-      "fields": [
-        {
-          "component": "reference",
-          "label": "Icon",
-          "name": "icon",
-          "valueType": "string"
-        }
-      ]
+      "id": "plan-possibility-box"
     }
   ],
   "filters": [
     {
       "id": "plan-possibility-template",
       "components": [
-        "plan-possibility"
+        "plan-possibility-box"
       ]
     }
   ]

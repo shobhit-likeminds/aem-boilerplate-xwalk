@@ -1,31 +1,31 @@
 {
   "definitions": [
     {
-      "title": "Trending-Now",
-      "id": "trending-now",
+      "title": "Products-Offer-Template",
+      "id": "products-offer-template",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block",
             "template": {
-              "filter": "trending-now",
-              "model": "trending-now",
-              "name": "Trending-Now"
+              "filter": "products-offer-template",
+              "model": "products-offer-template",
+              "name": "Products-Offer-Template"
             }
           }
         }
       }
     },
     {
-      "title": "Trending-Now-Item",
-      "id": "trending-now-item",
+      "title": "Product-Offer-Card",
+      "id": "product-offer-card",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "trending-now-item",
-              "name": "Trending-Now-Item"
+              "model": "product-offer-card",
+              "name": "Product-Offer-Card"
             }
           }
         }
@@ -34,7 +34,7 @@
   ],
   "models": [
     {
-      "id": "trending-now",
+      "id": "products-offer-template",
       "fields": [
         {
           "component": "text",
@@ -44,43 +44,37 @@
         },
         {
           "component": "container",
-          "item": "trending-now-item",
-          "label": "Trending Now Items",
-          "name": "items"
+          "item": "product-offer-card",
+          "label": "Cards",
+          "name": "cards"
         }
       ]
     },
     {
-      "id": "trending-now-item",
+      "id": "product-offer-card",
       "fields": [
         {
-          "component": "reference",
-          "label": "Image",
-          "name": "image",
-          "valueType": "string"
-        },
-        {
           "component": "text",
-          "label": "Title",
-          "name": "title",
+          "label": "Card Title",
+          "name": "cardTitle",
           "valueType": "string"
         },
         {
           "component": "richtext",
-          "label": "Description",
-          "name": "description",
+          "label": "Features",
+          "name": "features",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "label": "CTA Link",
-          "name": "ctaLink",
+          "label": "Read More Link",
+          "name": "readMoreLink",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "CTA Label",
-          "name": "ctaLinkLabel",
+          "label": "Read More Link Label",
+          "name": "readMoreLinkLabel",
           "valueType": "string"
         }
       ]
@@ -88,9 +82,9 @@
   ],
   "filters": [
     {
-      "id": "trending-now",
+      "id": "products-offer-template",
       "components": [
-        "trending-now-item"
+        "product-offer-card"
       ]
     }
   ]

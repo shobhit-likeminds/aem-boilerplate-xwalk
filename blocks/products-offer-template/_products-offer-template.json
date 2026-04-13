@@ -17,15 +17,15 @@
       }
     },
     {
-      "title": "Product-Offer-Card",
-      "id": "product-offer-card",
+      "title": "Product Offer",
+      "id": "product-offer",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "product-offer-card",
-              "name": "Product-Offer-Card"
+              "model": "product-offer",
+              "name": "Product Offer"
             }
           }
         }
@@ -44,19 +44,19 @@
         },
         {
           "component": "container",
-          "item": "product-offer-card",
-          "label": "Cards",
-          "name": "cards"
+          "item": "product-offer",
+          "label": "Product Offers",
+          "name": "productOffers"
         }
       ]
     },
     {
-      "id": "product-offer-card",
+      "id": "product-offer",
       "fields": [
         {
           "component": "text",
-          "label": "Card Title",
-          "name": "cardTitle",
+          "label": "Title",
+          "name": "title",
           "valueType": "string"
         },
         {
@@ -67,14 +67,14 @@
         },
         {
           "component": "aem-content",
-          "label": "Read More Link",
-          "name": "readMoreLink",
+          "label": "CTA Link",
+          "name": "ctaLink",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Read More Link Label",
-          "name": "readMoreLinkLabel",
+          "label": "CTA Label",
+          "name": "ctaLinkLabel",
           "valueType": "string"
         }
       ]
@@ -84,7 +84,7 @@
     {
       "id": "products-offer-template",
       "components": [
-        "product-offer-card"
+        "product-offer"
       ]
     }
   ]

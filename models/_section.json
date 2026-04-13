@@ -182,7 +182,8 @@
         "accordion-component",
         "popular-search",
         "disclaimer-container",
-        "footer-component"
+        "footer-component",
+        "banner-with-form-carousel"
       ]
     }
   ]

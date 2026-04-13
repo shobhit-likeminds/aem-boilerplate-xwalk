@@ -17,15 +17,15 @@
       }
     },
     {
-      "title": "Trending-Now-Item",
-      "id": "trending-now-item",
+      "title": "Trending Item",
+      "id": "trending-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "trending-now-item",
-              "name": "Trending-Now-Item"
+              "model": "trending-item",
+              "name": "Trending Item"
             }
           }
         }
@@ -44,14 +44,14 @@
         },
         {
           "component": "container",
-          "item": "trending-now-item",
-          "label": "Trending Now Items",
+          "item": "trending-item",
+          "label": "Trending Items",
           "name": "items"
         }
       ]
     },
     {
-      "id": "trending-now-item",
+      "id": "trending-item",
       "fields": [
         {
           "component": "reference",
@@ -90,7 +90,7 @@
     {
       "id": "trending-now",
       "components": [
-        "trending-now-item"
+        "trending-item"
       ]
     }
   ]

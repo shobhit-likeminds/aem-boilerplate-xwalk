@@ -1,7 +1,7 @@
 {
   "definitions": [
     {
-      "title": "Bhartiaxa-Header",
+      "title": "Bhartiaxa Header",
       "id": "bhartiaxa-header",
       "plugins": {
         "xwalk": {
@@ -10,7 +10,7 @@
             "template": {
               "filter": "bhartiaxa-header",
               "model": "bhartiaxa-header",
-              "name": "Bhartiaxa-Header"
+              "name": "Bhartiaxa Header"
             }
           }
         }
@@ -30,6 +30,51 @@
           }
         }
       }
+    },
+    {
+      "title": "Popover Item",
+      "id": "popover-item",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "popover-item",
+              "name": "Popover Item"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Mobile Accordion Item",
+      "id": "mobile-accordion-item",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "mobile-accordion-item",
+              "name": "Mobile Accordion Item"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Mobile Contact",
+      "id": "mobile-contact",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "mobile-contact",
+              "name": "Mobile Contact"
+            }
+          }
+        }
+      }
     }
   ],
   "models": [
@@ -39,26 +84,41 @@
         {
           "component": "reference",
           "label": "Logo",
-          "name": "logo",
-          "valueType": "string"
+          "name": "logo"
         },
         {
           "component": "aem-content",
           "label": "Logo Link",
-          "name": "logoLink",
-          "valueType": "string"
+          "name": "logoLink"
         },
         {
           "component": "text",
           "label": "Logo Link Label",
-          "name": "logoLinkLabel",
-          "valueType": "string"
+          "name": "logoLinkLabel"
         },
         {
           "component": "container",
           "item": "nav-item",
           "label": "Navigation Items",
           "name": "navItems"
+        },
+        {
+          "component": "container",
+          "item": "popover-item",
+          "label": "Popover Items",
+          "name": "popoverItems"
+        },
+        {
+          "component": "container",
+          "item": "mobile-accordion-item",
+          "label": "Mobile Accordion Items",
+          "name": "mobileAccordionItems"
+        },
+        {
+          "component": "container",
+          "item": "mobile-contact",
+          "label": "Mobile Contacts",
+          "name": "mobileContacts"
         }
       ]
     },
@@ -68,20 +128,95 @@
         {
           "component": "text",
           "label": "Label",
-          "name": "label",
-          "valueType": "string"
+          "name": "label"
         },
         {
           "component": "aem-content",
           "label": "Link",
-          "name": "link",
-          "valueType": "string"
+          "name": "link"
         },
         {
           "component": "text",
           "label": "Link Label",
-          "name": "linkLabel",
+          "name": "linkLabel"
+        },
+        {
+          "component": "richtext",
+          "label": "Sub Links",
+          "name": "subLinks",
           "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "popover-item",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Label",
+          "name": "label"
+        },
+        {
+          "component": "aem-content",
+          "label": "Link",
+          "name": "link"
+        },
+        {
+          "component": "text",
+          "label": "Link Label",
+          "name": "linkLabel"
+        },
+        {
+          "component": "richtext",
+          "label": "Sub Links",
+          "name": "subLinks",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "mobile-accordion-item",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Label",
+          "name": "label"
+        },
+        {
+          "component": "aem-content",
+          "label": "Link",
+          "name": "link"
+        },
+        {
+          "component": "text",
+          "label": "Link Label",
+          "name": "linkLabel"
+        },
+        {
+          "component": "richtext",
+          "label": "Sub Links",
+          "name": "subLinks",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "mobile-contact",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Label",
+          "name": "label"
+        },
+        {
+          "component": "aem-content",
+          "label": "Link",
+          "name": "link"
+        },
+        {
+          "component": "text",
+          "label": "Link Label",
+          "name": "linkLabel"
         },
         {
           "component": "richtext",
@@ -96,7 +231,10 @@
     {
       "id": "bhartiaxa-header",
       "components": [
-        "nav-item"
+        "nav-item",
+        "popover-item",
+        "mobile-accordion-item",
+        "mobile-contact"
       ]
     }
   ]

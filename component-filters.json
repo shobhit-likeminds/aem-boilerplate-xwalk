@@ -147,7 +147,8 @@
       "accordion-component",
       "popular-search",
       "disclaimer-container",
-      "footer-component"
+      "footer-component",
+      "banner-with-form-carousel"
     ]
   },
   {
@@ -181,6 +182,12 @@
     "id": "banner-section"
   },
   {
+    "id": "banner-with-form-carousel",
+    "components": [
+      "banner-with-form-slide"
+    ]
+  },
+  {
     "id": "banner"
   },
   {
@@ -192,7 +199,10 @@
   {
     "id": "bhartiaxa-header",
     "components": [
-      "nav-item"
+      "nav-item",
+      "popover-item",
+      "mobile-accordion-item",
+      "mobile-contact"
     ]
   },
   {
@@ -662,7 +672,7 @@
   {
     "id": "plan-possibility-template",
     "components": [
-      "plan-possibility-box"
+      "plan-possibility"
     ]
   },
   {
@@ -698,7 +708,7 @@
   {
     "id": "products-offer-template",
     "components": [
-      "product-offer-card"
+      "product-offer"
     ]
   },
   {
@@ -846,7 +856,7 @@
   {
     "id": "trending-now",
     "components": [
-      "trending-item"
+      "trending-now-item"
     ]
   },
   {

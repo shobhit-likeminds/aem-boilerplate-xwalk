@@ -5,13 +5,13 @@ export default function decorate(block) {
   const [headingRow, ...planRows] = [...block.children];
 
   // Heading
-  const heading = document.createElement('h2');
-  heading.classList.add('plan-possibility-heading');
-  moveInstrumentation(headingRow, heading);
-  heading.textContent = headingRow.firstElementChild?.textContent.trim() || '';
-  block.append(heading);
+  const headingEl = document.createElement('h2');
+  headingEl.classList.add('plan-possibility-heading');
+  moveInstrumentation(headingRow, headingEl);
+  headingEl.textContent = headingRow.firstElementChild?.textContent.trim() || '';
+  block.replaceChild(headingEl, headingRow);
 
-  // Plans Container (Swiper structure)
+  // Plans Container
   const planPossibilityContainer = document.createElement('div');
   planPossibilityContainer.classList.add('plan-possibility-container');
 
@@ -21,54 +21,47 @@ export default function decorate(block) {
   const swiperWrapper = document.createElement('div');
   swiperWrapper.classList.add('swiper-wrapper');
 
-  planRows.forEach((row, index) => {
+  planRows.forEach((row) => {
+    const cells = [...row.children]; // Get all cells for content detection
     const swiperSlide = document.createElement('div');
     swiperSlide.classList.add('swiper-slide');
-    if (index === 0) {
-      swiperSlide.classList.add('swiper-slide-active');
-    }
+    moveInstrumentation(row, swiperSlide);
 
-    const planBox = document.createElement('div');
-    planBox.classList.add('planpossible-box', 'plan-possibility-box');
-    moveInstrumentation(row, planBox);
+    const planPossibleBox = document.createElement('div');
+    planPossibleBox.classList.add('planpossible-box', 'plan-possibility-box');
 
-    // Use content detection for cells within each plan row
-    const cells = [...row.children];
+    const planIcon = document.createElement('div');
+    planIcon.classList.add('plan-icon');
+
+    const planIconBox = document.createElement('div');
+    planIconBox.classList.add('plan-icon-box');
+
+    const iconArea = document.createElement('div');
+    iconArea.classList.add('icon-area');
+
+    // Icon cell - using content detection
     const iconCell = cells.find(cell => cell.querySelector('picture'));
-    const contentCells = cells.filter(cell => !cell.querySelector('picture'));
-
     if (iconCell) {
-      const planIcon = document.createElement('div');
-      planIcon.classList.add('plan-icon');
-      const planIconBox = document.createElement('div');
-      planIconBox.classList.add('plan-icon-box');
-      const iconArea = document.createElement('div');
-      iconArea.classList.add('icon-area');
-
-      moveInstrumentation(iconCell, iconArea);
-      while (iconCell.firstChild) {
-        iconArea.append(iconCell.firstChild);
+      const picture = iconCell.querySelector('picture');
+      if (picture) {
+        const img = picture.querySelector('img');
+        if (img) {
+          const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+          moveInstrumentation(img, optimizedPic.querySelector('img'));
+          picture.replaceWith(optimizedPic);
+          iconArea.appendChild(optimizedPic);
+        }
       }
-      planIconBox.append(iconArea);
-      planIcon.append(planIconBox);
-      planBox.append(planIcon);
     }
 
-    contentCells.forEach((cell) => {
-      planBox.append(cell);
-    });
-
-    swiperSlide.append(planBox);
-    swiperWrapper.append(swiperSlide);
+    planIconBox.appendChild(iconArea);
+    planIcon.appendChild(planIconBox);
+    planPossibleBox.appendChild(planIcon);
+    swiperSlide.appendChild(planPossibleBox);
+    swiperWrapper.appendChild(swiperSlide);
   });
 
-  swiper.append(swiperWrapper);
-  planPossibilityContainer.append(swiper);
-  block.append(planPossibilityContainer);
-
-  block.querySelectorAll('picture > img').forEach((img) => {
-    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-    moveInstrumentation(img, optimizedPic.querySelector('img'));
-    img.closest('picture').replaceWith(optimizedPic);
-  });
+  swiper.appendChild(swiperWrapper);
+  planPossibilityContainer.appendChild(swiper);
+  block.appendChild(planPossibilityContainer);
 }

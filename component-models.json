@@ -366,6 +366,101 @@
     ]
   },
   {
+    "id": "banner-with-form-carousel",
+    "fields": [
+      {
+        "component": "container",
+        "item": "banner-with-form-slide",
+        "label": "Slides",
+        "name": "slides"
+      }
+    ]
+  },
+  {
+    "id": "banner-with-form-slide",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Banner Image",
+        "name": "image"
+      },
+      {
+        "component": "aem-content",
+        "label": "Banner Image Link",
+        "name": "imageLink"
+      },
+      {
+        "component": "text",
+        "label": "Banner Image Link Label",
+        "name": "imageLinkLabel",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Form Title",
+        "name": "formTitle",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Mobile Number Label",
+        "name": "mobileNumberLabel",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Date Of Birth Label",
+        "name": "dateOfBirthLabel",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Policy Number Label",
+        "name": "policyNumberLabel",
+        "valueType": "string"
+      },
+      {
+        "component": "checkbox-group",
+        "label": "WhatsApp Opt-In",
+        "name": "whatsappOptIn",
+        "options": [
+          {
+            "label": "Get your life insurance policy updates through WhatsApp",
+            "value": "whatsapp"
+          }
+        ]
+      },
+      {
+        "component": "aem-content",
+        "label": "CTA Link",
+        "name": "ctaLink"
+      },
+      {
+        "component": "text",
+        "label": "CTA Label",
+        "name": "ctaLinkLabel",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Contact Us Text",
+        "name": "contactUsText",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Contact Us Link",
+        "name": "contactUsLink"
+      },
+      {
+        "component": "text",
+        "label": "Contact Us Link Label",
+        "name": "contactUsLinkLabel",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "banner",
     "fields": [
       {
@@ -416,26 +511,41 @@
       {
         "component": "reference",
         "label": "Logo",
-        "name": "logo",
-        "valueType": "string"
+        "name": "logo"
       },
       {
         "component": "aem-content",
         "label": "Logo Link",
-        "name": "logoLink",
-        "valueType": "string"
+        "name": "logoLink"
       },
       {
         "component": "text",
         "label": "Logo Link Label",
-        "name": "logoLinkLabel",
-        "valueType": "string"
+        "name": "logoLinkLabel"
       },
       {
         "component": "container",
         "item": "nav-item",
         "label": "Navigation Items",
         "name": "navItems"
+      },
+      {
+        "component": "container",
+        "item": "popover-item",
+        "label": "Popover Items",
+        "name": "popoverItems"
+      },
+      {
+        "component": "container",
+        "item": "mobile-accordion-item",
+        "label": "Mobile Accordion Items",
+        "name": "mobileAccordionItems"
+      },
+      {
+        "component": "container",
+        "item": "mobile-contact",
+        "label": "Mobile Contacts",
+        "name": "mobileContacts"
       }
     ]
   },
@@ -445,20 +555,95 @@
       {
         "component": "text",
         "label": "Label",
-        "name": "label",
-        "valueType": "string"
+        "name": "label"
       },
       {
         "component": "aem-content",
         "label": "Link",
-        "name": "link",
-        "valueType": "string"
+        "name": "link"
       },
       {
         "component": "text",
         "label": "Link Label",
-        "name": "linkLabel",
+        "name": "linkLabel"
+      },
+      {
+        "component": "richtext",
+        "label": "Sub Links",
+        "name": "subLinks",
         "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "popover-item",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Label",
+        "name": "label"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link"
+      },
+      {
+        "component": "text",
+        "label": "Link Label",
+        "name": "linkLabel"
+      },
+      {
+        "component": "richtext",
+        "label": "Sub Links",
+        "name": "subLinks",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "mobile-accordion-item",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Label",
+        "name": "label"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link"
+      },
+      {
+        "component": "text",
+        "label": "Link Label",
+        "name": "linkLabel"
+      },
+      {
+        "component": "richtext",
+        "label": "Sub Links",
+        "name": "subLinks",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "mobile-contact",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Label",
+        "name": "label"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link"
+      },
+      {
+        "component": "text",
+        "label": "Link Label",
+        "name": "linkLabel"
       },
       {
         "component": "richtext",
@@ -4696,14 +4881,22 @@
       },
       {
         "component": "container",
-        "item": "plan-possibility-box",
+        "item": "plan-possibility",
         "label": "Plans",
         "name": "plans"
       }
     ]
   },
   {
-    "id": "plan-possibility-box"
+    "id": "plan-possibility",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Icon",
+        "name": "icon",
+        "valueType": "string"
+      }
+    ]
   },
   {
     "id": "popular-products",
@@ -4922,19 +5115,19 @@
       },
       {
         "component": "container",
-        "item": "product-offer-card",
-        "label": "Cards",
-        "name": "cards"
+        "item": "product-offer",
+        "label": "Product Offers",
+        "name": "productOffers"
       }
     ]
   },
   {
-    "id": "product-offer-card",
+    "id": "product-offer",
     "fields": [
       {
         "component": "text",
-        "label": "Card Title",
-        "name": "cardTitle",
+        "label": "Title",
+        "name": "title",
         "valueType": "string"
       },
       {
@@ -4945,14 +5138,14 @@
       },
       {
         "component": "aem-content",
-        "label": "Read More Link",
-        "name": "readMoreLink",
+        "label": "CTA Link",
+        "name": "ctaLink",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Read More Link Label",
-        "name": "readMoreLinkLabel",
+        "label": "CTA Label",
+        "name": "ctaLinkLabel",
         "valueType": "string"
       }
     ]
@@ -5980,14 +6173,14 @@
       },
       {
         "component": "container",
-        "item": "trending-item",
-        "label": "Trending Items",
+        "item": "trending-now-item",
+        "label": "Trending Now Items",
         "name": "items"
       }
     ]
   },
   {
-    "id": "trending-item",
+    "id": "trending-now-item",
     "fields": [
       {
         "component": "reference",

@@ -1,0 +1,140 @@
+{
+  "definitions": [
+    {
+      "title": "Banner-With-Form-Carousel",
+      "id": "banner-with-form-carousel",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "banner-with-form-carousel",
+              "model": "banner-with-form-carousel",
+              "name": "Banner-With-Form-Carousel"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Banner-With-Form-Slide",
+      "id": "banner-with-form-slide",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "banner-with-form-slide",
+              "name": "Banner-With-Form-Slide"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "banner-with-form-carousel",
+      "fields": [
+        {
+          "component": "container",
+          "item": "banner-with-form-slide",
+          "label": "Slides",
+          "name": "slides"
+        }
+      ]
+    },
+    {
+      "id": "banner-with-form-slide",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Banner Image",
+          "name": "image"
+        },
+        {
+          "component": "aem-content",
+          "label": "Banner Image Link",
+          "name": "imageLink"
+        },
+        {
+          "component": "text",
+          "label": "Banner Image Link Label",
+          "name": "imageLinkLabel",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Form Title",
+          "name": "formTitle",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Mobile Number Label",
+          "name": "mobileNumberLabel",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Date Of Birth Label",
+          "name": "dateOfBirthLabel",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Policy Number Label",
+          "name": "policyNumberLabel",
+          "valueType": "string"
+        },
+        {
+          "component": "checkbox-group",
+          "label": "WhatsApp Opt-In",
+          "name": "whatsappOptIn",
+          "options": [
+            {
+              "label": "Get your life insurance policy updates through WhatsApp",
+              "value": "whatsapp"
+            }
+          ]
+        },
+        {
+          "component": "aem-content",
+          "label": "CTA Link",
+          "name": "ctaLink"
+        },
+        {
+          "component": "text",
+          "label": "CTA Label",
+          "name": "ctaLinkLabel",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Contact Us Text",
+          "name": "contactUsText",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Contact Us Link",
+          "name": "contactUsLink"
+        },
+        {
+          "component": "text",
+          "label": "Contact Us Link Label",
+          "name": "contactUsLinkLabel",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "banner-with-form-carousel",
+      "components": [
+        "banner-with-form-slide"
+      ]
+    }
+  ]
+}
