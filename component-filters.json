@@ -135,7 +135,25 @@
       "featured-layered-image",
       "image-cta-card",
       "image-text-cta",
-      "cmp-text"
+      "cmp-text",
+      "bhartiaxa-header",
+      "desktop-quicklinks-component",
+      "swiper-area",
+      "products-offer-template",
+      "plan-possibility-template",
+      "trending-now",
+      "home-about-template",
+      "customer-say",
+      "accordion-component",
+      "popular-search",
+      "disclaimer-container",
+      "footer-component"
+    ]
+  },
+  {
+    "id": "accordion-component",
+    "components": [
+      "faq-item"
     ]
   },
   {
@@ -169,6 +187,12 @@
     "id": "bg_top",
     "components": [
       "menu-link"
+    ]
+  },
+  {
+    "id": "bhartiaxa-header",
+    "components": [
+      "nav-item"
     ]
   },
   {
@@ -288,10 +312,22 @@
     "components": []
   },
   {
+    "id": "customer-say",
+    "components": [
+      "testimonial"
+    ]
+  },
+  {
     "id": "delightfulDelicacies",
     "components": [
       "category"
     ]
+  },
+  {
+    "id": "desktop-quicklinks-component"
+  },
+  {
+    "id": "disclaimer-container"
   },
   {
     "id": "dynamiccardsvertwo",
@@ -394,6 +430,15 @@
     ]
   },
   {
+    "id": "footer-component",
+    "components": [
+      "footer-social-icon",
+      "footer-contact-method",
+      "footer-section",
+      "footer-key-link"
+    ]
+  },
+  {
     "id": "footer-main",
     "components": [
       "footer-social-link",
@@ -454,6 +499,12 @@
   {
     "id": "hero",
     "components": []
+  },
+  {
+    "id": "home-about-template",
+    "components": [
+      "plan-card"
+    ]
   },
   {
     "id": "home-slider",
@@ -609,9 +660,21 @@
     ]
   },
   {
+    "id": "plan-possibility-template",
+    "components": [
+      "plan-possibility-box"
+    ]
+  },
+  {
     "id": "popular-products",
     "components": [
       "popular-product"
+    ]
+  },
+  {
+    "id": "popular-search",
+    "components": [
+      "popular-search-link"
     ]
   },
   {
@@ -630,6 +693,12 @@
     "id": "products-list",
     "components": [
       "product"
+    ]
+  },
+  {
+    "id": "products-offer-template",
+    "components": [
+      "product-offer-card"
     ]
   },
   {
@@ -739,6 +808,12 @@
     ]
   },
   {
+    "id": "swiper-area",
+    "components": [
+      "swiper-slide"
+    ]
+  },
+  {
     "id": "symptom-condition-columns",
     "components": [
       "symptom-condition-column"
@@ -766,6 +841,12 @@
     "id": "transactionbanking-modal",
     "components": [
       "loancard"
+    ]
+  },
+  {
+    "id": "trending-now",
+    "components": [
+      "trending-item"
     ]
   },
   {

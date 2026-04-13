@@ -1,0 +1,242 @@
+{
+  "definitions": [
+    {
+      "title": "Footer Component",
+      "id": "footer-component",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "footer-component",
+              "model": "footer-component",
+              "name": "Footer Component"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Footer Section",
+      "id": "footer-section",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "footer-section",
+              "name": "Footer Section"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Footer Social Icon",
+      "id": "footer-social-icon",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "footer-social-icon",
+              "name": "Footer Social Icon"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Footer Contact Method",
+      "id": "footer-contact-method",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "footer-contact-method",
+              "name": "Footer Contact Method"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Footer Key Link",
+      "id": "footer-key-link",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "footer-key-link",
+              "name": "Footer Key Link"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "footer-component",
+      "fields": [
+        {
+          "component": "container",
+          "item": "footer-social-icon",
+          "label": "Footer Social Icons",
+          "name": "footerSocialIcons"
+        },
+        {
+          "component": "container",
+          "item": "footer-contact-method",
+          "label": "Footer Contact Methods",
+          "name": "footerContactMethods"
+        },
+        {
+          "component": "container",
+          "item": "footer-section",
+          "label": "Footer Sections",
+          "name": "footerSections"
+        },
+        {
+          "component": "container",
+          "item": "footer-key-link",
+          "label": "Footer Key Links",
+          "name": "footerKeyLinks"
+        },
+        {
+          "component": "richtext",
+          "label": "Footer Address",
+          "name": "footerAddress",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Footer Logo",
+          "name": "footerLogo"
+        },
+        {
+          "component": "text",
+          "label": "Footer Copyright",
+          "name": "footerCopyright",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Footer Scanner Image",
+          "name": "footerScannerImage"
+        }
+      ]
+    },
+    {
+      "id": "footer-section",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Section Title",
+          "name": "sectionTitle",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Section Title Link",
+          "name": "sectionTitleLink",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Section Title Link Label",
+          "name": "sectionTitleLinkLabel",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Section Links",
+          "name": "sectionLinks",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "footer-social-icon",
+      "fields": [
+        {
+          "component": "aem-content",
+          "label": "Icon Link",
+          "name": "iconLink",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Icon Link Label",
+          "name": "iconLinkLabel",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Icon Type",
+          "name": "iconType",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "footer-contact-method",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Contact Type",
+          "name": "contactType",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Contact Link",
+          "name": "contactLink",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Contact Link Label",
+          "name": "contactLinkLabel",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Contact Text",
+          "name": "contactText",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "footer-key-link",
+      "fields": [
+        {
+          "component": "aem-content",
+          "label": "Key Link",
+          "name": "keyLink",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Key Link Label",
+          "name": "keyLinkLabel",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "footer-component",
+      "components": [
+        "footer-social-icon",
+        "footer-contact-method",
+        "footer-section",
+        "footer-key-link"
+      ]
+    }
+  ]
+}

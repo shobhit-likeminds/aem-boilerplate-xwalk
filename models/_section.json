@@ -170,7 +170,19 @@
         "featured-layered-image",
         "image-cta-card",
         "image-text-cta",
-        "cmp-text"
+        "cmp-text",
+        "bhartiaxa-header",
+        "desktop-quicklinks-component",
+        "swiper-area",
+        "products-offer-template",
+        "plan-possibility-template",
+        "trending-now",
+        "home-about-template",
+        "customer-say",
+        "accordion-component",
+        "popular-search",
+        "disclaimer-container",
+        "footer-component"
       ]
     }
   ]

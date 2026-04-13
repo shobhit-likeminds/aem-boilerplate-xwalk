@@ -142,6 +142,40 @@
     ]
   },
   {
+    "id": "accordion-component",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "faq-item",
+        "label": "FAQ Items",
+        "name": "faqItems"
+      }
+    ]
+  },
+  {
+    "id": "faq-item",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Question",
+        "name": "question",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Answer",
+        "name": "answer",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "app-section",
     "fields": [
       {
@@ -372,6 +406,64 @@
         "component": "reference",
         "label": "Icon",
         "name": "icon",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "bhartiaxa-header",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Logo",
+        "name": "logo",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Logo Link",
+        "name": "logoLink",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Logo Link Label",
+        "name": "logoLinkLabel",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "nav-item",
+        "label": "Navigation Items",
+        "name": "navItems"
+      }
+    ]
+  },
+  {
+    "id": "nav-item",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Label",
+        "name": "label",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Link Label",
+        "name": "linkLabel",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Sub Links",
+        "name": "subLinks",
         "valueType": "string"
       }
     ]
@@ -1161,6 +1253,46 @@
     ]
   },
   {
+    "id": "customer-say",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "testimonial",
+        "label": "Testimonials",
+        "name": "testimonials"
+      }
+    ]
+  },
+  {
+    "id": "testimonial",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Image",
+        "name": "image",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Content",
+        "name": "content",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Author",
+        "name": "author",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "category",
     "fields": [
       {
@@ -1220,6 +1352,26 @@
         "component": "text",
         "label": "Button Text",
         "name": "buttonText",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "desktop-quicklinks-component"
+  },
+  {
+    "id": "disclaimer-container",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Accordion Title",
+        "name": "title",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Accordion Content",
+        "name": "content",
         "valueType": "string"
       }
     ]
@@ -2132,6 +2284,155 @@
     ]
   },
   {
+    "id": "footer-component",
+    "fields": [
+      {
+        "component": "container",
+        "item": "footer-social-icon",
+        "label": "Footer Social Icons",
+        "name": "footerSocialIcons"
+      },
+      {
+        "component": "container",
+        "item": "footer-contact-method",
+        "label": "Footer Contact Methods",
+        "name": "footerContactMethods"
+      },
+      {
+        "component": "container",
+        "item": "footer-section",
+        "label": "Footer Sections",
+        "name": "footerSections"
+      },
+      {
+        "component": "container",
+        "item": "footer-key-link",
+        "label": "Footer Key Links",
+        "name": "footerKeyLinks"
+      },
+      {
+        "component": "richtext",
+        "label": "Footer Address",
+        "name": "footerAddress",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Footer Logo",
+        "name": "footerLogo"
+      },
+      {
+        "component": "text",
+        "label": "Footer Copyright",
+        "name": "footerCopyright",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Footer Scanner Image",
+        "name": "footerScannerImage"
+      }
+    ]
+  },
+  {
+    "id": "footer-section",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Section Title",
+        "name": "sectionTitle",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Section Title Link",
+        "name": "sectionTitleLink",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Section Title Link Label",
+        "name": "sectionTitleLinkLabel",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Section Links",
+        "name": "sectionLinks",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "footer-social-icon",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Icon Link",
+        "name": "iconLink",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Icon Link Label",
+        "name": "iconLinkLabel",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Icon Type",
+        "name": "iconType",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "footer-contact-method",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Contact Type",
+        "name": "contactType",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Contact Link",
+        "name": "contactLink",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Contact Link Label",
+        "name": "contactLinkLabel",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Contact Text",
+        "name": "contactText",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "footer-key-link",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Key Link",
+        "name": "keyLink",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Key Link Label",
+        "name": "keyLinkLabel",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "footer-main",
     "fields": [
       {
@@ -2815,6 +3116,58 @@
         "name": "text",
         "value": "",
         "label": "Text",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "home-about-template",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Disclaimer",
+        "name": "disclaimer",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "plan-card",
+        "label": "Plan Cards",
+        "name": "planCards"
+      }
+    ]
+  },
+  {
+    "id": "plan-card",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Icon Class",
+        "name": "iconClass",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Plan Head",
+        "name": "planHead",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Plan Title",
+        "name": "planTitle",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Plan Description",
+        "name": "planDesc",
         "valueType": "string"
       }
     ]
@@ -4333,6 +4686,26 @@
     ]
   },
   {
+    "id": "plan-possibility-template",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "plan-possibility-box",
+        "label": "Plans",
+        "name": "plans"
+      }
+    ]
+  },
+  {
+    "id": "plan-possibility-box"
+  },
+  {
     "id": "popular-products",
     "fields": [
       {
@@ -4380,6 +4753,40 @@
         "component": "text",
         "label": "Button Text",
         "name": "button-text",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "popular-search",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Title",
+        "name": "title",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "popular-search-link",
+        "label": "Links",
+        "name": "links"
+      }
+    ]
+  },
+  {
+    "id": "popular-search-link",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Link Label",
+        "name": "linkLabel",
         "valueType": "string"
       }
     ]
@@ -4500,6 +4907,52 @@
         "component": "text",
         "label": "Product Id",
         "name": "product-id",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "products-offer-template",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "product-offer-card",
+        "label": "Cards",
+        "name": "cards"
+      }
+    ]
+  },
+  {
+    "id": "product-offer-card",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Card Title",
+        "name": "cardTitle",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Features",
+        "name": "features",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Read More Link",
+        "name": "readMoreLink",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Read More Link Label",
+        "name": "readMoreLinkLabel",
         "valueType": "string"
       }
     ]
@@ -5262,6 +5715,46 @@
     ]
   },
   {
+    "id": "swiper-area",
+    "fields": [
+      {
+        "component": "container",
+        "item": "swiper-slide",
+        "label": "Slides",
+        "name": "slides"
+      }
+    ]
+  },
+  {
+    "id": "swiper-slide",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Image",
+        "name": "image",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Image Link",
+        "name": "imageLink",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Image Link Label",
+        "name": "imageLinkLabel",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Form HTML",
+        "name": "formHtml",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "symptom-condition-columns",
     "fields": [
       {
@@ -5472,6 +5965,58 @@
         "component": "text",
         "label": "Link Label",
         "name": "linkLabel",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "trending-now",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "trending-item",
+        "label": "Trending Items",
+        "name": "items"
+      }
+    ]
+  },
+  {
+    "id": "trending-item",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Image",
+        "name": "image",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Title",
+        "name": "title",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Description",
+        "name": "description",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "CTA Link",
+        "name": "ctaLink",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "CTA Label",
+        "name": "ctaLinkLabel",
         "valueType": "string"
       }
     ]
