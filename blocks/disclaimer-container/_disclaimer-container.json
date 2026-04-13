@@ -23,14 +23,14 @@
       "fields": [
         {
           "component": "text",
-          "label": "Accordion Title",
-          "name": "title",
+          "label": "Heading",
+          "name": "heading",
           "valueType": "string"
         },
         {
           "component": "richtext",
-          "label": "Accordion Content",
-          "name": "content",
+          "label": "Disclaimers",
+          "name": "disclaimers",
           "valueType": "string"
         }
       ]

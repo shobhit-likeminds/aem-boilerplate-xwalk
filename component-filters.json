@@ -148,7 +148,10 @@
       "popular-search",
       "disclaimer-container",
       "footer-component",
-      "banner-with-form-carousel"
+      "banner-with-form-carousel",
+      "header",
+      "plan-possibility",
+      "trending-now-template"
     ]
   },
   {
@@ -442,10 +445,7 @@
   {
     "id": "footer-component",
     "components": [
-      "footer-social-icon",
-      "footer-contact-method",
-      "footer-section",
-      "footer-key-link"
+      "footer-section"
     ]
   },
   {
@@ -467,10 +467,7 @@
   {
     "id": "footer",
     "components": [
-      "footer-nav-group",
-      "footer-action",
-      "footer-social-link",
-      "footer-secondary-link"
+      "footer-section"
     ]
   },
   {
@@ -497,6 +494,12 @@
     "components": [
       "navigationItem",
       "countryOption"
+    ]
+  },
+  {
+    "id": "header",
+    "components": [
+      "nav-item"
     ]
   },
   {
@@ -676,6 +679,12 @@
     ]
   },
   {
+    "id": "plan-possibility",
+    "components": [
+      "plan-possibility-item"
+    ]
+  },
+  {
     "id": "popular-products",
     "components": [
       "popular-product"
@@ -851,6 +860,12 @@
     "id": "transactionbanking-modal",
     "components": [
       "loancard"
+    ]
+  },
+  {
+    "id": "trending-now-template",
+    "components": [
+      "trending-now-card"
     ]
   },
   {

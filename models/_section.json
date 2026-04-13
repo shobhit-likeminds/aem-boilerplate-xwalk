@@ -183,7 +183,10 @@
         "popular-search",
         "disclaimer-container",
         "footer-component",
-        "banner-with-form-carousel"
+        "banner-with-form-carousel",
+        "header",
+        "plan-possibility",
+        "trending-now-template"
       ]
     }
   ]

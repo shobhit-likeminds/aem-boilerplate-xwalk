@@ -44,8 +44,6 @@
 
 .icon-linkedin:before { content:"" }
 
-.icon-protect-life:before { content:"" }
-
 .icon-whatsapp-us:before { content:"" }
 
 .icon-arrow-forward:before { content:"" }
@@ -683,6 +681,10 @@
 .section-background-area:before { content:"";z-index:-3;background:linear-gradient(#f4f7fd,#f4f7fd00) no-repeat padding-box padding-box;width:100%;height:120px;display:block;position:absolute;top:0;left:0 }
 
 @media only screen and (max-width:1023px) { .section-background-area:before { height:90px } }
+
+.section-background-area2:before { content:"";background:linear-gradient(#f4f7fd00,#f4f7fd) no-repeat padding-box padding-box;width:100%;height:17%;display:block;position:absolute;bottom:0;left:0 }
+
+@media only screen and (max-width:1023px) { .section-background-area2:before { height:14% } }
 
 @media (max-width:500px) { @-moz-keyframes marquee-text{0%{-moz-transform:translate(100%)}to{-moz-transform:translate(-500%)}}
 

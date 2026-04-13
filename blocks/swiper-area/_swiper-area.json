@@ -49,26 +49,69 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Image",
-          "name": "image",
-          "valueType": "string"
+          "label": "Banner Image",
+          "name": "image"
         },
         {
           "component": "aem-content",
-          "label": "Image Link",
-          "name": "imageLink",
-          "valueType": "string"
+          "label": "Banner Image Link",
+          "name": "imageLink"
         },
         {
           "component": "text",
-          "label": "Image Link Label",
+          "label": "Banner Image Link Label",
           "name": "imageLinkLabel",
           "valueType": "string"
         },
         {
-          "component": "richtext",
-          "label": "Form HTML",
-          "name": "formHtml",
+          "component": "text",
+          "label": "Form Title",
+          "name": "formTitle",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Mobile Number Label",
+          "name": "mobileNumberLabel",
+          "valueType": "string"
+        },
+        {
+          "component": "date-time",
+          "label": "Date Of Birth",
+          "name": "dateOfBirth"
+        },
+        {
+          "component": "text",
+          "label": "Policy Number Label",
+          "name": "policyNumberLabel",
+          "valueType": "string"
+        },
+        {
+          "component": "checkbox-group",
+          "label": "Accept Terms Label",
+          "name": "acceptTermsLabel",
+          "options": [
+            {
+              "label": "Get your life insurance policy updates through WhatsApp",
+              "value": "whatsapp-updates"
+            }
+          ]
+        },
+        {
+          "component": "aem-content",
+          "label": "Contact Us Link",
+          "name": "contactUsLink"
+        },
+        {
+          "component": "text",
+          "label": "Contact Us Link Label",
+          "name": "contactUsLinkLabel",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Submit Button Label",
+          "name": "submitButtonLabel",
           "valueType": "string"
         }
       ]

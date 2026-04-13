@@ -46,7 +46,7 @@
           "component": "container",
           "item": "product-offer",
           "label": "Product Offers",
-          "name": "productOffers"
+          "name": "offers"
         }
       ]
     },
@@ -73,7 +73,7 @@
         },
         {
           "component": "text",
-          "label": "CTA Label",
+          "label": "CTA Link Label",
           "name": "ctaLinkLabel",
           "valueType": "string"
         }

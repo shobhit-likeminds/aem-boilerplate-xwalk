@@ -1,0 +1,97 @@
+{
+  "definitions": [
+    {
+      "title": "Plan Possibility",
+      "id": "plan-possibility",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "plan-possibility",
+              "model": "plan-possibility",
+              "name": "Plan Possibility"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Plan Possibility Item",
+      "id": "plan-possibility-item",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "plan-possibility-item",
+              "name": "Plan Possibility Item"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "plan-possibility",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Heading",
+          "name": "heading",
+          "valueType": "string"
+        },
+        {
+          "component": "container",
+          "item": "plan-possibility-item",
+          "label": "Plan Possibility Items",
+          "name": "items"
+        }
+      ]
+    },
+    {
+      "id": "plan-possibility-item",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Title",
+          "name": "title",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Description",
+          "name": "description",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Tags",
+          "name": "tags",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "CTA Link",
+          "name": "ctaLink",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "CTA Link Label",
+          "name": "ctaLinkLabel",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "plan-possibility",
+      "components": [
+        "plan-possibility-item"
+      ]
+    }
+  ]
+}

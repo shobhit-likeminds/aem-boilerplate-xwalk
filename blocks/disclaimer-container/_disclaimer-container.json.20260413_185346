@@ -1,0 +1,44 @@
+{
+  "definitions": [
+    {
+      "title": "Disclaimer-Container",
+      "id": "disclaimer-container",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "disclaimer-container",
+              "model": "disclaimer-container",
+              "name": "Disclaimer-Container"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "disclaimer-container",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Accordion Title",
+          "name": "title",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Accordion Content",
+          "name": "content",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "disclaimer-container"
+    }
+  ]
+}

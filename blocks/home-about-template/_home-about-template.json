@@ -62,25 +62,25 @@
         {
           "component": "text",
           "label": "Icon Class",
-          "name": "iconClass",
+          "name": "icon",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Plan Head",
-          "name": "planHead",
+          "label": "Highlight",
+          "name": "highlight",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Plan Title",
-          "name": "planTitle",
+          "label": "Title",
+          "name": "title",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Plan Description",
-          "name": "planDesc",
+          "label": "Description",
+          "name": "description",
           "valueType": "string"
         }
       ]

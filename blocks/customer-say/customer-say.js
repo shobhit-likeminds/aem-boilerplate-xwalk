@@ -4,52 +4,66 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
 export default function decorate(block) {
   const [headingRow, ...testimonialRows] = [...block.children];
 
-  const customerSayTemplate = document.createElement('div');
-  customerSayTemplate.classList.add('customer-say-template');
+  block.textContent = '';
+  block.classList.add('customer-say-template');
 
   // Heading
-  const heading = document.createElement('h2');
-  heading.classList.add('customer-say-heading');
-  // Use content detection for the heading cell
-  const headingCell = headingRow.querySelector('div');
-  if (headingCell) {
-    moveInstrumentation(headingCell, heading);
-    heading.textContent = headingCell.textContent.trim();
-  }
-  customerSayTemplate.append(heading);
+  const headingElement = document.createElement('h2');
+  headingElement.classList.add('customer-say-heading');
+  moveInstrumentation(headingRow, headingElement);
+  headingElement.textContent = headingRow.firstElementChild.textContent.trim();
+  block.append(headingElement);
 
+  // Testimonials container
   const customerSayContainer = document.createElement('div');
   customerSayContainer.classList.add('customer-say-container');
+  block.append(customerSayContainer);
 
   const commonCustomerSayComponent = document.createElement('div');
   commonCustomerSayComponent.classList.add('common-customer-say-component');
+  customerSayContainer.append(commonCustomerSayComponent);
 
   const desktopCustomerSay = document.createElement('div');
   desktopCustomerSay.classList.add('desktop-customer-say');
+  commonCustomerSayComponent.append(desktopCustomerSay);
 
   const swiper = document.createElement('div');
   swiper.classList.add('swiper', 'swiper-initialized', 'swiper-horizontal');
+  desktopCustomerSay.append(swiper);
 
   const swiperWrapper = document.createElement('div');
   swiperWrapper.classList.add('swiper-wrapper');
+  swiper.append(swiperWrapper);
 
   testimonialRows.forEach((row, index) => {
-    const [imageCell, contentCell, authorCell] = [...row.children];
+    // CRITICAL FIX: Replaced row.children[n] with content detection
+    const cells = [...row.children];
+    const imageCell = cells.find(cell => cell.querySelector('picture'));
+    const textCell = cells.find(cell => !cell.querySelector('picture') && cell.textContent.trim().length > 0);
+    const authorCell = cells.find(cell => cell !== imageCell && cell !== textCell);
 
     const swiperSlide = document.createElement('div');
     swiperSlide.classList.add('swiper-slide');
-    // Adjust initial slide classes to match original HTML (second slide is active)
+    // Corrected swiper-slide class logic based on original HTML and common Swiper behavior
     if (index === 0) {
-      swiperSlide.classList.add('swiper-slide-prev');
-    } else if (index === 1) {
+      // Initially, the first slide might be active, or a specific one from HTML
+      // For dynamic generation, we'll make the first one active by default
       swiperSlide.classList.add('swiper-slide-active');
-    } else if (index === 2) {
-      swiperSlide.classList.add('swiper-slide-next');
     }
+    // The original HTML shows specific slides as active, prev, next.
+    // The JS's `updateSlides` function will handle these dynamically.
+    // We should not hardcode prev/next classes here for all slides.
+    // The initial state should reflect the first slide as active.
+
+    // Set width and margin-right based on original HTML
+    swiperSlide.style.width = '615px';
+    swiperSlide.style.marginRight = '10px';
     moveInstrumentation(row, swiperSlide);
+    swiperWrapper.append(swiperSlide);
 
     const testimonialContainer = document.createElement('div');
     testimonialContainer.classList.add('testimonial-container');
+    swiperSlide.append(testimonialContainer);
 
     const borderStrip = document.createElement('div');
     borderStrip.classList.add(index % 2 === 0 ? 'blue-border-strip' : 'red-border-strip');
@@ -57,139 +71,135 @@ export default function decorate(block) {
 
     const testimonialBox = document.createElement('div');
     testimonialBox.classList.add('testimonial-box');
+    testimonialContainer.append(testimonialBox);
 
     const testimonialImgBox = document.createElement('div');
     testimonialImgBox.classList.add('testimonial-img-box');
+    testimonialBox.append(testimonialImgBox);
+
     const testimonialImg = document.createElement('div');
     testimonialImg.classList.add('testimonial-img');
+    testimonialImgBox.append(testimonialImg);
 
-    const picture = imageCell.querySelector('picture');
-    if (picture) {
-      const img = picture.querySelector('img');
-      if (img) {
+    if (imageCell) { // Ensure imageCell exists
+      const picture = imageCell.querySelector('picture');
+      if (picture) {
+        const img = picture.querySelector('img');
         const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '100' }]);
-        optimizedPic.querySelector('img').classList.add('w-[100px]', 'h-[100px]', 'object-contain');
         moveInstrumentation(img, optimizedPic.querySelector('img'));
+        // Ensure class names are verbatim from ORIGINAL HTML
+        optimizedPic.querySelector('img').classList.add('w-[100px]', 'h-[100px]', 'object-contain');
         testimonialImg.append(optimizedPic);
       }
     }
-    testimonialImgBox.append(testimonialImg);
-    testimonialBox.append(testimonialImgBox);
 
     const testimonialTextBox = document.createElement('div');
     testimonialTextBox.classList.add('testimonial-text-box');
+    testimonialBox.append(testimonialTextBox);
 
-    const p1 = document.createElement('div');
-    p1.classList.add('p1', 'testimonial-context');
+    const testimonialContext = document.createElement('div');
+    testimonialContext.classList.add('p1', 'testimonial-context');
+    testimonialTextBox.append(testimonialContext);
 
     const testimonialContent = document.createElement('div');
     testimonialContent.classList.add('testimonial-content', 'inline');
-    moveInstrumentation(contentCell, testimonialContent);
-    while (contentCell.firstChild) testimonialContent.append(contentCell.firstChild);
-    p1.append(testimonialContent);
+    if (textCell) { // Ensure textCell exists
+      moveInstrumentation(textCell, testimonialContent);
+      while (textCell.firstChild) testimonialContent.append(textCell.firstChild);
+    }
+    testimonialContext.append(testimonialContent);
 
-    // Check if content needs 'Read More' button
-    const contentText = testimonialContent.textContent.trim();
-    if (contentText.length > 100) { // Arbitrary length for demonstration, adjust as needed
+    // Check if the text content is long and requires a "Read More" button
+    const fullText = testimonialContent.textContent.trim();
+    const shortTextLength = 150; // Arbitrary length for "short" text
+    if (fullText.length > shortTextLength) {
+      const shortText = fullText.substring(0, shortTextLength);
+      testimonialContent.textContent = shortText;
+
       const readMoreButton = document.createElement('button');
-      readMoreButton.classList.add('readmore');
+      readMoreButton.classList.add('readmore'); // Class name from ORIGINAL HTML
       readMoreButton.textContent = 'Read More';
-      p1.append(readMoreButton);
+      testimonialContext.append(readMoreButton);
 
-      const fullContent = testimonialContent.innerHTML;
-      const truncatedContent = contentText.substring(0, 100) + '...';
-      testimonialContent.innerHTML = truncatedContent;
+      const fullTextContainer = document.createElement('div');
+      // Ensure class names are verbatim from ORIGINAL HTML, 'hidden' is not in allowlist
+      // Assuming 'hidden' is a utility class or will be added by CSS
+      fullTextContainer.classList.add('testimonial-content', 'inline');
+      fullTextContainer.style.display = 'none'; // Use style for hiding if 'hidden' isn't in allowlist
+      fullTextContainer.textContent = fullText;
+      testimonialContext.append(fullTextContainer);
 
       readMoreButton.addEventListener('click', () => {
-        if (testimonialContent.classList.contains('inline')) {
-          testimonialContent.innerHTML = fullContent;
-          testimonialContent.classList.remove('inline');
-          readMoreButton.textContent = 'Read Less';
-        } else {
-          testimonialContent.innerHTML = truncatedContent;
-          testimonialContent.classList.add('inline');
+        if (testimonialContent.style.display === 'none') { // Check style.display
+          testimonialContent.style.display = 'inline';
+          fullTextContainer.style.display = 'none';
           readMoreButton.textContent = 'Read More';
+        } else {
+          testimonialContent.style.display = 'none';
+          fullTextContainer.style.display = 'inline';
+          readMoreButton.textContent = 'Read Less';
         }
       });
     }
 
-    testimonialTextBox.append(p1);
-
     const authorHeading = document.createElement('h3');
-    moveInstrumentation(authorCell, authorHeading);
-    authorHeading.textContent = authorCell.textContent.trim();
+    if (authorCell) { // Ensure authorCell exists
+      moveInstrumentation(authorCell, authorHeading);
+      authorHeading.textContent = authorCell.textContent.trim();
+    }
     testimonialTextBox.append(authorHeading);
-
-    testimonialBox.append(testimonialTextBox);
-    testimonialContainer.append(testimonialBox);
-    swiperSlide.append(testimonialContainer);
-    swiperWrapper.append(swiperSlide);
   });
-
-  swiper.append(swiperWrapper);
 
   const swiperPagination = document.createElement('div');
   swiperPagination.classList.add('swiper-pagination', 'swiper-pagination-clickable', 'swiper-pagination-bullets', 'swiper-pagination-horizontal');
+  swiper.append(swiperPagination);
+
+  // Add pagination bullets (example, actual implementation would involve Swiper JS)
   testimonialRows.forEach((_, index) => {
     const bullet = document.createElement('span');
     bullet.classList.add('swiper-pagination-bullet');
-    if (index === 1) { // Assuming the second slide is active initially as per original HTML
+    if (index === 0) {
       bullet.classList.add('swiper-pagination-bullet-active');
     }
     swiperPagination.append(bullet);
   });
-  swiper.append(swiperPagination);
 
-  desktopCustomerSay.append(swiper);
-  commonCustomerSayComponent.append(desktopCustomerSay);
-  customerSayContainer.append(commonCustomerSayComponent);
-  customerSayTemplate.append(customerSayContainer);
-
-  block.textContent = '';
-  block.append(customerSayTemplate);
-
-  // Basic Swiper-like functionality (simplified, not full Swiper.js)
-  let currentIndex = 1; // Start with the second slide active as per original HTML
+  // Basic Swiper-like functionality (without full Swiper JS)
+  let currentIndex = 0;
   const slides = [...swiperWrapper.children];
   const bullets = [...swiperPagination.children];
 
   const updateSlides = () => {
     slides.forEach((slide, i) => {
-      slide.classList.remove('swiper-slide-prev', 'swiper-slide-active', 'swiper-slide-next');
-      if (i === currentIndex - 1) slide.classList.add('swiper-slide-prev');
-      if (i === currentIndex) slide.classList.add('swiper-slide-active');
-      if (i === currentIndex + 1) slide.classList.add('swiper-slide-next');
-      slide.style.width = '615px'; // Hardcoded from original HTML
-      slide.style.marginRight = '10px'; // Hardcoded from original HTML
+      slide.classList.remove('swiper-slide-active', 'swiper-slide-prev', 'swiper-slide-next');
+      if (i === currentIndex) {
+        slide.classList.add('swiper-slide-active');
+      } else if (i === (currentIndex - 1 + slides.length) % slides.length) {
+        slide.classList.add('swiper-slide-prev');
+      } else if (i === (currentIndex + 1) % slides.length) {
+        slide.classList.add('swiper-slide-next');
+      }
+      // Simple translation for demonstration
+      // The original HTML uses `transform: translate3d(-1250px, 0px, 0px)`
+      // and fixed widths. This simple `translateX` might not perfectly
+      // replicate the original Swiper behavior without more complex calculations
+      // based on slide width and margin.
+      // For now, keep the simple translation, but note this might need adjustment
+      // if the visual layout is off.
+      slide.style.transform = `translateX(${(i - currentIndex) * (615 + 10)}px)`; // (slide width + margin)
     });
-
     bullets.forEach((bullet, i) => {
       bullet.classList.toggle('swiper-pagination-bullet-active', i === currentIndex);
     });
-
-    const offset = -currentIndex * (615 + 10); // slide width + margin
-    swiperWrapper.style.transform = `translate3d(${offset}px, 0px, 0px)`;
-    swiperWrapper.style.transitionDuration = '300ms';
   };
 
-  // Auto-advance (simplified)
-  let intervalId = setInterval(() => {
-    currentIndex = (currentIndex + 1) % slides.length;
-    updateSlides();
-  }, 5000); // Change slide every 5 seconds
-
-  // Manual navigation via bullets
   bullets.forEach((bullet, i) => {
     bullet.addEventListener('click', () => {
-      clearInterval(intervalId); // Stop auto-advance on manual interaction
       currentIndex = i;
       updateSlides();
-      intervalId = setInterval(() => { // Restart auto-advance
-        currentIndex = (currentIndex + 1) % slides.length;
-        updateSlides();
-      }, 5000);
     });
   });
 
-  updateSlides(); // Initial update
+  // Initial update
+  updateSlides();
 }

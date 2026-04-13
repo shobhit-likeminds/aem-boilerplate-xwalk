@@ -1,7 +1,7 @@
 {
   "definitions": [
     {
-      "title": "Popular-Search",
+      "title": "Popular Search",
       "id": "popular-search",
       "plugins": {
         "xwalk": {
@@ -10,14 +10,14 @@
             "template": {
               "filter": "popular-search",
               "model": "popular-search",
-              "name": "Popular-Search"
+              "name": "Popular Search"
             }
           }
         }
       }
     },
     {
-      "title": "Popular-Search-Link",
+      "title": "Popular Search Link",
       "id": "popular-search-link",
       "plugins": {
         "xwalk": {
@@ -25,7 +25,7 @@
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
               "model": "popular-search-link",
-              "name": "Popular-Search-Link"
+              "name": "Popular Search Link"
             }
           }
         }
@@ -38,14 +38,14 @@
       "fields": [
         {
           "component": "text",
-          "label": "Title",
-          "name": "title",
+          "label": "Heading",
+          "name": "heading",
           "valueType": "string"
         },
         {
           "component": "container",
           "item": "popular-search-link",
-          "label": "Links",
+          "label": "Popular Search Links",
           "name": "links"
         }
       ]
