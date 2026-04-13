@@ -55,26 +55,14 @@
         },
         {
           "component": "text",
-          "label": "Headline",
-          "name": "headline",
+          "label": "Title",
+          "name": "title",
           "valueType": "string"
         },
         {
           "component": "richtext",
           "label": "Description",
           "name": "description",
-          "valueType": "string"
-        },
-        {
-          "component": "aem-content",
-          "label": "CTA Link",
-          "name": "ctaLink",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "CTA Label",
-          "name": "ctaLinkLabel",
           "valueType": "string"
         }
       ]

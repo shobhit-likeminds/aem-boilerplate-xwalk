@@ -9,146 +9,147 @@ export default function decorate(block) {
     descriptionRow,
     ctaLinkRow,
     ctaLinkLabelRow,
-    ...whyShiftItemRows
+    ...itemRows
   ] = [...block.children];
 
   block.textContent = '';
   block.classList.add('itc-how-shift');
 
+  // Left Image Div
   const leftImageDiv = document.createElement('div');
   leftImageDiv.classList.add('left-image-div');
   moveInstrumentation(mainImageRow, leftImageDiv);
-  const mainPicture = mainImageRow.querySelector('picture');
-  if (mainPicture) {
-    const mainImg = mainPicture.querySelector('img');
-    if (mainImg) {
-      const optimizedPic = createOptimizedPicture(mainImg.src, mainImg.alt, false, [{ width: '750' }]);
-      moveInstrumentation(mainImg, optimizedPic.querySelector('img'));
-      leftImageDiv.append(optimizedPic);
-    }
+  const mainImagePicture = mainImageRow.querySelector('picture');
+  if (mainImagePicture) {
+    const img = mainImagePicture.querySelector('img');
+    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+    moveInstrumentation(img, optimizedPic.querySelector('img'));
+    leftImageDiv.append(optimizedPic);
   }
   block.append(leftImageDiv);
 
-  const container = document.createElement('div');
-  container.classList.add('container', 'read-more');
+  // Container Read More
+  const containerReadMore = document.createElement('div');
+  containerReadMore.classList.add('container', 'read-more');
 
+  // Heading
   const heading = document.createElement('h1');
   heading.classList.add('text-center', 'pb-4', 'rs-heading');
   moveInstrumentation(headingRow, heading);
-  heading.textContent = headingRow.querySelector('div').textContent.trim();
-  container.append(heading);
+  heading.textContent = headingRow.textContent.trim();
+  containerReadMore.append(heading);
 
+  // Subheading and Description
   const readMoreText = document.createElement('div');
   readMoreText.classList.add('read-more-text');
   moveInstrumentation(subheadingRow, readMoreText);
   while (subheadingRow.firstChild) readMoreText.append(subheadingRow.firstChild);
   moveInstrumentation(descriptionRow, readMoreText);
   while (descriptionRow.firstChild) readMoreText.append(descriptionRow.firstChild);
-  container.append(readMoreText);
+  containerReadMore.append(readMoreText);
 
   const readMoreSpan = document.createElement('span');
   readMoreSpan.classList.add('readMore');
-  container.append(readMoreSpan);
+  containerReadMore.append(readMoreSpan);
 
-  // Add event listener for the readMore span
+  // Interactivity: Read More toggle
   readMoreSpan.addEventListener('click', () => {
-    readMoreText.classList.toggle('expanded'); // Toggle a class to show/hide content
-    readMoreSpan.classList.toggle('expanded'); // Toggle a class for the span itself (e.g., change text/icon)
+    containerReadMore.classList.toggle('expanded');
   });
 
+  // Items Wrapper
   const whyShiftWrapper = document.createElement('div');
   whyShiftWrapper.classList.add('d-flex', 'justify-content-evenly', 'flex-wrap', 'why-shift-wrapper');
 
-  whyShiftItemRows.forEach((row) => {
-    const itemDiv = document.createElement('div');
-    moveInstrumentation(row, itemDiv);
-    itemDiv.classList.add('mb-md-0', 'mb-3', 'text-center');
-
-    const healthGoalWrapper = document.createElement('div');
-    healthGoalWrapper.classList.add('itc-health-goal-wrapper');
-
-    let itemImageEl;
-    let itemLinkHref;
-    let itemLinkLabelText;
-
-    // Use content detection for item cells
+  itemRows.forEach((row) => {
     const cells = [...row.children];
+    // Content detection for item cells
     const imageCell = cells.find(cell => cell.querySelector('picture'));
-    const linkCell = cells.find(cell => cell.querySelector('a'));
-    const linkLabelCell = cells.find(cell => !cell.querySelector('picture') && !cell.querySelector('a'));
+    const linkCell = cells.find(cell => cell.querySelector('a') && cell.textContent.trim() !== '');
+    const linkLabelCell = cells.find(cell => !cell.querySelector('picture') && cell.textContent.trim() !== '' && cell !== linkCell);
 
+    const itemDiv = document.createElement('div');
+    itemDiv.classList.add('mb-md-0', 'mb-3', 'text-center');
+    moveInstrumentation(row, itemDiv);
+
+    const itcHealthGoalWrapper = document.createElement('div');
+    itcHealthGoalWrapper.classList.add('itc-health-goal-wrapper');
     if (imageCell) {
-      itemImageEl = imageCell.querySelector('picture');
-    }
-    if (linkCell) {
-      const link = linkCell.querySelector('a');
-      itemLinkHref = link.href;
-      // Prioritize linkLabelCell for text, fallback to link text if linkLabelCell is missing or empty
-      itemLinkLabelText = linkLabelCell ? linkLabelCell.textContent.trim() : link.textContent.trim();
-    } else if (linkLabelCell) {
-      // If there's no link, but there's a label cell, use it for label text
-      itemLinkLabelText = linkLabelCell.textContent.trim();
-    }
-
-
-    if (itemImageEl) {
-      const img = itemImageEl.querySelector('img');
-      if (img) {
+      moveInstrumentation(imageCell, itcHealthGoalWrapper);
+      const itemPicture = imageCell.querySelector('picture');
+      if (itemPicture) {
+        const img = itemPicture.querySelector('img');
         const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
         moveInstrumentation(img, optimizedPic.querySelector('img'));
-        healthGoalWrapper.append(optimizedPic);
+        itcHealthGoalWrapper.append(optimizedPic);
       }
     }
-    itemDiv.append(healthGoalWrapper);
+    itemDiv.append(itcHealthGoalWrapper);
 
-    const linkEl = document.createElement('a');
-    linkEl.classList.add('text-center', 'd-block', 'text-capitalize', 'pt-2', 'image-label');
-    if (itemLinkHref) {
-      linkEl.href = itemLinkHref;
+    const anchor = document.createElement('a');
+    anchor.classList.add('text-center', 'd-block', 'text-capitalize', 'pt-2', 'image-label');
+    if (linkCell) {
+      const foundLink = linkCell.querySelector('a');
+      if (foundLink) {
+        anchor.href = foundLink.href;
+        anchor.alt = linkLabelCell ? linkLabelCell.textContent.trim() : ''; // Use linkLabelCell for alt
+        anchor.textContent = linkLabelCell ? linkLabelCell.textContent.trim() : ''; // Use linkLabelCell for text content
+      }
+      moveInstrumentation(linkCell, anchor);
     }
-    if (itemLinkLabelText) {
-      linkEl.textContent = itemLinkLabelText;
-      linkEl.alt = itemLinkLabelText; // Use label for alt text
+    if (linkLabelCell) {
+      moveInstrumentation(linkLabelCell, anchor);
     }
-    itemDiv.append(linkEl);
+    itemDiv.append(anchor);
+
     whyShiftWrapper.append(itemDiv);
   });
-  container.append(whyShiftWrapper);
 
-  const spacerDiv = document.createElement('div');
-  spacerDiv.classList.add('d-md-none', 'd-block');
-  container.append(spacerDiv);
+  containerReadMore.append(whyShiftWrapper);
 
+  const dMdNoneDiv = document.createElement('div');
+  dMdNoneDiv.classList.add('d-md-none', 'd-block');
+  containerReadMore.append(dMdNoneDiv);
+
+  // CTA Button
   const buttonDiv = document.createElement('div');
   buttonDiv.classList.add('button', 'how-shift-button');
 
-  const ctaLink = ctaLinkRow.querySelector('a');
-  // The ctaLinkLabelRow contains a div, which contains the text.
-  // The original HTML shows the ctaLinkLabelRow as a div containing a div with a link.
-  // We need to extract the text content from the inner div.
-  const ctaLinkLabelText = ctaLinkLabelRow.querySelector('div').textContent.trim();
-
-  if (ctaLink) {
-    const ctaButton = document.createElement('a');
-    ctaButton.classList.add('cmp-button');
-    ctaButton.href = ctaLink.href;
-    ctaButton.alt = ctaLinkLabelText; // Use label for alt text
-
-    const ctaButtonText = document.createElement('span');
-    ctaButtonText.classList.add('cmp-button__text');
-    ctaButtonText.textContent = ctaLinkLabelText;
-    ctaButton.append(ctaButtonText);
-
-    // The original HTML has target="_blank", so we add it.
-    ctaButton.target = '_blank';
-    const screenReaderSpan = document.createElement('span');
-    screenReaderSpan.classList.add('cmp-link__screen-reader-only');
-    screenReaderSpan.textContent = 'opens in a new tab';
-    ctaButton.append(screenReaderSpan);
-
-    buttonDiv.append(ctaButton);
+  const ctaAnchor = document.createElement('a');
+  ctaAnchor.classList.add('cmp-button');
+  const foundCtaLink = ctaLinkRow.querySelector('a');
+  if (foundCtaLink) {
+    ctaAnchor.href = foundCtaLink.href;
+    // The alt attribute for the CTA button should come from the ctaLinkLabelRow's text content,
+    // not from the href. The original HTML shows "View All" as alt.
+    ctaAnchor.alt = ctaLinkLabelRow.textContent.trim();
   }
-  container.append(buttonDiv);
+  moveInstrumentation(ctaLinkRow, ctaAnchor);
 
-  block.append(container);
+  const ctaSpanText = document.createElement('span');
+  ctaSpanText.classList.add('cmp-button__text');
+  ctaSpanText.textContent = ctaLinkLabelRow.textContent.trim();
+  moveInstrumentation(ctaLinkLabelRow, ctaSpanText);
+  ctaAnchor.append(ctaSpanText);
+
+  // Add screen reader only text if present in original HTML
+  const screenReaderOnlySpan = document.createElement('span');
+  screenReaderOnlySpan.classList.add('cmp-link__screen-reader-only');
+  screenReaderOnlySpan.textContent = 'opens in a new tab'; // Hardcoded based on original HTML
+  ctaAnchor.append(screenReaderOnlySpan);
+
+  buttonDiv.append(ctaAnchor);
+  containerReadMore.append(buttonDiv);
+
+  block.append(containerReadMore);
+
+  // Optimize all images within the block
+  // This part is redundant if createOptimizedPicture is used directly when appending images.
+  // Keeping it for now as it's in the original generated code, but ideally should be removed
+  // if all images are handled by createOptimizedPicture during their initial creation.
+  block.querySelectorAll('picture > img').forEach((img) => {
+    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+    moveInstrumentation(img, optimizedPic.querySelector('img'));
+    img.closest('picture').replaceWith(optimizedPic);
+  });
 }

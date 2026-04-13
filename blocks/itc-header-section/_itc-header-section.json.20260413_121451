@@ -17,15 +17,15 @@
       }
     },
     {
-      "title": "Navigation Link",
-      "id": "navigation-link",
+      "title": "Navigation Item",
+      "id": "navigation-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "navigation-link",
-              "name": "Navigation Link"
+              "model": "navigation-item",
+              "name": "Navigation Item"
             }
           }
         }
@@ -70,28 +70,10 @@
           "valueType": "string"
         },
         {
-          "component": "reference",
-          "label": "Secondary Logo Image",
-          "name": "secondaryLogoImage",
-          "valueType": "string"
-        },
-        {
-          "component": "aem-content",
-          "label": "Secondary Logo Link",
-          "name": "secondaryLogoLink",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Secondary Logo Link Label",
-          "name": "secondaryLogoLinkLabel",
-          "valueType": "string"
-        },
-        {
           "component": "container",
-          "item": "navigation-link",
-          "label": "Navigation Links",
-          "name": "navigationLinks"
+          "item": "navigation-item",
+          "label": "Navigation Items",
+          "name": "navigationItems"
         },
         {
           "component": "container",
@@ -102,7 +84,7 @@
       ]
     },
     {
-      "id": "navigation-link",
+      "id": "navigation-item",
       "fields": [
         {
           "component": "aem-content",
@@ -152,7 +134,7 @@
     {
       "id": "itc-header-section",
       "components": [
-        "navigation-link",
+        "navigation-item",
         "country-option"
       ]
     }

@@ -2,7 +2,11 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  // The Space Adder block has no fields, so it renders as an empty div.
-  // We just need to apply the correct class names from the original HTML.
-  block.classList.add('spaceAdder', 'aem-GridColumn', 'aem-GridColumn--default--12');
+  const section = document.createElement('section');
+  section.classList.add('verticalPadding_section', 'padding-80'); // Copied from ORIGINAL HTML
+
+  // Since the block model has no fields, the block.children will be empty.
+  // We simply replace the block content with the new section.
+  block.textContent = '';
+  block.append(section);
 }

@@ -161,15 +161,15 @@
           }
         },
         {
-          "title": "Banner",
-          "id": "banner",
+          "title": "Banner Carousel Slide",
+          "id": "banner-carousel-slide",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "banner",
-                  "name": "Banner"
+                  "model": "banner-carousel-slide",
+                  "name": "Banner Carousel Slide"
                 }
               }
             }
@@ -1521,7 +1521,7 @@
           }
         },
         {
-          "title": "Carousel-Item",
+          "title": "Slide",
           "id": "carousel-item",
           "plugins": {
             "xwalk": {
@@ -1529,7 +1529,7 @@
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
                   "model": "carousel-item",
-                  "name": "Carousel-Item"
+                  "name": "Slide"
                 }
               }
             }
@@ -1598,15 +1598,15 @@
           }
         },
         {
-          "title": "Navigation Item",
-          "id": "navigation-item",
+          "title": "Navigation Link",
+          "id": "navigation-link",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "navigation-item",
-                  "name": "Navigation Item"
+                  "model": "navigation-link",
+                  "name": "Navigation Link"
                 }
               }
             }
@@ -1644,15 +1644,15 @@
           }
         },
         {
-          "title": "Why-Shift-Item",
-          "id": "why-shift-item",
+          "title": "ITC-How-Shift-Item",
+          "id": "itc-how-shift-item",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "why-shift-item",
-                  "name": "Why-Shift-Item"
+                  "model": "itc-how-shift-item",
+                  "name": "ITC-How-Shift-Item"
                 }
               }
             }

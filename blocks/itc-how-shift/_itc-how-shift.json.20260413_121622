@@ -17,15 +17,15 @@
       }
     },
     {
-      "title": "ITC-How-Shift-Item",
-      "id": "itc-how-shift-item",
+      "title": "Why-Shift-Item",
+      "id": "why-shift-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "itc-how-shift-item",
-              "name": "ITC-How-Shift-Item"
+              "model": "why-shift-item",
+              "name": "Why-Shift-Item"
             }
           }
         }
@@ -74,14 +74,14 @@
         },
         {
           "component": "container",
-          "item": "itc-how-shift-item",
-          "label": "Items",
-          "name": "items"
+          "item": "why-shift-item",
+          "label": "Why Shift Items",
+          "name": "whyShiftItems"
         }
       ]
     },
     {
-      "id": "itc-how-shift-item",
+      "id": "why-shift-item",
       "fields": [
         {
           "component": "reference",
@@ -108,7 +108,7 @@
     {
       "id": "itc-how-shift",
       "components": [
-        "itc-how-shift-item"
+        "why-shift-item"
       ]
     }
   ]

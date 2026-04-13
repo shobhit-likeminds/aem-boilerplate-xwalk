@@ -1297,11 +1297,7 @@ to{background-position:0 0}
 @media(prefers-reduced-motion:reduce){.carousel-item{transition:none}
 }
 
-.carousel-item-next, .carousel-item.active { display:block }
-
-.carousel-item-next:not(.carousel-item-left) { -webkit-transform:translateX(100%);transform:translateX(100%) }
-
-.active.carousel-item-left { -webkit-transform:translateX(-100%);transform:translateX(-100%) }
+.carousel-item.active { display:block }
 
 @media(prefers-reduced-motion:reduce){.carousel-fade .active.carousel-item-left,.carousel-fade .active.carousel-item-right{transition:none}
 }

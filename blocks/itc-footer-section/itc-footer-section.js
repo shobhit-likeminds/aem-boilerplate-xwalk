@@ -2,18 +2,23 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
+  const children = [...block.children];
+
   const [
-    itcLogoRow,
+    itcLogoImageRow,
     itcLogoLinkRow,
-    itcLogoLinkLabelRow,
-    fssaiLogoRow,
-    grievanceTitleRow,
-    grievanceNameRow,
-    grievanceContactRow,
-    grievanceTimeRow,
-    copyrightRow,
+    itcLogoLinkLabelRow, // This row contains the link label, not a direct link
+    fssaiLogoImageRow,
+    grievanceOfficerTitleRow,
+    grievanceOfficerNameRow,
+    grievanceOfficerContactRow,
+    grievanceOfficerHoursRow,
+    copyrightTextRow,
     ...itemRows
-  ] = [...block.children];
+  ] = children;
+
+  const footerLinks = itemRows.filter((row) => row.children.length === 2);
+  const socialLinks = itemRows.filter((row) => row.children.length === 3);
 
   block.textContent = '';
 
@@ -25,14 +30,14 @@ export default function decorate(block) {
   row.classList.add('row');
   container.append(row);
 
-  // Left section (logos, grievance)
-  const leftCol = document.createElement('div');
-  leftCol.classList.add('col-lg-6', 'col-sm-12', 'd-flex', 'd-lg-block', 'justify-content-center');
-  row.append(leftCol);
+  // Left column for logos
+  const colLeft = document.createElement('div');
+  colLeft.classList.add('col-lg-6', 'col-sm-12', 'd-flex', 'd-lg-block', 'justify-content-center');
+  row.append(colLeft);
 
   const footerLogos = document.createElement('div');
   footerLogos.classList.add('footer-logos');
-  leftCol.append(footerLogos);
+  colLeft.append(footerLogos);
 
   // ITC Logo
   const footerItcLogo = document.createElement('div');
@@ -41,182 +46,156 @@ export default function decorate(block) {
 
   const itcLogoDiv = document.createElement('div');
   itcLogoDiv.classList.add('logo', 'image');
-  moveInstrumentation(itcLogoRow, itcLogoDiv);
+  footerItcLogo.append(itcLogoDiv);
 
   const itcLogoLink = document.createElement('a');
   itcLogoLink.classList.add('cmp-image__link');
-  // Use content detection for itcLogoLinkRow
-  const itcLogoLinkHref = itcLogoLinkRow.querySelector('a');
-  if (itcLogoLinkHref) {
-    itcLogoLink.href = itcLogoLinkHref.href;
+  const itcLogoFoundLink = itcLogoLinkRow.querySelector('a');
+  if (itcLogoFoundLink) {
+    itcLogoLink.href = itcLogoFoundLink.href;
+  }
+  itcLogoLink.target = '_self';
+  moveInstrumentation(itcLogoLinkRow, itcLogoLink);
+
+  const itcLogoPicture = itcLogoImageRow.querySelector('picture');
+  if (itcLogoPicture) {
+    const img = itcLogoPicture.querySelector('img');
+    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '93' }]);
+    moveInstrumentation(img, optimizedPic.querySelector('img'));
+    itcLogoLink.append(optimizedPic);
   }
   itcLogoDiv.append(itcLogoLink);
 
-  const itcLogoPicture = itcLogoRow.querySelector('picture');
-  if (itcLogoPicture) {
-    itcLogoLink.append(itcLogoPicture);
-  }
-  footerItcLogo.append(itcLogoDiv);
-
-  // FSSAI Logo
+  // Fssai Logo
   const footerFssaiLogo = document.createElement('div');
   footerFssaiLogo.classList.add('footer-fssai-logo');
   footerLogos.append(footerFssaiLogo);
 
   const fssaiLogoDiv = document.createElement('div');
   fssaiLogoDiv.classList.add('fssailogo', 'logo', 'image');
-  moveInstrumentation(fssaiLogoRow, fssaiLogoDiv);
-
-  const fssaiLogoPicture = fssaiLogoRow.querySelector('picture');
-  if (fssaiLogoPicture) {
-    fssaiLogoDiv.append(fssaiLogoPicture);
-  }
   footerFssaiLogo.append(fssaiLogoDiv);
 
-  const grievanceContainer = document.createElement('div');
-  grievanceContainer.classList.add('contact-details');
-  leftCol.append(grievanceContainer);
+  const fssaiLogoPicture = fssaiLogoImageRow.querySelector('picture');
+  if (fssaiLogoPicture) {
+    const img = fssaiLogoPicture.querySelector('img');
+    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '192' }]);
+    moveInstrumentation(img, optimizedPic.querySelector('img'));
+    fssaiLogoDiv.append(optimizedPic);
+  }
 
-  const grievanceTitle = document.createElement('h5');
-  grievanceTitle.classList.add('contact-details__title', 'mb-md-3', 'mb-0');
-  moveInstrumentation(grievanceTitleRow, grievanceTitle);
-  while (grievanceTitleRow.firstChild) grievanceTitle.append(grievanceTitleRow.firstChild);
-  grievanceContainer.append(grievanceTitle);
-
-  const grievanceName = document.createElement('p');
-  grievanceName.classList.add('contact-details__description', 'mb-md-1', 'mb-0');
-  moveInstrumentation(grievanceNameRow, grievanceName);
-  while (grievanceNameRow.firstChild) grievanceName.append(grievanceNameRow.firstChild);
-  grievanceContainer.append(grievanceName);
-
-  const grievanceContact = document.createElement('p');
-  grievanceContact.classList.add('contact-details__description', 'mb-md-1', 'mb-0');
-  moveInstrumentation(grievanceContactRow, grievanceContact);
-  while (grievanceContactRow.firstChild) grievanceContact.append(grievanceContactRow.firstChild);
-  grievanceContainer.append(grievanceContact);
-
-  const grievanceTime = document.createElement('p');
-  grievanceTime.classList.add('contact-details__description', 'mb-0');
-  moveInstrumentation(grievanceTimeRow, grievanceTime);
-  while (grievanceTimeRow.firstChild) grievanceTime.append(grievanceTimeRow.firstChild);
-  grievanceContainer.append(grievanceTime);
-
-  // Center section (footer links)
-  const centerCol = document.createElement('div');
-  centerCol.classList.add('col-lg-6', 'col-sm-12', 'itc-footer-link-left');
-  row.append(centerCol);
+  // Footer links and contact details column
+  const colCenter = document.createElement('div');
+  colCenter.classList.add('col-lg-6', 'col-sm-12', 'itc-footer-link-left');
+  row.append(colCenter);
 
   const footerListsContainer = document.createElement('div');
   footerListsContainer.classList.add('footer-lists-container', 'd-flex');
-  centerCol.append(footerListsContainer);
+  colCenter.append(footerListsContainer);
 
-  const footerLinks1 = document.createElement('div');
-  footerLinks1.classList.add('list-4', 'list'); // Corrected class name from original HTML
-  const ul1 = document.createElement('ul');
-  footerLinks1.append(ul1);
-  footerListsContainer.append(footerLinks1);
+  // Footer Links
+  const list4 = document.createElement('div');
+  list4.classList.add('list-4', 'list');
+  footerListsContainer.append(list4);
 
-  const footerLinks2 = document.createElement('div');
-  footerLinks2.classList.add('list-3', 'list'); // Corrected class name from original HTML
-  const ul2 = document.createElement('ul');
-  ul2.classList.add('cmp-list');
-  footerLinks2.append(ul2);
-  footerListsContainer.append(footerLinks2);
+  const ulFooterLinks = document.createElement('ul');
+  list4.append(ulFooterLinks);
 
-  const footerLinks = itemRows.filter((rowItem) => rowItem.children.length === 2);
-  const socialLinks = itemRows.filter((rowItem) => rowItem.children.length === 3);
+  footerLinks.forEach((rowItem) => {
+    const cells = [...rowItem.children];
+    const linkCell = cells.find(cell => cell.querySelector('a'));
+    const labelCell = cells.find(cell => !cell.querySelector('a')); // Assuming label cell doesn't contain a direct link
 
-  footerLinks.forEach((rowItem, index) => {
     const li = document.createElement('li');
     moveInstrumentation(rowItem, li);
-    li.id = `footerLinks-${index + 1}`;
-
-    const linkCell = [...rowItem.children].find((cell) => cell.querySelector('a'));
-    const linkLabelCell = [...rowItem.children].find((cell) => !cell.querySelector('a'));
 
     const link = document.createElement('a');
-    link.target = '_blank';
-    link.setAttribute('data-cmp-clickable', '');
-
-    if (linkCell) {
-      const foundLink = linkCell.querySelector('a');
-      if (foundLink) {
-        link.href = foundLink.href;
-      }
-      moveInstrumentation(linkCell, link);
-      while (linkCell.firstChild) link.append(linkCell.firstChild);
+    const foundLink = linkCell.querySelector('a');
+    if (foundLink) {
+      link.href = foundLink.href;
+      link.target = '_blank';
     }
-    if (linkLabelCell) {
-      const span = document.createElement('span');
-      span.classList.add('cmp-link__screen-reader-only');
-      moveInstrumentation(linkLabelCell, span);
-      while (linkLabelCell.firstChild) span.append(linkLabelCell.firstChild);
-      link.append(span);
-    }
-
+    link.textContent = labelCell ? labelCell.textContent.trim() : ''; // Use labelCell if found
     li.append(link);
-    if (index % 2 === 0) {
-      ul1.append(li);
-    } else {
-      ul2.append(li);
-    }
+    ulFooterLinks.append(li);
   });
 
-  // Right section (social links, copyright)
-  const rightCol = document.createElement('div');
-  rightCol.classList.add('col-lg-6', 'col-sm-12', 'align-items-md-end', 'd-flex', 'flex-column', 'itc-footer-link-right');
-  row.append(rightCol);
+  // Contact Details
+  const contactDetails = document.createElement('div');
+  contactDetails.classList.add('contact-details');
+  colCenter.append(contactDetails);
 
-  const socialLinksContainer = document.createElement('div');
-  rightCol.append(socialLinksContainer);
+  const grievanceTitle = document.createElement('h5');
+  grievanceTitle.classList.add('contact-details__title', 'mb-md-3', 'mb-0');
+  grievanceTitle.textContent = grievanceOfficerTitleRow.textContent.trim();
+  moveInstrumentation(grievanceOfficerTitleRow, grievanceTitle);
+  contactDetails.append(grievanceTitle);
+
+  const grievanceName = document.createElement('p');
+  grievanceName.classList.add('contact-details__description', 'mb-md-1', 'mb-0');
+  grievanceName.textContent = grievanceOfficerNameRow.textContent.trim();
+  moveInstrumentation(grievanceOfficerNameRow, grievanceName);
+  contactDetails.append(grievanceName);
+
+  const grievanceContact = document.createElement('p');
+  grievanceContact.classList.add('contact-details__description', 'mb-md-1', 'mb-0');
+  grievanceContact.textContent = grievanceOfficerContactRow.textContent.trim();
+  moveInstrumentation(grievanceOfficerContactRow, grievanceContact);
+  contactDetails.append(grievanceContact);
+
+  const grievanceHours = document.createElement('p');
+  grievanceHours.classList.add('contact-details__description', 'mb-0');
+  grievanceHours.textContent = grievanceOfficerHoursRow.textContent.trim();
+  moveInstrumentation(grievanceOfficerHoursRow, grievanceHours);
+  contactDetails.append(grievanceHours);
+
+  // Social links and copyright column
+  const colRight = document.createElement('div');
+  colRight.classList.add('col-lg-6', 'col-sm-12', 'align-items-md-end', 'd-flex', 'flex-column', 'itc-footer-link-right');
+  row.append(colRight);
+
+  const socialLinksWrapper = document.createElement('div');
+  colRight.append(socialLinksWrapper);
+
+  const ulSocial = document.createElement('ul'); // Create ul once outside the loop
+  ulSocial.classList.add('list-unstyled');
+  socialLinksWrapper.append(ulSocial);
 
   socialLinks.forEach((rowItem) => {
-    const ul = document.createElement('ul');
-    ul.classList.add('list-unstyled');
-    socialLinksContainer.append(ul);
+    const cells = [...rowItem.children];
+    const socialLinkCell = cells.find(cell => cell.querySelector('a'));
+    const socialLinkLabelCell = cells.find(cell => !cell.querySelector('a') && !cell.querySelector('picture')); // Assuming label cell doesn't have a link or picture
+    const iconImageCell = cells.find(cell => cell.querySelector('picture'));
 
-    const li = document.createElement('li');
-    moveInstrumentation(rowItem, li);
-    ul.append(li);
+    const liSocial = document.createElement('li');
+    moveInstrumentation(rowItem, liSocial);
+    ulSocial.append(liSocial);
 
-    const iconLinkCell = [...rowItem.children].find((cell) => cell.querySelector('a'));
-    const iconImageCell = [...rowItem.children].find((cell) => cell.querySelector('picture'));
-
-    const link = document.createElement('a');
-    link.id = 'socialIcons';
-    link.target = '_blank';
-    link.setAttribute('data-cmp-clickable', '');
-
-    if (iconLinkCell) {
-      const foundLink = iconLinkCell.querySelector('a');
-      if (foundLink) {
-        link.href = foundLink.href;
-      }
-      moveInstrumentation(iconLinkCell, link);
-      while (iconLinkCell.firstChild) link.append(iconLinkCell.firstChild);
+    const socialLink = document.createElement('a');
+    socialLink.id = 'socialIcons';
+    const foundSocialLink = socialLinkCell.querySelector('a');
+    if (foundSocialLink) {
+      socialLink.href = foundSocialLink.href;
+      socialLink.target = '_blank';
     }
+    moveInstrumentation(socialLinkCell, socialLink);
 
-    if (iconImageCell) {
-      const picture = iconImageCell.querySelector('picture');
-      if (picture) {
-        link.prepend(picture);
-      }
+    const picture = iconImageCell.querySelector('picture');
+    if (picture) {
+      const img = picture.querySelector('img');
+      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '32' }]); // Assuming a small size for social icons
+      moveInstrumentation(img, optimizedPic.querySelector('img'));
+      socialLink.append(optimizedPic);
     }
-
-    const span = document.createElement('span');
-    span.classList.add('cmp-link__screen-reader-only');
-    span.textContent = 'opens in a new tab';
-    link.append(span);
-
-    li.append(link);
+    liSocial.append(socialLink);
   });
 
   const copyrightSpan = document.createElement('span');
   copyrightSpan.classList.add('footer-link');
-  moveInstrumentation(copyrightRow, copyrightSpan);
-  while (copyrightRow.firstChild) copyrightSpan.append(copyrightRow.firstChild);
-  rightCol.append(copyrightSpan);
+  copyrightSpan.textContent = copyrightTextRow.textContent.trim();
+  moveInstrumentation(copyrightTextRow, copyrightSpan);
+  colRight.append(copyrightSpan);
 
+  // Optimize all images in the block
   block.querySelectorAll('picture > img').forEach((img) => {
     const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
     moveInstrumentation(img, optimizedPic.querySelector('img'));

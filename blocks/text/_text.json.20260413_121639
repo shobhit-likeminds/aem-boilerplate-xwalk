@@ -32,7 +32,8 @@
   ],
   "filters": [
     {
-      "id": "text"
+      "id": "text",
+      "components": []
     }
   ]
 }

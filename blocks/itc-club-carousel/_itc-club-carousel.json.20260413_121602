@@ -1,31 +1,31 @@
 {
   "definitions": [
     {
-      "title": "Rs-Cards",
-      "id": "rs-cards",
+      "title": "ITC-Club-Carousel",
+      "id": "itc-club-carousel",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block",
             "template": {
-              "filter": "rs-cards",
-              "model": "rs-cards",
-              "name": "Rs-Cards"
+              "filter": "itc-club-carousel",
+              "model": "itc-club-carousel",
+              "name": "ITC-Club-Carousel"
             }
           }
         }
       }
     },
     {
-      "title": "Rs-Card",
-      "id": "rs-card",
+      "title": "Carousel-Item",
+      "id": "carousel-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "rs-card",
-              "name": "Rs-Card"
+              "model": "carousel-item",
+              "name": "Carousel-Item"
             }
           }
         }
@@ -34,18 +34,18 @@
   ],
   "models": [
     {
-      "id": "rs-cards",
+      "id": "itc-club-carousel",
       "fields": [
         {
           "component": "container",
-          "item": "rs-card",
-          "label": "Cards",
-          "name": "cards"
+          "item": "carousel-item",
+          "label": "Carousel Items",
+          "name": "carouselItems"
         }
       ]
     },
     {
-      "id": "rs-card",
+      "id": "carousel-item",
       "fields": [
         {
           "component": "reference",
@@ -55,8 +55,14 @@
         },
         {
           "component": "text",
-          "label": "Headline",
-          "name": "headline",
+          "label": "Image Alt Text",
+          "name": "imageAlt",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Title",
+          "name": "title",
           "valueType": "string"
         },
         {
@@ -64,27 +70,15 @@
           "label": "Description",
           "name": "description",
           "valueType": "string"
-        },
-        {
-          "component": "aem-content",
-          "label": "CTA Link",
-          "name": "ctaLink",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "CTA Label",
-          "name": "ctaLinkLabel",
-          "valueType": "string"
         }
       ]
     }
   ],
   "filters": [
     {
-      "id": "rs-cards",
+      "id": "itc-club-carousel",
       "components": [
-        "rs-card"
+        "carousel-item"
       ]
     }
   ]

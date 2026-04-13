@@ -121,7 +121,7 @@
   {
     "id": "banner-carousel",
     "components": [
-      "banner"
+      "banner-carousel-slide"
     ]
   },
   {
@@ -386,14 +386,14 @@
   {
     "id": "itc-header-section",
     "components": [
-      "navigation-item",
+      "navigation-link",
       "country-option"
     ]
   },
   {
     "id": "itc-how-shift",
     "components": [
-      "why-shift-item"
+      "itc-how-shift-item"
     ]
   },
   {
@@ -578,8 +578,7 @@
     "components": []
   },
   {
-    "id": "text",
-    "components": []
+    "id": "text"
   },
   {
     "id": "top-nav",

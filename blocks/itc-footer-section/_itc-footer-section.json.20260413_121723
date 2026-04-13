@@ -53,8 +53,8 @@
       "fields": [
         {
           "component": "reference",
-          "label": "ITC Logo Image",
-          "name": "itcLogoImage",
+          "label": "ITC Logo",
+          "name": "itcLogo",
           "valueType": "string"
         },
         {
@@ -65,44 +65,44 @@
         },
         {
           "component": "text",
-          "label": "ITC Logo Link Label",
+          "label": "ITC Logo Label",
           "name": "itcLogoLinkLabel",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Fssai Logo Image",
-          "name": "fssaiLogoImage",
+          "label": "FSSAI Logo",
+          "name": "fssaiLogo",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Grievance Officer Title",
-          "name": "grievanceOfficerTitle",
+          "label": "Grievance Title",
+          "name": "grievanceTitle",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Grievance Officer Name",
-          "name": "grievanceOfficerName",
+          "label": "Grievance Name",
+          "name": "grievanceName",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Grievance Officer Contact",
-          "name": "grievanceOfficerContact",
+          "label": "Grievance Contact",
+          "name": "grievanceContact",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Grievance Officer Hours",
-          "name": "grievanceOfficerHours",
+          "label": "Grievance Time",
+          "name": "grievanceTime",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Copyright Text",
-          "name": "copyrightText",
+          "label": "Copyright",
+          "name": "copyright",
           "valueType": "string"
         },
         {
@@ -141,19 +141,19 @@
       "fields": [
         {
           "component": "aem-content",
-          "label": "Social Link",
-          "name": "socialLink",
+          "label": "Social Icon Link",
+          "name": "iconLink",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Social Link Label",
-          "name": "socialLinkLabel",
+          "label": "Social Icon Label",
+          "name": "iconLinkLabel",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Icon Image",
+          "label": "Social Icon Image",
           "name": "iconImage",
           "valueType": "string"
         }
