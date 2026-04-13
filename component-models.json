@@ -1542,6 +1542,28 @@
     ]
   },
   {
+    "id": "demerged-info",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Image",
+        "name": "image"
+      },
+      {
+        "component": "richtext",
+        "label": "Main Text",
+        "name": "mainText",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Scrolling Text",
+        "name": "scrollingText",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "desktop-quicklinks-component"
   },
   {
@@ -2718,6 +2740,11 @@
     "id": "footer",
     "fields": [
       {
+        "component": "reference",
+        "label": "Logo",
+        "name": "logo"
+      },
+      {
         "component": "container",
         "item": "footer-section",
         "label": "Footer Sections",
@@ -2730,7 +2757,7 @@
     "fields": [
       {
         "component": "text",
-        "label": "Section Title",
+        "label": "Title",
         "name": "title",
         "valueType": "string"
       },
@@ -2783,6 +2810,83 @@
         "component": "aem-content",
         "name": "reference",
         "label": "Reference"
+      }
+    ]
+  },
+  {
+    "id": "header-full-wrp",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Logo",
+        "name": "logo"
+      },
+      {
+        "component": "aem-content",
+        "label": "Logo Link",
+        "name": "logoLink"
+      },
+      {
+        "component": "text",
+        "label": "Logo Link Label",
+        "name": "logoLinkLabel"
+      },
+      {
+        "component": "reference",
+        "label": "Mobile Logo",
+        "name": "mobileLogo"
+      },
+      {
+        "component": "reference",
+        "label": "Close Icon",
+        "name": "closeIcon"
+      },
+      {
+        "component": "reference",
+        "label": "Secondary Logo",
+        "name": "secondaryLogo"
+      },
+      {
+        "component": "aem-content",
+        "label": "Secondary Logo Link",
+        "name": "secondaryLogoLink"
+      },
+      {
+        "component": "text",
+        "label": "Secondary Logo Link Label",
+        "name": "secondaryLogoLinkLabel"
+      },
+      {
+        "component": "container",
+        "item": "nav-item",
+        "label": "Navigation Items",
+        "name": "navItems"
+      }
+    ]
+  },
+  {
+    "id": "nav-item",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Label",
+        "name": "label"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link"
+      },
+      {
+        "component": "text",
+        "label": "Link Label",
+        "name": "linkLabel"
+      },
+      {
+        "component": "richtext",
+        "label": "Sub Links",
+        "name": "subLinks",
+        "valueType": "string"
       }
     ]
   },
@@ -3170,6 +3274,165 @@
     ]
   },
   {
+    "id": "hm-careers",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Image",
+        "name": "image"
+      },
+      {
+        "component": "text",
+        "label": "Sub Title",
+        "name": "subTitle",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "CTA Link",
+        "name": "ctaLink",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "CTA Label",
+        "name": "ctaLinkLabel",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "hm-eng-for-evol",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Description",
+        "name": "description",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "evolution-blurb",
+        "label": "Evolution Blurbs",
+        "name": "evolutionBlurbs"
+      }
+    ]
+  },
+  {
+    "id": "evolution-blurb",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Image",
+        "name": "image",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Title",
+        "name": "title",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Text",
+        "name": "text",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "CTA Link",
+        "name": "ctaLink",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "CTA Label",
+        "name": "ctaLinkLabel",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "hm-suatainability",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Background Image",
+        "name": "backgroundImage"
+      },
+      {
+        "component": "text",
+        "label": "Sub Title",
+        "name": "subTitle",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Description",
+        "name": "description",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "CTA Link",
+        "name": "ctaLink",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "CTA Label",
+        "name": "ctaLinkLabel",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "hm-welcome",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Dot Right Image",
+        "name": "dotRightImage"
+      },
+      {
+        "component": "reference",
+        "label": "Dot Left Image",
+        "name": "dotLeftImage"
+      },
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Description",
+        "name": "description",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "home-about-template",
     "fields": [
       {
@@ -3217,6 +3480,59 @@
         "component": "text",
         "label": "Description",
         "name": "description",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "home-banner",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Background Image",
+        "name": "backgroundImage",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Banner Text 1",
+        "name": "bannerText1",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Banner Text 2",
+        "name": "bannerText2",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Banner Text 3",
+        "name": "bannerText3",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Rotator Image 1",
+        "name": "rotatorImage1",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Rotator Image 2",
+        "name": "rotatorImage2",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Rotator Image 3",
+        "name": "rotatorImage3",
         "valueType": "string"
       }
     ]
@@ -3802,6 +4118,65 @@
     ]
   },
   {
+    "id": "legacy-slider",
+    "fields": [
+      {
+        "component": "container",
+        "item": "legacy-slide",
+        "label": "Slides",
+        "name": "slides"
+      }
+    ]
+  },
+  {
+    "id": "legacy-slide",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Image",
+        "name": "image"
+      },
+      {
+        "component": "text",
+        "label": "Image Alt",
+        "name": "imageAlt"
+      },
+      {
+        "component": "text",
+        "label": "Subtitle",
+        "name": "subtitle"
+      },
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading"
+      },
+      {
+        "component": "text",
+        "label": "Name",
+        "name": "name"
+      },
+      {
+        "component": "richtext",
+        "label": "Designation",
+        "name": "designation",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "CTA Link",
+        "name": "ctaLink",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "CTA Label",
+        "name": "ctaLinkLabel",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "loan-modal",
     "fields": [
       {
@@ -4225,6 +4600,58 @@
         "component": "reference",
         "label": "Image Mobile",
         "name": "imageMobile",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "movement-matters",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Text",
+        "name": "text",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "card-blurb",
+        "label": "Card Blurbs",
+        "name": "cardBlurbs"
+      }
+    ]
+  },
+  {
+    "id": "card-blurb",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Title",
+        "name": "title",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Description",
+        "name": "description",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "CTA Link",
+        "name": "ctaLink",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "CTA Label",
+        "name": "ctaLinkLabel",
         "valueType": "string"
       }
     ]
@@ -5948,6 +6375,73 @@
         "component": "text",
         "label": "Link Label",
         "name": "link-label",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "systems-in-motion",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Dot Right Image",
+        "name": "dotRightImage"
+      },
+      {
+        "component": "reference",
+        "label": "Dot Left Image",
+        "name": "dotLeftImage"
+      },
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Description",
+        "name": "description",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "motion-card",
+        "label": "Motion Cards",
+        "name": "motionCards"
+      }
+    ]
+  },
+  {
+    "id": "motion-card",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Logo",
+        "name": "logo"
+      },
+      {
+        "component": "text",
+        "label": "Title",
+        "name": "title",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Text",
+        "name": "text",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "CTA Link",
+        "name": "ctaLink",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "CTA Label",
+        "name": "ctaLinkLabel",
         "valueType": "string"
       }
     ]

@@ -151,7 +151,17 @@
       "banner-with-form-carousel",
       "header",
       "plan-possibility",
-      "trending-now-template"
+      "trending-now-template",
+      "header-full-wrp",
+      "home-banner",
+      "hm-welcome",
+      "demerged-info",
+      "hm-eng-for-evol",
+      "systems-in-motion",
+      "movement-matters",
+      "legacy-slider",
+      "hm-suatainability",
+      "hm-careers"
     ]
   },
   {
@@ -337,6 +347,9 @@
     ]
   },
   {
+    "id": "demerged-info"
+  },
+  {
     "id": "desktop-quicklinks-component"
   },
   {
@@ -481,6 +494,12 @@
     "components": []
   },
   {
+    "id": "header-full-wrp",
+    "components": [
+      "nav-item"
+    ]
+  },
+  {
     "id": "header-navigation",
     "components": [
       "mainnav-item",
@@ -514,10 +533,28 @@
     "components": []
   },
   {
+    "id": "hm-careers"
+  },
+  {
+    "id": "hm-eng-for-evol",
+    "components": [
+      "evolution-blurb"
+    ]
+  },
+  {
+    "id": "hm-suatainability"
+  },
+  {
+    "id": "hm-welcome"
+  },
+  {
     "id": "home-about-template",
     "components": [
       "plan-card"
     ]
+  },
+  {
+    "id": "home-banner"
   },
   {
     "id": "home-slider",
@@ -571,6 +608,12 @@
     "id": "latest-stories",
     "components": [
       "story"
+    ]
+  },
+  {
+    "id": "legacy-slider",
+    "components": [
+      "legacy-slide"
     ]
   },
   {
@@ -628,6 +671,12 @@
   },
   {
     "id": "modal"
+  },
+  {
+    "id": "movement-matters",
+    "components": [
+      "card-blurb"
+    ]
   },
   {
     "id": "navbar",
@@ -836,6 +885,12 @@
     "id": "symptom-condition-columns",
     "components": [
       "symptom-condition-column"
+    ]
+  },
+  {
+    "id": "systems-in-motion",
+    "components": [
+      "motion-card"
     ]
   },
   {

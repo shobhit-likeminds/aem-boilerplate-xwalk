@@ -37,11 +37,6 @@
       "id": "footer",
       "fields": [
         {
-          "component": "reference",
-          "label": "Logo",
-          "name": "logo"
-        },
-        {
           "component": "container",
           "item": "footer-section",
           "label": "Footer Sections",
@@ -54,7 +49,7 @@
       "fields": [
         {
           "component": "text",
-          "label": "Title",
+          "label": "Section Title",
           "name": "title",
           "valueType": "string"
         },
