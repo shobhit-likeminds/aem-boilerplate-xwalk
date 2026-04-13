@@ -1,0 +1,61 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  const ul = document.createElement('ul');
+
+  [...block.children].forEach((row) => {
+    const li = document.createElement('li');
+    moveInstrumentation(row, li);
+    li.classList.add('first:[&>div]:pt-0', 'theme-dark:border-stroke-light/10', 'grid-full', 'items-center', 'gap-grid-gutter');
+
+    const wrapperDiv = document.createElement('div');
+    wrapperDiv.classList.add('py-lg', 'border-b', 'border-stroke-medium', 'flex', 'flex-col', 'md:grid-centered-12', 'md:grid', 'md:grid-cols-12', 'gap-grid-gutter');
+
+    // Use content detection instead of index access
+    const cells = [...row.children];
+    const valueCell = cells[0]; // Value is the first cell
+    const labelCell = cells[1]; // Label is the second cell
+    const descriptionCell = cells[2]; // Description is the third cell
+
+    // Value and Label
+    const valueLabelContainer = document.createElement('div');
+    valueLabelContainer.classList.add('col-span-1', 'md:col-span-7', 'flex', 'items-center', 'gap-grid-gutter');
+
+    const h3 = document.createElement('h3');
+    h3.classList.add('font-semibold', 'inline', 'text-h2');
+
+    const valueSpan = document.createElement('span');
+    valueSpan.classList.add('text-foreground-colored', 'theme-dark:text-foreground-colored-light', 'theme-medium:text-foreground-tm');
+    valueSpan.textContent = valueCell ? valueCell.textContent.trim() : '';
+    moveInstrumentation(valueCell, valueSpan);
+
+    const labelSpan = document.createElement('span');
+    labelSpan.classList.add('text-foreground-colored-strong', 'theme-dark:text-foreground-colored-muted', 'theme-medium:text-foreground-muted');
+    labelSpan.textContent = labelCell ? labelCell.textContent.trim() : '';
+    moveInstrumentation(labelCell, labelSpan);
+
+    h3.append(valueSpan, labelSpan);
+    valueLabelContainer.append(h3);
+    wrapperDiv.append(valueLabelContainer);
+
+    // Description
+    const descriptionContainer = document.createElement('div');
+    descriptionContainer.classList.add('col-span-1', 'md:col-span-5');
+
+    const descriptionDiv = document.createElement('div');
+    descriptionDiv.classList.add('text-p1', 'prose', 'theme-dark:prose-td', 'theme-medium:prose-p:text-foreground-strong', 'theme-dark:text-foreground-td');
+    moveInstrumentation(descriptionCell, descriptionDiv);
+    while (descriptionCell.firstChild) {
+      descriptionDiv.append(descriptionCell.firstChild);
+    }
+    descriptionContainer.append(descriptionDiv);
+    wrapperDiv.append(descriptionContainer);
+
+    li.append(wrapperDiv);
+    ul.append(li);
+  });
+
+  block.textContent = '';
+  block.append(ul);
+}

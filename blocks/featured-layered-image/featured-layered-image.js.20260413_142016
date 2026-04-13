@@ -1,0 +1,99 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  const [backgroundImageRow, overlayImageRow, imageCreditRow, ...itemRows] = [...block.children];
+
+  // Main container for the image section
+  const imageWrapper = document.createElement('div');
+  imageWrapper.classList.add('relative', 'mb-lg', 'mt-6', 'lg:mt-8', 'w-full', 'h-auto');
+
+  // Background Image
+  const backgroundPicture = backgroundImageRow.querySelector('picture');
+  if (backgroundPicture) {
+    const bgImg = backgroundPicture.querySelector('img');
+    const optimizedBgPic = createOptimizedPicture(bgImg.src, bgImg.alt, false, [{ width: '1280' }]);
+    moveInstrumentation(bgImg, optimizedBgPic.querySelector('img'));
+    optimizedBgPic.querySelector('img').classList.add('rounded-sm', 'relative', 'z-1', 'w-full', 'aspect-[4/3]', 'md:aspect-2/1', 'object-cover');
+    imageWrapper.append(optimizedBgPic);
+  }
+
+  // Overlay Image
+  const overlayPicture = overlayImageRow.querySelector('picture');
+  if (overlayPicture) {
+    const overlayImgWrapper = document.createElement('div');
+    overlayImgWrapper.classList.add('absolute', 'right-8', 'md:right-12', 'lg:right-16', '-top-10', 'md:-top-16', 'z-2', 'w-2/3', 'md:w-1/2', 'max-w-[630px]', 'aspect-square', 'rounded-full', 'overflow-hidden', 'shadow-md');
+
+    const ovImg = overlayPicture.querySelector('img');
+    const optimizedOvPic = createOptimizedPicture(ovImg.src, ovImg.alt, false, [{ width: '630' }]);
+    moveInstrumentation(ovImg, optimizedOvPic.querySelector('img'));
+    optimizedOvPic.querySelector('img').classList.add('w-full', 'h-full', 'object-cover');
+    overlayImgWrapper.append(optimizedOvPic);
+    imageWrapper.append(overlayImgWrapper);
+  }
+
+  // Image Credit
+  const imageCreditDiv = document.createElement('div');
+  imageCreditDiv.classList.add('mt-2xs');
+  const imageCreditP = document.createElement('p');
+  imageCreditP.classList.add('z-1', 'relative', 'text-caption-size', 'theme-dark:text-foreground-colored-muted', 'text-foreground-muted');
+  moveInstrumentation(imageCreditRow.firstElementChild, imageCreditP);
+  imageCreditP.textContent = imageCreditRow.firstElementChild.textContent.trim();
+  imageCreditDiv.append(imageCreditP);
+  imageWrapper.append(imageCreditDiv);
+
+  // Items container
+  const itemsContainer = document.createElement('div');
+  itemsContainer.classList.add('grid', 'grid-cols-1', 'gap-grid-gutter', 'mt-lg', 'md:grid-cols-3');
+
+  itemRows.forEach((row) => {
+    const cells = [...row.children];
+    // Use content detection to find cells, as direct index access is fragile.
+    // Based on BlockJson: Heading (text), Text (richtext), CTA Link (aem-content), CTA Label (text)
+    const headingCell = cells.find((cell) => cell.querySelector('h1, h2, h3, h4, h5, h6') || (cell.textContent.trim() && !cell.querySelector('p') && !cell.querySelector('a')));
+    const textCell = cells.find((cell) => cell.querySelector('p'));
+    const ctaLinkCell = cells.find((cell) => cell.querySelector('a') && cell.textContent.trim() === cell.querySelector('a').href); // CTA Link is the actual link cell
+    const ctaLinkLabelCell = cells.find((cell) => cell.querySelector('a') && cell.textContent.trim() !== cell.querySelector('a').href); // CTA Label is the text for the link
+
+    const itemDiv = document.createElement('div');
+    itemDiv.classList.add('flex', 'flex-col', 'items-start', 'justify-start', 'p-0');
+    moveInstrumentation(row, itemDiv);
+
+    // Heading
+    if (headingCell) {
+      const heading = document.createElement('h3');
+      heading.classList.add('text-h4', 'font-bold', 'mb-xs', 'theme-dark:text-foreground-td', 'theme-medium:text-foreground-tm', 'text-foreground');
+      moveInstrumentation(headingCell, heading);
+      heading.textContent = headingCell.textContent.trim();
+      itemDiv.append(heading);
+    }
+
+    // Text
+    if (textCell) {
+      const textDiv = document.createElement('div');
+      textDiv.classList.add('text-p1', 'mb-md', 'prose', 'theme-dark:prose-td', 'theme-medium:prose-tm');
+      moveInstrumentation(textCell, textDiv);
+      while (textCell.firstChild) textDiv.append(textCell.firstChild);
+      itemDiv.append(textDiv);
+    }
+
+    // CTA Link
+    if (ctaLinkCell && ctaLinkLabelCell) { // Ensure both link and label cells are found
+      const ctaLink = document.createElement('a');
+      ctaLink.classList.add('button', 'button--dark', 'theme-dark:button--light');
+      const foundLink = ctaLinkCell.querySelector('a');
+      if (foundLink) {
+        ctaLink.href = foundLink.href;
+      }
+      moveInstrumentation(ctaLinkCell, ctaLink);
+      ctaLink.textContent = ctaLinkLabelCell.textContent.trim(); // Use the label cell for text
+      itemDiv.append(ctaLink);
+    }
+
+    itemsContainer.append(itemDiv);
+  });
+
+  block.textContent = ''; // Clear the block content
+  block.append(imageWrapper);
+  block.append(itemsContainer);
+}

@@ -159,7 +159,17 @@
         "transactionbanking-modal",
         "small-businesses-modal",
         "insurance-modal",
-        "exclusive-offers-modal"
+        "exclusive-offers-modal",
+        "skip-link",
+        "hero-banner",
+        "mission-heading",
+        "featured-cta-rectangle",
+        "our-work-banner",
+        "featured-grid",
+        "stat-list",
+        "featured-layered-image",
+        "image-cta-card",
+        "image-text-cta"
       ]
     }
   ]

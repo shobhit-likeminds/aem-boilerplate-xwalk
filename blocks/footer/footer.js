@@ -2,336 +2,247 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const children = [...block.children];
+  const footer = document.createElement('footer');
+  footer.classList.add('bg-surface-footer');
 
-  // Filtering root rows based on content detection
-  const accordionSections = children.filter((row) => {
+  const borderDiv = document.createElement('div');
+  borderDiv.classList.add('border-t', 'border-stroke-muted');
+  footer.append(borderDiv);
+
+  const containerDiv = document.createElement('div');
+  containerDiv.classList.add('container', 'overflow-hidden', 'relative');
+  borderDiv.append(containerDiv);
+
+  const ptDiv = document.createElement('div');
+  ptDiv.classList.add('pt-3xl', 'relative', 'z-1', 'lg:pb-5xl');
+  containerDiv.append(ptDiv);
+
+  const primaryNav = document.createElement('nav');
+  primaryNav.classList.add('text-p1', 'grid', 'grid-cols-2', 'md:grid-cols-3', 'xl:grid-full');
+  primaryNav.setAttribute('aria-label', 'Primary footer');
+  ptDiv.append(primaryNav);
+
+  const pandaBgDiv = document.createElement('div');
+  pandaBgDiv.classList.add('absolute', '-z-1', 'bg-[url(\'../images/cssBackgrounds/panda.svg\')]', 'opacity-5', 'bg-no-repeat', 'inset-[0_-10%_0_0]', 'bg-position-[center_left]', 'bg-size-[130%]', 'sm:bg-size-[75%]', 'md:bg-top-left', 'md:inset-[24px_0_0_-24px]', 'lg:bg-size-[60%]');
+  primaryNav.append(pandaBgDiv);
+
+  const allRows = [...block.children];
+
+  // The first row is always the address.
+  const addressRow = allRows[0];
+  const itemRows = allRows.slice(1);
+
+  // Content detection for different item types
+  const navGroupRows = itemRows.filter((row) => {
     const cells = [...row.children];
-    return cells.length === 2 && !cells[0].querySelector('picture') && !cells[0].querySelector('a');
+    return cells.length === 2 && cells.some(cell => cell.querySelector('ul')) && cells.some(cell => !cell.querySelector('a') && !cell.querySelector('picture'));
+  });
+  const actionRows = itemRows.filter((row) => {
+    const cells = [...row.children];
+    return cells.length === 2 && cells.some(cell => cell.querySelector('a')) && cells.some(cell => !cell.querySelector('a') && !cell.querySelector('picture'));
+  });
+  const socialLinkRows = itemRows.filter((row) => {
+    const cells = [...row.children];
+    return cells.length === 3 && cells.some(cell => cell.querySelector('picture')) && cells.some(cell => cell.querySelector('a'));
+  });
+  const secondaryLinkRows = itemRows.filter((row) => {
+    const cells = [...row.children];
+    return cells.length === 2 && cells.some(cell => cell.querySelector('a')) && cells.some(cell => !cell.querySelector('a') && !cell.querySelector('picture'));
   });
 
-  const socialLinks = children.filter((row) => {
-    const cells = [...row.children];
-    return cells.length === 3 && cells[0].querySelector('a') && cells[2].querySelector('picture') && !cells[0].textContent.includes('App Link');
-  });
+  navGroupRows.forEach((row) => {
+    const navGroupDiv = document.createElement('div');
+    navGroupDiv.classList.add('not-last:mb-md', 'md:mb-0', 'flex', 'flex-col', 'xl:col-span-3');
+    moveInstrumentation(row, navGroupDiv);
 
-  const appLinks = children.filter((row) => {
-    const cells = [...row.children];
-    return cells.length === 3 && cells[0].querySelector('a') && cells[2].querySelector('picture') && cells[0].textContent.includes('App Link');
-  });
-
-  const termLinks = children.filter((row) => {
-    const cells = [...row.children];
-    return cells.length === 2 && cells[0].querySelector('a') && !cells[1].querySelector('picture');
-  });
-
-  const footerLight = document.createElement('div');
-  footerLight.classList.add('footer-light');
-
-  const containerFluid = document.createElement('div');
-  containerFluid.classList.add('container-fluid');
-  footerLight.append(containerFluid);
-
-  const rowAccordion = document.createElement('div');
-  rowAccordion.classList.add('row', 'accordion');
-  rowAccordion.id = 'fl-acc-one';
-  containerFluid.append(rowAccordion);
-
-  // Accordion Sections
-  const allYouMayWantToKnowCol = document.createElement('div');
-  allYouMayWantToKnowCol.classList.add('col-12', 'accblock', 'col-lg-6', 'col-xl-5');
-  rowAccordion.append(allYouMayWantToKnowCol);
-
-  const fLinksWantToKnow = document.createElement('div');
-  fLinksWantToKnow.classList.add('f-links');
-  allYouMayWantToKnowCol.append(fLinksWantToKnow);
-
-  const flheadWantToKnow = document.createElement('div');
-  flheadWantToKnow.classList.add('flhead', 'font-italic');
-  flheadWantToKnow.textContent = 'All you may want to know';
-  fLinksWantToKnow.append(flheadWantToKnow);
-
-  const flbodyWantToKnow = document.createElement('div');
-  flbodyWantToKnow.classList.add('flbody');
-  fLinksWantToKnow.append(flbodyWantToKnow);
-
-  const dXlFlexWantToKnow = document.createElement('div');
-  dXlFlexWantToKnow.classList.add('d-xl-flex');
-  flbodyWantToKnow.append(dXlFlexWantToKnow);
-
-  accordionSections.forEach((row, index) => {
-    const cells = [...row.children];
-    const sectionTitleCell = cells.find(cell => !cell.querySelector('a') && !cell.querySelector('picture'));
-    const accordionItemsCell = cells.find(cell => cell.children.length > 0 && !cell.querySelector('a') && !cell.querySelector('picture'));
-
-    const card = document.createElement('div');
-    card.classList.add('card');
-    dXlFlexWantToKnow.append(card);
-
-    const cardHeader = document.createElement('div');
-    cardHeader.classList.add('card-header');
-    cardHeader.id = `flheading${index + 1}`;
-    card.append(cardHeader);
-
-    const h2 = document.createElement('h2');
-    h2.classList.add('mb-0');
-    cardHeader.append(h2);
-
-    const button = document.createElement('button');
-    button.classList.add('btn', 'btn-link', 'btn-block', 'text-left');
-    button.type = 'button';
-    button.setAttribute('aria-expanded', index === 0 ? 'true' : 'false');
-    button.setAttribute('aria-controls', `flcollapse${index + 1}`);
-    button.textContent = sectionTitleCell ? sectionTitleCell.textContent.trim() : '';
-    h2.append(button);
-
-    const faDiv = document.createElement('div');
-    faDiv.classList.add('fa', index === 0 ? 'fa-minus' : 'fa-plus');
-    cardHeader.append(faDiv);
-
-    const plusDiv = document.createElement('div');
-    plusDiv.classList.add('plus');
-    plusDiv.textContent = '+';
-    faDiv.append(plusDiv);
-
-    const minusDiv = document.createElement('div');
-    minusDiv.classList.add('minus');
-    minusDiv.textContent = '_';
-    faDiv.append(minusDiv);
-
-    const collapseDiv = document.createElement('div');
-    collapseDiv.id = `flcollapse${index + 1}`;
-    collapseDiv.classList.add('collapse', 'bbbb', `${index + 1}`);
-    if (index === 0) {
-      collapseDiv.classList.add('show');
+    const headingCell = [...row.children].find((cell) => !cell.querySelector('a') && !cell.querySelector('picture'));
+    if (headingCell) {
+      const headingP = document.createElement('p');
+      headingP.classList.add('mb-xs', 'text-15', 'xl:text-p2', 'font-stretch-normal', 'font-bold', 'text-sm');
+      moveInstrumentation(headingCell, headingP);
+      while (headingCell.firstChild) headingP.append(headingCell.firstChild);
+      navGroupDiv.append(headingP);
     }
-    collapseDiv.setAttribute('aria-labelledby', `flheading${index + 1}`);
-    collapseDiv.setAttribute('data-parent', '#fl-acc-one');
-    card.append(collapseDiv);
 
-    const cardBody = document.createElement('div');
-    cardBody.classList.add('card-body');
-    collapseDiv.append(cardBody);
+    const linksCell = [...row.children].find((cell) => cell.querySelector('ul'));
+    if (linksCell) {
+      const ul = document.createElement('ul');
+      ul.classList.add('flex', 'flex-col', 'gap-xs');
+      moveInstrumentation(linksCell, ul);
 
-    const ul = document.createElement('ul');
-    cardBody.append(ul);
-
-    // Accordion Items (links)
-    if (accordionItemsCell) {
-      const accordionItems = [...accordionItemsCell.children];
-      accordionItems.forEach((itemRow) => {
-        const itemCells = [...itemRow.children];
-        const linkFieldCell = itemCells.find(cell => cell.querySelector('a'));
-        const linkLabelCell = itemCells.find(cell => !cell.querySelector('a'));
-
+      [...linksCell.children].forEach((linkWrapper) => {
         const li = document.createElement('li');
-        const a = document.createElement('a');
-        const foundLink = linkFieldCell ? linkFieldCell.querySelector('a') : null;
-        if (foundLink) {
-          a.href = foundLink.href;
+        moveInstrumentation(linkWrapper, li);
+
+        const link = linkWrapper.querySelector('a');
+        if (link) {
+          const newLink = document.createElement('a');
+          newLink.href = link.href;
+          newLink.textContent = link.textContent.trim();
+          newLink.classList.add('link', 'text-foreground', 'text-p2', 'xl:text-p1', 'transition-display', 'hocus:underline', 'hocus:text-foreground', 'motion-safe:not-focus-visible:transition-underline', 'no-underline');
+          newLink.setAttribute('data-desktop-nav-link', '');
+          moveInstrumentation(link, newLink);
+          li.append(newLink);
         }
-        a.textContent = linkLabelCell ? linkLabelCell.textContent.trim() : '';
-        li.append(a);
         ul.append(li);
-        moveInstrumentation(itemRow, li);
       });
+      navGroupDiv.append(ul);
     }
-
-    button.addEventListener('click', () => {
-      const isExpanded = button.getAttribute('aria-expanded') === 'true';
-      button.setAttribute('aria-expanded', String(!isExpanded));
-      collapseDiv.classList.toggle('show');
-      faDiv.classList.toggle('fa-minus', !isExpanded);
-      faDiv.classList.toggle('fa-plus', isExpanded);
-    });
-    moveInstrumentation(row, card);
+    primaryNav.append(navGroupDiv);
   });
 
-  // Social Links
-  const socialLinksCol = document.createElement('div');
-  socialLinksCol.classList.add('col-12', 'col-xl-2');
-  rowAccordion.append(socialLinksCol);
+  const actionsSocialWrapper = document.createElement('div');
+  actionsSocialWrapper.classList.add('col-span-full', 'pt-[200px]', 'lg:pt-0', 'lg:col-start-10', 'lg:col-span-5', 'lg:ml-auto');
+  primaryNav.append(actionsSocialWrapper);
 
-  const sociallinksDiv = document.createElement('div');
-  sociallinksDiv.classList.add('sociallinks');
-  socialLinksCol.append(sociallinksDiv);
+  const actionsWrapper = document.createElement('div');
+  actionsWrapper.classList.add('flex', 'flex-col', 'items-start', 'gap-md');
+  actionsSocialWrapper.append(actionsWrapper);
 
-  const fLinksSocial = document.createElement('div');
-  fLinksSocial.classList.add('f-links');
-  sociallinksDiv.append(fLinksSocial);
+  actionRows.forEach((row) => {
+    const actionLinkCell = [...row.children].find((cell) => cell.querySelector('a'));
+    const actionLinkLabelCell = [...row.children].find((cell) => !cell.querySelector('a') && !cell.querySelector('picture'));
 
-  const flheadSocial = document.createElement('div');
-  flheadSocial.classList.add('flhead', 'font-italic');
-  flheadSocial.textContent = "Let's get social";
-  fLinksSocial.append(flheadSocial);
+    if (actionLinkCell && actionLinkLabelCell) {
+      const originalLink = actionLinkCell.querySelector('a');
+      const actionLink = document.createElement('a');
+      if (originalLink) {
+        actionLink.href = originalLink.href;
+      }
+      actionLink.textContent = actionLinkLabelCell.textContent.trim();
+      actionLink.classList.add('button', 'button--dark', 'group');
+      moveInstrumentation(row, actionLink);
 
-  const socialNavDiv = document.createElement('div');
-  sociallinksDiv.append(socialNavDiv);
-
-  const socialNav = document.createElement('nav');
-  socialNav.setAttribute('role', 'navigation');
-  socialNav.setAttribute('aria-labelledby', 'block-socialmedialinks-menu');
-  socialNav.id = 'block-socialmedialinks';
-  socialNavDiv.append(socialNav);
-
-  const socialH2 = document.createElement('h2');
-  socialH2.classList.add('visually-hidden');
-  socialH2.id = 'block-socialmedialinks-menu';
-  socialH2.textContent = 'social media links';
-  socialNav.append(socialH2);
-
-  socialLinks.forEach((row) => {
-    const cells = [...row.children];
-    const socialLinkCell = cells.find(cell => cell.querySelector('a'));
-    const iconCell = cells.find(cell => cell.querySelector('picture'));
-
-    const a = document.createElement('a');
-    const foundLink = socialLinkCell ? socialLinkCell.querySelector('a') : null;
-    if (foundLink) {
-      a.href = foundLink.href;
-      if (foundLink.textContent.includes('facebook')) a.classList.add('fb');
-      if (foundLink.textContent.includes('twitter')) a.classList.add('tw');
-      if (foundLink.textContent.includes('youtube')) a.classList.add('yt');
-      if (foundLink.textContent.includes('linkedin')) a.classList.add('lin');
-      if (foundLink.textContent.includes('instagram')) a.classList.add('yt'); // Original HTML uses 'yt' for instagram
-      a.target = '_blank';
-    }
-
-    const picture = iconCell ? iconCell.querySelector('picture') : null;
-    if (picture) {
-      const img = picture.querySelector('img');
+      // Check if there's an image in the original link cell to append
+      const img = originalLink ? originalLink.querySelector('img') : null;
       if (img) {
-        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '30' }]);
-        moveInstrumentation(img, optimizedPic.querySelector('img'));
-        a.append(optimizedPic);
+        const newImg = document.createElement('img');
+        newImg.alt = img.alt;
+        newImg.src = img.src;
+        actionLink.append(newImg);
       }
+      actionsWrapper.append(actionLink);
     }
-    socialNav.append(a);
-    moveInstrumentation(row, a);
   });
 
-  // App Links
-  const appLinksDiv = document.createElement('div');
-  appLinksDiv.classList.add('sociallinks');
-  socialLinksCol.append(appLinksDiv);
+  const socialLinksWrapper = document.createElement('div');
+  socialLinksWrapper.classList.add('flex', 'gap-sm', 'py-2xs', 'mt-sm', 'mb-lg', 'items-center');
+  actionsSocialWrapper.append(socialLinksWrapper);
 
-  const appNavDiv = document.createElement('div');
-  appLinksDiv.append(appNavDiv);
+  socialLinkRows.forEach((row) => {
+    const socialLinkCell = [...row.children].find((cell) => cell.querySelector('a'));
+    const socialLinkLabelCell = [...row.children].find((cell) => !cell.querySelector('a') && !cell.querySelector('picture'));
+    const iconCell = [...row.children].find((cell) => cell.querySelector('picture'));
 
-  const appNav = document.createElement('nav');
-  appNav.setAttribute('role', 'navigation');
-  appNav.setAttribute('aria-labelledby', 'block-mobileappdownload-menu');
-  appNav.id = 'block-mobileappdownload';
-  appNavDiv.append(appNav);
-
-  const appH2 = document.createElement('h2');
-  appH2.classList.add('visually-hidden');
-  appH2.id = 'block-mobileappdownload-menu';
-  appH2.textContent = 'Mobile App download';
-  appNav.append(appH2);
-
-  const fLinksApp = document.createElement('div');
-  fLinksApp.classList.add('f-links');
-  appNav.append(fLinksApp);
-
-  const flheadApp = document.createElement('div');
-  flheadApp.classList.add('flhead', 'font-italic', 'nowrap');
-  flheadApp.textContent = 'Download mBandhan 2.0 app';
-  fLinksApp.append(flheadApp);
-
-  appLinks.forEach((row) => {
-    const cells = [...row.children];
-    const appLinkCell = cells.find(cell => cell.querySelector('a'));
-    const iconCell = cells.find(cell => cell.querySelector('picture'));
-
-    const a = document.createElement('a');
-    const foundLink = appLinkCell ? appLinkCell.querySelector('a') : null;
-    if (foundLink) {
-      a.href = foundLink.href;
-      a.classList.add('apps');
-      a.target = '_blank';
-    }
-
-    const picture = iconCell ? iconCell.querySelector('picture') : null;
-    if (picture) {
-      const img = picture.querySelector('img');
-      if (img) {
-        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: 'auto' }]);
-        moveInstrumentation(img, optimizedPic.querySelector('img'));
-        a.append(optimizedPic);
+    if (socialLinkCell && socialLinkLabelCell && iconCell) {
+      const originalLink = socialLinkCell.querySelector('a');
+      const socialLink = document.createElement('a');
+      if (originalLink) {
+        socialLink.href = originalLink.href;
+        socialLink.target = '_blank';
+        socialLink.rel = 'nofollow noopener';
       }
+      socialLink.classList.add('transition-colors', 'hover:cursor-pointer', 'theme-focus-outline', 'outline-none', 'fill-foreground', 'hocus:fill-foreground-accent');
+      moveInstrumentation(row, socialLink);
+
+      const srOnlySpan = document.createElement('span');
+      srOnlySpan.classList.add('sr-only');
+      srOnlySpan.textContent = socialLinkLabelCell.textContent.trim();
+      socialLink.append(srOnlySpan);
+
+      const picture = iconCell.querySelector('picture');
+      if (picture) {
+        const img = picture.querySelector('img');
+        if (img) {
+          const newImg = document.createElement('img');
+          newImg.alt = img.alt;
+          newImg.src = img.src;
+          socialLink.append(newImg);
+        }
+      }
+      socialLinksWrapper.append(socialLink);
     }
-    appNav.append(a);
-    moveInstrumentation(row, a);
   });
 
-  // Footer Dark
-  const footerDark = document.createElement('div');
-  footerDark.classList.add('footer-dark');
-  block.append(footerDark);
+  const bottomFooterDiv = document.createElement('div');
+  bottomFooterDiv.classList.add('py-2xl', 'text-foreground-invert', 'bg-punaluu-500');
+  footer.append(bottomFooterDiv);
 
-  const darkContainerFluid = document.createElement('div');
-  darkContainerFluid.classList.add('container-fluid');
-  footerDark.append(darkContainerFluid);
+  const bottomContainerDiv = document.createElement('div');
+  bottomContainerDiv.classList.add('grid-full', 'container');
+  bottomFooterDiv.append(bottomContainerDiv);
 
-  const darkRow = document.createElement('div');
-  darkRow.classList.add('row');
-  darkContainerFluid.append(darkRow);
+  const contentDiv = document.createElement('div');
+  contentDiv.classList.add('md:col-span-11', 'space-y-sm', '[&>p]:text-p2');
+  bottomContainerDiv.append(contentDiv);
 
-  const darkCol = document.createElement('div');
-  darkCol.classList.add('col-12');
-  darkRow.append(darkCol);
+  if (addressRow) {
+    const addressP = document.createElement('p');
+    moveInstrumentation(addressRow, addressP);
+    while (addressRow.firstChild) addressP.append(addressRow.firstChild);
+    contentDiv.append(addressP);
+  }
 
-  const flinksDark = document.createElement('div');
-  flinksDark.classList.add('flinks');
-  darkCol.append(flinksDark);
+  // Add static content paragraphs from original HTML
+  const staticP1 = document.createElement('p');
+  staticP1.textContent = 'World Wildlife Fund Inc. is a nonprofit, tax-exempt charitable organization (tax ID number 52-1693387) under Section 501(c)(3) of the Internal Revenue Code. Donations are tax-deductible as allowed by law.';
+  contentDiv.append(staticP1);
 
-  const flheadTerms = document.createElement('div');
-  flheadTerms.classList.add('flhead');
-  flheadTerms.textContent = 'Terms, Polices & Regulations';
-  flinksDark.append(flheadTerms);
+  const staticP2 = document.createElement('p');
+  staticP2.textContent = '© 2026 World Wildlife Fund. WWF® and ©1986 Panda Symbol are owned by WWF. All rights reserved.';
+  contentDiv.append(staticP2);
 
-  const flbodyTerms = document.createElement('div');
-  flbodyTerms.classList.add('flbody');
-  flinksDark.append(flbodyTerms);
+  const secondaryLinksContainer = document.createElement('div');
+  contentDiv.append(secondaryLinksContainer);
 
-  const cloudlinks = document.createElement('div');
-  cloudlinks.classList.add('cloudlinks', 'clearfix');
-  flbodyTerms.append(cloudlinks);
+  const secondaryNav = document.createElement('nav');
+  secondaryNav.setAttribute('aria-label', 'Secondary footer');
+  secondaryLinksContainer.append(secondaryNav);
 
-  termLinks.forEach((row) => {
-    const cells = [...row.children];
-    const termLinkCell = cells.find(cell => cell.querySelector('a'));
-    const termLinkLabelCell = cells.find(cell => !cell.querySelector('a'));
+  const secondaryUl = document.createElement('ul');
+  secondaryUl.classList.add('md:flex', 'flex-wrap', 'gap-sm');
+  secondaryNav.append(secondaryUl);
 
-    const a = document.createElement('a');
-    const foundLink = termLinkCell ? termLinkCell.querySelector('a') : null;
-    if (foundLink) {
-      a.href = foundLink.href;
-      if (foundLink.target) {
-        a.target = foundLink.target;
+  secondaryLinkRows.forEach((row) => {
+    const li = document.createElement('li');
+    li.classList.add('text-p2', 'mb-sm', 'md:mb-0');
+    moveInstrumentation(row, li);
+
+    const secondaryLinkCell = [...row.children].find((cell) => cell.querySelector('a'));
+    const secondaryLinkLabelCell = [...row.children].find((cell) => !cell.querySelector('a') && !cell.querySelector('picture'));
+
+    if (secondaryLinkCell && secondaryLinkLabelCell) {
+      const originalLink = secondaryLinkCell.querySelector('a');
+      const secondaryLink = document.createElement('a');
+      if (originalLink) {
+        secondaryLink.href = originalLink.href;
+        if (originalLink.target) secondaryLink.target = originalLink.target;
+        if (originalLink.rel) secondaryLink.rel = originalLink.rel;
       }
+      secondaryLink.textContent = secondaryLinkLabelCell.textContent.trim();
+      secondaryLink.classList.add('link', 'text-cta-size', 'font-semibold', 'decoration-2', 'underline-offset-8', 'text-foreground-invert', 'hocus:text-foreground-strong-invert');
+      li.append(secondaryLink);
     }
-    a.textContent = termLinkLabelCell ? termLinkLabelCell.textContent.trim() : '';
-    cloudlinks.append(a);
-    moveInstrumentation(row, a);
+    secondaryUl.append(li);
   });
 
-  const copyrightsDiv = document.createElement('div');
-  copyrightsDiv.classList.add('copyrights');
-  darkCol.append(copyrightsDiv);
+  // Add the cookie settings button
+  const cookieLi = document.createElement('li');
+  cookieLi.classList.add('text-p2', 'mb-sm', 'md:mb-0');
+  const cookieButton = document.createElement('button');
+  cookieButton.type = 'button';
+  cookieButton.classList.add('ot-sdk-show-settings', 'cursor-pointer', 'link', 'text-cta-size', 'font-semibold', 'decoration-2', 'underline-offset-8', 'text-foreground-invert', 'hocus:text-foreground-strong-invert');
+  cookieButton.textContent = 'Cookie settings';
+  cookieLi.append(cookieButton);
+  secondaryUl.append(cookieLi);
 
-  const p = document.createElement('p');
-  p.innerHTML = `Bandhan Bank is <a href="/iso-certification" rel="noopener noreferrer" target="_blank">ISO27001:2022 &amp; ISO 22301:2019 certified</a><br>
-© 2026&nbsp;Bandhan Bank. All Rights Reserved`;
-  copyrightsDiv.append(p);
-
-  block.textContent = '';
-  block.append(footerLight, footerDark);
-
-  block.querySelectorAll('picture > img').forEach((img) => {
+  // Image optimization
+  footer.querySelectorAll('picture > img').forEach((img) => {
     const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
     moveInstrumentation(img, optimizedPic.querySelector('img'));
     img.closest('picture').replaceWith(optimizedPic);
   });
+
+  block.textContent = '';
+  block.append(footer);
 }

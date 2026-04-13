@@ -124,7 +124,17 @@
       "transactionbanking-modal",
       "small-businesses-modal",
       "insurance-modal",
-      "exclusive-offers-modal"
+      "exclusive-offers-modal",
+      "skip-link",
+      "hero-banner",
+      "mission-heading",
+      "featured-cta-rectangle",
+      "our-work-banner",
+      "featured-grid",
+      "stat-list",
+      "featured-layered-image",
+      "image-cta-card",
+      "image-text-cta"
     ]
   },
   {
@@ -352,6 +362,21 @@
     ]
   },
   {
+    "id": "featured-cta-rectangle"
+  },
+  {
+    "id": "featured-grid",
+    "components": [
+      "featured-grid-item"
+    ]
+  },
+  {
+    "id": "featured-layered-image",
+    "components": [
+      "featured-layered-image-item"
+    ]
+  },
+  {
     "id": "floating-product",
     "components": [
       "product"
@@ -383,10 +408,10 @@
   {
     "id": "footer",
     "components": [
-      "footer-accordion-section",
+      "footer-nav-group",
+      "footer-action",
       "footer-social-link",
-      "footer-app-link",
-      "footer-term-link"
+      "footer-secondary-link"
     ]
   },
   {
@@ -416,6 +441,9 @@
     ]
   },
   {
+    "id": "hero-banner"
+  },
+  {
     "id": "hero-steel",
     "components": []
   },
@@ -428,6 +456,12 @@
     "components": [
       "home-slider-item"
     ]
+  },
+  {
+    "id": "image-cta-card"
+  },
+  {
+    "id": "image-text-cta"
   },
   {
     "id": "inner-title"
@@ -515,6 +549,9 @@
     ]
   },
   {
+    "id": "mission-heading"
+  },
+  {
     "id": "mobile-menu",
     "components": [
       "menu-item"
@@ -526,7 +563,8 @@
   {
     "id": "navbar",
     "components": [
-      "nav-item"
+      "nav-section",
+      "nav-primary-action"
     ]
   },
   {
@@ -538,6 +576,9 @@
     "components": [
       "nri-banking-carousel-item"
     ]
+  },
+  {
+    "id": "our-work-banner"
   },
   {
     "id": "page-intro",
@@ -641,6 +682,9 @@
     ]
   },
   {
+    "id": "skip-link"
+  },
+  {
     "id": "slickcarousel",
     "components": [
       "carousel-item"
@@ -669,6 +713,12 @@
     "components": [
       "spotlight-slide",
       "quick-link"
+    ]
+  },
+  {
+    "id": "stat-list",
+    "components": [
+      "stat"
     ]
   },
   {
