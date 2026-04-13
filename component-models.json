@@ -269,10 +269,18 @@
     ]
   },
   {
-    "id": "banner-carousel"
+    "id": "banner-carousel",
+    "fields": [
+      {
+        "component": "container",
+        "item": "carousel-item",
+        "label": "Carousel Items",
+        "name": "carouselItems"
+      }
+    ]
   },
   {
-    "id": "carousel-slide",
+    "id": "carousel-item",
     "fields": [
       {
         "component": "reference",
