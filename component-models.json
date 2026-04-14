@@ -245,19 +245,8 @@
     "fields": [
       {
         "component": "text",
-        "label": "Label",
-        "name": "label",
-        "valueType": "string"
-      },
-      {
-        "component": "aem-content",
-        "label": "Link",
-        "name": "link"
-      },
-      {
-        "component": "text",
-        "label": "Link Label",
-        "name": "linkLabel",
+        "label": "Heading",
+        "name": "heading",
         "valueType": "string"
       },
       {
@@ -294,8 +283,7 @@
       {
         "component": "text",
         "label": "Logo Link Label",
-        "name": "logoLinkLabel",
-        "valueType": "string"
+        "name": "logoLinkLabel"
       },
       {
         "component": "reference",
@@ -310,8 +298,17 @@
       {
         "component": "text",
         "label": "80th Year Logo Link Label",
-        "name": "year80LogoLinkLabel",
-        "valueType": "string"
+        "name": "year80LogoLinkLabel"
+      },
+      {
+        "component": "aem-content",
+        "label": "Contact Us Link",
+        "name": "contactUsLink"
+      },
+      {
+        "component": "text",
+        "label": "Contact Us Link Label",
+        "name": "contactUsLinkLabel"
       },
       {
         "component": "container",
@@ -327,8 +324,7 @@
       {
         "component": "text",
         "label": "Label",
-        "name": "label",
-        "valueType": "string"
+        "name": "label"
       },
       {
         "component": "aem-content",
@@ -338,8 +334,7 @@
       {
         "component": "text",
         "label": "Link Label",
-        "name": "linkLabel",
-        "valueType": "string"
+        "name": "linkLabel"
       },
       {
         "component": "richtext",
@@ -606,6 +601,69 @@
         "component": "text",
         "label": "Link Label",
         "name": "linkLabel",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "spotlight-home",
+    "fields": [
+      {
+        "component": "container",
+        "item": "spotlight-slide",
+        "label": "Slides",
+        "name": "slides"
+      },
+      {
+        "component": "richtext",
+        "label": "Quick Links",
+        "name": "quickLinks",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "spotlight-slide",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Image",
+        "name": "image"
+      },
+      {
+        "component": "text",
+        "label": "Image Alt Text",
+        "name": "altText",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Small Heading",
+        "name": "small",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Description",
+        "name": "description",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "CTA Link",
+        "name": "ctaLink",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "CTA Label",
+        "name": "ctaLinkLabel",
         "valueType": "string"
       }
     ]

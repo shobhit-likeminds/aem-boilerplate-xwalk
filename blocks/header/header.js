@@ -2,18 +2,25 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const [
-    logoRow,
-    logoLinkRow,
-    logoLinkLabelRow,
-    year80LogoRow,
-    year80LogoLinkRow,
-    year80LogoLinkLabelRow,
-    ...navItemRows
-  ] = [...block.children];
+  const children = [...block.children];
+
+  // Map the first 8 rows to specific fields based on BlockJson structure
+  const logoRow = children[0];
+  const logoLinkRow = children[1];
+  const logoLinkLabelRow = children[2];
+  const year80LogoRow = children[3];
+  const year80LogoLinkRow = children[4];
+  const year80LogoLinkLabelRow = children[5];
+  const contactUsLinkRow = children[6];
+  const contactUsLinkLabelRow = children[7];
+
+  // Remaining rows are nav items
+  const navItemRows = children.slice(8);
+
+  block.textContent = '';
 
   const header = document.createElement('header');
-  header.classList.add('main-header', 'solid'); // nav-up is a scroll state class, do not add initially
+  header.classList.add('main-header', 'with-marquee', 'solid'); // 'nav-up' is a state class, not initial.
 
   const container = document.createElement('div');
   container.classList.add('container');
@@ -27,9 +34,9 @@ export default function decorate(block) {
   const logoDiv = document.createElement('div');
   logoDiv.classList.add('logo');
   const logoLink = document.createElement('a');
-  const foundLogoLink = logoLinkRow.querySelector('a');
-  if (foundLogoLink) {
-    logoLink.href = foundLogoLink.href;
+  const logoLinkHref = logoLinkRow.querySelector('a')?.href;
+  if (logoLinkHref) {
+    logoLink.href = logoLinkHref;
   }
   const logoPicture = logoRow.querySelector('picture');
   if (logoPicture) {
@@ -37,13 +44,14 @@ export default function decorate(block) {
     const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '200' }]);
     moveInstrumentation(img, optimizedPic.querySelector('img'));
     logoLink.append(optimizedPic);
-    optimizedPic.querySelector('img').classList.add('hiddenlogo1');
-  } else {
-    logoLink.textContent = logoLinkLabelRow.textContent.trim();
+    logoLink.querySelector('img').classList.add('hiddenlogo1');
+    logoLink.querySelector('img').width = 200;
+    logoLink.querySelector('img').height = 30;
+    logoLink.querySelector('img').style.width = 'auto';
+    logoLink.querySelector('img').loading = 'lazy';
+    logoLink.querySelector('img').title = logoLinkLabelRow.textContent.trim();
   }
   moveInstrumentation(logoRow, logoLink);
-  moveInstrumentation(logoLinkRow, logoLink);
-  moveInstrumentation(logoLinkLabelRow, logoLink);
   logoDiv.append(logoLink);
   wrap.append(logoDiv);
 
@@ -51,61 +59,43 @@ export default function decorate(block) {
   const hamburger = document.createElement('div');
   hamburger.classList.add('hamburger');
   const hamburgerUl = document.createElement('ul');
-  for (let i = 0; i < 3; i += 1) {
-    hamburgerUl.append(document.createElement('li'));
-  }
+  [...Array(3)].forEach(() => hamburgerUl.append(document.createElement('li')));
   hamburger.append(hamburgerUl);
   wrap.append(hamburger);
 
-  // Main Navigation
-  const nav = document.createElement('nav');
-  nav.classList.add('main-nav');
+  // Main Nav
+  const mainNav = document.createElement('nav');
+  mainNav.classList.add('main-nav');
   const navUl = document.createElement('ul');
   navUl.setAttribute('itemscope', '');
   navUl.setAttribute('itemtype', 'http://www.schema.org/SiteNavigationElement');
-  nav.append(navUl);
-  wrap.append(nav);
+  mainNav.append(navUl);
+  wrap.append(mainNav);
 
   navItemRows.forEach((row) => {
-    const cells = [...row.children];
-    // Use content detection for cells based on BlockJson types
-    const labelCell = cells.find(cell => !cell.querySelector('a') && !cell.querySelector('picture') && cell.textContent.trim() === row.children[0].textContent.trim());
-    const linkCell = cells.find(cell => cell.querySelector('a') && cell.textContent.trim() === row.children[1].textContent.trim());
-    const linkLabelCell = cells.find(cell => !cell.querySelector('a') && !cell.querySelector('picture') && cell.textContent.trim() === row.children[2].textContent.trim());
-    const subLinksCell = cells.find(cell => cell.innerHTML.includes('<p>') || cell.innerHTML.includes('<ul>'));
-
+    const [labelCell, linkCell, linkLabelCell, subLinksCell] = [...row.children];
     const li = document.createElement('li');
-    moveInstrumentation(row, li);
-
-    const subList = subLinksCell?.querySelector('ul');
-    const hasSubChild = subList || (subLinksCell && subLinksCell.textContent.trim()); // Check for actual content or ul
-    const anchor = document.createElement('a');
-    const foundLink = linkCell?.querySelector('a');
-    if (foundLink) {
-      anchor.href = foundLink.href;
-    } else {
-      anchor.href = '#';
-    }
-    anchor.textContent = linkLabelCell?.textContent.trim() || labelCell.textContent.trim();
-    anchor.setAttribute('itemprop', 'url');
+    li.classList.add('has-child', 'hover-red');
     li.setAttribute('itemprop', 'name');
 
-    if (hasSubChild) {
-      li.classList.add('has-child', 'hover-red');
-      li.append(anchor);
+    const anchor = document.createElement('a');
+    anchor.setAttribute('itemprop', 'url');
+    const foundLink = linkCell.querySelector('a');
+    if (foundLink) {
+      anchor.href = foundLink.href;
+    }
+    anchor.textContent = linkLabelCell.textContent.trim();
+    li.append(anchor);
 
+    const subList = subLinksCell?.querySelector('ul');
+    if (subList) {
       const span = document.createElement('span');
-      // This SVG is hardcoded in the original HTML, but not provided in the model.
-      // We will create a generic arrow icon.
-      const svgIcon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-      svgIcon.setAttribute('viewBox', '0 0 24 24');
-      svgIcon.setAttribute('fill', 'currentColor');
-      svgIcon.setAttribute('width', '1em');
-      svgIcon.setAttribute('height', '1em');
-      const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-      path.setAttribute('d', 'M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z');
-      svgIcon.append(path);
-      span.append(svgIcon);
+      const svgImg = document.createElement('img');
+      svgImg.alt = 'svg file';
+      // The original SVG is hardcoded in the HTML, so we'll create a placeholder.
+      // In a real scenario, this SVG would ideally come from a dedicated field in the model.
+      svgImg.src = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgdmlld0JveD0iMCAwIDE2IDE2Ij48cGF0aCBmaWxsPSIjRkYwMDAwIiBkPSJNNi4wMyAzLjQyYy40LS40LjktLjYgMS40LS42cy45LjIgMS4zLjZsNC43IDQuNy43LjctLjcuN0wxMC40IDEzLjZjLS40LjQtLjkuNi0xLjMuNnMtLjktLjItMS4zLS42LTYuNy02LjctNi43LTYuN2MtLjQtLjQtLjYtLjktLjYtMS4zcy4yLS45LjYtMS4zTDYuMDMgMy40MnoiLz48L3N2Zz4='; // Placeholder SVG
+      span.append(svgImg);
       li.append(span);
 
       const megaMenu = document.createElement('div');
@@ -114,206 +104,117 @@ export default function decorate(block) {
       megaMenuWrap.classList.add('wrap', 'container');
       const centerDiv = document.createElement('div');
       centerDiv.classList.add('center-div');
+      const subNavWrap = document.createElement('div');
+      subNavWrap.classList.add('sub-nav-wrap'); // Add specific classes if needed based on original HTML context
+      subNavWrap.innerHTML = subLinksCell.innerHTML; // Move content directly
+
+      // Transform nested lists if any
+      const transformNestedLists = (rootUl) => {
+        rootUl.querySelectorAll('li').forEach(itemLi => {
+          const nested = itemLi.querySelector(':scope > ul');
+          if (nested) {
+            nested.remove();
+            const subWrap = document.createElement('div');
+            subWrap.classList.add('has-sub-child');
+            subWrap.append(nested);
+            itemLi.append(subWrap);
+            const trigger = itemLi.querySelector(':scope > a') || itemLi;
+            trigger.addEventListener('click', (e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              itemLi.classList.toggle('active');
+              subWrap.classList.toggle('active');
+            });
+          }
+        });
+      };
+      subNavWrap.querySelectorAll('ul').forEach(transformNestedLists);
+
+      centerDiv.append(subNavWrap);
       megaMenuWrap.append(centerDiv);
       megaMenu.append(megaMenuWrap);
-
-      const subNavWrap = document.createElement('div');
-      subNavWrap.classList.add('sub-nav-wrap');
-      centerDiv.append(subNavWrap);
-
-      if (subList) {
-        subNavWrap.append(subList);
-        // Transform nested lists if any
-        function transformNestedLists(rootUl) {
-          rootUl.querySelectorAll('li').forEach(itemLi => {
-            const nested = itemLi.querySelector(':scope > ul');
-            if (nested) {
-              nested.remove();
-              const subWrap = document.createElement('div');
-              subWrap.classList.add('has-sub-child');
-              subWrap.append(nested);
-              itemLi.append(subWrap);
-
-              const trigger = itemLi.querySelector(':scope > a') || itemLi;
-              trigger.addEventListener('click', (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                itemLi.classList.toggle('active');
-                subWrap.classList.toggle('active');
-              });
-            }
-          });
-        }
-        transformNestedLists(subList);
-
-        // Toggle mega menu on click
-        li.addEventListener('click', (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          li.classList.toggle('active');
-          megaMenu.classList.toggle('active');
-        });
-      } else if (subLinksCell && subLinksCell.textContent.trim()) {
-        // If it's rich text but not a UL, treat as a simple content block
-        const leftDiv = document.createElement('div');
-        leftDiv.classList.add('left-div');
-        leftDiv.innerHTML = subLinksCell.innerHTML; // Preserve rich text formatting
-        centerDiv.prepend(leftDiv);
-
-        // If there's rich text content, the parent li should also toggle the mega menu
-        li.addEventListener('click', (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          li.classList.toggle('active');
-          megaMenu.classList.toggle('active');
-        });
-      }
       li.append(megaMenu);
-    } else {
-      li.append(anchor);
+
+      // Toggle functionality for mega menu
+      anchor.addEventListener('click', (e) => {
+        e.preventDefault();
+        li.classList.toggle('active');
+      });
     }
+    moveInstrumentation(row, li);
     navUl.append(li);
   });
 
-  // Icon Nav (Mobile and Desktop)
-  const createIconNav = (isMobile) => {
-    const iconNav = document.createElement('div');
-    iconNav.classList.add('icon-nav', isMobile ? 'mobile-menus-icon' : 'desktop-menus-icon');
-    const iconUl = document.createElement('ul');
+  // Icon Nav (Mobile)
+  const mobileIconNav = document.createElement('div');
+  mobileIconNav.classList.add('icon-nav', 'mobile-menus-icon');
+  const mobileIconUl = document.createElement('ul');
 
-    // Contact Us
-    const contactLi = document.createElement('li');
-    contactLi.classList.add('mail');
-    const contactLink = document.createElement('a');
-    contactLink.href = 'https://www.mahindra.com/contact-us';
-    if (isMobile) {
-      contactLink.textContent = 'Contact Us';
-    } else {
-      const contactImg = document.createElement('img');
-      contactImg.alt = 'svg file';
-      contactImg.src = '/content/dam/aemigrate/uploaded-folder/image/1776176653641.svg+xml'; // Example path, should come from model if possible
-      contactLink.append(contactImg);
-    }
-    contactLi.append(contactLink);
-    iconUl.append(contactLi);
+  const mailLiMobile = document.createElement('li');
+  mailLiMobile.classList.add('mail');
+  const mailLinkMobile = document.createElement('a');
+  const contactUsLinkHref = contactUsLinkRow.querySelector('a')?.href;
+  if (contactUsLinkHref) {
+    mailLinkMobile.href = contactUsLinkHref;
+  }
+  mailLinkMobile.textContent = contactUsLinkLabelRow.textContent.trim();
+  mailLiMobile.append(mailLinkMobile);
+  mobileIconUl.append(mailLiMobile);
 
-    // Search
-    const searchLi = document.createElement('li');
-    searchLi.classList.add('search');
-    const searchLink = document.createElement('a');
-    searchLink.href = '#';
-    const searchIcon1 = document.createElement('img');
-    searchIcon1.alt = 'svg file';
-    searchIcon1.src = '/content/dam/aemigrate/uploaded-folder/image/1776176653201.svg+xml';
-    const searchIcon2 = document.createElement('img');
-    searchIcon2.alt = 'svg file';
-    searchIcon2.src = '/content/dam/aemigrate/uploaded-folder/image/1776176653349.svg+xml';
-    searchLink.append(searchIcon1, searchIcon2);
-    if (isMobile) {
-      const searchSpan = document.createElement('span');
-      searchSpan.textContent = ' Search';
-      searchLink.append(searchSpan);
-    }
-    searchLi.append(searchLink);
+  const searchLiMobile = document.createElement('li');
+  searchLiMobile.classList.add('search');
+  const searchLinkMobile = document.createElement('a');
+  searchLinkMobile.href = '#';
+  const searchImgMobile = document.createElement('img');
+  searchImgMobile.alt = 'svg file';
+  searchImgMobile.src = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgdmlld0JveD0iMCAwIDE2IDE2Ij48cGF0aCBmaWxsPSIjRkYwMDAwIiBkPSJNNi4wMyAzLjQyYy40LS40LjktLjYgMS40LS42cy45LjIgMS4zLjZsNC43IDQuNy43LjctLjcuN0wxMC40IDEzLjZjLS40LjQtLjkuNi0xLjMuNnMtLjktLjItMS4zLS42LTYuNy02LjctNi43LTYuN2MtLjQtLjQtLjYtLjktLjYtMS4zcy4yLS45LjYtMS4zTDYuMDMgMy40MnoiLz48L3N2Zz4='; // Placeholder SVG
+  searchLinkMobile.append(searchImgMobile);
+  const searchSpanMobile = document.createElement('span');
+  searchSpanMobile.textContent = ' Search';
+  searchLinkMobile.append(searchSpanMobile);
+  searchLiMobile.append(searchLinkMobile);
+  mobileIconUl.append(searchLiMobile);
+  mobileIconNav.append(mobileIconUl);
+  mainNav.append(mobileIconNav);
 
-    const searchScreenWrap = document.createElement('div');
-    searchScreenWrap.classList.add('search-screen-wrap');
-    const searchWrapInner = document.createElement('div');
-    searchWrapInner.classList.add('wrap');
-    searchScreenWrap.append(searchWrapInner);
+  // Icon Nav (Desktop)
+  const desktopIconNav = document.createElement('div');
+  desktopIconNav.classList.add('icon-nav', 'desktop-menus-icon');
+  const desktopIconUl = document.createElement('ul');
 
-    const searchForm = document.createElement('form');
-    searchForm.action = 'https://www.mahindra.com/search';
-    searchForm.method = 'get';
-    searchForm.id = 'search-block-form';
-    searchForm.setAttribute('accept-charset', 'UTF-8');
+  const mailLiDesktop = document.createElement('li');
+  mailLiDesktop.classList.add('mail');
+  const mailLinkDesktop = document.createElement('a');
+  if (contactUsLinkHref) {
+    mailLinkDesktop.href = contactUsLinkHref;
+  }
+  const mailImgDesktop = document.createElement('img');
+  mailImgDesktop.alt = 'svg file';
+  mailImgDesktop.src = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgdmlld0JveD0iMCAwIDE2IDE2Ij48cGF0aCBmaWxsPSIjRkYwMDAwIiBkPSJNNi4wMyAzLjQyYy40LS40LjktLjYgMS40LS42cy45LjIgMS4zLjZsNC43IDQuNy43LjctLjcuN0wxMC40IDEzLjZjLS40LjQtLjkuNi0xLjMuNnMtLjktLjItMS4zLS42LTYuNy02LjctNi43LTYuN2MtLjQtLjQtLjYtLjktLjYtMS4zcy4yLS45LjYtMS4zTDYuMDMgMy40MnoiLz48L3N2Zz4='; // Placeholder SVG
+  mailLinkDesktop.append(mailImgDesktop);
+  mailLiDesktop.append(mailLinkDesktop);
+  desktopIconUl.append(mailLiDesktop);
 
-    const searchInputWrap = document.createElement('div');
-    searchInputWrap.classList.add('search-wrap');
-    const searchIconDiv = document.createElement('div');
-    searchIconDiv.classList.add('search-icon');
-    const searchIconImg = document.createElement('img');
-    searchIconImg.alt = 'svg file';
-    searchIconImg.src = '/content/dam/aemigrate/uploaded-folder/image/1776176653454.svg+xml';
-    searchIconDiv.append(searchIconImg);
-    const searchInput = document.createElement('input');
-    searchInput.type = 'text';
-    searchInput.classList.add('input-text', 'searchtext');
-    searchInput.required = true;
-    searchInput.name = 'key';
-    searchInput.id = 'searchInput';
-    searchInput.autocomplete = 'off';
-    const submitButton = document.createElement('button');
-    submitButton.classList.add('submit-button');
-    const submitLabel = document.createElement('div');
-    submitLabel.classList.add('label');
-    submitLabel.textContent = 'Submit';
-    const submitIcon = document.createElement('img');
-    submitIcon.alt = 'svg file';
-    submitIcon.src = '/content/dam/aemigrate/uploaded-folder/image/1776176653588.svg+xml';
-    submitButton.append(submitLabel, submitIcon);
-    searchInputWrap.append(searchIconDiv, searchInput, submitButton);
-    searchForm.append(searchInputWrap);
-
-    const searchResultBox = document.createElement('div');
-    searchResultBox.classList.add('searchResultBox');
-    searchResultBox.style.display = 'none'; // Initial state
-    // Add swiper structure if needed, but EDS doesn't load swiper JS.
-    searchForm.append(searchResultBox);
-
-    searchWrapInner.append(searchForm);
-
-    const createSuggestions = (label, keywords) => {
-      const suggestionsWrap = document.createElement('div');
-      suggestionsWrap.classList.add('search-suggestions-wrap');
-      const labelDiv = document.createElement('div');
-      labelDiv.classList.add('label');
-      labelDiv.textContent = label;
-      const tokensWrap = document.createElement('div');
-      tokensWrap.classList.add('tokens-wrap');
-      const keywordsUl = document.createElement('ul');
-      keywords.forEach(keyword => {
-        const keywordLi = document.createElement('li');
-        keywordLi.textContent = keyword;
-        keywordsUl.append(keywordLi);
-      });
-      tokensWrap.append(keywordsUl);
-      suggestionsWrap.append(labelDiv, tokensWrap);
-      return suggestionsWrap;
-    };
-
-    searchWrapInner.append(
-      createSuggestions('Popular Keywords:', ['Business', 'FY 21', 'Brands', 'XUV700', 'Global', 'Nanhi Kali']),
-      createSuggestions('Recommended for you:', ['Annual Report 2021 - 2022', 'Leadership Announcement', 'Latest Press Release', 'Brand Guidelines']),
-    );
-    searchLi.append(searchScreenWrap);
-    iconUl.append(searchLi);
-    iconNav.append(iconUl);
-
-    // Search toggle behavior
-    searchLink.addEventListener('click', (e) => {
-      e.preventDefault();
-      searchScreenWrap.classList.toggle('show'); // Use 'show' class for visibility
-    });
-    searchScreenWrap.addEventListener('click', (e) => {
-      if (e.target === searchScreenWrap) {
-        searchScreenWrap.classList.remove('show');
-      }
-    });
-
-    return iconNav;
-  };
-
-  nav.append(createIconNav(true)); // Mobile icon nav
-  nav.append(createIconNav(false)); // Desktop icon nav
+  const searchLiDesktop = document.createElement('li');
+  searchLiDesktop.classList.add('search');
+  const searchLinkDesktop = document.createElement('a');
+  searchLinkDesktop.href = '#';
+  const searchImgDesktop = document.createElement('img');
+  searchImgDesktop.alt = 'svg file';
+  searchImgDesktop.src = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgdmlld0JveD0iMCAwIDE2IDE2Ij48cGF0aCBmaWxsPSIjRkYwMDAwIiBkPSJNNi4wMyAzLjQyYy40LS40LjktLjYgMS40LS42cy45LjIgMS4zLjZsNC43IDQuNy43LjctLjcuN0wxMC40IDEzLjZjLS40LjQtLjkuNi0xLjMuNnMtLjktLjItMS4zLS42LTYuNy02LjctNi43LTYuN2MtLjQtLjQtLjYtLjktLjYtMS4zcy4yLS45LjYtMS4zTDYuMDMgMy.4MnoiLz48L3N2Zz4='; // Placeholder SVG
+  searchLinkDesktop.append(searchImgDesktop);
+  searchLiDesktop.append(searchLinkDesktop);
+  desktopIconUl.append(searchLiDesktop);
+  desktopIconNav.append(desktopIconUl);
+  mainNav.append(desktopIconNav);
 
   // 80th Year Logo
   const year80LogoDiv = document.createElement('div');
   year80LogoDiv.classList.add('logo', 'year-80-logo');
   const year80LogoLink = document.createElement('a');
-  const foundYear80LogoLink = year80LogoLinkRow.querySelector('a');
-  if (foundYear80LogoLink) {
-    year80LogoLink.href = foundYear80LogoLink.href;
+  const year80LogoLinkHref = year80LogoLinkRow.querySelector('a')?.href;
+  if (year80LogoLinkHref) {
+    year80LogoLink.href = year80LogoLinkHref;
   }
   const year80LogoPicture = year80LogoRow.querySelector('picture');
   if (year80LogoPicture) {
@@ -321,27 +222,106 @@ export default function decorate(block) {
     const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '74' }]);
     moveInstrumentation(img, optimizedPic.querySelector('img'));
     year80LogoLink.append(optimizedPic);
-    optimizedPic.querySelector('img').classList.add('hiddenlogo1', 'years-80');
-  } else {
-    year80LogoLink.textContent = year80LogoLinkLabelRow.textContent.trim();
+    year80LogoLink.querySelector('img').classList.add('hiddenlogo1', 'years-80');
+    year80LogoLink.querySelector('img').width = 74;
+    year80LogoLink.querySelector('img').height = 60;
+    year80LogoLink.querySelector('img').loading = 'lazy';
+    year80LogoLink.querySelector('img').title = year80LogoLinkLabelRow.textContent.trim();
   }
   moveInstrumentation(year80LogoRow, year80LogoLink);
-  moveInstrumentation(year80LogoLinkRow, year80LogoLink);
-  moveInstrumentation(year80LogoLinkLabelRow, year80LogoLink);
   year80LogoDiv.append(year80LogoLink);
   wrap.append(year80LogoDiv);
 
-  // Hamburger click behavior
-  hamburger.addEventListener('click', () => {
-    nav.classList.toggle('active');
-    hamburger.classList.toggle('active');
-    document.body.classList.toggle('no-scroll'); // Add no-scroll to body
-  });
-
-  block.textContent = '';
   block.append(header);
 
-  // Image optimization for all pictures in the block
+  // Add event listeners for hamburger menu toggle
+  hamburger.addEventListener('click', () => {
+    mainNav.classList.toggle('active');
+    hamburger.classList.toggle('active');
+  });
+
+  // Add event listeners for search functionality
+  const searchElements = block.querySelectorAll('.search');
+  searchElements.forEach((searchLi) => {
+    const searchLink = searchLi.querySelector('a');
+    const searchScreenWrap = document.createElement('div');
+    searchScreenWrap.classList.add('search-screen-wrap');
+    searchScreenWrap.innerHTML = `
+      <div class="wrap">
+        <form action="https://www.mahindra.com/search" method="get" id="search-block-form" accept-charset="UTF-8">
+          <div class="search-wrap">
+            <div class="search-icon">
+              <img alt="svg file" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgdmlld0JveD0iMCAwIDE2IDE2Ij48cGF0aCBmaWxsPSIjRkYwMDAwIiBkPSJNNi4wMyAzLjQyYy40LS40LjktLjYgMS40LS42cy45LjIgMS4zLjZsNC43IDQuNy43LjctLjcuN0wxMC40IDEzLjZjLS40LjQtLjkuNi0xLjMuNnMtLjktLjItMS4zLS42LTYuNy02LjctNi43LTYuN2MtLjQtLjQtLjYtLjktLjYtMS4zcy4yLS45LjYtMS4zTDYuMDMgMy40MnoiLz48L3N2Zz4="/>
+            </div>
+            <input type="text" class="input-text searchtext" required="" name="key" id="searchInput" autocomplete="off">
+            <button class="submit-button">
+              <div class="label"> Submit </div>
+              <img alt="svg file" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgdmlld0JveD0iMCAwIDE2IDE2Ij48cGF0aCBmaWxsPSIjRkYwMDAwIiBkPSJNNi4wMyAzLjQyYy40LS40LjktLjYgMS40LS42cy45LjIgMS4zLjZsNC43IDQuNy43LjctLjcuN0wxMC40IDEzLjZjLS40LjQtLjkuNi0xLjMuNnMtLjktLjItMS4zLS42LTYuNy02LjctNi43LTYuN2MtLjQtLjQtLjYtLjktLjYtMS4zcy4yLS45LjYtMS4zTDYuMDMgMy40MnoiLz48L3N2Zz4="/>
+            </button>
+          </div>
+          <div class="searchResultBox" style="display: none;">
+            <div class="swiper scrollSwiper">
+              <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                </div>
+              </div>
+            </div>
+            <div class="swiper-scrollbar"></div>
+          </div>
+        </form>
+        <div class="search-suggestions-wrap">
+          <div class="label">Popular Keywords:</div>
+          <div class="tokens-wrap">
+            <ul>
+              <li>Business</li>
+              <li>FY 21</li>
+              <li>Brands</li>
+              <li>XUV700</li>
+              <li>Global</li>
+              <li>Nanhi Kali</li>
+            </ul>
+          </div>
+        </div>
+        <div class="search-suggestions-wrap">
+          <div class="label">Recommended for you:</div>
+          <div class="tokens-wrap">
+            <ul>
+              <li>Annual Report 2021 - 2022</li>
+              <li>Leadership Announcement</li>
+              <li>Latest Press Release</li>
+              <li>Brand Guidelines</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    `;
+    searchLi.append(searchScreenWrap);
+
+    searchLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      searchLi.classList.toggle('active');
+      searchScreenWrap.classList.toggle('active');
+      // Close hamburger menu if open
+      mainNav.classList.remove('active');
+      hamburger.classList.remove('active');
+    });
+
+    // Close search when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!searchLi.contains(e.target) && searchLi.classList.contains('active')) {
+        searchLi.classList.remove('active');
+        searchScreenWrap.classList.remove('active');
+      }
+    });
+
+    // Prevent propagation for elements within search screen to keep it open
+    searchScreenWrap.addEventListener('click', (e) => {
+      e.stopPropagation();
+    });
+  });
+
+  // Optimize all images within the block
   block.querySelectorAll('picture > img').forEach((img) => {
     const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
     moveInstrumentation(img, optimizedPic.querySelector('img'));

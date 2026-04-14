@@ -24,7 +24,8 @@
       "spirit-of-rise",
       "latest-stories",
       "work-with-us",
-      "footer-main"
+      "footer-main",
+      "spotlight-home"
     ]
   },
   {
@@ -89,6 +90,12 @@
     "components": [
       "slide",
       "quick-link"
+    ]
+  },
+  {
+    "id": "spotlight-home",
+    "components": [
+      "spotlight-slide"
     ]
   },
   {
