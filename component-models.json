@@ -180,6 +180,40 @@
     ]
   },
   {
+    "id": "faqs-section",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "faq",
+        "label": "Faqs",
+        "name": "faqs"
+      }
+    ]
+  },
+  {
+    "id": "faq",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Question",
+        "name": "question",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Answer",
+        "name": "answer",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "fragment",
     "fields": [
       {

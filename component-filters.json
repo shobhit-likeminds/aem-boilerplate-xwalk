@@ -15,7 +15,8 @@
       "hero",
       "cards",
       "columns",
-      "fragment"
+      "fragment",
+      "faqs-section"
     ]
   },
   {
@@ -37,6 +38,12 @@
       "image",
       "button",
       "title"
+    ]
+  },
+  {
+    "id": "faqs-section",
+    "components": [
+      "faq"
     ]
   }
 ]
