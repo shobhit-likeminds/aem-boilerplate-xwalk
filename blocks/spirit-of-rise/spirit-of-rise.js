@@ -2,112 +2,89 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const allRows = [...block.children];
+  const [headingRow, descriptionRow, ...cardRows] = [...block.children];
 
-  // Separate section rows from card rows based on cell count
-  const sectionRows = allRows.filter((row) => row.children.length === 3);
-  const cardRows = allRows.filter((row) => row.children.length === 4);
+  const sectionHeader = document.createElement('div');
+  sectionHeader.classList.add('section-header', 'text-center', 'pb-3');
 
-  block.textContent = '';
-  block.classList.add('section', 'spirit-of-rise');
+  const heading = document.createElement('h2');
+  heading.classList.add('heading', 'font-regular', 'aos-init', 'aos-animate');
+  moveInstrumentation(headingRow.firstElementChild, heading);
+  heading.textContent = headingRow.firstElementChild.textContent.trim();
+  sectionHeader.append(heading);
 
-  sectionRows.forEach((sectionRow, sectionIndex) => {
-    // CRITICAL FIX: Use content detection instead of index access for sectionRow.children
-    const sectionCells = [...sectionRow.children];
-    const headingCell = sectionCells.find(cell => cell.querySelector('h1, h2, h3, h4, h5, h6') || (cell.textContent.trim() && !cell.querySelector('p') && !cell.querySelector('a')));
-    const descriptionCell = sectionCells.find(cell => cell.querySelector('p') || (cell.textContent.trim() && !cell.querySelector('h1, h2, h3, h4, h5, h6') && !cell.querySelector('a')));
-    const cardsCell = sectionCells.find(cell => !headingCell.contains(cell) && !descriptionCell.contains(cell)); // This cell is just a placeholder for the container
+  const description = document.createElement('p');
+  description.classList.add('aos-init', 'aos-animate');
+  moveInstrumentation(descriptionRow.firstElementChild, description);
+  description.textContent = descriptionRow.firstElementChild.textContent.trim();
+  sectionHeader.append(description);
 
-    const sectionHeader = document.createElement('div');
-    sectionHeader.classList.add('section-header', 'text-center', 'pb-3');
-    if (headingCell) {
-      moveInstrumentation(headingCell, sectionHeader);
+  const performanceDriven = document.createElement('div');
+  performanceDriven.classList.add('performance-driven', 'performace-driven-home');
+
+  const container = document.createElement('div');
+  container.classList.add('container');
+
+  const cardsContainer = document.createElement('div');
+  cardsContainer.classList.add('performace-driven-cards');
+
+  cardRows.forEach((row) => {
+    // CRITICAL FIX: Replaced array destructuring with content detection
+    const cells = [...row.children];
+    const imageCell = cells.find(cell => cell.querySelector('picture'));
+    const linkCell = cells.find(cell => cell.querySelector('a'));
+    // Assuming linkLabelCell is the cell containing a link that is not the primary link
+    // and descriptionCell is the cell containing a <p> tag.
+    // Based on the EDS structure, linkLabel is just a text field, but the generated JS
+    // was trying to find a link in it. The original HTML shows the link label is not rendered.
+    // The description cell contains a <p>.
+    const descriptionCell = cells.find(cell => cell.querySelector('p'));
+
+    const linkEl = document.createElement('a');
+    linkEl.classList.add('performace-driven-cards-link');
+    const foundLink = linkCell?.querySelector('a'); // Use optional chaining for safety
+    if (foundLink) {
+      linkEl.href = foundLink.href;
+      linkEl.target = '_blank'; // Assuming target blank from original HTML
     }
+    moveInstrumentation(row, linkEl);
 
-    if (headingCell && headingCell.textContent.trim()) {
-      const heading = document.createElement('h2');
-      heading.classList.add('heading', 'font-regular', 'aos-init', 'aos-animate');
-      heading.textContent = headingCell.textContent.trim();
-      sectionHeader.append(heading);
+    const cardWrapper = document.createElement('div');
+    cardWrapper.classList.add('performace-driven-card-wrapper');
+
+    const cardImage = document.createElement('div');
+    cardImage.classList.add('card-image');
+    const picture = imageCell?.querySelector('picture'); // Use optional chaining for safety
+    if (picture) {
+      cardImage.append(picture);
     }
+    cardWrapper.append(cardImage);
 
-    if (descriptionCell && descriptionCell.textContent.trim()) {
-      const description = document.createElement('p');
-      description.classList.add('aos-init', 'aos-animate');
-      description.textContent = descriptionCell.textContent.trim();
-      sectionHeader.append(description);
+    const homeBoxCard = document.createElement('div');
+    homeBoxCard.classList.add('performace-driven-home-box-card');
+
+    const descP = document.createElement('p');
+    descP.classList.add('desc');
+    // Ensure descriptionCell and its firstElementChild exist before accessing
+    if (descriptionCell?.firstElementChild) {
+      moveInstrumentation(descriptionCell.firstElementChild, descP);
+      descP.innerHTML = descriptionCell.firstElementChild.innerHTML;
     }
-    block.append(sectionHeader);
+    homeBoxCard.append(descP);
 
-    const performanceDriven = document.createElement('div');
-    // Corrected class name from 'performace-driven-home' to 'performance-driven-home'
-    performanceDriven.classList.add('performance-driven', 'performance-driven-home');
-    if (cardsCell) {
-      moveInstrumentation(cardsCell, performanceDriven);
-    }
-
-    const container = document.createElement('div');
-    container.classList.add('container');
-    performanceDriven.append(container);
-
-    const cardsContainer = document.createElement('div');
-    cardsContainer.classList.add('performace-driven-cards');
-    container.append(cardsContainer);
-
-    const cardsPerSection = 3; // Based on the example HTML
-    const startIndex = sectionIndex * cardsPerSection;
-    const sectionCards = cardRows.slice(startIndex, startIndex + cardsPerSection);
-
-    sectionCards.forEach((cardRow) => {
-      const [imageCell, linkCell, linkLabelCell, descriptionCellCard] = [...cardRow.children];
-
-      const linkEl = document.createElement('a');
-      linkEl.classList.add('performace-driven-cards-link');
-      const foundLink = linkCell.querySelector('a');
-      if (foundLink) {
-        linkEl.href = foundLink.href;
-        linkEl.target = '_blank'; // Based on original HTML
-      }
-      moveInstrumentation(cardRow, linkEl);
-
-      const cardWrapper = document.createElement('div');
-      cardWrapper.classList.add('performace-driven-card-wrapper');
-      linkEl.append(cardWrapper);
-
-      const cardImage = document.createElement('div');
-      cardImage.classList.add('card-image');
-      const picture = imageCell.querySelector('picture');
-      if (picture) {
-        const img = picture.querySelector('img');
-        if (img) {
-          const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-          moveInstrumentation(img, optimizedPic.querySelector('img'));
-          cardImage.append(optimizedPic);
-        }
-      }
-      cardWrapper.append(cardImage);
-
-      const homeBoxCard = document.createElement('div');
-      homeBoxCard.classList.add('performace-driven-home-box-card');
-      cardWrapper.append(homeBoxCard);
-
-      const descriptionP = document.createElement('p');
-      descriptionP.classList.add('desc');
-      descriptionP.innerHTML = descriptionCellCard.textContent.trim(); // Use innerHTML for potential br tags
-      homeBoxCard.append(descriptionP);
-
-      cardsContainer.append(linkEl);
-    });
-
-    block.append(performanceDriven);
-
-    // Add grey-bg class to subsequent sections if applicable, based on original HTML pattern
-    if (sectionIndex > 0) {
-      block.classList.add('grey-bg');
-    }
+    cardWrapper.append(homeBoxCard);
+    linkEl.append(cardWrapper);
+    cardsContainer.append(linkEl);
   });
 
-  // Optimize all images within the block
+  container.append(cardsContainer);
+  performanceDriven.append(container);
+
+  block.textContent = '';
+  block.classList.add('grey-bg'); // Add grey-bg to the block itself as per original HTML
+  block.append(sectionHeader);
+  block.append(performanceDriven);
+
   block.querySelectorAll('picture > img').forEach((img) => {
     const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
     moveInstrumentation(img, optimizedPic.querySelector('img'));

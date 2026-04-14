@@ -5960,17 +5960,6 @@
     "id": "spirit-of-rise",
     "fields": [
       {
-        "component": "container",
-        "item": "spirit-of-rise-section",
-        "label": "Sections",
-        "name": "sections"
-      }
-    ]
-  },
-  {
-    "id": "spirit-of-rise-section",
-    "fields": [
-      {
         "component": "text",
         "label": "Heading",
         "name": "heading",
@@ -6012,7 +6001,7 @@
         "valueType": "string"
       },
       {
-        "component": "text",
+        "component": "richtext",
         "label": "Description",
         "name": "description",
         "valueType": "string"

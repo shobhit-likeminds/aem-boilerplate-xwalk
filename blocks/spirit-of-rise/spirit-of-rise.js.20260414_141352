@@ -1,0 +1,134 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  const allRows = [...block.children];
+
+  const sections = [];
+  const cards = [];
+
+  // Separate section rows from card rows based on cell count
+  allRows.forEach((row) => {
+    // spirit-of-rise-section has 3 cells (heading, description, cards container)
+    // spirit-of-rise-card has 4 cells (image, link, linkLabel, description)
+    // The 'cards' cell in spirit-of-rise-section is empty in the EDS structure,
+    // so a section row will have 3 children, and a card row will have 4.
+    if (row.children.length === 3) {
+      sections.push(row);
+    } else if (row.children.length === 4) {
+      cards.push(row);
+    }
+  });
+
+  block.textContent = '';
+
+  sections.forEach((sectionRow, sectionIndex) => {
+    const sectionWrapper = document.createElement('div');
+    sectionWrapper.classList.add('section', 'spirit-of-rise');
+    // Apply 'grey-bg' class based on the original HTML structure (second section has it)
+    if (sectionIndex > 0) {
+      sectionWrapper.classList.add('grey-bg');
+    }
+    moveInstrumentation(sectionRow, sectionWrapper);
+
+    const sectionHeader = document.createElement('div');
+    sectionHeader.classList.add('section-header', 'text-center', 'pb-3');
+
+    // Use content detection for section cells
+    const sectionCells = [...sectionRow.children];
+    const headingCell = sectionCells.find(cell => cell.textContent.trim() !== '' && !cell.querySelector('a') && !cell.querySelector('picture'));
+    const descriptionCell = sectionCells.find(cell => cell !== headingCell && cell.textContent.trim() !== '' && !cell.querySelector('a') && !cell.querySelector('picture'));
+
+    if (headingCell) {
+      const heading = document.createElement('h2');
+      heading.classList.add('heading', 'font-regular', 'aos-init', 'aos-animate');
+      heading.textContent = headingCell.textContent.trim();
+      moveInstrumentation(headingCell, heading);
+      sectionHeader.append(heading);
+    }
+
+    if (descriptionCell) {
+      const description = document.createElement('p');
+      description.classList.add('aos-init', 'aos-animate');
+      description.textContent = descriptionCell.textContent.trim();
+      moveInstrumentation(descriptionCell, description);
+      sectionHeader.append(description);
+    }
+
+    const performanceDriven = document.createElement('div');
+    performanceDriven.classList.add('performance-driven', 'performace-driven-home');
+
+    const container = document.createElement('div');
+    container.classList.add('container');
+
+    const cardsWrapper = document.createElement('div');
+    cardsWrapper.classList.add('performace-driven-cards');
+
+    // The original HTML shows 3 cards per section.
+    const cardsPerSection = 3;
+    const startIndex = sectionIndex * cardsPerSection;
+    const sectionCards = cards.slice(startIndex, startIndex + cardsPerSection);
+
+    sectionCards.forEach((cardRow) => {
+      // Use content detection for card cells
+      const cardCells = [...cardRow.children];
+      const imageCell = cardCells.find(cell => cell.querySelector('picture'));
+      const linkCell = cardCells.find(cell => cell.querySelector('a'));
+      // The linkLabel cell in the EDS structure contains an <a> tag with the URL as text,
+      // but the original HTML uses the link text from the 'link' cell.
+      // We will prioritize the 'link' cell for the actual link and its text.
+      // The 'linkLabel' cell is effectively ignored as per original HTML.
+      const descriptionCell = cardCells.find(cell => cell.querySelector('p') || (cell.textContent.trim() !== '' && !cell.querySelector('picture') && !cell.querySelector('a')));
+
+
+      const cardLink = document.createElement('a');
+      cardLink.classList.add('performace-driven-cards-link');
+      const foundLink = linkCell ? linkCell.querySelector('a') : null;
+      if (foundLink) {
+        cardLink.href = foundLink.href;
+        cardLink.target = '_blank'; // Original HTML has target="_blank"
+      }
+      moveInstrumentation(linkCell, cardLink);
+
+      const cardWrapper = document.createElement('div');
+      cardWrapper.classList.add('performace-driven-card-wrapper');
+
+      const cardImageDiv = document.createElement('div');
+      cardImageDiv.classList.add('card-image');
+      const picture = imageCell ? imageCell.querySelector('picture') : null;
+      if (picture) {
+        cardImageDiv.append(picture);
+      }
+      moveInstrumentation(imageCell, cardImageDiv);
+
+      const cardBox = document.createElement('div');
+      cardBox.classList.add('performace-driven-home-box-card');
+
+      const descP = document.createElement('p');
+      descP.classList.add('desc');
+      // The description cell for cards often contains rich text, so append its children
+      if (descriptionCell) {
+        moveInstrumentation(descriptionCell, descP);
+        while (descriptionCell.firstChild) {
+          descP.append(descriptionCell.firstChild);
+        }
+      }
+
+      cardBox.append(descP);
+      cardWrapper.append(cardImageDiv, cardBox);
+      cardLink.append(cardWrapper);
+      cardsWrapper.append(cardLink);
+    });
+
+    container.append(cardsWrapper);
+    performanceDriven.append(container);
+    sectionWrapper.append(sectionHeader, performanceDriven);
+    block.append(sectionWrapper);
+  });
+
+  block.querySelectorAll('picture > img').forEach((img) => {
+    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+    moveInstrumentation(img, optimizedPic.querySelector('img'));
+    img.closest('picture').replaceWith(optimizedPic);
+  });
+}

@@ -1,0 +1,99 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  const [headingRow, descriptionRow, ...cardRows] = [...block.children];
+
+  const container = document.createElement('div');
+  container.classList.add('container');
+
+  // Header
+  const sectionHeader = document.createElement('div');
+  sectionHeader.classList.add('section-header', 'text-center', 'pb-3');
+  moveInstrumentation(headingRow, sectionHeader);
+  moveInstrumentation(descriptionRow, sectionHeader);
+
+  const heading = document.createElement('h2');
+  heading.classList.add('heading', 'font-regular', 'aos-init', 'aos-animate');
+  heading.setAttribute('data-aos-easing', 'ease-in-out');
+  heading.setAttribute('data-aos', 'fade-up');
+  heading.setAttribute('data-aos-delay', '200');
+  heading.innerHTML = headingRow.firstElementChild.innerHTML; // Heading can contain <br>
+  sectionHeader.append(heading);
+
+  const description = document.createElement('p');
+  description.classList.add('aos-init', 'aos-animate');
+  description.setAttribute('data-aos', 'fade-up');
+  description.setAttribute('data-aos-offset', '100');
+  description.setAttribute('data-aos-duration', '650');
+  description.setAttribute('data-aos-easing', 'ease-in-out');
+  description.textContent = descriptionRow.firstElementChild.textContent.trim();
+  sectionHeader.append(description);
+
+  container.append(sectionHeader);
+
+  // Grid
+  const grid = document.createElement('div');
+  grid.classList.add('row', 'g-4', 'purpose-led-grid', 'pt-3');
+
+  cardRows.forEach((row) => {
+    const cells = [...row.children];
+    // Use content detection instead of fixed index access
+    const imageCell = cells.find(cell => cell.querySelector('picture'));
+    const linkCell = cells.find(cell => cell.querySelector('a'));
+    const textCell = cells.find(cell => cell.querySelector('p')); // Assuming text cell contains a <p>
+
+    const col = document.createElement('div');
+    col.classList.add('col-md-6', 'aos-init', 'aos-animate');
+    col.setAttribute('data-aos-easing', 'ease-in-out');
+    col.setAttribute('data-aos', 'fade-up');
+    col.setAttribute('data-aos-delay', '700');
+    moveInstrumentation(row, col);
+
+    const cardWrap = document.createElement('a');
+    cardWrap.classList.add('card-wrap');
+    const foundLink = linkCell?.querySelector('a'); // Use optional chaining
+    if (foundLink) {
+      cardWrap.href = foundLink.href;
+      cardWrap.target = '_blank'; // Original HTML has target="_blank"
+    }
+
+    const cardImage = document.createElement('div');
+    cardImage.classList.add('card-image');
+
+    if (imageCell) {
+      const picture = imageCell.querySelector('picture');
+      if (picture) {
+        const img = picture.querySelector('img');
+        if (img) {
+          img.classList.add('img-fluid');
+          // The imageAlt field is present in the model but not explicitly rendered as a separate element in the original HTML.
+          // The alt text is set directly on the img tag. We can try to get it from the original img or default.
+          const imageAltText = img.alt || 'Card image'; // Use existing alt or a default
+          const optimizedPic = createOptimizedPicture(img.src, imageAltText, false, [{ width: '750' }]);
+          moveInstrumentation(img, optimizedPic.querySelector('img'));
+          picture.replaceWith(optimizedPic);
+        }
+        cardImage.append(picture);
+      }
+    }
+    cardWrap.append(cardImage);
+
+    const cardText = document.createElement('div');
+    cardText.classList.add('card-text');
+    const textP = document.createElement('p');
+    textP.classList.add('desc');
+    if (textCell) {
+      textP.innerHTML = textCell.innerHTML; // Rich text content
+    }
+    cardText.append(textP);
+    cardWrap.append(cardText);
+
+    col.append(cardWrap);
+    grid.append(col);
+  });
+
+  container.append(grid);
+  block.textContent = '';
+  block.append(container);
+}

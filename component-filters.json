@@ -845,7 +845,6 @@
   {
     "id": "spirit-of-rise",
     "components": [
-      "spirit-of-rise-section",
       "spirit-of-rise-card"
     ]
   },
