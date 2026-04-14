@@ -51,7 +51,15 @@
         "cards",
         "columns",
         "fragment",
-        "faqs-section"
+        "faqs-section",
+        "header",
+        "spotlight-home-wrap",
+        "what-we-do-wrap",
+        "purpose-led-grid",
+        "spirit-of-rise",
+        "latest-stories",
+        "work-with-us",
+        "footer-main"
       ]
     }
   ]

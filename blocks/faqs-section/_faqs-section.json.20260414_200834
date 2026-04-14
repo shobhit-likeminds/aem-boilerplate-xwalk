@@ -45,7 +45,7 @@
         {
           "component": "container",
           "item": "faq",
-          "label": "FAQs",
+          "label": "Faqs",
           "name": "faqs"
         }
       ]

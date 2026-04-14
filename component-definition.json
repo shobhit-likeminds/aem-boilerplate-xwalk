@@ -159,6 +159,37 @@
           }
         },
         {
+          "title": "Footer-Main",
+          "id": "footer-main",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "footer-main",
+                  "model": "footer-main",
+                  "name": "Footer-Main"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Footer Section",
+          "id": "footer-section",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "footer-section",
+                  "name": "Footer Section"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Fragment",
           "id": "fragment",
           "plugins": {
@@ -174,6 +205,37 @@
           }
         },
         {
+          "title": "Header",
+          "id": "header",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "header",
+                  "model": "header",
+                  "name": "Header"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Nav Item",
+          "id": "nav-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "nav-item",
+                  "name": "Nav Item"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Hero",
           "id": "hero",
           "plugins": {
@@ -183,6 +245,207 @@
                 "template": {
                   "name": "Hero",
                   "model": "hero"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Latest-Stories",
+          "id": "latest-stories",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "latest-stories",
+                  "model": "latest-stories",
+                  "name": "Latest-Stories"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Story",
+          "id": "story",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "story",
+                  "name": "Story"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Purpose-Led-Grid",
+          "id": "purpose-led-grid",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "purpose-led-grid",
+                  "model": "purpose-led-grid",
+                  "name": "Purpose-Led-Grid"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Purpose-Led-Card",
+          "id": "purpose-led-card",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "purpose-led-card",
+                  "name": "Purpose-Led-Card"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Spirit Of Rise",
+          "id": "spirit-of-rise",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "spirit-of-rise",
+                  "model": "spirit-of-rise",
+                  "name": "Spirit Of Rise"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Spirit Of Rise Card",
+          "id": "spirit-of-rise-card",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "spirit-of-rise-card",
+                  "name": "Spirit Of Rise Card"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Spotlight Home Wrap",
+          "id": "spotlight-home-wrap",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "spotlight-home-wrap",
+                  "model": "spotlight-home-wrap",
+                  "name": "Spotlight Home Wrap"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Slide",
+          "id": "slide",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "slide",
+                  "name": "Slide"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Quick Link",
+          "id": "quick-link",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "quick-link",
+                  "name": "Quick Link"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "What-We-Do-Wrap",
+          "id": "what-we-do-wrap",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "what-we-do-wrap",
+                  "model": "what-we-do-wrap",
+                  "name": "What-We-Do-Wrap"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Business-Vertical",
+          "id": "business-vertical",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "business-vertical",
+                  "name": "Business-Vertical"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Work-With-Us",
+          "id": "work-with-us",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "work-with-us",
+                  "model": "work-with-us",
+                  "name": "Work-With-Us"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Work-With-Us-Slide",
+          "id": "work-with-us-slide",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "work-with-us-slide",
+                  "name": "Work-With-Us-Slide"
                 }
               }
             }

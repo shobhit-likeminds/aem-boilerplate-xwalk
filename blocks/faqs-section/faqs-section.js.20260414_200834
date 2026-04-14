@@ -6,7 +6,6 @@ export default function decorate(block) {
 
   const section = document.createElement('section');
   section.classList.add('section', 'faqs-section');
-  moveInstrumentation(block, section);
 
   const container = document.createElement('div');
   container.classList.add('container');
@@ -16,14 +15,16 @@ export default function decorate(block) {
   sectionHeader.classList.add('section-header', 'text-center');
   const heading = document.createElement('h2');
   heading.classList.add('heading', 'font-regular', 'aos-init', 'aos-animate');
-  heading.setAttribute('data-aos', 'fade-up');
-  // Use children[0] for consistency, though firstElementChild works here
-  moveInstrumentation(headingRow.children[0], heading);
-  heading.textContent = headingRow.children[0].textContent.trim();
+  // Use content detection for the heading cell
+  const headingCell = [...headingRow.children].find(cell => cell.textContent.trim());
+  if (headingCell) {
+    moveInstrumentation(headingCell, heading);
+    heading.textContent = headingCell.textContent.trim();
+  }
   sectionHeader.append(heading);
   container.append(sectionHeader);
 
-  // FAQs Accordion
+  // FAQs
   const accoDiv = document.createElement('div');
   accoDiv.classList.add('acco-div');
   const ul = document.createElement('ul');
@@ -33,40 +34,34 @@ export default function decorate(block) {
 
     const li = document.createElement('li');
     li.classList.add('aos-init', 'aos-animate');
-    li.setAttribute('data-aos', 'fade-up');
-    if (index === 0) {
-      li.classList.add('active'); // First item is active by default
-    }
     moveInstrumentation(row, li);
 
-    const h2 = document.createElement('h2');
-    h2.setAttribute('data-once', 'faqsAccordion');
-    moveInstrumentation(questionCell, h2);
-    h2.textContent = questionCell.textContent.trim();
+    const questionHeading = document.createElement('h2');
+    questionHeading.textContent = questionCell.textContent.trim();
+    questionHeading.setAttribute('data-once', 'faqsAccordion'); // Add data-once attribute
 
     const accoContentDiv = document.createElement('div');
     accoContentDiv.classList.add('acco-content-div');
-    if (index === 0) {
-      accoContentDiv.classList.add('show');
-    }
-    moveInstrumentation(answerCell, accoContentDiv);
     accoContentDiv.innerHTML = answerCell.innerHTML;
 
-    h2.addEventListener('click', () => {
-      // Close all other open accordions
-      ul.querySelectorAll('li.active').forEach((activeLi) => {
-        if (activeLi !== li) {
-          activeLi.classList.remove('active');
-          activeLi.querySelector('.acco-content-div').classList.remove('show');
-        }
-      });
+    // First item is active by default
+    if (index === 0) {
+      li.classList.add('active');
+      accoContentDiv.classList.add('show');
+    }
 
-      // Toggle current accordion
+    // Add event listener for accordion functionality
+    questionHeading.addEventListener('click', () => {
+      const currentActive = ul.querySelector('li.active');
+      if (currentActive && currentActive !== li) {
+        currentActive.classList.remove('active');
+        currentActive.querySelector('.acco-content-div').classList.remove('show');
+      }
       li.classList.toggle('active');
       accoContentDiv.classList.toggle('show');
     });
 
-    li.append(h2, accoContentDiv);
+    li.append(questionHeading, accoContentDiv);
     ul.append(li);
   });
 

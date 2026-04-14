@@ -16,7 +16,15 @@
       "cards",
       "columns",
       "fragment",
-      "faqs-section"
+      "faqs-section",
+      "header",
+      "spotlight-home-wrap",
+      "what-we-do-wrap",
+      "purpose-led-grid",
+      "spirit-of-rise",
+      "latest-stories",
+      "work-with-us",
+      "footer-main"
     ]
   },
   {
@@ -44,6 +52,55 @@
     "id": "faqs-section",
     "components": [
       "faq"
+    ]
+  },
+  {
+    "id": "footer-main",
+    "components": [
+      "footer-section"
+    ]
+  },
+  {
+    "id": "header",
+    "components": [
+      "nav-item"
+    ]
+  },
+  {
+    "id": "latest-stories",
+    "components": [
+      "story"
+    ]
+  },
+  {
+    "id": "purpose-led-grid",
+    "components": [
+      "purpose-led-card"
+    ]
+  },
+  {
+    "id": "spirit-of-rise",
+    "components": [
+      "spirit-of-rise-card"
+    ]
+  },
+  {
+    "id": "spotlight-home-wrap",
+    "components": [
+      "slide",
+      "quick-link"
+    ]
+  },
+  {
+    "id": "what-we-do-wrap",
+    "components": [
+      "business-vertical"
+    ]
+  },
+  {
+    "id": "work-with-us",
+    "components": [
+      "work-with-us-slide"
     ]
   }
 ]
