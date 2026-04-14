@@ -54,18 +54,18 @@
         },
         {
           "component": "reference",
-          "label": "Secondary Logo",
-          "name": "secondaryLogo"
+          "label": "Anniversary Logo",
+          "name": "anniversaryLogo"
         },
         {
           "component": "aem-content",
-          "label": "Secondary Logo Link",
-          "name": "secondaryLogoLink"
+          "label": "Anniversary Logo Link",
+          "name": "anniversaryLogoLink"
         },
         {
           "component": "text",
-          "label": "Secondary Logo Link Label",
-          "name": "secondaryLogoLinkLabel",
+          "label": "Anniversary Logo Link Label",
+          "name": "anniversaryLogoLinkLabel",
           "valueType": "string"
         },
         {

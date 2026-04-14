@@ -1,0 +1,184 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  const allRows = [...block.children];
+
+  const slides = allRows.filter((row) => row.children.length === 7);
+  const quickLinks = allRows.filter((row) => row.children.length === 2);
+
+  const section = document.createElement('section');
+  section.classList.add('section', 'spotlight-home-wrap', 'm-0', 'p-0');
+
+  const beamSlider = document.createElement('div');
+  beamSlider.classList.add('beam-slider', 'main-slider', 'loading1', 'beam-slider-multi', 'swiper-initialized', 'swiper-horizontal', 'swiper-watch-progress', 'swiper-backface-hidden');
+
+  const swiperWrapper = document.createElement('div');
+  swiperWrapper.classList.add('swiper-wrapper');
+  swiperWrapper.setAttribute('aria-live', 'off');
+
+  slides.forEach((row, index) => {
+    // Destructuring for robust access, replacing row.children[n]
+    const [imageCell, altTextCell, headingCell, subheadingCell, descriptionCell, ctaLinkCell, ctaLinkLabelCell] = [...row.children];
+
+    const swiperSlide = document.createElement('div');
+    swiperSlide.classList.add('swiper-slide', 'nogradient');
+    swiperSlide.setAttribute('role', 'group');
+    swiperSlide.setAttribute('aria-label', `${index + 1} / ${slides.length}`);
+    swiperSlide.setAttribute('data-swiper-slide-index', index);
+    moveInstrumentation(row, swiperSlide);
+
+    const slideBgImg = document.createElement('div');
+    slideBgImg.classList.add('slide-bgimg');
+
+    const picture = imageCell.querySelector('picture');
+    if (picture) {
+      const img = picture.querySelector('img');
+      const optimizedPic = createOptimizedPicture(img.src, altTextCell.textContent.trim(), false, [{ width: '1903' }]);
+      moveInstrumentation(img, optimizedPic.querySelector('img'));
+      slideBgImg.append(optimizedPic);
+    }
+
+    const mobContentHomeSpotlight = document.createElement('div');
+    mobContentHomeSpotlight.classList.add('mob-content-home-spotlight');
+
+    const contentDiv = document.createElement('div');
+    contentDiv.classList.add('content', 'text-center', 'text-lg-start');
+
+    if (subheadingCell.textContent.trim()) {
+      const small = document.createElement('small');
+      small.style.fontWeight = 'bold';
+      small.textContent = subheadingCell.textContent.trim();
+      contentDiv.append(small);
+    }
+
+    if (headingCell.textContent.trim()) {
+      const heading = document.createElement('h2');
+      heading.classList.add('heading', 'font-medium', 'font-size-tb');
+      heading.innerHTML = headingCell.textContent.trim().replace(/\n/g, '<br>');
+      contentDiv.append(heading);
+    }
+
+    if (descriptionCell.textContent.trim()) {
+      const p = document.createElement('p');
+      const strong = document.createElement('strong');
+      strong.textContent = descriptionCell.textContent.trim();
+      p.append(strong);
+      contentDiv.append(p);
+    }
+
+    const ctaLink = ctaLinkCell.querySelector('a');
+    // Corrected to get text content directly from ctaLinkLabelCell
+    const ctaLinkLabel = ctaLinkLabelCell.textContent.trim();
+    if (ctaLink && ctaLinkLabel) {
+      const anchor = document.createElement('a');
+      anchor.href = ctaLink.href;
+      anchor.classList.add('btn', 'btn-primary');
+      anchor.textContent = ctaLinkLabel;
+      contentDiv.append(anchor);
+    }
+
+    mobContentHomeSpotlight.append(contentDiv);
+    swiperSlide.append(slideBgImg, mobContentHomeSpotlight);
+    swiperWrapper.append(swiperSlide);
+  });
+
+  const swiperButtonPrev = document.createElement('div');
+  swiperButtonPrev.classList.add('swiper-button-prev', 'slide-home-btn', 'swiper-button-white');
+  swiperButtonPrev.setAttribute('tabindex', '0');
+  swiperButtonPrev.setAttribute('role', 'button');
+  swiperButtonPrev.setAttribute('aria-label', 'Previous slide');
+  const prevImg = document.createElement('img');
+  prevImg.alt = 'svg file';
+  // Corrected SVG path to match original HTML
+  prevImg.src = '/content/dam/aemigrate/uploaded-folder/image/1776145926124.svg+xml';
+  swiperButtonPrev.append(prevImg);
+
+  const swiperButtonNext = document.createElement('div');
+  swiperButtonNext.classList.add('swiper-button-next', 'slide-home-btn', 'swiper-button-white');
+  swiperButtonNext.setAttribute('tabindex', '0');
+  swiperButtonNext.setAttribute('role', 'button');
+  swiperButtonNext.setAttribute('aria-label', 'Next slide');
+  const nextImg = document.createElement('img');
+  nextImg.alt = 'svg file';
+  // Corrected SVG path to match original HTML
+  nextImg.src = '/content/dam/aemigrate/uploaded-folder/image/1776145926124.svg+xml';
+  swiperButtonNext.append(nextImg);
+
+  const swiperPagination = document.createElement('div');
+  swiperPagination.classList.add('swiper-pagination', 'bullet-bottom');
+
+  beamSlider.append(swiperWrapper, swiperButtonPrev, swiperButtonNext, swiperPagination);
+
+  const quickLinksParentDiv = document.createElement('div');
+  quickLinksParentDiv.classList.add('mt-0', 'pt-1', 'pb-1', 'm-none1', 'bottom-0', 'w-100', 'quick-links-parents-div', 'position-relative');
+
+  const containerDiv = document.createElement('div');
+  containerDiv.classList.add('container', 'aos-init', 'aos-animate');
+  containerDiv.setAttribute('data-aos', 'fade-up');
+  containerDiv.setAttribute('data-aos-offset', '-100');
+  containerDiv.setAttribute('data-aos-duration', '650');
+  containerDiv.setAttribute('data-aos-easing', 'ease-in-out');
+
+  const quickLinksUl = document.createElement('ul');
+  quickLinksUl.classList.add('quick-links-div');
+
+  quickLinks.forEach((row) => {
+    // Destructuring for robust access, replacing row.children[n]
+    const [linkCell, linkLabelCell] = [...row.children];
+    const li = document.createElement('li');
+    moveInstrumentation(row, li);
+
+    const link = linkCell.querySelector('a');
+    // Corrected to get text content directly from linkLabelCell
+    const linkLabel = linkLabelCell.textContent.trim();
+    if (link && linkLabel) {
+      const anchor = document.createElement('a');
+      anchor.href = link.href;
+      anchor.classList.add('with-full-underline');
+      anchor.textContent = linkLabel;
+      li.append(anchor);
+    }
+    quickLinksUl.append(li);
+  });
+
+  containerDiv.append(quickLinksUl);
+  quickLinksParentDiv.append(containerDiv);
+
+  section.append(beamSlider, quickLinksParentDiv);
+
+  block.textContent = '';
+  block.append(section);
+
+  // Swiper initialization (simplified, full Swiper logic would be more complex)
+  let currentSlide = 0;
+  const updateSlide = () => {
+    swiperWrapper.style.transform = `translate3d(-${currentSlide * 100}%, 0px, 0px)`;
+    [...swiperWrapper.children].forEach((slide, i) => {
+      if (i === currentSlide) {
+        slide.classList.add('swiper-slide-active', 'swiper-slide-visible', 'swiper-slide-fully-visible');
+        slide.classList.remove('swiper-slide-prev', 'swiper-slide-next');
+      } else if (i === currentSlide - 1) {
+        slide.classList.add('swiper-slide-prev');
+        slide.classList.remove('swiper-slide-active', 'swiper-slide-visible', 'swiper-slide-fully-visible', 'swiper-slide-next');
+      } else if (i === currentSlide + 1) {
+        slide.classList.add('swiper-slide-next');
+        slide.classList.remove('swiper-slide-active', 'swiper-slide-visible', 'swiper-slide-fully-visible', 'swiper-slide-prev');
+      } else {
+        slide.classList.remove('swiper-slide-active', 'swiper-slide-visible', 'swiper-slide-fully-visible', 'swiper-slide-prev', 'swiper-slide-next');
+      }
+    });
+  };
+
+  swiperButtonNext.addEventListener('click', () => {
+    currentSlide = (currentSlide + 1) % slides.length;
+    updateSlide();
+  });
+
+  swiperButtonPrev.addEventListener('click', () => {
+    currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+    updateSlide();
+  });
+
+  updateSlide(); // Initialize first slide
+}

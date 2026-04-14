@@ -17,30 +17,15 @@
       }
     },
     {
-      "title": "Spirit-of-Rise Section",
-      "id": "spirit-of-rise-section",
+      "title": "Purpose Card",
+      "id": "purpose-card",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "spirit-of-rise-section",
-              "name": "Spirit-of-Rise Section"
-            }
-          }
-        }
-      }
-    },
-    {
-      "title": "Spirit-of-Rise Card",
-      "id": "spirit-of-rise-card",
-      "plugins": {
-        "xwalk": {
-          "page": {
-            "resourceType": "core/franklin/components/block/v1/block/item",
-            "template": {
-              "model": "spirit-of-rise-card",
-              "name": "Spirit-of-Rise Card"
+              "model": "purpose-card",
+              "name": "Purpose Card"
             }
           }
         }
@@ -50,17 +35,6 @@
   "models": [
     {
       "id": "spirit-of-rise",
-      "fields": [
-        {
-          "component": "container",
-          "item": "spirit-of-rise-section",
-          "label": "Sections",
-          "name": "sections"
-        }
-      ]
-    },
-    {
-      "id": "spirit-of-rise-section",
       "fields": [
         {
           "component": "text",
@@ -76,19 +50,25 @@
         },
         {
           "component": "container",
-          "item": "spirit-of-rise-card",
+          "item": "purpose-card",
           "label": "Cards",
           "name": "cards"
         }
       ]
     },
     {
-      "id": "spirit-of-rise-card",
+      "id": "purpose-card",
       "fields": [
         {
           "component": "reference",
           "label": "Image",
           "name": "image",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Image Alt Text",
+          "name": "imageAlt",
           "valueType": "string"
         },
         {
@@ -104,9 +84,9 @@
           "valueType": "string"
         },
         {
-          "component": "text",
-          "label": "Description",
-          "name": "description",
+          "component": "richtext",
+          "label": "Text",
+          "name": "text",
           "valueType": "string"
         }
       ]
@@ -116,8 +96,7 @@
     {
       "id": "spirit-of-rise",
       "components": [
-        "spirit-of-rise-section",
-        "spirit-of-rise-card"
+        "purpose-card"
       ]
     }
   ]

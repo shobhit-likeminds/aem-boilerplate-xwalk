@@ -1,0 +1,158 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  const [headingRow, descriptionRow, ...businessVerticalRows] = [...block.children];
+
+  // Create section-header
+  const sectionHeader = document.createElement('div');
+  sectionHeader.classList.add('section-header', 'text-center');
+
+  const heading = document.createElement('h2');
+  moveInstrumentation(headingRow, heading);
+  heading.classList.add('heading', 'font-regular');
+  heading.textContent = headingRow.firstElementChild.textContent.trim();
+  sectionHeader.append(heading);
+
+  const description = document.createElement('p');
+  moveInstrumentation(descriptionRow, description);
+  description.textContent = descriptionRow.firstElementChild.textContent.trim();
+  sectionHeader.append(description);
+
+  const containerDiv = document.createElement('div');
+  containerDiv.classList.add('container');
+  containerDiv.append(sectionHeader);
+
+  // Create our-business-verticals
+  const ourBusinessVerticals = document.createElement('div');
+  ourBusinessVerticals.classList.add('our-business-verticals');
+
+  // Desktop view
+  const desktopContainer = document.createElement('div');
+  desktopContainer.classList.add('container', 'd-lg-block', 'd-none');
+  const desktopRow = document.createElement('div');
+  desktopRow.classList.add('row', 'row-cols-lg-3', 'row-cols-1', 'g-3');
+
+  businessVerticalRows.forEach((row) => {
+    const [imageCell, titleCell, linkCell, linkLabelCell] = [...row.children];
+
+    const col = document.createElement('div');
+    col.classList.add('col');
+    moveInstrumentation(row, col);
+
+    const wrap = document.createElement('div');
+    wrap.classList.add('wrap');
+
+    const imageDiv = document.createElement('div');
+    imageDiv.classList.add('image');
+    const picture = imageCell.querySelector('picture');
+    if (picture) {
+      imageDiv.append(picture);
+    }
+    wrap.append(imageDiv);
+
+    const titleDiv = document.createElement('div');
+    titleDiv.classList.add('title');
+    titleDiv.textContent = titleCell.textContent.trim();
+    // Check if there's an SVG icon in the original HTML title, if so, add it.
+    // This icon is not part of the EDS model, so it's a hardcoded addition based on original HTML.
+    const iconImg = document.createElement('img');
+    iconImg.loading = 'lazy';
+    iconImg.src = '/content/dam/aemigrate/uploaded-folder/image/1776145932783.svg+xml';
+    iconImg.alt = 'Mahindra Group - Arrow Icon'; // Placeholder alt text
+    titleDiv.append(iconImg);
+    wrap.append(titleDiv);
+
+    const anchor = document.createElement('a');
+    const foundLink = linkCell.querySelector('a');
+    if (foundLink) {
+      anchor.href = foundLink.href;
+      anchor.setAttribute('aria-label', `Learn more about ${linkLabelCell.textContent.trim()}`);
+    } else {
+      anchor.href = '#'; // Fallback if no link found
+    }
+    anchor.classList.add('stretched-link');
+    moveInstrumentation(linkCell, anchor);
+    wrap.append(anchor);
+
+    col.append(wrap);
+    desktopRow.append(col);
+  });
+  desktopContainer.append(desktopRow);
+  ourBusinessVerticals.append(desktopContainer);
+
+  // Mobile view (simplified for this example, focusing on structure)
+  const mobileContainer = document.createElement('div');
+  mobileContainer.classList.add('container', 'd-lg-none', 'd-block');
+  const mobileSlider = document.createElement('div');
+  mobileSlider.classList.add('mobile-slider');
+  mobileSlider.setAttribute('data-flickity', '{ "wrapAround": false, "lazyLoad": true, "pageDots": true, "prevNextButtons": false, "imagesLoaded": true, "cellAlign": "left", "adaptiveHeight": true }');
+
+  // For the mobile slider, we'll group items into sets of 3, similar to the original HTML.
+  // This is a common pattern for mobile carousels.
+  const itemsPerSlide = 3;
+  for (let i = 0; i < businessVerticalRows.length; i += itemsPerSlide) {
+    const slideDiv = document.createElement('div');
+    slideDiv.classList.add('slides'); // Each slide contains a group of items
+    const slideRow = document.createElement('div');
+    slideRow.classList.add('row', 'row-cols-1', 'gy-3');
+
+    for (let j = 0; j < itemsPerSlide && (i + j) < businessVerticalRows.length; j++) {
+      const row = businessVerticalRows[i + j];
+      const [imageCell, titleCell, linkCell, linkLabelCell] = [...row.children];
+
+      const col = document.createElement('div');
+      col.classList.add('col');
+
+      const wrap = document.createElement('div');
+      wrap.classList.add('wrap');
+
+      const imageDiv = document.createElement('div');
+      imageDiv.classList.add('image');
+      const picture = imageCell.querySelector('picture');
+      if (picture) {
+        imageDiv.append(picture);
+      }
+      wrap.append(imageDiv);
+
+      const titleDiv = document.createElement('div');
+      titleDiv.classList.add('title');
+      titleDiv.textContent = titleCell.textContent.trim();
+      const iconImg = document.createElement('img');
+      iconImg.loading = 'lazy';
+      iconImg.src = '/content/dam/aemigrate/uploaded-folder/image/1776145932783.svg+xml';
+      iconImg.alt = 'Mahindra Group - Arrow Icon';
+      titleDiv.append(iconImg);
+      wrap.append(titleDiv);
+
+      const anchor = document.createElement('a');
+      const foundLink = linkCell.querySelector('a');
+      if (foundLink) {
+        anchor.href = foundLink.href;
+        anchor.setAttribute('aria-label', `Learn more about ${linkLabelCell.textContent.trim()}`);
+      } else {
+        anchor.href = '#';
+      }
+      anchor.classList.add('stretched-link');
+      wrap.append(anchor);
+
+      col.append(wrap);
+      slideRow.append(col);
+    }
+    slideDiv.append(slideRow);
+    mobileSlider.append(slideDiv);
+  }
+
+  mobileContainer.append(mobileSlider);
+  ourBusinessVerticals.append(mobileContainer);
+
+  block.textContent = '';
+  block.append(containerDiv, ourBusinessVerticals);
+
+  // Image optimization
+  block.querySelectorAll('picture > img').forEach((img) => {
+    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+    moveInstrumentation(img, optimizedPic.querySelector('img'));
+    img.closest('picture').replaceWith(optimizedPic);
+  });
+}

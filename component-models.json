@@ -3054,18 +3054,18 @@
       },
       {
         "component": "reference",
-        "label": "Anniversary Logo",
-        "name": "anniversaryLogo"
+        "label": "Secondary Logo",
+        "name": "secondaryLogo"
       },
       {
         "component": "aem-content",
-        "label": "Anniversary Logo Link",
-        "name": "anniversaryLogoLink"
+        "label": "Secondary Logo Link",
+        "name": "secondaryLogoLink"
       },
       {
         "component": "text",
-        "label": "Anniversary Logo Link Label",
-        "name": "anniversaryLogoLinkLabel",
+        "label": "Secondary Logo Link Label",
+        "name": "secondaryLogoLinkLabel",
         "valueType": "string"
       },
       {
@@ -5960,6 +5960,17 @@
     "id": "spirit-of-rise",
     "fields": [
       {
+        "component": "container",
+        "item": "spirit-of-rise-section",
+        "label": "Sections",
+        "name": "sections"
+      }
+    ]
+  },
+  {
+    "id": "spirit-of-rise-section",
+    "fields": [
+      {
         "component": "text",
         "label": "Heading",
         "name": "heading",
@@ -5973,25 +5984,19 @@
       },
       {
         "component": "container",
-        "item": "purpose-card",
+        "item": "spirit-of-rise-card",
         "label": "Cards",
         "name": "cards"
       }
     ]
   },
   {
-    "id": "purpose-card",
+    "id": "spirit-of-rise-card",
     "fields": [
       {
         "component": "reference",
         "label": "Image",
         "name": "image",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Image Alt Text",
-        "name": "imageAlt",
         "valueType": "string"
       },
       {
@@ -6007,9 +6012,9 @@
         "valueType": "string"
       },
       {
-        "component": "richtext",
-        "label": "Text",
-        "name": "text",
+        "component": "text",
+        "label": "Description",
+        "name": "description",
         "valueType": "string"
       }
     ]

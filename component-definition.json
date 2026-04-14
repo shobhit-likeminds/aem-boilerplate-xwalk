@@ -3777,15 +3777,30 @@
           }
         },
         {
-          "title": "Purpose Card",
-          "id": "purpose-card",
+          "title": "Spirit-of-Rise Section",
+          "id": "spirit-of-rise-section",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "purpose-card",
-                  "name": "Purpose Card"
+                  "model": "spirit-of-rise-section",
+                  "name": "Spirit-of-Rise Section"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Spirit-of-Rise Card",
+          "id": "spirit-of-rise-card",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "spirit-of-rise-card",
+                  "name": "Spirit-of-Rise Card"
                 }
               }
             }

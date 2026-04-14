@@ -4,7 +4,6 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
 export default function decorate(block) {
   const allRows = [...block.children];
 
-  // Distinguish slide rows (7 cells) from quick link rows (2 cells)
   const slideRows = allRows.filter((row) => row.children.length === 7);
   const quickLinkRows = allRows.filter((row) => row.children.length === 2);
 
@@ -12,21 +11,19 @@ export default function decorate(block) {
   section.classList.add('section', 'spotlight-home-wrap', 'm-0', 'p-0');
 
   const beamSlider = document.createElement('div');
-  beamSlider.classList.add('beam-slider', 'main-slider', 'loading1', 'beam-slider-multi', 'swiper-initialized', 'swiper-horizontal', 'swiper-watch-progress', 'swiper-backface-hidden');
+  beamSlider.classList.add('beam-slider', 'main-slider', 'loading1', 'beam-slider-multi');
+  section.append(beamSlider);
 
   const swiperWrapper = document.createElement('div');
   swiperWrapper.classList.add('swiper-wrapper');
-  swiperWrapper.setAttribute('aria-live', 'off');
+  beamSlider.append(swiperWrapper);
 
-  slideRows.forEach((row, index) => {
-    // Destructuring is safe here because the filter ensures exactly 7 children
+  slideRows.forEach((row) => {
     const [imageCell, altTextCell, smallTextCell, headingCell, descriptionCell, ctaLinkCell, ctaLinkLabelCell] = [...row.children];
 
     const swiperSlide = document.createElement('div');
     swiperSlide.classList.add('swiper-slide', 'nogradient');
-    swiperSlide.setAttribute('role', 'group');
-    swiperSlide.setAttribute('aria-label', `${index + 1} / ${slideRows.length}`);
-    swiperSlide.setAttribute('data-swiper-slide-index', index);
+    moveInstrumentation(row, swiperSlide);
 
     const slideBgImg = document.createElement('div');
     slideBgImg.classList.add('slide-bgimg');
@@ -35,182 +32,157 @@ export default function decorate(block) {
     if (picture) {
       const img = picture.querySelector('img');
       if (img) {
-        const optimizedPic = createOptimizedPicture(img.src, altTextCell.textContent.trim(), false, [{ width: '576' }, { width: '799' }, { width: '1903' }]);
-        moveInstrumentation(picture, optimizedPic);
+        const optimizedPic = createOptimizedPicture(img.src, altTextCell.textContent.trim(), false, [{ width: '1903' }]);
+        moveInstrumentation(img, optimizedPic.querySelector('img'));
         slideBgImg.append(optimizedPic);
       }
     }
+    swiperSlide.append(slideBgImg);
 
     const mobContentHomeSpotlight = document.createElement('div');
     mobContentHomeSpotlight.classList.add('mob-content-home-spotlight');
 
-    const content = document.createElement('div');
-    content.classList.add('content', 'text-center', 'text-lg-start');
+    const contentDiv = document.createElement('div');
+    contentDiv.classList.add('content', 'text-center', 'text-lg-start');
 
-    if (smallTextCell.textContent.trim()) {
+    const smallText = smallTextCell.textContent.trim();
+    if (smallText) {
       const small = document.createElement('small');
       small.style.fontWeight = 'bold';
-      small.textContent = smallTextCell.textContent.trim();
-      content.append(small);
+      small.textContent = smallText;
+      contentDiv.append(small);
     }
 
-    if (headingCell.textContent.trim()) {
+    const heading = headingCell.textContent.trim();
+    if (heading) {
       const h2 = document.createElement('h2');
       h2.classList.add('heading', 'font-medium', 'font-size-tb');
-      h2.textContent = headingCell.textContent.trim();
-      content.append(h2);
+      h2.innerHTML = heading;
+      contentDiv.append(h2);
     }
 
-    if (descriptionCell.textContent.trim()) {
+    const description = descriptionCell.textContent.trim();
+    if (description) {
       const p = document.createElement('p');
-      moveInstrumentation(descriptionCell, p);
-      while (descriptionCell.firstChild) p.append(descriptionCell.firstChild);
-      content.append(p);
+      p.innerHTML = description;
+      contentDiv.append(p);
     }
 
     const ctaLink = ctaLinkCell.querySelector('a');
-    if (ctaLink) {
-      const anchor = document.createElement('a');
-      anchor.href = ctaLink.href;
-      anchor.classList.add('btn', 'btn-primary');
-      anchor.textContent = ctaLinkLabelCell.textContent.trim() || ctaLink.textContent.trim();
-      moveInstrumentation(ctaLinkCell, anchor);
-      content.append(anchor);
+    const ctaLinkLabel = ctaLinkLabelCell.textContent.trim(); // Corrected: Use textContent.trim()
+    if (ctaLink && ctaLinkLabel) {
+      const a = document.createElement('a');
+      a.href = ctaLink.href;
+      a.textContent = ctaLinkLabel;
+      a.classList.add('btn', 'btn-primary');
+      contentDiv.append(a);
     }
 
-    mobContentHomeSpotlight.append(content);
-    swiperSlide.append(slideBgImg, mobContentHomeSpotlight);
+    mobContentHomeSpotlight.append(contentDiv);
+    swiperSlide.append(mobContentHomeSpotlight);
     swiperWrapper.append(swiperSlide);
-    moveInstrumentation(row, swiperSlide);
   });
 
   const prevButton = document.createElement('div');
   prevButton.classList.add('swiper-button-prev', 'slide-home-btn', 'swiper-button-white');
-  prevButton.setAttribute('tabindex', '0');
-  prevButton.setAttribute('role', 'button');
-  prevButton.setAttribute('aria-label', 'Previous slide');
-  const prevButtonImg = document.createElement('img');
-  prevButtonImg.alt = 'svg file';
-  // Placeholder for navigation button image, as it's not part of the block model
-  prevButtonImg.src = '/icons/arrow-left.svg';
-  prevButton.append(prevButtonImg);
+  const prevImg = document.createElement('img');
+  prevImg.alt = 'svg file';
+  prevImg.src = '/content/dam/aemigrate/uploaded-folder/image/1776145926124.svg+xml'; // Corrected SVG path
+  prevButton.append(prevImg);
+  beamSlider.append(prevButton);
 
   const nextButton = document.createElement('div');
   nextButton.classList.add('swiper-button-next', 'slide-home-btn', 'swiper-button-white');
-  nextButton.setAttribute('tabindex', '0');
-  nextButton.setAttribute('role', 'button');
-  nextButton.setAttribute('aria-label', 'Next slide');
-  const nextButtonImg = document.createElement('img');
-  nextButtonImg.alt = 'svg file';
-  // Placeholder for navigation button image, as it's not part of the block model
-  nextButtonImg.src = '/icons/arrow-right.svg';
-  nextButton.append(nextButtonImg);
+  const nextImg = document.createElement('img');
+  nextImg.alt = 'svg file';
+  nextImg.src = '/content/dam/aemigrate/uploaded-folder/image/1776145926124.svg+xml'; // Corrected SVG path
+  nextButton.append(nextImg);
+  beamSlider.append(nextButton);
 
-  const pagination = document.createElement('div');
-  pagination.classList.add('swiper-pagination', 'bullet-bottom');
-
-  const swiperNotification = document.createElement('span');
-  swiperNotification.classList.add('swiper-notification');
-  swiperNotification.setAttribute('aria-live', 'assertive');
-  swiperNotification.setAttribute('aria-atomic', 'true');
-
-  beamSlider.append(swiperWrapper, prevButton, nextButton, pagination, swiperNotification);
+  const swiperPagination = document.createElement('div');
+  swiperPagination.classList.add('swiper-pagination', 'bullet-bottom');
+  beamSlider.append(swiperPagination);
 
   const quickLinksParentDiv = document.createElement('div');
   quickLinksParentDiv.classList.add('mt-0', 'pt-1', 'pb-1', 'm-none1', 'bottom-0', 'w-100', 'quick-links-parents-div', 'position-relative');
 
-  const container = document.createElement('div');
-  container.classList.add('container', 'aos-init', 'aos-animate');
-  container.setAttribute('data-aos', 'fade-up');
-  container.setAttribute('data-aos-offset', '-100');
-  container.setAttribute('data-aos-duration', '650');
-  container.setAttribute('data-aos-easing', 'ease-in-out');
+  const containerDiv = document.createElement('div');
+  containerDiv.classList.add('container', 'aos-init', 'aos-animate');
+  containerDiv.setAttribute('data-aos', 'fade-up');
+  containerDiv.setAttribute('data-aos-offset', '-100');
+  containerDiv.setAttribute('data-aos-duration', '650');
+  containerDiv.setAttribute('data-aos-easing', 'ease-in-out');
+  quickLinksParentDiv.append(containerDiv);
 
   const quickLinksUl = document.createElement('ul');
   quickLinksUl.classList.add('quick-links-div');
+  containerDiv.append(quickLinksUl);
 
   quickLinkRows.forEach((row) => {
-    // Destructuring is safe here because the filter ensures exactly 2 children
     const [linkCell, linkLabelCell] = [...row.children];
-    const li = document.createElement('li');
-    const link = linkCell.querySelector('a');
 
-    if (link) {
-      const anchor = document.createElement('a');
-      anchor.href = link.href;
-      anchor.classList.add('with-full-underline');
-      anchor.textContent = linkLabelCell.textContent.trim() || link.textContent.trim();
-      moveInstrumentation(linkCell, anchor);
-      li.append(anchor);
+    const li = document.createElement('li');
+    moveInstrumentation(row, li);
+
+    const link = linkCell.querySelector('a');
+    const linkLabel = linkLabelCell.textContent.trim();
+
+    if (link && linkLabel) {
+      const a = document.createElement('a');
+      a.href = link.href;
+      a.textContent = linkLabel;
+      a.classList.add('with-full-underline');
+      li.append(a);
     }
     quickLinksUl.append(li);
-    moveInstrumentation(row, li);
   });
-
-  container.append(quickLinksUl);
-  quickLinksParentDiv.append(container);
-
-  section.append(beamSlider, quickLinksParentDiv);
 
   block.textContent = '';
   block.append(section);
 
-  // Initialize Swiper (simplified, actual Swiper library would be loaded separately)
-  // This is a placeholder for Swiper initialization logic
-  if (typeof window.Swiper === 'function') {
-    // eslint-disable-next-line no-new
-    new window.Swiper(beamSlider, {
-      loop: true,
-      pagination: {
-        el: pagination,
-        clickable: true,
-      },
-      navigation: {
-        nextEl: nextButton,
-        prevEl: prevButton,
-      },
-      // Add other Swiper options as needed from original HTML behavior
-    });
-  } else {
-    // Fallback if Swiper is not loaded, ensure navigation works
-    let currentIndex = 0;
-    const slides = [...swiperWrapper.children];
-    const totalSlides = slides.length;
+  // Swiper initialization (simplified, full Swiper logic would be in a separate script)
+  let currentIndex = 0;
+  const slides = [...swiperWrapper.children];
+  const totalSlides = slides.length;
 
-    const updateSlideVisibility = () => {
-      slides.forEach((slide, i) => {
-        slide.style.display = (i === currentIndex) ? 'block' : 'none';
-        // Update aria-label for pagination fallback
-        pagination.innerHTML = ''; // Clear existing bullets
-        slides.forEach((_, i) => {
-          const bullet = document.createElement('span');
-          bullet.classList.add('swiper-pagination-bullet');
-          if (i === currentIndex) {
-            bullet.classList.add('swiper-pagination-bullet-active');
-          }
-          bullet.setAttribute('tabindex', '0');
-          bullet.setAttribute('role', 'button');
-          bullet.setAttribute('aria-label', `Go to slide ${i + 1}`);
-          bullet.addEventListener('click', () => {
-            currentIndex = i;
-            updateSlideVisibility();
-          });
-          pagination.append(bullet);
-        });
-        swiperNotification.textContent = `Slide ${currentIndex + 1} of ${totalSlides}`;
+  const updateSlider = () => {
+    slides.forEach((slide, index) => {
+      slide.style.transform = `translateX(-${currentIndex * 100}%)`;
+      slide.classList.remove('swiper-slide-active', 'swiper-slide-prev', 'swiper-slide-next');
+      if (index === currentIndex) {
+        slide.classList.add('swiper-slide-active');
+      } else if (index === currentIndex - 1) {
+        slide.classList.add('swiper-slide-prev');
+      } else if (index === currentIndex + 1) {
+        slide.classList.add('swiper-slide-next');
+      }
+    });
+
+    // Update pagination bullets
+    swiperPagination.innerHTML = '';
+    for (let i = 0; i < totalSlides; i += 1) {
+      const bullet = document.createElement('span');
+      bullet.classList.add('swiper-pagination-bullet');
+      if (i === currentIndex) {
+        bullet.classList.add('swiper-pagination-bullet-active');
+      }
+      bullet.addEventListener('click', () => {
+        currentIndex = i;
+        updateSlider();
       });
-    };
+      swiperPagination.append(bullet);
+    }
+  };
 
-    prevButton.addEventListener('click', () => {
-      currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
-      updateSlideVisibility();
-    });
+  prevButton.addEventListener('click', () => {
+    currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+    updateSlider();
+  });
 
-    nextButton.addEventListener('click', () => {
-      currentIndex = (currentIndex + 1) % totalSlides;
-      updateSlideVisibility();
-    });
+  nextButton.addEventListener('click', () => {
+    currentIndex = (currentIndex + 1) % totalSlides;
+    updateSlider();
+  });
 
-    updateSlideVisibility(); // Initial display
-  }
+  updateSlider(); // Initial render
 }
