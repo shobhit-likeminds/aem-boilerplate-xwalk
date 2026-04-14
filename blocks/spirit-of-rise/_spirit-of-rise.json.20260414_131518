@@ -1,7 +1,7 @@
 {
   "definitions": [
     {
-      "title": "Spirit-of-Rise",
+      "title": "Spirit of Rise",
       "id": "spirit-of-rise",
       "plugins": {
         "xwalk": {
@@ -10,22 +10,22 @@
             "template": {
               "filter": "spirit-of-rise",
               "model": "spirit-of-rise",
-              "name": "Spirit-of-Rise"
+              "name": "Spirit of Rise"
             }
           }
         }
       }
     },
     {
-      "title": "Purpose Card",
-      "id": "purpose-card",
+      "title": "Spirit of Rise Card",
+      "id": "spirit-of-rise-card",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "purpose-card",
-              "name": "Purpose Card"
+              "model": "spirit-of-rise-card",
+              "name": "Spirit of Rise Card"
             }
           }
         }
@@ -50,25 +50,19 @@
         },
         {
           "component": "container",
-          "item": "purpose-card",
+          "item": "spirit-of-rise-card",
           "label": "Cards",
           "name": "cards"
         }
       ]
     },
     {
-      "id": "purpose-card",
+      "id": "spirit-of-rise-card",
       "fields": [
         {
           "component": "reference",
           "label": "Image",
           "name": "image",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Image Alt Text",
-          "name": "imageAlt",
           "valueType": "string"
         },
         {
@@ -96,7 +90,7 @@
     {
       "id": "spirit-of-rise",
       "components": [
-        "purpose-card"
+        "spirit-of-rise-card"
       ]
     }
   ]

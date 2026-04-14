@@ -54,18 +54,18 @@
         },
         {
           "component": "reference",
-          "label": "Anniversary Logo",
-          "name": "anniversaryLogo"
+          "label": "80th Year Logo",
+          "name": "year80Logo"
         },
         {
           "component": "aem-content",
-          "label": "Anniversary Logo Link",
-          "name": "anniversaryLogoLink"
+          "label": "80th Year Logo Link",
+          "name": "year80LogoLink"
         },
         {
           "component": "text",
-          "label": "Anniversary Logo Link Label",
-          "name": "anniversaryLogoLinkLabel",
+          "label": "80th Year Logo Link Label",
+          "name": "year80LogoLinkLabel",
           "valueType": "string"
         },
         {

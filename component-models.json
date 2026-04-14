@@ -3054,18 +3054,18 @@
       },
       {
         "component": "reference",
-        "label": "80th Year Logo",
-        "name": "year80Logo"
+        "label": "Anniversary Logo",
+        "name": "anniversaryLogo"
       },
       {
         "component": "aem-content",
-        "label": "80th Year Logo Link",
-        "name": "year80LogoLink"
+        "label": "Anniversary Logo Link",
+        "name": "anniversaryLogoLink"
       },
       {
         "component": "text",
-        "label": "80th Year Logo Link Label",
-        "name": "year80LogoLinkLabel",
+        "label": "Anniversary Logo Link Label",
+        "name": "anniversaryLogoLinkLabel",
         "valueType": "string"
       },
       {
@@ -5973,19 +5973,25 @@
       },
       {
         "component": "container",
-        "item": "spirit-of-rise-card",
+        "item": "purpose-card",
         "label": "Cards",
         "name": "cards"
       }
     ]
   },
   {
-    "id": "spirit-of-rise-card",
+    "id": "purpose-card",
     "fields": [
       {
         "component": "reference",
         "label": "Image",
         "name": "image",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Image Alt Text",
+        "name": "imageAlt",
         "valueType": "string"
       },
       {
@@ -6944,8 +6950,8 @@
       },
       {
         "component": "richtext",
-        "label": "Text",
-        "name": "text",
+        "label": "Description",
+        "name": "description",
         "valueType": "string"
       },
       {
