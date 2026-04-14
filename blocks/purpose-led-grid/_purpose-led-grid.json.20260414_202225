@@ -53,20 +53,27 @@
           "name": "image"
         },
         {
+          "component": "text",
+          "label": "Image Alt",
+          "name": "imageAlt",
+          "valueType": "string"
+        },
+        {
           "component": "aem-content",
-          "label": "Link",
-          "name": "link"
+          "label": "Card Link",
+          "name": "cardLink",
+          "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Link Label",
-          "name": "linkLabel",
+          "label": "Card Link Label",
+          "name": "cardLinkLabel",
           "valueType": "string"
         },
         {
           "component": "richtext",
-          "label": "Text",
-          "name": "text",
+          "label": "Description",
+          "name": "description",
           "valueType": "string"
         }
       ]

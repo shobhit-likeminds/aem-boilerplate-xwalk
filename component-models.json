@@ -448,27 +448,20 @@
         "name": "image"
       },
       {
-        "component": "text",
-        "label": "Image Alt",
-        "name": "imageAlt",
-        "valueType": "string"
-      },
-      {
         "component": "aem-content",
-        "label": "Card Link",
-        "name": "cardLink",
-        "valueType": "string"
+        "label": "Link",
+        "name": "link"
       },
       {
         "component": "text",
-        "label": "Card Link Label",
-        "name": "cardLinkLabel",
+        "label": "Link Label",
+        "name": "linkLabel",
         "valueType": "string"
       },
       {
         "component": "richtext",
-        "label": "Description",
-        "name": "description",
+        "label": "Text",
+        "name": "text",
         "valueType": "string"
       }
     ]
