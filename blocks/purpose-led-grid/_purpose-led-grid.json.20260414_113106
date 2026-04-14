@@ -1,31 +1,31 @@
 {
   "definitions": [
     {
-      "title": "Latest-Stories",
-      "id": "latest-stories",
+      "title": "Purpose-Led-Grid",
+      "id": "purpose-led-grid",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block",
             "template": {
-              "filter": "latest-stories",
-              "model": "latest-stories",
-              "name": "Latest-Stories"
+              "filter": "purpose-led-grid",
+              "model": "purpose-led-grid",
+              "name": "Purpose-Led-Grid"
             }
           }
         }
       }
     },
     {
-      "title": "Story",
-      "id": "story",
+      "title": "Purpose-Led-Grid-Item",
+      "id": "purpose-led-grid-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "story",
-              "name": "Story"
+              "model": "purpose-led-grid-item",
+              "name": "Purpose-Led-Grid-Item"
             }
           }
         }
@@ -34,24 +34,18 @@
   ],
   "models": [
     {
-      "id": "latest-stories",
+      "id": "purpose-led-grid",
       "fields": [
         {
-          "component": "text",
-          "label": "Heading",
-          "name": "heading",
-          "valueType": "string"
-        },
-        {
           "component": "container",
-          "item": "story",
-          "label": "Stories",
-          "name": "stories"
+          "item": "purpose-led-grid-item",
+          "label": "Items",
+          "name": "items"
         }
       ]
     },
     {
-      "id": "story",
+      "id": "purpose-led-grid-item",
       "fields": [
         {
           "component": "reference",
@@ -61,32 +55,26 @@
         },
         {
           "component": "text",
-          "label": "Category",
-          "name": "category",
+          "label": "Image Alt Text",
+          "name": "altText",
           "valueType": "string"
         },
         {
-          "component": "text",
-          "label": "Text",
-          "name": "text",
+          "component": "richtext",
+          "label": "Description",
+          "name": "description",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "label": "Link",
-          "name": "link",
+          "label": "Card Link",
+          "name": "cardLink",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Link Label",
-          "name": "linkLabel",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Date",
-          "name": "date",
+          "label": "Card Link Label",
+          "name": "cardLinkLabel",
           "valueType": "string"
         }
       ]
@@ -94,9 +82,9 @@
   ],
   "filters": [
     {
-      "id": "latest-stories",
+      "id": "purpose-led-grid",
       "components": [
-        "story"
+        "purpose-led-grid-item"
       ]
     }
   ]

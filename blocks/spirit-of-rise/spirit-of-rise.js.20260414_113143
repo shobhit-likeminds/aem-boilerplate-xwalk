@@ -1,0 +1,115 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  const allRows = [...block.children];
+
+  // Separate section rows from card rows based on cell count and content
+  const sectionRows = allRows.filter((row) => row.children.length === 3 && !row.querySelector('picture'));
+  const cardRows = allRows.filter((row) => row.children.length === 4 && row.querySelector('picture'));
+
+  block.textContent = '';
+
+  sectionRows.forEach((sectionRow, sectionIndex) => {
+    // Use content detection for cells within a section row
+    const cells = [...sectionRow.children];
+    const headingCell = cells.find(cell => cell.textContent.trim() && !cell.querySelector('picture') && !cell.querySelector('a'));
+    const descriptionCell = cells.find(cell => cell.textContent.trim() && !cell.querySelector('picture') && !cell.querySelector('a') && cell !== headingCell);
+    const cardsContainerCell = cells.find(cell => cell.textContent.trim() && !cell.querySelector('picture') && !cell.querySelector('a') && cell !== headingCell && cell !== descriptionCell); // This cell is mostly a placeholder based on the model
+
+    const sectionHeader = document.createElement('div');
+    sectionHeader.classList.add('section-header', 'text-center', 'pb-3');
+    if (headingCell) {
+      moveInstrumentation(headingCell, sectionHeader);
+      const heading = document.createElement('h2');
+      heading.classList.add('heading', 'font-regular', 'aos-init', 'aos-animate');
+      heading.textContent = headingCell.textContent.trim();
+      sectionHeader.appendChild(heading);
+    }
+
+    if (descriptionCell && descriptionCell.textContent.trim()) {
+      const description = document.createElement('p');
+      description.classList.add('aos-init', 'aos-animate');
+      description.textContent = descriptionCell.textContent.trim();
+      sectionHeader.appendChild(description);
+    }
+
+    block.appendChild(sectionHeader);
+
+    const performanceDriven = document.createElement('div');
+    performanceDriven.classList.add('performance-driven', 'performace-driven-home');
+    if (cardsContainerCell) {
+      moveInstrumentation(cardsContainerCell, performanceDriven);
+    }
+
+    const container = document.createElement('div');
+    container.classList.add('container');
+    performanceDriven.appendChild(container);
+
+    const cardsWrapper = document.createElement('div');
+    cardsWrapper.classList.add('performace-driven-cards');
+    container.appendChild(cardsWrapper);
+
+    // To match the ORIGINAL HTML, the 'grey-bg' class is applied to the second section.
+    if (sectionIndex === 1) {
+      block.classList.add('grey-bg');
+    }
+
+    // Render all cardRows under each section as per the original HTML structure
+    cardRows.forEach((cardRow) => {
+      // Use content detection for cells within a card row
+      const cardCells = [...cardRow.children];
+      const imageCell = cardCells.find(cell => cell.querySelector('picture'));
+      const linkCell = cardCells.find(cell => cell.querySelector('a'));
+      const textCell = cardCells.find(cell => cell.querySelector('p'));
+      // linkLabelCell is often just text or a duplicate link, if it's not the link cell or text cell, it's the label
+      const linkLabelCell = cardCells.find(cell => cell !== imageCell && cell !== linkCell && cell !== textCell);
+
+
+      const cardLink = document.createElement('a');
+      cardLink.classList.add('performace-driven-cards-link');
+      if (linkCell) {
+        const foundLink = linkCell.querySelector('a');
+        if (foundLink) {
+          cardLink.href = foundLink.href;
+          cardLink.target = '_blank';
+        }
+      }
+      moveInstrumentation(cardRow, cardLink);
+
+      const cardWrapper = document.createElement('div');
+      cardWrapper.classList.add('performace-driven-card-wrapper');
+      cardLink.appendChild(cardWrapper);
+
+      const cardImage = document.createElement('div');
+      cardImage.classList.add('card-image');
+      if (imageCell) {
+        const picture = imageCell.querySelector('picture');
+        if (picture) {
+          const img = picture.querySelector('img');
+          if (img) {
+            const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ media: '(max-width: 576px)', width: '576' }, { width: '750' }]);
+            moveInstrumentation(picture, optimizedPic.querySelector('img'));
+            cardImage.appendChild(optimizedPic);
+          }
+        }
+      }
+      cardWrapper.appendChild(cardImage);
+
+      const cardBox = document.createElement('div');
+      cardBox.classList.add('performace-driven-home-box-card');
+      cardWrapper.appendChild(cardBox);
+
+      if (textCell) {
+        const desc = document.createElement('p');
+        desc.classList.add('desc');
+        desc.innerHTML = textCell.innerHTML.trim();
+        cardBox.appendChild(desc);
+      }
+
+      cardsWrapper.appendChild(cardLink);
+    });
+
+    block.appendChild(performanceDriven);
+  });
+}

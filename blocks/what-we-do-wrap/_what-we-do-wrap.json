@@ -17,15 +17,15 @@
       }
     },
     {
-      "title": "What-We-Do-Item",
-      "id": "what-we-do-item",
+      "title": "Business-Vertical",
+      "id": "business-vertical",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "what-we-do-item",
-              "name": "What-We-Do-Item"
+              "model": "business-vertical",
+              "name": "Business-Vertical"
             }
           }
         }
@@ -43,21 +43,21 @@
           "valueType": "string"
         },
         {
-          "component": "richtext",
+          "component": "text",
           "label": "Description",
           "name": "description",
           "valueType": "string"
         },
         {
           "component": "container",
-          "item": "what-we-do-item",
+          "item": "business-vertical",
           "label": "Business Verticals",
-          "name": "items"
+          "name": "businessVerticals"
         }
       ]
     },
     {
-      "id": "what-we-do-item",
+      "id": "business-vertical",
       "fields": [
         {
           "component": "reference",
@@ -90,7 +90,7 @@
     {
       "id": "what-we-do-wrap",
       "components": [
-        "what-we-do-item"
+        "business-vertical"
       ]
     }
   ]

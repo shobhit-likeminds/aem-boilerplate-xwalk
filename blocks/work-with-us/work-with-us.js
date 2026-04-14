@@ -6,23 +6,15 @@ export default function decorate(block) {
 
   const sectionHeader = document.createElement('div');
   sectionHeader.classList.add('section-header', 'text-center');
-  moveInstrumentation(headingRow, sectionHeader);
 
   const heading = document.createElement('h2');
   heading.classList.add('heading', 'font-regular', 'aos-init', 'aos-animate');
-  heading.setAttribute('data-aos', 'fade-up');
-  heading.setAttribute('data-aos-offset', '100');
-  heading.setAttribute('data-aos-duration', '650');
-  heading.setAttribute('data-aos-easing', 'ease-in-out');
+  moveInstrumentation(headingRow.firstElementChild, heading);
   heading.textContent = headingRow.firstElementChild.textContent.trim();
   sectionHeader.append(heading);
 
   const positionRelativeDiv = document.createElement('div');
   positionRelativeDiv.classList.add('position-relative', 'aos-init', 'aos-animate');
-  positionRelativeDiv.setAttribute('data-aos', 'fade-up');
-  positionRelativeDiv.setAttribute('data-aos-offset', '100');
-  positionRelativeDiv.setAttribute('data-aos-duration', '650');
-  positionRelativeDiv.setAttribute('data-aos-easing', 'ease-in-out');
 
   const containerDiv = document.createElement('div');
   containerDiv.classList.add('container');
@@ -30,23 +22,29 @@ export default function decorate(block) {
   const gridLayoutDiv = document.createElement('div');
   gridLayoutDiv.classList.add('grid-layout');
 
+  // Check if Flickity is needed for mobile
+  const isMobileCarousel = block.classList.contains('flickity-slider-mobile-wrap');
+  if (isMobileCarousel) {
+    gridLayoutDiv.classList.add('flickity-slider-mobile-wrap');
+    gridLayoutDiv.setAttribute('data-flickity', '{ "wrapAround": false, "lazyLoad": true, "pageDots": true, "prevNextButtons": false, "imagesLoaded": true, "cellAlign": "left", "watchCSS": true, "adaptiveHeight": true }');
+  }
+
   slideRows.forEach((row) => {
-    const cells = [...row.children];
-
-    // Content detection for cells
-    const imageCell = cells.find(cell => cell.querySelector('picture'));
-    const titleCell = cells.find(cell => cell.textContent.trim() && !cell.querySelector('picture') && !cell.querySelector('a'));
-    const descriptionCell = cells.find(cell => cell.innerHTML.includes('<p>') && !cell.querySelector('picture') && !cell.querySelector('a'));
-    const ctaLinkCell = cells.find(cell => cell.querySelector('a') && cell.querySelector('a').href.includes('https://'));
-    const ctaLinkLabelCell = cells.find(cell => cell.textContent.trim() && cell.querySelector('a') && !cell.querySelector('a').href.includes('https://'));
-
-
-    const slidesDiv = document.createElement('div');
-    slidesDiv.classList.add('slides');
-    moveInstrumentation(row, slidesDiv);
+    const slideDiv = document.createElement('div');
+    slideDiv.classList.add('slides');
+    moveInstrumentation(row, slideDiv);
 
     const wrapDiv = document.createElement('div');
     wrapDiv.classList.add('wrap');
+
+    const cells = [...row.children];
+
+    // Content detection for cells
+    const imageCell = cells.find((cell) => cell.querySelector('picture'));
+    const ctaLinkCell = cells.find((cell) => cell.querySelector('a'));
+    const ctaLinkLabelCell = cells.find((cell) => ctaLinkCell && cell !== ctaLinkCell && cell.textContent.trim() === ctaLinkCell.href); // Assuming ctaLinkLabelCell contains the href if it's not the actual label
+    const titleCell = cells.find((cell) => !cell.querySelector('picture') && !cell.querySelector('a') && cell.textContent.trim() !== '' && cell.innerHTML.indexOf('<p') === -1);
+    const textCell = cells.find((cell) => cell.innerHTML.indexOf('<p') > -1);
 
     if (imageCell && imageCell.querySelector('picture')) {
       const imageWrapDiv = document.createElement('div');
@@ -54,12 +52,9 @@ export default function decorate(block) {
       const picture = imageCell.querySelector('picture');
       if (picture) {
         const img = picture.querySelector('img');
-        if (img) {
-          const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-          optimizedPic.querySelector('img').classList.add('img-fluid');
-          moveInstrumentation(img, optimizedPic.querySelector('img'));
-          imageWrapDiv.append(optimizedPic);
-        }
+        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+        moveInstrumentation(img, optimizedPic.querySelector('img'));
+        imageWrapDiv.append(optimizedPic);
       }
       wrapDiv.append(imageWrapDiv);
     }
@@ -71,62 +66,55 @@ export default function decorate(block) {
     contentSectionHeader.classList.add('section-header');
 
     if (titleCell) {
-      const title = document.createElement('h3');
-      title.classList.add('heading', 'font-regular');
-      title.textContent = titleCell.textContent.trim();
-      contentSectionHeader.append(title);
+      const slideTitle = document.createElement('h3');
+      slideTitle.classList.add('heading', 'font-regular');
+      moveInstrumentation(titleCell, slideTitle);
+      slideTitle.textContent = titleCell.textContent.trim();
+      contentSectionHeader.append(slideTitle);
     }
 
-    if (descriptionCell) {
-      const description = document.createElement('p');
-      description.classList.add('text-size-body');
-      description.innerHTML = descriptionCell.innerHTML;
-      contentSectionHeader.append(description);
+    if (textCell) {
+      const slideText = document.createElement('p');
+      slideText.classList.add('text-size-body');
+      moveInstrumentation(textCell, slideText);
+      slideText.innerHTML = textCell.innerHTML; // richtext content
+      contentSectionHeader.append(slideText);
     }
 
-    if (ctaLinkCell && ctaLinkLabelCell) {
-      const ctaLink = document.createElement('a');
-      ctaLink.classList.add('btn', 'btn-primary', 'stretched-link');
-      const originalCtaLink = ctaLinkCell.querySelector('a');
-      if (originalCtaLink) {
-        ctaLink.href = originalCtaLink.href;
+    if (ctaLinkCell) {
+      const ctaLink = ctaLinkCell.querySelector('a');
+      if (ctaLink) {
+        const ctaAnchor = document.createElement('a');
+        ctaAnchor.classList.add('btn', 'btn-primary', 'stretched-link');
+        ctaAnchor.href = ctaLink.href;
+        moveInstrumentation(ctaLinkCell, ctaAnchor);
+        // Use ctaLinkLabelCell content if it exists and is different from ctaLink.href
+        ctaAnchor.textContent = ctaLinkLabelCell && ctaLinkLabelCell.textContent.trim() !== ctaLink.href
+          ? ctaLinkLabelCell.textContent.trim()
+          : ctaLink.textContent.trim();
+        contentSectionHeader.append(ctaAnchor);
       }
-      ctaLink.textContent = ctaLinkLabelCell.textContent.trim();
-      contentSectionHeader.append(ctaLink);
     }
-
 
     contentWrapDiv.append(contentSectionHeader);
     wrapDiv.append(contentWrapDiv);
-    slidesDiv.append(wrapDiv);
-    gridLayoutDiv.append(slidesDiv);
+    slideDiv.append(wrapDiv);
+    gridLayoutDiv.append(slideDiv);
   });
 
   containerDiv.append(gridLayoutDiv);
   positionRelativeDiv.append(containerDiv);
 
   block.textContent = '';
-  block.classList.add('section', 'pb-0'); // Add section and pb-0 classes to the block itself
+  block.classList.add('pb-0'); // Add section classes to block div
   block.append(sectionHeader, positionRelativeDiv);
 
-  // Interactivity: Initialize Flickity for mobile slider
-  if (window.innerWidth <= 799) { // Assuming mobile breakpoint
+  // Initialize Flickity if the block has the class
+  if (isMobileCarousel) {
     // Dynamically import Flickity
     import('flickity').then((Flickity) => {
-      // Add flickity-slider-mobile-wrap class to gridLayoutDiv
-      gridLayoutDiv.classList.add('flickity-slider-mobile-wrap');
-      // Initialize Flickity
       // eslint-disable-next-line no-new
-      new Flickity.default(gridLayoutDiv, {
-        wrapAround: false,
-        lazyLoad: true,
-        pageDots: true,
-        prevNextButtons: false,
-        imagesLoaded: true,
-        cellAlign: 'left',
-        watchCSS: true,
-        adaptiveHeight: true,
-      });
+      new Flickity.default(gridLayoutDiv, JSON.parse(gridLayoutDiv.dataset.flickity));
     });
   }
 }

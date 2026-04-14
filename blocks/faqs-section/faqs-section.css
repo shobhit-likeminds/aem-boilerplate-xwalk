@@ -654,6 +654,8 @@ progress { vertical-align:baseline }
 
 @font-face{font-family:quantum-rise-regular;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.mahindra.com%2Fthemes%2Fcustom%2Fmahindra%2Ffonts%2FQuantumRise-Regular.woff2') format("woff2"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fwww.mahindra.com%2Fthemes%2Fcustom%2Fmahindra%2Ffonts%2FQuantumRise-Regular.woff') format("woff");font-style:normal;font-weight:400;font-display:swap;}
 
+:root{--bs-font-sans-serif:"Georama","Roboto",sans-serif;--bs-font-monospace:"quantum-rise-regular",monospace;}
+
 body{margin:0;padding:0;font-size:1rem;line-height:1.4;font-family:"Georama",sans-serif;color:#000000;background:#ffffff;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;}
 
 @media (max-width:834px) { body{font-size:1rem;} }

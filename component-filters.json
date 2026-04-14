@@ -161,7 +161,8 @@
       "movement-matters",
       "legacy-slider",
       "hm-suatainability",
-      "hm-careers"
+      "hm-careers",
+      "spotlight-home"
     ]
   },
   {
@@ -406,7 +407,7 @@
   {
     "id": "faqs-section",
     "components": [
-      "faq"
+      "faq-item"
     ]
   },
   {
@@ -464,10 +465,7 @@
   {
     "id": "footer-main",
     "components": [
-      "footer-social-link",
-      "footer-link-block",
-      "footer-link",
-      "footer-secondary-link"
+      "footer-section"
     ]
   },
   {
@@ -772,7 +770,7 @@
   {
     "id": "purpose-led-grid",
     "components": [
-      "purpose-led-grid-item"
+      "purpose-led-card"
     ]
   },
   {
@@ -852,6 +850,13 @@
   },
   {
     "id": "spotlight-home-wrap",
+    "components": [
+      "spotlight-slide",
+      "quick-link"
+    ]
+  },
+  {
+    "id": "spotlight-home",
     "components": [
       "spotlight-slide",
       "quick-link"
@@ -945,7 +950,7 @@
   {
     "id": "what-we-do-wrap",
     "components": [
-      "what-we-do-item"
+      "business-vertical"
     ]
   },
   {
