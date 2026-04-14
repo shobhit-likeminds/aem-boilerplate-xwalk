@@ -2,54 +2,45 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const [headingRow, ...faqItemRows] = [...block.children];
-
-  const section = document.createElement('section');
-  section.classList.add('section', 'faqs-section');
-  moveInstrumentation(block, section);
+  const [headingRow, ...faqRows] = [...block.children];
 
   const container = document.createElement('div');
   container.classList.add('container');
 
-  // Heading
+  // Section Header
   const sectionHeader = document.createElement('div');
   sectionHeader.classList.add('section-header', 'text-center');
   moveInstrumentation(headingRow, sectionHeader);
 
-  const headingElement = headingRow.querySelector('div'); // Get the div containing the heading text
   const heading = document.createElement('h2');
   heading.classList.add('heading', 'font-regular', 'aos-init', 'aos-animate');
   heading.setAttribute('data-aos', 'fade-up');
-  if (headingElement) {
-    heading.textContent = headingElement.textContent.trim();
-  }
+  heading.textContent = headingRow.firstElementChild?.textContent.trim() || '';
   sectionHeader.append(heading);
   container.append(sectionHeader);
 
-  // FAQs Accordion
+  // Accordion Div
   const accoDiv = document.createElement('div');
   accoDiv.classList.add('acco-div');
-
   const ul = document.createElement('ul');
 
-  faqItemRows.forEach((row, index) => {
+  faqRows.forEach((row, index) => {
+    // CRITICAL FIX: Replaced row.children[n] with content detection
     const cells = [...row.children];
-    const questionCell = cells[0]; // Assuming first cell is question
-    const answerCell = cells[1];   // Assuming second cell is answer
+    const questionCell = cells.find(cell => !cell.querySelector('p')); // Assuming question is not a paragraph
+    const answerCell = cells.find(cell => cell.querySelector('p')); // Assuming answer is a paragraph
 
     const li = document.createElement('li');
     moveInstrumentation(row, li);
     li.classList.add('aos-init', 'aos-animate');
     li.setAttribute('data-aos', 'fade-up');
     if (index === 0) {
-      li.classList.add('active'); // First item is active by default
+      li.classList.add('active');
     }
 
     const h2 = document.createElement('h2');
     h2.setAttribute('data-once', 'faqsAccordion');
-    if (questionCell) {
-      h2.textContent = questionCell.textContent.trim();
-    }
+    h2.textContent = questionCell?.textContent.trim() || '';
     li.append(h2);
 
     const accoContentDiv = document.createElement('div');
@@ -57,43 +48,30 @@ export default function decorate(block) {
     if (index === 0) {
       accoContentDiv.classList.add('show');
     }
-    if (answerCell) {
-      moveInstrumentation(answerCell, accoContentDiv);
+    moveInstrumentation(answerCell, accoContentDiv);
+    if (answerCell) { // Ensure answerCell exists before appending children
       while (answerCell.firstChild) {
         accoContentDiv.append(answerCell.firstChild);
       }
     }
     li.append(accoContentDiv);
 
+    h2.addEventListener('click', () => {
+      const currentActive = ul.querySelector('li.active');
+      if (currentActive && currentActive !== li) {
+        currentActive.classList.remove('active');
+        currentActive.querySelector('.acco-content-div').classList.remove('show');
+      }
+      li.classList.toggle('active');
+      accoContentDiv.classList.toggle('show');
+    });
+
     ul.append(li);
   });
 
   accoDiv.append(ul);
   container.append(accoDiv);
-  section.append(container);
-
-  // Accordion logic
-  ul.querySelectorAll('h2[data-once="faqsAccordion"]').forEach((h2) => {
-    h2.addEventListener('click', () => {
-      const li = h2.closest('li');
-      const accoContentDiv = li.querySelector('.acco-content-div');
-
-      if (li.classList.contains('active')) {
-        li.classList.remove('active');
-        accoContentDiv.classList.remove('show');
-      } else {
-        // Close all other active items
-        ul.querySelectorAll('li.active').forEach((activeLi) => {
-          activeLi.classList.remove('active');
-          activeLi.querySelector('.acco-content-div').classList.remove('show');
-        });
-        // Open current item
-        li.classList.add('active');
-        accoContentDiv.classList.add('show');
-      }
-    });
-  });
 
   block.textContent = '';
-  block.append(section);
+  block.append(container);
 }

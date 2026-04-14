@@ -1,0 +1,334 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  const [
+    logoRow,
+    logoLinkRow,
+    logoLinkLabelRow,
+    anniversaryLogoRow,
+    anniversaryLogoLinkRow,
+    anniversaryLogoLinkLabelRow,
+    ...navItemRows
+  ] = [...block.children];
+
+  const header = document.createElement('header');
+  header.classList.add('main-header', 'with-marquee', 'solid'); // 'nav-up' is a scroll state class, do not add initially
+
+  const container = document.createElement('div');
+  container.classList.add('container');
+  header.append(container);
+
+  const wrap = document.createElement('div');
+  wrap.classList.add('wrap');
+  container.append(wrap);
+
+  // Logo
+  const logoDiv = document.createElement('div');
+  logoDiv.classList.add('logo');
+  const logoLink = document.createElement('a');
+  const foundLogoLink = logoLinkRow.querySelector('a');
+  if (foundLogoLink) {
+    logoLink.href = foundLogoLink.href;
+  }
+  const logoImg = logoRow.querySelector('picture img');
+  if (logoImg) {
+    const optimizedPic = createOptimizedPicture(logoImg.src, logoImg.alt, false, [{ width: '200' }]);
+    const imgElement = optimizedPic.querySelector('img');
+    imgElement.classList.add('hiddenlogo1');
+    imgElement.alt = logoImg.alt;
+    imgElement.title = logoImg.title || logoImg.alt;
+    logoLink.append(optimizedPic);
+  }
+  moveInstrumentation(logoRow, logoDiv);
+  moveInstrumentation(logoLinkRow, logoLink);
+  logoDiv.append(logoLink);
+  wrap.append(logoDiv);
+
+  // Hamburger
+  const hamburger = document.createElement('div');
+  hamburger.classList.add('hamburger');
+  const hamburgerUl = document.createElement('ul');
+  for (let i = 0; i < 3; i += 1) {
+    hamburgerUl.append(document.createElement('li'));
+  }
+  hamburger.append(hamburgerUl);
+  wrap.append(hamburger);
+
+  // Main Nav
+  const nav = document.createElement('nav');
+  nav.classList.add('main-nav');
+  const navUl = document.createElement('ul');
+  navUl.setAttribute('itemscope', '');
+  navUl.setAttribute('itemtype', 'http://www.schema.org/SiteNavigationElement');
+  nav.append(navUl);
+  wrap.append(nav);
+
+  navItemRows.forEach((row) => {
+    // Use content detection instead of index access for robustness
+    const cells = [...row.children];
+    const labelCell = cells.find(cell => !cell.querySelector('a') && !cell.querySelector('ul'));
+    const linkCell = cells.find(cell => cell.querySelector('a'));
+    const subLinksCell = cells.find(cell => cell.querySelector('ul'));
+    // Assuming linkLabelCell is the text content of the link, which might be the same as labelCell if no explicit link label is provided.
+    // For now, let's assume it's the cell with a link that is not the subLinksCell.
+    const linkLabelCell = linkCell; // The text content for the anchor will come from here or labelCell
+
+    const li = document.createElement('li');
+    moveInstrumentation(row, li);
+    li.classList.add('hover-red');
+
+    const subList = subLinksCell?.querySelector('ul');
+    const anchor = document.createElement('a');
+    const foundLink = linkCell?.querySelector('a');
+
+    if (foundLink) {
+      anchor.href = foundLink.href;
+    }
+    // Prioritize linkLabelCell's text, then labelCell's text
+    anchor.textContent = linkLabelCell?.textContent.trim() || labelCell?.textContent.trim() || '';
+    li.append(anchor);
+
+    if (subList) {
+      li.classList.add('has-child');
+      const arrowSpan = document.createElement('span');
+      const arrowImg = document.createElement('img');
+      arrowImg.alt = 'svg file';
+      arrowImg.src = '/icons/arrow-right.svg'; // Use a generic local SVG or ensure this is from model
+      arrowSpan.append(arrowImg);
+      li.append(arrowSpan);
+
+      const megaMenu = document.createElement('div');
+      megaMenu.classList.add('mega-menu');
+      const megaMenuWrap = document.createElement('div');
+      megaMenuWrap.classList.add('wrap', 'container');
+      const centerDiv = document.createElement('div');
+      centerDiv.classList.add('center-div');
+      const subNavWrap = document.createElement('div');
+      subNavWrap.classList.add('sub-nav-wrap');
+      subNavWrap.append(subList); // Move the authored <ul> into the subNavWrap
+
+      centerDiv.append(subNavWrap);
+      megaMenuWrap.append(centerDiv);
+      megaMenu.append(megaMenuWrap);
+      li.append(megaMenu);
+
+      // Toggle functionality for mega menu
+      li.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        li.classList.toggle('active'); // Use 'active' class for styling
+      });
+    }
+    navUl.append(li);
+  });
+
+  // Icon Nav (Mobile)
+  const mobileIconNav = document.createElement('div');
+  mobileIconNav.classList.add('icon-nav', 'mobile-menus-icon');
+  const mobileIconUl = document.createElement('ul');
+  mobileIconNav.append(mobileIconUl);
+
+  const mailLiMobile = document.createElement('li');
+  mailLiMobile.classList.add('mail');
+  const mailLinkMobile = document.createElement('a');
+  mailLinkMobile.href = 'https://www.mahindra.com/contact-us';
+  mailLinkMobile.textContent = 'Contact Us';
+  mailLiMobile.append(mailLinkMobile);
+  mobileIconUl.append(mailLiMobile);
+
+  const searchLiMobile = document.createElement('li');
+  searchLiMobile.classList.add('search');
+  const searchLinkMobile = document.createElement('a');
+  searchLinkMobile.href = '#';
+  const searchImgMobile = document.createElement('img');
+  searchImgMobile.alt = 'svg file';
+  searchImgMobile.src = '/icons/search.svg'; // Use generic local SVG
+  const searchImgCloseMobile = document.createElement('img');
+  searchImgCloseMobile.alt = 'svg file';
+  searchImgCloseMobile.src = '/icons/close.svg'; // Use generic local SVG
+  const searchSpanMobile = document.createElement('span');
+  searchSpanMobile.textContent = ' Search';
+  searchLinkMobile.append(searchImgMobile, searchImgCloseMobile, searchSpanMobile);
+  searchLiMobile.append(searchLinkMobile);
+
+  const searchScreenWrapMobile = document.createElement('div');
+  searchScreenWrapMobile.classList.add('search-screen-wrap');
+  const searchWrapMobile = document.createElement('div');
+  searchWrapMobile.classList.add('wrap');
+  const searchFormMobile = document.createElement('form');
+  searchFormMobile.action = 'https://www.mahindra.com/search';
+  searchFormMobile.method = 'get';
+  searchFormMobile.id = 'search-block-form'; // Corrected ID from original HTML
+
+  const searchInputWrapMobile = document.createElement('div');
+  searchInputWrapMobile.classList.add('search-wrap');
+  const searchIconDivMobile = document.createElement('div');
+  searchIconDivMobile.classList.add('search-icon');
+  const searchIconImgMobile = document.createElement('img');
+  searchIconImgMobile.alt = 'svg file';
+  searchIconImgMobile.src = '/icons/search.svg'; // Use generic local SVG
+  searchIconDivMobile.append(searchIconImgMobile);
+  const searchInputMobile = document.createElement('input');
+  searchInputMobile.type = 'text';
+  searchInputMobile.classList.add('input-text', 'searchtext');
+  searchInputMobile.required = true;
+  searchInputMobile.name = 'key';
+  searchInputMobile.id = 'searchInput'; // Corrected ID from original HTML
+  searchInputMobile.autocomplete = 'off';
+  const submitButtonMobile = document.createElement('button');
+  submitButtonMobile.classList.add('submit-button');
+  const submitLabelMobile = document.createElement('div');
+  submitLabelMobile.classList.add('label');
+  submitLabelMobile.textContent = ' Submit ';
+  const submitImgMobile = document.createElement('img');
+  submitImgMobile.alt = 'svg file';
+  submitImgMobile.src = '/icons/arrow-right.svg'; // Use generic local SVG
+  submitButtonMobile.append(submitLabelMobile, submitImgMobile);
+  searchInputWrapMobile.append(searchIconDivMobile, searchInputMobile, submitButtonMobile);
+  searchFormMobile.append(searchInputWrapMobile);
+  searchWrapMobile.append(searchFormMobile);
+  searchScreenWrapMobile.append(searchWrapMobile);
+  searchLiMobile.append(searchScreenWrapMobile);
+  mobileIconUl.append(searchLiMobile);
+  nav.append(mobileIconNav);
+
+  // Icon Nav (Desktop)
+  const desktopIconNav = document.createElement('div');
+  desktopIconNav.classList.add('icon-nav', 'desktop-menus-icon');
+  const desktopIconUl = document.createElement('ul');
+  desktopIconNav.append(desktopIconUl);
+
+  const mailLiDesktop = document.createElement('li');
+  mailLiDesktop.classList.add('mail');
+  const mailLinkDesktop = document.createElement('a');
+  mailLinkDesktop.href = 'https://www.mahindra.com/contact-us';
+  const mailImgDesktop = document.createElement('img');
+  mailImgDesktop.alt = 'svg file';
+  mailImgDesktop.src = '/icons/mail.svg'; // Use generic local SVG
+  mailLinkDesktop.append(mailImgDesktop);
+  mailLiDesktop.append(mailLinkDesktop);
+  desktopIconUl.append(mailLiDesktop);
+
+  const searchLiDesktop = document.createElement('li');
+  searchLiDesktop.classList.add('search');
+  const searchLinkDesktop = document.createElement('a');
+  searchLinkDesktop.href = '#';
+  const searchImgDesktop = document.createElement('img');
+  searchImgDesktop.alt = 'svg file';
+  searchImgDesktop.src = '/icons/search.svg'; // Use generic local SVG
+  const searchImgCloseDesktop = document.createElement('img');
+  searchImgCloseDesktop.alt = 'svg file';
+  searchImgCloseDesktop.src = '/icons/close.svg'; // Use generic local SVG
+  searchLinkDesktop.append(searchImgDesktop, searchImgCloseDesktop);
+  searchLiDesktop.append(searchLinkDesktop);
+
+  const searchScreenWrapDesktop = document.createElement('div');
+  searchScreenWrapDesktop.classList.add('search-screen-wrap');
+  const searchWrapDesktop = document.createElement('div');
+  searchWrapDesktop.classList.add('wrap');
+  const searchFormDesktop = document.createElement('form');
+  searchFormDesktop.action = 'https://www.mahindra.com/search';
+  searchFormDesktop.method = 'get';
+  searchFormDesktop.id = 'search-block-form'; // Corrected ID from original HTML
+
+  const searchInputWrapDesktop = document.createElement('div');
+  searchInputWrapDesktop.classList.add('search-wrap');
+  const searchIconDivDesktop = document.createElement('div');
+  searchIconDivDesktop.classList.add('search-icon');
+  const searchIconImgDesktop = document.createElement('img');
+  searchIconImgDesktop.alt = 'svg file';
+  searchIconImgDesktop.src = '/icons/search.svg'; // Use generic local SVG
+  searchIconDivDesktop.append(searchIconImgDesktop);
+  const searchInputDesktop = document.createElement('input');
+  searchInputDesktop.type = 'text';
+  searchInputDesktop.classList.add('input-text', 'searchtext');
+  searchInputDesktop.required = true;
+  searchInputDesktop.name = 'key';
+  searchInputDesktop.id = 'searchInput'; // Corrected ID from original HTML
+  searchInputDesktop.autocomplete = 'off';
+  const submitButtonDesktop = document.createElement('button');
+  submitButtonDesktop.classList.add('submit-button');
+  const submitLabelDesktop = document.createElement('div');
+  submitLabelDesktop.classList.add('label');
+  submitLabelDesktop.textContent = ' Submit ';
+  const submitImgDesktop = document.createElement('img');
+  submitImgDesktop.alt = 'svg file';
+  submitImgDesktop.src = '/icons/arrow-right.svg'; // Use generic local SVG
+  submitButtonDesktop.append(submitLabelDesktop, submitImgDesktop);
+  searchInputWrapDesktop.append(searchIconDivDesktop, searchInputDesktop, submitButtonDesktop);
+  searchFormDesktop.append(searchInputWrapDesktop);
+  searchWrapDesktop.append(searchFormDesktop);
+  searchScreenWrapDesktop.append(searchWrapDesktop);
+  searchLiDesktop.append(searchScreenWrapDesktop);
+  desktopIconUl.append(searchLiDesktop);
+  nav.append(desktopIconNav);
+
+  // Anniversary Logo
+  const anniversaryLogoDiv = document.createElement('div');
+  anniversaryLogoDiv.classList.add('logo', 'year-80-logo');
+  const anniversaryLogoLink = document.createElement('a');
+  const foundAnniversaryLogoLink = anniversaryLogoLinkRow.querySelector('a');
+  if (foundAnniversaryLogoLink) {
+    anniversaryLogoLink.href = foundAnniversaryLogoLink.href;
+  }
+  const anniversaryLogoImg = anniversaryLogoRow.querySelector('picture img');
+  if (anniversaryLogoImg) {
+    const optimizedPic = createOptimizedPicture(anniversaryLogoImg.src, anniversaryLogoImg.alt, false, [{ width: '74' }]);
+    const imgElement = optimizedPic.querySelector('img');
+    imgElement.classList.add('hiddenlogo1', 'years-80');
+    imgElement.alt = anniversaryLogoImg.alt;
+    imgElement.title = anniversaryLogoImg.title || anniversaryLogoImg.alt;
+    anniversaryLogoLink.append(optimizedPic);
+  }
+  moveInstrumentation(anniversaryLogoRow, anniversaryLogoDiv);
+  moveInstrumentation(anniversaryLogoLinkRow, anniversaryLogoLink);
+  anniversaryLogoDiv.append(anniversaryLogoLink);
+  wrap.append(anniversaryLogoDiv);
+
+  // Search toggle functionality
+  const searchToggle = (searchTrigger, searchScreen) => {
+    searchTrigger.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      searchScreen.classList.toggle('show');
+      block.classList.toggle('search-open'); // Add a class to block for body overflow
+    });
+
+    searchScreen.addEventListener('click', (e) => {
+      if (e.target === searchScreen) {
+        searchScreen.classList.remove('show');
+        block.classList.remove('search-open');
+      }
+    });
+  };
+
+  const mobileSearchTrigger = mobileIconNav.querySelector('.search > a');
+  const mobileSearchScreen = mobileIconNav.querySelector('.search-screen-wrap');
+  if (mobileSearchTrigger && mobileSearchScreen) {
+    searchToggle(mobileSearchTrigger, mobileSearchScreen);
+  }
+
+  const desktopSearchTrigger = desktopIconNav.querySelector('.search > a');
+  const desktopSearchScreen = desktopIconNav.querySelector('.search-screen-wrap');
+  if (desktopSearchTrigger && desktopSearchScreen) {
+    searchToggle(desktopSearchTrigger, desktopSearchScreen);
+  }
+
+  // Hamburger menu toggle
+  hamburger.addEventListener('click', () => {
+    nav.classList.toggle('active');
+    hamburger.classList.toggle('close');
+    block.classList.toggle('menu-open'); // Add a class to block for body overflow
+  });
+
+  // Optimize all images
+  header.querySelectorAll('picture > img').forEach((img) => {
+    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+    moveInstrumentation(img, optimizedPic.querySelector('img'));
+    img.closest('picture').replaceWith(optimizedPic);
+  });
+
+  block.textContent = '';
+  block.append(header);
+}

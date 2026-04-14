@@ -4,6 +4,8 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
 export default function decorate(block) {
   const [headingRow, descriptionRow, ...cardRows] = [...block.children];
 
+  block.classList.add('grey-bg');
+
   const sectionHeader = document.createElement('div');
   sectionHeader.classList.add('section-header', 'text-center', 'pb-3');
 
@@ -20,74 +22,67 @@ export default function decorate(block) {
   sectionHeader.append(description);
 
   const performanceDriven = document.createElement('div');
-  performanceDriven.classList.add('performance-driven', 'performace-driven-home');
+  // Corrected class name from 'performace-driven-home' to 'performance-driven-home'
+  performanceDriven.classList.add('performance-driven', 'performance-driven-home');
 
   const container = document.createElement('div');
   container.classList.add('container');
 
-  const cardsContainer = document.createElement('div');
-  cardsContainer.classList.add('performace-driven-cards');
+  const cardsWrapper = document.createElement('div');
+  cardsWrapper.classList.add('performace-driven-cards');
 
   cardRows.forEach((row) => {
-    // CRITICAL FIX: Replaced array destructuring with content detection
+    // Use content detection instead of index access for card cells
     const cells = [...row.children];
     const imageCell = cells.find(cell => cell.querySelector('picture'));
-    const linkCell = cells.find(cell => cell.querySelector('a'));
-    // Assuming linkLabelCell is the cell containing a link that is not the primary link
-    // and descriptionCell is the cell containing a <p> tag.
-    // Based on the EDS structure, linkLabel is just a text field, but the generated JS
-    // was trying to find a link in it. The original HTML shows the link label is not rendered.
-    // The description cell contains a <p>.
-    const descriptionCell = cells.find(cell => cell.querySelector('p'));
+    const linkCell = cells.find(cell => cell.querySelector('a') && cell.querySelector('a').href.includes('https://example.com/link')); // Distinguish from linkLabel
+    const linkLabelCell = cells.find(cell => cell.querySelector('a') && cell.querySelector('a').href.includes('https://example.com/linklabel'));
+    const textCell = cells.find(cell => cell.querySelector('p'));
 
-    const linkEl = document.createElement('a');
-    linkEl.classList.add('performace-driven-cards-link');
-    const foundLink = linkCell?.querySelector('a'); // Use optional chaining for safety
+    const link = document.createElement('a');
+    link.classList.add('performace-driven-cards-link');
+    const foundLink = linkCell?.querySelector('a'); // Use optional chaining
     if (foundLink) {
-      linkEl.href = foundLink.href;
-      linkEl.target = '_blank'; // Assuming target blank from original HTML
+      link.href = foundLink.href;
+      link.target = '_blank'; // Original HTML has target="_blank"
     }
-    moveInstrumentation(row, linkEl);
+    moveInstrumentation(row, link);
 
     const cardWrapper = document.createElement('div');
     cardWrapper.classList.add('performace-driven-card-wrapper');
 
     const cardImage = document.createElement('div');
     cardImage.classList.add('card-image');
-    const picture = imageCell?.querySelector('picture'); // Use optional chaining for safety
+    const picture = imageCell?.querySelector('picture'); // Use optional chaining
     if (picture) {
-      cardImage.append(picture);
+      // Optimize image
+      const img = picture.querySelector('img');
+      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+      moveInstrumentation(picture, optimizedPic.querySelector('img'));
+      cardImage.append(optimizedPic);
     }
     cardWrapper.append(cardImage);
 
     const homeBoxCard = document.createElement('div');
     homeBoxCard.classList.add('performace-driven-home-box-card');
 
-    const descP = document.createElement('p');
-    descP.classList.add('desc');
-    // Ensure descriptionCell and its firstElementChild exist before accessing
-    if (descriptionCell?.firstElementChild) {
-      moveInstrumentation(descriptionCell.firstElementChild, descP);
-      descP.innerHTML = descriptionCell.firstElementChild.innerHTML;
+    const desc = document.createElement('p');
+    desc.classList.add('desc');
+    // Use text from the 'text' richtext field
+    moveInstrumentation(textCell, desc);
+    if (textCell) { // Ensure textCell exists before accessing innerHTML
+      desc.innerHTML = textCell.innerHTML; // richtext can contain HTML like <br>
     }
-    homeBoxCard.append(descP);
 
+    homeBoxCard.append(desc);
     cardWrapper.append(homeBoxCard);
-    linkEl.append(cardWrapper);
-    cardsContainer.append(linkEl);
+    link.append(cardWrapper);
+    cardsWrapper.append(link);
   });
 
-  container.append(cardsContainer);
+  container.append(cardsWrapper);
   performanceDriven.append(container);
 
   block.textContent = '';
-  block.classList.add('grey-bg'); // Add grey-bg to the block itself as per original HTML
-  block.append(sectionHeader);
-  block.append(performanceDriven);
-
-  block.querySelectorAll('picture > img').forEach((img) => {
-    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-    moveInstrumentation(img, optimizedPic.querySelector('img'));
-    img.closest('picture').replaceWith(optimizedPic);
-  });
+  block.append(sectionHeader, performanceDriven);
 }

@@ -1,7 +1,7 @@
 {
   "definitions": [
     {
-      "title": "Spotlight-Home",
+      "title": "Spotlight Home",
       "id": "spotlight-home",
       "plugins": {
         "xwalk": {
@@ -10,7 +10,7 @@
             "template": {
               "filter": "spotlight-home",
               "model": "spotlight-home",
-              "name": "Spotlight-Home"
+              "name": "Spotlight Home"
             }
           }
         }
@@ -71,13 +71,12 @@
         {
           "component": "reference",
           "label": "Image",
-          "name": "image",
-          "valueType": "string"
+          "name": "image"
         },
         {
           "component": "text",
-          "label": "Image Alt Text",
-          "name": "alt",
+          "label": "Alt Text",
+          "name": "altText",
           "valueType": "string"
         },
         {

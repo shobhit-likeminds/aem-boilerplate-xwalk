@@ -8,40 +8,31 @@ export default function decorate(block) {
   const sectionHeader = document.createElement('div');
   sectionHeader.classList.add('section-header', 'text-center');
 
-  const heading = document.createElement('h2');
-  heading.classList.add('heading', 'font-regular', 'aos-init', 'aos-animate');
-  moveInstrumentation(headingRow.firstElementChild, heading);
-  heading.textContent = headingRow.firstElementChild.textContent.trim();
-  sectionHeader.append(heading);
+  const h2 = document.createElement('h2');
+  h2.classList.add('heading', 'font-regular', 'aos-init', 'aos-animate');
+  moveInstrumentation(headingRow.firstElementChild, h2);
+  h2.textContent = headingRow.firstElementChild.textContent.trim();
+  sectionHeader.append(h2);
 
   // Slides container
-  const positionRelative = document.createElement('div');
-  positionRelative.classList.add('position-relative', 'aos-init', 'aos-animate');
-  // Add data-aos attributes from original HTML
-  positionRelative.setAttribute('data-aos', 'fade-up');
-  positionRelative.setAttribute('data-aos-offset', '100');
-  positionRelative.setAttribute('data-aos-duration', '650');
-  positionRelative.setAttribute('data-aos-easing', 'ease-in-out');
+  const positionRelativeDiv = document.createElement('div');
+  positionRelativeDiv.classList.add('position-relative', 'aos-init', 'aos-animate');
 
+  const containerDiv = document.createElement('div');
+  containerDiv.classList.add('container');
 
-  const container = document.createElement('div');
-  container.classList.add('container');
-
-  const gridLayout = document.createElement('div');
-  gridLayout.classList.add('grid-layout');
-  // Add Flickity attributes for mobile slider
-  gridLayout.classList.add('flickity-slider-mobile-wrap');
-  gridLayout.setAttribute('data-flickity', '{ "wrapAround": false, "lazyLoad": true, "pageDots": true, "prevNextButtons": false, "imagesLoaded": true, "cellAlign": "left", "watchCSS": true, "adaptiveHeight": true }');
-
+  const gridLayoutDiv = document.createElement('div');
+  gridLayoutDiv.classList.add('grid-layout');
 
   slideRows.forEach((row) => {
-    // Use content detection instead of index access for slide cells
     const cells = [...row.children];
+
+    // Content detection for slide cells
     const imageCell = cells.find(cell => cell.querySelector('picture'));
-    const titleCell = cells.find(cell => !cell.querySelector('picture') && cell.textContent.trim() !== '' && !cell.querySelector('a'));
-    const descriptionCell = cells.find(cell => cell.querySelector('p'));
-    const ctaLinkCell = cells.find(cell => cell.querySelector('a') && !cell.textContent.trim().startsWith('http')); // CTA Link
-    const ctaLinkLabelCell = cells.find(cell => cell.querySelector('a') && cell.textContent.trim().startsWith('http')); // CTA Label (which is the link itself)
+    const slideHeadingCell = cells.find(cell => !cell.querySelector('picture') && cell.textContent.trim() !== '' && cell.querySelector('a') === null);
+    const textCell = cells.find(cell => cell.querySelector('p'));
+    const ctaLinkCell = cells.find(cell => cell.querySelector('a') && cell.querySelector('a').href && cell.querySelector('a').textContent.trim() === '');
+    const ctaLinkLabelCell = cells.find(cell => cell.querySelector('a') && cell.querySelector('a').textContent.trim() !== '');
 
     const slidesDiv = document.createElement('div');
     slidesDiv.classList.add('slides');
@@ -49,85 +40,70 @@ export default function decorate(block) {
     const wrapDiv = document.createElement('div');
     wrapDiv.classList.add('wrap');
 
+    // Image
     if (imageCell) {
-      const imageWrap = document.createElement('div');
-      imageWrap.classList.add('image-wrap');
-
+      const imageWrapDiv = document.createElement('div');
+      imageWrapDiv.classList.add('image-wrap');
       const picture = imageCell.querySelector('picture');
       if (picture) {
         const img = picture.querySelector('img');
         if (img) {
           const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-          moveInstrumentation(img, optimizedPic.querySelector('img'));
-          imageWrap.append(optimizedPic);
           optimizedPic.querySelector('img').classList.add('img-fluid');
+          moveInstrumentation(picture, optimizedPic.querySelector('img'));
+          imageWrapDiv.append(optimizedPic);
         }
       }
-      wrapDiv.append(imageWrap);
+      if (imageWrapDiv.hasChildNodes()) {
+        wrapDiv.append(imageWrapDiv);
+      }
     }
 
-    const contentWrap = document.createElement('div');
-    contentWrap.classList.add('content-wrap');
+    // Content
+    const contentWrapDiv = document.createElement('div');
+    contentWrapDiv.classList.add('content-wrap');
 
-    const contentSectionHeader = document.createElement('div');
-    contentSectionHeader.classList.add('section-header');
+    const slideSectionHeader = document.createElement('div');
+    slideSectionHeader.classList.add('section-header');
 
-    if (titleCell) {
-      const title = document.createElement('h3');
-      title.classList.add('heading', 'font-regular');
-      moveInstrumentation(titleCell, title);
-      title.textContent = titleCell.textContent.trim();
-      contentSectionHeader.append(title);
+    if (slideHeadingCell) {
+      const h3 = document.createElement('h3');
+      h3.classList.add('heading', 'font-regular');
+      moveInstrumentation(slideHeadingCell, h3);
+      h3.textContent = slideHeadingCell.textContent.trim();
+      slideSectionHeader.append(h3);
     }
 
-    if (descriptionCell) {
-      const description = document.createElement('p');
-      description.classList.add('text-size-body');
-      moveInstrumentation(descriptionCell, description);
-      description.innerHTML = descriptionCell.innerHTML; // richtext content
-      contentSectionHeader.append(description);
+    if (textCell) {
+      const p = document.createElement('p');
+      p.classList.add('text-size-body');
+      moveInstrumentation(textCell, p);
+      p.innerHTML = textCell.innerHTML;
+      slideSectionHeader.append(p);
     }
 
     if (ctaLinkCell && ctaLinkLabelCell) {
-      const ctaLink = document.createElement('a');
-      ctaLink.classList.add('btn', 'btn-primary', 'stretched-link');
-      const foundCtaLink = ctaLinkCell.querySelector('a');
-      if (foundCtaLink) {
-        ctaLink.href = foundCtaLink.href;
-      } else {
-        // Fallback if ctaLinkCell doesn't contain an <a> but ctaLinkLabelCell does
-        const fallbackLink = ctaLinkLabelCell.querySelector('a');
-        if (fallbackLink) {
-          ctaLink.href = fallbackLink.href;
-        }
+      const ctaLink = ctaLinkCell.querySelector('a');
+      if (ctaLink) {
+        const anchor = document.createElement('a');
+        anchor.href = ctaLink.href;
+        anchor.classList.add('btn', 'btn-primary', 'stretched-link');
+        anchor.textContent = ctaLinkLabelCell.textContent.trim();
+        moveInstrumentation(ctaLinkCell, anchor);
+        slideSectionHeader.append(anchor);
       }
-      ctaLink.textContent = ctaLinkLabelCell.textContent.trim();
-      moveInstrumentation(ctaLinkCell, ctaLink);
-      contentSectionHeader.append(ctaLink);
     }
 
-
-    contentWrap.append(contentSectionHeader);
-    wrapDiv.append(contentWrap);
+    contentWrapDiv.append(slideSectionHeader);
+    wrapDiv.append(contentWrapDiv);
     slidesDiv.append(wrapDiv);
-    gridLayout.append(slidesDiv);
+    gridLayoutDiv.append(slidesDiv);
   });
 
-  container.append(gridLayout);
-  positionRelative.append(container);
+  containerDiv.append(gridLayoutDiv);
+  positionRelativeDiv.append(containerDiv);
 
   block.textContent = '';
-  block.classList.add('section', 'work-with-us', 'pb-0');
-  block.append(sectionHeader, positionRelative);
-
-  // Initialize Flickity for the carousel if it's present
-  // This assumes Flickity is loaded globally or via a dynamic import elsewhere
-  // For a robust solution, Flickity should be imported and initialized properly.
-  // For this review, we'll just add the initialization logic.
-  if (gridLayout.classList.contains('flickity-slider-mobile-wrap')) {
-    import('flickity').then((Flickity) => {
-      // eslint-disable-next-line no-new
-      new Flickity.default(gridLayout, JSON.parse(gridLayout.dataset.flickity));
-    }).catch((e) => console.error('Flickity not loaded', e));
-  }
+  block.classList.add('section', 'work-with-us', 'pb-0'); // Add section classes to the block itself
+  block.append(sectionHeader, positionRelativeDiv);
 }

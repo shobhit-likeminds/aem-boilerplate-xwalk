@@ -4,69 +4,48 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
 export default function decorate(block) {
   const [headingRow, ...storyRows] = [...block.children];
 
-  // Section wrapper
-  const section = document.createElement('section');
-  section.classList.add('section', 'grey-bg', 'latest-stories', 'home-stories');
-  moveInstrumentation(block, section);
-
-  // Heading
+  // Section header
   const sectionHeader = document.createElement('div');
   sectionHeader.classList.add('section-header', 'text-center');
   const heading = document.createElement('h2');
   heading.classList.add('heading', 'font-regular', 'aos-init', 'aos-animate');
-  heading.setAttribute('data-aos', 'fade-up');
-  heading.setAttribute('data-aos-offset', '100');
-  heading.setAttribute('data-aos-duration', '650');
-  heading.setAttribute('data-aos-easing', 'ease-in-out');
   moveInstrumentation(headingRow.firstElementChild, heading);
   heading.textContent = headingRow.firstElementChild.textContent.trim();
   sectionHeader.append(heading);
-  section.append(sectionHeader);
 
   // Stories container
   const container = document.createElement('div');
   container.classList.add('container', 'aos-init', 'aos-animate');
-  container.setAttribute('data-aos', 'fade-up');
-  container.setAttribute('data-aos-offset', '100');
-  container.setAttribute('data-aos-duration', '650');
-  container.setAttribute('data-aos-easing', 'ease-in-out');
 
-  const flickitySliderWrap = document.createElement('div');
-  flickitySliderWrap.classList.add('flickity-slider-mobile-wrap', 'grid-layout');
-  flickitySliderWrap.setAttribute('data-flickity', '{ "wrapAround": false, "lazyLoad": true, "pageDots": true, "prevNextButtons": false, "imagesLoaded": true, "cellAlign": "left", "watchCSS": true, "adaptiveHeight": true }');
+  const sliderWrap = document.createElement('div');
+  sliderWrap.classList.add('flickity-slider-mobile-wrap', 'grid-layout');
 
-  const slidesWrapper = document.createElement('div');
-  slidesWrapper.classList.add('slides');
+  const slides = document.createElement('div');
+  slides.classList.add('slides');
 
   storyRows.forEach((row) => {
-    const cells = [...row.children];
-
-    // Content detection for story cells
-    const imageCell = cells.find(cell => cell.querySelector('picture'));
-    const categoryCell = cells.find(cell => !cell.querySelector('picture') && !cell.querySelector('a') && cell.textContent.trim().length > 0 && cell.textContent.trim().toLowerCase() === 'farm'); // Assuming category is 'Farm'
-    const textCell = cells.find(cell => !cell.querySelector('picture') && !cell.querySelector('a') && cell !== categoryCell && cell.textContent.trim().length > 0);
-    const linkCell = cells.find(cell => cell.querySelector('a') && cell.querySelector('a').href.includes('mahindra.com'));
-    const linkLabelCell = cells.find(cell => cell.querySelector('a') && cell.querySelector('a').href.includes('mahindra.com') && cell.textContent.trim().toLowerCase() === 'read more');
-    const dateCell = cells.find(cell => !cell.querySelector('picture') && !cell.querySelector('a') && cell.textContent.trim().match(/\d{1,2} \w+ \d{4}/)); // Basic date format detection
-
-    const slide = document.createElement('div');
-    slide.classList.add('slides'); // This class name is duplicated, but it's in the allowlist.
-    moveInstrumentation(row, slide);
+    // Destructuring with spread for robustness, though direct access is fine here
+    // because the model defines exactly 6 cells per story row.
+    const [imageCell, categoryCell, textCell, linkCell, linkLabelCell, dateCell] = [...row.children];
 
     const wrap = document.createElement('div');
     wrap.classList.add('wrap');
 
     const imageWrap = document.createElement('div');
     imageWrap.classList.add('image-wrap');
-    if (imageCell) {
-      const picture = imageCell.querySelector('picture');
-      if (picture) {
-        const img = picture.querySelector('img');
-        if (img) {
-          const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-          moveInstrumentation(img, optimizedPic.querySelector('img'));
-          imageWrap.append(optimizedPic);
-        }
+    const picture = imageCell.querySelector('picture');
+    if (picture) {
+      const img = picture.querySelector('img');
+      if (img) {
+        // Use the existing img src and alt, and add the thumb-img and img-fluid classes
+        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+        const optimizedImg = optimizedPic.querySelector('img');
+        optimizedImg.classList.add('thumb-img', 'img-fluid');
+        // Copy data attributes from original img if they exist
+        if (img.dataset.imgHorizontal) optimizedImg.dataset.imgHorizontal = img.dataset.imgHorizontal;
+        if (img.dataset.imgVertical) optimizedImg.dataset.imgVertical = img.dataset.imgVertical;
+        moveInstrumentation(picture, optimizedImg);
+        imageWrap.append(optimizedPic);
       }
     }
     wrap.append(imageWrap);
@@ -74,62 +53,65 @@ export default function decorate(block) {
     const contentWrap = document.createElement('div');
     contentWrap.classList.add('content-wrap');
 
-    if (categoryCell) {
-      const category = document.createElement('div');
-      category.classList.add('category');
-      moveInstrumentation(categoryCell, category);
-      category.textContent = categoryCell.textContent.trim();
-      contentWrap.append(category);
-    }
+    const category = document.createElement('div');
+    category.classList.add('category');
+    moveInstrumentation(categoryCell, category);
+    category.textContent = categoryCell.textContent.trim();
+    contentWrap.append(category);
 
-    if (textCell) {
-      const text = document.createElement('div');
-      text.classList.add('text');
-      moveInstrumentation(textCell, text);
-      text.textContent = textCell.textContent.trim();
-      contentWrap.append(text);
-    }
+    const text = document.createElement('div');
+    text.classList.add('text');
+    moveInstrumentation(textCell, text);
+    text.textContent = textCell.textContent.trim();
+    contentWrap.append(text);
 
-    if (linkCell && linkLabelCell) {
-      const link = document.createElement('a');
-      link.classList.add('btn', 'btn-link');
-      const foundLink = linkCell.querySelector('a');
-      if (foundLink) {
-        link.href = foundLink.href;
-      }
-      moveInstrumentation(linkLabelCell, link);
-      link.textContent = linkLabelCell.textContent.trim();
-      contentWrap.append(link);
+    const linkAnchor = document.createElement('a');
+    linkAnchor.classList.add('btn', 'btn-link');
+    const foundLink = linkCell.querySelector('a');
+    if (foundLink) {
+      linkAnchor.href = foundLink.href;
     }
+    // Use linkLabel for the anchor text
+    moveInstrumentation(linkLabelCell, linkAnchor);
+    linkAnchor.textContent = linkLabelCell.textContent.trim();
+    contentWrap.append(linkAnchor);
 
-    if (dateCell) {
-      const date = document.createElement('div');
-      date.classList.add('date');
-      moveInstrumentation(dateCell, date);
-      // Assuming dateCell.textContent is already in a format suitable for datetime attribute
-      date.innerHTML = `<time datetime="${dateCell.textContent.trim()}">${dateCell.textContent.trim()}</time>`;
-      contentWrap.append(date);
-    }
+    const date = document.createElement('div');
+    date.classList.add('date');
+    const time = document.createElement('time');
+    moveInstrumentation(dateCell, time);
+    time.setAttribute('datetime', dateCell.textContent.trim()); // Assuming date cell contains a parseable date string
+    time.textContent = dateCell.textContent.trim();
+    date.append(time);
+    contentWrap.append(date);
 
     wrap.append(contentWrap);
-    slide.append(wrap);
-    slidesWrapper.append(slide);
+    moveInstrumentation(row, wrap);
+    slides.append(wrap);
   });
 
-  flickitySliderWrap.append(slidesWrapper);
-  container.append(flickitySliderWrap);
-  section.append(container);
+  sliderWrap.append(slides);
+  container.append(sliderWrap);
 
   block.textContent = '';
-  block.append(section);
+  block.classList.add('section', 'grey-bg', 'latest-stories', 'home-stories');
+  block.append(sectionHeader);
+  block.append(container);
 
-  // Initialize Flickity if it's loaded
-  if (typeof Flickity !== 'undefined') {
-    // eslint-disable-next-line no-new
-    new Flickity(slidesWrapper, JSON.parse(flickitySliderWrap.dataset.flickity));
-  } else {
-    // Fallback or dynamic import if Flickity is not immediately available
-    // For this review, we assume Flickity is loaded globally or via a script.
-    // In a real scenario, you might dynamically import it or ensure it's loaded.
+  // Flickity initialization based on data-flickity attribute from original HTML
+  const flickityData = sliderWrap.dataset.flickity;
+  if (flickityData) {
+    // Dynamically import Flickity and initialize it
+    import('flickity').then((FlickityModule) => {
+      const Flickity = FlickityModule.default;
+      try {
+        const options = JSON.parse(flickityData.replace(/&quot;/g, '"'));
+        // eslint-disable-next-line no-new
+        new Flickity(slides, options);
+      } catch (e) {
+        // eslint-disable-next-line no-console
+        console.error('Failed to parse Flickity options or initialize Flickity:', e);
+      }
+    });
   }
 }

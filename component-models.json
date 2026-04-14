@@ -1985,14 +1985,14 @@
       },
       {
         "component": "container",
-        "item": "faq-item",
+        "item": "faq",
         "label": "FAQs",
         "name": "faqs"
       }
     ]
   },
   {
-    "id": "faq-item",
+    "id": "faq",
     "fields": [
       {
         "component": "text",
@@ -3049,24 +3049,22 @@
       {
         "component": "text",
         "label": "Logo Link Label",
-        "name": "logoLinkLabel",
-        "valueType": "string"
+        "name": "logoLinkLabel"
       },
       {
         "component": "reference",
-        "label": "Secondary Logo",
-        "name": "secondaryLogo"
+        "label": "80th Year Logo",
+        "name": "year80Logo"
       },
       {
         "component": "aem-content",
-        "label": "Secondary Logo Link",
-        "name": "secondaryLogoLink"
+        "label": "80th Year Logo Link",
+        "name": "year80LogoLink"
       },
       {
         "component": "text",
-        "label": "Secondary Logo Link Label",
-        "name": "secondaryLogoLinkLabel",
-        "valueType": "string"
+        "label": "80th Year Logo Link Label",
+        "name": "year80LogoLinkLabel"
       },
       {
         "component": "container",
@@ -3082,8 +3080,7 @@
       {
         "component": "text",
         "label": "Label",
-        "name": "label",
-        "valueType": "string"
+        "name": "label"
       },
       {
         "component": "aem-content",
@@ -3093,8 +3090,7 @@
       {
         "component": "text",
         "label": "Link Label",
-        "name": "linkLabel",
-        "valueType": "string"
+        "name": "linkLabel"
       },
       {
         "component": "richtext",
@@ -5973,14 +5969,14 @@
       },
       {
         "component": "container",
-        "item": "spirit-of-rise-card",
+        "item": "rise-card",
         "label": "Cards",
         "name": "cards"
       }
     ]
   },
   {
-    "id": "spirit-of-rise-card",
+    "id": "rise-card",
     "fields": [
       {
         "component": "reference",
@@ -6002,8 +5998,8 @@
       },
       {
         "component": "richtext",
-        "label": "Description",
-        "name": "description",
+        "label": "Text",
+        "name": "text",
         "valueType": "string"
       }
     ]
@@ -6112,12 +6108,13 @@
       {
         "component": "reference",
         "label": "Image",
-        "name": "image"
+        "name": "image",
+        "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Alt Text",
-        "name": "altText",
+        "label": "Image Alt Text",
+        "name": "alt",
         "valueType": "string"
       },
       {
@@ -6834,7 +6831,7 @@
         "valueType": "string"
       },
       {
-        "component": "text",
+        "component": "richtext",
         "label": "Description",
         "name": "description",
         "valueType": "string"
@@ -6860,6 +6857,12 @@
         "component": "text",
         "label": "Title",
         "name": "title",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Icon",
+        "name": "icon",
         "valueType": "string"
       },
       {
@@ -6938,14 +6941,14 @@
       },
       {
         "component": "text",
-        "label": "Title",
-        "name": "title",
+        "label": "Heading",
+        "name": "heading",
         "valueType": "string"
       },
       {
         "component": "richtext",
-        "label": "Description",
-        "name": "description",
+        "label": "Text",
+        "name": "text",
         "valueType": "string"
       },
       {

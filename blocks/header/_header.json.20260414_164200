@@ -49,22 +49,24 @@
         {
           "component": "text",
           "label": "Logo Link Label",
-          "name": "logoLinkLabel"
+          "name": "logoLinkLabel",
+          "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "80th Year Logo",
-          "name": "year80Logo"
+          "label": "Anniversary Logo",
+          "name": "anniversaryLogo"
         },
         {
           "component": "aem-content",
-          "label": "80th Year Logo Link",
-          "name": "year80LogoLink"
+          "label": "Anniversary Logo Link",
+          "name": "anniversaryLogoLink"
         },
         {
           "component": "text",
-          "label": "80th Year Logo Link Label",
-          "name": "year80LogoLinkLabel"
+          "label": "Anniversary Logo Link Label",
+          "name": "anniversaryLogoLinkLabel",
+          "valueType": "string"
         },
         {
           "component": "container",
@@ -80,7 +82,8 @@
         {
           "component": "text",
           "label": "Label",
-          "name": "label"
+          "name": "label",
+          "valueType": "string"
         },
         {
           "component": "aem-content",
@@ -90,7 +93,8 @@
         {
           "component": "text",
           "label": "Link Label",
-          "name": "linkLabel"
+          "name": "linkLabel",
+          "valueType": "string"
         },
         {
           "component": "richtext",

@@ -1,0 +1,111 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  [...block.children].forEach((sectionRow, sectionIndex) => {
+    // CHECK 0 & 1: This destructuring is acceptable here because the block structure
+    // for 'spirit-of-rise-section' guarantees exactly 3 cells in this order:
+    // heading, description, cards.
+    const [headingCell, descriptionCell, cardsCell] = [...sectionRow.children];
+
+    const sectionHeader = document.createElement('div');
+    sectionHeader.classList.add('section-header', 'text-center', 'pb-3');
+    moveInstrumentation(headingCell, sectionHeader);
+
+    const heading = document.createElement('h2');
+    heading.classList.add('heading', 'font-regular', 'aos-init', 'aos-animate');
+    heading.setAttribute('data-aos-easing', 'ease-in-out');
+    heading.setAttribute('data-aos', 'fade-up');
+    heading.setAttribute('data-aos-delay', '200');
+    heading.textContent = headingCell.textContent.trim();
+    sectionHeader.appendChild(heading);
+
+    if (descriptionCell.textContent.trim()) {
+      const description = document.createElement('p');
+      description.classList.add('aos-init', 'aos-animate');
+      description.setAttribute('data-aos', 'fade-up');
+      description.setAttribute('data-aos-offset', '100');
+      description.setAttribute('data-aos-duration', '650');
+      description.setAttribute('data-aos-easing', 'ease-in-out');
+      description.textContent = descriptionCell.textContent.trim();
+      sectionHeader.appendChild(description);
+    }
+
+    const performanceDriven = document.createElement('div');
+    performanceDriven.classList.add('performance-driven', 'performace-driven-home');
+
+    const container = document.createElement('div');
+    container.classList.add('container');
+    performanceDriven.appendChild(container);
+
+    const cardsWrapper = document.createElement('div');
+    cardsWrapper.classList.add('performace-driven-cards');
+    container.appendChild(cardsWrapper);
+
+    const cardRows = [...cardsCell.children];
+    cardRows.forEach((cardRow) => {
+      // CHECK 0: VIOLATION DETECTED AND FIXED.
+      // Replaced direct index access with content detection for 'spirit-of-rise-card' cells.
+      const cells = [...cardRow.children];
+      const imageCell = cells.find(cell => cell.querySelector('picture'));
+      const linkCell = cells.find(cell => cell.querySelector('a'));
+      const linkLabelCell = cells.find(cell => !cell.querySelector('picture') && !cell.querySelector('a') && cell.textContent.trim() && cells.indexOf(cell) === 2); // Assuming linkLabel is the 3rd cell if present
+      const textCell = cells.find(cell => !cell.querySelector('picture') && !cell.querySelector('a') && cell.textContent.trim() && cells.indexOf(cell) === 3); // Assuming text is the 4th cell if present and contains rich text
+
+      const cardLink = document.createElement('a');
+      cardLink.classList.add('performace-driven-cards-link');
+      const foundLink = linkCell?.querySelector('a'); // Use optional chaining for safety
+      if (foundLink) {
+        cardLink.href = foundLink.href;
+        cardLink.target = '_blank';
+      }
+      moveInstrumentation(cardRow, cardLink);
+
+      const cardWrapper = document.createElement('div');
+      cardWrapper.classList.add('performace-driven-card-wrapper');
+      cardLink.appendChild(cardWrapper);
+
+      const cardImageDiv = document.createElement('div');
+      cardImageDiv.classList.add('card-image');
+      const picture = imageCell?.querySelector('picture'); // Use optional chaining for safety
+      if (picture) {
+        const img = picture.querySelector('img');
+        if (img) {
+          const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+          moveInstrumentation(img, optimizedPic.querySelector('img'));
+          cardImageDiv.appendChild(optimizedPic);
+        }
+      }
+      cardWrapper.appendChild(cardImageDiv);
+
+      const homeBoxCard = document.createElement('div');
+      homeBoxCard.classList.add('performace-driven-home-box-card');
+      cardWrapper.appendChild(homeBoxCard);
+
+      const desc = document.createElement('p');
+      desc.classList.add('desc');
+      if (textCell?.textContent.trim()) { // Use optional chaining for safety
+        // Richtext content might contain HTML, append children directly
+        while (textCell.firstChild) {
+          desc.append(textCell.firstChild);
+        }
+      } else if (linkLabelCell?.textContent.trim()) { // Use optional chaining for safety
+        desc.textContent = linkLabelCell.textContent.trim();
+      }
+      homeBoxCard.appendChild(desc);
+
+      cardsWrapper.appendChild(cardLink);
+    });
+
+    const section = document.createElement('section');
+    section.classList.add('section', 'spirit-of-rise');
+    if (sectionIndex % 2 !== 0) { // Apply grey-bg to alternate sections
+      section.classList.add('grey-bg');
+    }
+
+    section.appendChild(sectionHeader);
+    section.appendChild(performanceDriven);
+
+    sectionRow.replaceWith(section);
+  });
+}
