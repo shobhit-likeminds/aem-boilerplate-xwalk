@@ -2,14 +2,13 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const [logoRow, logoLinkRow, logoLinkLabelRow, ...footerSectionRows] = [...block.children];
+  const [logoRow, logoLinkRow, logoLinkLabelRow, ...sectionRows] = [...block.children];
 
-  block.innerHTML = ''; // Clear the block content
-
+  // Create main container
   const container = document.createElement('div');
   container.classList.add('container');
 
-  // Footer Header Section
+  // --- Footer Header Section ---
   const footerHeader = document.createElement('div');
   footerHeader.classList.add('row', 'footer-header');
 
@@ -20,12 +19,19 @@ export default function decorate(block) {
   logoDiv.classList.add('logo');
 
   const logoLink = document.createElement('a');
-  // Use querySelector to find the link, more robust than children[0]
-  const foundLogoLink = logoLinkRow.querySelector('a');
-  if (foundLogoLink) {
-    logoLink.href = foundLogoLink.href;
+  const originalLogoLink = logoLinkRow.querySelector('a');
+  if (originalLogoLink) {
+    logoLink.href = originalLogoLink.href;
+  } else {
+    // Fallback if logoLink is empty, use logoLinkLabel if available
+    const originalLogoLinkLabel = logoLinkLabelRow.querySelector('div');
+    if (originalLogoLinkLabel) {
+      const link = originalLogoLinkLabel.textContent.trim();
+      if (link.startsWith('http')) {
+        logoLink.href = link;
+      }
+    }
   }
-  moveInstrumentation(logoLinkRow, logoLink);
 
   const logoPicture = logoRow.querySelector('picture');
   if (logoPicture) {
@@ -33,121 +39,164 @@ export default function decorate(block) {
     const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '200' }]);
     const optimizedImg = optimizedPic.querySelector('img');
     optimizedImg.classList.add('hiddenlogo1');
-    optimizedImg.alt = img.alt;
-    optimizedImg.title = img.title || img.alt;
+    optimizedImg.width = 200;
+    optimizedImg.height = 30;
+    optimizedImg.style.width = 'auto';
     optimizedImg.loading = 'lazy';
     moveInstrumentation(img, optimizedImg);
     logoLink.append(optimizedPic);
   }
+  moveInstrumentation(logoRow, logoLink);
+  moveInstrumentation(logoLinkRow, logoLink);
+  moveInstrumentation(logoLinkLabelRow, logoLink);
+
   logoDiv.append(logoLink);
   logoCol.append(logoDiv);
-  footerHeader.append(logoCol);
 
-  // Social Wrap
+  // Social icons from original HTML
   const socialCol = document.createElement('div');
   socialCol.classList.add('col-md-6', 'col-12', 'footer-social-wrap-center');
+  const socialWrap = document.createElement('ul');
+  socialWrap.classList.add('social-wrap');
 
-  const socialUl = document.createElement('ul');
-  socialUl.classList.add('social-wrap');
-
-  const socialLinks = [
-    { class: 'fb', href: 'https://www.facebook.com/mahindrarise', img: '/content/dam/aemigrate/uploaded-folder/image/1776164450908.svg+xml', alt: 'svg file' },
-    { class: 'tw', href: 'https://twitter.com/mahindrarise', img: '/content/dam/aemigrate/uploaded-folder/image/1776164450962.svg+xml', alt: 'svg file' },
-    { class: 'inst', href: 'https://instagram.com/mahindrarise', img: '/content/dam/aemigrate/uploaded-folder/image/1776164451330.svg+xml', alt: 'svg file' },
-    { class: 'yt', href: 'https://youtube.com/c/MahindraRise', img: '/content/dam/aemigrate/uploaded-folder/image/1776164451400.svg+xml', alt: 'svg file' },
-    { class: 'in', href: 'https://www.linkedin.com/company/mahindragroup/', img: '/content/dam/aemigrate/uploaded-folder/image/1776164451444.svg+xml', alt: 'svg file' },
+  const socialLinksData = [
+    { class: 'fb', href: 'https://www.facebook.com/mahindrarise', imgSrc: '/content/dam/aemigrate/uploaded-folder/image/1776164450908.svg+xml' },
+    { class: 'tw', href: 'https://twitter.com/mahindrarise', imgSrc: '/content/dam/aemigrate/uploaded-folder/image/1776164450962.svg+xml' },
+    { class: 'inst', href: 'https://instagram.com/mahindrarise', imgSrc: '/content/dam/aemigrate/uploaded-folder/image/1776164451330.svg+xml' },
+    { class: 'yt', href: 'https://youtube.com/c/MahindraRise', imgSrc: '/content/dam/aemigrate/uploaded-folder/image/1776164451400.svg+xml' },
+    { class: 'in', href: 'https://www.linkedin.com/company/mahindragroup/', imgSrc: '/content/dam/aemigrate/uploaded-folder/image/1776164451444.svg+xml' },
   ];
 
-  socialLinks.forEach(linkData => {
+  socialLinksData.forEach((data) => {
     const li = document.createElement('li');
-    li.classList.add(linkData.class);
+    li.classList.add(data.class);
     const a = document.createElement('a');
-    a.href = linkData.href;
+    a.href = data.href;
     a.target = '_blank';
     const img = document.createElement('img');
-    img.alt = linkData.alt;
-    img.src = linkData.img;
+    img.alt = 'svg file';
+    img.src = data.imgSrc;
     a.append(img);
     li.append(a);
-    socialUl.append(li);
+    socialWrap.append(li);
   });
-  socialCol.append(socialUl);
-  footerHeader.append(socialCol);
+  socialCol.append(socialWrap);
 
+  footerHeader.append(logoCol, socialCol);
   container.append(footerHeader);
 
-  // Footer Menu Box Section
+  // --- Footer Menu Section ---
   const footerMenuBox = document.createElement('div');
   footerMenuBox.classList.add('row', 'footer-menu-box');
-  const menuCol = document.createElement('div');
-  menuCol.classList.add('col');
+  const footerMenuCol = document.createElement('div');
+  footerMenuCol.classList.add('col');
   const footerMenu = document.createElement('div');
   footerMenu.classList.add('footer-menu');
 
-  footerSectionRows.forEach((row) => {
+  sectionRows.forEach((row) => {
     const cells = [...row.children];
-    const headingCell = cells.find(cell => !cell.querySelector('ul')); // Find cell without a UL
-    const sectionLinksCell = cells.find(cell => cell.querySelector('ul')); // Find cell with a UL
+    // Use content detection to find cells based on BlockJson model
+    const labelCell = cells.find(cell => !cell.querySelector('a') && !cell.querySelector('ul'));
+    const linkCell = cells.find(cell => cell.querySelector('a') && !cell.querySelector('ul'));
+    const sectionLinksCell = cells.find(cell => cell.querySelector('ul'));
+    const linkLabelCell = cells.find(cell => cell.textContent.trim().startsWith('http') || (cell.textContent.trim() && !cell.querySelector('a') && !cell.querySelector('ul') && cell !== labelCell));
 
     const linkBlocks = document.createElement('div');
     linkBlocks.classList.add('link-blocks');
-
-    const headDiv = document.createElement('div');
-    headDiv.classList.add('head');
+    const head = document.createElement('div');
+    head.classList.add('head');
 
     const span = document.createElement('span');
-    const headingLink = document.createElement('a');
-    const existingLink = headingCell?.querySelector('a');
-    if (existingLink) {
-      headingLink.href = existingLink.href;
-      headingLink.textContent = existingLink.textContent.trim();
-      moveInstrumentation(existingLink, headingLink);
-    } else if (headingCell) {
-      headingLink.href = '#'; // Default href if not provided
-      headingLink.textContent = headingCell.textContent.trim();
-      moveInstrumentation(headingCell, headingLink);
+    const mainLink = document.createElement('a');
+    const originalLink = linkCell?.querySelector('a');
+    if (originalLink) {
+      mainLink.href = originalLink.href;
     }
-    span.append(headingLink);
+    mainLink.textContent = linkLabelCell?.textContent.trim() || labelCell?.textContent.trim() || '';
+    span.append(mainLink);
 
     const small = document.createElement('small');
-    span.append(small); // small element is empty in original HTML, used for JS behavior
-    headDiv.append(span);
+    head.append(span, small);
 
     const sectionLinksUl = sectionLinksCell?.querySelector('ul');
     if (sectionLinksUl) {
       sectionLinksUl.classList.add('footer-inner-list');
-      // Transform nested lists for accordion behavior
-      transformNestedLists(sectionLinksUl);
-      headDiv.append(sectionLinksUl);
+      head.append(sectionLinksUl);
 
-      // Add click listener for top-level accordion behavior
-      span.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        headDiv.classList.toggle('active'); // Toggle 'active' class on headDiv for accordion
-        sectionLinksUl.classList.toggle('active'); // Toggle 'active' class on ul for visibility
+      // Transform nested lists
+      sectionLinksUl.querySelectorAll('li').forEach((li) => {
+        const nestedUl = li.querySelector(':scope > ul');
+        if (nestedUl) {
+          nestedUl.remove(); // Remove the original nested ul
+          const subWrap = document.createElement('div');
+          subWrap.classList.add('has-footer-sub-child');
+          subWrap.append(nestedUl);
+          li.append(subWrap);
+
+          const trigger = li.querySelector(':scope > a') || li;
+          const arrowSpan = document.createElement('span');
+          const arrowImg = document.createElement('img');
+          arrowImg.alt = 'svg file';
+          arrowImg.src = '/etc.clientlibs/mahindra/clientlibs/clientlib-site/resources/images/down-arrow.svg';
+          arrowSpan.append(arrowImg);
+          trigger.append(arrowSpan);
+
+          trigger.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            li.classList.toggle('active');
+            subWrap.classList.toggle('active');
+          });
+
+          // Handle inner nested lists
+          nestedUl.querySelectorAll('li').forEach((innerLi) => {
+            const innerNestedUl = innerLi.querySelector(':scope > ul');
+            if (innerNestedUl) {
+              innerNestedUl.remove();
+              const innerSubWrap = document.createElement('div');
+              innerSubWrap.classList.add('has-footer-inner-sub-child');
+              innerSubWrap.append(innerNestedUl);
+              innerLi.append(innerSubWrap);
+
+              const innerTrigger = innerLi.querySelector(':scope > a') || innerLi;
+              const innerArrowSpan = document.createElement('span');
+              const innerArrowImg = document.createElement('img');
+              innerArrowImg.alt = 'svg file';
+              innerArrowImg.src = '/etc.clientlibs/mahindra/clientlibs/clientlib-site/resources/images/down-arrow.svg';
+              innerArrowSpan.append(innerArrowImg);
+              innerTrigger.append(innerArrowSpan);
+
+              innerTrigger.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                innerLi.classList.toggle('active');
+                innerSubWrap.classList.toggle('active');
+              });
+            }
+          });
+        }
       });
     }
 
-    linkBlocks.append(headDiv);
+    linkBlocks.append(head);
     footerMenu.append(linkBlocks);
+    moveInstrumentation(row, linkBlocks);
   });
 
-  menuCol.append(footerMenu);
-  footerMenuBox.append(menuCol);
+  footerMenuCol.append(footerMenu);
+  footerMenuBox.append(footerMenuCol);
   container.append(footerMenuBox);
 
-  // Copyright Section
+  // --- Copyright Section ---
   const copyrightWrap = document.createElement('div');
   copyrightWrap.classList.add('row', 'align-items-lg-end', 'copyright-wrap');
 
   const secondaryNavCol = document.createElement('div');
   secondaryNavCol.classList.add('col-12', 'col-lg-6');
+  const secondaryNav = document.createElement('ul');
+  secondaryNav.classList.add('secondary-nav');
 
-  const secondaryNavUl = document.createElement('ul');
-  secondaryNavUl.classList.add('secondary-nav');
-  // Placeholder for secondary navigation links, as they are not in the block model
-  // Add example links based on original HTML
+  // Assuming these links are not part of the current EDS model and are static in original HTML
   const secondaryLinks = [
     { text: 'Terms of use', href: 'https://www.mahindra.com/terms-of-use' },
     { text: 'Disclaimer', href: 'https://www.mahindra.com/disclaimer' },
@@ -155,107 +204,31 @@ export default function decorate(block) {
     { text: 'Sitemap', href: 'https://www.mahindra.com/sitemap' },
     { text: 'Contact Us', href: 'https://www.mahindra.com/contact-us' },
   ];
-  secondaryLinks.forEach(linkData => {
+
+  secondaryLinks.forEach((item) => {
     const li = document.createElement('li');
     const a = document.createElement('a');
-    a.href = linkData.href;
-    a.textContent = linkData.text;
+    a.href = item.href;
+    a.textContent = item.text;
     li.append(a);
-    secondaryNavUl.append(li);
+    secondaryNav.append(li);
   });
-  secondaryNavCol.append(secondaryNavUl);
-  copyrightWrap.append(secondaryNavCol);
+  secondaryNavCol.append(secondaryNav);
 
   const copyrightTextCol = document.createElement('div');
   copyrightTextCol.classList.add('col-12', 'col-lg-6', 'copyright-text');
   copyrightTextCol.textContent = 'Copyright© 2026 Mahindra&Mahindra Ltd. All Rights Reserved.';
-  copyrightWrap.append(copyrightTextCol);
 
+  copyrightWrap.append(secondaryNavCol, copyrightTextCol);
   container.append(copyrightWrap);
+
+  block.textContent = '';
   block.append(container);
 
-  // Image optimization for all pictures in the block
+  // Optimize images
   block.querySelectorAll('picture > img').forEach((img) => {
     const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
     moveInstrumentation(img, optimizedPic.querySelector('img'));
     img.closest('picture').replaceWith(optimizedPic);
-  });
-}
-
-function transformNestedLists(rootUl) {
-  rootUl.querySelectorAll('li').forEach(li => {
-    const nestedUl = li.querySelector(':scope > ul');
-    if (nestedUl) {
-      nestedUl.remove(); // Remove the nested ul from its original position
-
-      const subWrap = document.createElement('div');
-      subWrap.classList.add('has-footer-sub-child'); // Use class from original HTML
-      subWrap.append(nestedUl);
-      li.append(subWrap);
-
-      // Create a trigger for the nested accordion
-      // The trigger can be the direct <a> child of the li, or the li itself if no direct link
-      const trigger = li.querySelector(':scope > a') || li;
-
-      // Add a span with an image for visual accordion toggle, if not already present
-      if (!li.querySelector(':scope > span[data-once="footerClickEvent"]')) {
-        const toggleSpan = document.createElement('span');
-        toggleSpan.setAttribute('data-once', 'footerClickEvent');
-        const toggleImg = document.createElement('img');
-        toggleImg.alt = 'svg file';
-        toggleImg.src = '/content/dam/aemigrate/uploaded-folder/image/1776164448796.svg+xml'; // Example SVG
-        toggleSpan.append(toggleImg);
-        // Insert the toggle span after the direct link or at the beginning of the li content
-        if (li.querySelector(':scope > a')) {
-          li.querySelector(':scope > a').after(toggleSpan);
-        } else {
-          li.prepend(toggleSpan);
-        }
-      }
-
-      // Add click listener for the nested accordion
-      // This listener should be on the trigger (link or li) or the newly added toggle span
-      const actualTrigger = li.querySelector(':scope > span[data-once="footerClickEvent"]') || trigger;
-      actualTrigger.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopPropagation(); // Prevents parent accordion from also toggling
-        li.classList.toggle('active');
-        subWrap.classList.toggle('active');
-
-        // Handle deeper nesting for 'has-footer-inner-sub-child'
-        subWrap.querySelectorAll('li').forEach(innerLi => {
-          const innerNestedUl = innerLi.querySelector(':scope > ul');
-          if (innerNestedUl) {
-            const innerSubWrap = document.createElement('div');
-            innerSubWrap.classList.add('has-footer-inner-sub-child');
-            innerSubWrap.append(innerNestedUl);
-            innerLi.append(innerSubWrap);
-
-            // Add inner toggle span if not present
-            if (!innerLi.querySelector(':scope > span[data-once="footerClickEvent"]')) {
-              const innerToggleSpan = document.createElement('span');
-              innerToggleSpan.setAttribute('data-once', 'footerClickEvent innerFooterClickEvent');
-              const innerToggleImg = document.createElement('img');
-              innerToggleImg.alt = 'svg file';
-              innerToggleImg.src = '/content/dam/aemigrate/uploaded-folder/image/1776164448796.svg+xml';
-              innerToggleSpan.append(innerToggleImg);
-              if (innerLi.querySelector(':scope > a')) {
-                innerLi.querySelector(':scope > a').after(innerToggleSpan);
-              } else {
-                innerLi.prepend(innerToggleSpan);
-              }
-            }
-
-            const innerActualTrigger = innerLi.querySelector(':scope > span[data-once="footerClickEvent"]') || innerLi.querySelector(':scope > a') || innerLi;
-            innerActualTrigger.addEventListener('click', (e2) => {
-              e2.preventDefault();
-              e2.stopPropagation();
-              innerLi.classList.toggle('active');
-              innerSubWrap.classList.toggle('active');
-            });
-          }
-        });
-      });
-    }
   });
 }

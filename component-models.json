@@ -1986,7 +1986,7 @@
       {
         "component": "container",
         "item": "faq",
-        "label": "FAQs",
+        "label": "Faqs",
         "name": "faqs"
       }
     ]
@@ -2578,8 +2578,19 @@
     "fields": [
       {
         "component": "text",
-        "label": "Heading",
-        "name": "heading",
+        "label": "Label",
+        "name": "label",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link"
+      },
+      {
+        "component": "text",
+        "label": "Link Label",
+        "name": "linkLabel",
         "valueType": "string"
       },
       {
