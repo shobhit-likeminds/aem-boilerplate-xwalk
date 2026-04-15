@@ -146,24 +146,25 @@
     "fields": [
       {
         "component": "container",
-        "item": "call-to-act-item",
-        "label": "Items",
-        "name": "items"
+        "item": "call-to-act-column",
+        "label": "Columns",
+        "name": "columns"
       }
     ]
   },
   {
-    "id": "call-to-act-item",
+    "id": "call-to-act-column",
     "fields": [
       {
         "component": "reference",
-        "label": "Image",
-        "name": "image"
+        "label": "Icon",
+        "name": "icon",
+        "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Value",
-        "name": "value",
+        "label": "Stat",
+        "name": "stat",
         "valueType": "string"
       },
       {
@@ -174,14 +175,14 @@
       },
       {
         "component": "aem-content",
-        "label": "Link",
-        "name": "link",
+        "label": "CTA Link",
+        "name": "ctaLink",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Link Label",
-        "name": "linkLabel",
+        "label": "CTA Link Label",
+        "name": "ctaLinkLabel",
         "valueType": "string"
       },
       {
@@ -600,20 +601,20 @@
     "fields": [
       {
         "component": "richtext",
-        "label": "Caption",
-        "name": "caption",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Video",
+        "name": "video",
         "valueType": "string"
       },
       {
         "component": "reference",
         "label": "Video Poster",
         "name": "videoPoster",
-        "valueType": "string"
-      },
-      {
-        "component": "reference",
-        "label": "Video Source",
-        "name": "videoSource",
         "valueType": "string"
       }
     ]
@@ -694,14 +695,7 @@
       {
         "component": "text",
         "label": "Logo Link Label",
-        "name": "logoLinkLabel",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Site Name",
-        "name": "siteName",
-        "valueType": "string"
+        "name": "logoLinkLabel"
       },
       {
         "component": "container",
@@ -717,8 +711,7 @@
       {
         "component": "text",
         "label": "Label",
-        "name": "label",
-        "valueType": "string"
+        "name": "label"
       },
       {
         "component": "aem-content",
@@ -728,8 +721,7 @@
       {
         "component": "text",
         "label": "Link Label",
-        "name": "linkLabel",
-        "valueType": "string"
+        "name": "linkLabel"
       },
       {
         "component": "richtext",
@@ -1012,6 +1004,18 @@
         "valueType": "string"
       },
       {
+        "component": "aem-content",
+        "label": "More News Link",
+        "name": "moreNewsLink",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "More News Link Label",
+        "name": "moreNewsLinkLabel",
+        "valueType": "string"
+      },
+      {
         "component": "container",
         "item": "news-item",
         "label": "News Items",
@@ -1036,8 +1040,8 @@
       },
       {
         "component": "richtext",
-        "label": "Description",
-        "name": "description",
+        "label": "Body",
+        "name": "body",
         "valueType": "string"
       }
     ]
@@ -1292,20 +1296,17 @@
       {
         "component": "text",
         "label": "Label",
-        "name": "label",
-        "valueType": "string"
+        "name": "label"
       },
       {
         "component": "aem-content",
         "label": "Link",
-        "name": "link",
-        "valueType": "string"
+        "name": "link"
       },
       {
         "component": "text",
         "label": "Link Label",
-        "name": "linkLabel",
-        "valueType": "string"
+        "name": "linkLabel"
       },
       {
         "component": "richtext",
@@ -1462,8 +1463,8 @@
       },
       {
         "component": "richtext",
-        "label": "Footer Bottom",
-        "name": "footerBottom",
+        "label": "Copyright",
+        "name": "copyright",
         "valueType": "string"
       }
     ]

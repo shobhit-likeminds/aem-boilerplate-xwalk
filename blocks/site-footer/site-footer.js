@@ -2,134 +2,152 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const [logoRow, addressRow, phoneRow, socialIconsRow, ...itemRows] = [...block.children];
-  const footerBottomRow = itemRows.pop(); // The last row is always footerBottom
+  // Correct destructuring based on BlockJson model
+  const [
+    logoRow,
+    addressRow,
+    phoneRow,
+    socialIconsRow,
+    ...remainingRows // This will contain footerSection item rows and the copyright row
+  ] = [...block.children];
 
+  // The last row in remainingRows is the copyright row, the rest are footerSection item rows
+  const copyrightRow = remainingRows.pop();
+  const footerSectionRows = remainingRows;
+
+  block.textContent = '';
   block.classList.add('site-footer');
 
   const container = document.createElement('div');
   container.classList.add('container');
+  block.append(container);
 
   const siteFooterTop = document.createElement('div');
   siteFooterTop.classList.add('site-footer__top', 'clearfix');
+  container.append(siteFooterTop);
 
-  const row1 = document.createElement('div');
-  row1.classList.add('row');
+  const topRow = document.createElement('div');
+  topRow.classList.add('row');
+  siteFooterTop.append(topRow);
 
+  // Footer First Section (Logo, Address, Phone, Social Icons)
   const regionFooterFirst = document.createElement('section');
   regionFooterFirst.classList.add('region', 'region-footer-first');
+  topRow.append(regionFooterFirst);
 
-  // Logo
-  const logoFooterContainer = document.createElement('div');
-  logoFooterContainer.id = 'logo-footer-container';
+  const logoContainer = document.createElement('div');
+  logoContainer.id = 'logo-footer-container';
   const logoPicture = logoRow.querySelector('picture');
   if (logoPicture) {
     const img = logoPicture.querySelector('img');
-    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '200' }]);
     moveInstrumentation(img, optimizedPic.querySelector('img'));
-    logoFooterContainer.append(optimizedPic);
+    logoContainer.append(optimizedPic);
   }
-  moveInstrumentation(logoRow, logoFooterContainer);
-  regionFooterFirst.append(logoFooterContainer);
+  moveInstrumentation(logoRow, logoContainer);
+  regionFooterFirst.append(logoContainer);
 
-  // Address
   const addressP = document.createElement('p');
   addressP.classList.add('small');
-  addressP.textContent = `Address: ${addressRow.textContent.trim()}`;
   moveInstrumentation(addressRow, addressP);
+  addressP.textContent = `Address: ${addressRow.textContent.trim()}`;
   regionFooterFirst.append(addressP);
 
-  // Phone
   const phoneP = document.createElement('p');
   phoneP.classList.add('small');
-  phoneP.textContent = `Phone: ${phoneRow.textContent.trim()}`;
   moveInstrumentation(phoneRow, phoneP);
+  phoneP.textContent = `Phone: ${phoneRow.textContent.trim()}`;
   regionFooterFirst.append(phoneP);
 
-  // Social Icons
   const socialIconsDiv = document.createElement('div');
   socialIconsDiv.id = 'social-icons';
-  if (socialIconsRow) {
-    moveInstrumentation(socialIconsRow, socialIconsDiv);
-    while (socialIconsRow.firstChild) socialIconsDiv.append(socialIconsRow.firstChild);
-  }
+  moveInstrumentation(socialIconsRow, socialIconsDiv);
+  socialIconsDiv.innerHTML = socialIconsRow.innerHTML;
   regionFooterFirst.append(socialIconsDiv);
-  row1.append(regionFooterFirst);
-  siteFooterTop.append(row1);
 
-  // Footer Sections
-  itemRows.forEach((row, index) => {
-    // CRITICAL FIX: Replaced row.children[n] with content detection
-    const cells = [...row.children];
-    const headingCell = cells.find(cell => !cell.querySelector('ul') && !cell.querySelector('a'));
-    const sectionLinksCell = cells.find(cell => cell.querySelector('ul') || cell.querySelector('p'));
+  // Optimize social icons
+  socialIconsDiv.querySelectorAll('picture > img').forEach((img) => {
+    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '32' }]);
+    moveInstrumentation(img, optimizedPic.querySelector('img'));
+    img.closest('picture').replaceWith(optimizedPic);
+  });
 
-    const section = document.createElement('section');
-    // Ensure class names are from allowlist. 'row' is already present in original HTML for these sections.
-    section.classList.add('row', `region`, `region-footer-${index === 0 ? 'second' : index === 1 ? 'third' : 'fourth'}`);
+  // Footer Sections (dynamic)
+  const regions = ['region-footer-second', 'region-footer-third', 'region-footer-fourth'];
+  footerSectionRows.forEach((row, index) => {
+    // This correctly uses destructuring for fixed-field item models
+    const [headingCell, sectionLinksCell] = [...row.children];
+
+    const sectionRow = document.createElement('section');
+    sectionRow.classList.add('row', 'region', regions[index % regions.length]);
+    topRow.append(sectionRow);
 
     const nav = document.createElement('nav');
     nav.classList.add('block', 'block-menu', 'navigation');
+    nav.setAttribute('role', 'navigation');
+    const menuId = `block-menu-${index}`; // Using index for unique ID
+    nav.setAttribute('aria-labelledby', menuId);
+    sectionRow.append(nav);
 
     const h2 = document.createElement('h2');
-    if (headingCell) {
-      h2.textContent = headingCell.textContent.trim();
-    }
+    h2.id = menuId;
+    h2.textContent = headingCell.textContent.trim();
+    moveInstrumentation(headingCell, h2);
     nav.append(h2);
 
     const ul = document.createElement('ul');
     ul.classList.add('clearfix', 'nav');
-    if (index === 0) { // First footer section (Menu) has flex-row
+    if (index === 0) { // Only the first menu has flex-row
       ul.classList.add('flex-row');
-      nav.classList.add('menu--footer');
-    } else if (index === 1) { // Second footer section (Departments)
-      nav.classList.add('menu--departments');
-    } else if (index === 2) { // Third footer section (Links)
-      nav.classList.add('menu--links');
     }
+    nav.append(ul);
 
-    if (sectionLinksCell) {
-      const sectionLinksContent = sectionLinksCell.querySelector('ul') || sectionLinksCell;
-      [...sectionLinksContent.children].forEach((li) => {
+    const sectionLinksContent = document.createElement('div');
+    sectionLinksContent.innerHTML = sectionLinksCell.innerHTML;
+    moveInstrumentation(sectionLinksCell, sectionLinksContent);
+
+    // Transform authored <ul><li><a> into nav-items
+    const authoredUl = sectionLinksContent.querySelector('ul');
+    if (authoredUl) {
+      [...authoredUl.children].forEach((li) => {
         const navItem = document.createElement('li');
         navItem.classList.add('nav-item');
-        moveInstrumentation(li, navItem);
-        while (li.firstChild) navItem.append(li.firstChild);
-
-        const anchor = navItem.querySelector('a');
-        if (anchor) {
-          anchor.classList.add('nav-link');
+        const link = li.querySelector('a');
+        if (link) {
+          const navLink = document.createElement('a');
+          navLink.href = link.href;
+          navLink.textContent = link.textContent.trim();
+          navLink.classList.add('nav-link');
+          // Add specific nav-link-- classes based on href if possible, or a generic one
+          const path = new URL(link.href).pathname.replace(/^\//, '').replace(/\//g, '-');
+          if (path) {
+            navLink.classList.add(`nav-link--${path}`);
+          }
+          navItem.append(navLink);
+        } else {
+          // If it's just text in an li, append as is or wrap in a span
+          navItem.append(...li.childNodes);
         }
         ul.append(navItem);
       });
+    } else {
+      // Handle cases where sectionLinks might just be paragraphs or other content
+      const p = document.createElement('p');
+      p.innerHTML = sectionLinksContent.innerHTML;
+      ul.append(p);
     }
-    moveInstrumentation(row, nav);
-    nav.append(ul);
-    section.append(nav);
-    siteFooterTop.append(section);
+    moveInstrumentation(row, sectionRow);
   });
 
-  container.append(siteFooterTop);
-
-  // Footer Bottom
+  // Footer Bottom (Copyright)
   const siteFooterBottom = document.createElement('div');
   siteFooterBottom.classList.add('site-footer__bottom');
-  const textCenter = document.createElement('div');
-  textCenter.classList.add('text-center');
-  if (footerBottomRow) {
-    moveInstrumentation(footerBottomRow, textCenter);
-    while (footerBottomRow.firstChild) textCenter.append(footerBottomRow.firstChild);
-  }
-  siteFooterBottom.append(textCenter);
   container.append(siteFooterBottom);
 
-  block.textContent = '';
-  block.append(container);
+  const textCenter = document.createElement('div');
+  textCenter.classList.add('text-center');
+  siteFooterBottom.append(textCenter);
 
-  // Image optimization for social icons
-  block.querySelectorAll('picture > img').forEach((img) => {
-    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-    moveInstrumentation(img, optimizedPic.querySelector('img'));
-    img.closest('picture').replaceWith(optimizedPic);
-  });
+  moveInstrumentation(copyrightRow, textCenter);
+  textCenter.innerHTML = copyrightRow.innerHTML;
 }

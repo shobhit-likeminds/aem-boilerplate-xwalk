@@ -55,7 +55,7 @@
   {
     "id": "call-to-act-front",
     "components": [
-      "call-to-act-item"
+      "call-to-act-column"
     ]
   },
   {

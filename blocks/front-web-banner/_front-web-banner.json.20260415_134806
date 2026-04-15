@@ -23,20 +23,20 @@
       "fields": [
         {
           "component": "richtext",
-          "label": "Heading",
-          "name": "heading",
-          "valueType": "string"
-        },
-        {
-          "component": "reference",
-          "label": "Video",
-          "name": "video",
+          "label": "Caption",
+          "name": "caption",
           "valueType": "string"
         },
         {
           "component": "reference",
           "label": "Video Poster",
           "name": "videoPoster",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Video Source",
+          "name": "videoSource",
           "valueType": "string"
         }
       ]

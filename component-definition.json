@@ -99,15 +99,15 @@
           }
         },
         {
-          "title": "Call-To-Act-Item",
-          "id": "call-to-act-item",
+          "title": "Call-To-Act-Column",
+          "id": "call-to-act-column",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "call-to-act-item",
-                  "name": "Call-To-Act-Item"
+                  "model": "call-to-act-column",
+                  "name": "Call-To-Act-Column"
                 }
               }
             }
@@ -550,7 +550,7 @@
           }
         },
         {
-          "title": "News Item",
+          "title": "News-Item",
           "id": "news-item",
           "plugins": {
             "xwalk": {
@@ -558,7 +558,7 @@
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
                   "model": "news-item",
-                  "name": "News Item"
+                  "name": "News-Item"
                 }
               }
             }

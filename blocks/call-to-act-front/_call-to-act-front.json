@@ -17,15 +17,15 @@
       }
     },
     {
-      "title": "Call-To-Act-Item",
-      "id": "call-to-act-item",
+      "title": "Call-To-Act-Column",
+      "id": "call-to-act-column",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "call-to-act-item",
-              "name": "Call-To-Act-Item"
+              "model": "call-to-act-column",
+              "name": "Call-To-Act-Column"
             }
           }
         }
@@ -38,24 +38,25 @@
       "fields": [
         {
           "component": "container",
-          "item": "call-to-act-item",
-          "label": "Items",
-          "name": "items"
+          "item": "call-to-act-column",
+          "label": "Columns",
+          "name": "columns"
         }
       ]
     },
     {
-      "id": "call-to-act-item",
+      "id": "call-to-act-column",
       "fields": [
         {
           "component": "reference",
-          "label": "Image",
-          "name": "image"
+          "label": "Icon",
+          "name": "icon",
+          "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Value",
-          "name": "value",
+          "label": "Stat",
+          "name": "stat",
           "valueType": "string"
         },
         {
@@ -66,14 +67,14 @@
         },
         {
           "component": "aem-content",
-          "label": "Link",
-          "name": "link",
+          "label": "CTA Link",
+          "name": "ctaLink",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Link Label",
-          "name": "linkLabel",
+          "label": "CTA Link Label",
+          "name": "ctaLinkLabel",
           "valueType": "string"
         },
         {
@@ -89,7 +90,7 @@
     {
       "id": "call-to-act-front",
       "components": [
-        "call-to-act-item"
+        "call-to-act-column"
       ]
     }
   ]

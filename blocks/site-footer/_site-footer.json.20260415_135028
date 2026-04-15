@@ -67,8 +67,8 @@
         },
         {
           "component": "richtext",
-          "label": "Copyright",
-          "name": "copyright",
+          "label": "Footer Bottom",
+          "name": "footerBottom",
           "valueType": "string"
         }
       ]
