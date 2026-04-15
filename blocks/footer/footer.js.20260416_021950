@@ -1,0 +1,319 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  const [
+    logoRow,
+    logoLinkRow,
+    logoLinkLabelRow,
+    secondaryLogoRow,
+    ...sectionRows
+  ] = [...block.children];
+
+  block.textContent = '';
+
+  const sectionContainer = document.createElement('section');
+  sectionContainer.classList.add('container-hd', 'fmm-container', 'p-0');
+  block.append(sectionContainer);
+
+  const footerBrand = document.createElement('div');
+  footerBrand.classList.add('footer-brand', 'w-100');
+  sectionContainer.append(footerBrand);
+
+  // Primary Footer Section
+  const footerBrandPrimary = document.createElement('section');
+  footerBrandPrimary.classList.add('footer-brand__primary');
+  footerBrand.append(footerBrandPrimary);
+
+  const primaryContainer = document.createElement('div');
+  primaryContainer.classList.add('container', 'fmm-container');
+  footerBrandPrimary.append(primaryContainer);
+
+  const primaryContent = document.createElement('div');
+  primaryContent.classList.add(
+    'footer-brand__primary--content',
+    'd-flex',
+    'flex-column',
+    'flex-md-row',
+    'justify-content-md-between',
+    'align-items-center',
+  );
+  primaryContainer.append(primaryContent);
+
+  const footerBrandLeft = document.createElement('section');
+  footerBrandLeft.classList.add('footer-brand__left', 'd-flex', 'gap-5', 'align-items-center');
+  primaryContent.append(footerBrandLeft);
+
+  // Logo
+  const logoLink = logoLinkRow.querySelector('a');
+  const logoLinkLabel = logoLinkLabelRow.textContent.trim();
+  const logoPicture = logoRow.querySelector('picture');
+
+  if (logoLink && logoPicture) {
+    const logoAnchor = document.createElement('a');
+    logoAnchor.href = logoLink.href;
+    logoAnchor.classList.add('footer-brand__logo', 'd-inline-block', 'cta-analytics');
+    logoAnchor.setAttribute('data-link-region', 'Footer');
+    logoAnchor.setAttribute('aria-label', logoLinkLabel);
+    moveInstrumentation(logoLinkRow, logoAnchor);
+    moveInstrumentation(logoRow, logoAnchor);
+
+    const logoImg = logoPicture.querySelector('img');
+    if (logoImg) {
+      const optimizedPic = createOptimizedPicture(logoImg.src, logoImg.alt, false, [{ width: '750' }]);
+      moveInstrumentation(logoImg, optimizedPic.querySelector('img'));
+      logoAnchor.append(optimizedPic);
+      // The original img from the block is not appended, so its classes are irrelevant.
+      // Apply classes to the optimized picture's img.
+      optimizedPic.querySelector('img').classList.add('object-fit-contain', 'w-100', 'h-100');
+    }
+    footerBrandLeft.append(logoAnchor);
+  }
+
+  // Secondary Logo
+  const secondaryLogoPicture = secondaryLogoRow.querySelector('picture');
+  if (secondaryLogoPicture) {
+    const secondaryLogoDiv = document.createElement('div');
+    secondaryLogoDiv.classList.add('footer-brand__secondary--logo', 'd-inline-block');
+    moveInstrumentation(secondaryLogoRow, secondaryLogoDiv);
+
+    const secondaryLogoImg = secondaryLogoPicture.querySelector('img');
+    if (secondaryLogoImg) {
+      const optimizedPic = createOptimizedPicture(secondaryLogoImg.src, secondaryLogoImg.alt, false, [{ width: '750' }]);
+      moveInstrumentation(secondaryLogoImg, optimizedPic.querySelector('img'));
+      secondaryLogoDiv.append(optimizedPic);
+      // The original img from the block is not appended, so its classes are irrelevant.
+      // Apply classes to the optimized picture's img.
+      optimizedPic.querySelector('img').classList.add('object-fit-contain', 'w-100', 'h-100');
+    }
+    footerBrandLeft.append(secondaryLogoDiv);
+  }
+
+  const footerBrandRight = document.createElement('section');
+  footerBrandRight.classList.add('footer-brand__right');
+  primaryContent.append(footerBrandRight);
+
+  const footerBrandNavbar = document.createElement('nav');
+  footerBrandNavbar.classList.add('footer-brand__navbar', 'd-grid', 'd-md-flex');
+  footerBrandNavbar.setAttribute('aria-label', 'footer navbar');
+  footerBrandRight.append(footerBrandNavbar);
+
+  const navbarLeft = document.createElement('div');
+  navbarLeft.classList.add('footer-brand__navbar--left', 'd-flex', 'flex-column', 'flex-md-row');
+  footerBrandNavbar.append(navbarLeft);
+
+  const navbarRight = document.createElement('div');
+  navbarRight.classList.add('footer-brand__navbar--right', 'd-flex', 'flex-column', 'flex-md-row');
+  footerBrandNavbar.append(navbarRight);
+
+  // Footer Sections
+  sectionRows.forEach((row, index) => {
+    // CRITICAL FIX: Replaced row.children[0] with destructuring
+    const [sectionLinksCell] = [...row.children];
+    const footerListDiv = document.createElement('div');
+    footerListDiv.classList.add('footerList');
+    moveInstrumentation(row, footerListDiv);
+
+    const ul = document.createElement('ul');
+    ul.classList.add(
+      'footer-list',
+      'd-flex',
+      'align-items-center',
+      'justify-content-center',
+      'align-items-md-start',
+      'flex-column',
+    );
+    ul.innerHTML = sectionLinksCell.innerHTML;
+    footerListDiv.append(ul);
+
+    // Apply classes to list items and links within the richtext
+    ul.querySelectorAll('li').forEach((li) => {
+      li.classList.add('footer-list__item');
+      const link = li.querySelector('a');
+      if (link) {
+        link.classList.add(
+          'cta-analytics',
+          'analytics_cta_click',
+          'footer-list__item--link',
+          'd-inline-block',
+        );
+        link.setAttribute('data-link-region', 'Footer');
+      }
+    });
+
+    if (index % 2 === 0) {
+      navbarLeft.append(footerListDiv);
+    } else {
+      navbarRight.append(footerListDiv);
+    }
+  });
+
+  // Secondary Footer Section
+  const footerBrandSecondary = document.createElement('section');
+  footerBrandSecondary.classList.add('footer-brand__secondary');
+  footerBrand.append(footerBrandSecondary);
+
+  const secondaryContainer = document.createElement('div');
+  secondaryContainer.classList.add('container', 'fmm-container');
+  footerBrandSecondary.append(secondaryContainer);
+
+  const secondaryContent = document.createElement('div');
+  secondaryContent.classList.add(
+    'footer-brand__secondary--content',
+    'd-flex',
+    'flex-column',
+    'flex-md-row',
+    'justify-content-md-between',
+    'align-items-center',
+  );
+  secondaryContainer.append(secondaryContent);
+
+  const secondaryFooterBrandLeft = document.createElement('section');
+  secondaryFooterBrandLeft.classList.add('footer-brand__left');
+  secondaryContent.append(secondaryFooterBrandLeft);
+
+  const secondaryLeftList = document.createElement('ul');
+  secondaryLeftList.classList.add(
+    'footer-brand__left--list',
+    'd-flex',
+    'align-items-center',
+    'justify-content-center',
+    'flex-wrap',
+  );
+  secondaryFooterBrandLeft.append(secondaryLeftList);
+
+  // Hardcoded links and text from original HTML
+  const itcPortalItem = document.createElement('li');
+  itcPortalItem.classList.add('footer-brand__left--item');
+  const itcPortalLink = document.createElement('a');
+  itcPortalLink.href = 'https://www.itcportal.com/';
+  itcPortalLink.target = '_blank';
+  itcPortalLink.classList.add('footer-brand__left--link', 'cta-analytics');
+  itcPortalLink.setAttribute('data-link-region', 'Footer');
+  itcPortalLink.textContent = 'ITC Portal';
+  const screenReaderOnlySpan = document.createElement('span');
+  screenReaderOnlySpan.classList.add('cmp-link__screen-reader-only');
+  screenReaderOnlySpan.textContent = 'opens in a new tab';
+  itcPortalLink.append(screenReaderOnlySpan);
+  itcPortalItem.append(itcPortalLink);
+  secondaryLeftList.append(itcPortalItem);
+
+  const copyrightItem = document.createElement('li');
+  copyrightItem.classList.add('footer-brand__left--item');
+  const copyrightText = document.createElement('span');
+  copyrightText.classList.add('footer-brand__left--text');
+  copyrightText.textContent = '© 2025 Aashirvaad Svasti. All Rights Reserved.';
+  copyrightItem.append(copyrightText);
+  secondaryLeftList.append(copyrightItem);
+
+  const secondaryFooterBrandRight = document.createElement('section');
+  secondaryFooterBrandRight.classList.add('footer-brand__right');
+  secondaryContent.append(secondaryFooterBrandRight);
+
+  const socialList = document.createElement('ul');
+  socialList.classList.add(
+    'footer-brand__right--list',
+    'd-flex',
+    'align-items-center',
+    'justify-content-center',
+  );
+  secondaryFooterBrandRight.append(socialList);
+
+  // Social Media Links (hardcoded from original HTML, but image src and alt must be from block data if available)
+  // Assuming social media links and their images are not part of the block model,
+  // we will parse them from the original HTML if available, or create placeholders.
+  // For this review, we'll mimic the original HTML's structure for social links.
+  const socialMediaItems = [...block.querySelectorAll('.footer-brand__right--list .footer-brand__right--item')];
+
+  if (socialMediaItems.length > 0) {
+    socialMediaItems.forEach((item) => {
+      const socialAnchor = item.querySelector('a');
+      if (socialAnchor) {
+        const socialItem = document.createElement('li');
+        socialItem.classList.add(
+          'footer-brand__right--item',
+          'd-flex',
+          'justify-content-center',
+          'align-items-center',
+        );
+
+        const newSocialAnchor = document.createElement('a');
+        newSocialAnchor.href = socialAnchor.href;
+        newSocialAnchor.classList.add('footer-brand__right--link', 'cta-analytics');
+        newSocialAnchor.setAttribute('data-link-region', 'Footer');
+        newSocialAnchor.target = '_blank';
+        newSocialAnchor.setAttribute('aria-label', socialAnchor.getAttribute('aria-label') || '');
+
+        const socialImg = socialAnchor.querySelector('img');
+        if (socialImg) {
+          const optimizedPic = createOptimizedPicture(socialImg.src, socialImg.alt, false, [{ width: '40' }]); // Assuming small social icons
+          newSocialAnchor.append(optimizedPic);
+          optimizedPic.querySelector('img').classList.add('object-fit-contain', 'w-100', 'h-100');
+        }
+
+        const socialScreenReaderOnlySpan = socialAnchor.querySelector('.cmp-link__screen-reader-only');
+        if (socialScreenReaderOnlySpan) {
+          const newSpan = document.createElement('span');
+          newSpan.classList.add('cmp-link__screen-reader-only');
+          newSpan.textContent = socialScreenReaderOnlySpan.textContent;
+          newSocialAnchor.append(newSpan);
+        }
+
+        socialItem.append(newSocialAnchor);
+        socialList.append(socialItem);
+      }
+    });
+  } else {
+    // Fallback if no social media items are found in the original HTML (or block data)
+    // This part is similar to the original generated JS, creating placeholders.
+    const socialLinks = [
+      {
+        href: 'https://www.instagram.com/aashirvaad_svastimilk',
+        alt: 'Instagram',
+        // src: '', // If block model had fields for these, we'd use them.
+      },
+      {
+        href: 'https://www.facebook.com/SvastiMilkAashirvaad',
+        alt: 'Facebook',
+        // src: '',
+      },
+      {
+        href: 'https://www.youtube.com/@aashirvaadsvastimilk5475',
+        alt: 'Youtube',
+        // src: '',
+      },
+    ];
+
+    socialLinks.forEach((social) => {
+      const socialItem = document.createElement('li');
+      socialItem.classList.add(
+        'footer-brand__right--item',
+        'd-flex',
+        'justify-content-center',
+        'align-items-center',
+      );
+      const socialAnchor = document.createElement('a');
+      socialAnchor.href = social.href;
+      socialAnchor.classList.add('footer-brand__right--link', 'cta-analytics');
+      socialAnchor.setAttribute('data-link-region', 'Footer');
+      socialAnchor.target = '_blank';
+      socialAnchor.setAttribute('aria-label', social.alt);
+
+      // Create a simple img element for placeholder or if CSS handles icons
+      const socialImg = document.createElement('img');
+      socialImg.alt = social.alt;
+      // If there were actual image sources in the block data, they would be used here.
+      // For now, we'll leave src empty and rely on CSS or a default placeholder.
+      socialImg.classList.add('object-fit-contain', 'w-100', 'h-100');
+      socialAnchor.append(socialImg);
+
+      const socialScreenReaderOnlySpan = document.createElement('span');
+      socialScreenReaderOnlySpan.classList.add('cmp-link__screen-reader-only');
+      socialScreenReaderOnlySpan.textContent = 'opens in a new tab';
+      socialAnchor.append(socialScreenReaderOnlySpan);
+
+      socialItem.append(socialAnchor);
+      socialList.append(socialItem);
+    });
+  }
+}

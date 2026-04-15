@@ -24,7 +24,14 @@
         {
           "component": "reference",
           "label": "Image",
-          "name": "image"
+          "name": "image",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Mobile Image",
+          "name": "mobileImage",
+          "valueType": "string"
         },
         {
           "component": "aem-content",

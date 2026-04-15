@@ -115,7 +115,7 @@
           }
         },
         {
-          "title": "Card-Carousel",
+          "title": "Card Carousel",
           "id": "card-carousel",
           "plugins": {
             "xwalk": {
@@ -124,7 +124,7 @@
                 "template": {
                   "filter": "card-carousel",
                   "model": "card-carousel",
-                  "name": "Card-Carousel"
+                  "name": "Card Carousel"
                 }
               }
             }
@@ -361,15 +361,15 @@
           }
         },
         {
-          "title": "Product Item",
-          "id": "product-item",
+          "title": "Product",
+          "id": "product",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "product-item",
-                  "name": "Product Item"
+                  "model": "product",
+                  "name": "Product"
                 }
               }
             }

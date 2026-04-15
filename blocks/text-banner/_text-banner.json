@@ -23,8 +23,8 @@
       "fields": [
         {
           "component": "text",
-          "label": "Title",
-          "name": "title",
+          "label": "Heading",
+          "name": "heading",
           "valueType": "string"
         },
         {

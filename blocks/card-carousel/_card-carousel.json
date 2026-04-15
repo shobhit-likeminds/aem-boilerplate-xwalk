@@ -1,7 +1,7 @@
 {
   "definitions": [
     {
-      "title": "Card-Carousel",
+      "title": "Card Carousel",
       "id": "card-carousel",
       "plugins": {
         "xwalk": {
@@ -10,7 +10,7 @@
             "template": {
               "filter": "card-carousel",
               "model": "card-carousel",
-              "name": "Card-Carousel"
+              "name": "Card Carousel"
             }
           }
         }
@@ -38,14 +38,14 @@
       "fields": [
         {
           "component": "text",
-          "label": "Heading",
-          "name": "heading",
+          "label": "Title",
+          "name": "title",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Subheading",
-          "name": "subheading",
+          "label": "Subtitle",
+          "name": "subtitle",
           "valueType": "string"
         },
         {
@@ -61,20 +61,20 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Background Image",
-          "name": "backgroundImage",
+          "label": "Thumbnail Image",
+          "name": "thumbImage",
           "valueType": "string"
         },
         {
           "component": "richtext",
-          "label": "Title",
-          "name": "title",
+          "label": "Card Title",
+          "name": "cardTitle",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Product Image",
-          "name": "productImage",
+          "label": "Main Image",
+          "name": "mainImage",
           "valueType": "string"
         },
         {

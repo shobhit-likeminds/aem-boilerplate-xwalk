@@ -2,20 +2,18 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  // The block model is empty, meaning the block itself is just a container.
-  // The original HTML shows it has specific classes and a style attribute.
-  // We need to apply these to the block element itself.
+  // The block model "w-100" has no fields, so the block div will be empty.
+  // The original HTML shows that it's a simple div with specific classes and an inline style.
+  // We need to apply these classes and the inline style to the block element itself.
 
-  // The block element already exists, so we just add classes to it.
-  // The original HTML has: <div class="w-100 pt-3 pt-sm-3" style="background: ;"></div>
+  // Clear any existing content in the block, though it should be empty based on the model.
+  block.textContent = '';
+
+  // Apply classes from the ORIGINAL HTML
   block.classList.add('w-100', 'pt-3', 'pt-sm-3');
 
-  // The style attribute 'background: ;' is empty and typically not needed
-  // unless there's a dynamic background color from the model.
-  // Since the model is empty, we don't need to set any style.
-
-  // If there were any child rows, we would process them here.
-  // Since the model is empty, block.children will be empty, so no loop is needed.
-
-  // No images to optimize as there are no fields in the model.
+  // Apply inline style from the ORIGINAL HTML
+  // Note: The original HTML has `style="background: ;"`, which is an empty background style.
+  // We will replicate this exactly. If it had a value, we would copy that value.
+  block.style.background = ''; // This sets an empty background style, matching the original.
 }

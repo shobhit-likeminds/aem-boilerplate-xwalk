@@ -60,7 +60,7 @@
           "component": "container",
           "item": "footer-section",
           "label": "Footer Sections",
-          "name": "footerSections"
+          "name": "sections"
         }
       ]
     },

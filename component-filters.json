@@ -93,7 +93,7 @@
   {
     "id": "product-selection-component",
     "components": [
-      "product-item"
+      "product"
     ]
   },
   {

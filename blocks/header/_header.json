@@ -64,15 +64,15 @@
       "id": "nav-item",
       "fields": [
         {
+          "component": "reference",
+          "label": "Icon",
+          "name": "icon"
+        },
+        {
           "component": "text",
           "label": "Label",
           "name": "label",
           "valueType": "string"
-        },
-        {
-          "component": "reference",
-          "label": "Icon",
-          "name": "icon"
         },
         {
           "component": "aem-content",

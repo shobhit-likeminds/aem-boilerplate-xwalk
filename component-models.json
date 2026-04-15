@@ -147,7 +147,14 @@
       {
         "component": "reference",
         "label": "Image",
-        "name": "image"
+        "name": "image",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Mobile Image",
+        "name": "mobileImage",
+        "valueType": "string"
       },
       {
         "component": "aem-content",
@@ -171,14 +178,14 @@
     "fields": [
       {
         "component": "text",
-        "label": "Heading",
-        "name": "heading",
+        "label": "Title",
+        "name": "title",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Subheading",
-        "name": "subheading",
+        "label": "Subtitle",
+        "name": "subtitle",
         "valueType": "string"
       },
       {
@@ -194,20 +201,20 @@
     "fields": [
       {
         "component": "reference",
-        "label": "Background Image",
-        "name": "backgroundImage",
+        "label": "Thumbnail Image",
+        "name": "thumbImage",
         "valueType": "string"
       },
       {
         "component": "richtext",
-        "label": "Title",
-        "name": "title",
+        "label": "Card Title",
+        "name": "cardTitle",
         "valueType": "string"
       },
       {
         "component": "reference",
-        "label": "Product Image",
-        "name": "productImage",
+        "label": "Main Image",
+        "name": "mainImage",
         "valueType": "string"
       },
       {
@@ -311,7 +318,7 @@
         "component": "container",
         "item": "footer-section",
         "label": "Footer Sections",
-        "name": "footerSections"
+        "name": "sections"
       }
     ]
   },
@@ -352,7 +359,8 @@
       {
         "component": "text",
         "label": "Logo Link Label",
-        "name": "logoLinkLabel"
+        "name": "logoLinkLabel",
+        "valueType": "string"
       },
       {
         "component": "container",
@@ -373,7 +381,8 @@
       {
         "component": "text",
         "label": "Label",
-        "name": "label"
+        "name": "label",
+        "valueType": "string"
       },
       {
         "component": "aem-content",
@@ -383,7 +392,8 @@
       {
         "component": "text",
         "label": "Link Label",
-        "name": "linkLabel"
+        "name": "linkLabel",
+        "valueType": "string"
       },
       {
         "component": "richtext",
@@ -424,15 +434,15 @@
     "id": "nav-item",
     "fields": [
       {
+        "component": "reference",
+        "label": "Icon",
+        "name": "icon"
+      },
+      {
         "component": "text",
         "label": "Label",
         "name": "label",
         "valueType": "string"
-      },
-      {
-        "component": "reference",
-        "label": "Icon",
-        "name": "icon"
       },
       {
         "component": "aem-content",
@@ -490,14 +500,14 @@
       },
       {
         "component": "container",
-        "item": "product-item",
+        "item": "product",
         "label": "Products",
         "name": "products"
       }
     ]
   },
   {
-    "id": "product-item",
+    "id": "product",
     "fields": [
       {
         "component": "reference",
@@ -624,8 +634,8 @@
     "fields": [
       {
         "component": "text",
-        "label": "Title",
-        "name": "title",
+        "label": "Heading",
+        "name": "heading",
         "valueType": "string"
       },
       {
