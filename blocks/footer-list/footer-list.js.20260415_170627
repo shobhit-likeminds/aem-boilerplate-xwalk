@@ -1,0 +1,30 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  const ul = document.createElement('ul');
+  ul.classList.add('footer-list', 'd-flex', 'align-items-center', 'justify-content-center', 'align-items-md-start', 'flex-column');
+
+  [...block.children].forEach((row) => {
+    const [linkCell, linkLabelCell] = [...row.children];
+
+    const li = document.createElement('li');
+    moveInstrumentation(row, li);
+    li.classList.add('footer-list__item');
+
+    const anchor = document.createElement('a');
+    const foundLink = linkCell.querySelector('a');
+    if (foundLink) {
+      anchor.href = foundLink.href;
+    }
+    anchor.textContent = linkLabelCell.textContent.trim();
+    anchor.classList.add('cta-analytics', 'analytics_cta_click', 'footer-list__item--link', 'd-inline-block');
+    anchor.setAttribute('data-link-region', 'Footer'); // Copy data attribute from original HTML
+
+    li.append(anchor);
+    ul.append(li);
+  });
+
+  block.textContent = '';
+  block.append(ul);
+}

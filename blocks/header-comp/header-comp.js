@@ -1,0 +1,304 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  const [logoRow, logoLinkRow, logoLinkLabelRow, ...navItemRows] = [...block.children];
+
+  block.classList.add('bg-red-100', 'position-fixed', 'top-0', 'start-0', 'z-2', 'w-100');
+
+  const containerDiv = document.createElement('div');
+  containerDiv.classList.add('container', 'gx-8', 'gx-sm-0', 'd-flex', 'justify-content-between', 'align-items-start', 'align-items-md-center');
+  block.append(containerDiv);
+
+  const nav = document.createElement('nav');
+  nav.classList.add('header-nav', 'navbar', 'position-static', 'navbar-expand-lg');
+  containerDiv.append(nav);
+
+  const headerWrapper = document.createElement('div');
+  headerWrapper.classList.add('header-comp__wrapper', 'container-fluid', 'justify-content-start', 'gx-4', 'gx-md-0');
+  nav.append(headerWrapper);
+
+  // Hamburger button
+  const toggler = document.createElement('button');
+  toggler.classList.add('border-0', 'shadow-none', 'navbar-toggler', 'header-comp__wrapper--hamburger', 'collapsed', 'p-0');
+  toggler.type = 'button';
+  toggler.setAttribute('aria-controls', 'navbarSupportedContent');
+  toggler.setAttribute('aria-expanded', 'false');
+  toggler.setAttribute('aria-label', 'Toggle navigation');
+
+  const togglerIcon = document.createElement('span');
+  togglerIcon.classList.add('navbar-toggler-icon', 'd-flex', 'flex-column', 'justify-content-center', 'align-items-center');
+  ['d-block', 'd-block', 'd-block'].forEach((cls) => {
+    const span = document.createElement('span');
+    span.classList.add(cls, 'bg-white');
+    togglerIcon.append(span);
+  });
+  toggler.append(togglerIcon);
+  headerWrapper.append(toggler);
+
+  // Logo
+  const logoWrapper = document.createElement('div');
+  logoWrapper.classList.add('header-comp__wrapper--logo');
+
+  const logoLink = document.createElement('a');
+  logoLink.classList.add('header-comp__wrapper--link', 'cta-analytics', 'navbar-brand', 'm-0');
+  if (logoLinkRow) {
+    const foundLink = logoLinkRow.querySelector('a');
+    if (foundLink) logoLink.href = foundLink.href;
+  }
+  logoLink.setAttribute('data-link-region', 'Header');
+
+  const logoPicture = logoRow.querySelector('picture');
+  if (logoPicture) {
+    const img = logoPicture.querySelector('img');
+    const optimizedPic = createOptimizedPicture(img.src, img.alt, true, [{ width: '750' }]);
+    optimizedPic.querySelector('img').classList.add('header-comp__wrapper--image', 'h-100');
+    moveInstrumentation(img, optimizedPic.querySelector('img'));
+    logoLink.append(optimizedPic);
+  }
+  logoWrapper.append(logoLink);
+  headerWrapper.append(logoWrapper);
+
+  // Navigation menus
+  const navbarCollapse = document.createElement('div');
+  navbarCollapse.classList.add('header-comp__wrapper--menus', 'collapse', 'navbar-collapse', 'z-3');
+  navbarCollapse.id = 'navbarSupportedContent';
+  headerWrapper.append(navbarCollapse);
+
+  const navUl = document.createElement('ul');
+  navUl.classList.add('header-comp__wrapper--menus-groups', 'navbar-nav', 'me-auto', 'mb-2', 'mb-lg-0', 'w-100');
+  navbarCollapse.append(navUl);
+
+  toggler.addEventListener('click', () => {
+    navbarCollapse.classList.toggle('show');
+    toggler.classList.toggle('collapsed');
+  });
+
+  navItemRows.forEach((row, index) => {
+    const cells = [...row.children];
+    const iconCell = cells.find(cell => cell.querySelector('picture'));
+    const linkCell = cells.find(cell => cell.querySelector('a'));
+    const labelCell = cells.find(cell => !cell.querySelector('picture') && !cell.querySelector('a') && cell.textContent.trim() !== '');
+    const linkLabelCell = cells.find(cell => !cell.querySelector('picture') && !cell.querySelector('a') && cell !== labelCell && cell.textContent.trim() !== '');
+    const subLinksCell = cells.find(cell => cell.querySelector('ul') || cell.querySelector('p')); // Richtext can be <p> or <ul>
+
+    const li = document.createElement('li');
+    moveInstrumentation(row, li);
+    li.classList.add('header-comp__wrapper--menu-item', 'h-100', 'd-flex', 'align-items-center', 'nav-item', 'p-4', 'p-lg-0', 'border-bottom-lg-0');
+
+    if (index % 2 === 0) {
+      li.classList.add('left-division');
+    } else {
+      li.classList.add('right-division');
+    }
+
+    const menuLinkDiv = document.createElement('div');
+    menuLinkDiv.classList.add('header-comp__wrapper--menu-link', 'gap-6', 'gap-lg-1', 'position-relative', 'w-100', 'd-flex', 'align-items-center', 'nav-link', 'px-0', 'font-default', 'leading-28', 'leading-lg-26', 'text-header-list', 'text-lg-cream-100');
+
+    const iconPicture = iconCell?.querySelector('picture');
+    if (iconPicture) {
+      const img = iconPicture.querySelector('img');
+      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '24' }]);
+      optimizedPic.querySelector('img').classList.add('header-comp__wrapper--menu-image', 'd-lg-none');
+      moveInstrumentation(img, optimizedPic.querySelector('img'));
+      menuLinkDiv.append(optimizedPic);
+    }
+
+    const anchor = document.createElement('a');
+    anchor.classList.add('text-decoration-none', 'cta-analytics', 'header-comp__wrapper--link');
+    anchor.setAttribute('data-link-region', 'Header');
+    const foundLink = linkCell?.querySelector('a');
+    if (foundLink) anchor.href = foundLink.href;
+
+    const spanLink = document.createElement('span');
+    spanLink.classList.add('link-span');
+    spanLink.textContent = linkLabelCell?.textContent.trim() || labelCell?.textContent.trim() || '';
+    anchor.append(spanLink);
+    menuLinkDiv.append(anchor);
+
+    const subList = subLinksCell?.querySelector('ul');
+    if (subList) {
+      li.classList.add('dropdown', 'border-lg-0', 'show-nav');
+      menuLinkDiv.classList.add('dropdown-toggle');
+      menuLinkDiv.setAttribute('aria-expanded', 'false');
+
+      const toggleDropDown = document.createElement('span');
+      toggleDropDown.classList.add('toggle-drop-down', 'arrow-icon', 'd-flex', 'end-0', 'top-parent');
+      const arrowIcon = document.createElement('img');
+      arrowIcon.alt = 'svg file';
+      arrowIcon.src = '/icons/arrow-down.svg'; // Placeholder, replace if icon is in model
+      toggleDropDown.append(arrowIcon);
+      menuLinkDiv.append(toggleDropDown);
+
+      const subMenusDiv = document.createElement('div');
+      subMenusDiv.classList.add('header-comp__sub-menus');
+      subMenusDiv.id = `leftHeaderItem${index}`;
+      subMenusDiv.setAttribute('data-id', `leftHeaderItem${index}`);
+
+      const xfpageDiv = document.createElement('div');
+      xfpageDiv.classList.add('xfpage', 'page', 'basicpage');
+      const aemGridDiv = document.createElement('div');
+      aemGridDiv.classList.add('aem-Grid', 'aem-Grid--12', 'aem-Grid--default--12');
+      const headerSubMenuDiv = document.createElement('div');
+      headerSubMenuDiv.classList.add('headerSubMenu', 'aem-GridColumn', 'aem-GridColumn--default--12');
+
+      const subMenuGroup = document.createElement('ul');
+      subMenuGroup.classList.add('header-comp__wrapper--sub-menu-group', 'w-auto', 'border-0', 'pb-lg-0', 'dropdown-menu', 'p-0');
+      const subMenuTriParent = document.createElement('div');
+      subMenuTriParent.classList.add('header-comp__sub-menu', 'tri-parent');
+      subMenuGroup.append(subMenuTriParent);
+
+      const transformNestedLists = (rootUl) => {
+        rootUl.querySelectorAll('li').forEach((subLi) => {
+          const nested = subLi.querySelector(':scope > ul');
+          if (nested) {
+            nested.remove();
+            const subWrap = document.createElement('div');
+            subWrap.classList.add('d-lg-none', 'inner-childs');
+            subWrap.append(nested);
+            subLi.append(subWrap);
+
+            const trigger = subLi.querySelector(':scope > a') || subLi;
+            trigger.addEventListener('click', (e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              subLi.classList.toggle('active');
+              subWrap.classList.toggle('active');
+            });
+          }
+        });
+      };
+
+      transformNestedLists(subList);
+      subMenuTriParent.append(subList);
+
+      headerSubMenuDiv.append(subMenuGroup);
+      aemGridDiv.append(headerSubMenuDiv);
+      xfpageDiv.append(aemGridDiv);
+      subMenusDiv.append(xfpageDiv);
+      li.append(subMenusDiv);
+
+      menuLinkDiv.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        li.classList.toggle('show');
+        menuLinkDiv.classList.toggle('show');
+      });
+    }
+
+    li.append(menuLinkDiv);
+    navUl.append(li);
+  });
+
+  // Search and Access
+  const searchAccessDiv = document.createElement('div');
+  searchAccessDiv.classList.add('header-comp__wrapper--search-access', 'd-flex', 'py-4', 'py-lg-0');
+  containerDiv.append(searchAccessDiv);
+
+  const searchDiv = document.createElement('div');
+  searchDiv.classList.add('header-comp__wrapper--search');
+  searchAccessDiv.append(searchDiv);
+
+  const searchIconDiv = document.createElement('div');
+  searchIconDiv.classList.add('header-comp__wrapper--search-icon', 'd-flex', 'flex-column', 'align-items-center', 'font-12', 'leading-20', 'text-white');
+  const searchImg = document.createElement('img');
+  searchImg.alt = 'svg file';
+  searchImg.src = '/icons/search.svg'; // Placeholder, replace if icon is in model
+  searchIconDiv.append(searchImg);
+  const searchSpan = document.createElement('span');
+  searchSpan.classList.add('d-none', 'd-lg-block');
+  searchSpan.textContent = 'Search';
+  searchIconDiv.append(searchSpan);
+  searchDiv.append(searchIconDiv);
+
+  const outerBoxDiv = document.createElement('div');
+  outerBoxDiv.classList.add('header__outer-box', 'position-absolute', 'w-100', 'z-2', 'start-0', 'd-lg-none');
+  block.append(outerBoxDiv);
+
+  block.textContent = '';
+  block.append(containerDiv);
+  block.append(outerBoxDiv);
+
+  // Global search component (from original HTML, outside block)
+  const globalSearchSection = document.createElement('section');
+  globalSearchSection.classList.add('global-search', 'position-fixed', 'w-100', 'd-none'); // Hidden by default
+  const globalSearchWrapper = document.createElement('div');
+  globalSearchWrapper.classList.add('w-100', 'z-4', 'global-search__wrapper', 'pb-md-5', 'pb-lg-6', 'pt-lg-0', 'pt-md-0', 'pt-2', 'pb-2');
+  globalSearchSection.append(globalSearchWrapper);
+
+  const globalSearchFlex = document.createElement('div');
+  globalSearchFlex.classList.add('d-flex', 'justify-content-center', 'h-100');
+  globalSearchWrapper.append(globalSearchFlex);
+
+  const crossWrapDiv = document.createElement('div');
+  crossWrapDiv.classList.add('d-lg-block', 'align-items-center', 'd-flex');
+  const crossWrapInner = document.createElement('div');
+  crossWrapInner.classList.add('cross-wrap', 'd-flex', 'justify-content-center', 'align-items-center');
+  const crossImg = document.createElement('img');
+  crossImg.alt = 'svg file';
+  crossImg.src = '/icons/cross.svg'; // Placeholder, replace if icon is in model
+  crossWrapInner.append(crossImg);
+  crossWrapDiv.append(crossWrapInner);
+  globalSearchFlex.append(crossWrapDiv);
+
+  const searchFormDiv = document.createElement('div');
+  searchFormDiv.classList.add('global-search__wrapper--form', 'd-flex', 'align-items-center', 'justify-content-center');
+  const searchInput = document.createElement('input');
+  searchInput.type = 'text';
+  searchInput.classList.add('global-search__wrapper--form-input', 'pb-1', 'pb-md-1', 'pb-lg-3', 'px-lg-4');
+  searchInput.placeholder = 'Start typing...';
+  searchInput.setAttribute('data-path', '/content/svasti/in/en');
+  searchInput.setAttribute('data-limit', '5');
+  searchInput.setAttribute('data-error', '<p><b>Sorry, we cannot find what you are looking for :(</b></p><p>&nbsp;</p><p>Please try a new search term or browse through one of our product categories.</p>');
+  searchFormDiv.append(searchInput);
+  globalSearchFlex.append(searchFormDiv);
+
+  const searchWrapDiv = document.createElement('div');
+  searchWrapDiv.classList.add('d-lg-block', 'align-items-center', 'd-flex');
+  const searchWrapInner = document.createElement('div');
+  searchWrapInner.classList.add('search-wrap', 'd-flex', 'justify-content-center', 'align-items-center');
+  const searchIconImg = document.createElement('img');
+  searchIconImg.alt = 'svg file';
+  searchIconImg.src = '/icons/search.svg'; // Placeholder, replace if icon is in model
+  searchWrapInner.append(searchIconImg);
+  searchWrapDiv.append(searchWrapInner);
+  globalSearchFlex.append(searchWrapDiv);
+
+  const closeOnClickDiv = document.createElement('div');
+  closeOnClickDiv.classList.add('d-flex', 'justify-content-center', 'w-100', 'close-on-click');
+  const globalSearchResponseDiv = document.createElement('div');
+  globalSearchResponseDiv.classList.add('global-search__response', 'd-flex', 'justify-content-start', 'z-4', 'bg-transparent');
+  const globalSearchResultsUl = document.createElement('ul');
+  globalSearchResultsUl.classList.add('global-search__response--results', 'm-0', 'w-100', 'd-none', 'pt-5', 'pb-5', 'px-9');
+  globalSearchResponseDiv.append(globalSearchResultsUl);
+  closeOnClickDiv.append(globalSearchResponseDiv);
+  globalSearchSection.append(closeOnClickDiv);
+
+  // Append global search to the body or a suitable parent, outside the block
+  document.body.append(globalSearchSection);
+
+  // Add event listeners for search functionality
+  searchIconDiv.addEventListener('click', () => {
+    globalSearchSection.classList.remove('d-none');
+    document.body.classList.add('overflow-hidden');
+  });
+
+  crossWrapInner.addEventListener('click', () => {
+    globalSearchSection.classList.add('d-none');
+    document.body.classList.remove('overflow-hidden');
+  });
+
+  globalSearchSection.addEventListener('click', (e) => {
+    if (e.target === globalSearchSection || e.target.closest('.close-on-click')) {
+      globalSearchSection.classList.add('d-none');
+      document.body.classList.remove('overflow-hidden');
+    }
+  });
+
+  // Optimize all images within the block
+  block.querySelectorAll('picture > img').forEach((img) => {
+    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+    moveInstrumentation(img, optimizedPic.querySelector('img'));
+    img.closest('picture').replaceWith(optimizedPic);
+  });
+}

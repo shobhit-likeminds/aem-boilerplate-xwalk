@@ -1,0 +1,365 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  // Destructure the first three rows for logo, logoLink, and logoLinkLabel
+  const [logoRow, logoLinkRow, logoLinkLabelRow, ...navItemRows] = [...block.children];
+
+  const headerComp = document.createElement('section');
+  headerComp.classList.add('header-comp', 'bg-red-100', 'position-fixed', 'top-0', 'start-0', 'z-2', 'w-100');
+
+  const container = document.createElement('div');
+  container.classList.add('container', 'gx-8', 'gx-sm-0', 'd-flex', 'justify-content-between', 'align-items-start', 'align-items-md-center');
+  headerComp.append(container);
+
+  const nav = document.createElement('nav');
+  nav.classList.add('header-nav', 'navbar', 'position-static', 'navbar-expand-lg');
+  container.append(nav);
+
+  const navWrapper = document.createElement('div');
+  navWrapper.classList.add('header-comp__wrapper', 'container-fluid', 'justify-content-start', 'gx-4', 'gx-md-0');
+  nav.append(navWrapper);
+
+  // Hamburger button
+  const toggler = document.createElement('button');
+  toggler.classList.add('border-0', 'shadow-none', 'navbar-toggler', 'header-comp__wrapper--hamburger', 'collapsed', 'p-0');
+  toggler.type = 'button';
+  toggler.setAttribute('aria-controls', 'navbarSupportedContent');
+  toggler.setAttribute('aria-expanded', 'false');
+  toggler.setAttribute('aria-label', 'Toggle navigation');
+  const togglerIcon = document.createElement('span');
+  togglerIcon.classList.add('navbar-toggler-icon', 'd-flex', 'flex-column', 'justify-content-center', 'align-items-center');
+  for (let i = 0; i < 3; i += 1) {
+    const span = document.createElement('span');
+    span.classList.add('d-block', 'bg-white');
+    togglerIcon.append(span);
+  }
+  toggler.append(togglerIcon);
+  navWrapper.append(toggler);
+
+  // Logo
+  const logoDiv = document.createElement('div');
+  logoDiv.classList.add('header-comp__wrapper--logo');
+  const logoLink = document.createElement('a');
+  logoLink.classList.add('header-comp__wrapper--link', 'cta-analytics', 'navbar-brand', 'm-0');
+  logoLink.setAttribute('data-link-region', 'Header');
+  const logoAnchor = logoLinkRow.querySelector('a');
+  if (logoAnchor) {
+    logoLink.href = logoAnchor.href;
+  }
+  logoLink.textContent = logoLinkLabelRow.textContent.trim();
+
+  const logoPicture = logoRow.querySelector('picture');
+  if (logoPicture) {
+    const logoImg = logoPicture.querySelector('img');
+    const optimizedLogo = createOptimizedPicture(logoImg.src, logoImg.alt, true, [{ width: 'auto' }]);
+    optimizedLogo.querySelector('img').classList.add('header-comp__wrapper--image', 'h-100');
+    moveInstrumentation(logoImg, optimizedLogo.querySelector('img'));
+    logoLink.append(optimizedLogo);
+  }
+  moveInstrumentation(logoLinkRow, logoLink);
+  moveInstrumentation(logoLinkLabelRow, logoLink);
+  moveInstrumentation(logoRow, logoDiv);
+  logoDiv.append(logoLink);
+  navWrapper.append(logoDiv);
+
+  // Navigation menus
+  const navCollapse = document.createElement('div');
+  navCollapse.classList.add('header-comp__wrapper--menus', 'collapse', 'navbar-collapse', 'z-3');
+  navCollapse.id = 'navbarSupportedContent';
+  navWrapper.append(navCollapse);
+
+  const navUl = document.createElement('ul');
+  navUl.classList.add('header-comp__wrapper--menus-groups', 'navbar-nav', 'me-auto', 'mb-2', 'mb-lg-0', 'w-100');
+  navCollapse.append(navUl);
+
+  toggler.addEventListener('click', () => {
+    navCollapse.classList.toggle('show');
+    toggler.classList.toggle('collapsed');
+    toggler.setAttribute('aria-expanded', navCollapse.classList.contains('show'));
+  });
+
+  navItemRows.forEach((row) => {
+    // Use content detection for cells in navItemRows
+    const cells = [...row.children];
+    const iconCell = cells.find(cell => cell.querySelector('picture'));
+    const linkCell = cells.find(cell => cell.querySelector('a'));
+    const labelCell = cells.find(cell => cell.textContent.trim() && !cell.querySelector('a') && !cell.querySelector('picture'));
+    const linkLabelCell = cells.find(cell => cell.textContent.trim() && !cell.querySelector('a') && !cell.querySelector('picture') && cell !== labelCell);
+    const subLinksCell = cells.find(cell => cell.querySelector('ul')); // Find cell containing <ul> for subLinks
+
+    const navLi = document.createElement('li');
+    moveInstrumentation(row, navLi);
+    navLi.classList.add('header-comp__wrapper--menu-item', 'h-100', 'd-flex', 'align-items-center', 'nav-item', 'p-4', 'p-lg-0', 'border-bottom-lg-0', 'border-lg-0');
+
+    const subList = subLinksCell?.querySelector('ul');
+
+    if (subList) {
+      navLi.classList.add('dropdown', 'flex-column', 'show-nav', 'position-relative', 'left-division');
+
+      const menuLinkDiv = document.createElement('div');
+      menuLinkDiv.classList.add('header-comp__wrapper--menu-link', 'gap-6', 'gap-lg-1', 'position-relative', 'w-100', 'd-flex', 'align-items-center', 'nav-link', 'px-0', 'dropdown-toggle', 'font-default', 'leading-28', 'leading-lg-26', 'text-header-list', 'text-lg-cream-100');
+      menuLinkDiv.setAttribute('aria-current', 'page');
+      menuLinkDiv.setAttribute('aria-expanded', 'false');
+
+      const iconImg = iconCell?.querySelector('img');
+      if (iconImg) {
+        const iconPic = createOptimizedPicture(iconImg.src, iconImg.alt, false, [{ width: '24' }]);
+        iconPic.querySelector('img').classList.add('header-comp__wrapper--menu-image', 'd-lg-none');
+        menuLinkDiv.append(iconPic);
+        moveInstrumentation(iconCell, iconPic);
+      }
+
+      const innerLink = document.createElement('a');
+      const foundLink = linkCell?.querySelector('a');
+      if (foundLink) {
+        innerLink.href = foundLink.href;
+      }
+      innerLink.classList.add('text-decoration-none', 'cta-analytics', 'header-comp__wrapper--link');
+      innerLink.setAttribute('data-link-region', 'Header');
+      const linkSpan = document.createElement('span');
+      linkSpan.classList.add('link-span');
+      linkSpan.textContent = (linkLabelCell?.textContent.trim() || labelCell?.textContent.trim()) || '';
+      innerLink.append(linkSpan);
+      menuLinkDiv.append(innerLink);
+      moveInstrumentation(labelCell, innerLink);
+      moveInstrumentation(linkCell, innerLink);
+      moveInstrumentation(linkLabelCell, innerLink);
+
+      const toggleDropDown = document.createElement('span');
+      toggleDropDown.classList.add('toggle-drop-down', 'arrow-icon', 'd-flex', 'end-0', 'top-parent');
+      // Original HTML has an img for arrow icon, but it's hardcoded.
+      // If the icon is purely decorative and not from the model, CSS is preferred.
+      // For now, we'll create an empty img with alt text as per original HTML structure.
+      const arrowImg = document.createElement('img');
+      arrowImg.alt = 'svg file';
+      toggleDropDown.append(arrowImg);
+      menuLinkDiv.append(toggleDropDown);
+
+      navLi.append(menuLinkDiv);
+
+      const subMenusDiv = document.createElement('div');
+      subMenusDiv.classList.add('header-comp__sub-menus');
+      const subMenuUl = document.createElement('ul');
+      subMenuUl.classList.add('header-comp__wrapper--sub-menu-group', 'w-auto', 'border-0', 'pb-lg-0', 'dropdown-menu', 'p-0');
+      const subMenuWrapper = document.createElement('div');
+      subMenuWrapper.classList.add('header-comp__sub-menu', 'tri-parent');
+      subMenuUl.append(subMenuWrapper);
+      subMenusDiv.append(subMenuUl);
+
+      // Move subList content (which is a <ul>) into the subMenuWrapper
+      if (subList) {
+        moveInstrumentation(subLinksCell, subList); // Move instrumentation from cell to ul
+        subMenuWrapper.append(subList);
+      }
+
+      navLi.append(subMenusDiv);
+
+      menuLinkDiv.addEventListener('click', (e) => {
+        e.preventDefault();
+        navLi.classList.toggle('show'); // Changed from 'show-nav' to 'show' based on common Bootstrap behavior
+        menuLinkDiv.classList.toggle('collapsed');
+        menuLinkDiv.setAttribute('aria-expanded', navLi.classList.contains('show'));
+      });
+
+      // Transform nested lists within the sub-menu
+      function transformNestedLists(rootUl) {
+        rootUl.querySelectorAll('li').forEach((li) => {
+          const nested = li.querySelector(':scope > ul');
+          if (nested) {
+            nested.remove();
+            li.classList.add('child-below'); // Add class for parent li with nested children
+            const subWrap = document.createElement('div');
+            subWrap.classList.add('inner-childs', 'd-lg-none'); // Classes from original HTML for nested dropdowns
+            subWrap.append(nested);
+            li.append(subWrap);
+
+            // The trigger for nested dropdowns can be the link itself or a wrapper div
+            const trigger = li.querySelector(':scope > .header-comp__wrapper--menu-link') || li.querySelector(':scope > div');
+            if (trigger) {
+              trigger.classList.add('dropdown-toggle');
+              trigger.setAttribute('aria-expanded', 'false');
+
+              const arrowIconRight = document.createElement('span');
+              arrowIconRight.classList.add('arrow-icon-right', 'end-0', 'd-none', 'd-lg-inline');
+              const arrowImgRight = document.createElement('img');
+              arrowImgRight.alt = 'svg file';
+              arrowIconRight.append(arrowImgRight);
+              // Append to the sub-menu link if it exists, otherwise to the trigger itself
+              (trigger.querySelector('.header-comp__wrapper--sub-menu-link') || trigger).append(arrowIconRight);
+
+              const arrowIconMobile = document.createElement('span');
+              arrowIconMobile.classList.add('arrow-icon', 'd-lg-none', 'end-0');
+              const arrowImgMobile = document.createElement('img');
+              arrowImgMobile.alt = 'svg file';
+              arrowIconMobile.append(arrowImgMobile);
+              trigger.append(arrowIconMobile);
+
+              trigger.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation(); // Prevent parent dropdown from closing
+                li.classList.toggle('show'); // Changed from 'show-nav' to 'show'
+                trigger.classList.toggle('collapsed');
+                trigger.setAttribute('aria-expanded', li.classList.contains('show'));
+                subWrap.classList.toggle('d-lg-none'); // Toggle visibility for mobile
+              });
+            }
+          } else {
+            li.classList.add('no-child'); // Add class for li without nested children
+            const linkDiv = li.querySelector(':scope > div'); // The div containing the link
+            if (linkDiv) {
+              linkDiv.classList.remove('dropdown-toggle'); // Remove dropdown class if no sub-menu
+              linkDiv.removeAttribute('aria-expanded');
+              linkDiv.querySelector('.arrow-icon')?.remove(); // Remove arrow icon if no sub-menu
+            }
+          }
+        });
+      }
+      if (subList) {
+        transformNestedLists(subList);
+      }
+
+    } else {
+      // Simple flat link
+      navLi.classList.add('right-division'); // Assuming flat links are right-division based on original HTML
+
+      const menuLinkDiv = document.createElement('div');
+      menuLinkDiv.classList.add('header-comp__wrapper--menu-link', 'gap-6', 'gap-lg-1', 'position-relative', 'w-100', 'd-flex', 'align-items-center', 'nav-link', 'px-0', 'font-default', 'leading-28', 'leading-lg-26', 'text-header-list', 'text-lg-cream-100');
+      menuLinkDiv.setAttribute('aria-current', 'page');
+
+      const iconImg = iconCell?.querySelector('img');
+      if (iconImg) {
+        const iconPic = createOptimizedPicture(iconImg.src, iconImg.alt, false, [{ width: '24' }]);
+        iconPic.querySelector('img').classList.add('header-comp__wrapper--menu-image', 'd-lg-none');
+        menuLinkDiv.append(iconPic);
+        moveInstrumentation(iconCell, iconPic);
+      }
+
+      const anchor = document.createElement('a');
+      const foundLink = linkCell?.querySelector('a');
+      if (foundLink) {
+        anchor.href = foundLink.href;
+      }
+      anchor.classList.add('text-decoration-none', 'cta-analytics', 'header-comp__wrapper--link');
+      anchor.setAttribute('data-link-region', 'Header');
+      const linkSpan = document.createElement('span');
+      linkSpan.classList.add('link-span');
+      linkSpan.textContent = (linkLabelCell?.textContent.trim() || labelCell?.textContent.trim()) || '';
+      anchor.append(linkSpan);
+      menuLinkDiv.append(anchor);
+      moveInstrumentation(labelCell, anchor);
+      moveInstrumentation(linkCell, anchor);
+      moveInstrumentation(linkLabelCell, anchor);
+
+      navLi.append(menuLinkDiv);
+    }
+    navUl.append(navLi);
+  });
+
+  // Search and Access
+  const searchAccessDiv = document.createElement('div');
+  searchAccessDiv.classList.add('header-comp__wrapper--search-access', 'd-flex', 'py-4', 'py-lg-0');
+  container.append(searchAccessDiv);
+
+  const searchDiv = document.createElement('div');
+  searchDiv.classList.add('header-comp__wrapper--search');
+  searchAccessDiv.append(searchDiv);
+
+  const searchIconDiv = document.createElement('div');
+  searchIconDiv.classList.add('header-comp__wrapper--search-icon', 'd-flex', 'flex-column', 'align-items-center', 'font-12', 'leading-20', 'text-white');
+  const searchImg = document.createElement('img');
+  searchImg.alt = 'svg file';
+  // No search icon in block model, so omit src to avoid hardcoding.
+  searchIconDiv.append(searchImg);
+  const searchSpan = document.createElement('span');
+  searchSpan.classList.add('d-none', 'd-lg-block');
+  searchSpan.textContent = 'Search';
+  searchIconDiv.append(searchSpan);
+  searchDiv.append(searchIconDiv);
+
+  const headerOuterBox = document.createElement('div');
+  headerOuterBox.classList.add('header__outer-box', 'position-absolute', 'w-100', 'z-2', 'start-0', 'd-lg-none');
+  headerComp.append(headerOuterBox);
+
+  // Global Search (initially hidden)
+  const globalDiv = document.createElement('div');
+  globalDiv.classList.add('global');
+  const globalSearchSection = document.createElement('section');
+  globalSearchSection.classList.add('global-search', 'position-fixed', 'w-100', 'd-none');
+  globalDiv.append(globalSearchSection);
+
+  const globalSearchWrapper = document.createElement('div');
+  globalSearchWrapper.classList.add('w-100', 'z-4', 'global-search__wrapper', 'pb-md-5', 'pb-lg-6', 'pt-lg-0', 'pt-md-0', 'pt-2', 'pb-2');
+  globalSearchSection.append(globalSearchWrapper);
+
+  const globalSearchFlex = document.createElement('div');
+  globalSearchFlex.classList.add('d-flex', 'justify-content-center', 'h-100');
+  globalSearchWrapper.append(globalSearchFlex);
+
+  const crossWrapDiv = document.createElement('div');
+  crossWrapDiv.classList.add('d-lg-block', 'align-items-center', 'd-flex');
+  const crossWrapInner = document.createElement('div');
+  crossWrapInner.classList.add('cross-wrap', 'd-flex', 'justify-content-center', 'align-items-center');
+  const crossImg = document.createElement('img');
+  crossImg.alt = 'svg file';
+  // No cross icon in block model, so omit src to avoid hardcoding.
+  crossWrapInner.append(crossImg);
+  crossWrapDiv.append(crossWrapInner);
+  globalSearchFlex.append(crossWrapDiv);
+
+  const searchFormDiv = document.createElement('div');
+  searchFormDiv.classList.add('global-search__wrapper--form', 'd-flex', 'align-items-center', 'justify-content-center');
+  const searchInput = document.createElement('input');
+  searchInput.type = 'text';
+  searchInput.classList.add('global-search__wrapper--form-input', 'pb-1', 'pb-md-1', 'pb-lg-3', 'px-lg-4');
+  searchInput.placeholder = 'Start typing...';
+  searchInput.setAttribute('data-path', '/content/svasti/in/en');
+  searchInput.setAttribute('data-limit', '5');
+  searchInput.setAttribute('data-error', '<p><b>Sorry, we cannot find what you are looking for :(</b></p>\n<p>&nbsp;</p>\n<p>Please try a new search term or browse through one of our product categories.</p>\n');
+  searchFormDiv.append(searchInput);
+  globalSearchFlex.append(searchFormDiv);
+
+  const searchWrapDiv = document.createElement('div');
+  searchWrapDiv.classList.add('d-lg-block', 'align-items-center', 'd-flex');
+  const searchWrapInner = document.createElement('div');
+  searchWrapInner.classList.add('search-wrap', 'd-flex', 'justify-content-center', 'align-items-center');
+  const searchIconImg = document.createElement('img');
+  searchIconImg.alt = 'svg file';
+  // No search icon in block model, so omit src to avoid hardcoding.
+  searchWrapInner.append(searchIconImg);
+  searchWrapDiv.append(searchWrapInner);
+  globalSearchFlex.append(searchWrapDiv);
+
+  const responseDiv = document.createElement('div');
+  responseDiv.classList.add('d-flex', 'justify-content-center', 'w-100', 'close-on-click');
+  const resultsDiv = document.createElement('div');
+  resultsDiv.classList.add('global-search__response', 'd-flex', 'justify-content-start', 'z-4', 'bg-transparent');
+  const resultsUl = document.createElement('ul');
+  resultsUl.classList.add('global-search__response--results', 'm-0', 'w-100', 'd-none', 'pt-5', 'pb-5', 'px-9');
+  resultsDiv.append(resultsUl);
+  responseDiv.append(resultsDiv);
+  globalSearchSection.append(responseDiv);
+
+  // Toggle global search visibility
+  searchIconDiv.addEventListener('click', () => {
+    globalSearchSection.classList.toggle('d-none');
+  });
+  crossWrapInner.addEventListener('click', () => {
+    globalSearchSection.classList.add('d-none');
+  });
+  responseDiv.addEventListener('click', (e) => {
+    if (e.target === responseDiv) {
+      globalSearchSection.classList.add('d-none');
+    }
+  });
+
+  block.textContent = '';
+  block.append(headerComp, globalDiv);
+
+  // Image optimization for all pictures in the block
+  block.querySelectorAll('picture > img').forEach((img) => {
+    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+    moveInstrumentation(img, optimizedPic.querySelector('img'));
+    img.closest('picture').replaceWith(optimizedPic);
+  });
+}

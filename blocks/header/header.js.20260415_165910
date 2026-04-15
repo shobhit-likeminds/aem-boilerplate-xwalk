@@ -1,0 +1,405 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  const [logoRow, logoLinkRow, logoLinkLabelRow, ...navItemRows] = [...block.children];
+
+  // Create header section
+  const headerSection = document.createElement('section');
+  headerSection.classList.add('header-comp', 'bg-red-100', 'position-fixed', 'top-0', 'start-0', 'z-2', 'w-100');
+
+  const containerDiv = document.createElement('div');
+  containerDiv.classList.add('container', 'gx-8', 'gx-sm-0', 'd-flex', 'justify-content-between', 'align-items-start', 'align-items-md-center');
+  headerSection.append(containerDiv);
+
+  // Create nav element
+  const nav = document.createElement('nav');
+  nav.classList.add('header-nav', 'navbar', 'position-static', 'navbar-expand-lg');
+  containerDiv.append(nav);
+
+  const navWrapper = document.createElement('div');
+  navWrapper.classList.add('header-comp__wrapper', 'container-fluid', 'justify-content-start', 'gx-4', 'gx-md-0');
+  nav.append(navWrapper);
+
+  // Hamburger button
+  const toggler = document.createElement('button');
+  toggler.classList.add('border-0', 'shadow-none', 'navbar-toggler', 'header-comp__wrapper--hamburger', 'collapsed', 'p-0');
+  toggler.type = 'button';
+  toggler.setAttribute('data-bs-toggle', 'collapse'); // Added from original HTML
+  toggler.setAttribute('data-bs-target', '#navbarSupportedContent'); // Added from original HTML
+  toggler.setAttribute('aria-controls', 'navbarSupportedContent');
+  toggler.setAttribute('aria-expanded', 'false');
+  toggler.setAttribute('aria-label', 'Toggle navigation');
+
+  const togglerIcon = document.createElement('span');
+  togglerIcon.classList.add('navbar-toggler-icon', 'd-flex', 'flex-column', 'justify-content-center', 'align-items-center');
+
+  ['d-block', 'd-block', 'd-block'].forEach((cls) => {
+    const span = document.createElement('span');
+    span.classList.add(cls, 'bg-white');
+    togglerIcon.append(span);
+  });
+  toggler.append(togglerIcon);
+  navWrapper.append(toggler);
+
+  // Logo
+  const logoWrapper = document.createElement('div');
+  logoWrapper.classList.add('header-comp__wrapper--logo');
+
+  const logoLink = document.createElement('a');
+  logoLink.classList.add('header-comp__wrapper--link', 'cta-analytics', 'navbar-brand', 'm-0');
+  logoLink.setAttribute('data-link-region', 'Header');
+  logoLink.href = logoLinkRow.querySelector('a')?.href || '#';
+
+  const logoPicture = logoRow.querySelector('picture');
+  if (logoPicture) {
+    const logoImg = logoPicture.querySelector('img');
+    if (logoImg) {
+      const optimizedPic = createOptimizedPicture(logoImg.src, logoImg.alt, true, [{ width: '100' }]);
+      const img = optimizedPic.querySelector('img');
+      img.classList.add('header-comp__wrapper--image', 'h-100');
+      img.setAttribute('loading', 'eager');
+      moveInstrumentation(logoRow.querySelector('img'), img);
+      logoLink.append(optimizedPic);
+    }
+  }
+  logoWrapper.append(logoLink);
+  navWrapper.append(logoWrapper);
+
+  // Navigation menus
+  const navbarCollapse = document.createElement('div');
+  navbarCollapse.classList.add('header-comp__wrapper--menus', 'collapse', 'navbar-collapse', 'z-3');
+  navbarCollapse.id = 'navbarSupportedContent';
+  navWrapper.append(navbarCollapse);
+
+  const navList = document.createElement('ul');
+  navList.classList.add('header-comp__wrapper--menus-groups', 'navbar-nav', 'me-auto', 'mb-2', 'mb-lg-0', 'w-100');
+  navbarCollapse.append(navList);
+
+  navItemRows.forEach((row, index) => {
+    const cells = [...row.children];
+    // Use content detection instead of index access
+    const iconCell = cells.find(cell => cell.querySelector('picture'));
+    const linkCell = cells.find(cell => cell.querySelector('a') && !cell.querySelector('picture'));
+    const labelCell = cells.find(cell => !cell.querySelector('a') && !cell.querySelector('picture') && cell.textContent.trim() === row.children[1].textContent.trim()); // Assuming label is the second text cell
+    const linkLabelCell = cells.find(cell => !cell.querySelector('a') && !cell.querySelector('picture') && cell.textContent.trim() === row.children[3].textContent.trim()); // Assuming linkLabel is the fourth text cell
+    const subLinksCell = cells.find(cell => cell.querySelector('ul')); // Sub Links cell contains a UL if present
+
+    const li = document.createElement('li');
+    li.classList.add('header-comp__wrapper--menu-item', 'h-100', 'd-flex', 'align-items-center', 'nav-item', 'p-4', 'p-lg-0', 'border-bottom-lg-0', 'border-lg-0');
+    if (index % 2 === 0) {
+      li.classList.add('left-division');
+    } else {
+      li.classList.add('right-division');
+    }
+    li.setAttribute('data-header-item-id', `leftHeaderItem${index}`);
+    moveInstrumentation(row, li);
+
+    const menuLinkDiv = document.createElement('div');
+    menuLinkDiv.classList.add('header-comp__wrapper--menu-link', 'gap-6', 'gap-lg-1', 'position-relative', 'w-100', 'd-flex', 'align-items-center', 'nav-link', 'px-0', 'font-default', 'leading-28', 'leading-lg-26', 'text-header-list', 'text-lg-cream-100');
+
+    if (iconCell) {
+      const iconPicture = iconCell.querySelector('picture');
+      if (iconPicture) {
+        const iconImg = iconPicture.querySelector('img');
+        if (iconImg) {
+          const optimizedIcon = createOptimizedPicture(iconImg.src, iconImg.alt, false, [{ width: '30' }]);
+          const img = optimizedIcon.querySelector('img');
+          img.classList.add('header-comp__wrapper--menu-image', 'd-lg-none');
+          img.setAttribute('loading', 'eager');
+          moveInstrumentation(iconCell.querySelector('img'), img);
+          menuLinkDiv.append(optimizedIcon);
+        }
+      }
+    }
+
+    const anchor = document.createElement('a');
+    anchor.classList.add('text-decoration-none', 'cta-analytics', 'header-comp__wrapper--link');
+    anchor.setAttribute('data-link-region', 'Header');
+    anchor.href = linkCell?.querySelector('a')?.href || '#';
+
+    const spanLink = document.createElement('span');
+    spanLink.classList.add('link-span');
+    spanLink.textContent = linkLabelCell?.textContent.trim() || labelCell?.textContent.trim() || '';
+    anchor.append(spanLink);
+    menuLinkDiv.append(anchor);
+
+    const subList = subLinksCell?.querySelector('ul');
+    if (subList) {
+      li.classList.add('dropdown', 'show-nav', 'flex-column', 'position-relative'); // Added flex-column, position-relative from original HTML
+      menuLinkDiv.classList.add('dropdown-toggle');
+      menuLinkDiv.setAttribute('aria-expanded', 'false');
+
+      const toggleDropDown = document.createElement('span');
+      toggleDropDown.classList.add('toggle-drop-down', 'arrow-icon', 'd-flex', 'end-0', 'top-parent');
+      const toggleIcon = document.createElement('img');
+      toggleIcon.alt = 'svg file';
+      toggleIcon.src = '/icons/arrow-down.svg'; // Placeholder, actual icon from original HTML
+      toggleDropDown.append(toggleIcon);
+      menuLinkDiv.append(toggleDropDown);
+
+      const subMenusDiv = document.createElement('div');
+      subMenusDiv.classList.add('header-comp__sub-menus');
+      subMenusDiv.id = `leftHeaderItem${index}`;
+      subMenusDiv.setAttribute('data-id', `leftHeaderItem${index}`);
+
+      const subMenuXfpage = document.createElement('div'); // Renamed from subMenuWrapper for clarity
+      subMenuXfpage.classList.add('xfpage', 'page', 'basicpage');
+      const subMenuGrid = document.createElement('div');
+      subMenuGrid.classList.add('aem-Grid', 'aem-Grid--12', 'aem-Grid--default--12');
+      const subMenuComp = document.createElement('div');
+      subMenuComp.classList.add('headerSubMenu', 'aem-GridColumn', 'aem-GridColumn--default--12');
+      subMenuGrid.append(subMenuComp);
+      subMenuXfpage.append(subMenuGrid);
+      subMenusDiv.append(subMenuXfpage);
+
+      const subMenuGroup = document.createElement('ul');
+      subMenuGroup.classList.add('header-comp__wrapper--sub-menu-group', 'w-auto', 'border-0', 'pb-lg-0', 'dropdown-menu', 'p-0');
+      const subMenuTriParent = document.createElement('div');
+      subMenuTriParent.classList.add('header-comp__sub-menu', 'tri-parent');
+      subMenuGroup.append(subMenuTriParent);
+
+      // Transform nested lists
+      function transformNestedLists(rootUl) {
+        [...rootUl.children].forEach((subLi, subLiIndex) => { // Iterate over children directly
+          const nestedUl = subLi.querySelector(':scope > ul');
+          const subLiWrapper = document.createElement('li');
+          subLiWrapper.classList.add('header-comp__wrapper--sub-menu-item');
+          subLiWrapper.setAttribute('data-child-id', `subNavItem${subLiIndex}`);
+          moveInstrumentation(subLi, subLiWrapper);
+
+          const subLinkDiv = document.createElement('div');
+          subLinkDiv.classList.add('header-comp__wrapper--menu-link', 'mb-3', 'mb-lg-0', 'gap-4', 'position-relative', 'w-100', 'd-flex', 'align-items-center', 'nav-link', 'px-0', 'font-18', 'leading-24', 'text-header-list', 'text-lg-black');
+          if (nestedUl) {
+            subLiWrapper.classList.add('child-below');
+            subLinkDiv.classList.add('dropdown-toggle');
+            subLinkDiv.setAttribute('aria-expanded', 'false');
+          } else {
+            subLiWrapper.classList.add('no-child');
+          }
+
+          const subLinkInnerDiv = document.createElement('div');
+          subLinkInnerDiv.classList.add('header-comp__wrapper--sub-menu-link', 'dropdown-item', 'p-lg-3', 'mb-lg-3', 'mb-xl-3', 'leading-lg-24', 'leading-xl-24', 'font-default', 'font-lg-18', 'leading-lg-26', 'leading-28', 'ps-0', 'p-0', 'p-lg-3', 'd-inline-block', 'd-lg-flex', 'justify-content-between', 'align-items-center');
+
+          const subAnchor = document.createElement('a');
+          subAnchor.classList.add('text-decoration-none', 'text-dark-gray-100');
+          const subSpan = document.createElement('span');
+          subSpan.classList.add('sub-link-span');
+          subSpan.textContent = subLi.querySelector('a')?.textContent.trim() || subLi.textContent.trim();
+          subAnchor.append(subSpan);
+          // Check if the original <a> had a target="_blank"
+          const originalSubAnchor = subLi.querySelector('a');
+          if (originalSubAnchor && originalSubAnchor.target === '_blank') {
+            subAnchor.target = '_blank';
+            const screenReaderOnlySpan = document.createElement('span');
+            screenReaderOnlySpan.classList.add('cmp-link__screen-reader-only');
+            screenReaderOnlySpan.textContent = 'opens in a new tab';
+            subAnchor.append(screenReaderOnlySpan);
+          }
+          subAnchor.href = originalSubAnchor?.href || '#';
+          subLinkInnerDiv.append(subAnchor);
+
+          if (nestedUl) {
+            const arrowIconRight = document.createElement('span');
+            arrowIconRight.classList.add('arrow-icon-right', 'end-0', 'd-none', 'd-lg-inline');
+            const arrowImgRight = document.createElement('img');
+            arrowImgRight.alt = 'svg file';
+            arrowImgRight.src = '/icons/arrow-right.svg'; // Placeholder, actual icon from original HTML
+            arrowIconRight.append(arrowImgRight);
+            subLinkInnerDiv.append(arrowIconRight);
+
+            const arrowIcon = document.createElement('span');
+            arrowIcon.classList.add('arrow-icon', 'd-lg-none', 'end-0'); // Removed d-lg-none duplicate
+            const arrowImg = document.createElement('img');
+            arrowImg.alt = 'svg file';
+            arrowImg.src = '/icons/arrow-down.svg'; // Placeholder, actual icon from original HTML
+            arrowIcon.append(arrowImg);
+            subLinkDiv.append(arrowIcon);
+          }
+
+          subLinkDiv.append(subLinkInnerDiv);
+          subLiWrapper.append(subLinkDiv);
+
+          if (nestedUl) {
+            // nestedUl.remove(); // Remove the original ul from the current li - this is handled by appending children later
+            const innerChildsDiv = document.createElement('div');
+            innerChildsDiv.classList.add('d-lg-none', 'inner-childs');
+            innerChildsDiv.id = `subNavItem${subLiIndex}`;
+            innerChildsDiv.setAttribute('data-id', `subNavItem${subLiIndex}`);
+
+            const innerChildsXfpage = document.createElement('div');
+            innerChildsXfpage.classList.add('xfpage', 'page', 'basicpage');
+            const innerChildsGrid = document.createElement('div');
+            innerChildsGrid.classList.add('aem-Grid', 'aem-Grid--12', 'aem-Grid--default--12');
+            const innerChildsHeaderSubMenu = document.createElement('div');
+            innerChildsHeaderSubMenu.classList.add('headerSubMenu', 'aem-GridColumn', 'aem-GridColumn--default--12');
+            innerChildsGrid.append(innerChildsHeaderSubMenu);
+            innerChildsXfpage.append(innerChildsGrid);
+            innerChildsDiv.append(innerChildsXfpage);
+
+            const innerChildsUl = document.createElement('ul');
+            innerChildsUl.classList.add('header-comp__wrapper--sub-menu-group', 'w-auto', 'border-0', 'pb-lg-0', 'dropdown-menu', 'p-0');
+            const innerChildsTriParent = document.createElement('div');
+            innerChildsTriParent.classList.add('header-comp__sub-menu', 'tri-parent');
+            innerChildsUl.append(innerChildsTriParent);
+            innerChildsHeaderSubMenu.append(innerChildsUl);
+
+            // Recursively transform nested lists
+            transformNestedLists(nestedUl);
+            innerChildsTriParent.append(...nestedUl.children); // Append transformed children
+            subLiWrapper.append(innerChildsDiv);
+
+            // Add event listener for toggling dropdown
+            subLinkDiv.addEventListener('click', (e) => {
+              e.preventDefault();
+              e.stopPropagation(); // Prevents parent accordion from also toggling
+              subLiWrapper.classList.toggle('active');
+              innerChildsDiv.classList.toggle('active'); // Use 'active' class for visibility
+            });
+          }
+          subMenuTriParent.append(subLiWrapper);
+        });
+      }
+
+      transformNestedLists(subList); // Start transformation from the root subList
+      subMenuComp.append(subMenuGroup);
+
+      const borderSection = document.createElement('div');
+      borderSection.classList.add('borderr-section', 'd-none', 'd-lg-flex', 'd-xl-flex', 'align-items-end', 'position-absolute', 'no-prod');
+      borderSection.id = 'borderSec';
+      const borderBg = document.createElement('div');
+      borderBg.classList.add('border-bg');
+      borderSection.append(borderBg);
+      subMenuGroup.append(borderSection);
+
+      li.append(menuLinkDiv);
+      li.append(subMenusDiv);
+
+      // Add event listener for toggling main dropdown
+      menuLinkDiv.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        li.classList.toggle('show-nav');
+        subMenusDiv.classList.toggle('show'); // Use 'show' class for Bootstrap-like dropdown
+      });
+    } else {
+      // Simple flat link
+      li.append(menuLinkDiv);
+    }
+    navList.append(li);
+  });
+
+  // Search and access
+  const searchAccessDiv = document.createElement('div');
+  searchAccessDiv.classList.add('header-comp__wrapper--search-access', 'd-flex', 'py-4', 'py-lg-0');
+  containerDiv.append(searchAccessDiv);
+
+  const searchDiv = document.createElement('div');
+  searchDiv.classList.add('header-comp__wrapper--search');
+  searchAccessDiv.append(searchDiv);
+
+  const searchIconDiv = document.createElement('div');
+  searchIconDiv.classList.add('header-comp__wrapper--search-icon', 'd-flex', 'flex-column', 'align-items-center', 'font-12', 'leading-20', 'text-white');
+  const searchIconImg = document.createElement('img');
+  searchIconImg.alt = 'svg file';
+  searchIconImg.src = '/icons/search.svg'; // Placeholder, actual icon from original HTML
+  searchIconDiv.append(searchIconImg);
+  const searchSpan = document.createElement('span');
+  searchSpan.classList.add('d-none', 'd-lg-block');
+  searchSpan.textContent = 'Search';
+  searchIconDiv.append(searchSpan);
+  searchDiv.append(searchIconDiv);
+
+  const outerBoxDiv = document.createElement('div');
+  outerBoxDiv.classList.add('header__outer-box', 'position-absolute', 'w-100', 'z-2', 'start-0', 'd-lg-none');
+  headerSection.append(outerBoxDiv);
+
+  // Global search (initially hidden)
+  const globalDiv = document.createElement('div');
+  globalDiv.classList.add('global');
+  headerSection.append(globalDiv);
+
+  const globalSearchSection = document.createElement('section');
+  globalSearchSection.classList.add('global-search', 'position-fixed', 'w-100', 'd-none');
+  globalDiv.append(globalSearchSection);
+
+  const globalSearchWrapper = document.createElement('div');
+  globalSearchWrapper.classList.add('w-100', 'z-4', 'global-search__wrapper', 'pb-md-5', 'pb-lg-6', 'pt-lg-0', 'pt-md-0', 'pt-2', 'pb-2');
+  globalSearchSection.append(globalSearchWrapper);
+
+  const globalSearchFlex = document.createElement('div');
+  globalSearchFlex.classList.add('d-flex', 'justify-content-center', 'h-100');
+  globalSearchWrapper.append(globalSearchFlex);
+
+  const crossWrapDiv = document.createElement('div');
+  crossWrapDiv.classList.add('d-lg-block', 'align-items-center', 'd-flex');
+  const crossWrapInner = document.createElement('div');
+  crossWrapInner.classList.add('cross-wrap', 'd-flex', 'justify-content-center', 'align-items-center');
+  const crossImg = document.createElement('img');
+  crossImg.alt = 'svg file';
+  crossImg.src = '/icons/cross.svg'; // Placeholder, actual icon from original HTML
+  crossWrapInner.append(crossImg);
+  crossWrapDiv.append(crossWrapInner);
+  globalSearchFlex.append(crossWrapDiv);
+
+  const searchFormDiv = document.createElement('div');
+  searchFormDiv.classList.add('global-search__wrapper--form', 'd-flex', 'align-items-center', 'justify-content-center');
+  const searchInput = document.createElement('input');
+  searchInput.type = 'text';
+  searchInput.classList.add('global-search__wrapper--form-input', 'pb-1', 'pb-md-1', 'pb-lg-3', 'px-lg-4');
+  searchInput.placeholder = 'Start typing...';
+  searchInput.setAttribute('data-path', '/content/svasti/in/en');
+  searchInput.setAttribute('data-limit', '5');
+  searchInput.setAttribute('data-error', '<p><b>Sorry, we cannot find what you are looking for :(</b></p><p>&nbsp;</p><p>Please try a new search term or browse through one of our product categories.</p>');
+  searchFormDiv.append(searchInput);
+  globalSearchFlex.append(searchFormDiv);
+
+  const searchWrapDiv = document.createElement('div');
+  searchWrapDiv.classList.add('d-lg-block', 'align-items-center', 'd-flex');
+  const searchWrapInner = document.createElement('div');
+  searchWrapInner.classList.add('search-wrap', 'd-flex', 'justify-content-center', 'align-items-center');
+  const searchWrapImg = document.createElement('img');
+  searchWrapImg.alt = 'svg file';
+  searchWrapImg.src = '/icons/search.svg'; // Placeholder, actual icon from original HTML
+  searchWrapInner.append(searchWrapImg);
+  searchWrapDiv.append(searchWrapInner);
+  globalSearchFlex.append(searchWrapDiv);
+
+  const globalSearchResponseDiv = document.createElement('div');
+  globalSearchResponseDiv.classList.add('d-flex', 'justify-content-center', 'w-100', 'close-on-click');
+  globalSearchSection.append(globalSearchResponseDiv);
+
+  const globalSearchResponseInner = document.createElement('div');
+  globalSearchResponseInner.classList.add('global-search__response', 'd-flex', 'justify-content-start', 'z-4', 'bg-transparent');
+  const globalSearchResultsUl = document.createElement('ul');
+  globalSearchResultsUl.classList.add('global-search__response--results', 'm-0', 'w-100', 'd-none', 'pt-5', 'pb-5', 'px-9');
+  globalSearchResponseInner.append(globalSearchResultsUl);
+  globalSearchResponseDiv.append(globalSearchResponseInner);
+
+  // Event listeners for toggle behavior
+  toggler.addEventListener('click', () => {
+    navbarCollapse.classList.toggle('show');
+    toggler.classList.toggle('collapsed');
+    toggler.setAttribute('aria-expanded', navbarCollapse.classList.contains('show'));
+  });
+
+  searchIconDiv.addEventListener('click', () => {
+    globalSearchSection.classList.toggle('d-none');
+    globalSearchSection.classList.toggle('d-block');
+  });
+
+  crossWrapInner.addEventListener('click', () => {
+    globalSearchSection.classList.add('d-none');
+    globalSearchSection.classList.remove('d-block');
+  });
+
+  block.textContent = '';
+  block.append(headerSection);
+
+  // Image optimization for all pictures within the block
+  block.querySelectorAll('picture > img').forEach((img) => {
+    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+    moveInstrumentation(img, optimizedPic.querySelector('img'));
+    img.closest('picture').replaceWith(optimizedPic);
+  });
+}

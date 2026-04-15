@@ -15,7 +15,25 @@
       "hero",
       "cards",
       "columns",
-      "fragment"
+      "fragment",
+      "header",
+      "banner-section",
+      "footer-list",
+      "product-selection-component",
+      "card-carousel",
+      "header-comp",
+      "stay-social",
+      "scroll-to-top",
+      "footer"
+    ]
+  },
+  {
+    "id": "banner-section"
+  },
+  {
+    "id": "card-carousel",
+    "components": [
+      "product-card"
     ]
   },
   {
@@ -37,6 +55,45 @@
       "image",
       "button",
       "title"
+    ]
+  },
+  {
+    "id": "footer-list",
+    "components": [
+      "footer-list-item"
+    ]
+  },
+  {
+    "id": "footer",
+    "components": [
+      "footer-section"
+    ]
+  },
+  {
+    "id": "header-comp",
+    "components": [
+      "nav-item"
+    ]
+  },
+  {
+    "id": "header",
+    "components": [
+      "nav-item"
+    ]
+  },
+  {
+    "id": "product-selection-component",
+    "components": [
+      "product"
+    ]
+  },
+  {
+    "id": "scroll-to-top"
+  },
+  {
+    "id": "stay-social",
+    "components": [
+      "stay-social-card"
     ]
   }
 ]
