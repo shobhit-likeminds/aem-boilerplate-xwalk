@@ -2,114 +2,129 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const [logoRow, ...sectionRows] = [...block.children];
-
-  block.textContent = '';
-
-  const footerWrapper = document.createElement('section');
-  footerWrapper.classList.add('footer-wrp');
+  const footerWrp = document.createElement('section');
+  footerWrp.classList.add('footer-wrp');
 
   const container = document.createElement('div');
   container.classList.add('container-1600-wrp');
+  footerWrp.append(container);
 
-  // Mobile Logo Wrapper
+  const [logoRow, ...sectionRows] = [...block.children];
+
+  // Logo
   const mobLogoWr = document.createElement('div');
   mobLogoWr.classList.add('mob-logo-wr');
   const logoPicture = logoRow.querySelector('picture');
   if (logoPicture) {
     const img = logoPicture.querySelector('img');
-    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-    moveInstrumentation(img, optimizedPic.querySelector('img'));
-    mobLogoWr.append(optimizedPic);
+    if (img) {
+      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+      moveInstrumentation(img, optimizedPic.querySelector('img'));
+      mobLogoWr.append(optimizedPic);
+      optimizedPic.querySelector('img').classList.add('img-fluid');
+    }
   }
   moveInstrumentation(logoRow, mobLogoWr);
   container.append(mobLogoWr);
 
-  // Main footer sections
-  const row1 = document.createElement('div');
-  row1.classList.add('row', 'f1');
+  // Section Links
+  const f1Row = document.createElement('div');
+  f1Row.classList.add('row', 'f1');
+  container.append(f1Row);
 
   sectionRows.forEach((row) => {
-    // Use content detection instead of direct index access for robustness
-    const cells = [...row.children];
-    const titleCell = cells.find(cell => !cell.querySelector('ul') && !cell.querySelector('a')); // Assuming title is plain text
-    const sectionLinksCell = cells.find(cell => cell.querySelector('ul') || cell.querySelector('p') || cell.querySelector('a')); // Section links can be ul, p, or direct link
+    // CRITICAL FIX: Replaced row.children[0] with row.querySelector('div')
+    const sectionLinksCell = row.querySelector('div'); // Only one cell per row for sectionLinks
+    if (sectionLinksCell) {
+      const col = document.createElement('div');
+      col.classList.add('col', 'col-xl-3');
+      moveInstrumentation(row, col);
 
-    const col = document.createElement('div');
-    col.classList.add('col', 'col-xl-3');
-    moveInstrumentation(row, col);
+      const ul = sectionLinksCell.querySelector('ul');
+      if (ul) {
+        // This is an accordion / dropdown section
+        const titleLink = ul.previousElementSibling; // Assuming title is a sibling <p> or <a> before <ul>
+        const titleText = titleLink ? titleLink.textContent.trim() : 'Section Title';
 
-    const sectionLinksUl = sectionLinksCell?.querySelector('ul');
-    const titleText = titleCell?.textContent.trim() || '';
+        const ttle = document.createElement('a');
+        ttle.href = 'javascript:void(0)';
+        ttle.classList.add('ttle', 'accordion_head2');
+        ttle.innerHTML = `${titleText} <span class="plusminus2">+</span>`;
+        col.append(ttle);
 
-    if (sectionLinksUl) {
-      // This is an accordion/dropdown section
-      const accordionHead = document.createElement('a');
-      accordionHead.href = 'javascript:void(0)';
-      accordionHead.classList.add('ttle', 'accordion_head2');
-      accordionHead.textContent = titleText;
+        const ftrSubLinksCvr = document.createElement('div');
+        ftrSubLinksCvr.classList.add('ftr-sub-links-cvr', 'accordion_body2');
+        ftrSubLinksCvr.append(ul); // Move the authored ul into the new wrapper
+        col.append(ftrSubLinksCvr);
 
-      const plusMinusSpan = document.createElement('span');
-      plusMinusSpan.classList.add('plusminus2');
-      plusMinusSpan.textContent = '+';
-      accordionHead.append(plusMinusSpan);
+        // Add accordion functionality
+        ttle.addEventListener('click', (e) => {
+          e.preventDefault();
+          ftrSubLinksCvr.classList.toggle('active'); // Use 'active' class for toggling
+          ttle.classList.toggle('active');
+          const plusminus = ttle.querySelector('.plusminus2');
+          if (plusminus) {
+            plusminus.textContent = ftrSubLinksCvr.classList.contains('active') ? '-' : '+';
+          }
+        });
 
-      const ftrSubLinksCvr = document.createElement('div');
-      ftrSubLinksCvr.classList.add('ftr-sub-links-cvr', 'accordion_body2');
-      ftrSubLinksCvr.append(sectionLinksUl);
+        // Transform nested lists within this section
+        ul.querySelectorAll('li').forEach(li => {
+          const nestedUl = li.querySelector(':scope > ul');
+          if (nestedUl) {
+            nestedUl.remove();
+            const subWrap = document.createElement('div');
+            subWrap.classList.add('has-sub-child'); // Class from original HTML if available, otherwise generic
+            subWrap.append(nestedUl);
+            li.append(subWrap);
 
-      // Add event listener for accordion behavior
-      accordionHead.addEventListener('click', (e) => {
-        e.preventDefault();
-        accordionHead.classList.toggle('active');
-        ftrSubLinksCvr.classList.toggle('active');
-        plusMinusSpan.textContent = ftrSubLinksCvr.classList.contains('active') ? '-' : '+';
-      });
+            const trigger = li.querySelector(':scope > a') || li;
+            trigger.addEventListener('click', (e) => {
+              e.preventDefault();
+              e.stopPropagation(); // Prevents parent accordion from also toggling
+              li.classList.toggle('active');
+              subWrap.classList.toggle('active');
+            });
+          }
+        });
 
-      col.append(accordionHead, ftrSubLinksCvr);
-    } else {
-      // This is a simple link section (no dropdown) or a flat title
-      const linkInTitleCell = titleCell?.querySelector('a');
-      const linkInSectionLinksCell = sectionLinksCell?.querySelector('a');
-      const ttle = document.createElement('a');
-      ttle.classList.add('ttle');
+        // Apply ftr-link class to all direct <a> children of the ul
+        ul.querySelectorAll(':scope > li > a').forEach(a => {
+          a.classList.add('ftr-link');
+        });
 
-      if (linkInTitleCell) {
-        ttle.href = linkInTitleCell.href;
-        ttle.textContent = linkInTitleCell.textContent.trim();
-      } else if (linkInSectionLinksCell) {
-        // If sectionLinksCell contains a single link directly, use that.
-        ttle.href = linkInSectionLinksCell.href;
-        ttle.textContent = titleText || linkInSectionLinksCell.textContent.trim();
       } else {
-        // If title cell is just text, and no link in sectionLinks, it's a flat title.
-        // The original HTML suggests these are also links, so we'll make it a dummy link.
-        ttle.href = '#'; // Fallback if no link is found
-        ttle.textContent = titleText;
+        // Simple links (no dropdown)
+        const links = sectionLinksCell.querySelectorAll('a');
+        links.forEach(link => {
+          const newLink = document.createElement('a');
+          newLink.href = link.href;
+          newLink.textContent = link.textContent.trim();
+          newLink.classList.add('ttle'); // Apply ttle class for simple links
+          col.append(newLink);
+        });
       }
-      col.append(ttle);
+      f1Row.append(col);
     }
-    row1.append(col);
   });
-  container.append(row1);
 
-  // Hardcoded Social Media and Copyright sections from original HTML
-  // These are not dynamic in the EDS model, so they are reproduced directly.
-  const row2 = document.createElement('div');
-  row2.classList.add('row', 'f2', 'justify-content-between');
+  // Social Media Section (hardcoded as per original HTML structure, assuming no model field for this)
+  const f2Row = document.createElement('div');
+  f2Row.classList.add('row', 'f2', 'justify-content-between');
+  container.append(f2Row);
 
   const socialCol = document.createElement('div');
   socialCol.classList.add('col', 'col-xl-2', 'ftr-drop-wrp');
+  f2Row.append(socialCol);
+
   const socialTitle = document.createElement('p');
   socialTitle.classList.add('ttle', 'accordion_head2');
-  socialTitle.textContent = 'Social Media ';
-  const socialPlusMinus = document.createElement('span');
-  socialPlusMinus.classList.add('plusminus2');
-  socialPlusMinus.textContent = '+';
-  socialTitle.append(socialPlusMinus);
+  socialTitle.innerHTML = 'Social Media <span class="plusminus2">+</span>';
+  socialCol.append(socialTitle);
 
   const socialLinksCvr = document.createElement('div');
   socialLinksCvr.classList.add('ftr-sub-links-cvr', 'accordion_body2', 'socialIcons');
+  socialCol.append(socialLinksCvr);
 
   const socialLinks = [
     { href: 'https://www.facebook.com/TataMotorsGroup/', iconClass: 'fab fa-facebook-square' },
@@ -130,41 +145,46 @@ export default function decorate(block) {
     socialLinksCvr.append(a);
   });
 
+  // Add accordion functionality for social media
   socialTitle.addEventListener('click', (e) => {
     e.preventDefault();
-    socialTitle.classList.toggle('active');
     socialLinksCvr.classList.toggle('active');
-    socialPlusMinus.textContent = socialLinksCvr.classList.contains('active') ? '-' : '+';
+    socialTitle.classList.toggle('active');
+    const plusminus = socialTitle.querySelector('.plusminus2');
+    if (plusminus) {
+      plusminus.textContent = socialLinksCvr.classList.contains('active') ? '-' : '+';
+    }
   });
 
-  socialCol.append(socialTitle, socialLinksCvr);
-  row2.append(socialCol);
-  container.append(row2);
 
-
-  const row3 = document.createElement('div');
-  row3.classList.add('row', 'mt25', 'f3');
+  // Legal Disclaimer and Copyright Section
+  const f3Row = document.createElement('div');
+  f3Row.classList.add('row', 'mt25', 'f3');
+  container.append(f3Row);
 
   const legalCol = document.createElement('div');
   legalCol.classList.add('col-12', 'col-md-6');
-  const legalDisclaimer = document.createElement('a');
-  legalDisclaimer.href = 'https://www.tatamotors.com/legal-disclaimer';
-  legalDisclaimer.textContent = 'Legal Disclaimer';
-  const openSource = document.createElement('a');
-  openSource.href = 'https://www.tatamotors.com/open-source-license-disclosure';
-  openSource.textContent = 'Open Source License Disclosure';
-  legalCol.append(legalDisclaimer, openSource);
+  f3Row.append(legalCol);
+
+  const legalDisclaimerLink = document.createElement('a');
+  legalDisclaimerLink.href = 'https://www.tatamotors.com/legal-disclaimer';
+  legalDisclaimerLink.textContent = 'Legal Disclaimer';
+  legalCol.append(legalDisclaimerLink);
+
+  const openSourceLink = document.createElement('a');
+  openSourceLink.href = 'https://www.tatamotors.com/open-source-license-disclosure';
+  openSourceLink.textContent = 'Open Source License Disclosure';
+  legalCol.append(openSourceLink);
 
   const copyrightCol = document.createElement('div');
   copyrightCol.classList.add('col-12', 'col-md-6');
-  const copyrightText = document.createElement('p');
-  copyrightText.classList.add('copy-txt', 'text-md-end');
-  copyrightText.textContent = ' © Copyright 2026. All rights reserved. Tata Motors Limited.';
-  copyrightCol.append(copyrightText);
+  f3Row.append(copyrightCol);
 
-  row3.append(legalCol, copyrightCol);
-  container.append(row3);
+  const copyrightP = document.createElement('p');
+  copyrightP.classList.add('copy-txt', 'text-md-end');
+  copyrightP.innerHTML = '© Copyright 2026. All rights reserved. Tata Motors Limited.';
+  copyrightCol.append(copyrightP);
 
-  footerWrapper.append(container);
-  block.append(footerWrapper);
+  block.textContent = '';
+  block.append(footerWrp);
 }

@@ -292,19 +292,13 @@
         "component": "container",
         "item": "footer-section",
         "label": "Footer Sections",
-        "name": "footerSections"
+        "name": "sections"
       }
     ]
   },
   {
     "id": "footer-section",
     "fields": [
-      {
-        "component": "text",
-        "label": "Title",
-        "name": "title",
-        "valueType": "string"
-      },
       {
         "component": "richtext",
         "label": "Section Links",
@@ -492,20 +486,22 @@
       {
         "component": "reference",
         "label": "Image",
-        "name": "image",
-        "valueType": "string"
+        "name": "image"
       },
       {
         "component": "text",
-        "label": "Sub Title",
-        "name": "subTitle",
-        "valueType": "string"
+        "label": "Image Alt",
+        "name": "imageAlt"
+      },
+      {
+        "component": "text",
+        "label": "Subtitle",
+        "name": "subtitle"
       },
       {
         "component": "text",
         "label": "Heading",
-        "name": "heading",
-        "valueType": "string"
+        "name": "heading"
       },
       {
         "component": "aem-content",
@@ -585,19 +581,12 @@
       {
         "component": "reference",
         "label": "Background Image",
-        "name": "backgroundImage",
-        "valueType": "string"
+        "name": "backgroundImage"
       },
       {
         "component": "text",
-        "label": "Background Image Alt Text",
-        "name": "backgroundImageAlt",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Subtitle",
-        "name": "subtitle",
+        "label": "Sub Title",
+        "name": "subTitle",
         "valueType": "string"
       },
       {
@@ -620,7 +609,7 @@
       },
       {
         "component": "text",
-        "label": "CTA Label",
+        "label": "CTA Link Label",
         "name": "ctaLinkLabel",
         "valueType": "string"
       }
@@ -769,38 +758,45 @@
       },
       {
         "component": "text",
-        "label": "Image Alt",
-        "name": "imageAlt"
+        "label": "Alt Text",
+        "name": "altText",
+        "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Sub Title",
-        "name": "subTitle"
+        "label": "Subtitle",
+        "name": "subtitle",
+        "valueType": "string"
       },
       {
         "component": "text",
         "label": "Title",
-        "name": "title"
+        "name": "title",
+        "valueType": "string"
       },
       {
         "component": "text",
         "label": "Name",
-        "name": "name"
+        "name": "name",
+        "valueType": "string"
       },
       {
-        "component": "text",
-        "label": "Designation",
-        "name": "designation"
+        "component": "richtext",
+        "label": "Description",
+        "name": "description",
+        "valueType": "string"
       },
       {
         "component": "aem-content",
         "label": "CTA Link",
-        "name": "ctaLink"
+        "name": "ctaLink",
+        "valueType": "string"
       },
       {
         "component": "text",
-        "label": "CTA Label",
-        "name": "ctaLinkLabel"
+        "label": "CTA Link Label",
+        "name": "ctaLinkLabel",
+        "valueType": "string"
       }
     ]
   },
@@ -1095,14 +1091,12 @@
       {
         "component": "reference",
         "label": "Dot Right Image",
-        "name": "dotRightImage",
-        "valueType": "string"
+        "name": "dotRightImage"
       },
       {
         "component": "reference",
         "label": "Dot Left Image",
-        "name": "dotLeftImage",
-        "valueType": "string"
+        "name": "dotLeftImage"
       },
       {
         "component": "text",
@@ -1129,9 +1123,8 @@
     "fields": [
       {
         "component": "reference",
-        "label": "Logo Image",
-        "name": "logoImage",
-        "valueType": "string"
+        "label": "Logo",
+        "name": "logo"
       },
       {
         "component": "text",

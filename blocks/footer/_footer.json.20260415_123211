@@ -45,13 +45,19 @@
           "component": "container",
           "item": "footer-section",
           "label": "Footer Sections",
-          "name": "sections"
+          "name": "footerSections"
         }
       ]
     },
     {
       "id": "footer-section",
       "fields": [
+        {
+          "component": "text",
+          "label": "Title",
+          "name": "title",
+          "valueType": "string"
+        },
         {
           "component": "richtext",
           "label": "Section Links",

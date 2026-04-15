@@ -1,31 +1,31 @@
 {
   "definitions": [
     {
-      "title": "Systems-in-Motion",
-      "id": "systems-in-motion",
+      "title": "Hm-Eng-For-Evol",
+      "id": "hm-eng-for-evol",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block",
             "template": {
-              "filter": "systems-in-motion",
-              "model": "systems-in-motion",
-              "name": "Systems-in-Motion"
+              "filter": "hm-eng-for-evol",
+              "model": "hm-eng-for-evol",
+              "name": "Hm-Eng-For-Evol"
             }
           }
         }
       }
     },
     {
-      "title": "Motion Card",
-      "id": "motion-card",
+      "title": "Evolution-Blurb",
+      "id": "evolution-blurb",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "motion-card",
-              "name": "Motion Card"
+              "model": "evolution-blurb",
+              "name": "Evolution-Blurb"
             }
           }
         }
@@ -34,18 +34,8 @@
   ],
   "models": [
     {
-      "id": "systems-in-motion",
+      "id": "hm-eng-for-evol",
       "fields": [
-        {
-          "component": "reference",
-          "label": "Dot Right Image",
-          "name": "dotRightImage"
-        },
-        {
-          "component": "reference",
-          "label": "Dot Left Image",
-          "name": "dotLeftImage"
-        },
         {
           "component": "text",
           "label": "Heading",
@@ -60,19 +50,20 @@
         },
         {
           "component": "container",
-          "item": "motion-card",
-          "label": "Motion Cards",
-          "name": "motionCards"
+          "item": "evolution-blurb",
+          "label": "Blurbs",
+          "name": "blurbs"
         }
       ]
     },
     {
-      "id": "motion-card",
+      "id": "evolution-blurb",
       "fields": [
         {
           "component": "reference",
-          "label": "Logo",
-          "name": "logo"
+          "label": "Image",
+          "name": "image",
+          "valueType": "string"
         },
         {
           "component": "text",
@@ -94,7 +85,7 @@
         },
         {
           "component": "text",
-          "label": "CTA Link Label",
+          "label": "CTA Label",
           "name": "ctaLinkLabel",
           "valueType": "string"
         }
@@ -103,9 +94,9 @@
   ],
   "filters": [
     {
-      "id": "systems-in-motion",
+      "id": "hm-eng-for-evol",
       "components": [
-        "motion-card"
+        "evolution-blurb"
       ]
     }
   ]

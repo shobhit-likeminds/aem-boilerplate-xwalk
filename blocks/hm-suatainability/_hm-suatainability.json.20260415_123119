@@ -24,12 +24,19 @@
         {
           "component": "reference",
           "label": "Background Image",
-          "name": "backgroundImage"
+          "name": "backgroundImage",
+          "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Sub Title",
-          "name": "subTitle",
+          "label": "Background Image Alt Text",
+          "name": "backgroundImageAlt",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Subtitle",
+          "name": "subtitle",
           "valueType": "string"
         },
         {
@@ -52,7 +59,7 @@
         },
         {
           "component": "text",
-          "label": "CTA Link Label",
+          "label": "CTA Label",
           "name": "ctaLinkLabel",
           "valueType": "string"
         }

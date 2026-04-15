@@ -24,20 +24,22 @@
         {
           "component": "reference",
           "label": "Image",
-          "name": "image",
-          "valueType": "string"
+          "name": "image"
         },
         {
           "component": "text",
-          "label": "Sub Title",
-          "name": "subTitle",
-          "valueType": "string"
+          "label": "Image Alt",
+          "name": "imageAlt"
+        },
+        {
+          "component": "text",
+          "label": "Subtitle",
+          "name": "subtitle"
         },
         {
           "component": "text",
           "label": "Heading",
-          "name": "heading",
-          "valueType": "string"
+          "name": "heading"
         },
         {
           "component": "aem-content",

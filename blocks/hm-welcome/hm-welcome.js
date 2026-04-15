@@ -2,75 +2,73 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const [
-    dotRightImageRow,
-    dotLeftImageRow,
-    headingRow,
-    descriptionRow,
-  ] = [...block.children];
-
-  block.classList.add('hm-welcome');
+  // Use content detection instead of fixed index access for rows that might vary
+  const rows = [...block.children];
 
   // Dot Right Image
+  const dotRightImageRow = rows.find((row) => row.querySelector('picture') && row.textContent.includes('Dot Right Image'));
   const dotRightDiv = document.createElement('div');
   dotRightDiv.classList.add('dot-right');
-  const dotRightPicture = dotRightImageRow.querySelector('picture');
-  if (dotRightPicture) {
-    const img = dotRightPicture.querySelector('img');
-    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '267' }]);
-    moveInstrumentation(img, optimizedPic.querySelector('img'));
-    dotRightDiv.append(optimizedPic);
+  if (dotRightImageRow) {
+    const dotRightPicture = dotRightImageRow.querySelector('picture');
+    if (dotRightPicture) {
+      const img = dotRightPicture.querySelector('img');
+      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '267' }]);
+      moveInstrumentation(img, optimizedPic.querySelector('img'));
+      dotRightDiv.append(optimizedPic);
+    }
+    moveInstrumentation(dotRightImageRow, dotRightDiv);
   }
-  moveInstrumentation(dotRightImageRow, dotRightDiv);
-  block.append(dotRightDiv);
 
   // Dot Left Image
+  const dotLeftImageRow = rows.find((row) => row.querySelector('picture') && row.textContent.includes('Dot Left Image'));
   const dotLeftDiv = document.createElement('div');
   dotLeftDiv.classList.add('dot-left');
-  const dotLeftPicture = dotLeftImageRow.querySelector('picture');
-  if (dotLeftPicture) {
-    const img = dotLeftPicture.querySelector('img');
-    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '267' }]);
-    moveInstrumentation(img, optimizedPic.querySelector('img'));
-    dotLeftDiv.append(optimizedPic);
+  if (dotLeftImageRow) {
+    const dotLeftPicture = dotLeftImageRow.querySelector('picture');
+    if (dotLeftPicture) {
+      const img = dotLeftPicture.querySelector('img');
+      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '267' }]);
+      moveInstrumentation(img, optimizedPic.querySelector('img'));
+      dotLeftDiv.append(optimizedPic);
+    }
+    moveInstrumentation(dotLeftImageRow, dotLeftDiv);
   }
-  moveInstrumentation(dotLeftImageRow, dotLeftDiv);
-  block.append(dotLeftDiv);
 
-  // Content Wrapper
-  const containerWrapper = document.createElement('div');
-  containerWrapper.classList.add('container-1600-wrp', 'intro-para', 'wow', 'animate__', 'animate__fadeInUp', 'animated');
-  containerWrapper.style.visibility = 'visible'; // This is from original HTML, but for animation, it's usually handled by JS. Keep it for exact replication.
-  containerWrapper.style.animationName = 'fadeInUp';
+  // Heading and Description rows can be safely accessed by index if they are guaranteed to be in order
+  // after the image rows are potentially filtered out, or better, use content detection for all.
+  // For this specific block, the model implies a fixed order after the images, so we can use a more robust approach:
+  const headingRow = rows.find((row) => !row.querySelector('picture') && row.textContent.trim() === 'Heading label text');
+  const descriptionRow = rows.find((row) => !row.querySelector('picture') && row.innerHTML.includes('Description text content'));
 
-  const contentDiv = document.createElement('div');
-  contentDiv.classList.add('hm-welcome-con');
+
+  // Content container
+  const contentContainer = document.createElement('div');
+  contentContainer.classList.add('container-1600-wrp', 'intro-para', 'wow', 'animate__', 'animate__fadeInUp', 'animated');
+
+  const hmWelcomeCon = document.createElement('div');
+  hmWelcomeCon.classList.add('hm-welcome-con');
 
   // Heading
-  const headingCell = headingRow.firstElementChild;
-  if (headingCell && headingCell.textContent.trim()) {
-    const heading = document.createElement('h2');
-    heading.classList.add('common-ttle');
-    heading.textContent = headingCell.textContent.trim();
+  const heading = document.createElement('h2');
+  heading.classList.add('common-ttle');
+  if (headingRow) {
+    heading.textContent = headingRow.textContent.trim();
     moveInstrumentation(headingRow, heading);
-    contentDiv.append(heading);
   }
+  hmWelcomeCon.append(heading);
 
   // Description
-  const descriptionCell = descriptionRow.firstElementChild;
-  if (descriptionCell && descriptionCell.innerHTML.trim()) {
-    const description = document.createElement('p');
-    description.innerHTML = descriptionCell.innerHTML;
+  const description = document.createElement('p');
+  if (descriptionRow) {
+    description.innerHTML = descriptionRow.innerHTML;
     moveInstrumentation(descriptionRow, description);
-    contentDiv.append(description);
   }
+  hmWelcomeCon.append(description);
 
-  containerWrapper.append(contentDiv);
-  block.append(containerWrapper);
+  contentContainer.append(hmWelcomeCon);
 
-  // Remove original rows as they've been processed
-  dotRightImageRow.remove();
-  dotLeftImageRow.remove();
-  headingRow.remove();
-  descriptionRow.remove();
+  block.textContent = '';
+  block.classList.add('hm-welcome');
+  block.append(dotRightDiv, dotLeftDiv, contentContainer);
 }

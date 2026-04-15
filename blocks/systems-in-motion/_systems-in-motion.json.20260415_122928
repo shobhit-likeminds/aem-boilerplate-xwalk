@@ -1,7 +1,7 @@
 {
   "definitions": [
     {
-      "title": "Systems-in-Motion",
+      "title": "Systems In Motion",
       "id": "systems-in-motion",
       "plugins": {
         "xwalk": {
@@ -10,7 +10,7 @@
             "template": {
               "filter": "systems-in-motion",
               "model": "systems-in-motion",
-              "name": "Systems-in-Motion"
+              "name": "Systems In Motion"
             }
           }
         }
@@ -39,12 +39,14 @@
         {
           "component": "reference",
           "label": "Dot Right Image",
-          "name": "dotRightImage"
+          "name": "dotRightImage",
+          "valueType": "string"
         },
         {
           "component": "reference",
           "label": "Dot Left Image",
-          "name": "dotLeftImage"
+          "name": "dotLeftImage",
+          "valueType": "string"
         },
         {
           "component": "text",
@@ -71,8 +73,9 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Logo",
-          "name": "logo"
+          "label": "Logo Image",
+          "name": "logoImage",
+          "valueType": "string"
         },
         {
           "component": "text",

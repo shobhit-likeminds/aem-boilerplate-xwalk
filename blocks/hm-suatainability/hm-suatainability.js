@@ -4,64 +4,69 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
 export default function decorate(block) {
   const [
     backgroundImageRow,
-    backgroundImageAltRow,
-    subtitleRow,
+    subTitleRow,
     headingRow,
     descriptionRow,
     ctaLinkRow,
     ctaLinkLabelRow,
   ] = [...block.children];
 
-  // Create figure for background image
+  // Background Image
   const figure = document.createElement('figure');
-  const picture = backgroundImageRow.querySelector('picture');
+  const [backgroundImageCell] = [...backgroundImageRow.children];
+  const picture = backgroundImageCell.querySelector('picture');
   if (picture) {
     const img = picture.querySelector('img');
     if (img) {
-      const optimizedPic = createOptimizedPicture(img.src, backgroundImageAltRow.textContent.trim(), false, [{ width: '1920' }]);
-      const optimizedImg = optimizedPic.querySelector('img');
-      optimizedImg.classList.add('bg-cover');
-      moveInstrumentation(img, optimizedImg);
+      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '1920' }]);
+      optimizedPic.querySelector('img').classList.add('bg-cover');
+      moveInstrumentation(img, optimizedPic.querySelector('img'));
       figure.append(optimizedPic);
     }
   }
 
-  // Create content section
+  // Section details container
   const sectDet = document.createElement('div');
   sectDet.classList.add('sect-det');
 
-  // Subtitle
-  const subTtle = document.createElement('div');
-  subTtle.classList.add('sub-ttle', 'wow', 'animate__', 'animate__fadeInUp', 'animated');
-  moveInstrumentation(subtitleRow, subTtle);
-  subTtle.textContent = subtitleRow.textContent.trim();
-  sectDet.append(subTtle);
+  // Sub Title
+  const subTitle = document.createElement('div');
+  subTitle.classList.add('sub-ttle', 'wow', 'animate__', 'animate__fadeInUp', 'animated');
+  const [subTitleCell] = [...subTitleRow.children];
+  moveInstrumentation(subTitleRow, subTitle);
+  subTitle.textContent = subTitleCell.textContent.trim();
+  sectDet.append(subTitle);
 
   // Heading
-  const commonTtle = document.createElement('h2');
-  commonTtle.classList.add('common-ttle', 'wow', 'animate__', 'animate__fadeInUp', 'animated');
-  moveInstrumentation(headingRow, commonTtle);
-  commonTtle.textContent = headingRow.textContent.trim();
-  sectDet.append(commonTtle);
+  const heading = document.createElement('h2');
+  heading.classList.add('common-ttle', 'wow', 'animate__', 'animate__fadeInUp', 'animated');
+  const [headingCell] = [...headingRow.children];
+  moveInstrumentation(headingRow, heading);
+  heading.textContent = headingCell.textContent.trim();
+  sectDet.append(heading);
 
   // Description
-  const descriptionP = document.createElement('p');
-  descriptionP.classList.add('wow', 'animate__', 'animate__fadeInUp', 'animated');
-  moveInstrumentation(descriptionRow, descriptionP);
-  descriptionP.innerHTML = descriptionRow.innerHTML;
-  sectDet.append(descriptionP);
+  const description = document.createElement('p');
+  description.classList.add('wow', 'animate__', 'animate__fadeInUp', 'animated');
+  const [descriptionCell] = [...descriptionRow.children];
+  moveInstrumentation(descriptionRow, description);
+  description.innerHTML = descriptionCell.innerHTML;
+  sectDet.append(description);
 
   // CTA Link
   const ctaLink = document.createElement('a');
   ctaLink.classList.add('btn-box', 'wow', 'animate__', 'animate__fadeInUp', 'animated');
-  const foundCtaLink = ctaLinkRow.querySelector('a');
+  const [ctaLinkCell] = [...ctaLinkRow.children];
+  const foundCtaLink = ctaLinkCell.querySelector('a');
   if (foundCtaLink) {
-    ctaLink.href = foundCtaLink.href; // Use the href from the original anchor tag
+    ctaLink.href = foundCtaLink.href;
   }
-  ctaLink.textContent = ctaLinkLabelRow.textContent.trim();
+  const [ctaLinkLabelCell] = [...ctaLinkLabelRow.children];
   moveInstrumentation(ctaLinkRow, ctaLink);
+  ctaLink.textContent = ctaLinkLabelCell.textContent.trim();
   sectDet.append(ctaLink);
 
+  // Clear block content and append new structure
   block.textContent = '';
   block.append(figure, sectDet);
 }
