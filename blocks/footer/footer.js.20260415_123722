@@ -1,0 +1,183 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  const sectionWrapper = document.createElement('section');
+  sectionWrapper.classList.add('footer-wrp');
+
+  const container = document.createElement('div');
+  container.classList.add('container-1600-wrp');
+  sectionWrapper.append(container);
+
+  const [logoRow, ...sectionRows] = [...block.children];
+
+  // Logo
+  const mobLogoWr = document.createElement('div');
+  mobLogoWr.classList.add('mob-logo-wr');
+  moveInstrumentation(logoRow, mobLogoWr);
+
+  const logoPicture = logoRow.querySelector('picture');
+  if (logoPicture) {
+    const img = logoPicture.querySelector('img');
+    if (img) {
+      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '200' }]);
+      optimizedPic.querySelector('img').classList.add('img-fluid');
+      moveInstrumentation(img, optimizedPic.querySelector('img'));
+      mobLogoWr.append(optimizedPic);
+    }
+  }
+  container.append(mobLogoWr);
+
+  // Footer sections
+  const row1 = document.createElement('div');
+  row1.classList.add('row', 'f1');
+  container.append(row1);
+
+  sectionRows.forEach((row) => {
+    // Use content detection instead of index access
+    const cells = [...row.children];
+    const headingCell = cells.find(cell => !cell.querySelector('ul') && !cell.querySelector('a'));
+    const sectionLinksCell = cells.find(cell => cell.querySelector('ul') || cell.querySelector('a'));
+
+    const col = document.createElement('div');
+    col.classList.add('col', 'col-xl-3');
+    moveInstrumentation(row, col);
+
+    const headingText = headingCell ? headingCell.textContent.trim() : '';
+    const sectionLinksUl = sectionLinksCell ? sectionLinksCell.querySelector('ul') : null;
+
+    if (sectionLinksUl) {
+      // Accordion item
+      const ftrDropWrp = document.createElement('div');
+      ftrDropWrp.classList.add('col', 'ftr-drop-wrp');
+      moveInstrumentation(headingCell, ftrDropWrp);
+
+      const ttle = document.createElement('a');
+      ttle.href = 'javascript:void(0)';
+      ttle.classList.add('ttle', 'accordion_head2');
+      ttle.textContent = headingText;
+
+      const plusminus = document.createElement('span');
+      plusminus.classList.add('plusminus2');
+      plusminus.textContent = '+';
+      ttle.append(plusminus);
+
+      const ftrSubLinksCvr = document.createElement('div');
+      ftrSubLinksCvr.classList.add('ftr-sub-links-cvr', 'accordion_body2');
+      moveInstrumentation(sectionLinksCell, ftrSubLinksCvr);
+
+      // Transform the authored <ul> into flat links
+      [...sectionLinksUl.children].forEach((li) => {
+        const link = li.querySelector('a');
+        if (link) {
+          const ftrLink = document.createElement('a');
+          ftrLink.classList.add('ftr-link');
+          ftrLink.href = link.href;
+          ftrLink.textContent = link.textContent.trim();
+          ftrSubLinksCvr.append(ftrLink);
+        }
+      });
+
+      ttle.addEventListener('click', (e) => {
+        e.preventDefault();
+        ftrSubLinksCvr.classList.toggle('accordion_body2');
+        plusminus.textContent = ftrSubLinksCvr.classList.contains('accordion_body2') ? '+' : '-';
+      });
+
+      ftrDropWrp.append(ttle, ftrSubLinksCvr);
+      row1.append(ftrDropWrp);
+    } else {
+      // Simple link item (no sub-links or a single link)
+      const ttle = document.createElement('a');
+      ttle.classList.add('ttle');
+      // If the sectionLinks cell contains a single link, use it. Otherwise, default to #.
+      const singleLink = sectionLinksCell ? sectionLinksCell.querySelector('a') : null;
+      if (singleLink) {
+        ttle.href = singleLink.href;
+        ttle.textContent = headingText;
+      } else {
+        ttle.href = '#'; // Default if no link is found
+        ttle.textContent = headingText;
+      }
+      col.append(ttle);
+      row1.append(col);
+    }
+  });
+
+  // Hardcoded social media and legal links based on ORIGINAL HTML
+  const row2 = document.createElement('div');
+  row2.classList.add('row', 'f2', 'justify-content-between');
+  container.append(row2);
+
+  const socialCol = document.createElement('div');
+  socialCol.classList.add('col', 'col-xl-2', 'ftr-drop-wrp');
+  row2.append(socialCol);
+
+  const socialTitle = document.createElement('p');
+  socialTitle.classList.add('ttle', 'accordion_head2');
+  socialTitle.textContent = 'Social Media ';
+  const socialPlusminus = document.createElement('span');
+  socialPlusminus.classList.add('plusminus2');
+  socialPlusminus.textContent = '+';
+  socialTitle.append(socialPlusminus);
+
+  const socialLinksCvr = document.createElement('div');
+  socialLinksCvr.classList.add('ftr-sub-links-cvr', 'accordion_body2', 'socialIcons');
+
+  const socialLinks = [
+    { href: 'https://www.facebook.com/TataMotorsGroup/', icon: 'fab fa-facebook-square' },
+    { href: 'https://www.instagram.com/tatamotorsgroup/', icon: 'fab fa-instagram' },
+    { href: 'https://twitter.com/TataMotors', icon: 'fa-brands fa-square-x-twitter' },
+    { href: 'https://www.linkedin.com/company/tata-motors/', icon: 'fab fa-linkedin' },
+    { href: 'https://www.youtube.com/user/TataMotorsGroup', icon: 'fab fa-youtube-square' },
+  ];
+
+  socialLinks.forEach((data) => {
+    const link = document.createElement('a');
+    link.href = data.href;
+    link.classList.add('ftr-link');
+    link.target = '_blank';
+    const icon = document.createElement('i');
+    icon.classList.add(...data.icon.split(' '));
+    link.append(icon);
+    socialLinksCvr.append(link);
+  });
+
+  socialTitle.addEventListener('click', (e) => {
+    e.preventDefault();
+    socialLinksCvr.classList.toggle('accordion_body2');
+    socialPlusminus.textContent = socialLinksCvr.classList.contains('accordion_body2') ? '+' : '-';
+  });
+
+  socialCol.append(socialTitle, socialLinksCvr);
+
+  const row3 = document.createElement('div');
+  row3.classList.add('row', 'mt25', 'f3');
+  container.append(row3);
+
+  const legalCol = document.createElement('div');
+  legalCol.classList.add('col-12', 'col-md-6');
+  row3.append(legalCol);
+
+  const legalDisclaimer = document.createElement('a');
+  legalDisclaimer.href = 'https://www.tatamotors.com/legal-disclaimer';
+  legalDisclaimer.textContent = 'Legal Disclaimer';
+  legalCol.append(legalDisclaimer);
+
+  const openSource = document.createElement('a');
+  openSource.href = 'https://www.tatamotors.com/open-source-license-disclosure';
+  openSource.textContent = 'Open Source License Disclosure';
+  legalCol.append(openSource);
+
+  const copyrightCol = document.createElement('div');
+  copyrightCol.classList.add('col-12', 'col-md-6');
+  row3.append(copyrightCol);
+
+  const copyrightText = document.createElement('p');
+  copyrightText.classList.add('copy-txt', 'text-md-end');
+  copyrightText.textContent = '© Copyright 2026. All rights reserved. Tata Motors Limited.';
+  copyrightCol.append(copyrightText);
+
+  block.textContent = '';
+  block.append(sectionWrapper);
+}

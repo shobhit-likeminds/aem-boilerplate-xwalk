@@ -2,71 +2,74 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const [
-    imageRow,
-    imageAltRow, // This row is read but its content is not used in the current JS logic.
-    subtitleRow,
-    headingRow,
-    ctaLinkRow,
-    ctaLinkLabelRow,
-  ] = [...block.children];
-
-  block.classList.add('hm-careers');
-
+  // Create the main container div
   const hmCareersCon = document.createElement('div');
   hmCareersCon.classList.add('hm-careers-con');
 
-  // Image
+  // Process rows based on their content type
+  const rows = [...block.children];
+
+  // Image section (first row)
+  const imageRow = rows[0];
   const figure = document.createElement('figure');
-  const [imageCell] = [...imageRow.children]; // Destructuring for consistency
+  const imageCell = imageRow.firstElementChild;
   const picture = imageCell.querySelector('picture');
   if (picture) {
     const img = picture.querySelector('img');
     if (img) {
+      // Optimize the image and replace the picture element
       const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '1920' }]);
-      optimizedPic.querySelector('img').classList.add('bg-cover');
       moveInstrumentation(img, optimizedPic.querySelector('img'));
       figure.append(optimizedPic);
+      optimizedPic.querySelector('img').classList.add('bg-cover'); // Add class to the img inside the optimized picture
     }
   }
-  moveInstrumentation(imageRow, figure);
+  moveInstrumentation(imageRow, figure); // Move instrumentation from the original image row to the figure
   hmCareersCon.append(figure);
 
-  // Section details
+  // Text details section
   const sectDet = document.createElement('div');
   sectDet.classList.add('sect-det');
 
-  // Subtitle
+  // Subtitle (second row)
+  const subtitleRow = rows[1];
   const subtitleDiv = document.createElement('div');
   subtitleDiv.classList.add('sub-ttle', 'wow', 'animate__', 'animate__fadeInUp', 'animated');
-  const [subtitleCell] = [...subtitleRow.children]; // Destructuring for consistency
   moveInstrumentation(subtitleRow, subtitleDiv);
-  subtitleDiv.textContent = subtitleCell.textContent.trim();
+  subtitleDiv.textContent = subtitleRow.firstElementChild?.textContent.trim() || '';
   sectDet.append(subtitleDiv);
 
-  // Heading
+  // Heading (third row)
+  const headingRow = rows[2];
   const headingH2 = document.createElement('h2');
   headingH2.classList.add('common-ttle', 'wow', 'animate__', 'animate__fadeInUp', 'animated');
-  const [headingCell] = [...headingRow.children]; // Destructuring for consistency
   moveInstrumentation(headingRow, headingH2);
-  headingH2.textContent = headingCell.textContent.trim();
+  headingH2.textContent = headingRow.firstElementChild?.textContent.trim() || '';
   sectDet.append(headingH2);
 
-  // CTA Link
-  const ctaLink = document.createElement('a');
-  ctaLink.classList.add('btn-box', 'wow', 'animate__', 'animate__fadeInUp', 'animated');
-  const [ctaLinkCell] = [...ctaLinkRow.children]; // Destructuring for consistency
-  const foundLink = ctaLinkCell.querySelector('a');
-  if (foundLink) {
-    ctaLink.href = foundLink.href; // Read href for type=aem-content
+  // CTA Link and CTA Label (fourth and fifth rows)
+  const ctaLinkRow = rows[3];
+  const ctaLinkLabelRow = rows[4];
+
+  const ctaLinkAnchor = document.createElement('a');
+  ctaLinkAnchor.classList.add('btn-box', 'wow', 'animate__', 'animate__fadeInUp', 'animated');
+
+  // Get the actual link from the ctaLinkRow
+  const foundCtaLink = ctaLinkRow.firstElementChild?.querySelector('a');
+  if (foundCtaLink) {
+    ctaLinkAnchor.href = foundCtaLink.href;
   }
-  moveInstrumentation(ctaLinkRow, ctaLink);
-  const [ctaLinkLabelCell] = [...ctaLinkLabelRow.children]; // Destructuring for consistency
-  ctaLink.textContent = ctaLinkLabelCell.textContent.trim(); // Read textContent for type=text
-  sectDet.append(ctaLink);
+
+  // Get the label from the ctaLinkLabelRow
+  const ctaLabelText = ctaLinkLabelRow.firstElementChild?.textContent.trim() || '';
+  ctaLinkAnchor.textContent = ctaLabelText;
+
+  moveInstrumentation(ctaLinkRow, ctaLinkAnchor); // Move instrumentation from the original CTA link row
+  sectDet.append(ctaLinkAnchor);
 
   hmCareersCon.append(sectDet);
 
+  // Clear the block and append the new structure
   block.textContent = '';
   block.append(hmCareersCon);
 }

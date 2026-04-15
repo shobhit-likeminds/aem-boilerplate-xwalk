@@ -53,12 +53,6 @@
       "id": "footer-section",
       "fields": [
         {
-          "component": "text",
-          "label": "Label",
-          "name": "label",
-          "valueType": "string"
-        },
-        {
           "component": "richtext",
           "label": "Section Links",
           "name": "sectionLinks",

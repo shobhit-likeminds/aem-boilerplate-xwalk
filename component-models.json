@@ -300,6 +300,12 @@
     "id": "footer-section",
     "fields": [
       {
+        "component": "text",
+        "label": "Label",
+        "name": "label",
+        "valueType": "string"
+      },
+      {
         "component": "richtext",
         "label": "Section Links",
         "name": "sectionLinks",
@@ -490,18 +496,15 @@
       },
       {
         "component": "text",
-        "label": "Image Alt",
-        "name": "imageAlt"
-      },
-      {
-        "component": "text",
         "label": "Subtitle",
-        "name": "subtitle"
+        "name": "subtitle",
+        "valueType": "string"
       },
       {
         "component": "text",
         "label": "Heading",
-        "name": "heading"
+        "name": "heading",
+        "valueType": "string"
       },
       {
         "component": "aem-content",
