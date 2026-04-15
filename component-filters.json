@@ -25,7 +25,18 @@
       "latest-stories",
       "work-with-us",
       "footer-main",
-      "spotlight-home"
+      "spotlight-home",
+      "header-full-wrp",
+      "home-banner",
+      "hm-welcome",
+      "demerged-info",
+      "hm-eng-for-evol",
+      "systems-in-motion",
+      "movement-matters",
+      "legacy-slider",
+      "hm-suatainability",
+      "hm-careers",
+      "footer"
     ]
   },
   {
@@ -50,6 +61,9 @@
     ]
   },
   {
+    "id": "demerged-info"
+  },
+  {
     "id": "faqs-section",
     "components": [
       "faq"
@@ -62,15 +76,57 @@
     ]
   },
   {
+    "id": "footer",
+    "components": [
+      "footer-section"
+    ]
+  },
+  {
+    "id": "header-full-wrp",
+    "components": [
+      "nav-item"
+    ]
+  },
+  {
     "id": "header",
     "components": [
       "nav-item"
     ]
   },
   {
+    "id": "hm-careers"
+  },
+  {
+    "id": "hm-eng-for-evol",
+    "components": [
+      "evolution-blurb"
+    ]
+  },
+  {
+    "id": "hm-suatainability"
+  },
+  {
+    "id": "hm-welcome"
+  },
+  {
+    "id": "home-banner"
+  },
+  {
     "id": "latest-stories",
     "components": [
       "story"
+    ]
+  },
+  {
+    "id": "legacy-slider",
+    "components": [
+      "legacy-slide"
+    ]
+  },
+  {
+    "id": "movement-matters",
+    "components": [
+      "m-card-blurb"
     ]
   },
   {
@@ -96,6 +152,12 @@
     "id": "spotlight-home",
     "components": [
       "spotlight-slide"
+    ]
+  },
+  {
+    "id": "systems-in-motion",
+    "components": [
+      "motion-card"
     ]
   },
   {

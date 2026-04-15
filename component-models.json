@@ -180,6 +180,29 @@
     ]
   },
   {
+    "id": "demerged-info",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Dots Image",
+        "name": "dotsImage",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Main Text",
+        "name": "mainText",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Scrolling Text",
+        "name": "scrollingText",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "faqs-section",
     "fields": [
       {
@@ -258,12 +281,105 @@
     ]
   },
   {
+    "id": "footer",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Logo",
+        "name": "logo"
+      },
+      {
+        "component": "container",
+        "item": "footer-section",
+        "label": "Footer Sections",
+        "name": "footerSections"
+      }
+    ]
+  },
+  {
+    "id": "footer-section",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Title",
+        "name": "title",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Section Links",
+        "name": "sectionLinks",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "fragment",
     "fields": [
       {
         "component": "aem-content",
         "name": "reference",
         "label": "Reference"
+      }
+    ]
+  },
+  {
+    "id": "header-full-wrp",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Logo",
+        "name": "logo"
+      },
+      {
+        "component": "aem-content",
+        "label": "Logo Link",
+        "name": "logoLink"
+      },
+      {
+        "component": "text",
+        "label": "Logo Link Label",
+        "name": "logoLinkLabel",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Logo Mobile",
+        "name": "logoMobile"
+      },
+      {
+        "component": "container",
+        "item": "nav-item",
+        "label": "Navigation Items",
+        "name": "navItems"
+      }
+    ]
+  },
+  {
+    "id": "nav-item",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Label",
+        "name": "label",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link"
+      },
+      {
+        "component": "text",
+        "label": "Link Label",
+        "name": "linkLabel",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Sub Links",
+        "name": "subLinks",
+        "valueType": "string"
       }
     ]
   },
@@ -371,6 +487,210 @@
     ]
   },
   {
+    "id": "hm-careers",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Image",
+        "name": "image",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Sub Title",
+        "name": "subTitle",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "CTA Link",
+        "name": "ctaLink",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "CTA Label",
+        "name": "ctaLinkLabel",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "hm-eng-for-evol",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Description",
+        "name": "description",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "evolution-blurb",
+        "label": "Blurbs",
+        "name": "blurbs"
+      }
+    ]
+  },
+  {
+    "id": "evolution-blurb",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Image",
+        "name": "image",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Title",
+        "name": "title",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Text",
+        "name": "text",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "CTA Link",
+        "name": "ctaLink",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "CTA Label",
+        "name": "ctaLinkLabel",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "hm-suatainability",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Background Image",
+        "name": "backgroundImage",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Background Image Alt Text",
+        "name": "backgroundImageAlt",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Subtitle",
+        "name": "subtitle",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Description",
+        "name": "description",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "CTA Link",
+        "name": "ctaLink",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "CTA Label",
+        "name": "ctaLinkLabel",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "hm-welcome",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Dot Right Image",
+        "name": "dotRightImage"
+      },
+      {
+        "component": "reference",
+        "label": "Dot Left Image",
+        "name": "dotLeftImage"
+      },
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Description",
+        "name": "description",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "home-banner",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Background Image",
+        "name": "backgroundImage"
+      },
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Banner Text",
+        "name": "bannerText",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Rotator Image 1",
+        "name": "rotatorImage1"
+      },
+      {
+        "component": "reference",
+        "label": "Rotator Image 2",
+        "name": "rotatorImage2"
+      },
+      {
+        "component": "reference",
+        "label": "Rotator Image 3",
+        "name": "rotatorImage3"
+      }
+    ]
+  },
+  {
     "id": "latest-stories",
     "fields": [
       {
@@ -424,6 +744,114 @@
         "component": "text",
         "label": "Date",
         "name": "date",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "legacy-slider",
+    "fields": [
+      {
+        "component": "container",
+        "item": "legacy-slide",
+        "label": "Slides",
+        "name": "slides"
+      }
+    ]
+  },
+  {
+    "id": "legacy-slide",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Image",
+        "name": "image"
+      },
+      {
+        "component": "text",
+        "label": "Image Alt",
+        "name": "imageAlt"
+      },
+      {
+        "component": "text",
+        "label": "Sub Title",
+        "name": "subTitle"
+      },
+      {
+        "component": "text",
+        "label": "Title",
+        "name": "title"
+      },
+      {
+        "component": "text",
+        "label": "Name",
+        "name": "name"
+      },
+      {
+        "component": "text",
+        "label": "Designation",
+        "name": "designation"
+      },
+      {
+        "component": "aem-content",
+        "label": "CTA Link",
+        "name": "ctaLink"
+      },
+      {
+        "component": "text",
+        "label": "CTA Label",
+        "name": "ctaLinkLabel"
+      }
+    ]
+  },
+  {
+    "id": "movement-matters",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Description",
+        "name": "description",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "m-card-blurb",
+        "label": "Card Blurbs",
+        "name": "blurbs"
+      }
+    ]
+  },
+  {
+    "id": "m-card-blurb",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Title",
+        "name": "title",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Text",
+        "name": "text",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Link Label",
+        "name": "linkLabel",
         "valueType": "string"
       }
     ]
@@ -656,6 +1084,76 @@
       {
         "component": "text",
         "label": "CTA Label",
+        "name": "ctaLinkLabel",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "systems-in-motion",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Dot Right Image",
+        "name": "dotRightImage",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Dot Left Image",
+        "name": "dotLeftImage",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Description",
+        "name": "description",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "motion-card",
+        "label": "Motion Cards",
+        "name": "motionCards"
+      }
+    ]
+  },
+  {
+    "id": "motion-card",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Logo Image",
+        "name": "logoImage",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Title",
+        "name": "title",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Text",
+        "name": "text",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "CTA Link",
+        "name": "ctaLink",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "CTA Link Label",
         "name": "ctaLinkLabel",
         "valueType": "string"
       }
