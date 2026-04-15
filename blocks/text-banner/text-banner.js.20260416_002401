@@ -7,7 +7,7 @@ export default function decorate(block) {
   const section = document.createElement('section');
   section.classList.add('text-banner--wrapper', 'position-relative', 'bg-maroon-700');
 
-  // Background elements
+  // Background circles and curves
   const bgCircleLeft = document.createElement('div');
   bgCircleLeft.classList.add('position-absolute', 'opacity-60', 'bg-circle-left');
   section.append(bgCircleLeft);
@@ -43,12 +43,14 @@ export default function decorate(block) {
   // Title
   if (titleRow) {
     const titleDiv = document.createElement('div');
-    const h2 = document.createElement('h2');
-    h2.classList.add('font-baskerville', 'font-md-40', 'font-24', 'text-banner--title');
-    const [titleCell] = [...titleRow.children]; // Destructure for text cell
-    moveInstrumentation(titleRow, h2);
-    h2.textContent = titleCell?.textContent.trim() || '';
-    titleDiv.append(h2);
+    const title = document.createElement('h2');
+    title.classList.add('font-baskerville', 'font-md-40', 'font-24', 'text-banner--title');
+    const titleCell = [...titleRow.children].find((cell) => cell.textContent.trim());
+    if (titleCell) {
+      moveInstrumentation(titleCell, title);
+      title.textContent = titleCell.textContent.trim();
+    }
+    titleDiv.append(title);
     contentWrapper.append(titleDiv);
   }
 
@@ -56,12 +58,14 @@ export default function decorate(block) {
   if (descriptionRow) {
     const descriptionDiv = document.createElement('div');
     descriptionDiv.classList.add('mt-sm-8', 'mt-5', 'text-banner--description');
-    const descriptionContentDiv = document.createElement('div');
-    descriptionContentDiv.classList.add('font-md-18', 'font-default', 'leading-24', 'text-center', 'promise-text-padding');
-    const [descriptionCell] = [...descriptionRow.children]; // Destructure for richtext cell
-    moveInstrumentation(descriptionRow, descriptionContentDiv);
-    descriptionContentDiv.innerHTML = descriptionCell?.innerHTML || '';
-    descriptionDiv.append(descriptionContentDiv);
+    const descriptionContent = document.createElement('div');
+    descriptionContent.classList.add('font-md-18', 'font-default', 'leading-24', 'text-center', 'promise-text-padding');
+    const descriptionCell = [...descriptionRow.children].find((cell) => cell.innerHTML.trim());
+    if (descriptionCell) {
+      moveInstrumentation(descriptionCell, descriptionContent);
+      descriptionContent.innerHTML = descriptionCell.innerHTML;
+    }
+    descriptionDiv.append(descriptionContent);
     contentWrapper.append(descriptionDiv);
   }
 
@@ -71,6 +75,15 @@ export default function decorate(block) {
     ctaWrapper.classList.add('text-banner--cta', 'mt-12', 'mt-lg-16');
 
     const ctaLink = document.createElement('a');
+    const ctaLinkCell = [...ctaLinkRow.children].find((cell) => cell.querySelector('a'));
+    if (ctaLinkCell) {
+      const originalLink = ctaLinkCell.querySelector('a');
+      if (originalLink) {
+        ctaLink.href = originalLink.href;
+      }
+      moveInstrumentation(ctaLinkCell, ctaLink);
+    }
+    
     ctaLink.classList.add(
       'svasti-cta',
       'cta-analytics',
@@ -92,20 +105,14 @@ export default function decorate(block) {
       'bg-cream-100-active',
     );
 
-    const [ctaLinkCell] = [...ctaLinkRow.children]; // Destructure for aem-content cell
-    const foundLink = ctaLinkCell?.querySelector('a');
-    if (foundLink) {
-      ctaLink.href = foundLink.href;
-    }
-
     const ctaLabelSpan = document.createElement('span');
     ctaLabelSpan.classList.add('svasti-cta__label', 'fw-semibold', 'fs-default', 'leading-26');
-    const [ctaLinkLabelCell] = [...ctaLinkLabelRow.children]; // Destructure for text cell
-    moveInstrumentation(ctaLinkLabelRow, ctaLabelSpan);
-    ctaLabelSpan.textContent = ctaLinkLabelCell?.textContent.trim() || '';
+    const ctaLinkLabelCell = [...ctaLinkLabelRow.children].find((cell) => cell.textContent.trim());
+    if (ctaLinkLabelCell) {
+      moveInstrumentation(ctaLinkLabelCell, ctaLabelSpan);
+      ctaLabelSpan.textContent = ctaLinkLabelCell.textContent.trim();
+    }
     ctaLink.append(ctaLabelSpan);
-
-    moveInstrumentation(ctaLinkRow, ctaLink);
     ctaWrapper.append(ctaLink);
     textBannerContainer.append(ctaWrapper);
   }

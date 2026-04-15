@@ -189,14 +189,14 @@
       },
       {
         "component": "text",
-        "label": "CTA Link Label",
+        "label": "CTA Label",
         "name": "ctaLinkLabel",
         "valueType": "string"
       },
       {
         "component": "container",
         "item": "recipe-card",
-        "label": "Recipe Cards",
+        "label": "Cards",
         "name": "cards"
       }
     ]
@@ -212,31 +212,13 @@
       },
       {
         "component": "text",
-        "label": "Image Alt Text",
-        "name": "imageAlt",
-        "valueType": "string"
-      },
-      {
-        "component": "aem-content",
-        "label": "Recipe Link",
-        "name": "link",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Recipe Link Label",
-        "name": "linkLabel",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Recipe Title",
+        "label": "Title",
         "name": "title",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Recipe Description",
+        "label": "Description",
         "name": "description",
         "valueType": "string"
       },
@@ -250,6 +232,18 @@
         "component": "text",
         "label": "Serves",
         "name": "serves",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Link Label",
+        "name": "linkLabel",
         "valueType": "string"
       }
     ]
@@ -672,7 +666,7 @@
       },
       {
         "component": "text",
-        "label": "CTA Link Label",
+        "label": "CTA Label",
         "name": "ctaLinkLabel",
         "valueType": "string"
       }

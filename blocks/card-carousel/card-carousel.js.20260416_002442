@@ -1,0 +1,308 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  // Destructure the first two rows for title and subtitle, and collect the rest as cardRows
+  const allRows = [...block.children];
+  const titleRow = allRows[0];
+  const subtitleRow = allRows[1];
+  const cardRows = allRows.slice(2);
+
+  block.classList.add('card-carousel');
+
+  const containerDiv = document.createElement('div');
+  containerDiv.classList.add('container', 'gx-8', 'gx-sm-0');
+
+  const title = document.createElement('h2');
+  title.classList.add(
+    'card-carousel__title',
+    'font-24',
+    'leading-28',
+    'font-sm-40',
+    'leading-sm-50',
+    'text-dark-gray-100',
+    'text-center',
+    'font-baskerville',
+  );
+  // Use content detection for title cell
+  const titleCell = [...titleRow.children].find((cell) => cell.textContent.trim());
+  moveInstrumentation(titleCell, title);
+  title.textContent = titleCell?.textContent.trim() || '';
+  containerDiv.append(title);
+
+  const subtitle = document.createElement('p');
+  subtitle.classList.add(
+    'card-carousel__subtitle',
+    'font-default',
+    'leading-24',
+    'font-sm-18',
+    'leading-sm-32',
+    'text-dark-gray-100',
+    'text-center',
+    'mt-4',
+    'fw-medium',
+  );
+  // Use content detection for subtitle cell
+  const subtitleCell = [...subtitleRow.children].find((cell) => cell.textContent.trim());
+  moveInstrumentation(subtitleCell, subtitle);
+  subtitle.textContent = subtitleCell?.textContent.trim() || '';
+  containerDiv.append(subtitle);
+
+  block.textContent = '';
+  block.append(containerDiv);
+
+  const swiperContainer = document.createElement('div');
+  swiperContainer.classList.add('card-carousel__swiper', 'swiper', 'container', 'gx-0');
+
+  const swiperInnerContainer = document.createElement('div');
+  swiperInnerContainer.classList.add('card-carousel__swiper--container', 'mt-8', 'mt-sm-10');
+
+  const productCardsContainer = document.createElement('div');
+  productCardsContainer.classList.add('product-cards__card-container', 'mx-4', 'mx-sm-0', 'overflow-hidden', 'add-margin');
+
+  const swiperWrapper = document.createElement('div');
+  swiperWrapper.classList.add('swiper-wrapper', 'slide-in-anim');
+
+  cardRows.forEach((row) => {
+    // Use destructuring as per EDS Block Structure for fixed-field item models
+    const [thumbImageCell, cardTitleCell, mainImageCell, ctaLinkCell, ctaLinkLabelCell] = [
+      ...row.children,
+    ];
+
+    const card = document.createElement('div');
+    card.classList.add('product-cards__card', 'swiper-slide', 'd-flex', 'flex-column', 'cursor-pointer');
+    moveInstrumentation(row, card);
+
+    const cardMedia = document.createElement('div');
+    cardMedia.classList.add('product-cards__card-media', 'position-relative');
+
+    const ratioWrapper = document.createElement('div');
+    ratioWrapper.classList.add('ratio', 'ratio-3x4', 'position-relative', 'product-cards__card-video-wrapper');
+
+    const thumbImage = thumbImageCell.querySelector('picture');
+    if (thumbImage) {
+      const img = thumbImage.querySelector('img');
+      const newThumbImg = document.createElement('img');
+      newThumbImg.classList.add('product-cards__card-thumb', 'object-fit-cover');
+      newThumbImg.src = img.src;
+      newThumbImg.alt = img.alt;
+      moveInstrumentation(thumbImage, newThumbImg);
+      ratioWrapper.append(newThumbImg);
+    }
+    const cardGradient = document.createElement('div');
+    cardGradient.classList.add('card-gradient', 'position-absolute', 'top-0', 'bottom-0', 'start-0', 'end-0');
+    ratioWrapper.append(cardGradient);
+    cardMedia.append(ratioWrapper);
+
+    const cardTitle = document.createElement('div');
+    cardTitle.classList.add(
+      'product-cards__card-title',
+      'position-absolute',
+      'top-0',
+      'text-white',
+      'px-5',
+      'pt-4',
+      'text-cream-100',
+      'leading-32',
+    );
+    moveInstrumentation(cardTitleCell, cardTitle);
+    cardTitle.innerHTML = cardTitleCell.innerHTML;
+    cardMedia.append(cardTitle);
+
+    const cardImgWrapper = document.createElement('div');
+    cardImgWrapper.classList.add(
+      'product-cards__card-img',
+      'pt-lg-8',
+      'pt-sm-6',
+      'pt-8',
+      'pb-3',
+      'bg-cream-300',
+      'position-absolute',
+      'start-50',
+      'top-100',
+      'rounded-top-circle',
+    );
+    const ratio1x1 = document.createElement('div');
+    ratio1x1.classList.add('ratio', 'ratio-1x1');
+
+    const ctaLink = document.createElement('a');
+    ctaLink.classList.add('cta-analytics');
+    const ctaAnchor = ctaLinkCell.querySelector('a');
+    if (ctaAnchor) {
+      ctaLink.href = ctaAnchor.href;
+    }
+
+    const mainImage = mainImageCell.querySelector('picture');
+    if (mainImage) {
+      const img = mainImage.querySelector('img');
+      const newMainImg = document.createElement('img');
+      newMainImg.classList.add('w-100', 'h-100', 'object-fit-contain');
+      newMainImg.src = img.src;
+      newMainImg.alt = img.alt;
+      moveInstrumentation(mainImage, newMainImg);
+      ctaLink.append(newMainImg);
+    }
+    ratio1x1.append(ctaLink);
+    cardImgWrapper.append(ratio1x1);
+    cardMedia.append(cardImgWrapper);
+    card.append(cardMedia);
+
+    const ctaDiv = document.createElement('div');
+    ctaDiv.classList.add('mt-6', 'align-self-center');
+
+    const ctaButton = document.createElement('a');
+    ctaButton.classList.add(
+      'cta-analytics',
+      'svasti-cta',
+      'w-fit',
+      'text-decoration-none',
+      'd-flex',
+      'align-items-center',
+      'primary',
+      'px-8',
+      'pb-3',
+      'text-cream-100',
+      'border',
+      'border-2',
+      'border-red-100',
+      'border-maroon-100-hover',
+      'border-red-300-active',
+      'bg-red-100',
+      'bg-maroon-100-hover',
+      'bg-red-300-active',
+    );
+    if (ctaAnchor) {
+      ctaButton.href = ctaAnchor.href;
+    }
+    ctaButton.textContent = ctaLinkLabelCell?.textContent.trim() || '';
+    moveInstrumentation(ctaLinkLabelCell, ctaButton);
+
+    ctaDiv.append(ctaButton);
+    card.append(ctaDiv);
+
+    swiperWrapper.append(card);
+  });
+
+  productCardsContainer.append(swiperWrapper);
+  swiperInnerContainer.append(productCardsContainer);
+
+  const prevButton = document.createElement('button');
+  prevButton.classList.add(
+    'card-carousel__swiper--prev',
+    'card-carousel__navigation',
+    'cursor-pointer',
+    'rounded-circle',
+    'bg-transparent',
+    'text-red-100',
+    'text-maroon-600-hover',
+    'justify-content-center',
+    'align-items-center',
+    'position-absolute',
+    'd-none',
+    'd-sm-flex',
+    'opacity-30',
+  );
+  prevButton.disabled = true;
+  const prevImg = document.createElement('img');
+  prevImg.alt = 'svg file';
+  prevImg.src = '/icons/arrow.svg'; // Placeholder, replace with actual icon from model if available
+  prevButton.append(prevImg);
+  swiperInnerContainer.append(prevButton);
+
+  const nextButton = document.createElement('button');
+  nextButton.classList.add(
+    'card-carousel__swiper--next',
+    'card-carousel__navigation',
+    'cursor-pointer',
+    'rounded-circle',
+    'bg-transparent',
+    'text-red-100',
+    'text-maroon-600-hover',
+    'justify-content-center',
+    'align-items-center',
+    'position-absolute',
+    'end-0',
+    'd-none',
+    'd-sm-flex',
+  );
+  const nextImg = document.createElement('img');
+  nextImg.alt = 'svg file';
+  nextImg.src = '/icons/arrow.svg'; // Placeholder, replace with actual icon from model if available
+  nextButton.append(nextImg);
+  swiperInnerContainer.append(nextButton);
+
+  const pagination = document.createElement('div');
+  pagination.classList.add(
+    'card-carousel__swiper--pagination',
+    'mt-10',
+    'cursor-pointer',
+    'position-relative',
+    'swiper-pagination-clickable',
+    'swiper-pagination-bullets',
+    'swiper-pagination-horizontal',
+    'mx-auto',
+    'w-fit',
+  );
+
+  swiperContainer.append(swiperInnerContainer);
+  swiperContainer.append(pagination);
+  block.append(swiperContainer);
+
+  block.querySelectorAll('picture > img').forEach((img) => {
+    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+    moveInstrumentation(img, optimizedPic.querySelector('img'));
+    img.closest('picture').replaceWith(optimizedPic);
+  });
+
+  // Basic Swiper-like functionality (no external library)
+  let currentIndex = 0;
+  const slides = swiperWrapper.querySelectorAll('.swiper-slide');
+  // Calculate slideWidth dynamically, considering potential margins.
+  // This needs to be done after slides are rendered and have their actual width.
+  // For simplicity, using a fixed value for now, but in a real scenario,
+  // this would need a resize observer or recalculation on window resize.
+  let slideWidth = 0;
+  if (slides.length > 0) {
+    const firstSlide = slides[0];
+    const computedStyle = window.getComputedStyle(firstSlide);
+    const marginRight = parseFloat(computedStyle.marginRight);
+    slideWidth = firstSlide.offsetWidth + marginRight;
+  }
+
+  const updateCarousel = () => {
+    swiperWrapper.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
+    prevButton.disabled = currentIndex === 0;
+    nextButton.disabled = currentIndex >= slides.length - 1;
+
+    pagination.innerHTML = '';
+    for (let i = 0; i < slides.length; i += 1) {
+      const bullet = document.createElement('span');
+      bullet.classList.add('swiper-pagination-bullet');
+      if (i === currentIndex) {
+        bullet.classList.add('swiper-pagination-bullet-active', 'swiper-pagination-bullet-active-main');
+      }
+      bullet.addEventListener('click', () => {
+        currentIndex = i;
+        updateCarousel();
+      });
+      pagination.append(bullet);
+    }
+  };
+
+  prevButton.addEventListener('click', () => {
+    if (currentIndex > 0) {
+      currentIndex -= 1;
+      updateCarousel();
+    }
+  });
+
+  nextButton.addEventListener('click', () => {
+    if (currentIndex < slides.length - 1) {
+      currentIndex += 1;
+      updateCarousel();
+    }
+  });
+
+  // Initial update
+  updateCarousel();
+}
