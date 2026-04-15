@@ -1,7 +1,7 @@
 {
   "definitions": [
     {
-      "title": "Card-Carousel",
+      "title": "Card Carousel",
       "id": "card-carousel",
       "plugins": {
         "xwalk": {
@@ -10,22 +10,22 @@
             "template": {
               "filter": "card-carousel",
               "model": "card-carousel",
-              "name": "Card-Carousel"
+              "name": "Card Carousel"
             }
           }
         }
       }
     },
     {
-      "title": "Product Card",
-      "id": "product-card",
+      "title": "Recipe Card",
+      "id": "recipe-card",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "product-card",
-              "name": "Product Card"
+              "model": "recipe-card",
+              "name": "Recipe Card"
             }
           }
         }
@@ -38,43 +38,14 @@
       "fields": [
         {
           "component": "text",
-          "label": "Heading",
-          "name": "heading",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Subheading",
-          "name": "subheading",
-          "valueType": "string"
-        },
-        {
-          "component": "container",
-          "item": "product-card",
-          "label": "Cards",
-          "name": "cards"
-        }
-      ]
-    },
-    {
-      "id": "product-card",
-      "fields": [
-        {
-          "component": "reference",
-          "label": "Background Image",
-          "name": "backgroundImage",
-          "valueType": "string"
-        },
-        {
-          "component": "richtext",
           "label": "Title",
           "name": "title",
           "valueType": "string"
         },
         {
-          "component": "reference",
-          "label": "Product Image",
-          "name": "productImage",
+          "component": "text",
+          "label": "Subtitle",
+          "name": "subtitle",
           "valueType": "string"
         },
         {
@@ -88,6 +59,59 @@
           "label": "CTA Label",
           "name": "ctaLinkLabel",
           "valueType": "string"
+        },
+        {
+          "component": "container",
+          "item": "recipe-card",
+          "label": "Cards",
+          "name": "cards"
+        }
+      ]
+    },
+    {
+      "id": "recipe-card",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Image",
+          "name": "image",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Title",
+          "name": "title",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Description",
+          "name": "description",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Time",
+          "name": "time",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Serves",
+          "name": "serves",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Link",
+          "name": "link",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Link Label",
+          "name": "linkLabel",
+          "valueType": "string"
         }
       ]
     }
@@ -96,7 +120,7 @@
     {
       "id": "card-carousel",
       "components": [
-        "product-card"
+        "recipe-card"
       ]
     }
   ]

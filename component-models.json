@@ -171,14 +171,43 @@
     "fields": [
       {
         "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Subheading",
+        "name": "subheading",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "product-card",
+        "label": "Cards",
+        "name": "cards"
+      }
+    ]
+  },
+  {
+    "id": "product-card",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Background Image",
+        "name": "backgroundImage",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
         "label": "Title",
         "name": "title",
         "valueType": "string"
       },
       {
-        "component": "text",
-        "label": "Subtitle",
-        "name": "subtitle",
+        "component": "reference",
+        "label": "Product Image",
+        "name": "productImage",
         "valueType": "string"
       },
       {
@@ -191,59 +220,6 @@
         "component": "text",
         "label": "CTA Label",
         "name": "ctaLinkLabel",
-        "valueType": "string"
-      },
-      {
-        "component": "container",
-        "item": "recipe-card",
-        "label": "Cards",
-        "name": "cards"
-      }
-    ]
-  },
-  {
-    "id": "recipe-card",
-    "fields": [
-      {
-        "component": "reference",
-        "label": "Image",
-        "name": "image",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Title",
-        "name": "title",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Description",
-        "name": "description",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Time",
-        "name": "time",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Serves",
-        "name": "serves",
-        "valueType": "string"
-      },
-      {
-        "component": "aem-content",
-        "label": "Link",
-        "name": "link",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Link Label",
-        "name": "linkLabel",
         "valueType": "string"
       }
     ]
@@ -514,14 +490,14 @@
       },
       {
         "component": "container",
-        "item": "product",
+        "item": "product-item",
         "label": "Products",
         "name": "products"
       }
     ]
   },
   {
-    "id": "product",
+    "id": "product-item",
     "fields": [
       {
         "component": "reference",

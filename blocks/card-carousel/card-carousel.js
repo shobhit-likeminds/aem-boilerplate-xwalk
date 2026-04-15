@@ -2,191 +2,275 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const rows = [...block.children];
+  const [headingRow, subheadingRow, ...cardRows] = [...block.children];
 
-  const [titleRow, subtitleRow, ctaLinkRow, ctaLabelRow, ...cardRows] = rows;
-
+  block.textContent = '';
   block.classList.add('card-carousel');
 
   const containerDiv = document.createElement('div');
   containerDiv.classList.add('container', 'gx-8', 'gx-sm-0');
 
-  const title = document.createElement('h2');
-  title.classList.add('card-carousel__title', 'font-24', 'leading-28', 'font-sm-40', 'leading-sm-50', 'text-dark-gray-100', 'text-center', 'font-baskerville');
-  moveInstrumentation(titleRow.firstElementChild, title);
-  title.textContent = titleRow.firstElementChild.textContent.trim();
-  containerDiv.append(title);
+  const heading = document.createElement('h2');
+  heading.classList.add(
+    'card-carousel__title',
+    'font-24',
+    'leading-28',
+    'font-sm-40',
+    'leading-sm-50',
+    'text-dark-gray-100',
+    'text-center',
+    'font-baskerville',
+  );
+  // Use children[0] as per EDS block structure for single cell rows
+  moveInstrumentation(headingRow.children[0], heading);
+  heading.textContent = headingRow.children[0]?.textContent.trim() || '';
+  containerDiv.append(heading);
 
-  const subtitle = document.createElement('p');
-  subtitle.classList.add('card-carousel__subtitle', 'font-default', 'leading-24', 'font-sm-18', 'leading-sm-32', 'text-dark-gray-100', 'text-center', 'mt-4', 'fw-medium');
-  moveInstrumentation(subtitleRow.firstElementChild, subtitle);
-  subtitle.textContent = subtitleRow.firstElementChild.textContent.trim();
-  containerDiv.append(subtitle);
+  const subheading = document.createElement('p');
+  subheading.classList.add(
+    'card-carousel__subtitle',
+    'font-default',
+    'leading-24',
+    'font-sm-18',
+    'leading-sm-32',
+    'text-dark-gray-100',
+    'text-center',
+    'mt-4',
+    'fw-medium',
+  );
+  // Use children[0] as per EDS block structure for single cell rows
+  moveInstrumentation(subheadingRow.children[0], subheading);
+  subheading.textContent = subheadingRow.children[0]?.textContent.trim() || '';
+  containerDiv.append(subheading);
 
   block.append(containerDiv);
 
-  const swiperContainer = document.createElement('div');
-  swiperContainer.classList.add('card-carousel__swiper', 'swiper', 'container', 'gx-0');
-  swiperContainer.setAttribute('data-loop', 'true');
-
-  const swiperWrapperContainer = document.createElement('div');
-  swiperWrapperContainer.classList.add('card-carousel__swiper--container', 'mt-8', 'mt-sm-10');
-
-  const popularRecipeSection = document.createElement('section');
-  popularRecipeSection.classList.add('popular-recipe', 'slide-in-anim');
-
-  const popularRecipeContainer = document.createElement('div');
-  popularRecipeContainer.classList.add('popular-recipe__container', 'overflow-hidden');
-  popularRecipeContainer.setAttribute('data-swiper-init-async', 'true');
-
   const swiperWrapper = document.createElement('div');
-  swiperWrapper.classList.add('swiper-wrapper', 'popular-recipe__recipe-wrapper');
+  swiperWrapper.classList.add('card-carousel__swiper', 'swiper', 'container', 'gx-0');
+  swiperWrapper.setAttribute('data-loop', 'false');
+
+  const swiperContainer = document.createElement('div');
+  swiperContainer.classList.add('card-carousel__swiper--container', 'mt-8', 'mt-sm-10');
+
+  const productCardsContainer = document.createElement('div');
+  productCardsContainer.classList.add(
+    'product-cards__card-container',
+    'mx-4',
+    'mx-sm-0',
+    'overflow-hidden',
+    'add-margin',
+    'swiper-initialized',
+    'swiper-horizontal',
+    'swiper-backface-hidden',
+  );
+
+  const swiperSlideWrapper = document.createElement('div');
+  swiperSlideWrapper.classList.add('swiper-wrapper', 'slide-in-anim');
 
   cardRows.forEach((row) => {
-    const [imageCell, titleCell, descriptionCell, timeCell, servesCell, linkCell, linkLabelCell] = [...row.children];
+    const [backgroundImageCell, titleCell, productImageCell, ctaLinkCell, ctaLinkLabelCell] = [
+      ...row.children,
+    ];
 
-    const swiperSlide = document.createElement('div');
-    swiperSlide.classList.add('swiper-slide');
-    moveInstrumentation(row, swiperSlide);
+    const card = document.createElement('div');
+    card.classList.add(
+      'product-cards__card',
+      'swiper-slide',
+      'd-flex',
+      'flex-column',
+      'cursor-pointer',
+    );
+    moveInstrumentation(row, card);
 
-    const recipeCard = document.createElement('div');
-    recipeCard.classList.add('recipe-card', 'bg-cream-100', 'h-100');
+    const media = document.createElement('div');
+    media.classList.add('product-cards__card-media', 'position-relative');
 
-    const cardLink = document.createElement('a');
-    cardLink.classList.add('recipe-card__link', 'd-block', 'position-relative');
-    const foundLink = linkCell.querySelector('a');
-    if (foundLink) {
-      cardLink.href = foundLink.href;
+    const ratioDiv = document.createElement('div');
+    ratioDiv.classList.add('ratio', 'ratio-3x4', 'position-relative', 'product-cards__card-video-wrapper');
+
+    const bgImg = backgroundImageCell.querySelector('img');
+    if (bgImg) {
+      const optimizedBgPic = createOptimizedPicture(bgImg.src, bgImg.alt, false, [{ width: '750' }]);
+      optimizedBgPic.classList.add('product-cards__card-thumb', 'object-fit-cover');
+      moveInstrumentation(bgImg, optimizedBgPic.querySelector('img'));
+      ratioDiv.append(optimizedBgPic);
     }
 
-    const picture = imageCell.querySelector('picture');
-    if (picture) {
-      const img = picture.querySelector('img');
-      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-      const optimizedImg = optimizedPic.querySelector('img');
-      optimizedImg.classList.add('recipe-card__image', 'object-fit-cover', 'w-100');
-      moveInstrumentation(img, optimizedImg);
-      cardLink.append(optimizedPic);
+    const cardGradient = document.createElement('div');
+    cardGradient.classList.add('card-gradient', 'position-absolute', 'top-0', 'bottom-0', 'start-0', 'end-0');
+    ratioDiv.append(cardGradient);
+    media.append(ratioDiv);
+
+    const cardTitle = document.createElement('div');
+    cardTitle.classList.add(
+      'product-cards__card-title',
+      'position-absolute',
+      'top-0',
+      'text-white',
+      'px-5',
+      'pt-4',
+      'text-cream-100',
+      'leading-32',
+    );
+    cardTitle.innerHTML = titleCell.innerHTML;
+    media.append(cardTitle);
+
+    const cardImgWrapper = document.createElement('div');
+    cardImgWrapper.classList.add(
+      'product-cards__card-img',
+      'pt-lg-8',
+      'pt-sm-6',
+      'pt-8',
+      'pb-3',
+      'bg-cream-300',
+      'position-absolute',
+      'start-50',
+      'top-100',
+      'rounded-top-circle',
+    );
+
+    const ratio1x1 = document.createElement('div');
+    ratio1x1.classList.add('ratio', 'ratio-1x1');
+
+    const ctaLink = ctaLinkCell.querySelector('a');
+    const ctaAnchor = document.createElement('a');
+    ctaAnchor.classList.add('cta-analytics');
+    if (ctaLink) {
+      ctaAnchor.href = ctaLink.href;
     }
 
-    const cardContent = document.createElement('div');
-    cardContent.classList.add('recipe-card__content', 'py-6');
+    const prodImg = productImageCell.querySelector('img');
+    if (prodImg) {
+      const optimizedProdPic = createOptimizedPicture(prodImg.src, prodImg.alt, false, [{ width: '750' }]);
+      optimizedProdPic.querySelector('img').classList.add('w-100', 'h-100', 'object-fit-contain');
+      moveInstrumentation(prodImg, optimizedProdPic.querySelector('img'));
+      ctaAnchor.append(optimizedProdPic);
+    }
+    ratio1x1.append(ctaAnchor);
+    cardImgWrapper.append(ratio1x1);
+    media.append(cardImgWrapper);
+    card.append(media);
 
-    const cardInfo = document.createElement('div');
-    cardInfo.classList.add('recipe-card__info', 'd-flex', 'align-items-center', 'justify-content-between');
-    const cardTag = document.createElement('span');
-    cardTag.classList.add('recipe-card__tag', 'text-uppercase', 'text-red-100', 'font-14', 'font-xl-default', 'leading-24', 'fw-semibold');
-    cardInfo.append(cardTag);
-    cardContent.append(cardInfo);
+    const ctaDiv = document.createElement('div');
+    ctaDiv.classList.add('mt-6', 'align-self-center');
 
-    const cardText = document.createElement('div');
-    cardText.classList.add('recipe-card__text');
-    const cardTitle = document.createElement('h3');
-    cardTitle.classList.add('recipe-card__title', 'font-20', 'font-xl-24', 'leading-24', 'leading-xl-30', 'font-baskerville', 'fw-bold', 'text-dark-gray-100', 'mt-4');
-    cardTitle.textContent = titleCell.textContent.trim();
-    cardText.append(cardTitle);
+    const ctaButton = document.createElement('a');
+    ctaButton.classList.add(
+      'cta-analytics',
+      'svasti-cta',
+      'w-fit',
+      'text-decoration-none',
+      'd-flex',
+      'align-items-center',
+      'primary',
+      'px-8',
+      'pb-3',
+      'text-cream-100',
+      'border',
+      'border-2',
+      'border-red-100',
+      'border-maroon-100-hover',
+      'border-red-300-active',
+      'bg-red-100',
+      'bg-maroon-100-hover',
+      'bg-red-300-active',
+    );
+    if (ctaLink) {
+      ctaButton.href = ctaLink.href;
+    }
+    ctaButton.textContent = ctaLinkLabelCell.textContent.trim();
+    ctaDiv.append(ctaButton);
+    card.append(ctaDiv);
 
-    const cardDesc = document.createElement('p');
-    cardDesc.classList.add('recipe-card__desc', 'font-default', 'font-xl-18', 'leading-24', 'fw-medium', 'text-dark-gray-100', 'mt-4');
-    cardDesc.textContent = descriptionCell.textContent.trim();
-    cardText.append(cardDesc);
-    cardContent.append(cardText);
-
-    const cardWave = document.createElement('div');
-    cardWave.classList.add('recipe-card__wave', 'mt-11', 'mt-xl-7', 'w-100');
-    cardContent.append(cardWave);
-
-    const cardProperties = document.createElement('ul');
-    cardProperties.classList.add('recipe-card__properties', 'mt-4', 'd-flex', 'align-items-center'); // Corrected class name
-
-    const timeProperty = document.createElement('li');
-    timeProperty.classList.add('recipe-card__property', 'recipe-card__property--left', 'd-flex', 'align-items-center');
-    const timeSpan = document.createElement('span');
-    timeSpan.classList.add('recipe-card__time', 'text-dark-gray-100', 'font-14', 'font-xl-default', 'leading-20', 'fw-medium', 'ms-2', 'd-inline-block', 'text-nowrap');
-    timeSpan.textContent = timeCell.textContent.trim();
-    timeProperty.append(timeSpan);
-    cardProperties.append(timeProperty);
-
-    const servesProperty = document.createElement('li');
-    servesProperty.classList.add('recipe-card__property', 'recipe-card__property--right', 'flex-fill', 'd-flex', 'align-items-center', 'justify-content-end');
-    const servesSpan = document.createElement('span');
-    servesSpan.classList.add('serve-content', 'recipe-card__serves', 'text-dark-gray-100', 'font-14', 'font-xl-default', 'leading-20', 'fw-medium', 'ms-2', 'd-inline-block');
-    servesSpan.textContent = servesCell.textContent.trim();
-    servesProperty.append(servesSpan);
-    cardProperties.append(servesProperty);
-
-    cardContent.append(cardProperties);
-    cardLink.append(cardContent);
-    recipeCard.append(cardLink);
-    swiperSlide.append(recipeCard);
-    swiperWrapper.append(swiperSlide);
+    swiperSlideWrapper.append(card);
   });
 
-  popularRecipeContainer.append(swiperWrapper);
-  popularRecipeSection.append(popularRecipeContainer);
-  swiperWrapperContainer.append(popularRecipeSection);
-  swiperContainer.append(swiperWrapperContainer);
+  productCardsContainer.append(swiperSlideWrapper);
+  swiperContainer.append(productCardsContainer);
 
   const prevButton = document.createElement('button');
-  prevButton.classList.add('card-carousel__swiper--prev', 'card-carousel__navigation', 'cursor-pointer', 'rounded-circle', 'bg-transparent', 'text-red-100', 'text-maroon-600-hover', 'justify-content-center', 'align-items-center', 'position-absolute', 'd-none', 'd-sm-flex');
+  prevButton.classList.add(
+    'card-carousel__swiper--prev',
+    'card-carousel__navigation',
+    'cursor-pointer',
+    'rounded-circle',
+    'bg-transparent',
+    'text-red-100',
+    'text-maroon-600-hover',
+    'justify-content-center',
+    'align-items-center',
+    'position-absolute',
+    'd-none',
+    'd-sm-flex',
+    'opacity-30',
+  );
+  prevButton.disabled = true;
   const prevImg = document.createElement('img');
   prevImg.alt = 'svg file';
-  // The original HTML uses a specific SVG for navigation buttons.
-  // Since we cannot hardcode DAM paths, and the model does not provide a field for these icons,
-  // we will omit the src attribute for these generated icons.
-  // In a real scenario, these would either come from a model field or be handled by CSS.
+  prevImg.src = '/icons/arrow.svg'; // Placeholder, replace with actual icon path if needed
   prevButton.append(prevImg);
-  swiperWrapperContainer.append(prevButton);
+  swiperContainer.append(prevButton);
 
   const nextButton = document.createElement('button');
-  nextButton.classList.add('card-carousel__swiper--next', 'card-carousel__navigation', 'cursor-pointer', 'rounded-circle', 'bg-transparent', 'text-red-100', 'text-maroon-600-hover', 'justify-content-center', 'align-items-center', 'position-absolute', 'end-0', 'd-none', 'd-sm-flex');
+  nextButton.classList.add(
+    'card-carousel__swiper--next',
+    'card-carousel__navigation',
+    'cursor-pointer',
+    'rounded-circle',
+    'bg-transparent',
+    'text-red-100',
+    'text-maroon-600-hover',
+    'justify-content-center',
+    'align-items-center',
+    'position-absolute',
+    'end-0',
+    'd-none',
+    'd-sm-flex',
+  );
   const nextImg = document.createElement('img');
   nextImg.alt = 'svg file';
+  nextImg.src = '/icons/arrow.svg'; // Placeholder, replace with actual icon path if needed
   nextButton.append(nextImg);
-  swiperWrapperContainer.append(nextButton);
+  swiperContainer.append(nextButton);
+
+  swiperWrapper.append(swiperContainer);
 
   const pagination = document.createElement('div');
-  pagination.classList.add('card-carousel__swiper--pagination', 'mt-10', 'cursor-pointer', 'position-relative', 'swiper-pagination-clickable', 'swiper-pagination-bullets', 'swiper-pagination-horizontal', 'mx-auto', 'w-fit');
-  swiperContainer.append(pagination);
+  pagination.classList.add(
+    'card-carousel__swiper--pagination',
+    'mt-10',
+    'cursor-pointer',
+    'position-relative',
+    'swiper-pagination-clickable',
+    'swiper-pagination-bullets',
+    'swiper-pagination-horizontal',
+    'mx-auto',
+    'w-fit',
+  );
+  swiperWrapper.append(pagination);
 
-  block.append(swiperContainer);
-
-  const ctaDiv = document.createElement('div');
-  ctaDiv.classList.add('d-flex', 'justify-content-center', 'align-items-center', 'mt-8');
-
-  const ctaAnchor = document.createElement('a');
-  ctaAnchor.classList.add('svasti-cta', 'cta-analytics', 'w-fit', 'text-decoration-none', 'd-flex', 'align-items-center', 'primary', 'px-8', 'pb-3', 'text-cream-100', 'border', 'border-2', 'border-red-100', 'border-maroon-100-hover', 'border-red-300-active', 'bg-red-100', 'bg-maroon-100-hover', 'bg-red-300-active');
-  const foundCtaLink = ctaLinkRow.querySelector('a');
-  if (foundCtaLink) {
-    ctaAnchor.href = foundCtaLink.href;
-  }
-
-  const ctaLabelSpan = document.createElement('span');
-  ctaLabelSpan.classList.add('svasti-cta__label', 'fw-semibold', 'fs-default', 'leading-26');
-  ctaLabelSpan.textContent = ctaLabelRow.firstElementChild.textContent.trim();
-  ctaAnchor.append(ctaLabelSpan);
-  moveInstrumentation(ctaLinkRow, ctaAnchor);
-  moveInstrumentation(ctaLabelRow, ctaLabelSpan);
-  ctaDiv.append(ctaAnchor);
-
-  block.append(ctaDiv);
+  block.append(swiperWrapper);
 
   // Add event listeners for carousel navigation
-  // These will typically interact with a Swiper instance initialized by data-swiper-init-async
-  // For now, we'll add placeholder listeners. The actual Swiper API calls would go here.
+  // This assumes a Swiper.js instance will be initialized later
+  // For a full implementation, Swiper.js would need to be imported and initialized here
+  // For now, we'll add basic click listeners that would interact with a Swiper instance
   prevButton.addEventListener('click', () => {
-    // Logic to navigate to the previous slide
-    // e.g., if (window.swiperInstance) swiperInstance.slidePrev();
+    // Logic to navigate to previous slide, e.g., swiper.slidePrev();
     console.log('Previous button clicked');
+    // Example: if (window.swiperInstance) window.swiperInstance.slidePrev();
   });
 
   nextButton.addEventListener('click', () => {
-    // Logic to navigate to the next slide
-    // e.g., if (window.swiperInstance) swiperInstance.slideNext();
+    // Logic to navigate to next slide, e.g., swiper.slideNext();
     console.log('Next button clicked');
+    // Example: if (window.swiperInstance) window.swiperInstance.slideNext();
   });
 
 
-  // Clean up original block content
-  rows.forEach((row) => row.remove());
+  block.querySelectorAll('picture > img').forEach((img) => {
+    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+    moveInstrumentation(img, optimizedPic.querySelector('img'));
+    img.closest('picture').replaceWith(optimizedPic);
+  });
 }

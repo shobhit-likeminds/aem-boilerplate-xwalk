@@ -42,7 +42,7 @@
   {
     "id": "card-carousel",
     "components": [
-      "recipe-card"
+      "product-card"
     ]
   },
   {
@@ -93,7 +93,7 @@
   {
     "id": "product-selection-component",
     "components": [
-      "product"
+      "product-item"
     ]
   },
   {
