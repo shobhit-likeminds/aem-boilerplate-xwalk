@@ -79,7 +79,12 @@
         "latest-social",
         "careers-cta",
         "footer-links-row",
-        "main-search-bar"
+        "main-search-bar",
+        "navbar",
+        "front-web-banner",
+        "call-to-act-front",
+        "latest-news",
+        "site-footer"
       ]
     }
   ]

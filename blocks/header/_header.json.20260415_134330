@@ -53,12 +53,6 @@
           "valueType": "string"
         },
         {
-          "component": "text",
-          "label": "Site Name",
-          "name": "siteName",
-          "valueType": "string"
-        },
-        {
           "component": "container",
           "item": "nav-item",
           "label": "Navigation Items",

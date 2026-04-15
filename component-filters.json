@@ -44,7 +44,18 @@
       "latest-social",
       "careers-cta",
       "footer-links-row",
-      "main-search-bar"
+      "main-search-bar",
+      "navbar",
+      "front-web-banner",
+      "call-to-act-front",
+      "latest-news",
+      "site-footer"
+    ]
+  },
+  {
+    "id": "call-to-act-front",
+    "components": [
+      "call-to-act-item"
     ]
   },
   {
@@ -99,6 +110,9 @@
     ]
   },
   {
+    "id": "front-web-banner"
+  },
+  {
     "id": "header-full-wrp",
     "components": [
       "nav-item"
@@ -132,6 +146,12 @@
     "id": "image-with-text-over"
   },
   {
+    "id": "latest-news",
+    "components": [
+      "news-item"
+    ]
+  },
+  {
     "id": "latest-social"
   },
   {
@@ -156,6 +176,12 @@
     ]
   },
   {
+    "id": "navbar",
+    "components": [
+      "nav-item"
+    ]
+  },
+  {
     "id": "our-brands"
   },
   {
@@ -168,6 +194,12 @@
     "id": "purpose-led-grid",
     "components": [
       "purpose-led-card"
+    ]
+  },
+  {
+    "id": "site-footer",
+    "components": [
+      "footer-section"
     ]
   },
   {

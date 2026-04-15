@@ -142,6 +142,57 @@
     ]
   },
   {
+    "id": "call-to-act-front",
+    "fields": [
+      {
+        "component": "container",
+        "item": "call-to-act-item",
+        "label": "Items",
+        "name": "items"
+      }
+    ]
+  },
+  {
+    "id": "call-to-act-item",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Image",
+        "name": "image"
+      },
+      {
+        "component": "text",
+        "label": "Value",
+        "name": "value",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Label",
+        "name": "label",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Link Label",
+        "name": "linkLabel",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Description",
+        "name": "description",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "card",
     "fields": [
       {
@@ -545,6 +596,29 @@
     ]
   },
   {
+    "id": "front-web-banner",
+    "fields": [
+      {
+        "component": "richtext",
+        "label": "Caption",
+        "name": "caption",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Video Poster",
+        "name": "videoPoster",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Video Source",
+        "name": "videoSource",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "header-full-wrp",
     "fields": [
       {
@@ -621,6 +695,12 @@
         "component": "text",
         "label": "Logo Link Label",
         "name": "logoLinkLabel",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Site Name",
+        "name": "siteName",
         "valueType": "string"
       },
       {
@@ -923,6 +1003,46 @@
     ]
   },
   {
+    "id": "latest-news",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "news-item",
+        "label": "News Items",
+        "name": "newsItems"
+      }
+    ]
+  },
+  {
+    "id": "news-item",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Link Label",
+        "name": "linkLabel",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Description",
+        "name": "description",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "latest-social",
     "fields": [
       {
@@ -1156,6 +1276,46 @@
     ]
   },
   {
+    "id": "navbar",
+    "fields": [
+      {
+        "component": "container",
+        "item": "nav-item",
+        "label": "Navigation Items",
+        "name": "navItems"
+      }
+    ]
+  },
+  {
+    "id": "nav-item",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Label",
+        "name": "label",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Link Label",
+        "name": "linkLabel",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Sub Links",
+        "name": "subLinks",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "our-brands",
     "fields": [
       {
@@ -1264,6 +1424,63 @@
         "component": "richtext",
         "label": "Text",
         "name": "text",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "site-footer",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Logo",
+        "name": "logo"
+      },
+      {
+        "component": "text",
+        "label": "Address",
+        "name": "address",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Phone",
+        "name": "phone",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Social Icons",
+        "name": "socialIcons",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "footer-section",
+        "label": "Footer Sections",
+        "name": "footerSections"
+      },
+      {
+        "component": "richtext",
+        "label": "Footer Bottom",
+        "name": "footerBottom",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "footer-section",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Section Links",
+        "name": "sectionLinks",
         "valueType": "string"
       }
     ]

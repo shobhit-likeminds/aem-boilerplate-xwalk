@@ -83,6 +83,37 @@
       "id": "blocks",
       "components": [
         {
+          "title": "Call-To-Act-Front",
+          "id": "call-to-act-front",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "call-to-act-front",
+                  "model": "call-to-act-front",
+                  "name": "Call-To-Act-Front"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Call-To-Act-Item",
+          "id": "call-to-act-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "call-to-act-item",
+                  "name": "Call-To-Act-Item"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Cards",
           "id": "cards",
           "plugins": {
@@ -299,6 +330,22 @@
           }
         },
         {
+          "title": "Front-Web-Banner",
+          "id": "front-web-banner",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "front-web-banner",
+                  "model": "front-web-banner",
+                  "name": "Front-Web-Banner"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Header-Full-Wrp",
           "id": "header-full-wrp",
           "plugins": {
@@ -487,6 +534,37 @@
           }
         },
         {
+          "title": "Latest-News",
+          "id": "latest-news",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "latest-news",
+                  "model": "latest-news",
+                  "name": "Latest-News"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "News Item",
+          "id": "news-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "news-item",
+                  "name": "News Item"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Latest-Social",
           "id": "latest-social",
           "plugins": {
@@ -612,6 +690,37 @@
           }
         },
         {
+          "title": "Navbar",
+          "id": "navbar",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "navbar",
+                  "model": "navbar",
+                  "name": "Navbar"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Nav Item",
+          "id": "nav-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "nav-item",
+                  "name": "Nav Item"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Our Brands",
           "id": "our-brands",
           "plugins": {
@@ -684,6 +793,37 @@
                 "template": {
                   "model": "purpose-led-card",
                   "name": "Purpose-Led-Card"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Site-Footer",
+          "id": "site-footer",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "site-footer",
+                  "model": "site-footer",
+                  "name": "Site-Footer"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Footer Section",
+          "id": "footer-section",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "footer-section",
+                  "name": "Footer Section"
                 }
               }
             }
