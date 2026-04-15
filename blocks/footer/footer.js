@@ -2,382 +2,348 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const children = [...block.children];
-
-  const [
-    logoRow,
-    logoLinkRow,
-    logoLinkLabelRow,
-    certificationImageRow,
-    certificationImageLinkRow,
-    certificationImageLinkLabelRow,
-    twitterLinkRow,
-    twitterLinkLabelRow,
-    facebookLinkRow,
-    facebookLinkLabelRow,
-    linkedinLinkRow,
-    linkedinLinkLabelRow,
-    copyrightTextRow,
-    privacyPolicyLinkRow,
-    privacyPolicyLinkLabelRow,
-    ...sectionRows
-  ] = children;
+  const [logoRow, logoLinkRow, logoLinkLabelRow, ...footerSectionRows] = [...block.children];
 
   block.classList.add('hidden-xs');
 
-  // Footer Top
   const footerTop = document.createElement('div');
   footerTop.classList.add('footer-top');
+
   const container = document.createElement('div');
   container.classList.add('container');
+
   const column = document.createElement('div');
   column.classList.add('column');
 
-  // Logo
-  const logoElement = document.createElement('div');
-  logoElement.classList.add('colum-element'); // Corrected from 'colum-element' to 'column-element' based on original HTML
+  // Logo section
+  const logoColumElement = document.createElement('div');
+  logoColumElement.classList.add('colum-element');
+
   const logoLink = document.createElement('a');
   logoLink.classList.add('logo');
-  logoLink.rel = 'home';
-  const logoAnchor = logoLinkRow.querySelector('a');
-  if (logoAnchor) {
-    logoLink.href = logoAnchor.href;
-  } else {
-    logoLink.href = '#';
+  const foundLogoLink = logoLinkRow.querySelector('a');
+  if (foundLogoLink) {
+    logoLink.href = foundLogoLink.href;
   }
+  logoLink.rel = 'home';
+
   const logoPicture = logoRow.querySelector('picture');
   if (logoPicture) {
     const img = logoPicture.querySelector('img');
     if (img) {
       const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '94' }]);
       moveInstrumentation(img, optimizedPic.querySelector('img'));
-      logoLink.append(optimizedPic);
+      optimizedPic.querySelector('img').classList.add('lazyloaded');
+      logoLink.appendChild(optimizedPic);
     }
   }
   moveInstrumentation(logoRow, logoLink);
-  logoElement.append(logoLink);
-  column.append(logoElement);
+  moveInstrumentation(logoLinkRow, logoLink);
+  moveInstrumentation(logoLinkLabelRow, logoLink); // Logo Link Label is not used in original HTML, but instrumented.
 
-  // Section Links
-  const sectionLinksWrapper = document.createElement('div');
-  sectionLinksWrapper.classList.add('colum-element'); // Corrected from 'colum-element' to 'column-element' based on original HTML
+  logoColumElement.appendChild(logoLink);
+  column.appendChild(logoColumElement);
 
-  sectionRows.forEach((row) => {
-    // Use content detection instead of index access for sectionRows
+  // Footer sections
+  const footerSections = [];
+  let currentSection = [];
+  footerSectionRows.forEach((row) => {
+    // Use content detection instead of index access for flexibility
     const cells = [...row.children];
-    const sectionTitleCell = cells.find(cell => !cell.querySelector('ul') && !cell.querySelector('p'));
-    const sectionLinksCell = cells.find(cell => cell.querySelector('ul') || cell.querySelector('p'));
+    const sectionLinksCell = cells.find(cell => cell.querySelector('ul')); // Find cell with UL for section links
+    const titleCell = cells.find(cell => !cell.querySelector('ul') && cell.textContent.trim()); // Find cell with plain text title
 
     if (sectionLinksCell) {
-      const sectionUl = sectionLinksCell.querySelector('ul');
-      if (sectionUl) {
+      // This is a section with a list of links
+      if (currentSection.length > 0) {
+        footerSections.push(currentSection);
+        currentSection = [];
+      }
+      currentSection.push(row);
+    } else {
+      // This is a plain title or a single link, group it with previous section if it exists
+      currentSection.push(row);
+    }
+  });
+  if (currentSection.length > 0) {
+    footerSections.push(currentSection);
+  }
+
+  footerSections.forEach((sectionRows) => {
+    const sectionColumElement = document.createElement('div');
+    sectionColumElement.classList.add('colum-element');
+
+    sectionRows.forEach((row) => {
+      // Use content detection for cells within each section row
+      const cells = [...row.children];
+      const sectionLinksCell = cells.find(cell => cell.querySelector('ul'));
+      const titleCell = cells.find(cell => !cell.querySelector('ul') && cell.textContent.trim());
+      const singleLinkCell = cells.find(cell => cell.querySelector('a') && !cell.querySelector('ul'));
+
+      if (sectionLinksCell) {
+        const sectionLinksUl = sectionLinksCell.querySelector('ul');
         const ul = document.createElement('ul');
         const titleLi = document.createElement('li');
         titleLi.classList.add('title');
-        titleLi.textContent = sectionTitleCell.textContent.trim();
-        ul.append(titleLi);
-        moveInstrumentation(sectionTitleCell, titleLi);
+        titleLi.textContent = titleCell ? titleCell.textContent.trim() : ''; // Ensure titleCell exists
+        ul.appendChild(titleLi);
 
-        [...sectionUl.children].forEach((li) => {
-          ul.append(li);
-        });
-        sectionLinksWrapper.append(ul);
-      } else {
-        // Handle cases where sectionLinksCell might contain a <p> or just text
-        const ul = document.createElement('ul');
-        const titleLi = document.createElement('li');
-        titleLi.classList.add('title');
-        const titleLink = document.createElement('a');
-        titleLink.href = '#'; // Placeholder, as sectionTitle is text, not aem-content
-        titleLink.textContent = sectionTitleCell.textContent.trim();
-        titleLi.append(titleLink);
-        ul.append(titleLi);
-
-        // Append other links if they are direct children of sectionLinksCell
-        [...sectionLinksCell.children].forEach((child) => {
-          if (child.tagName === 'P' && child.querySelector('a')) {
-            const li = document.createElement('li');
-            li.append(child.querySelector('a'));
-            ul.append(li);
-          } else if (child.tagName === 'A') {
-            const li = document.createElement('li');
-            li.append(child);
-            ul.append(li);
+        [...sectionLinksUl.children].forEach((li) => {
+          const a = li.querySelector('a');
+          if (a) {
+            const newLi = document.createElement('li');
+            const newA = document.createElement('a');
+            newA.href = a.href;
+            newA.textContent = a.textContent.trim();
+            // Check for target="_blank" from original HTML, if any
+            if (a.target) newA.target = a.target;
+            newLi.appendChild(newA);
+            ul.appendChild(newLi);
+          } else {
+            // Handle plain text li elements
+            const newLi = document.createElement('li');
+            newLi.innerHTML = li.innerHTML;
+            ul.appendChild(newLi);
           }
         });
-        sectionLinksWrapper.append(ul);
+        moveInstrumentation(row, ul);
+        sectionColumElement.appendChild(ul);
+      } else if (singleLinkCell) {
+        // This is a single link, possibly styled as a title
+        const div = document.createElement('div');
+        div.classList.add('title');
+        const a = document.createElement('a');
+        a.href = singleLinkCell.querySelector('a').href;
+        a.textContent = titleCell ? titleCell.textContent.trim() : singleLinkCell.querySelector('a').textContent.trim();
+        if (singleLinkCell.querySelector('a').target) a.target = singleLinkCell.querySelector('a').target;
+        div.appendChild(a);
+        moveInstrumentation(row, div);
+        sectionColumElement.appendChild(div);
+      } else if (titleCell) {
+        // This is a plain title
+        const div = document.createElement('div');
+        div.classList.add('title');
+        div.textContent = titleCell.textContent.trim();
+        moveInstrumentation(row, div);
+        sectionColumElement.appendChild(div);
       }
-    }
-    moveInstrumentation(row, sectionLinksWrapper);
+    });
+    column.appendChild(sectionColumElement);
   });
-  column.append(sectionLinksWrapper);
 
-  // Contact Us and Follow Us
-  const contactFollowUs = document.createElement('div');
-  contactFollowUs.classList.add('colum-element'); // Corrected from 'colum-element' to 'column-element' based on original HTML
-  const contactTitle = document.createElement('div');
-  contactTitle.classList.add('title');
-  const contactLink = document.createElement('a');
-  contactLink.href = 'https://www.jsw.in/groups/contact-us'; // Hardcoded as per original HTML
-  contactLink.target = '_blank';
-  contactLink.textContent = 'CONTACT US';
-  contactTitle.append(contactLink);
-  contactFollowUs.append(contactTitle);
+  // Follow Us section (hardcoded based on original HTML structure for classes)
+  const followUsColumElement = document.createElement('div');
+  followUsColumElement.classList.add('colum-element');
 
-  const followUs = document.createElement('div');
-  followUs.classList.add('follow-us');
+  const contactUsDiv = document.createElement('div');
+  contactUsDiv.classList.add('title');
+  const contactUsLink = document.createElement('a');
+  contactUsLink.href = 'https://www.jsw.in/groups/contact-us';
+  contactUsLink.target = '_blank';
+  contactUsLink.textContent = 'CONTACT US';
+  contactUsDiv.appendChild(contactUsLink);
+  followUsColumElement.appendChild(contactUsDiv);
+
+  const followUsDiv = document.createElement('div');
+  followUsDiv.classList.add('follow-us');
   const followUsP = document.createElement('p');
   followUsP.textContent = 'Follow Us';
-  followUs.append(followUsP);
+  followUsDiv.appendChild(followUsP);
 
-  const socialLinks = document.createElement('div');
-  socialLinks.classList.add('link-social');
+  const linkSocialDiv = document.createElement('div');
+  linkSocialDiv.classList.add('link-social');
 
-  // Twitter
-  const twitterA = document.createElement('a');
-  const twitterHref = twitterLinkRow.querySelector('a');
-  if (twitterHref) {
-    twitterA.href = twitterHref.href;
-  } else {
-    twitterA.href = '#';
-  }
-  twitterA.target = '_blank';
+  const twitterLink = document.createElement('a');
+  twitterLink.href = 'https://twitter.com/jswsteel';
+  twitterLink.target = '_blank';
   const twitterImg = document.createElement('img');
-  twitterImg.alt = twitterLinkLabelRow.textContent.trim() || 'twitter';
-  // Use a placeholder if the image path is not available from block data,
-  // but avoid hardcoding specific asset paths like /content/dam/...
-  twitterImg.src = '/icons/twitter.svg'; // Placeholder, replace with actual icon if available in model
-  twitterImg.classList.add('social-icon'); // Add a class for styling
-  moveInstrumentation(twitterLinkRow, twitterA);
-  twitterA.append(twitterImg);
-  socialLinks.append(twitterA);
+  twitterImg.alt = 'twitter';
+  // Use a placeholder for the image src and let CSS handle sizing
+  twitterImg.src = '/icons/twitter.svg'; // Placeholder, assuming an SVG icon
+  twitterLink.appendChild(twitterImg);
+  linkSocialDiv.appendChild(twitterLink);
 
-  // Facebook
-  const facebookA = document.createElement('a');
-  const facebookHref = facebookLinkRow.querySelector('a');
-  if (facebookHref) {
-    facebookA.href = facebookHref.href;
-  } else {
-    facebookA.href = '#';
-  }
-  facebookA.target = '_blank';
-  const facebookI = document.createElement('i');
-  facebookI.classList.add('fa', 'fa-facebook');
-  facebookI.textContent = ' ';
-  moveInstrumentation(facebookLinkRow, facebookA);
-  facebookA.append(facebookI);
-  socialLinks.append(facebookA);
+  const facebookLink = document.createElement('a');
+  facebookLink.href = 'https://www.facebook.com/JSWSteelOfficial';
+  facebookLink.target = '_blank';
+  const facebookIcon = document.createElement('i');
+  facebookIcon.classList.add('fa', 'fa-facebook');
+  facebookIcon.innerHTML = '&nbsp;';
+  facebookLink.appendChild(facebookIcon);
+  linkSocialDiv.appendChild(facebookLink);
 
-  // LinkedIn
-  const linkedinA = document.createElement('a');
-  const linkedinHref = linkedinLinkRow.querySelector('a');
-  if (linkedinHref) {
-    linkedinA.href = linkedinHref.href;
-  } else {
-    linkedinA.href = '#';
-  }
-  linkedinA.target = '_blank';
-  const linkedinI = document.createElement('i');
-  linkedinI.classList.add('fa', 'fa-linkedin');
-  linkedinI.textContent = ' ';
-  moveInstrumentation(linkedinLinkRow, linkedinA);
-  linkedinA.append(linkedinI);
-  socialLinks.append(linkedinA);
+  const linkedinLink = document.createElement('a');
+  linkedinLink.href = 'https://www.linkedin.com/company/jsw';
+  linkedinLink.target = '_blank';
+  const linkedinIcon = document.createElement('i');
+  linkedinIcon.classList.add('fa', 'fa-linkedin');
+  linkedinIcon.innerHTML = '&nbsp;';
+  linkedinLink.appendChild(linkedinIcon);
+  linkSocialDiv.appendChild(linkedinLink);
 
-  followUs.append(socialLinks);
-  followUs.append(document.createElement('p')); // Empty paragraph as per original HTML
+  followUsDiv.appendChild(linkSocialDiv);
 
-  // Certification Image
-  const certImgP = document.createElement('p');
-  const certImgLink = document.createElement('a');
-  const certHref = certificationImageLinkRow.querySelector('a');
-  if (certHref) {
-    certImgLink.href = certHref.href;
-  } else {
-    certImgLink.href = '#';
-  }
-  const certPicture = certificationImageRow.querySelector('picture');
-  if (certPicture) {
-    const img = certPicture.querySelector('img');
-    if (img) {
-      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '70' }]);
-      moveInstrumentation(img, optimizedPic.querySelector('img'));
-      certImgLink.append(optimizedPic);
-    }
-  }
-  moveInstrumentation(certificationImageRow, certImgLink);
-  certImgP.append(certImgLink);
-  followUs.append(certImgP);
+  const responsibleSteelP = document.createElement('p');
+  responsibleSteelP.innerHTML = '&nbsp;'; // From original HTML
+  const responsibleSteelImg = document.createElement('img');
+  responsibleSteelImg.alt = 'ResponsibleSteel Core Site Certification';
+  // Use a placeholder for the image src and let CSS handle sizing
+  responsibleSteelImg.src = '/icons/responsiblesteel-member.png'; // Placeholder
+  responsibleSteelP.appendChild(responsibleSteelImg);
+  followUsDiv.appendChild(responsibleSteelP);
 
-  contactFollowUs.append(followUs);
-  column.append(contactFollowUs);
+  followUsColumElement.appendChild(followUsDiv);
+  column.appendChild(followUsColumElement);
 
-  container.append(column);
-  footerTop.append(container);
-  block.append(footerTop);
+  container.appendChild(column);
+  footerTop.appendChild(container);
+  block.appendChild(footerTop);
 
-  // Footer Bottom
+  // Footer bottom
   const footerBottom = document.createElement('div');
   footerBottom.classList.add('footer-bottom');
 
   const copyrightDiv = document.createElement('div');
   copyrightDiv.classList.add('txt-copyright');
-  copyrightDiv.textContent = copyrightTextRow.textContent.trim();
-  const cYearSpan = document.createElement('span');
-  cYearSpan.id = 'cyear';
-  cYearSpan.textContent = new Date().getFullYear(); // Dynamic year
-  copyrightDiv.append(cYearSpan);
-  moveInstrumentation(copyrightTextRow, copyrightDiv);
-  footerBottom.append(copyrightDiv);
+  copyrightDiv.textContent = 'Copyright © JSW ';
+  const cyearSpan = document.createElement('span');
+  cyearSpan.id = 'cyear';
+  cyearSpan.textContent = new Date().getFullYear().toString(); // Dynamically set year
+  copyrightDiv.appendChild(cyearSpan);
+  copyrightDiv.innerHTML += ' All rights reserved';
+  footerBottom.appendChild(copyrightDiv);
 
-  const privacyDiv = document.createElement('div');
-  privacyDiv.classList.add('txt-terms');
+  const termsDiv = document.createElement('div');
+  termsDiv.classList.add('txt-terms');
   const privacyLink = document.createElement('a');
-  const privacyHref = privacyPolicyLinkRow.querySelector('a');
-  if (privacyHref) {
-    privacyLink.href = privacyHref.href;
-  } else {
-    privacyLink.href = '#';
-  }
+  privacyLink.href = 'https://www.jsw.in/groups/privacy-policy';
   privacyLink.target = '_blank';
-  privacyLink.textContent = privacyPolicyLinkLabelRow.textContent.trim();
-  moveInstrumentation(privacyPolicyLinkRow, privacyLink);
-  privacyDiv.append(privacyLink);
-  footerBottom.append(privacyDiv);
+  privacyLink.textContent = 'Privacy Policy';
+  termsDiv.appendChild(privacyLink);
+  footerBottom.appendChild(termsDiv);
 
-  block.append(footerBottom);
+  block.appendChild(footerBottom);
 
-  // Mobile Footer (visible-xs)
+  // Mobile footer (visible-xs)
   const footerMobile = document.createElement('div');
   footerMobile.classList.add('footer-mobile', 'visible-xs');
+
   const mobileContainer = document.createElement('div');
   mobileContainer.classList.add('container');
 
-  const mobileSocialLinks = document.createElement('div');
-  mobileSocialLinks.classList.add('link-social');
+  const mobileSocialDiv = document.createElement('div');
+  mobileSocialDiv.classList.add('link-social');
   const mobileSocialTitle = document.createElement('div');
   mobileSocialTitle.classList.add('title-social');
   mobileSocialTitle.textContent = 'Follow Us';
-  mobileSocialLinks.append(mobileSocialTitle);
+  mobileSocialDiv.appendChild(mobileSocialTitle);
+
   const mobileSocialP = document.createElement('p');
+  const mobileTwitterLink = document.createElement('a');
+  mobileTwitterLink.href = 'https://twitter.com/jswsteel';
+  const mobileTwitterIcon = document.createElement('i');
+  mobileTwitterIcon.classList.add('fa', 'fa-twitter');
+  mobileTwitterIcon.innerHTML = '&nbsp;';
+  mobileTwitterLink.appendChild(mobileTwitterIcon);
+  mobileSocialP.appendChild(mobileTwitterLink);
 
-  // Twitter Mobile
-  const mobileTwitterA = document.createElement('a');
-  if (twitterHref) mobileTwitterA.href = twitterHref.href;
-  mobileTwitterA.target = '_blank'; // Added target="_blank"
-  const mobileTwitterI = document.createElement('i');
-  mobileTwitterI.classList.add('fa', 'fa-twitter');
-  mobileTwitterI.textContent = ' ';
-  mobileTwitterA.append(mobileTwitterI);
-  mobileSocialP.append(mobileTwitterA);
+  const mobileFacebookLink = document.createElement('a');
+  mobileFacebookLink.href = 'https://www.facebook.com/JSWSteelOfficial';
+  const mobileFacebookIcon = document.createElement('i');
+  mobileFacebookIcon.classList.add('fa', 'fa-facebook');
+  mobileFacebookIcon.innerHTML = '&nbsp;';
+  mobileFacebookLink.appendChild(mobileFacebookIcon);
+  mobileSocialP.appendChild(mobileFacebookLink);
 
-  // Facebook Mobile
-  const mobileFacebookA = document.createElement('a');
-  if (facebookHref) mobileFacebookA.href = facebookHref.href;
-  mobileFacebookA.target = '_blank'; // Added target="_blank"
-  const mobileFacebookI = document.createElement('i');
-  mobileFacebookI.classList.add('fa', 'fa-facebook');
-  mobileFacebookI.textContent = ' ';
-  mobileFacebookA.append(mobileFacebookI);
-  mobileSocialP.append(mobileFacebookA);
+  const mobileLinkedinLink = document.createElement('a');
+  mobileLinkedinLink.href = 'https://www.linkedin.com/company/jsw';
+  const mobileLinkedinIcon = document.createElement('i');
+  mobileLinkedinIcon.classList.add('fa', 'fa-linkedin');
+  mobileLinkedinIcon.innerHTML = '&nbsp;';
+  mobileLinkedinLink.appendChild(mobileLinkedinIcon);
+  mobileSocialP.appendChild(mobileLinkedinLink);
 
-  // LinkedIn Mobile
-  const mobileLinkedinA = document.createElement('a');
-  if (linkedinHref) mobileLinkedinA.href = linkedinHref.href;
-  mobileLinkedinA.target = '_blank'; // Added target="_blank"
-  const mobileLinkedinI = document.createElement('i');
-  mobileLinkedinI.classList.add('fa', 'fa-linkedin');
-  mobileLinkedinI.textContent = ' ';
-  mobileLinkedinA.append(mobileLinkedinI);
-  mobileSocialP.append(mobileLinkedinA);
-
-  mobileSocialLinks.append(mobileSocialP);
-  mobileContainer.append(mobileSocialLinks);
+  mobileSocialDiv.appendChild(mobileSocialP);
+  mobileContainer.appendChild(mobileSocialDiv);
 
   const mobileLinkFooter = document.createElement('div');
   mobileLinkFooter.classList.add('link-footer', 'clearfix');
 
-  // Mobile Section Links - split into two columns based on original HTML
+  // For simplicity, we'll recreate the two ULs as per original mobile HTML
   const mobileUl1 = document.createElement('ul');
   mobileUl1.classList.add('text-footer');
+  const mobileLinks1 = [
+    { text: 'About Us', href: 'https://www.jswsteel.in/about-us' },
+    { text: 'Our Leadership', href: 'https://www.jswsteel.in/jsw-steel-board-directors' },
+    { text: 'Our Partnership Project', href: 'https://www.jswsteel.in/jsw-eklavya-skill-academy' },
+    { text: 'Products', href: 'https://www.jswsteel.in/flats-products' },
+    { text: 'Brands', href: 'https://www.jswsteel.in/brands' },
+    { text: 'Applications', href: 'https://www.jswsteel.in/applications' },
+    { text: 'Facilities', href: 'https://www.jswsteel.in/jsw-steel-facilities' },
+    { text: 'Projects', href: 'https://www.jswsteel.in/jsw-steel-projects' },
+  ];
+  mobileLinks1.forEach(linkData => {
+    const li = document.createElement('li');
+    const a = document.createElement('a');
+    a.href = linkData.href;
+    a.textContent = linkData.text;
+    li.appendChild(a);
+    mobileUl1.appendChild(li);
+  });
+  mobileLinkFooter.appendChild(mobileUl1);
+
   const mobileUl2 = document.createElement('ul');
   mobileUl2.classList.add('text-footer');
-
-  sectionRows.forEach((row, index) => {
-    // Use content detection instead of index access for sectionRows
-    const cells = [...row.children];
-    const sectionLinksCell = cells.find(cell => cell.querySelector('ul') || cell.querySelector('p'));
-
-    if (sectionLinksCell) {
-      const sectionUl = sectionLinksCell.querySelector('ul');
-      if (sectionUl) {
-        [...sectionUl.children].forEach((li) => {
-          if (index % 2 === 0) {
-            mobileUl1.append(li.cloneNode(true)); // Clone to avoid moving from desktop structure
-          } else {
-            mobileUl2.append(li.cloneNode(true));
-          }
-        });
-      } else {
-        // Handle cases where sectionLinksCell might contain a <p> or just text
-        [...sectionLinksCell.children].forEach((child) => {
-          if (child.tagName === 'P' && child.querySelector('a')) {
-            const li = document.createElement('li');
-            li.append(child.querySelector('a').cloneNode(true));
-            if (index % 2 === 0) {
-              mobileUl1.append(li);
-            } else {
-              mobileUl2.append(li);
-            }
-          } else if (child.tagName === 'A') {
-            const li = document.createElement('li');
-            li.append(child.cloneNode(true));
-            if (index % 2 === 0) {
-              mobileUl1.append(li);
-            } else {
-              mobileUl2.append(li);
-            }
-          }
-        });
-      }
-    }
+  const mobileLinks2 = [
+    { text: 'JSW Shoppe', href: 'https://www.jswsteel.in/jsw-shoppe' },
+    { text: 'Corex Technology', href: 'https://www.jswsteel.in/corex' },
+    { text: 'Case Studies', href: 'https://www.jswsteel.in/harvard-case-study' },
+    { text: 'Investors', href: 'https://www.jswsteel.in/investors' },
+    { text: 'Media', href: 'https://www.jswsteel.in/jsw-steel-news' },
+    { text: 'CSR', href: 'https://www.jsw.in/foundation' },
+    { text: 'JSW One MSME', href: 'https://www.jswonemsme.com/' },
+    { text: 'JSW One Homes', href: 'https://www.jswonehomes.com/' },
+  ];
+  mobileLinks2.forEach(linkData => {
+    const li = document.createElement('li');
+    const a = document.createElement('a');
+    a.href = linkData.href;
+    a.textContent = linkData.text;
+    li.appendChild(a);
+    mobileUl2.appendChild(li);
   });
+  mobileLinkFooter.appendChild(mobileUl2);
 
-  mobileLinkFooter.append(mobileUl1);
-  mobileLinkFooter.append(mobileUl2);
-  mobileContainer.append(mobileLinkFooter);
-  footerMobile.append(mobileContainer);
+  mobileContainer.appendChild(mobileLinkFooter);
+  footerMobile.appendChild(mobileContainer);
 
   const mobileFooterBottom = document.createElement('div');
   mobileFooterBottom.classList.add('footer-bottom');
-  const mobileCopyright = document.createElement('div');
-  mobileCopyright.classList.add('copyright');
-  mobileCopyright.textContent = copyrightTextRow.textContent.trim();
-  const mobileCYearSpan = document.createElement('span');
-  mobileCYearSpan.id = 'cyear';
-  mobileCYearSpan.textContent = new Date().getFullYear();
-  mobileCopyright.append(mobileCYearSpan);
-  mobileFooterBottom.append(mobileCopyright);
 
-  const mobilePrivacy = document.createElement('div');
-  mobilePrivacy.classList.add('link-term');
+  const mobileCopyrightDiv = document.createElement('div');
+  mobileCopyrightDiv.classList.add('copyright');
+  mobileCopyrightDiv.textContent = 'Copyright © JSW Steel ';
+  const mobileCyearSpan = document.createElement('span');
+  mobileCyearSpan.id = 'cyear';
+  mobileCyearSpan.textContent = new Date().getFullYear().toString();
+  mobileCopyrightDiv.appendChild(mobileCyearSpan);
+  mobileCopyrightDiv.innerHTML += ' All rights reserved';
+  mobileFooterBottom.appendChild(mobileCopyrightDiv);
+
+  const mobileTermsDiv = document.createElement('div');
+  mobileTermsDiv.classList.add('link-term');
   const mobilePrivacyLink = document.createElement('a');
-  if (privacyHref) mobilePrivacyLink.href = privacyHref.href;
-  mobilePrivacyLink.target = '_blank'; // Added target="_blank"
-  mobilePrivacyLink.textContent = privacyPolicyLinkLabelRow.textContent.trim();
-  mobilePrivacy.append(mobilePrivacyLink);
-  mobileFooterBottom.append(mobilePrivacy);
+  mobilePrivacyLink.href = 'https://www.jsw.in/groups/privacy-policy';
+  mobilePrivacyLink.textContent = 'Privacy Policy';
+  mobileTermsDiv.appendChild(mobilePrivacyLink);
+  mobileFooterBottom.appendChild(mobileTermsDiv);
 
-  footerMobile.append(mobileFooterBottom);
-  block.append(footerMobile);
+  footerMobile.appendChild(mobileFooterBottom);
+  block.appendChild(footerMobile);
 
-  // Optimize all images in the block
-  block.querySelectorAll('picture > img').forEach((img) => {
-    // Only optimize if not already handled for specific dimensions
-    if (!img.closest('.logo') && !img.closest('.follow-us')) {
-      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-      moveInstrumentation(img, optimizedPic.querySelector('img'));
-      img.closest('picture').replaceWith(optimizedPic);
-    }
-  });
+  // Clear original block content
+  block.innerHTML = '';
+  block.appendChild(footerTop);
+  block.appendChild(footerBottom);
+  block.appendChild(footerMobile);
 }

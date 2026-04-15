@@ -526,68 +526,8 @@
       {
         "component": "text",
         "label": "Logo Link Label",
-        "name": "logoLinkLabel"
-      },
-      {
-        "component": "reference",
-        "label": "Certification Image",
-        "name": "certificationImage"
-      },
-      {
-        "component": "aem-content",
-        "label": "Certification Image Link",
-        "name": "certificationImageLink"
-      },
-      {
-        "component": "text",
-        "label": "Certification Image Link Label",
-        "name": "certificationImageLinkLabel"
-      },
-      {
-        "component": "aem-content",
-        "label": "Twitter Link",
-        "name": "twitterLink"
-      },
-      {
-        "component": "text",
-        "label": "Twitter Link Label",
-        "name": "twitterLinkLabel"
-      },
-      {
-        "component": "aem-content",
-        "label": "Facebook Link",
-        "name": "facebookLink"
-      },
-      {
-        "component": "text",
-        "label": "Facebook Link Label",
-        "name": "facebookLinkLabel"
-      },
-      {
-        "component": "aem-content",
-        "label": "LinkedIn Link",
-        "name": "linkedinLink"
-      },
-      {
-        "component": "text",
-        "label": "LinkedIn Link Label",
-        "name": "linkedinLinkLabel"
-      },
-      {
-        "component": "text",
-        "label": "Copyright Text",
-        "name": "copyrightText",
+        "name": "logoLinkLabel",
         "valueType": "string"
-      },
-      {
-        "component": "aem-content",
-        "label": "Privacy Policy Link",
-        "name": "privacyPolicyLink"
-      },
-      {
-        "component": "text",
-        "label": "Privacy Policy Link Label",
-        "name": "privacyPolicyLinkLabel"
       },
       {
         "component": "container",
@@ -602,8 +542,8 @@
     "fields": [
       {
         "component": "text",
-        "label": "Section Title",
-        "name": "sectionTitle",
+        "label": "Title",
+        "name": "title",
         "valueType": "string"
       },
       {
@@ -724,28 +664,6 @@
         "component": "text",
         "label": "Logo Link Label",
         "name": "logoLinkLabel",
-        "valueType": "string"
-      },
-      {
-        "component": "aem-content",
-        "label": "Internal Home Link",
-        "name": "internalHomeLink"
-      },
-      {
-        "component": "text",
-        "label": "Internal Home Link Label",
-        "name": "internalHomeLinkLabel",
-        "valueType": "string"
-      },
-      {
-        "component": "aem-content",
-        "label": "Mobile Home Link",
-        "name": "mobileHomeLink"
-      },
-      {
-        "component": "text",
-        "label": "Mobile Home Link Label",
-        "name": "mobileHomeLinkLabel",
         "valueType": "string"
       },
       {

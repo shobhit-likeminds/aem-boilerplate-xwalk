@@ -53,6 +53,28 @@
           "valueType": "string"
         },
         {
+          "component": "aem-content",
+          "label": "Internal Home Link",
+          "name": "internalHomeLink"
+        },
+        {
+          "component": "text",
+          "label": "Internal Home Link Label",
+          "name": "internalHomeLinkLabel",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Mobile Home Link",
+          "name": "mobileHomeLink"
+        },
+        {
+          "component": "text",
+          "label": "Mobile Home Link Label",
+          "name": "mobileHomeLinkLabel",
+          "valueType": "string"
+        },
+        {
           "component": "container",
           "item": "nav-item",
           "label": "Navigation Items",
