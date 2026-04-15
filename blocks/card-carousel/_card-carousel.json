@@ -49,9 +49,21 @@
           "valueType": "string"
         },
         {
+          "component": "aem-content",
+          "label": "CTA Link",
+          "name": "ctaLink",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "CTA Link Label",
+          "name": "ctaLinkLabel",
+          "valueType": "string"
+        },
+        {
           "component": "container",
           "item": "recipe-card",
-          "label": "Cards",
+          "label": "Recipe Cards",
           "name": "cards"
         }
       ]
@@ -66,14 +78,20 @@
           "valueType": "string"
         },
         {
+          "component": "text",
+          "label": "Image Alt Text",
+          "name": "imageAlt",
+          "valueType": "string"
+        },
+        {
           "component": "aem-content",
-          "label": "Link",
+          "label": "Recipe Link",
           "name": "link",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Link Label",
+          "label": "Recipe Link Label",
           "name": "linkLabel",
           "valueType": "string"
         },
@@ -85,7 +103,7 @@
         },
         {
           "component": "text",
-          "label": "Description",
+          "label": "Recipe Description",
           "name": "description",
           "valueType": "string"
         },

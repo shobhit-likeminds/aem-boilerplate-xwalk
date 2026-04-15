@@ -1,7 +1,7 @@
 {
   "definitions": [
     {
-      "title": "Product Selection Component",
+      "title": "Product-Selection-Component",
       "id": "product-selection-component",
       "plugins": {
         "xwalk": {
@@ -10,7 +10,7 @@
             "template": {
               "filter": "product-selection-component",
               "model": "product-selection-component",
-              "name": "Product Selection Component"
+              "name": "Product-Selection-Component"
             }
           }
         }

@@ -49,8 +49,7 @@
         {
           "component": "text",
           "label": "Logo Link Label",
-          "name": "logoLinkLabel",
-          "valueType": "string"
+          "name": "logoLinkLabel"
         },
         {
           "component": "reference",

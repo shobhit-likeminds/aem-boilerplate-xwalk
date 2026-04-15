@@ -111,7 +111,7 @@
   {
     "id": "stay-social",
     "components": [
-      "social-card"
+      "stay-social-card"
     ]
   },
   {

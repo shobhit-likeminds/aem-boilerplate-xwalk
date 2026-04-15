@@ -1,0 +1,370 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  const [logoRow, logoLinkRow, logoLinkLabelRow, ...navItemRows] = [...block.children];
+
+  const headerComp = document.createElement('section');
+  headerComp.classList.add('header-comp', 'bg-red-100', 'position-fixed', 'top-0', 'start-0', 'z-2', 'w-100');
+
+  const container = document.createElement('div');
+  container.classList.add('container', 'gx-8', 'gx-sm-0', 'd-flex', 'justify-content-between', 'align-items-start', 'align-items-md-center');
+  headerComp.append(container);
+
+  const headerNav = document.createElement('nav');
+  headerNav.classList.add('header-nav', 'navbar', 'position-static', 'navbar-expand-lg');
+  container.append(headerNav);
+
+  const headerWrapper = document.createElement('div');
+  headerWrapper.classList.add('header-comp__wrapper', 'container-fluid', 'justify-content-start', 'gx-4', 'gx-md-0');
+  headerNav.append(headerWrapper);
+
+  // Hamburger button
+  const hamburgerButton = document.createElement('button');
+  hamburgerButton.classList.add('border-0', 'shadow-none', 'navbar-toggler', 'header-comp__wrapper--hamburger', 'collapsed', 'p-0');
+  hamburgerButton.type = 'button';
+  hamburgerButton.setAttribute('aria-controls', 'navbarSupportedContent');
+  hamburgerButton.setAttribute('aria-expanded', 'false');
+  hamburgerButton.setAttribute('aria-label', 'Toggle navigation');
+  headerWrapper.append(hamburgerButton);
+
+  const togglerIcon = document.createElement('span');
+  togglerIcon.classList.add('navbar-toggler-icon', 'd-flex', 'flex-column', 'justify-content-center', 'align-items-center');
+  hamburgerButton.append(togglerIcon);
+
+  for (let i = 0; i < 3; i += 1) {
+    const span = document.createElement('span');
+    span.classList.add('d-block', 'bg-white');
+    togglerIcon.append(span);
+  }
+
+  const navbarCollapse = document.createElement('div');
+  navbarCollapse.classList.add('header-comp__wrapper--menus', 'collapse', 'navbar-collapse', 'z-3');
+  navbarCollapse.id = 'navbarSupportedContent';
+  headerWrapper.append(navbarCollapse);
+
+  hamburgerButton.addEventListener('click', () => {
+    navbarCollapse.classList.toggle('show');
+    hamburgerButton.classList.toggle('collapsed');
+    hamburgerButton.setAttribute('aria-expanded', navbarCollapse.classList.contains('show'));
+  });
+
+  // Logo
+  const logoDiv = document.createElement('div');
+  logoDiv.classList.add('header-comp__wrapper--logo');
+  headerWrapper.append(logoDiv);
+
+  const logoLink = document.createElement('a');
+  logoLink.classList.add('header-comp__wrapper--link', 'cta-analytics', 'navbar-brand', 'm-0');
+  moveInstrumentation(logoLinkRow.firstElementChild, logoLink);
+  logoLink.href = logoLinkRow.querySelector('a')?.href || '#';
+  logoLink.setAttribute('data-link-region', 'Header');
+  logoDiv.append(logoLink);
+
+  const logoPicture = logoRow.querySelector('picture');
+  if (logoPicture) {
+    const logoImg = logoPicture.querySelector('img');
+    const optimizedLogoPic = createOptimizedPicture(logoImg.src, logoImg.alt, true, [{ width: '200' }]);
+    optimizedLogoPic.classList.add('header-comp__wrapper--image', 'h-100');
+    moveInstrumentation(logoRow.firstElementChild, optimizedLogoPic);
+    logoLink.append(optimizedLogoPic);
+  } else {
+    const img = document.createElement('img');
+    img.classList.add('header-comp__wrapper--image', 'h-100');
+    img.alt = logoLinkLabelRow.textContent.trim();
+    logoLink.append(img);
+  }
+
+  // Navigation Items
+  const navUl = document.createElement('ul');
+  navUl.classList.add('header-comp__wrapper--menus-groups', 'navbar-nav', 'me-auto', 'mb-2', 'mb-lg-0', 'w-100');
+  navbarCollapse.append(navUl);
+
+  navItemRows.forEach((row, index) => {
+    const cells = [...row.children];
+    const iconCell = cells.find(cell => cell.querySelector('picture'));
+    const linkCell = cells.find(cell => cell.querySelector('a'));
+    const labelCell = cells.find(cell => !cell.querySelector('picture') && !cell.querySelector('a') && cell.textContent.trim().length > 0);
+    const linkLabelCell = cells.find(cell => cell !== iconCell && cell !== linkCell && cell !== labelCell && cell.textContent.trim().length > 0);
+    const subLinksCell = cells.find(cell => cell.querySelector('ul'));
+
+    const li = document.createElement('li');
+    li.classList.add('header-comp__wrapper--menu-item', 'h-100', 'd-flex', 'align-items-center', 'nav-item', 'p-4', 'p-lg-0', 'border-bottom-lg-0');
+    if (index % 2 === 0) {
+      li.classList.add('left-division');
+    } else {
+      li.classList.add('right-division');
+    }
+    li.setAttribute('data-header-item-id', `leftHeaderItem${index}`);
+    moveInstrumentation(row, li);
+
+    const menuLinkDiv = document.createElement('div');
+    menuLinkDiv.classList.add('header-comp__wrapper--menu-link', 'gap-6', 'gap-lg-1', 'position-relative', 'w-100', 'd-flex', 'align-items-center', 'nav-link', 'px-0', 'font-default', 'leading-28', 'leading-lg-26', 'text-header-list', 'text-lg-cream-100');
+    li.append(menuLinkDiv);
+
+    if (iconCell) {
+      const iconPicture = iconCell.querySelector('picture');
+      if (iconPicture) {
+        const iconImg = iconPicture.querySelector('img');
+        const optimizedIconPic = createOptimizedPicture(iconImg.src, iconImg.alt, false, [{ width: '24' }]);
+        optimizedIconPic.classList.add('header-comp__wrapper--menu-image', 'd-lg-none');
+        moveInstrumentation(iconCell, optimizedIconPic);
+        menuLinkDiv.append(optimizedIconPic);
+      }
+    }
+
+    const anchor = document.createElement('a');
+    anchor.classList.add('text-decoration-none', 'cta-analytics', 'header-comp__wrapper--link');
+    anchor.setAttribute('data-link-region', 'Header');
+    anchor.href = linkCell?.querySelector('a')?.href || '#';
+    menuLinkDiv.append(anchor);
+
+    const spanLink = document.createElement('span');
+    spanLink.classList.add('link-span');
+    spanLink.textContent = linkLabelCell?.textContent.trim() || labelCell?.textContent.trim() || '';
+    anchor.append(spanLink);
+
+    const subList = subLinksCell?.querySelector('ul');
+    if (subList) {
+      li.classList.add('dropdown', 'border-lg-0', 'show-nav');
+      menuLinkDiv.classList.add('dropdown-toggle');
+      menuLinkDiv.setAttribute('aria-expanded', 'false');
+
+      const toggleDropDown = document.createElement('span');
+      toggleDropDown.classList.add('toggle-drop-down', 'arrow-icon', 'd-flex', 'end-0', 'top-parent');
+      const arrowIconImg = document.createElement('img');
+      arrowIconImg.alt = 'svg file';
+      // Use a placeholder or default image if the model doesn't provide one
+      arrowIconImg.src = '/icons/arrow-down.svg'; // Placeholder, replace if model has a field for this
+      toggleDropDown.append(arrowIconImg);
+      menuLinkDiv.append(toggleDropDown);
+
+      const subMenusDiv = document.createElement('div');
+      subMenusDiv.classList.add('header-comp__sub-menus');
+      subMenusDiv.id = `leftHeaderItem${index}`;
+      subMenusDiv.setAttribute('data-id', `leftHeaderItem${index}`);
+      li.append(subMenusDiv);
+
+      const subMenuUl = document.createElement('ul');
+      subMenuUl.classList.add('header-comp__wrapper--sub-menu-group', 'w-auto', 'border-0', 'pb-lg-0', 'dropdown-menu', 'p-0');
+      subMenusDiv.append(subMenuUl);
+
+      const subMenuDiv = document.createElement('div');
+      subMenuDiv.classList.add('header-comp__sub-menu', 'tri-parent');
+      subMenuUl.append(subMenuDiv);
+
+      const transformNestedLists = (rootUl) => {
+        [...rootUl.children].forEach((subLi, subIndex) => {
+          const nested = subLi.querySelector(':scope > ul');
+          const subLiWrapper = document.createElement('li');
+          subLiWrapper.classList.add('header-comp__wrapper--sub-menu-item');
+          if (nested) {
+            subLiWrapper.classList.add('child-below');
+          } else {
+            subLiWrapper.classList.add('no-child');
+          }
+          subLiWrapper.setAttribute('data-child-id', `subNavItem${subIndex}`);
+          moveInstrumentation(subLi, subLiWrapper);
+
+          const subMenuLinkDiv = document.createElement('div');
+          subMenuLinkDiv.classList.add('header-comp__wrapper--menu-link', 'mb-3', 'mb-lg-0', 'gap-4', 'position-relative', 'w-100', 'd-flex', 'align-items-center', 'nav-link', 'px-0', 'font-18', 'leading-24', 'text-header-list', 'text-lg-black');
+          if (nested) {
+            subMenuLinkDiv.classList.add('dropdown-toggle');
+            subMenuLinkDiv.setAttribute('aria-expanded', 'false');
+          }
+          subLiWrapper.append(subMenuLinkDiv);
+
+          const subLinkWrapper = document.createElement('div');
+          subLinkWrapper.classList.add('header-comp__wrapper--sub-menu-link', 'dropdown-item', 'p-lg-3', 'mb-lg-3', 'mb-xl-3', 'leading-lg-24', 'leading-xl-24', 'font-default', 'font-lg-18', 'leading-lg-26', 'leading-28', 'ps-0', 'p-0', 'p-lg-3', 'd-inline-block', 'd-lg-flex', 'justify-content-between', 'align-items-center');
+          subMenuLinkDiv.append(subLinkWrapper);
+
+          const subAnchor = document.createElement('a');
+          subAnchor.classList.add('text-decoration-none', 'text-dark-gray-100');
+          const foundSubLink = subLi.querySelector('a');
+          if (foundSubLink) {
+            subAnchor.href = foundSubLink.href;
+            if (foundSubLink.target === '_blank') {
+              subAnchor.target = '_blank';
+              const srOnlySpan = document.createElement('span');
+              srOnlySpan.classList.add('cmp-link__screen-reader-only');
+              srOnlySpan.textContent = 'opens in a new tab';
+              subAnchor.append(srOnlySpan);
+            }
+          } else {
+            subAnchor.href = '#';
+          }
+          const subLinkSpan = document.createElement('span');
+          subLinkSpan.classList.add('sub-link-span');
+          subLinkSpan.textContent = subLi.textContent.trim();
+          subAnchor.prepend(subLinkSpan);
+          subLinkWrapper.append(subAnchor);
+
+          if (nested) {
+            const arrowIconRight = document.createElement('span');
+            arrowIconRight.classList.add('arrow-icon-right', 'end-0', 'd-none', 'd-lg-inline');
+            const arrowRightImg = document.createElement('img');
+            arrowRightImg.alt = 'svg file';
+            arrowRightImg.src = '/icons/arrow-right.svg'; // Placeholder
+            arrowIconRight.append(arrowRightImg);
+            subLinkWrapper.append(arrowIconRight);
+
+            const arrowIcon = document.createElement('span');
+            arrowIcon.classList.add('arrow-icon', 'd-lg-none', 'end-0');
+            const arrowImg = document.createElement('img');
+            arrowImg.alt = 'svg file';
+            arrowImg.src = '/icons/arrow-down.svg'; // Placeholder
+            arrowIcon.append(arrowImg);
+            subMenuLinkDiv.append(arrowIcon);
+
+            const innerChildsDiv = document.createElement('div');
+            innerChildsDiv.classList.add('d-lg-none', 'inner-childs');
+            innerChildsDiv.id = `subNavItem${subIndex}`;
+            innerChildsDiv.setAttribute('data-id', `subNavItem${subIndex}`);
+            subLiWrapper.append(innerChildsDiv);
+
+            const xfpageDiv = document.createElement('div');
+            xfpageDiv.classList.add('xfpage', 'page', 'basicpage');
+            innerChildsDiv.append(xfpageDiv);
+
+            const aemGridDiv = document.createElement('div');
+            aemGridDiv.classList.add('aem-Grid', 'aem-Grid--12', 'aem-Grid--default--12');
+            xfpageDiv.append(aemGridDiv);
+
+            const headerSubMenuDiv = document.createElement('div');
+            headerSubMenuDiv.classList.add('headerSubMenu', 'aem-GridColumn', 'aem-GridColumn--default--12');
+            aemGridDiv.append(headerSubMenuDiv);
+
+            const nestedUl = document.createElement('ul');
+            nestedUl.classList.add('header-comp__wrapper--sub-menu-group', 'w-auto', 'border-0', 'pb-lg-0', 'dropdown-menu', 'p-0');
+            headerSubMenuDiv.append(nestedUl);
+
+            const nestedSubMenuDiv = document.createElement('div');
+            nestedSubMenuDiv.classList.add('header-comp__sub-menu', 'tri-parent');
+            nestedUl.append(nestedSubMenuDiv);
+
+            while (nested.firstElementChild) {
+              nestedSubMenuDiv.append(nested.firstElementChild);
+            }
+            transformNestedLists(nestedSubMenuDiv); // Recurse for deeper levels
+
+            subMenuLinkDiv.addEventListener('click', (e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              subLiWrapper.classList.toggle('child-below--open');
+              innerChildsDiv.classList.toggle('child-below--open');
+              subMenuLinkDiv.classList.toggle('collapsed');
+              subMenuLinkDiv.setAttribute('aria-expanded', subMenuLinkDiv.classList.contains('collapsed'));
+            });
+          }
+          subMenuDiv.append(subLiWrapper);
+        });
+      };
+
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = subLinksCell.innerHTML;
+      const authoredUl = tempDiv.querySelector('ul');
+      if (authoredUl) {
+        transformNestedLists(authoredUl);
+        while (authoredUl.firstElementChild) {
+          subMenuDiv.append(authoredUl.firstElementChild);
+        }
+      }
+
+      menuLinkDiv.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        li.classList.toggle('show-nav');
+        menuLinkDiv.classList.toggle('collapsed');
+        menuLinkDiv.setAttribute('aria-expanded', menuLinkDiv.classList.contains('collapsed'));
+      });
+    }
+    navUl.append(li);
+  });
+
+  // Search and Access
+  const searchAccessDiv = document.createElement('div');
+  searchAccessDiv.classList.add('header-comp__wrapper--search-access', 'd-flex', 'py-4', 'py-lg-0');
+  container.append(searchAccessDiv);
+
+  const searchDiv = document.createElement('div');
+  searchDiv.classList.add('header-comp__wrapper--search');
+  searchAccessDiv.append(searchDiv);
+
+  const searchIconDiv = document.createElement('div');
+  searchIconDiv.classList.add('header-comp__wrapper--search-icon', 'd-flex', 'flex-column', 'align-items-center', 'font-12', 'leading-20', 'text-white');
+  searchDiv.append(searchIconDiv);
+
+  const searchIconImg = document.createElement('img');
+  searchIconImg.alt = 'svg file';
+  searchIconImg.src = '/icons/search.svg'; // Placeholder, replace if model has a field for this
+  searchIconDiv.append(searchIconImg);
+
+  const searchSpan = document.createElement('span');
+  searchSpan.classList.add('d-none', 'd-lg-block');
+  searchSpan.textContent = 'Search';
+  searchIconDiv.append(searchSpan);
+
+  const headerOuterBox = document.createElement('div');
+  headerOuterBox.classList.add('header__outer-box', 'position-absolute', 'w-100', 'z-2', 'start-0', 'd-lg-none');
+  headerComp.append(headerOuterBox);
+
+  // Search functionality
+  const globalSearchSection = document.querySelector('.global-search');
+  const searchInput = globalSearchSection?.querySelector('.global-search__wrapper--form-input');
+  const searchResults = globalSearchSection?.querySelector('.global-search__response--results');
+  const crossWrap = globalSearchSection?.querySelector('.cross-wrap');
+  const searchWrap = globalSearchSection?.querySelector('.search-wrap');
+  const closeOnClick = globalSearchSection?.querySelector('.close-on-click');
+
+  searchIconDiv.addEventListener('click', () => {
+    globalSearchSection?.classList.toggle('d-none');
+    globalSearchSection?.classList.toggle('d-block');
+    if (globalSearchSection?.classList.contains('d-block')) {
+      searchInput?.focus();
+    }
+  });
+
+  crossWrap?.addEventListener('click', () => {
+    globalSearchSection?.classList.add('d-none');
+    globalSearchSection?.classList.remove('d-block');
+    if (searchInput) searchInput.value = '';
+    searchResults?.classList.add('d-none');
+    if (searchResults) searchResults.innerHTML = '';
+  });
+
+  closeOnClick?.addEventListener('click', (e) => {
+    if (e.target === closeOnClick) {
+      globalSearchSection?.classList.add('d-none');
+      globalSearchSection?.classList.remove('d-block');
+      if (searchInput) searchInput.value = '';
+      searchResults?.classList.add('d-none');
+      if (searchResults) searchResults.innerHTML = '';
+    }
+  });
+
+  // Example of search input handling (can be expanded with actual search logic)
+  searchInput?.addEventListener('input', () => {
+    const query = searchInput.value.trim();
+    if (query.length > 2) {
+      // Simulate search results
+      searchResults?.classList.remove('d-none');
+      if (searchResults) {
+        searchResults.innerHTML = `<li>Searching for: ${query}</li><li>Result 1</li><li>Result 2</li>`;
+      }
+    } else {
+      searchResults?.classList.add('d-none');
+      if (searchResults) searchResults.innerHTML = '';
+    }
+  });
+
+
+  block.textContent = '';
+  block.append(headerComp);
+
+  // Optimize all pictures in the block
+  block.querySelectorAll('picture > img').forEach((img) => {
+    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+    moveInstrumentation(img, optimizedPic.querySelector('img'));
+    img.closest('picture').replaceWith(optimizedPic);
+  });
+}

@@ -3,18 +3,15 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
   // The buy-now-card block has no fields defined in its model.
-  // This means it's an empty block, likely used as a container for other components
-  // or its content is dynamically loaded by client-side JS.
-  // As per the provided HTML, it only has structural classes.
-  // We simply apply the classes from the original HTML to the block itself.
+  // This means it's an empty block that serves as a container or marker,
+  // and its styling is applied directly to the block element itself.
+  // Therefore, we only need to apply the class names from the original HTML
+  // to the block element.
 
-  // Clear existing content if any, as the block model is empty.
-  block.textContent = '';
-
-  // Apply the classes from the ORIGINAL HTML to the block element.
-  // The original HTML shows these classes on the outer div.
+  // The original HTML shows the block div with specific classes.
+  // We need to ensure these classes are present on the block element.
   block.classList.add('buyNowCard', 'aem-GridColumn', 'aem-GridColumn--default--12');
 
-  // No fields means no rows to process, no images to optimize, no elements to create.
-  // The block itself is the final decorated element.
+  // Since there are no fields, there's no content to process or transform.
+  // The block remains an empty container with the correct styling classes.
 }

@@ -24,8 +24,7 @@
         {
           "component": "reference",
           "label": "Image",
-          "name": "image",
-          "valueType": "string"
+          "name": "image"
         },
         {
           "component": "aem-content",
