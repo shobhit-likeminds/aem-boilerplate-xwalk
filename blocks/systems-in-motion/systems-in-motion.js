@@ -10,115 +10,112 @@ export default function decorate(block) {
     ...motionCardRows
   ] = [...block.children];
 
-  block.classList.add('systems-in-motion');
-
   // Dot Right Image
-  const dotRightDiv = document.createElement('div');
-  dotRightDiv.classList.add('dot-right');
+  const dotRight = document.createElement('div');
+  dotRight.classList.add('dot-right');
   const dotRightPicture = dotRightImageRow.querySelector('picture');
   if (dotRightPicture) {
     const img = dotRightPicture.querySelector('img');
     const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '267' }]);
     moveInstrumentation(img, optimizedPic.querySelector('img'));
-    dotRightDiv.append(optimizedPic);
+    dotRight.append(optimizedPic);
   }
-  moveInstrumentation(dotRightImageRow, dotRightDiv);
-  block.append(dotRightDiv);
+  moveInstrumentation(dotRightImageRow, dotRight);
 
   // Dot Left Image
-  const dotLeftDiv = document.createElement('div');
-  dotLeftDiv.classList.add('dot-left');
+  const dotLeft = document.createElement('div');
+  dotLeft.classList.add('dot-left');
   const dotLeftPicture = dotLeftImageRow.querySelector('picture');
   if (dotLeftPicture) {
     const img = dotLeftPicture.querySelector('img');
     const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '267' }]);
     moveInstrumentation(img, optimizedPic.querySelector('img'));
-    dotLeftDiv.append(optimizedPic);
+    dotLeft.append(optimizedPic);
   }
-  moveInstrumentation(dotLeftImageRow, dotLeftDiv);
-  block.append(dotLeftDiv);
+  moveInstrumentation(dotLeftImageRow, dotLeft);
 
-  // Heading and Description
-  const container = document.createElement('div');
-  container.classList.add('container-1600-wrp');
+  // Container for heading and description
+  const container1600Wrp = document.createElement('div');
+  container1600Wrp.classList.add('container-1600-wrp');
 
+  // Heading
   const heading = document.createElement('h2');
   heading.classList.add('common-ttle', 'wow', 'animate__', 'animate__fadeInUp', 'animated');
   heading.textContent = headingRow.textContent.trim();
   moveInstrumentation(headingRow, heading);
-  container.append(heading);
+  container1600Wrp.append(heading);
 
+  // Description
   const description = document.createElement('p');
   description.classList.add('wow', 'animate__', 'animate__fadeInUp', 'animated');
   description.innerHTML = descriptionRow.innerHTML;
   moveInstrumentation(descriptionRow, description);
-  container.append(description);
+  container1600Wrp.append(description);
 
-  block.append(container);
+  // Motion Cards Holder
+  const motionCardHld = document.createElement('div');
+  motionCardHld.classList.add('motion-card-hld');
+  const rowDiv = document.createElement('div');
+  rowDiv.classList.add('row');
 
-  // Motion Cards
-  if (motionCardRows.length > 0) {
-    const motionCardHld = document.createElement('div');
-    motionCardHld.classList.add('motion-card-hld');
+  motionCardRows.forEach((row, index) => {
+    // CRITICAL FIX: Replaced row.children[n] with destructuring for fixed-field item model
+    const [logoCell, titleCell, textCell, linkCell, linkLabelCell] = [...row.children];
 
-    const rowDiv = document.createElement('div');
-    rowDiv.classList.add('row');
+    const colLg6 = document.createElement('div');
+    colLg6.classList.add('col-lg-6');
 
-    motionCardRows.forEach((cardRow, index) => {
-      // Use content detection for CTA Link as it's an aem-content type
-      const cells = [...cardRow.children];
-      const logoCell = cells[0];
-      const titleCell = cells[1];
-      const textCell = cells[2];
-      const ctaLinkCell = cells[3]; // This cell contains the <a> tag for the link
-      const ctaLinkLabelCell = cells[4]; // This cell contains the plain text label
+    const mCardBlurb = document.createElement('div');
+    mCardBlurb.classList.add('m-card-blurb', 'wow', 'animate__', 'animate__fadeInUp', 'animated');
+    mCardBlurb.style.setProperty('--wow-duration', '1s');
+    mCardBlurb.style.setProperty('--wow-delay', `${0.1 + index * 0.1}s`);
 
-      const colDiv = document.createElement('div');
-      colDiv.classList.add('col-lg-6');
+    const contentDiv = document.createElement('div');
 
-      const mCardBlurb = document.createElement('div');
-      mCardBlurb.classList.add('m-card-blurb', 'wow', 'animate__', 'animate__fadeInUp', 'animated');
-      mCardBlurb.style.animationDuration = '1s';
-      mCardBlurb.style.animationDelay = `${0.1 + index * 0.1}s`;
+    // Logo
+    const figure = document.createElement('figure');
+    const logoPicture = logoCell.querySelector('picture');
+    if (logoPicture) {
+      const img = logoPicture.querySelector('img');
+      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '80' }]);
+      moveInstrumentation(img, optimizedPic.querySelector('img'));
+      optimizedPic.querySelector('img').classList.add('bg-cover'); // Add class to the img inside picture
+      figure.append(optimizedPic);
+    }
+    contentDiv.append(figure);
 
-      const contentDiv = document.createElement('div');
+    // Title
+    const title = document.createElement('h4');
+    title.textContent = titleCell.textContent.trim();
+    contentDiv.append(title);
 
-      const figure = document.createElement('figure');
-      const logoPicture = logoCell.querySelector('picture');
-      if (logoPicture) {
-        const img = logoPicture.querySelector('img');
-        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '80' }]);
-        optimizedPic.querySelector('img').classList.add('bg-cover'); // Add class to the img inside picture
-        moveInstrumentation(img, optimizedPic.querySelector('img'));
-        figure.append(optimizedPic);
-      }
-      contentDiv.append(figure);
+    // Text
+    const text = document.createElement('p');
+    text.innerHTML = textCell.innerHTML;
+    contentDiv.append(text);
 
-      const title = document.createElement('h4');
-      title.textContent = titleCell.textContent.trim();
-      contentDiv.append(title);
+    mCardBlurb.append(contentDiv);
 
-      const text = document.createElement('p');
-      text.innerHTML = textCell.innerHTML;
-      contentDiv.append(text);
+    // Link
+    const foundLink = linkCell.querySelector('a');
+    if (foundLink && linkLabelCell.textContent.trim()) {
+      const anchor = document.createElement('a');
+      // CRITICAL FIX: For type=aem-content, read href from the foundLink element, not textContent
+      anchor.href = foundLink.href;
+      anchor.textContent = linkLabelCell.textContent.trim();
+      anchor.classList.add('btn-box');
+      anchor.target = '_blank'; // Assuming links open in new tab based on original HTML
+      mCardBlurb.append(anchor);
+    }
 
-      mCardBlurb.append(contentDiv);
+    moveInstrumentation(row, mCardBlurb);
+    colLg6.append(mCardBlurb);
+    rowDiv.append(colLg6);
+  });
 
-      const ctaLink = ctaLinkCell.querySelector('a'); // Correctly get the <a> tag from the aem-content cell
-      if (ctaLink) {
-        const anchor = document.createElement('a');
-        anchor.href = ctaLink.href; // Read href from the <a> tag
-        anchor.textContent = ctaLinkLabelCell.textContent.trim(); // Read label from the separate label cell
-        anchor.classList.add('btn-box');
-        moveInstrumentation(ctaLinkCell, anchor);
-        mCardBlurb.append(anchor);
-      }
+  motionCardHld.append(rowDiv);
 
-      moveInstrumentation(cardRow, mCardBlurb);
-      colDiv.append(mCardBlurb);
-      rowDiv.append(colDiv);
-    });
-    motionCardHld.append(rowDiv);
-    block.append(motionCardHld);
-  }
+  block.textContent = '';
+  block.classList.add('systems-in-motion'); // Add block-level class
+  block.append(dotRight, dotLeft, container1600Wrp, motionCardHld);
 }

@@ -4,9 +4,10 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
 export default function decorate(block) {
   const [headingRow, descriptionRow, ...blurbRows] = [...block.children];
 
-  // Main container
-  const container = document.createElement('div');
-  container.classList.add('container-1600-wrp');
+  block.classList.add('hm-eng-for-evol');
+
+  const containerWrapper = document.createElement('div');
+  containerWrapper.classList.add('container-1600-wrp');
 
   // Heading
   if (headingRow) {
@@ -14,8 +15,8 @@ export default function decorate(block) {
     const h2 = document.createElement('h2');
     h2.classList.add('common-ttle', 'wow', 'animate__', 'animate__fadeInUp', 'animated');
     moveInstrumentation(headingRow, h2);
-    h2.textContent = headingCell?.textContent.trim() || '';
-    container.append(h2);
+    h2.textContent = headingCell.textContent.trim();
+    containerWrapper.append(h2);
   }
 
   // Description
@@ -24,87 +25,83 @@ export default function decorate(block) {
     const p = document.createElement('p');
     p.classList.add('wow', 'animate__', 'animate__fadeInUp', 'animated');
     moveInstrumentation(descriptionRow, p);
-    p.innerHTML = descriptionCell?.innerHTML || '';
-    container.append(p);
+    p.innerHTML = descriptionCell.innerHTML;
+    containerWrapper.append(p);
   }
 
-  // Blurbs container
+  // Blurbs
   if (blurbRows.length > 0) {
-    const blurbHld = document.createElement('div');
-    blurbHld.classList.add('evolution-blurb-hld');
+    const evolutionBlurbHld = document.createElement('div');
+    evolutionBlurbHld.classList.add('evolution-blurb-hld');
+
     const rowDiv = document.createElement('div');
     rowDiv.classList.add('row');
 
-    blurbRows.forEach((blurbRow) => {
-      // This pattern is correct for fixed-field item models where all cells are present and in order.
-      const [imageCell, titleCell, textCell, ctaLinkCell, ctaLinkLabelCell] = [...blurbRow.children];
+    blurbRows.forEach((row) => {
+      // Use destructuring for fixed-field item models as per guide
+      const [imageCell, titleCell, textCell, ctaLinkCell, ctaLinkLabelCell] = [...row.children];
 
       const colLg4 = document.createElement('div');
       colLg4.classList.add('col-lg-4');
 
       const evolutionBlurb = document.createElement('div');
       evolutionBlurb.classList.add('evolution-blurb', 'wow', 'animate__', 'animate__fadeInUp', 'animated');
-      moveInstrumentation(blurbRow, evolutionBlurb);
+      moveInstrumentation(row, evolutionBlurb);
 
-      const blurb = document.createElement('div');
-      blurb.classList.add('blurb');
+      const blurbDiv = document.createElement('div');
+      blurbDiv.classList.add('blurb');
 
-      const blurbContentDiv = document.createElement('div');
+      const contentDiv = document.createElement('div');
 
-      // Image
-      if (imageCell) {
-        const figure = document.createElement('figure');
-        const img = imageCell.querySelector('img');
+      const figureDiv = document.createElement('div');
+      const picture = imageCell.querySelector('picture');
+      if (picture) {
+        const img = picture.querySelector('img');
         if (img) {
+          const figure = document.createElement('figure');
           const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '80' }]);
-          optimizedPic.querySelector('img').classList.add('bg-cover');
-          moveInstrumentation(img.closest('picture'), optimizedPic.querySelector('img'));
+          moveInstrumentation(img, optimizedPic.querySelector('img'));
           figure.append(optimizedPic);
+          figureDiv.append(figure);
+          optimizedPic.querySelector('img').classList.add('bg-cover'); // Add bg-cover to the optimized img
         }
-        blurbContentDiv.append(figure);
       }
+      contentDiv.append(figureDiv);
 
       const blurbDet = document.createElement('div');
       blurbDet.classList.add('blurb-det');
 
-      // Title
-      if (titleCell) {
-        const h4 = document.createElement('h4');
-        h4.textContent = titleCell.textContent.trim();
-        blurbDet.append(h4);
+      const h4 = document.createElement('h4');
+      h4.textContent = titleCell ? titleCell.textContent.trim() : '';
+      blurbDet.append(h4);
+
+      const pText = document.createElement('p');
+      pText.innerHTML = textCell ? textCell.innerHTML : '';
+      blurbDet.append(pText);
+
+      contentDiv.append(blurbDet);
+      blurbDiv.append(contentDiv);
+
+      // Correctly read aem-content type for ctaLinkCell
+      const ctaLinkAnchor = ctaLinkCell.querySelector('a');
+      if (ctaLinkAnchor) {
+        const anchor = document.createElement('a');
+        anchor.href = ctaLinkAnchor.href; // Read href from the <a> tag
+        anchor.textContent = ctaLinkLabelCell ? ctaLinkLabelCell.textContent.trim() : '';
+        anchor.classList.add('btn-box');
+        moveInstrumentation(ctaLinkCell, anchor);
+        blurbDiv.append(anchor);
       }
 
-      // Text
-      if (textCell) {
-        const pText = document.createElement('p');
-        pText.innerHTML = textCell.innerHTML;
-        blurbDet.append(pText);
-      }
-      blurbContentDiv.append(blurbDet);
-      blurb.append(blurbContentDiv);
-
-      // CTA Link
-      if (ctaLinkCell && ctaLinkLabelCell) {
-        // For type=aem-content, the anchor is typically the first child of the cell.
-        // The decorateButtons() script wraps it in a <p> tag, so .firstElementChild is more robust than .querySelector('a').
-        const ctaLink = ctaLinkCell.firstElementChild;
-        if (ctaLink && ctaLink.tagName === 'A') { // Ensure it's an anchor tag
-          const btnBox = document.createElement('a');
-          btnBox.classList.add('btn-box');
-          btnBox.href = ctaLink.href;
-          btnBox.textContent = ctaLinkLabelCell.textContent.trim();
-          blurb.append(btnBox);
-        }
-      }
-
-      evolutionBlurb.append(blurb);
+      evolutionBlurb.append(blurbDiv);
       colLg4.append(evolutionBlurb);
       rowDiv.append(colLg4);
     });
-    blurbHld.append(rowDiv);
-    container.append(blurbHld);
+
+    evolutionBlurbHld.append(rowDiv);
+    containerWrapper.append(evolutionBlurbHld);
   }
 
   block.textContent = '';
-  block.append(container);
+  block.append(containerWrapper);
 }

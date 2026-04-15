@@ -301,8 +301,8 @@
     "fields": [
       {
         "component": "text",
-        "label": "Title",
-        "name": "title",
+        "label": "Section Heading",
+        "name": "heading",
         "valueType": "string"
       },
       {
@@ -538,7 +538,7 @@
       {
         "component": "container",
         "item": "evolution-blurb",
-        "label": "Blurbs",
+        "label": "Evolution Blurbs",
         "name": "blurbs"
       }
     ]
@@ -1143,14 +1143,13 @@
       },
       {
         "component": "aem-content",
-        "label": "CTA Link",
-        "name": "ctaLink",
-        "valueType": "string"
+        "label": "Link",
+        "name": "link"
       },
       {
         "component": "text",
-        "label": "CTA Label",
-        "name": "ctaLinkLabel",
+        "label": "Link Label",
+        "name": "linkLabel",
         "valueType": "string"
       }
     ]
