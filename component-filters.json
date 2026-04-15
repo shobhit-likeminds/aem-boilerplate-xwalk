@@ -24,16 +24,25 @@
       "header-comp",
       "stay-social",
       "scroll-to-top",
-      "footer"
+      "footer",
+      "w-100",
+      "text-banner",
+      "w-100-pt-3-pt-sm-3",
+      "product-selection",
+      "simple-block",
+      "buy-now-card"
     ]
   },
   {
     "id": "banner-section"
   },
   {
+    "id": "buy-now-card"
+  },
+  {
     "id": "card-carousel",
     "components": [
-      "product-card"
+      "recipe-card"
     ]
   },
   {
@@ -88,12 +97,30 @@
     ]
   },
   {
+    "id": "product-selection",
+    "components": [
+      "product"
+    ]
+  },
+  {
     "id": "scroll-to-top"
+  },
+  {
+    "id": "simple-block"
   },
   {
     "id": "stay-social",
     "components": [
-      "stay-social-card"
+      "social-card"
     ]
+  },
+  {
+    "id": "text-banner"
+  },
+  {
+    "id": "w-100-pt-3-pt-sm-3"
+  },
+  {
+    "id": "w-100"
   }
 ]

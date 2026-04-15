@@ -44,7 +44,8 @@
         {
           "component": "aem-content",
           "label": "Logo Link",
-          "name": "logoLink"
+          "name": "logoLink",
+          "valueType": "string"
         },
         {
           "component": "text",
@@ -65,19 +66,14 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Image",
-          "name": "image"
-        },
-        {
-          "component": "text",
-          "label": "Label",
-          "name": "label",
-          "valueType": "string"
+          "label": "Icon",
+          "name": "icon"
         },
         {
           "component": "aem-content",
           "label": "Link",
-          "name": "link"
+          "name": "link",
+          "valueType": "string"
         },
         {
           "component": "text",

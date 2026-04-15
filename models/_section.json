@@ -59,7 +59,13 @@
         "header-comp",
         "stay-social",
         "scroll-to-top",
-        "footer"
+        "footer",
+        "w-100",
+        "text-banner",
+        "w-100-pt-3-pt-sm-3",
+        "product-selection",
+        "simple-block",
+        "buy-now-card"
       ]
     }
   ]

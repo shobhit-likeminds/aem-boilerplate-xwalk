@@ -1,0 +1,19 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  // The simple-block has no fields in its model, so it renders as an empty div.
+  // The original HTML shows it as a div with specific classes and inline style.
+  // We will replicate that structure.
+
+  // The block element itself is the container. We just need to apply the classes and style.
+  block.classList.add('w-100', 'pt-3', 'pt-sm-3');
+
+  // The original HTML also shows an inline style `background: ;`.
+  // This is an empty background property, likely a placeholder or an artifact.
+  // We should replicate it if it's present, as it might be relevant for CSS overrides.
+  block.style.background = '';
+
+  // Since there are no fields, there are no children rows to process or optimize pictures from.
+  // The block is already the target element, so no need to clear its content or append new elements.
+}

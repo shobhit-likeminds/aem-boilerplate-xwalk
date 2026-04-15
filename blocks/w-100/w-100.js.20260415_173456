@@ -1,0 +1,18 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  // The w-100 block is an empty block in the model, used only for its CSS classes.
+  // It has no fields, so there are no rows to process.
+  // We only need to apply the classes from the original HTML to the block itself.
+
+  // Original HTML classes: w-100, pt-3, pt-sm-3
+  // The 'w-100' class is already on the block element.
+  block.classList.add('pt-3', 'pt-sm-3');
+
+  // If there were any child rows (which there aren't for this block),
+  // we would clear the block's content and append new elements.
+  // Since there are no children, we just ensure the block is empty if it somehow
+  // received content (e.g., a stray <p> tag from authoring).
+  block.textContent = '';
+}
