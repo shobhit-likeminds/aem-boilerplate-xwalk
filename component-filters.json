@@ -36,7 +36,15 @@
       "legacy-slider",
       "hm-suatainability",
       "hm-careers",
-      "footer"
+      "footer",
+      "press-release-carousel",
+      "image-with-text-over",
+      "ts-cards-sec",
+      "our-brands",
+      "latest-social",
+      "careers-cta",
+      "footer-links-row",
+      "main-search-bar"
     ]
   },
   {
@@ -44,6 +52,9 @@
     "components": [
       "card"
     ]
+  },
+  {
+    "id": "careers-cta"
   },
   {
     "id": "columns",
@@ -67,6 +78,12 @@
     "id": "faqs-section",
     "components": [
       "faq"
+    ]
+  },
+  {
+    "id": "footer-links-row",
+    "components": [
+      "footer-section"
     ]
   },
   {
@@ -112,6 +129,12 @@
     "id": "home-banner"
   },
   {
+    "id": "image-with-text-over"
+  },
+  {
+    "id": "latest-social"
+  },
+  {
     "id": "latest-stories",
     "components": [
       "story"
@@ -124,9 +147,21 @@
     ]
   },
   {
+    "id": "main-search-bar"
+  },
+  {
     "id": "movement-matters",
     "components": [
       "m-card-blurb"
+    ]
+  },
+  {
+    "id": "our-brands"
+  },
+  {
+    "id": "press-release-carousel",
+    "components": [
+      "press-release-item"
     ]
   },
   {
@@ -158,6 +193,12 @@
     "id": "systems-in-motion",
     "components": [
       "motion-card"
+    ]
+  },
+  {
+    "id": "ts-cards-sec",
+    "components": [
+      "ts-card"
     ]
   },
   {

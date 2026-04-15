@@ -2,204 +2,205 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const [logoRow, ...sectionRows] = [...block.children];
+  const children = [...block.children];
 
-  // Main wrapper
-  const sectionWrapper = document.createElement('section');
-  sectionWrapper.classList.add('footer-wrp');
+  const footer = document.createElement('footer');
+  footer.classList.add('footer');
+  footer.setAttribute('role', 'contentinfo');
 
   const container = document.createElement('div');
-  container.classList.add('container-1600-wrp');
-  sectionWrapper.append(container);
+  container.classList.add('container');
 
-  // Mobile Logo
-  const mobLogoWr = document.createElement('div');
-  mobLogoWr.classList.add('mob-logo-wr');
-  moveInstrumentation(logoRow, mobLogoWr);
+  // Logo and Back to Top
+  const logoBtpDiv = document.createElement('div');
+  logoBtpDiv.classList.add('footer__logo-btp');
 
+  // Destructure the main block fields based on the BlockJson model
+  const [
+    logoRow, // block.children[0]
+    logoLinkRow, // block.children[1]
+    logoLinkLabelRow, // block.children[2]
+    backToTopIconRow, // block.children[3]
+    backToTopLinkRow, // block.children[4]
+    backToTopLinkLabelRow, // block.children[5]
+    facebookIconRow, // block.children[6]
+    facebookLinkRow, // block.children[7]
+    facebookLinkLabelRow, // block.children[8]
+    twitterIconRow, // block.children[9]
+    twitterLinkRow, // block.children[10]
+    twitterLinkLabelRow, // block.children[11]
+    youtubeIconRow, // block.children[12]
+    youtubeLinkRow, // block.children[13]
+    youtubeLinkLabelRow, // block.children[14]
+    linkedinIconRow, // block.children[15]
+    linkedinLinkRow, // block.children[16]
+    linkedinLinkLabelRow, // block.children[17]
+    instagramIconRow, // block.children[18]
+    instagramLinkRow, // block.children[19]
+    instagramLinkLabelRow, // block.children[20]
+    copyrightRow, // block.children[21]
+    termsLinkRow, // block.children[22]
+    termsLinkLabelRow, // block.children[23]
+    privacyLinkRow, // block.children[24]
+    privacyLinkLabelRow, // block.children[25]
+    accessibilityLinkRow, // block.children[26]
+    accessibilityLinkLabelRow, // block.children[27]
+    moreSitesLinksRow, // block.children[28]
+    ...itemRows // Remaining rows are footer-section items
+  ] = children;
+
+  const logoLink = document.createElement('a');
+  logoLink.classList.add('footer__logo');
+  const logoAnchor = logoLinkRow.querySelector('a');
+  if (logoAnchor) {
+    logoLink.href = logoAnchor.href;
+    logoLink.setAttribute('aria-label', logoLinkLabelRow.textContent.trim());
+  }
   const logoPicture = logoRow.querySelector('picture');
   if (logoPicture) {
-    const img = logoPicture.querySelector('img');
-    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '200' }]);
-    moveInstrumentation(img, optimizedPic.querySelector('img'));
-    optimizedPic.querySelector('img').classList.add('img-fluid');
-    mobLogoWr.append(optimizedPic);
+    const logoImg = logoPicture.querySelector('img');
+    const optimizedLogo = createOptimizedPicture(logoImg.src, logoImg.alt, false, [{ width: '750' }]);
+    moveInstrumentation(logoPicture, optimizedLogo.querySelector('img'));
+    logoLink.append(optimizedLogo);
   }
-  container.append(mobLogoWr);
+  moveInstrumentation(logoLinkRow, logoLink);
+  logoBtpDiv.append(logoLink);
 
-  // Footer sections row (f1)
-  const f1Row = document.createElement('div');
-  f1Row.classList.add('row', 'f1');
-  container.append(f1Row);
+  const backToTopButton = document.createElement('button');
+  backToTopButton.classList.add('back-to-top__button');
+  backToTopButton.setAttribute('data-function', 'back-to-top');
+  backToTopButton.setAttribute('aria-label', backToTopLinkLabelRow.textContent.trim());
+  backToTopButton.textContent = backToTopLinkLabelRow.textContent.trim();
 
-  // Process footer sections (f1)
-  sectionRows.forEach((row) => {
-    // Check 0: CRITICAL - Replaced row.children[n] with content detection
-    const cells = [...row.children];
-    const headingCell = cells.find(cell => !cell.querySelector('ul') && !cell.querySelector('a')); // Find cell with plain text heading
-    const sectionLinksCell = cells.find(cell => cell.querySelector('ul') || cell.querySelector('p > a')); // Find cell with ul or p > a
+  const backToTopSpan = document.createElement('span');
+  const backToTopPicture = backToTopIconRow.querySelector('picture');
+  if (backToTopPicture) {
+    const backToTopImg = backToTopPicture.querySelector('img');
+    const optimizedBackToTop = createOptimizedPicture(backToTopImg.src, backToTopImg.alt, false, [{ width: '750' }]);
+    moveInstrumentation(backToTopPicture, optimizedBackToTop.querySelector('img'));
+    backToTopSpan.append(optimizedBackToTop);
+  }
+  backToTopButton.append(backToTopSpan);
+  moveInstrumentation(backToTopLinkRow, backToTopButton);
+  logoBtpDiv.append(backToTopButton);
 
-    if (!headingCell || !sectionLinksCell) {
-      // Skip if structure is unexpected
-      return;
-    }
-
-    const col = document.createElement('div');
-    col.classList.add('col', 'col-xl-3');
-    moveInstrumentation(row, col);
-
-    const headingText = headingCell.textContent.trim();
-    const sectionLinksUl = sectionLinksCell.querySelector('ul');
-    const singleLink = sectionLinksCell.querySelector('p > a');
-
-    if (sectionLinksUl) {
-      // Accordion item
-      const accordionWrapper = document.createElement('div');
-      accordionWrapper.classList.add('ftr-drop-wrp');
-
-      const accordionHead = document.createElement('a');
-      accordionHead.href = 'javascript:void(0)';
-      accordionHead.classList.add('ttle', 'accordion_head2');
-      accordionHead.textContent = headingText;
-
-      const plusMinusSpan = document.createElement('span');
-      plusMinusSpan.classList.add('plusminus2');
-      plusMinusSpan.textContent = '+';
-      accordionHead.append(plusMinusSpan);
-
-      const accordionBody = document.createElement('div');
-      accordionBody.classList.add('ftr-sub-links-cvr', 'accordion_body2');
-      accordionBody.append(sectionLinksUl);
-
-      // Add click listener for accordion behavior
-      accordionHead.addEventListener('click', (e) => {
-        e.preventDefault();
-        accordionHead.classList.toggle('active');
-        accordionBody.classList.toggle('active');
-        plusMinusSpan.textContent = accordionHead.classList.contains('active') ? '-' : '+';
-      });
-
-      accordionWrapper.append(accordionHead, accordionBody);
-      col.append(accordionWrapper);
-
-      // Transform nested lists if any (e.g., social media icons)
-      sectionLinksUl.querySelectorAll('li').forEach((li) => {
-        const link = li.querySelector('a');
-        if (link) {
-          link.classList.add('ftr-link');
-          // Check for social media icons
-          const icon = link.querySelector('i');
-          if (icon) {
-            accordionBody.classList.add('socialIcons');
-          }
-        }
-      });
-    } else if (singleLink) {
-      // Simple link item (no accordion, heading is a link)
-      const link = document.createElement('a');
-      link.classList.add('ttle');
-      link.href = singleLink.href;
-      link.textContent = headingText;
-      col.append(link);
-    } else {
-      // Simple text item (heading is just text, no accordion, no link)
-      const textElement = document.createElement('a'); // Use 'a' as per original HTML for consistency, even if not linked
-      textElement.classList.add('ttle');
-      textElement.href = 'javascript:void(0)'; // Default if no specific link
-      textElement.textContent = headingText;
-      col.append(textElement);
-    }
-    f1Row.append(col);
+  backToTopButton.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 
-  // Footer row 2 (f2) - Social Media section
-  const f2Row = document.createElement('div');
-  f2Row.classList.add('row', 'f2', 'justify-content-between');
-  container.append(f2Row);
+  container.append(logoBtpDiv);
 
-  // The original HTML shows social media as a separate accordion in f2.
-  // This needs to be explicitly created if not coming from block content.
-  // For now, assuming it's part of the block content if present, or hardcoded if not.
-  // Based on the provided block structure, social media would be a 'footer-section' item.
-  // If it's not in sectionRows, it implies it's hardcoded or a separate block.
-  // Given the original HTML, it seems to be a hardcoded structure.
-  // Let's create it based on the original HTML structure.
-  const socialMediaCol = document.createElement('div');
-  socialMediaCol.classList.add('col', 'col-xl-2', 'ftr-drop-wrp'); // Use col-xl-2 from original HTML
-  f2Row.append(socialMediaCol);
+  // Footer Sections
+  const footerLinksDiv = document.createElement('div');
+  footerLinksDiv.classList.add('footer__links');
 
-  const socialMediaHead = document.createElement('p'); // Original HTML uses <p> for social media heading
-  socialMediaHead.classList.add('ttle', 'accordion_head2');
-  socialMediaHead.textContent = 'Social Media';
+  const footerLinksRow = document.createElement('div');
+  footerLinksRow.classList.add('footer__links-row');
 
-  const socialMediaPlusMinusSpan = document.createElement('span');
-  socialMediaPlusMinusSpan.classList.add('plusminus2');
-  socialMediaPlusMinusSpan.textContent = '+';
-  socialMediaHead.append(socialMediaPlusMinusSpan);
+  itemRows.forEach((row) => {
+    const [sectionTitleCell, sectionLinksCell] = [...row.children];
+    const sectionDiv = document.createElement('div');
 
-  const socialMediaBody = document.createElement('div');
-  socialMediaBody.classList.add('ftr-sub-links-cvr', 'accordion_body2', 'socialIcons');
+    const sectionTitle = document.createElement('h6');
+    sectionTitle.classList.add('footer__column-title');
+    sectionTitle.textContent = sectionTitleCell.textContent.trim();
+    moveInstrumentation(sectionTitleCell, sectionTitle);
+    sectionDiv.append(sectionTitle);
 
-  // Hardcoded social media links from original HTML
-  const socialLinks = [
-    { href: 'https://www.facebook.com/TataMotorsGroup/', iconClass: 'fab fa-facebook-square' },
-    { href: 'https://www.instagram.com/tatamotorsgroup/', iconClass: 'fab fa-instagram' },
-    { href: 'https://twitter.com/TataMotors', iconClass: 'fa-brands fa-square-x-twitter' },
-    { href: 'https://www.linkedin.com/company/tata-motors/', iconClass: 'fab fa-linkedin' },
-    { href: 'https://www.youtube.com/user/TataMotorsGroup', iconClass: 'fab fa-youtube-square' },
+    const sectionLinksUl = sectionLinksCell.querySelector('ul');
+    if (sectionLinksUl) {
+      sectionLinksUl.classList.add('footer__links-list');
+      [...sectionLinksUl.children].forEach((li) => {
+        li.classList.add('footer__link');
+      });
+      moveInstrumentation(sectionLinksCell, sectionLinksUl);
+      sectionDiv.append(sectionLinksUl);
+    }
+    footerLinksRow.append(sectionDiv);
+  });
+  footerLinksDiv.append(footerLinksRow);
+  container.append(footerLinksDiv);
+
+  // Social Links
+  const socialLinksDiv = document.createElement('div');
+  socialLinksDiv.classList.add('footer__social-links');
+
+  const socialMedia = [
+    { icon: facebookIconRow, link: facebookLinkRow, label: facebookLinkLabelRow, class: 'social-link--facebook' },
+    { icon: twitterIconRow, link: twitterLinkRow, label: twitterLinkLabelRow, class: 'social-link--twitter' },
+    { icon: youtubeIconRow, link: youtubeLinkRow, label: youtubeLinkLabelRow, class: 'social-link--youtube' },
+    { icon: linkedinIconRow, link: linkedinLinkRow, label: linkedinLinkLabelRow, class: 'social-link--linkedin' },
+    { icon: instagramIconRow, link: instagramLinkRow, label: instagramLinkLabelRow, class: 'social-link--instagram' },
   ];
 
-  socialLinks.forEach(item => {
-    const link = document.createElement('a');
-    link.href = item.href;
-    link.classList.add('ftr-link');
-    link.target = '_blank';
-    const icon = document.createElement('i');
-    icon.className = item.iconClass; // Use className for multiple classes
-    link.append(icon);
-    socialMediaBody.append(link);
+  socialMedia.forEach(({ icon, link, label, class: socialClass }) => {
+    const socialLink = document.createElement('a');
+    socialLink.classList.add('social-link', socialClass);
+    const socialAnchor = link.querySelector('a');
+    if (socialAnchor) {
+      socialLink.href = socialAnchor.href;
+      socialLink.setAttribute('target', '_blank'); // Assuming social links open in new tab
+      socialLink.setAttribute('aria-label', label.textContent.trim());
+    }
+    const socialPicture = icon.querySelector('picture');
+    if (socialPicture) {
+      const socialImg = socialPicture.querySelector('img');
+      const optimizedSocial = createOptimizedPicture(socialImg.src, socialImg.alt, false, [{ width: '750' }]);
+      moveInstrumentation(socialPicture, optimizedSocial.querySelector('img'));
+      socialLink.append(optimizedSocial);
+    }
+    moveInstrumentation(link, socialLink);
+    socialLinksDiv.append(socialLink);
   });
+  container.append(socialLinksDiv);
 
-  // Add click listener for social media accordion
-  socialMediaHead.addEventListener('click', (e) => {
-    e.preventDefault();
-    socialMediaHead.classList.toggle('active');
-    socialMediaBody.classList.toggle('active');
-    socialMediaPlusMinusSpan.textContent = socialMediaHead.classList.contains('active') ? '-' : '+';
+  // Auxiliaries (Copyright, Terms, Privacy, Accessibility)
+  const auxilliariesDiv = document.createElement('div');
+  auxilliariesDiv.classList.add('footer__auxilliaries');
+
+  const copyrightSpan = document.createElement('span');
+  copyrightSpan.classList.add('footer__copyright');
+  copyrightSpan.textContent = copyrightRow.textContent.trim();
+  moveInstrumentation(copyrightRow, copyrightSpan);
+  auxilliariesDiv.append(copyrightSpan);
+
+  const legalLinks = [
+    { linkRow: termsLinkRow, labelRow: termsLinkLabelRow, ariaLabel: 'Terms of Use' },
+    { linkRow: privacyLinkRow, labelRow: privacyLinkLabelRow, ariaLabel: 'Privacy Policy' },
+    { linkRow: accessibilityLinkRow, labelRow: accessibilityLinkLabelRow, ariaLabel: 'Accessibility Statement' },
+  ];
+
+  legalLinks.forEach(({ linkRow, labelRow, ariaLabel }) => {
+    const legalAnchor = document.createElement('a');
+    const originalLink = linkRow.querySelector('a');
+    if (originalLink) {
+      legalAnchor.href = originalLink.href;
+      legalAnchor.setAttribute('aria-label', ariaLabel);
+      legalAnchor.textContent = labelRow.textContent.trim();
+    }
+    moveInstrumentation(linkRow, legalAnchor);
+    auxilliariesDiv.append(legalAnchor);
   });
+  container.append(auxilliariesDiv);
 
-  socialMediaCol.append(socialMediaHead, socialMediaBody);
+  // More Sites Links
+  const moreSitesDiv = document.createElement('div');
+  moreSitesDiv.classList.add('footer__more-sites');
+  const moreSitesUl = moreSitesLinksRow.querySelector('ul');
+  if (moreSitesUl) {
+    moreSitesUl.classList.add('more-sites__list');
+    moveInstrumentation(moreSitesLinksRow, moreSitesUl);
+    moreSitesDiv.append(moreSitesUl);
+  }
+  container.append(moreSitesDiv);
 
-
-  // Footer row 3 (f3) - Legal and Copyright
-  const f3Row = document.createElement('div');
-  f3Row.classList.add('row', 'mt25', 'f3');
-  container.append(f3Row);
-
-  const legalCol = document.createElement('div');
-  legalCol.classList.add('col-12', 'col-md-6');
-  f3Row.append(legalCol);
-
-  // Hardcoded links from original HTML
-  const legalDisclaimer = document.createElement('a');
-  legalDisclaimer.href = 'https://www.tatamotors.com/legal-disclaimer';
-  legalDisclaimer.textContent = 'Legal Disclaimer';
-  legalCol.append(legalDisclaimer);
-
-  const openSourceLink = document.createElement('a');
-  openSourceLink.href = 'https://www.tatamotors.com/open-source-license-disclosure';
-  openSourceLink.textContent = 'Open Source License Disclosure';
-  legalCol.append(openSourceLink);
-
-  const copyrightCol = document.createElement('div');
-  copyrightCol.classList.add('col-12', 'col-md-6');
-  f3Row.append(copyrightCol);
-
-  const copyrightText = document.createElement('p');
-  copyrightText.classList.add('copy-txt', 'text-md-end');
-  copyrightText.textContent = '© Copyright 2026. All rights reserved. Tata Motors Limited.';
-  copyrightCol.append(copyrightText);
-
+  footer.append(container);
   block.textContent = '';
-  block.append(sectionWrapper);
+  block.append(footer);
+
+  // The original JS had a generic image optimization loop here.
+  // Since createOptimizedPicture is used for each individual image,
+  // this generic loop is redundant and potentially problematic if it
+  // re-optimizes already optimized pictures or interferes with instrumentation.
+  // Removed for cleaner and more precise image handling.
 }
