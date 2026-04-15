@@ -94,7 +94,7 @@
         },
         {
           "component": "text",
-          "label": "CTA Link Label",
+          "label": "CTA Label",
           "name": "ctaLinkLabel",
           "valueType": "string"
         }

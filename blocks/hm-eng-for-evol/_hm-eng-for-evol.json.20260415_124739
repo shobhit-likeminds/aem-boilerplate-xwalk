@@ -17,7 +17,7 @@
       }
     },
     {
-      "title": "Evolution-Blurb",
+      "title": "Evolution Blurb",
       "id": "evolution-blurb",
       "plugins": {
         "xwalk": {
@@ -25,7 +25,7 @@
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
               "model": "evolution-blurb",
-              "name": "Evolution-Blurb"
+              "name": "Evolution Blurb"
             }
           }
         }

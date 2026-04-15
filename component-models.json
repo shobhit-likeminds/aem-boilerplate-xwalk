@@ -301,8 +301,8 @@
     "fields": [
       {
         "component": "text",
-        "label": "Label",
-        "name": "label",
+        "label": "Title",
+        "name": "title",
         "valueType": "string"
       },
       {
@@ -1149,7 +1149,7 @@
       },
       {
         "component": "text",
-        "label": "CTA Link Label",
+        "label": "CTA Label",
         "name": "ctaLinkLabel",
         "valueType": "string"
       }
