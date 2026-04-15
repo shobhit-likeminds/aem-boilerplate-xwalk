@@ -49,8 +49,24 @@
       "front-web-banner",
       "call-to-act-front",
       "latest-news",
-      "site-footer"
+      "site-footer",
+      "hero-steel",
+      "manufactures",
+      "steel-stories",
+      "app-section",
+      "video-banner",
+      "btn-scroll-up",
+      "footer-mobile"
     ]
+  },
+  {
+    "id": "app-section",
+    "components": [
+      "app-list-item"
+    ]
+  },
+  {
+    "id": "btn-scroll-up"
   },
   {
     "id": "call-to-act-front",
@@ -104,6 +120,12 @@
     ]
   },
   {
+    "id": "footer-mobile",
+    "components": [
+      "footer-section"
+    ]
+  },
+  {
     "id": "footer",
     "components": [
       "footer-section"
@@ -123,6 +145,9 @@
     "components": [
       "nav-item"
     ]
+  },
+  {
+    "id": "hero-steel"
   },
   {
     "id": "hm-careers"
@@ -168,6 +193,9 @@
   },
   {
     "id": "main-search-bar"
+  },
+  {
+    "id": "manufactures"
   },
   {
     "id": "movement-matters",
@@ -222,6 +250,12 @@
     ]
   },
   {
+    "id": "steel-stories",
+    "components": [
+      "story"
+    ]
+  },
+  {
     "id": "systems-in-motion",
     "components": [
       "motion-card"
@@ -232,6 +266,9 @@
     "components": [
       "ts-card"
     ]
+  },
+  {
+    "id": "video-banner"
   },
   {
     "id": "what-we-do-wrap",

@@ -14,15 +14,6 @@
   font-display: swap;
 }
 
-.fa { 
-  display: inline-block;
-  font: normal normal normal 14px/1 FontAwesome;
-  font-size: inherit;
-  text-rendering: auto;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
- }
-
 @-webkit-keyframes fa-spin {
   0% {
     -webkit-transform: rotate(0deg);
@@ -52,34 +43,6 @@
 :root .fa-flip-vertical {
   filter: none;
 }
-
-.fa-search:before { 
-  content: "\f002";
- }
-
-.fa-home:before { 
-  content: "\f015";
- }
-
-.fa-arrow-right:before { 
-  content: "\f061";
- }
-
-.fa-twitter:before { 
-  content: "\f099";
- }
-
-.fa-facebook:before { 
-  content: "\f09a";
- }
-
-.fa-linkedin:before { 
-  content: "\f0e1";
- }
-
-.fa-youtube:before { 
-  content: "\f167";
- }
 
 #fancybox-loading { 
 	background-image: url('https://group.jsw.in/sites/all/themes/jsw_theme/styles/fancybox_sprite.png');
@@ -1230,6 +1193,11 @@
   }
 }
 
+.fadeInLeft { 
+  -webkit-animation-name: fadeInLeft;
+  animation-name: fadeInLeft;
+ }
+
 @-webkit-keyframes fadeInLeftBig {
   from {
     opacity: 0;
@@ -1281,6 +1249,11 @@
     transform: none;
   }
 }
+
+.fadeInRight { 
+  -webkit-animation-name: fadeInRight;
+  animation-name: fadeInRight;
+ }
 
 @-webkit-keyframes fadeInRightBig {
   from {
@@ -3015,6 +2988,10 @@ iframe body {
     overflow: hidden;
 }
 
+.ohidden { 
+    overflow: hidden;
+ }
+
 /*!
  * Bootstrap v3.3.6 (http://getbootstrap.com)
  * Copyright 2011-2015 Twitter, Inc.
@@ -3483,23 +3460,33 @@ pre code {
         width: 1170px;
      } }
 
-.col-md-3, .col-md-12 { 
+.row { 
+    margin-left: -15px;
+    margin-right: -15px;
+ }
+
+.row:before, .row:after { 
+    content: " ";
+    display: table;
+ }
+
+.row:after { 
+    clear: both;
+ }
+
+.col-sm-6 { 
     position: relative;
     min-height: 1px;
     padding-left: 15px;
     padding-right: 15px;
  }
 
-@media (min-width: 992px) { .col-md-3, .col-md-12 { 
+@media (min-width: 768px) { .col-sm-6 { 
         float: left;
      }
 
-.col-md-3 { 
-        width: 25%;
-     }
-
-.col-md-12 { 
-        width: 100%;
+.col-sm-6 { 
+        width: 50%;
      } }
 
 table { 
@@ -3618,34 +3605,9 @@ input[type="radio"][disabled], fieldset[disabled] input[type="radio"], input[typ
     }
 }
 
-.clearfix:before, .clearfix:after { 
-    content: " ";
-    display: table;
- }
-
-.clearfix:after { 
-    clear: both;
- }
-
 @-ms-viewport {
     width: device-width;
 }
-
-.visible-xs { 
-    display: none !important;
- }
-
-.visible-sm { 
-    display: none !important;
- }
-
-@media (max-width: 767px) { .visible-xs { 
-        display: block !important;
-     } }
-
-@media (min-width: 768px) and (max-width: 991px) { .visible-sm { 
-        display: block !important;
-     } }
 
 /*!
  *  Font Awesome 4.5.0 by @davegandy - http://fontawesome.io - @fontawesome
@@ -3663,15 +3625,6 @@ input[type="radio"][disabled], fieldset[disabled] input[type="radio"], input[typ
     font-weight: normal;
     font-style: normal;
 }
-
-.fa { 
-    display: inline-block;
-    font: normal normal normal 14px/1 FontAwesome;
-    font-size: inherit;
-    text-rendering: auto;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
- }
 
 @-webkit-keyframes fa-spin {
     0% {
@@ -3704,34 +3657,6 @@ input[type="radio"][disabled], fieldset[disabled] input[type="radio"], input[typ
     filter: none;
 }
 
-.fa-search:before { 
-    content: "";
- }
-
-.fa-home:before { 
-    content: "";
- }
-
-.fa-arrow-right:before { 
-    content: "";
- }
-
-.fa-twitter:before { 
-    content: "";
- }
-
-.fa-facebook:before { 
-    content: "";
- }
-
-.fa-linkedin:before { 
-    content: "";
- }
-
-.fa-youtube:before { 
-    content: "";
- }
-
 @-webkit-keyframes ripple {
     0% {
         opacity: 1;
@@ -3758,9 +3683,28 @@ input[type="radio"][disabled], fieldset[disabled] input[type="radio"], input[typ
     }
 }
 
+.os-animation { 
+    opacity: 0;
+ }
+
+.os-animation.animated { 
+    opacity: 1;
+ }
+
+.animated { 
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+ }
+
 #fancybox-loading { 
     background-image: url('https://group.jsw.in/sites/all/themes/jsw_theme/images/fancybox_sprite@2x.png');
     background-size: 45px;
+ }
+
+.MT30 { 
+    margin-top: 30px;
  }
 
 .block-has-video.op1 .video-btn,
@@ -3768,6 +3712,98 @@ input[type="radio"][disabled], fieldset[disabled] input[type="radio"], input[typ
 body .about-us .about-block1 .container-right .op1.block-right1.block-has-video .video-btn {
     opacity: 1;
 }
+
+.steel-stories { 
+    background: #f24644;
+    background: -webkit-linear-gradient(left, #f24644 0%, #f24644 45%, white 45%, white 100%);
+    background: linear-gradient(90deg, #f24644 0%, #f24644 45%, white 45%, white 100%);
+    margin-top: 115px;
+ }
+
+@media (max-width: 991px) { .steel-stories { 
+        margin-top: 60px;
+     } }
+
+@media (max-width: 767px) { .steel-stories { 
+        background: none;
+     } }
+
+.stories-steel-box { 
+    padding: 65px 185px 65px 0;
+    color: #fff;
+    line-height: 30px;
+    font-size: 16px;
+ }
+
+@media (max-width: 991px) { .stories-steel-box { 
+        padding: 65px 65px 65px 0;
+     } }
+
+@media (max-width: 767px) { .stories-steel-box { 
+        padding: 30px;
+        background: #ce534a;
+        margin: 0 -15px;
+     } }
+
+.stories-steel-box h2 { 
+    font-family: 'BarlowMedium';
+    font-size: 60px;
+    color: #fff;
+ }
+
+@media (max-width: 1024px) { .stories-steel-box h2 { 
+        font-size: 38px;
+     } }
+
+@media (max-width: 991px) { .stories-steel-box figure img { 
+        width: 290px;
+     } }
+
+.story-list { 
+    margin: 0;
+    padding: 0;
+ }
+
+.story-list li { 
+    list-style: none;
+    padding: 0 50px 0 20px;
+    border-left: 4px solid #F24644;
+    margin-bottom: 35px;
+ }
+
+@media (max-width: 767px) { .story-list li { 
+        padding: 0 10px 0 20px;
+        margin-bottom: 20px;
+     } }
+
+.story-list.op1 li { 
+    margin-bottom: 40px;
+    color: #09153f;
+    font-size: 22px;
+ }
+
+@media (max-width: 1024px) { .story-list.op1 li { 
+        font-size: 16px;
+     } }
+
+@media (max-width: 767px) { .story-list.op1 { 
+        margin-top: 30px;
+     } }
+
+.os-animation { 
+    opacity: 0;
+ }
+
+.os-animation.animated { 
+    opacity: 1;
+ }
+
+.animated { 
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+ }
 
 #fancybox-loading { 
     background-image: url('https://group.jsw.in/sites/all/themes/jsw_theme/images/fancybox_sprite@2x.png');
@@ -3840,10 +3876,6 @@ h5 {
 
 strong { 
     font-family: 'BarlowBold';
- }
-
-.blue { 
-    color: #16469d;
  }
 
 html,
@@ -8711,10 +8743,6 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 	border-top: 0px;
  }
 
-.block-mobile-search .search-mobile a.icon-search { 
-	z-index: 2;
- }
-
 iframe { border: none }
 
 body nav.port-menu .menu-right {
@@ -8767,23 +8795,6 @@ body .business .hero-banner .items .hero-slider .txt-title {
 	margin-top: 110px;
 }
 
-.container .sub-menu .container { 
-	margin-right: auto;
-  margin-left: auto;
- }
-
-@media screen and (min-width: 768px) { .container .sub-menu .container { 
-	    width: 750px;
-	 } }
-
-@media screen and (min-width: 992px) { .container .sub-menu .container { 
-	    width: 970px;
-	 } }
-
-@media screen and (min-width: 1200px) { .container .sub-menu .container { 
-	    width: 1170px;
-	 } }
-
 figcaption a { 
   color: white;
  }
@@ -8814,15 +8825,6 @@ form#better-everyday-form .text-offwhite {
 body .key-persons {
   background: #fff;
 }
-
-.element-invisible { 
-	position: absolute !important;
-	clip: rect(1px 1px 1px 1px);
-	/* IE6, IE7 */
-	clip: rect(1px, 1px, 1px, 1px);
-	overflow: hidden;
-	height: 1px;
- }
 
 body .btn-share:hover {
   width: 120px;

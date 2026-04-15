@@ -49,30 +49,7 @@
         {
           "component": "text",
           "label": "Logo Link Label",
-          "name": "logoLinkLabel",
-          "valueType": "string"
-        },
-        {
-          "component": "aem-content",
-          "label": "Internal Home Link",
-          "name": "internalHomeLink"
-        },
-        {
-          "component": "text",
-          "label": "Internal Home Link Label",
-          "name": "internalHomeLinkLabel",
-          "valueType": "string"
-        },
-        {
-          "component": "aem-content",
-          "label": "Mobile Home Link",
-          "name": "mobileHomeLink"
-        },
-        {
-          "component": "text",
-          "label": "Mobile Home Link Label",
-          "name": "mobileHomeLinkLabel",
-          "valueType": "string"
+          "name": "logoLinkLabel"
         },
         {
           "component": "container",
@@ -88,8 +65,7 @@
         {
           "component": "text",
           "label": "Label",
-          "name": "label",
-          "valueType": "string"
+          "name": "label"
         },
         {
           "component": "aem-content",
@@ -99,8 +75,7 @@
         {
           "component": "text",
           "label": "Link Label",
-          "name": "linkLabel",
-          "valueType": "string"
+          "name": "linkLabel"
         },
         {
           "component": "richtext",

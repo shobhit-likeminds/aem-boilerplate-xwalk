@@ -49,45 +49,22 @@
         {
           "component": "text",
           "label": "Logo Link Label",
-          "name": "logoLinkLabel",
-          "valueType": "string"
+          "name": "logoLinkLabel"
         },
         {
           "component": "reference",
-          "label": "Back To Top Icon",
-          "name": "backToTopIcon"
+          "label": "Certification Image",
+          "name": "certificationImage"
         },
         {
           "component": "aem-content",
-          "label": "Back To Top Link",
-          "name": "backToTopLink"
+          "label": "Certification Image Link",
+          "name": "certificationImageLink"
         },
         {
           "component": "text",
-          "label": "Back To Top Link Label",
-          "name": "backToTopLinkLabel",
-          "valueType": "string"
-        },
-        {
-          "component": "reference",
-          "label": "Facebook Icon",
-          "name": "facebookIcon"
-        },
-        {
-          "component": "aem-content",
-          "label": "Facebook Link",
-          "name": "facebookLink"
-        },
-        {
-          "component": "text",
-          "label": "Facebook Link Label",
-          "name": "facebookLinkLabel",
-          "valueType": "string"
-        },
-        {
-          "component": "reference",
-          "label": "Twitter Icon",
-          "name": "twitterIcon"
+          "label": "Certification Image Link Label",
+          "name": "certificationImageLinkLabel"
         },
         {
           "component": "aem-content",
@@ -97,29 +74,17 @@
         {
           "component": "text",
           "label": "Twitter Link Label",
-          "name": "twitterLinkLabel",
-          "valueType": "string"
-        },
-        {
-          "component": "reference",
-          "label": "YouTube Icon",
-          "name": "youtubeIcon"
+          "name": "twitterLinkLabel"
         },
         {
           "component": "aem-content",
-          "label": "YouTube Link",
-          "name": "youtubeLink"
+          "label": "Facebook Link",
+          "name": "facebookLink"
         },
         {
           "component": "text",
-          "label": "YouTube Link Label",
-          "name": "youtubeLinkLabel",
-          "valueType": "string"
-        },
-        {
-          "component": "reference",
-          "label": "LinkedIn Icon",
-          "name": "linkedinIcon"
+          "label": "Facebook Link Label",
+          "name": "facebookLinkLabel"
         },
         {
           "component": "aem-content",
@@ -129,69 +94,23 @@
         {
           "component": "text",
           "label": "LinkedIn Link Label",
-          "name": "linkedinLinkLabel",
-          "valueType": "string"
-        },
-        {
-          "component": "reference",
-          "label": "Instagram Icon",
-          "name": "instagramIcon"
-        },
-        {
-          "component": "aem-content",
-          "label": "Instagram Link",
-          "name": "instagramLink"
+          "name": "linkedinLinkLabel"
         },
         {
           "component": "text",
-          "label": "Instagram Link Label",
-          "name": "instagramLinkLabel",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Copyright",
-          "name": "copyright",
-          "valueType": "string"
-        },
-        {
-          "component": "aem-content",
-          "label": "Terms of Use Link",
-          "name": "termsLink"
-        },
-        {
-          "component": "text",
-          "label": "Terms of Use Link Label",
-          "name": "termsLinkLabel",
+          "label": "Copyright Text",
+          "name": "copyrightText",
           "valueType": "string"
         },
         {
           "component": "aem-content",
           "label": "Privacy Policy Link",
-          "name": "privacyLink"
+          "name": "privacyPolicyLink"
         },
         {
           "component": "text",
           "label": "Privacy Policy Link Label",
-          "name": "privacyLinkLabel",
-          "valueType": "string"
-        },
-        {
-          "component": "aem-content",
-          "label": "Accessibility Statement Link",
-          "name": "accessibilityLink"
-        },
-        {
-          "component": "text",
-          "label": "Accessibility Statement Link Label",
-          "name": "accessibilityLinkLabel",
-          "valueType": "string"
-        },
-        {
-          "component": "richtext",
-          "label": "More Sites Links",
-          "name": "moreSitesLinks",
-          "valueType": "string"
+          "name": "privacyPolicyLinkLabel"
         },
         {
           "component": "container",

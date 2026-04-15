@@ -84,7 +84,14 @@
         "front-web-banner",
         "call-to-act-front",
         "latest-news",
-        "site-footer"
+        "site-footer",
+        "hero-steel",
+        "manufactures",
+        "steel-stories",
+        "app-section",
+        "video-banner",
+        "btn-scroll-up",
+        "footer-mobile"
       ]
     }
   ]

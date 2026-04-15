@@ -1,0 +1,62 @@
+{
+  "definitions": [
+    {
+      "title": "Hero-Steel",
+      "id": "hero-steel",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "hero-steel",
+              "model": "hero-steel",
+              "name": "Hero-Steel"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "hero-steel",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Image Desktop",
+          "name": "imageDesktop",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Image Mobile",
+          "name": "imageMobile",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Breadcrumbs",
+          "name": "breadcrumbs",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Heading",
+          "name": "heading",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Description",
+          "name": "description",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "hero-steel"
+    }
+  ]
+}
