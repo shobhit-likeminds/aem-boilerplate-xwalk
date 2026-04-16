@@ -1,7 +1,7 @@
 {
   "definitions": [
     {
-      "title": "Hm-Our-Legacy",
+      "title": "HM-Our-Legacy",
       "id": "hm-our-legacy",
       "plugins": {
         "xwalk": {
@@ -10,7 +10,7 @@
             "template": {
               "filter": "hm-our-legacy",
               "model": "hm-our-legacy",
-              "name": "Hm-Our-Legacy"
+              "name": "HM-Our-Legacy"
             }
           }
         }
@@ -54,20 +54,14 @@
         },
         {
           "component": "text",
-          "label": "Image Alt",
-          "name": "imageAlt",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
           "label": "Sub Title",
           "name": "subTitle",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Title",
-          "name": "title",
+          "label": "Heading",
+          "name": "heading",
           "valueType": "string"
         },
         {
@@ -77,7 +71,7 @@
           "valueType": "string"
         },
         {
-          "component": "richtext",
+          "component": "text",
           "label": "Designation",
           "name": "designation",
           "valueType": "string"

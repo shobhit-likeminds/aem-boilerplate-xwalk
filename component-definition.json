@@ -439,7 +439,7 @@
           }
         },
         {
-          "title": "HM-Our-Legacy",
+          "title": "Hm-Our-Legacy",
           "id": "hm-our-legacy",
           "plugins": {
             "xwalk": {
@@ -448,7 +448,7 @@
                 "template": {
                   "filter": "hm-our-legacy",
                   "model": "hm-our-legacy",
-                  "name": "HM-Our-Legacy"
+                  "name": "Hm-Our-Legacy"
                 }
               }
             }

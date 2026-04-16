@@ -13,14 +13,14 @@ export default function decorate(block) {
     ...navItemRows
   ] = [...block.children];
 
-  // Top Head Section
+  block.classList.add('fixed', 'nav-up');
+
   const topHead = document.createElement('div');
   topHead.classList.add('top-head');
   const topHeadContainer = document.createElement('div');
   topHeadContainer.classList.add('container-1600-wrp');
   topHead.append(topHeadContainer);
 
-  // Main Nav Box
   const mainNavBx = document.createElement('div');
   mainNavBx.classList.add('main-nav-bx');
   const mainNavContainer = document.createElement('div');
@@ -30,172 +30,142 @@ export default function decorate(block) {
   mainNavContainer.append(mainNavRow);
   mainNavBx.append(mainNavContainer);
 
-  // Column 1: Logo, Mobile Logo, Nav Icon, Switcher
-  const col1 = document.createElement('div');
-  col1.classList.add('col-md-2', 'col-6');
+  const colLeft = document.createElement('div');
+  colLeft.classList.add('col-md-2', 'col-6');
+  mainNavRow.append(colLeft);
 
-  // Logo
-  const logoLink = document.createElement('a');
-  logoLink.classList.add('logo-wrp');
-  const logoHref = logoLinkRow.querySelector('a')?.href || '#'; // Correctly read href from aem-content cell
-  logoLink.href = logoHref;
-  moveInstrumentation(logoLinkRow, logoLink);
-
-  const logoImg = logoRow.querySelector('img');
-  if (logoImg) {
-    const optimizedLogoPic = createOptimizedPicture(logoImg.src, logoImg.alt, false, [{ width: '750' }]);
-    moveInstrumentation(logoImg, optimizedLogoPic.querySelector('img'));
-    logoLink.append(optimizedLogoPic);
-  } else {
-    logoLink.textContent = logoLinkLabelRow.textContent.trim();
+  const logoWrp = document.createElement('a');
+  logoWrp.classList.add('logo-wrp');
+  const logoLink = logoLinkRow.querySelector('a');
+  if (logoLink) {
+    logoWrp.href = logoLink.href;
   }
-  col1.append(logoLink);
+  const logoPicture = logoRow.querySelector('picture');
+  if (logoPicture) {
+    const img = logoPicture.querySelector('img');
+    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+    moveInstrumentation(logoPicture, optimizedPic.querySelector('img'));
+    logoWrp.append(optimizedPic);
+  }
+  colLeft.append(logoWrp);
 
-  // Mobile Logo
   const mobileLogoPicture = mobileLogoRow.querySelector('picture');
   if (mobileLogoPicture) {
-    const mobileLogoImg = mobileLogoPicture.querySelector('img');
-    const optimizedMobileLogoPic = createOptimizedPicture(mobileLogoImg.src, mobileLogoImg.alt, false, [{ width: '750' }]);
-    optimizedMobileLogoPic.classList.add('image-holder', 'tata-logo-mob');
-    moveInstrumentation(mobileLogoRow, optimizedMobileLogoPic.querySelector('img'));
-    col1.append(optimizedMobileLogoPic);
+    const mobileLogoHolder = document.createElement('picture');
+    mobileLogoHolder.classList.add('image-holder', 'tata-logo-mob');
+    const img = mobileLogoPicture.querySelector('img');
+    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+    moveInstrumentation(mobileLogoPicture, optimizedPic.querySelector('img'));
+    mobileLogoHolder.append(optimizedPic);
+    colLeft.append(mobileLogoHolder);
   }
 
-  // Nav Icon
   const navIcon4 = document.createElement('div');
   navIcon4.id = 'nav-icon4';
-  for (let i = 0; i < 3; i += 1) {
-    navIcon4.append(document.createElement('span'));
-  }
-  col1.append(navIcon4);
+  navIcon4.innerHTML = '<span></span><span></span><span></span>';
+  colLeft.append(navIcon4);
 
-  navIcon4.addEventListener('click', () => {
-    mainNavBx.classList.toggle('open');
-    navIcon4.classList.toggle('open');
-  });
+  const switchBtn = document.createElement('button');
+  switchBtn.id = 'switch2';
+  switchBtn.innerHTML = 'Mode <strong><span class="switch2_light">Light</span> <span class="switch2_dark">Dark</span></strong>';
+  colLeft.append(switchBtn);
 
-  // Switcher (hardcoded from original HTML, as no model field)
-  const switcher = document.createElement('button');
-  switcher.id = 'switch2';
-  switcher.innerHTML = `
-    Mode  
-    <strong>
-      <span class="switch2_light">Light</span> 
-      <span class="switch2_dark">Dark</span> 
-    </strong>
-  `;
-  col1.append(switcher);
-
-  mainNavRow.append(col1);
-
-  // Column 2: Navigation
-  const col2 = document.createElement('div');
-  col2.classList.add('col-md-10', 'col-6', 'hm-main-nav-con');
+  const colRight = document.createElement('div');
+  colRight.classList.add('col-md-10', 'col-6', 'hm-main-nav-con');
+  mainNavRow.append(colRight);
 
   const navCard = document.createElement('div');
   navCard.classList.add('nav-card');
+  colRight.append(navCard);
 
-  // Close Mobile Drop (hardcoded from original HTML, as no model field)
   const closeMobDrop = document.createElement('a');
-  closeMobDrop.href = 'javascript:void(0)';
   closeMobDrop.classList.add('close-mob-drop');
+  // Assuming close button image is fixed or from a global asset. If it were in block, it would be a field.
+  // For now, creating a placeholder image as per the original HTML structure.
   const closeImg = document.createElement('img');
-  closeImg.src = '/etc.clientlibs/tatamotors/clientlibs/clientlib-site/resources/images/close.png'; // Fallback for missing model field
+  closeImg.src = '/content/dam/aemigrate/uploaded-folder/image/close.png'; // This is a hardcoded path from ORIGINAL HTML, not from block model.
   closeImg.alt = '';
   closeImg.classList.add('img-fluid');
   closeMobDrop.append(closeImg);
   navCard.append(closeMobDrop);
 
-  closeMobDrop.addEventListener('click', () => {
-    mainNavBx.classList.remove('open');
-    navIcon4.classList.remove('open');
-  });
-
   const level1Ul = document.createElement('ul');
   level1Ul.classList.add('level1');
+  navCard.append(level1Ul);
 
   navItemRows.forEach((row) => {
-    const [labelCell, linkCell, linkLabelCell, subLinksCell] = [...row.children];
+    const cells = [...row.children];
+    // Content detection for nav-item fields:
+    // labelCell: text (first cell without a link or sublinks)
+    // linkCell: aem-content (cell with an 'a' tag, but not the subLinks cell)
+    // linkLabelCell: text (cell with text content, but not the labelCell or subLinks cell)
+    // subLinksCell: richtext (cell containing a 'ul' or 'p')
+    const subLinksCell = cells.find(cell => cell.querySelector('ul') || cell.querySelector('p'));
+    const linkCell = cells.find(cell => cell.querySelector('a') && cell !== subLinksCell);
+    const labelCell = cells.find(cell => !cell.querySelector('a') && !cell.querySelector('ul') && !cell.querySelector('p') && cell.textContent.trim() !== '');
+    const linkLabelCell = cells.find(cell => cell !== labelCell && cell !== linkCell && cell !== subLinksCell && cell.textContent.trim() !== '');
+
     const li = document.createElement('li');
     moveInstrumentation(row, li);
 
     const subList = subLinksCell?.querySelector('ul');
-
     if (subList) {
       li.classList.add('level1');
       const trigger = document.createElement('a');
       trigger.href = 'javascript:void(0)';
-      trigger.textContent = labelCell.textContent.trim();
+      trigger.textContent = labelCell?.textContent.trim();
       li.append(trigger);
 
       const level2Ul = document.createElement('ul');
       level2Ul.classList.add('level2');
-      moveInstrumentation(subLinksCell, level2Ul);
-      while (subLinksCell.firstChild) {
-        level2Ul.append(subLinksCell.firstChild);
-      }
-
-      // Add back button for mobile
-      const mobBack = document.createElement('li');
-      mobBack.classList.add('mob-back');
+      const mobBackLi = document.createElement('li');
+      mobBackLi.classList.add('mob-back');
       const mobBackImg = document.createElement('img');
-      mobBackImg.src = '/etc.clientlibs/tatamotors/clientlibs/clientlib-site/resources/images/mob-level2-arrw.png'; // Fallback for missing model field
+      mobBackImg.src = '/content/dam/aemigrate/uploaded-folder/image/mob-level2-arrw.png'; // This is a hardcoded path from ORIGINAL HTML, not from block model.
       mobBackImg.alt = '';
-      mobBack.append(mobBackImg);
-      level2Ul.prepend(mobBack);
+      mobBackLi.append(mobBackImg);
+      level2Ul.append(mobBackLi);
 
+      [...subList.children].forEach((subLi) => {
+        level2Ul.append(subLi);
+      });
       li.append(level2Ul);
 
       trigger.addEventListener('click', (e) => {
         e.preventDefault();
-        e.stopPropagation();
-        li.classList.toggle('open');
-        level2Ul.classList.toggle('open');
-      });
-
-      mobBack.addEventListener('click', (e) => {
-        e.stopPropagation();
-        li.classList.remove('open');
-        level2Ul.classList.remove('open');
+        li.classList.toggle('active');
+        level2Ul.classList.toggle('active');
       });
     } else {
       li.classList.add('no-arrw-mob');
       const anchor = document.createElement('a');
       const foundLink = linkCell?.querySelector('a');
       if (foundLink) anchor.href = foundLink.href;
-      anchor.textContent = linkLabelCell?.textContent.trim() || labelCell.textContent.trim();
+      anchor.textContent = linkLabelCell?.textContent.trim() || labelCell?.textContent.trim();
       li.append(anchor);
     }
     level1Ul.append(li);
   });
 
-  navCard.append(level1Ul);
-
-  // Secondary Logo
-  const secondaryLogoAnchor = document.createElement('a');
-  secondaryLogoAnchor.classList.add('logo-wrp2');
-  secondaryLogoAnchor.target = '_blank';
+  const secondaryLogoWrp = document.createElement('a');
+  secondaryLogoWrp.classList.add('logo-wrp2');
+  secondaryLogoWrp.target = '_blank';
   const secondaryLogoLink = secondaryLogoLinkRow.querySelector('a');
-  secondaryLogoAnchor.href = secondaryLogoLink?.href || 'https://www.tata.com/'; // Correctly read href from aem-content cell
-  moveInstrumentation(secondaryLogoLinkRow, secondaryLogoAnchor);
-
-  const secondaryLogoImg = secondaryLogoRow.querySelector('img');
-  if (secondaryLogoImg) {
-    const optimizedSecondaryLogoPic = createOptimizedPicture(secondaryLogoImg.src, secondaryLogoImg.alt, false, [{ width: '750' }]);
-    moveInstrumentation(secondaryLogoImg, optimizedSecondaryLogoPic.querySelector('img'));
-    secondaryLogoAnchor.append(optimizedSecondaryLogoPic);
-  } else {
-    secondaryLogoAnchor.textContent = secondaryLogoLinkLabelRow.textContent.trim();
+  if (secondaryLogoLink) {
+    secondaryLogoWrp.href = secondaryLogoLink.href;
   }
-  navCard.append(secondaryLogoAnchor);
+  const secondaryLogoPicture = secondaryLogoRow.querySelector('picture');
+  if (secondaryLogoPicture) {
+    const img = secondaryLogoPicture.querySelector('img');
+    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+    moveInstrumentation(secondaryLogoPicture, optimizedPic.querySelector('img'));
+    secondaryLogoWrp.append(optimizedPic);
+  }
+  navCard.append(secondaryLogoWrp);
 
-  col2.append(navCard);
-  mainNavRow.append(col2);
-
-  // Search Section (hardcoded from original HTML, as no model field)
   const cdSearch = document.createElement('div');
   cdSearch.classList.add('cd-search');
-  cdSearch.style.display = 'none'; // Initially hidden
+  cdSearch.style.display = 'none'; // Initial state as per original HTML
   cdSearch.innerHTML = `
     <div class="container">
       <div class="input-group">
@@ -209,38 +179,37 @@ export default function decorate(block) {
     </div>
   `;
 
-  // Append all created elements to the block
   block.textContent = '';
-  block.classList.add('fixed'); // Add fixed class for styling
   block.append(topHead, mainNavBx, cdSearch);
 
-  // Event listener for the search button
-  const searchButton = cdSearch.querySelector('.btn.btn-outline-secondary');
-  if (searchButton) {
-    searchButton.addEventListener('click', () => {
-      // Toggle visibility of the search overlay
-      if (cdSearch.style.display === 'none') {
-        cdSearch.style.display = 'block';
-      } else {
-        cdSearch.style.display = 'none';
-      }
-    });
-  }
+  // Add event listener for mobile menu toggle
+  navIcon4.addEventListener('click', () => {
+    navIcon4.classList.toggle('open');
+    navCard.classList.toggle('open');
+    document.body.classList.toggle('overflow-hidden');
+  });
 
-  // Image optimization
-  block.querySelectorAll('picture > img').forEach((img) => {
-    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-    moveInstrumentation(img, optimizedPic.querySelector('img'));
-    img.closest('picture').replaceWith(optimizedPic);
+  closeMobDrop.addEventListener('click', (e) => {
+    e.preventDefault();
+    navIcon4.classList.remove('open');
+    navCard.classList.remove('open');
+    document.body.classList.remove('overflow-hidden');
+  });
+
+  // Add event listener for dark/light mode switch
+  switchBtn.addEventListener('click', () => {
+    document.body.classList.toggle('dark-mode'); // Assuming 'dark-mode' class toggles the theme
   });
 
   // Scroll behavior for nav-up/nav-down
   let lastScrollY = window.scrollY;
   window.addEventListener('scroll', () => {
     if (window.scrollY > lastScrollY && window.scrollY > 0) {
-      block.classList.add('nav-up');
-    } else {
       block.classList.remove('nav-up');
+      block.classList.add('nav-down');
+    } else {
+      block.classList.remove('nav-down');
+      block.classList.add('nav-up');
     }
     lastScrollY = window.scrollY;
   });
