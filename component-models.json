@@ -436,13 +436,23 @@
       },
       {
         "component": "reference",
-        "label": "Logo Mobile",
-        "name": "logoMobile"
+        "label": "Mobile Logo",
+        "name": "mobileLogo"
       },
       {
         "component": "reference",
-        "label": "Logo Secondary",
-        "name": "logoSecondary"
+        "label": "Secondary Logo",
+        "name": "secondaryLogo"
+      },
+      {
+        "component": "aem-content",
+        "label": "Secondary Logo Link",
+        "name": "secondaryLogoLink"
+      },
+      {
+        "component": "text",
+        "label": "Secondary Logo Link Label",
+        "name": "secondaryLogoLinkLabel"
       },
       {
         "component": "container",
@@ -919,8 +929,8 @@
       },
       {
         "component": "richtext",
-        "label": "Description",
-        "name": "description",
+        "label": "Text",
+        "name": "text",
         "valueType": "string"
       },
       {
@@ -942,8 +952,8 @@
       },
       {
         "component": "richtext",
-        "label": "Text",
-        "name": "text",
+        "label": "Description",
+        "name": "description",
         "valueType": "string"
       },
       {

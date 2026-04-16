@@ -53,23 +53,13 @@
         },
         {
           "component": "reference",
-          "label": "Mobile Logo",
-          "name": "mobileLogo"
+          "label": "Logo Mobile",
+          "name": "logoMobile"
         },
         {
           "component": "reference",
-          "label": "Secondary Logo",
-          "name": "secondaryLogo"
-        },
-        {
-          "component": "aem-content",
-          "label": "Secondary Logo Link",
-          "name": "secondaryLogoLink"
-        },
-        {
-          "component": "text",
-          "label": "Secondary Logo Link Label",
-          "name": "secondaryLogoLinkLabel"
+          "label": "Logo Secondary",
+          "name": "logoSecondary"
         },
         {
           "component": "container",

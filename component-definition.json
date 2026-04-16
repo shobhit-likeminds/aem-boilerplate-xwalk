@@ -595,7 +595,7 @@
           }
         },
         {
-          "title": "Card-Blurb",
+          "title": "Card Blurb",
           "id": "card-blurb",
           "plugins": {
             "xwalk": {
@@ -603,7 +603,7 @@
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
                   "model": "card-blurb",
-                  "name": "Card-Blurb"
+                  "name": "Card Blurb"
                 }
               }
             }
