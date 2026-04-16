@@ -3,65 +3,64 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
   const [
-    backgroundImageRow,
-    backgroundImageAltRow,
+    imageRow,
     subTitleRow,
-    titleRow,
+    headingRow,
     descriptionRow,
     ctaLinkRow,
     ctaLinkLabelRow,
   ] = [...block.children];
 
-  block.textContent = '';
-
-  // Background Image
+  // Image
   const figure = document.createElement('figure');
-  const backgroundImageCell = backgroundImageRow.firstElementChild;
-  const img = backgroundImageCell.querySelector('img');
-  if (img) {
-    const altText = backgroundImageAltRow.firstElementChild?.textContent.trim() || img.alt;
-    const optimizedPic = createOptimizedPicture(img.src, altText, false, [{ width: '1920' }]);
-    optimizedPic.querySelector('img').classList.add('bg-cover');
-    moveInstrumentation(backgroundImageCell, optimizedPic.querySelector('img'));
-    figure.append(optimizedPic);
+  const imageCell = imageRow.firstElementChild;
+  const picture = imageCell?.querySelector('picture');
+  if (picture) {
+    const img = picture.querySelector('img');
+    if (img) {
+      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '1920' }]);
+      // Copy classes from original img to the new optimized img
+      optimizedPic.querySelector('img').classList.add('bg-cover');
+      moveInstrumentation(img, optimizedPic.querySelector('img'));
+      figure.append(optimizedPic);
+    }
   }
-  block.append(figure);
+  moveInstrumentation(imageRow, figure);
 
-  // Section Details
+  // Section details
   const sectDet = document.createElement('div');
   sectDet.classList.add('sect-det');
 
   // Sub Title
   const subTtle = document.createElement('div');
   subTtle.classList.add('sub-ttle', 'wow', 'animate__', 'animate__fadeInUp', 'animated');
-  moveInstrumentation(subTitleRow.firstElementChild, subTtle);
-  subTtle.textContent = subTitleRow.firstElementChild?.textContent.trim() || '';
-  sectDet.append(subTtle);
+  moveInstrumentation(subTitleRow, subTtle);
+  subTtle.textContent = subTitleRow?.firstElementChild?.textContent.trim() || '';
 
-  // Title
-  const commonTtle = document.createElement('h2');
-  commonTtle.classList.add('common-ttle', 'wow', 'animate__', 'animate__fadeInUp', 'animated');
-  moveInstrumentation(titleRow.firstElementChild, commonTtle);
-  commonTtle.textContent = titleRow.firstElementChild?.textContent.trim() || '';
-  sectDet.append(commonTtle);
+  // Heading
+  const heading = document.createElement('h2');
+  heading.classList.add('common-ttle', 'wow', 'animate__', 'animate__fadeInUp', 'animated');
+  moveInstrumentation(headingRow, heading);
+  heading.textContent = headingRow?.firstElementChild?.textContent.trim() || '';
 
   // Description
-  const descriptionP = document.createElement('p');
-  descriptionP.classList.add('wow', 'animate__', 'animate__fadeInUp', 'animated');
-  moveInstrumentation(descriptionRow.firstElementChild, descriptionP);
-  descriptionP.innerHTML = descriptionRow.firstElementChild?.innerHTML || '';
-  sectDet.append(descriptionP);
+  const description = document.createElement('p');
+  description.classList.add('wow', 'animate__', 'animate__fadeInUp', 'animated');
+  moveInstrumentation(descriptionRow, description);
+  description.innerHTML = descriptionRow?.firstElementChild?.innerHTML || '';
 
   // CTA Link
-  const ctaLinkAnchor = document.createElement('a');
-  ctaLinkAnchor.classList.add('btn-box', 'wow', 'animate__', 'animate__fadeInUp', 'animated');
-  const foundCtaLink = ctaLinkRow.firstElementChild?.querySelector('a');
+  const ctaLink = document.createElement('a');
+  ctaLink.classList.add('btn-box', 'wow', 'animate__', 'animate__fadeInUp', 'animated');
+  const foundCtaLink = ctaLinkRow?.firstElementChild?.querySelector('a');
   if (foundCtaLink) {
-    ctaLinkAnchor.href = foundCtaLink.href;
+    ctaLink.href = foundCtaLink.href;
   }
-  ctaLinkAnchor.textContent = ctaLinkLabelRow.firstElementChild?.textContent.trim() || '';
-  moveInstrumentation(ctaLinkRow.firstElementChild, ctaLinkAnchor);
-  sectDet.append(ctaLinkAnchor);
+  ctaLink.textContent = ctaLinkLabelRow?.firstElementChild?.textContent.trim() || '';
+  moveInstrumentation(ctaLinkRow, ctaLink);
 
-  block.append(sectDet);
+  sectDet.append(subTtle, heading, description, ctaLink);
+
+  block.textContent = '';
+  block.append(figure, sectDet);
 }

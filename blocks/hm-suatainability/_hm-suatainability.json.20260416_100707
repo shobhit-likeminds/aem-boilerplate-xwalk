@@ -23,19 +23,26 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Image",
-          "name": "image"
-        },
-        {
-          "component": "text",
-          "label": "Sub Ttle",
-          "name": "subTtle",
+          "label": "Background Image",
+          "name": "backgroundImage",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Heading",
-          "name": "heading",
+          "label": "Background Image Alt",
+          "name": "backgroundImageAlt",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Sub Title",
+          "name": "subTitle",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Title",
+          "name": "title",
           "valueType": "string"
         },
         {
@@ -52,7 +59,7 @@
         },
         {
           "component": "text",
-          "label": "CTA Label",
+          "label": "CTA Link Label",
           "name": "ctaLinkLabel",
           "valueType": "string"
         }

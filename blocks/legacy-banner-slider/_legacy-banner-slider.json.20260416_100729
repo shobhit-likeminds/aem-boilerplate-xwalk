@@ -50,13 +50,12 @@
         {
           "component": "reference",
           "label": "Image",
-          "name": "image",
-          "valueType": "string"
+          "name": "image"
         },
         {
           "component": "text",
-          "label": "Alt Text",
-          "name": "altText",
+          "label": "Image Alt",
+          "name": "imageAlt",
           "valueType": "string"
         },
         {
@@ -66,9 +65,9 @@
           "valueType": "string"
         },
         {
-          "component": "richtext",
-          "label": "Title",
-          "name": "title",
+          "component": "text",
+          "label": "Heading",
+          "name": "heading",
           "valueType": "string"
         },
         {
@@ -78,9 +77,9 @@
           "valueType": "string"
         },
         {
-          "component": "richtext",
-          "label": "Designation",
-          "name": "designation",
+          "component": "text",
+          "label": "Description",
+          "name": "description",
           "valueType": "string"
         },
         {
@@ -91,7 +90,7 @@
         },
         {
           "component": "text",
-          "label": "CTA Label",
+          "label": "CTA Link Label",
           "name": "ctaLinkLabel",
           "valueType": "string"
         }
