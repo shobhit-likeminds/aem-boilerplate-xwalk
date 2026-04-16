@@ -1,0 +1,103 @@
+{
+  "definitions": [
+    {
+      "title": "Hm-Our-Legacy",
+      "id": "hm-our-legacy",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "hm-our-legacy",
+              "model": "hm-our-legacy",
+              "name": "Hm-Our-Legacy"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Legacy Slide",
+      "id": "legacy-slide",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "legacy-slide",
+              "name": "Legacy Slide"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "hm-our-legacy",
+      "fields": [
+        {
+          "component": "container",
+          "item": "legacy-slide",
+          "label": "Slides",
+          "name": "slides"
+        }
+      ]
+    },
+    {
+      "id": "legacy-slide",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Image",
+          "name": "image",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Sub Title",
+          "name": "subTitle",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Title",
+          "name": "title",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Name",
+          "name": "name",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Description",
+          "name": "description",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "CTA Link",
+          "name": "ctaLink",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "CTA Label",
+          "name": "ctaLinkLabel",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "hm-our-legacy",
+      "components": [
+        "legacy-slide"
+      ]
+    }
+  ]
+}

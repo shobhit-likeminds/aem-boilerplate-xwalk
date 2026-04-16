@@ -42,6 +42,21 @@
           "name": "logo"
         },
         {
+          "component": "aem-content",
+          "label": "Logo Link",
+          "name": "logoLink"
+        },
+        {
+          "component": "text",
+          "label": "Logo Link Label",
+          "name": "logoLinkLabel"
+        },
+        {
+          "component": "reference",
+          "label": "Secondary Logo",
+          "name": "secondaryLogo"
+        },
+        {
           "component": "container",
           "item": "footer-section",
           "label": "Footer Sections",
@@ -52,12 +67,6 @@
     {
       "id": "footer-section",
       "fields": [
-        {
-          "component": "text",
-          "label": "Heading",
-          "name": "heading",
-          "valueType": "string"
-        },
         {
           "component": "richtext",
           "label": "Section Links",

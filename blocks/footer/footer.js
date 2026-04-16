@@ -2,232 +2,166 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const [
-    logoRow,
-    logoLinkRow,
-    logoLinkLabelRow,
-    secondaryLogoRow,
-    ...sectionRows
-  ] = [...block.children];
+  const [logoRow, ...sectionRows] = [...block.children];
 
-  block.textContent = '';
+  // Main wrapper
+  const footerWrp = document.createElement('section');
+  footerWrp.classList.add('footer-wrp');
 
-  const sectionContainer = document.createElement('section');
-  sectionContainer.classList.add('container-hd', 'fmm-container', 'p-0');
-  block.append(sectionContainer);
-
-  const footerBrand = document.createElement('div');
-  footerBrand.classList.add('footer-brand', 'w-100');
-  sectionContainer.append(footerBrand);
-
-  const footerBrandPrimary = document.createElement('section');
-  footerBrandPrimary.classList.add('footer-brand__primary');
-  footerBrand.append(footerBrandPrimary);
-
-  const containerPrimary = document.createElement('div');
-  containerPrimary.classList.add('container', 'fmm-container');
-  footerBrandPrimary.append(containerPrimary);
-
-  const primaryContent = document.createElement('div');
-  primaryContent.classList.add('footer-brand__primary--content', 'd-flex', 'flex-column', 'flex-md-row', 'justify-content-md-between', 'align-items-center');
-  containerPrimary.append(primaryContent);
-
-  const footerBrandLeft = document.createElement('section');
-  footerBrandLeft.classList.add('footer-brand__left', 'd-flex', 'gap-5', 'align-items-center');
-  primaryContent.append(footerBrandLeft);
+  const container = document.createElement('div');
+  container.classList.add('container-1600-wrp');
+  footerWrp.append(container);
 
   // Logo
-  const logoLink = document.createElement('a');
-  logoLink.classList.add('footer-brand__logo', 'd-inline-block', 'cta-analytics');
-  logoLink.setAttribute('data-link-region', 'Footer');
-  logoLink.setAttribute('aria-label', 'logo');
-  const logoAnchor = logoLinkRow.querySelector('a');
-  if (logoAnchor) {
-    logoLink.href = logoAnchor.href;
-    moveInstrumentation(logoLinkRow, logoLink);
-  }
-
-  const logoPicture = logoRow.querySelector('picture');
-  if (logoPicture) {
-    const img = logoPicture.querySelector('img');
-    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-    optimizedPic.querySelector('img').classList.add('object-fit-contain', 'w-100', 'h-100');
-    moveInstrumentation(logoRow, optimizedPic.querySelector('img'));
-    logoLink.append(optimizedPic);
-  }
-  footerBrandLeft.append(logoLink);
-
-  // Secondary Logo
-  const secondaryLogoDiv = document.createElement('div');
-  secondaryLogoDiv.classList.add('footer-brand__secondary--logo', 'd-inline-block');
-  const secondaryLogoPicture = secondaryLogoRow.querySelector('picture');
-  if (secondaryLogoPicture) {
-    const img = secondaryLogoPicture.querySelector('img');
-    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-    optimizedPic.querySelector('img').classList.add('object-fit-contain', 'w-100', 'h-100');
-    moveInstrumentation(secondaryLogoRow, optimizedPic.querySelector('img'));
-    secondaryLogoDiv.append(optimizedPic);
-  }
-  footerBrandLeft.append(secondaryLogoDiv);
-
-  const footerBrandRight = document.createElement('section');
-  footerBrandRight.classList.add('footer-brand__right');
-  primaryContent.append(footerBrandRight);
-
-  const footerBrandNavbar = document.createElement('nav');
-  footerBrandNavbar.classList.add('footer-brand__navbar', 'd-grid', 'd-md-flex');
-  footerBrandNavbar.setAttribute('aria-label', 'footer navbar');
-  footerBrandRight.append(footerBrandNavbar);
-
-  const footerBrandNavbarLeft = document.createElement('div');
-  footerBrandNavbarLeft.classList.add('footer-brand__navbar--left', 'd-flex', 'flex-column', 'flex-md-row');
-  footerBrandNavbar.append(footerBrandNavbarLeft);
-
-  const footerBrandNavbarRight = document.createElement('div');
-  footerBrandNavbarRight.classList.add('footer-brand__navbar--right', 'd-flex', 'flex-column', 'flex-md-row');
-  footerBrandNavbar.append(footerBrandNavbarRight);
-
-  // Section Links
-  sectionRows.forEach((row, index) => {
-    // Check 0: Replaced row.children[0] with content detection
-    const sectionLinksCell = [...row.children].find((cell) => cell.innerHTML.trim());
-    if (!sectionLinksCell) return; // Skip if cell is empty
-
-    const footerListDiv = document.createElement('div');
-    footerListDiv.classList.add('footerList');
-    moveInstrumentation(row, footerListDiv);
-
-    const ul = document.createElement('ul');
-    ul.classList.add('footer-list', 'd-flex', 'align-items-center', 'justify-content-center', 'align-items-md-start', 'flex-column');
-    ul.innerHTML = sectionLinksCell.innerHTML;
-
-    // Transform nested lists if any
-    ul.querySelectorAll('li').forEach((li) => {
-      const nestedUl = li.querySelector(':scope > ul');
-      if (nestedUl) {
-        nestedUl.remove();
-        const subWrap = document.createElement('div');
-        subWrap.classList.add('has-sub-child'); // Use class from original site CSS
-        subWrap.append(nestedUl);
-        li.append(subWrap);
-
-        const trigger = li.querySelector(':scope > a') || li;
-        trigger.addEventListener('click', (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          li.classList.toggle('active');
-          subWrap.classList.toggle('active');
-        });
+  if (logoRow) {
+    const mobLogoWr = document.createElement('div');
+    mobLogoWr.classList.add('mob-logo-wr');
+    const picture = logoRow.querySelector('picture');
+    if (picture) {
+      const img = picture.querySelector('img');
+      if (img) {
+        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+        moveInstrumentation(img, optimizedPic.querySelector('img'));
+        mobLogoWr.append(optimizedPic);
+        optimizedPic.querySelector('img').classList.add('img-fluid');
       }
-
-      const link = li.querySelector('a');
-      if (link) {
-        link.classList.add('cta-analytics', 'analytics_cta_click', 'footer-list__item--link', 'd-inline-block');
-        link.setAttribute('data-link-region', 'Footer');
-        moveInstrumentation(li, link);
-      }
-      li.classList.add('footer-list__item');
-    });
-
-    footerListDiv.append(ul);
-    if (index < 2) { // Assuming first two footerLists go to navbar-left
-      footerBrandNavbarLeft.append(footerListDiv);
-    } else { // Remaining footerLists go to navbar-right
-      footerBrandNavbarRight.append(footerListDiv);
     }
+    moveInstrumentation(logoRow, mobLogoWr);
+    container.append(mobLogoWr);
+  }
+
+  // Sections
+  const row1 = document.createElement('div');
+  row1.classList.add('row', 'f1');
+  container.append(row1);
+
+  sectionRows.forEach((row) => {
+    // Use content detection instead of index access for robustness
+    const cells = [...row.children];
+    const headingCell = cells.find(cell => !cell.querySelector('ul') && !cell.querySelector('a'));
+    const sectionLinksCell = cells.find(cell => cell.querySelector('ul') || cell.querySelector('p') || cell.querySelector('a'));
+
+    if (!headingCell || !sectionLinksCell) {
+      // Skip if cells are not found as expected
+      return;
+    }
+
+    const col = document.createElement('div');
+    col.classList.add('col', 'col-xl-3');
+    moveInstrumentation(row, col);
+
+    const headingText = headingCell.textContent.trim();
+    const sectionLinksContent = sectionLinksCell.innerHTML;
+    const hasUl = sectionLinksCell.querySelector('ul');
+
+    if (hasUl) {
+      // Accordion item
+      const ttle = document.createElement('a');
+      ttle.href = 'javascript:void(0)';
+      ttle.classList.add('ttle', 'accordion_head2');
+      ttle.textContent = headingText;
+
+      const plusminus = document.createElement('span');
+      plusminus.classList.add('plusminus2');
+      plusminus.textContent = '+';
+      ttle.append(plusminus);
+
+      const ftrDropWrp = document.createElement('div');
+      ftrDropWrp.classList.add('ftr-drop-wrp');
+      ftrDropWrp.append(ttle);
+
+      const ftrSubLinksCvr = document.createElement('div');
+      ftrSubLinksCvr.classList.add('ftr-sub-links-cvr', 'accordion_body2');
+      ftrSubLinksCvr.innerHTML = sectionLinksContent;
+
+      // Add event listener for accordion behavior
+      ttle.addEventListener('click', () => {
+        ftrSubLinksCvr.classList.toggle('active');
+        plusminus.textContent = ftrSubLinksCvr.classList.contains('active') ? '-' : '+';
+      });
+
+      // Ensure all links inside the accordion body have 'ftr-link' class
+      ftrSubLinksCvr.querySelectorAll('a').forEach((link) => {
+        link.classList.add('ftr-link');
+      });
+
+      ftrDropWrp.append(ftrSubLinksCvr);
+      col.append(ftrDropWrp);
+    } else {
+      // Simple link or text
+      const link = sectionLinksCell.querySelector('a');
+      if (link) {
+        const ttle = document.createElement('a');
+        ttle.href = link.href;
+        ttle.classList.add('ttle');
+        ttle.textContent = headingText;
+        col.append(ttle);
+      } else {
+        const ttle = document.createElement('p'); // Use p for plain text headings without links
+        ttle.classList.add('ttle');
+        ttle.textContent = headingText;
+        col.append(ttle);
+      }
+    }
+    row1.append(col);
   });
 
-  const footerBrandSecondary = document.createElement('section');
-  footerBrandSecondary.classList.add('footer-brand__secondary');
-  footerBrand.append(footerBrandSecondary);
+  // Add the row f2 and f3 for social media and legal links/copyright if they exist in the original HTML
+  // (These are not part of the EDS model for this block, but are static elements in the original HTML)
+  // For this exercise, we will assume these are not dynamic and only focus on the block's model.
+  // If these were dynamic, they would need to be part of the EDS model.
 
-  const containerSecondary = document.createElement('div');
-  containerSecondary.classList.add('container', 'fmm-container');
-  footerBrandSecondary.append(containerSecondary);
+  // Example of how to add fixed elements from original HTML if they were hardcoded in decorate:
+  const row2 = document.createElement('div');
+  row2.classList.add('row', 'f2', 'justify-content-between');
+  container.append(row2);
 
-  const secondaryContent = document.createElement('div');
-  secondaryContent.classList.add('footer-brand__secondary--content', 'd-flex', 'flex-column', 'flex-md-row', 'justify-content-md-between', 'align-items-center');
-  containerSecondary.append(secondaryContent);
+  const socialCol = document.createElement('div');
+  socialCol.classList.add('col', 'col-xl-2', 'ftr-drop-wrp');
+  const socialTitle = document.createElement('p');
+  socialTitle.classList.add('ttle', 'accordion_head2');
+  socialTitle.textContent = 'Social Media ';
+  const socialPlusminus = document.createElement('span');
+  socialPlusminus.classList.add('plusminus2');
+  socialPlusminus.textContent = '+';
+  socialTitle.append(socialPlusminus);
+  socialCol.append(socialTitle);
 
-  const footerBrandLeftSecondary = document.createElement('section');
-  footerBrandLeftSecondary.classList.add('footer-brand__left');
-  secondaryContent.append(footerBrandLeftSecondary);
-
-  const footerBrandLeftList = document.createElement('ul');
-  footerBrandLeftList.classList.add('footer-brand__left--list', 'd-flex', 'align-items-center', 'justify-content-center', 'flex-wrap');
-  footerBrandLeftSecondary.append(footerBrandLeftList);
-
-  // ITC Portal link (hardcoded from original HTML as it's not in EDS model)
-  const itcPortalLi = document.createElement('li');
-  itcPortalLi.classList.add('footer-brand__left--item');
-  const itcPortalLink = document.createElement('a');
-  itcPortalLink.href = 'https://www.itcportal.com/';
-  itcPortalLink.target = '_blank';
-  itcPortalLink.classList.add('footer-brand__left--link', 'cta-analytics');
-  itcPortalLink.setAttribute('data-link-region', 'Footer');
-  itcPortalLink.textContent = 'ITC Portal';
-  const screenReaderSpan = document.createElement('span');
-  screenReaderSpan.classList.add('cmp-link__screen-reader-only');
-  screenReaderSpan.textContent = 'opens in a new tab';
-  itcPortalLink.append(screenReaderSpan);
-  itcPortalLi.append(itcPortalLink);
-  footerBrandLeftList.append(itcPortalLi);
-
-  // Copyright text (hardcoded from original HTML as it's not in EDS model)
-  const copyrightLi = document.createElement('li');
-  copyrightLi.classList.add('footer-brand__left--item');
-  const copyrightSpan = document.createElement('span');
-  copyrightSpan.classList.add('footer-brand__left--text');
-  copyrightSpan.textContent = '© 2025 Aashirvaad Svasti. All Rights Reserved.';
-  copyrightLi.append(copyrightSpan);
-  footerBrandLeftList.append(copyrightLi);
-
-  const footerBrandRightSecondary = document.createElement('section');
-  footerBrandRightSecondary.classList.add('footer-brand__right');
-  secondaryContent.append(footerBrandRightSecondary);
-
-  const socialList = document.createElement('ul');
-  socialList.classList.add('footer-brand__right--list', 'd-flex', 'align-items-center', 'justify-content-center');
-  footerBrandRightSecondary.append(socialList);
-
-  // Social media links (hardcoded from original HTML as they are not in EDS model)
-  const socialLinks = [
-    {
-      href: 'https://www.instagram.com/aashirvaad_svastimilk',
-      alt: 'Instagram',
-      src: '/content/dam/aemigrate/uploaded-folder/image/1776285259108.svg+xml',
-    },
-    {
-      href: 'https://www.facebook.com/SvastiMilkAashirvaad',
-      alt: 'Facebook',
-      src: '/content/dam/aemigrate/uploaded-folder/image/1776285259070.svg+xml',
-    },
-    {
-      href: 'https://www.youtube.com/@aashirvaadsvastimilk5475',
-      alt: 'Youtube',
-      src: '/content/dam/aemigrate/uploaded-folder/image/1776285259145.svg+xml',
-    },
-  ];
-
-  socialLinks.forEach((social) => {
-    const li = document.createElement('li');
-    li.classList.add('footer-brand__right--item', 'd-flex', 'justify-content-center', 'align-items-center');
-    const link = document.createElement('a');
-    link.href = social.href;
-    link.classList.add('footer-brand__right--link', 'cta-analytics');
-    link.setAttribute('data-link-region', 'Footer');
-    link.target = '_blank';
-    const img = document.createElement('img');
-    img.setAttribute('aria-label', social.alt);
-    img.src = social.src;
-    img.classList.add('object-fit-contain', 'w-100', 'h-100');
-    img.alt = social.alt; // Corrected: Use alt from social object
-    img.loading = 'lazy';
-    const screenReader = document.createElement('span');
-    screenReader.classList.add('cmp-link__screen-reader-only');
-    screenReader.textContent = 'opens in a new tab';
-    link.append(img, screenReader);
-    li.append(link);
-    socialList.append(li);
+  const socialLinksCvr = document.createElement('div');
+  socialLinksCvr.classList.add('ftr-sub-links-cvr', 'accordion_body2', 'socialIcons');
+  socialLinksCvr.innerHTML = `
+    <a href="https://www.facebook.com/TataMotorsGroup/" class="ftr-link" target="_blank"><i class="fab fa-facebook-square"></i></a>
+    <a href="https://www.instagram.com/tatamotorsgroup/" class="ftr-link" target="_blank"><i class="fab fa-instagram"></i></a>
+    <a href="https://twitter.com/TataMotors" class="ftr-link" target="_blank"><i class="fa-brands fa-square-x-twitter"></i></a>
+    <a href="https://www.linkedin.com/company/tata-motors/" class="ftr-link" target="_blank"><i class="fab fa-linkedin"></i></a>
+    <a href="https://www.youtube.com/user/TataMotorsGroup" class="ftr-link" target="_blank"><i class="fab fa-youtube-square"></i></a>
+  `;
+  socialCol.append(socialLinksCvr);
+  socialTitle.addEventListener('click', () => {
+    socialLinksCvr.classList.toggle('active');
+    socialPlusminus.textContent = socialLinksCvr.classList.contains('active') ? '-' : '+';
   });
+  row2.append(socialCol);
+
+  const row3 = document.createElement('div');
+  row3.classList.add('row', 'mt25', 'f3');
+  container.append(row3);
+
+  const legalCol = document.createElement('div');
+  legalCol.classList.add('col-12', 'col-md-6');
+  legalCol.innerHTML = `
+    <a href="https://www.tatamotors.com/legal-disclaimer">Legal Disclaimer</a>
+    <a href="https://www.tatamotors.com/open-source-license-disclosure">Open Source License Disclosure</a>
+  `;
+  row3.append(legalCol);
+
+  const copyrightCol = document.createElement('div');
+  copyrightCol.classList.add('col-12', 'col-md-6');
+  copyrightCol.innerHTML = `
+    <p class="copy-txt text-md-end"> © Copyright 2026. All rights reserved. Tata Motors Limited.</p>
+  `;
+  row3.append(copyrightCol);
+
+  block.textContent = '';
+  block.append(footerWrp);
 }

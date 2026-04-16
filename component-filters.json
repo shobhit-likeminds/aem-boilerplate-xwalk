@@ -30,7 +30,17 @@
       "w-100-pt-3-pt-sm-3",
       "product-selection",
       "simple-block",
-      "buy-now-card"
+      "buy-now-card",
+      "header-full-wrp",
+      "home-banner",
+      "hm-welcome",
+      "demerged-info",
+      "hm-eng-for-evol",
+      "systems-in-motion",
+      "movement-matters",
+      "hm-our-legacy",
+      "hm-suatainability",
+      "hm-careers"
     ]
   },
   {
@@ -67,6 +77,9 @@
     ]
   },
   {
+    "id": "demerged-info"
+  },
+  {
     "id": "footer-list",
     "components": [
       "footer-list-item"
@@ -85,9 +98,48 @@
     ]
   },
   {
+    "id": "header-full-wrp",
+    "components": [
+      "nav-item"
+    ]
+  },
+  {
     "id": "header",
     "components": [
       "nav-item"
+    ]
+  },
+  {
+    "id": "hm-careers"
+  },
+  {
+    "id": "hm-eng-for-evol",
+    "components": [
+      "evolution-blurb"
+    ]
+  },
+  {
+    "id": "hm-our-legacy",
+    "components": [
+      "legacy-slide"
+    ]
+  },
+  {
+    "id": "hm-suatainability"
+  },
+  {
+    "id": "hm-welcome"
+  },
+  {
+    "id": "home-banner",
+    "components": [
+      "rotator-image"
+    ]
+  },
+  {
+    "id": "movement-matters",
+    "components": [
+      "m-card-blurb"
     ]
   },
   {
@@ -112,6 +164,12 @@
     "id": "stay-social",
     "components": [
       "stay-social-card"
+    ]
+  },
+  {
+    "id": "systems-in-motion",
+    "components": [
+      "motion-card"
     ]
   },
   {
