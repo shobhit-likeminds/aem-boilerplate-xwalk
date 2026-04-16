@@ -39,12 +39,14 @@
         {
           "component": "reference",
           "label": "Dot Right Image",
-          "name": "dotRightImage"
+          "name": "dotRightImage",
+          "valueType": "string"
         },
         {
           "component": "reference",
           "label": "Dot Left Image",
-          "name": "dotLeftImage"
+          "name": "dotLeftImage",
+          "valueType": "string"
         },
         {
           "component": "text",
@@ -54,8 +56,8 @@
         },
         {
           "component": "richtext",
-          "label": "Intro Text",
-          "name": "introText",
+          "label": "Description",
+          "name": "description",
           "valueType": "string"
         },
         {
@@ -72,7 +74,8 @@
         {
           "component": "reference",
           "label": "Logo",
-          "name": "logo"
+          "name": "logo",
+          "valueType": "string"
         },
         {
           "component": "text",
@@ -82,8 +85,8 @@
         },
         {
           "component": "richtext",
-          "label": "Description",
-          "name": "description",
+          "label": "Text",
+          "name": "text",
           "valueType": "string"
         },
         {
@@ -94,7 +97,7 @@
         },
         {
           "component": "text",
-          "label": "CTA Label",
+          "label": "CTA Link Label",
           "name": "ctaLinkLabel",
           "valueType": "string"
         }

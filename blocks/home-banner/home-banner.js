@@ -5,8 +5,7 @@ export default function decorate(block) {
   const [
     backgroundImageRow,
     headingRow,
-    bannerTextRow,
-    ...rotatorImageRows
+    ...itemRows
   ] = [...block.children];
 
   block.textContent = '';
@@ -21,19 +20,17 @@ export default function decorate(block) {
   // Background Image
   const animBg = document.createElement('div');
   animBg.classList.add('anim-bg');
-  const bgFigure = document.createElement('figure');
-  const bgPicture = backgroundImageRow.querySelector('picture');
-  if (bgPicture) {
-    const bgImg = bgPicture.querySelector('img');
-    if (bgImg) {
-      const optimizedBgPic = createOptimizedPicture(bgImg.src, bgImg.alt, false, [{ width: '1920' }]);
-      moveInstrumentation(bgImg, optimizedBgPic.querySelector('img'));
-      bgFigure.append(optimizedBgPic);
-      optimizedBgPic.querySelector('img').classList.add('bg-cover');
-    }
+  const figureBg = document.createElement('figure');
+  const bgImage = backgroundImageRow.firstElementChild.querySelector('picture');
+  if (bgImage) {
+    const img = bgImage.querySelector('img');
+    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '1920' }]);
+    optimizedPic.querySelector('img').classList.add('bg-cover');
+    moveInstrumentation(img, optimizedPic.querySelector('img'));
+    figureBg.append(optimizedPic);
   }
-  moveInstrumentation(backgroundImageRow, bgFigure);
-  animBg.append(bgFigure);
+  moveInstrumentation(backgroundImageRow, figureBg);
+  animBg.append(figureBg);
   bannerHld.append(animBg);
 
   const container1600Wrp = document.createElement('div');
@@ -42,55 +39,55 @@ export default function decorate(block) {
   // Heading
   const captionWrp = document.createElement('div');
   captionWrp.classList.add('caption-wrp');
-  const heading = document.createElement('h2');
-  moveInstrumentation(headingRow, heading);
-  heading.innerHTML = headingRow.textContent.trim();
-  captionWrp.append(heading);
+  const h2 = document.createElement('h2');
+  h2.innerHTML = headingRow.firstElementChild.innerHTML;
+  moveInstrumentation(headingRow, h2);
+  captionWrp.append(h2);
   container1600Wrp.append(captionWrp);
 
-  // Banner Text
-  const bannerText = document.createElement('div');
-  bannerText.classList.add('banner-text');
-  moveInstrumentation(bannerTextRow, bannerText);
-  bannerText.innerHTML = bannerTextRow.firstElementChild.innerHTML;
-  container1600Wrp.append(bannerText);
-
+  // Banner Texts
+  const bannerTextDiv = document.createElement('div');
+  bannerTextDiv.classList.add('banner-text');
+  // Filter for banner-text items: rows with one child cell containing only text (no picture)
+  const bannerTexts = itemRows.filter((row) => {
+    const cells = [...row.children];
+    return cells.length === 1 && !cells[0].querySelector('picture') && cells[0].textContent.trim();
+  });
+  bannerTexts.forEach((row, index) => {
+    const span = document.createElement('span');
+    span.style.display = 'block';
+    span.style.opacity = index === 0 ? '1' : '0'; // Set first item to visible initially
+    span.textContent = row.firstElementChild.textContent.trim();
+    moveInstrumentation(row, span);
+    bannerTextDiv.append(span);
+  });
+  container1600Wrp.append(bannerTextDiv);
   bannerHld.append(container1600Wrp);
 
   // Rotator Images
-  if (rotatorImageRows.length > 0) {
-    const rotator = document.createElement('div');
-    rotator.classList.add('rotator');
-    const rotatorFigure = document.createElement('figure');
-
-    rotatorImageRows.forEach((row, index) => {
-      // Use content detection instead of row.firstElementChild for robustness
-      const imageCell = [...row.children].find(cell => cell.querySelector('picture'));
-      if (imageCell) {
-        const picture = imageCell.querySelector('picture');
-        if (picture) {
-          const img = picture.querySelector('img');
-          if (img) {
-            const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '1920' }]);
-            moveInstrumentation(img, optimizedPic.querySelector('img'));
-            const rotatorImg = optimizedPic.querySelector('img');
-            rotatorImg.classList.add('bg-cover');
-            if (index === 0) {
-              rotatorImg.style.display = 'block';
-              rotatorImg.style.opacity = '1';
-            } else {
-              rotatorImg.style.display = 'block';
-              rotatorImg.style.opacity = '0.7';
-            }
-            rotatorFigure.append(optimizedPic);
-          }
-        }
-      }
-      moveInstrumentation(row, rotatorFigure);
-    });
-    rotator.append(rotatorFigure);
-    bannerHld.append(rotator);
-  }
+  const rotatorDiv = document.createElement('div');
+  rotatorDiv.classList.add('rotator');
+  const rotatorFigure = document.createElement('figure');
+  // Filter for rotator-image items: rows with one child cell containing a picture
+  const rotatorImages = itemRows.filter((row) => {
+    const cells = [...row.children];
+    return cells.length === 1 && cells[0].querySelector('picture');
+  });
+  rotatorImages.forEach((row, index) => {
+    const picture = row.firstElementChild.querySelector('picture');
+    if (picture) {
+      const img = picture.querySelector('img');
+      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '1920' }]);
+      optimizedPic.querySelector('img').classList.add('bg-cover');
+      optimizedPic.querySelector('img').style.display = 'block';
+      optimizedPic.querySelector('img').style.opacity = index === 0 ? '1' : '0.7'; // Set first item to visible initially
+      moveInstrumentation(img, optimizedPic.querySelector('img'));
+      rotatorFigure.append(optimizedPic);
+    }
+    moveInstrumentation(row, rotatorFigure);
+  });
+  rotatorDiv.append(rotatorFigure);
+  bannerHld.append(rotatorDiv);
 
   const bannerOverlay = document.createElement('div');
   bannerOverlay.classList.add('banner-overlay');
@@ -99,29 +96,28 @@ export default function decorate(block) {
   pentionBnr.append(bannerHld);
   block.append(pentionBnr);
 
-  // Implement the banner text rotator logic
-  const bannerTextSpans = bannerText.querySelectorAll('span');
-  let currentSpanIndex = 0;
+  // Implement rotator logic
+  let currentBannerTextIndex = 0;
+  let currentRotatorImageIndex = 0;
 
-  function rotateBannerText() {
-    bannerTextSpans.forEach((span, index) => {
-      if (index === currentSpanIndex) {
-        span.style.opacity = '1';
-      } else {
-        span.style.opacity = '0';
-      }
+  const updateBanner = () => {
+    // Update banner text
+    const bannerTextSpans = bannerTextDiv.querySelectorAll('span');
+    bannerTextSpans.forEach((span, i) => {
+      span.style.opacity = i === currentBannerTextIndex ? '1' : '0';
     });
 
-    currentSpanIndex = (currentSpanIndex + 1) % bannerTextSpans.length;
-  }
-
-  if (bannerTextSpans.length > 1) {
-    // Initial state setup
-    bannerTextSpans.forEach((span, index) => {
-      span.style.display = 'block';
-      span.style.transition = 'opacity 1s ease-in-out';
-      span.style.opacity = index === 0 ? '1' : '0';
+    // Update rotator images
+    const rotatorImagesElements = rotatorFigure.querySelectorAll('picture');
+    rotatorImagesElements.forEach((picture, i) => {
+      picture.querySelector('img').style.opacity = i === currentRotatorImageIndex ? '1' : '0.7';
     });
-    setInterval(rotateBannerText, 3000); // Rotate every 3 seconds
+
+    currentBannerTextIndex = (currentBannerTextIndex + 1) % bannerTextSpans.length;
+    currentRotatorImageIndex = (currentRotatorImageIndex + 1) % rotatorImagesElements.length;
+  };
+
+  if (bannerTexts.length > 1 || rotatorImages.length > 1) {
+    setInterval(updateBanner, 3000); // Change every 3 seconds
   }
 }

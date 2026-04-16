@@ -4,64 +4,64 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
 export default function decorate(block) {
   const [
     backgroundImageRow,
+    backgroundImageAltRow,
     subTitleRow,
-    headingRow,
+    titleRow,
     descriptionRow,
     ctaLinkRow,
     ctaLinkLabelRow,
   ] = [...block.children];
 
+  block.textContent = '';
+
   // Background Image
   const figure = document.createElement('figure');
-  const picture = backgroundImageRow.children[0].querySelector('picture'); // Access the cell first
-  if (picture) {
-    const img = picture.querySelector('img');
-    if (img) {
-      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '1920' }]);
-      optimizedPic.querySelector('img').classList.add('bg-cover');
-      moveInstrumentation(img, optimizedPic.querySelector('img'));
-      figure.append(optimizedPic);
-    }
+  const backgroundImageCell = backgroundImageRow.firstElementChild;
+  const img = backgroundImageCell.querySelector('img');
+  if (img) {
+    const altText = backgroundImageAltRow.firstElementChild?.textContent.trim() || img.alt;
+    const optimizedPic = createOptimizedPicture(img.src, altText, false, [{ width: '1920' }]);
+    optimizedPic.querySelector('img').classList.add('bg-cover');
+    moveInstrumentation(backgroundImageCell, optimizedPic.querySelector('img'));
+    figure.append(optimizedPic);
   }
-  moveInstrumentation(backgroundImageRow, figure);
+  block.append(figure);
 
   // Section Details
   const sectDet = document.createElement('div');
   sectDet.classList.add('sect-det');
 
   // Sub Title
-  const subTitle = document.createElement('div');
-  subTitle.classList.add('sub-ttle', 'wow', 'animate__', 'animate__fadeInUp', 'animated');
-  subTitle.textContent = subTitleRow.children[0].textContent.trim(); // Access the cell first
-  moveInstrumentation(subTitleRow, subTitle);
-  sectDet.append(subTitle);
+  const subTtle = document.createElement('div');
+  subTtle.classList.add('sub-ttle', 'wow', 'animate__', 'animate__fadeInUp', 'animated');
+  moveInstrumentation(subTitleRow.firstElementChild, subTtle);
+  subTtle.textContent = subTitleRow.firstElementChild?.textContent.trim() || '';
+  sectDet.append(subTtle);
 
-  // Heading
-  const heading = document.createElement('h2');
-  heading.classList.add('common-ttle', 'wow', 'animate__', 'animate__fadeInUp', 'animated');
-  heading.textContent = headingRow.children[0].textContent.trim(); // Access the cell first
-  moveInstrumentation(headingRow, heading);
-  sectDet.append(heading);
+  // Title
+  const commonTtle = document.createElement('h2');
+  commonTtle.classList.add('common-ttle', 'wow', 'animate__', 'animate__fadeInUp', 'animated');
+  moveInstrumentation(titleRow.firstElementChild, commonTtle);
+  commonTtle.textContent = titleRow.firstElementChild?.textContent.trim() || '';
+  sectDet.append(commonTtle);
 
   // Description
-  const description = document.createElement('p');
-  description.classList.add('wow', 'animate__', 'animate__fadeInUp', 'animated');
-  description.innerHTML = descriptionRow.children[0].innerHTML; // Access the cell first
-  moveInstrumentation(descriptionRow, description);
-  sectDet.append(description);
+  const descriptionP = document.createElement('p');
+  descriptionP.classList.add('wow', 'animate__', 'animate__fadeInUp', 'animated');
+  moveInstrumentation(descriptionRow.firstElementChild, descriptionP);
+  descriptionP.innerHTML = descriptionRow.firstElementChild?.innerHTML || '';
+  sectDet.append(descriptionP);
 
   // CTA Link
-  const ctaLink = document.createElement('a');
-  ctaLink.classList.add('btn-box', 'wow', 'animate__', 'animate__fadeInUp', 'animated');
-  const foundLink = ctaLinkRow.children[0].querySelector('a'); // Access the cell first and then the link
-  if (foundLink) {
-    ctaLink.href = foundLink.href;
+  const ctaLinkAnchor = document.createElement('a');
+  ctaLinkAnchor.classList.add('btn-box', 'wow', 'animate__', 'animate__fadeInUp', 'animated');
+  const foundCtaLink = ctaLinkRow.firstElementChild?.querySelector('a');
+  if (foundCtaLink) {
+    ctaLinkAnchor.href = foundCtaLink.href;
   }
-  ctaLink.textContent = ctaLinkLabelRow.children[0].textContent.trim(); // Access the cell first
-  moveInstrumentation(ctaLinkRow, ctaLink);
-  sectDet.append(ctaLink);
+  ctaLinkAnchor.textContent = ctaLinkLabelRow.firstElementChild?.textContent.trim() || '';
+  moveInstrumentation(ctaLinkRow.firstElementChild, ctaLinkAnchor);
+  sectDet.append(ctaLinkAnchor);
 
-  // Clear block and append new structure
-  block.textContent = '';
-  block.append(figure, sectDet);
+  block.append(sectDet);
 }

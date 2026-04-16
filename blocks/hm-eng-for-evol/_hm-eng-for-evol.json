@@ -52,7 +52,7 @@
           "component": "container",
           "item": "evolution-blurb",
           "label": "Evolution Blurbs",
-          "name": "evolutionBlurbs"
+          "name": "blurbs"
         }
       ]
     },
@@ -85,7 +85,7 @@
         },
         {
           "component": "text",
-          "label": "CTA Link Label",
+          "label": "CTA Label",
           "name": "ctaLinkLabel",
           "valueType": "string"
         }

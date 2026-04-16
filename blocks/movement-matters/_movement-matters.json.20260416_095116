@@ -1,31 +1,31 @@
 {
   "definitions": [
     {
-      "title": "Systems-in-Motion",
-      "id": "systems-in-motion",
+      "title": "Movement-Matters",
+      "id": "movement-matters",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block",
             "template": {
-              "filter": "systems-in-motion",
-              "model": "systems-in-motion",
-              "name": "Systems-in-Motion"
+              "filter": "movement-matters",
+              "model": "movement-matters",
+              "name": "Movement-Matters"
             }
           }
         }
       }
     },
     {
-      "title": "Motion Card",
-      "id": "motion-card",
+      "title": "M-Card-Blurb",
+      "id": "m-card-blurb",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "motion-card",
-              "name": "Motion Card"
+              "model": "m-card-blurb",
+              "name": "M-Card-Blurb"
             }
           }
         }
@@ -34,18 +34,8 @@
   ],
   "models": [
     {
-      "id": "systems-in-motion",
+      "id": "movement-matters",
       "fields": [
-        {
-          "component": "reference",
-          "label": "Dot Right Image",
-          "name": "dotRightImage"
-        },
-        {
-          "component": "reference",
-          "label": "Dot Left Image",
-          "name": "dotLeftImage"
-        },
         {
           "component": "text",
           "label": "Heading",
@@ -54,26 +44,21 @@
         },
         {
           "component": "richtext",
-          "label": "Intro Text",
-          "name": "introText",
+          "label": "Description",
+          "name": "description",
           "valueType": "string"
         },
         {
           "component": "container",
-          "item": "motion-card",
-          "label": "Motion Cards",
-          "name": "motionCards"
+          "item": "m-card-blurb",
+          "label": "Blurb Cards",
+          "name": "blurbs"
         }
       ]
     },
     {
-      "id": "motion-card",
+      "id": "m-card-blurb",
       "fields": [
-        {
-          "component": "reference",
-          "label": "Logo",
-          "name": "logo"
-        },
         {
           "component": "text",
           "label": "Title",
@@ -82,8 +67,8 @@
         },
         {
           "component": "richtext",
-          "label": "Description",
-          "name": "description",
+          "label": "Text",
+          "name": "text",
           "valueType": "string"
         },
         {
@@ -103,9 +88,9 @@
   ],
   "filters": [
     {
-      "id": "systems-in-motion",
+      "id": "movement-matters",
       "components": [
-        "motion-card"
+        "m-card-blurb"
       ]
     }
   ]

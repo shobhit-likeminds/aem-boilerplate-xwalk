@@ -4,55 +4,61 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
 export default function decorate(block) {
   const [logoRow, ...sectionRows] = [...block.children];
 
-  const footerWrapper = document.createElement('section');
-  footerWrapper.classList.add('footer-wrp');
+  // Create the main footer wrapper
+  const footerWrp = document.createElement('section');
+  footerWrp.classList.add('footer-wrp');
 
   const container = document.createElement('div');
   container.classList.add('container-1600-wrp');
-  footerWrapper.append(container);
+  footerWrp.append(container);
 
-  // Logo
-  if (logoRow) {
-    const mobLogoWr = document.createElement('div');
-    mobLogoWr.classList.add('mob-logo-wr');
-    moveInstrumentation(logoRow, mobLogoWr);
+  // Logo section
+  const mobLogoWr = document.createElement('div');
+  mobLogoWr.classList.add('mob-logo-wr');
+  moveInstrumentation(logoRow, mobLogoWr);
 
-    const picture = logoRow.querySelector('picture');
-    if (picture) {
-      const img = picture.querySelector('img');
-      if (img) {
-        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-        moveInstrumentation(img, optimizedPic.querySelector('img'));
-        mobLogoWr.append(optimizedPic);
-        optimizedPic.querySelector('img').classList.add('img-fluid');
-      }
+  const logoPicture = logoRow.querySelector('picture');
+  if (logoPicture) {
+    const img = logoPicture.querySelector('img');
+    if (img) {
+      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '200' }]);
+      optimizedPic.querySelector('img').classList.add('img-fluid');
+      moveInstrumentation(img, optimizedPic.querySelector('img'));
+      mobLogoWr.append(optimizedPic);
     }
-    container.append(mobLogoWr);
   }
+  container.append(mobLogoWr);
 
+  // Footer sections (f1 row)
   const f1Row = document.createElement('div');
   f1Row.classList.add('row', 'f1');
   container.append(f1Row);
 
-  // Sections
   sectionRows.forEach((row) => {
-    // CRITICAL FIX: Replaced direct index access with content detection
+    // Use content detection instead of index access for robustness
     const cells = [...row.children];
-    const labelCell = cells.find(cell => !cell.querySelector('ul') && !cell.querySelector('a'));
+    const titleCell = cells.find(cell => !cell.querySelector('ul') && !cell.querySelector('a'));
     const sectionLinksCell = cells.find(cell => cell.querySelector('ul') || cell.querySelector('a'));
+
+    if (!titleCell || !sectionLinksCell) {
+      // Skip if the row structure is unexpected
+      return;
+    }
 
     const col = document.createElement('div');
     col.classList.add('col', 'col-xl-3');
     moveInstrumentation(row, col);
 
-    const sectionLinksUl = sectionLinksCell ? sectionLinksCell.querySelector('ul') : null;
+    const titleText = titleCell.textContent.trim();
+    const sectionLinksContent = sectionLinksCell.innerHTML;
+    const sectionLinksUl = sectionLinksCell.querySelector('ul');
 
     if (sectionLinksUl) {
-      // Accordion/dropdown item
+      // This is an accordion item
       const ttle = document.createElement('a');
       ttle.href = 'javascript:void(0)';
       ttle.classList.add('ttle', 'accordion_head2');
-      ttle.textContent = labelCell ? labelCell.textContent.trim() : '';
+      ttle.textContent = titleText;
 
       const plusminus = document.createElement('span');
       plusminus.classList.add('plusminus2');
@@ -61,63 +67,46 @@ export default function decorate(block) {
 
       const ftrSubLinksCvr = document.createElement('div');
       ftrSubLinksCvr.classList.add('ftr-sub-links-cvr', 'accordion_body2');
-      ftrSubLinksCvr.append(sectionLinksUl);
+      ftrSubLinksCvr.innerHTML = sectionLinksContent; // Append the raw HTML, including <ul>
 
-      // Transform nested lists into accordion structure
-      function transformNestedLists(rootUl) {
-        rootUl.querySelectorAll('li').forEach(li => {
-          const nested = li.querySelector(':scope > ul');
-          if (nested) {
-            nested.remove();
-            const subWrap = document.createElement('div');
-            subWrap.classList.add('has-sub-child');
-            subWrap.append(nested);
-            li.append(subWrap);
-            const trigger = li.querySelector(':scope > a') || li;
-            trigger.addEventListener('click', (e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              li.classList.toggle('active');
-              subWrap.classList.toggle('active');
-            });
-          }
-        });
-      }
-      transformNestedLists(sectionLinksUl);
-
+      // Add click listener for accordion behavior
       ttle.addEventListener('click', () => {
-        ftrSubLinksCvr.classList.toggle('accordion_body2'); // Toggle visibility
-        ttle.classList.toggle('active'); // Add active state to header
-        if (ttle.classList.contains('active')) {
-          plusminus.textContent = '-';
-        } else {
-          plusminus.textContent = '+';
-        }
-      });
-
-      // Apply ftr-link class to all direct links within the section
-      [...ftrSubLinksCvr.querySelectorAll(':scope > ul > li > a')].forEach(link => {
-        link.classList.add('ftr-link');
+        ftrSubLinksCvr.classList.toggle('active'); // Use 'active' for visibility
+        ttle.classList.toggle('active'); // Use 'active' for trigger state
+        plusminus.textContent = ftrSubLinksCvr.classList.contains('active') ? '-' : '+';
       });
 
       col.append(ttle, ftrSubLinksCvr);
     } else {
-      // Simple link
+      // This is a simple link item (no sub-links, just a single link or plain text)
+      const link = sectionLinksCell.querySelector('a');
       const ttle = document.createElement('a');
-      const link = sectionLinksCell ? sectionLinksCell.querySelector('a') : null;
       if (link) {
+        // If there's an anchor in sectionLinksCell, use its href and the titleText
         ttle.href = link.href;
+        ttle.textContent = titleText;
       } else {
-        ttle.href = 'javascript:void(0)'; // Fallback if no link in richtext
+        // If no link, it's just a title, potentially with rich text content
+        // As per the model, title is text, sectionLinks is richtext.
+        // If sectionLinks has no UL and no A, it's just rich text content.
+        // The original HTML suggests these are always links or accordions.
+        // Fallback to a non-functional link if no actual link is found.
+        ttle.href = '#';
+        ttle.textContent = titleText;
       }
       ttle.classList.add('ttle');
-      ttle.textContent = labelCell ? labelCell.textContent.trim() : '';
       col.append(ttle);
     }
     f1Row.append(col);
   });
 
-  // Social media section (hardcoded structure from original HTML as it's not in EDS model)
+  // Placeholder for f2 and f3 rows based on the original HTML structure
+  // These are not directly driven by the EDS block model, but are structural elements
+  // from the original HTML that need to be replicated.
+  // For this exercise, we'll create the structure as seen in the original HTML,
+  // assuming these are fixed parts of the footer layout.
+
+  // F2 row (Social Media)
   const f2Row = document.createElement('div');
   f2Row.classList.add('row', 'f2', 'justify-content-between');
   container.append(f2Row);
@@ -139,37 +128,34 @@ export default function decorate(block) {
   socialLinksCvr.classList.add('ftr-sub-links-cvr', 'accordion_body2', 'socialIcons');
   socialCol.append(socialLinksCvr);
 
+  // Example social links (hardcoded as they are not in the EDS model)
   const socialLinks = [
-    { href: 'https://www.facebook.com/TataMotorsGroup/', iconClasses: ['fab', 'fa-facebook-square'] },
-    { href: 'https://www.instagram.com/tatamotorsgroup/', iconClasses: ['fab', 'fa-instagram'] },
-    { href: 'https://twitter.com/TataMotors', iconClasses: ['fa-brands', 'fa-square-x-twitter'] },
-    { href: 'https://www.linkedin.com/company/tata-motors/', iconClasses: ['fab', 'fa-linkedin'] },
-    { href: 'https://www.youtube.com/user/TataMotorsGroup', iconClasses: ['fab', 'fa-youtube-square'] },
+    { href: 'https://www.facebook.com/TataMotorsGroup/', icon: 'fab fa-facebook-square' },
+    { href: 'https://www.instagram.com/tatamotorsgroup/', icon: 'fab fa-instagram' },
+    { href: 'https://twitter.com/TataMotors', icon: 'fa-brands fa-square-x-twitter' },
+    { href: 'https://www.linkedin.com/company/tata-motors/', icon: 'fab fa-linkedin' },
+    { href: 'https://www.youtube.com/user/TataMotorsGroup', icon: 'fab fa-youtube-square' },
   ];
 
-  socialLinks.forEach(social => {
+  socialLinks.forEach(item => {
     const a = document.createElement('a');
-    a.href = social.href;
+    a.href = item.href;
     a.classList.add('ftr-link');
     a.target = '_blank';
     const i = document.createElement('i');
-    i.classList.add(...social.iconClasses);
+    i.classList.add(...item.icon.split(' '));
     a.append(i);
     socialLinksCvr.append(a);
   });
 
+  // Add click listener for social media accordion
   socialTitle.addEventListener('click', () => {
-    socialLinksCvr.classList.toggle('accordion_body2');
+    socialLinksCvr.classList.toggle('active');
     socialTitle.classList.toggle('active');
-    if (socialTitle.classList.contains('active')) {
-      socialPlusminus.textContent = '-';
-    } else {
-      socialPlusminus.textContent = '+';
-    }
+    socialPlusminus.textContent = socialLinksCvr.classList.contains('active') ? '-' : '+';
   });
 
-
-  // Legal and Copyright section (hardcoded structure from original HTML)
+  // F3 row (Legal and Copyright)
   const f3Row = document.createElement('div');
   f3Row.classList.add('row', 'mt25', 'f3');
   container.append(f3Row);
@@ -198,5 +184,5 @@ export default function decorate(block) {
   copyrightCol.append(copyrightText);
 
   block.textContent = '';
-  block.append(footerWrapper);
+  block.append(footerWrp);
 }

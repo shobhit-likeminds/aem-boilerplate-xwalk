@@ -2,63 +2,68 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const [
-    dotRightImageRow,
-    dotLeftImageRow,
-    headingRow,
-    descriptionRow,
-    ...motionCardRows
-  ] = [...block.children];
+  const [dotRightImageRow, dotLeftImageRow, headingRow, introTextRow, ...motionCardRows] = [...block.children];
 
-  block.innerHTML = ''; // Clear the block content
+  block.classList.add('systems-in-motion');
 
   // Dot Right Image
-  const dotRightDiv = document.createElement('div');
-  dotRightDiv.classList.add('dot-right');
-  // The EDS structure indicates the picture is directly in the first child of the row
-  const dotRightPicture = dotRightImageRow.children[0].querySelector('picture');
-  if (dotRightPicture) {
-    const img = dotRightPicture.querySelector('img');
-    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '267' }]);
-    moveInstrumentation(img, optimizedPic.querySelector('img'));
-    dotRightDiv.append(optimizedPic);
+  if (dotRightImageRow) {
+    const dotRightDiv = document.createElement('div');
+    dotRightDiv.classList.add('dot-right');
+    const picture = dotRightImageRow.querySelector('picture');
+    if (picture) {
+      const img = picture.querySelector('img');
+      if (img) {
+        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '267' }]);
+        moveInstrumentation(img, optimizedPic.querySelector('img'));
+        dotRightDiv.append(optimizedPic);
+      }
+    }
+    moveInstrumentation(dotRightImageRow, dotRightDiv);
+    block.append(dotRightDiv);
   }
-  moveInstrumentation(dotRightImageRow, dotRightDiv);
-  block.append(dotRightDiv);
 
   // Dot Left Image
-  const dotLeftDiv = document.createElement('div');
-  dotLeftDiv.classList.add('dot-left');
-  // The EDS structure indicates the picture is directly in the first child of the row
-  const dotLeftPicture = dotLeftImageRow.children[0].querySelector('picture');
-  if (dotLeftPicture) {
-    const img = dotLeftPicture.querySelector('img');
-    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '267' }]);
-    moveInstrumentation(img, optimizedPic.querySelector('img'));
-    dotLeftDiv.append(optimizedPic);
+  if (dotLeftImageRow) {
+    const dotLeftDiv = document.createElement('div');
+    dotLeftDiv.classList.add('dot-left');
+    const picture = dotLeftImageRow.querySelector('picture');
+    if (picture) {
+      const img = picture.querySelector('img');
+      if (img) {
+        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '267' }]);
+        moveInstrumentation(img, optimizedPic.querySelector('img'));
+        dotLeftDiv.append(optimizedPic);
+      }
+    }
+    moveInstrumentation(dotLeftImageRow, dotLeftDiv);
+    block.append(dotLeftDiv);
   }
-  moveInstrumentation(dotLeftImageRow, dotLeftDiv);
-  block.append(dotLeftDiv);
 
-  // Heading and Description
-  const container1600Wrp = document.createElement('div');
-  container1600Wrp.classList.add('container-1600-wrp');
+  // Container for Heading and Intro Text
+  const containerWrapper = document.createElement('div');
+  containerWrapper.classList.add('container-1600-wrp');
 
-  const heading = document.createElement('h2');
-  heading.classList.add('common-ttle', 'wow', 'animate__', 'animate__fadeInUp', 'animated');
-  // The EDS structure indicates the text content is directly in the first child of the row
-  heading.textContent = headingRow.children[0].textContent.trim();
-  moveInstrumentation(headingRow, heading);
-  container1600Wrp.append(heading);
+  // Heading
+  if (headingRow) {
+    const headingCell = headingRow.firstElementChild;
+    const h2 = document.createElement('h2');
+    h2.classList.add('common-ttle', 'wow', 'animate__', 'animate__fadeInUp', 'animated');
+    h2.textContent = headingCell.textContent.trim();
+    moveInstrumentation(headingRow, h2);
+    containerWrapper.append(h2);
+  }
 
-  const description = document.createElement('p');
-  description.classList.add('wow', 'animate__', 'animate__fadeInUp', 'animated');
-  // The EDS structure indicates the rich text HTML is directly in the first child of the row
-  description.innerHTML = descriptionRow.children[0].innerHTML;
-  moveInstrumentation(descriptionRow, description);
-  container1600Wrp.append(description);
-
-  block.append(container1600Wrp);
+  // Intro Text
+  if (introTextRow) {
+    const introTextCell = introTextRow.firstElementChild;
+    const p = document.createElement('p');
+    p.classList.add('wow', 'animate__', 'animate__fadeInUp', 'animated');
+    p.innerHTML = introTextCell.innerHTML;
+    moveInstrumentation(introTextRow, p);
+    containerWrapper.append(p);
+  }
+  block.append(containerWrapper);
 
   // Motion Cards
   if (motionCardRows.length > 0) {
@@ -68,63 +73,77 @@ export default function decorate(block) {
     const rowDiv = document.createElement('div');
     rowDiv.classList.add('row');
 
-    motionCardRows.forEach((cardRow) => {
-      const [logoCell, titleCell, textCell, ctaLinkCell, ctaLinkLabelCell] = [...cardRow.children];
+    motionCardRows.forEach((cardRow, index) => {
+      // CRITICAL FIX: Destructuring for fixed-field item models
+      const [logoCell, titleCell, descriptionCell, ctaLinkCell, ctaLinkLabelCell] = [...cardRow.children];
 
-      const colLg6 = document.createElement('div');
-      colLg6.classList.add('col-lg-6');
+      const colDiv = document.createElement('div');
+      colDiv.classList.add('col-lg-6');
 
       const mCardBlurb = document.createElement('div');
       mCardBlurb.classList.add('m-card-blurb', 'wow', 'animate__', 'animate__fadeInUp', 'animated');
+      mCardBlurb.style.animationDuration = '1s';
+      mCardBlurb.style.animationDelay = `${0.1 + index * 0.1}s`;
 
       const contentDiv = document.createElement('div');
 
-      const figure = document.createElement('figure');
-      const logoPicture = logoCell.querySelector('picture');
-      if (logoPicture) {
-        const img = logoPicture.querySelector('img');
-        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '80' }]);
-        optimizedPic.querySelector('img').classList.add('bg-cover'); // Add class to the img inside picture
-        moveInstrumentation(img, optimizedPic.querySelector('img'));
-        figure.append(optimizedPic);
+      // Logo
+      if (logoCell) {
+        const figure = document.createElement('figure');
+        const picture = logoCell.querySelector('picture');
+        if (picture) {
+          const img = picture.querySelector('img');
+          if (img) {
+            const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '80' }]);
+            optimizedPic.querySelector('img').classList.add('bg-cover');
+            moveInstrumentation(img, optimizedPic.querySelector('img'));
+            figure.append(optimizedPic);
+          }
+        }
+        contentDiv.append(figure);
       }
-      moveInstrumentation(logoCell, figure);
-      contentDiv.append(figure);
 
-      const title = document.createElement('h4');
-      title.textContent = titleCell.textContent.trim();
-      moveInstrumentation(titleCell, title);
-      contentDiv.append(title);
+      // Title
+      if (titleCell) {
+        const h4 = document.createElement('h4');
+        h4.textContent = titleCell.textContent.trim();
+        contentDiv.append(h4);
+      }
 
-      const text = document.createElement('p');
-      text.innerHTML = textCell.innerHTML;
-      moveInstrumentation(textCell, text);
-      contentDiv.append(text);
+      // Description
+      if (descriptionCell) {
+        const p = document.createElement('p');
+        p.innerHTML = descriptionCell.innerHTML;
+        contentDiv.append(p);
+      }
 
       mCardBlurb.append(contentDiv);
 
-      // For type=aem-content, the anchor tag is usually the first child of the cell.
-      // The EDS structure shows <div><a href="...">...</a></div>, so ctaLinkCell.children[0] is correct.
-      const ctaLink = ctaLinkCell.children[0];
-      if (ctaLink && ctaLink.tagName === 'A' && ctaLinkLabelCell.textContent.trim()) {
-        const btnBox = document.createElement('a');
-        btnBox.classList.add('btn-box');
-        btnBox.href = ctaLink.href;
-        btnBox.textContent = ctaLinkLabelCell.textContent.trim();
-        moveInstrumentation(cardRow, btnBox); // Instrument the whole row to the button if it exists
-        mCardBlurb.append(btnBox);
-      } else {
-        // If no CTA link or label, instrument the row to the mCardBlurb div
-        moveInstrumentation(cardRow, mCardBlurb);
+      // CTA Link
+      if (ctaLinkCell && ctaLinkLabelCell) {
+        const ctaAnchor = ctaLinkCell.querySelector('a'); // Get the anchor from the ctaLinkCell
+        if (ctaAnchor) {
+          const anchor = document.createElement('a');
+          anchor.href = ctaAnchor.href; // Use the href from the aem-content cell
+          anchor.textContent = ctaLinkLabelCell.textContent.trim(); // Use text from ctaLinkLabelCell
+          anchor.classList.add('btn-box');
+          anchor.target = '_blank';
+          mCardBlurb.append(anchor);
+        }
       }
-
-      colLg6.append(mCardBlurb);
-      rowDiv.append(colLg6);
+      moveInstrumentation(cardRow, mCardBlurb);
+      colDiv.append(mCardBlurb);
+      rowDiv.append(colDiv);
     });
-
     motionCardHld.append(rowDiv);
     block.append(motionCardHld);
   }
 
-  block.classList.add('systems-in-motion'); // Add the main block class
+  // Remove original rows as they have been processed
+  [...block.children].forEach((child) => {
+    if (!child.classList.contains('dot-right') && !child.classList.contains('dot-left') &&
+        !child.classList.contains('container-1600-wrp') && !child.classList.contains('motion-card-hld')) {
+      child.remove();
+    }
+  });
 }

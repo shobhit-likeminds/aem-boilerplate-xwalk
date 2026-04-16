@@ -40,7 +40,8 @@
       "movement-matters",
       "hm-our-legacy",
       "hm-suatainability",
-      "hm-careers"
+      "hm-careers",
+      "legacy-banner-slider"
     ]
   },
   {
@@ -133,13 +134,20 @@
   {
     "id": "home-banner",
     "components": [
+      "banner-text",
       "rotator-image"
+    ]
+  },
+  {
+    "id": "legacy-banner-slider",
+    "components": [
+      "legacy-slide"
     ]
   },
   {
     "id": "movement-matters",
     "components": [
-      "m-card-blurb"
+      "card-blurb"
     ]
   },
   {
