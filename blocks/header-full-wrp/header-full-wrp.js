@@ -6,198 +6,183 @@ export default function decorate(block) {
     logoRow,
     logoLinkRow,
     logoLinkLabelRow,
-    mobileLogoRow,
+    logoMobileRow,
     secondaryLogoRow,
     secondaryLogoLinkRow,
     secondaryLogoLinkLabelRow,
     ...navItemRows
   ] = [...block.children];
 
-  block.classList.add('fixed'); // Add 'fixed' class as per original HTML
+  block.classList.add('fixed', 'nav-up'); // Add initial classes from original HTML
 
   const topHead = document.createElement('div');
   topHead.classList.add('top-head');
   const topHeadContainer = document.createElement('div');
   topHeadContainer.classList.add('container-1600-wrp');
   topHead.append(topHeadContainer);
+  block.append(topHead);
 
   const mainNavBx = document.createElement('div');
   mainNavBx.classList.add('main-nav-bx');
   const mainNavContainer = document.createElement('div');
   mainNavContainer.classList.add('container-1600-wrp');
-  const mainNavRow = document.createElement('div');
-  mainNavRow.classList.add('row');
-  mainNavContainer.append(mainNavRow);
   mainNavBx.append(mainNavContainer);
+  block.append(mainNavBx);
 
-  // Column 1: Logo, Mobile Logo, Nav Icon, Mode Switch
-  const col1 = document.createElement('div');
-  col1.classList.add('col-md-2', 'col-6');
-  mainNavRow.append(col1);
+  const row = document.createElement('div');
+  row.classList.add('row');
+  mainNavContainer.append(row);
 
-  // Logo
+  const colLeft = document.createElement('div');
+  colLeft.classList.add('col-md-2', 'col-6');
+  row.append(colLeft);
+
   const logoLink = document.createElement('a');
   logoLink.classList.add('logo-wrp');
-  const foundLogoLink = logoLinkRow.querySelector('a');
-  if (foundLogoLink) {
-    logoLink.href = foundLogoLink.href;
-  } else {
-    logoLink.href = '#'; // Fallback if no link
-  }
+  const logoHref = logoLinkRow?.querySelector('a')?.href || 'javascript:void(0)';
+  logoLink.href = logoHref;
   moveInstrumentation(logoLinkRow, logoLink);
 
-  const logoPicture = logoRow.querySelector('picture');
+  const logoPicture = logoRow?.querySelector('picture');
   if (logoPicture) {
-    const logoImg = logoPicture.querySelector('img');
-    if (logoImg) {
-      const optimizedLogo = createOptimizedPicture(logoImg.src, logoImg.alt, false, [{ width: '100' }]);
-      optimizedLogo.querySelector('img').classList.add('img-fluid');
-      moveInstrumentation(logoRow, optimizedLogo.querySelector('img'));
-      logoLink.append(optimizedLogo);
-    }
+    const img = logoPicture.querySelector('img');
+    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+    moveInstrumentation(img, optimizedPic.querySelector('img'));
+    logoLink.append(optimizedPic);
   }
-  col1.append(logoLink);
+  colLeft.append(logoLink);
 
-  // Mobile Logo
-  const mobileLogoPicture = mobileLogoRow.querySelector('picture');
-  if (mobileLogoPicture) {
-    const mobileLogoImg = mobileLogoPicture.querySelector('img');
-    if (mobileLogoImg) {
-      const mobileLogoHolder = document.createElement('picture');
-      mobileLogoHolder.classList.add('image-holder', 'tata-logo-mob');
-      const optimizedMobileLogo = createOptimizedPicture(mobileLogoImg.src, mobileLogoImg.alt, false, [{ width: '100' }]);
-      optimizedMobileLogo.querySelector('img').classList.add('img-fluid');
-      moveInstrumentation(mobileLogoRow, optimizedMobileLogo.querySelector('img'));
-      mobileLogoHolder.append(optimizedMobileLogo.querySelector('img'));
-      col1.append(mobileLogoHolder);
-    }
+  const logoMobilePicture = logoMobileRow?.querySelector('picture');
+  if (logoMobilePicture) {
+    const mobileLogoWrapper = document.createElement('picture');
+    mobileLogoWrapper.classList.add('image-holder', 'tata-logo-mob');
+    const img = logoMobilePicture.querySelector('img');
+    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+    moveInstrumentation(img, optimizedPic.querySelector('img'));
+    mobileLogoWrapper.append(optimizedPic);
+    colLeft.append(mobileLogoWrapper);
   }
 
-  // Nav Icon
   const navIcon = document.createElement('div');
   navIcon.id = 'nav-icon4';
-  for (let i = 0; i < 3; i += 1) {
-    navIcon.append(document.createElement('span'));
-  }
-  col1.append(navIcon);
+  navIcon.innerHTML = '<span></span><span></span><span></span>';
+  colLeft.append(navIcon);
 
-  // Mode Switch (hardcoded as per original HTML structure)
-  const switchBtn = document.createElement('button');
-  switchBtn.id = 'switch2';
-  switchBtn.innerHTML = `
-    Mode  
-    <strong>
-      <span class="switch2_light">Light</span> 
-      <span class="switch2_dark">Dark</span> 
-    </strong>
-  `;
-  col1.append(switchBtn);
+  const switchButton = document.createElement('button');
+  switchButton.id = 'switch2';
+  switchButton.innerHTML = 'Mode <strong><span class="switch2_light">Light</span> <span class="switch2_dark">Dark</span></strong>';
+  colLeft.append(switchButton);
 
-  // Column 2: Main Navigation
-  const col2 = document.createElement('div');
-  col2.classList.add('col-md-10', 'col-6', 'hm-main-nav-con');
-  mainNavRow.append(col2);
+  const colRight = document.createElement('div');
+  colRight.classList.add('col-md-10', 'col-6', 'hm-main-nav-con');
+  row.append(colRight);
 
   const navCard = document.createElement('div');
   navCard.classList.add('nav-card');
-  col2.append(navCard);
+  colRight.append(navCard);
 
-  // Close Mobile Drop
   const closeMobDrop = document.createElement('a');
   closeMobDrop.href = 'javascript:void(0)';
   closeMobDrop.classList.add('close-mob-drop');
+  // Assuming the close image is hardcoded in the original HTML, we replicate it.
+  // If it were from an EDS field, we'd read it from the block model.
   const closeImg = document.createElement('img');
-  closeImg.src = '/icons/close.png'; // Assuming an icon path, original was hardcoded DAM
+  closeImg.src = '/content/dam/aemigrate/uploaded-folder/image/close.png'; // This is a hardcoded asset path from the original HTML
   closeImg.alt = '';
   closeImg.classList.add('img-fluid');
   closeMobDrop.append(closeImg);
   navCard.append(closeMobDrop);
 
-  // Level 1 Navigation List
   const level1Ul = document.createElement('ul');
   level1Ul.classList.add('level1');
   navCard.append(level1Ul);
 
   navItemRows.forEach((row) => {
-    // Corrected: Using destructuring for navItemRows as per BlockJson model
-    const [labelCell, linkCell, linkLabelCell, subLinksCell] = [...row.children];
+    // Use content detection instead of index access for navItemRows
+    const cells = [...row.children];
+    const labelCell = cells.find(cell => !cell.querySelector('a') && !cell.querySelector('picture') && !cell.querySelector('ul'));
+    const linkCell = cells.find(cell => cell.querySelector('a'));
+    const linkLabelCell = cells.find(cell => !cell.querySelector('a') && !cell.querySelector('picture') && !cell.querySelector('ul') && cell !== labelCell);
+    const subLinksCell = cells.find(cell => cell.querySelector('ul') || cell.innerHTML.includes('<p>')); // Check for ul or rich text content
+
     const li = document.createElement('li');
     moveInstrumentation(row, li);
 
     const subList = subLinksCell?.querySelector('ul');
-
     if (subList) {
       li.classList.add('level1'); // Add level1 class for items with sub-menus
-      const triggerLink = document.createElement('a');
-      triggerLink.href = 'javascript:void(0)'; // Trigger for dropdown
-      triggerLink.textContent = labelCell?.textContent.trim() || '';
-      li.append(triggerLink);
+      const trigger = document.createElement('a');
+      trigger.href = 'javascript:void(0)'; // Sub-menu triggers are often void links
+      trigger.textContent = labelCell?.textContent.trim() || '';
+      li.append(trigger);
 
       const level2Ul = document.createElement('ul');
       level2Ul.classList.add('level2');
       moveInstrumentation(subLinksCell, level2Ul);
-      // Move all children from subLinksCell to level2Ul
+      // Move original content from subLinksCell to level2Ul
+      // Ensure only direct children are moved, and preserve original structure
       while (subLinksCell.firstChild) {
         level2Ul.append(subLinksCell.firstChild);
       }
 
-      // Add mob-back item with arrow image (hardcoded as per original HTML structure)
-      const mobBackLi = document.createElement('li');
-      mobBackLi.classList.add('mob-back');
-      const mobBackImg = document.createElement('img');
-      mobBackImg.src = '/icons/mob-level2-arrw.png'; // Assuming an icon path, original was hardcoded DAM
-      mobBackImg.alt = '';
-      mobBackLi.append(mobBackImg);
-      level2Ul.prepend(mobBackLi);
+      // Transform nested lists within the sub-menu
+      level2Ul.querySelectorAll('li').forEach(subLi => {
+        const nestedUl = subLi.querySelector(':scope > ul');
+        if (nestedUl) {
+          nestedUl.remove(); // Remove the original nested UL
+          const subWrap = document.createElement('div');
+          subWrap.classList.add('has-sub-child'); // Use class from original site CSS
+          subWrap.append(nestedUl); // Append the nested UL into the new wrapper
+          subLi.append(subWrap);
+
+          const nestedTrigger = subLi.querySelector(':scope > a') || subLi;
+          nestedTrigger.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            subLi.classList.toggle('active');
+            subWrap.classList.toggle('active');
+          });
+        }
+      });
 
       li.append(level2Ul);
 
-      // Event listener for dropdown toggle
-      triggerLink.addEventListener('click', (e) => {
+      trigger.addEventListener('click', (e) => {
         e.preventDefault();
         e.stopPropagation();
-        li.classList.toggle('active');
-        level2Ul.classList.toggle('active');
+        li.classList.toggle('active'); // Toggle active class on parent li for CSS
+        level2Ul.classList.toggle('active'); // Toggle active class on sub-menu ul for CSS
       });
     } else {
       li.classList.add('no-arrw-mob');
       const anchor = document.createElement('a');
       const foundLink = linkCell?.querySelector('a');
       if (foundLink) anchor.href = foundLink.href;
-      anchor.textContent = linkLabelCell?.textContent.trim() || labelCell.textContent.trim();
+      anchor.textContent = linkLabelCell?.textContent.trim() || labelCell?.textContent.trim() || '';
       li.append(anchor);
     }
     level1Ul.append(li);
   });
 
-  // Secondary Logo (for footer-like section in nav-card)
-  const secondaryLogoLink = document.createElement('a');
-  secondaryLogoLink.classList.add('logo-wrp2');
-  secondaryLogoLink.target = '_blank';
-  const foundSecondaryLogoLink = secondaryLogoLinkRow.querySelector('a');
-  if (foundSecondaryLogoLink) {
-    secondaryLogoLink.href = foundSecondaryLogoLink.href;
-  } else {
-    secondaryLogoLink.href = '#'; // Fallback
-  }
-  moveInstrumentation(secondaryLogoLinkRow, secondaryLogoLink);
+  const secondaryLogoWrapper = document.createElement('a');
+  secondaryLogoWrapper.classList.add('logo-wrp2');
+  secondaryLogoWrapper.target = '_blank';
+  const secondaryLogoHref = secondaryLogoLinkRow?.querySelector('a')?.href || 'javascript:void(0)';
+  secondaryLogoWrapper.href = secondaryLogoHref;
+  moveInstrumentation(secondaryLogoLinkRow, secondaryLogoWrapper);
 
-  const secondaryLogoPicture = secondaryLogoRow.querySelector('picture');
+  const secondaryLogoPicture = secondaryLogoRow?.querySelector('picture');
   if (secondaryLogoPicture) {
-    const secondaryLogoImg = secondaryLogoPicture.querySelector('img');
-    if (secondaryLogoImg) {
-      const optimizedSecondaryLogo = createOptimizedPicture(secondaryLogoImg.src, secondaryLogoImg.alt, false, [{ width: '100' }]);
-      optimizedSecondaryLogo.querySelector('img').alt = 'svg file';
-      moveInstrumentation(secondaryLogoRow, optimizedSecondaryLogo.querySelector('img'));
-      secondaryLogoLink.append(optimizedSecondaryLogo);
-    }
+    const img = secondaryLogoPicture.querySelector('img');
+    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+    moveInstrumentation(img, optimizedPic.querySelector('img'));
+    secondaryLogoWrapper.append(optimizedPic);
   }
-  navCard.append(secondaryLogoLink);
+  navCard.append(secondaryLogoWrapper);
 
-  // Search section (hardcoded as per original HTML structure)
   const cdSearch = document.createElement('div');
   cdSearch.classList.add('cd-search');
-  cdSearch.style.display = 'none'; // Initially hidden
+  cdSearch.style.display = 'none'; // Initial state from original HTML
   cdSearch.innerHTML = `
     <div class="container">
       <div class="input-group">
@@ -210,39 +195,44 @@ export default function decorate(block) {
       </div>
     </div>
   `;
+  block.append(cdSearch);
 
-  block.textContent = '';
-  block.append(topHead, mainNavBx, cdSearch);
-
-  // Toggle mobile navigation
+  // Event listener for mobile menu toggle
   navIcon.addEventListener('click', () => {
     navIcon.classList.toggle('open');
     navCard.classList.toggle('open');
-    document.body.classList.toggle('no-scroll');
+    document.body.classList.toggle('noscroll'); // Assuming noscroll class exists for body
   });
 
   closeMobDrop.addEventListener('click', (e) => {
     e.preventDefault();
     navIcon.classList.remove('open');
     navCard.classList.remove('open');
-    document.body.classList.remove('no-scroll');
+    document.body.classList.remove('noscroll');
   });
 
-  // Toggle dark/light mode
-  switchBtn.addEventListener('click', () => {
-    document.body.classList.toggle('dark-mode'); // Assuming 'dark-mode' class controls the theme
+  // Event listener for switch2 button
+  switchButton.addEventListener('click', () => {
+    // Add logic for dark/light mode toggle here
+    // Example: document.body.classList.toggle('dark-mode');
+    console.log('Switch2 button clicked!');
   });
 
-  // Scroll behavior (as per original site's JS, not in EDS block.js)
-  // This is an example of how to implement the 'nav-up' behavior if needed.
-  // Do NOT add 'nav-up' to initial classList, it will hide the header permanently.
-  let lastScrollY = window.scrollY;
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > lastScrollY && window.scrollY > 100) {
-      block.classList.add('nav-up');
-    } else {
-      block.classList.remove('nav-up');
-    }
-    lastScrollY = window.scrollY;
+  // Event listener for search button
+  const searchButton = cdSearch.querySelector('.btn.btn-outline-secondary');
+  if (searchButton) {
+    searchButton.addEventListener('click', (e) => {
+      e.preventDefault();
+      const searchInput = cdSearch.querySelector('#example-search-input');
+      console.log('Search button clicked, search term:', searchInput.value);
+      // Add actual search logic here
+    });
+  }
+
+  // Optimize images
+  block.querySelectorAll('picture > img').forEach((img) => {
+    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+    moveInstrumentation(img, optimizedPic.querySelector('img'));
+    img.closest('picture').replaceWith(optimizedPic);
   });
 }
