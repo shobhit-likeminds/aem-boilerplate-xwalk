@@ -334,8 +334,8 @@
     "fields": [
       {
         "component": "text",
-        "label": "Heading",
-        "name": "heading",
+        "label": "Label",
+        "name": "label",
         "valueType": "string"
       },
       {
@@ -692,20 +692,14 @@
       },
       {
         "component": "text",
-        "label": "Alt Text",
-        "name": "altText",
+        "label": "Sub Title",
+        "name": "subTitle",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Subtitle",
-        "name": "subtitle",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Title",
-        "name": "title",
+        "label": "Heading",
+        "name": "heading",
         "valueType": "string"
       },
       {
@@ -715,9 +709,9 @@
         "valueType": "string"
       },
       {
-        "component": "richtext",
-        "label": "Description",
-        "name": "description",
+        "component": "text",
+        "label": "Designation",
+        "name": "designation",
         "valueType": "string"
       },
       {

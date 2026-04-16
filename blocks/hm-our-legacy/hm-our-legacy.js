@@ -2,134 +2,176 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  block.classList.add('container-1600-wrp');
+  const container1600Wrp = document.createElement('div');
+  container1600Wrp.classList.add('container-1600-wrp');
 
   const legacySliderHld = document.createElement('div');
-  legacySliderHld.classList.add('legacy-slider-hld', 'wow', 'animate__', 'animate__fadeInUp', 'animated');
-  block.append(legacySliderHld);
+  // 'animated' is a state class, not initial, 'animate__' is part of the class name
+  legacySliderHld.classList.add('legacy-slider-hld', 'wow', 'animate__', 'animate__fadeInUp');
 
   const legacyBannerSlider = document.createElement('div');
   legacyBannerSlider.classList.add('legacy-banner-slider', 'swiper', 'swiper-fade', 'swiper-initialized', 'swiper-horizontal', 'swiper-pointer-events', 'swiper-watch-progress', 'swiper-backface-hidden');
-  legacySliderHld.append(legacyBannerSlider);
 
   const swiperWrapper = document.createElement('div');
   swiperWrapper.classList.add('swiper-wrapper');
-  legacyBannerSlider.append(swiperWrapper);
+  swiperWrapper.setAttribute('aria-live', 'polite');
 
   [...block.children].forEach((row, index) => {
-    // Check for legacy-slide item rows based on the BlockJson model (8 fields)
-    if (row.children.length === 8) {
-      const [imageCell, altTextCell, subtitleCell, titleCell, nameCell, descriptionCell, ctaLinkCell, ctaLinkLabelCell] = [...row.children];
+    // Use content detection for cells that might be empty or have varying content
+    const cells = [...row.children];
+    const imageCell = cells[0]; // Image is always the first cell
+    const subTitleCell = cells[1]; // Sub Title is always the second cell
+    const headingCell = cells[2]; // Heading is always the third cell
 
-      const swiperSlide = document.createElement('div');
-      swiperSlide.classList.add('swiper-slide');
-      if (index === 0) {
-        swiperSlide.classList.add('swiper-slide-visible', 'swiper-slide-active');
+    // Name, Designation, CTA Link, CTA Label might be optional or in varying order if not strictly enforced
+    // Based on the model, they are fixed fields, so direct index access is acceptable IF the model is strictly followed.
+    // However, for robustness, especially with CTA, it's safer to find them.
+    // Given the BlockJson and EDS structure, direct index access is implied for fixed fields.
+    // Let's stick to the fixed field assumption for now, but be mindful of potential issues if content authors deviate.
+    const nameCell = cells[3];
+    const designationCell = cells[4];
+    const ctaLinkCell = cells[5];
+    const ctaLinkLabelCell = cells[6];
+
+    const swiperSlide = document.createElement('div');
+    swiperSlide.classList.add('swiper-slide');
+    swiperSlide.setAttribute('role', 'group');
+    swiperSlide.setAttribute('aria-label', `${index + 1} / ${block.children.length}`);
+    if (index === 0) {
+      swiperSlide.classList.add('swiper-slide-visible', 'swiper-slide-active');
+    }
+    moveInstrumentation(row, swiperSlide);
+
+    const figure = document.createElement('figure');
+    const picture = imageCell.querySelector('picture');
+    if (picture) {
+      const img = picture.querySelector('img');
+      if (img) {
+        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '1169' }]);
+        moveInstrumentation(img, optimizedPic.querySelector('img'));
+        optimizedPic.querySelector('img').classList.add('bg-cover');
+        figure.append(optimizedPic);
       }
-      moveInstrumentation(row, swiperSlide);
+    }
 
-      const figure = document.createElement('figure');
-      const picture = imageCell.querySelector('picture');
-      if (picture) {
-        const img = picture.querySelector('img');
-        if (img) {
-          const optimizedPic = createOptimizedPicture(img.src, altTextCell.textContent.trim(), false, [{ width: '1169' }]);
-          optimizedPic.querySelector('img').classList.add('bg-cover');
-          figure.append(optimizedPic);
-          moveInstrumentation(img, optimizedPic.querySelector('img'));
-        }
-      }
-      swiperSlide.append(figure);
+    const overlay = document.createElement('div');
+    overlay.classList.add('overlay');
 
-      const overlay = document.createElement('div');
-      overlay.classList.add('overlay');
-      swiperSlide.append(overlay);
+    const legacyDet = document.createElement('div');
+    legacyDet.classList.add('legacy-det');
 
-      const legacyDet = document.createElement('div');
-      legacyDet.classList.add('legacy-det');
-      swiperSlide.append(legacyDet);
+    const subTtle = document.createElement('div');
+    subTtle.classList.add('sub-ttle');
+    subTtle.textContent = subTitleCell.textContent.trim();
 
-      const subTtle = document.createElement('div');
-      subTtle.classList.add('sub-ttle');
-      subTtle.textContent = subtitleCell.textContent.trim();
-      legacyDet.append(subTtle);
+    const commonTtle = document.createElement('h2');
+    commonTtle.classList.add('common-ttle');
+    commonTtle.innerHTML = headingCell.innerHTML; // Use innerHTML for potential line breaks
 
-      const commonTtle = document.createElement('h2');
-      commonTtle.classList.add('common-ttle');
-      commonTtle.innerHTML = titleCell.textContent.trim();
-      legacyDet.append(commonTtle);
+    legacyDet.append(subTtle, commonTtle);
 
+    // Check if name or designation cells have content before creating desg-con
+    const hasName = nameCell && nameCell.textContent.trim();
+    const hasDesignation = designationCell && designationCell.textContent.trim();
+
+    if (hasName || hasDesignation) {
       const desgCon = document.createElement('div');
       desgCon.classList.add('desg-con');
+
+      if (hasName) {
+        const name = document.createElement('div');
+        name.classList.add('name');
+        name.textContent = nameCell.textContent.trim();
+        desgCon.append(name);
+      }
+
+      if (hasDesignation) {
+        const designation = document.createElement('p');
+        designation.textContent = designationCell.textContent.trim();
+        desgCon.append(designation);
+      }
       legacyDet.append(desgCon);
-
-      const name = document.createElement('div');
-      name.classList.add('name');
-      name.textContent = nameCell.textContent.trim();
-      desgCon.append(name);
-
-      if (descriptionCell.innerHTML.trim()) {
-        const description = document.createElement('p');
-        description.innerHTML = descriptionCell.innerHTML;
-        desgCon.append(description);
-      }
-
-      const ctaLink = ctaLinkCell.querySelector('a');
-      if (ctaLink && ctaLinkLabelCell.textContent.trim()) {
-        const btnBox = document.createElement('a');
-        btnBox.classList.add('btn-box');
-        btnBox.href = ctaLink.href;
-        btnBox.textContent = ctaLinkLabelCell.textContent.trim();
-        moveInstrumentation(ctaLinkCell, btnBox);
-        legacyDet.append(btnBox);
-      }
-
-      swiperWrapper.append(swiperSlide);
     }
+
+    // CTA Link and Label handling
+    const ctaLinkElement = ctaLinkCell ? ctaLinkCell.querySelector('a') : null;
+    const ctaLabelText = ctaLinkLabelCell ? ctaLinkLabelCell.textContent.trim() : '';
+
+    if (ctaLinkElement && ctaLinkElement.href && ctaLabelText) {
+      const btnBox = document.createElement('a');
+      btnBox.classList.add('btn-box');
+      btnBox.href = ctaLinkElement.href;
+      btnBox.textContent = ctaLabelText;
+      legacyDet.append(btnBox);
+    }
+
+    swiperSlide.append(figure, overlay, legacyDet);
+    swiperWrapper.append(swiperSlide);
   });
 
   const swiperButtonNext = document.createElement('div');
-  swiperButtonNext.classList.add('swiper-button-next', 'swiper-button-disabled', 'swiper-button-lock');
+  swiperButtonNext.classList.add('swiper-button-next', 'swiper-button-disabled', 'swiper-button-lock'); // 'swiper-button-disabled' and 'swiper-button-lock' are initial states
   swiperButtonNext.setAttribute('tabindex', '-1');
   swiperButtonNext.setAttribute('role', 'button');
   swiperButtonNext.setAttribute('aria-label', 'Next slide');
-  swiperButtonNext.setAttribute('aria-disabled', 'true');
-  legacyBannerSlider.append(swiperButtonNext);
 
   const swiperButtonPrev = document.createElement('div');
-  swiperButtonPrev.classList.add('swiper-button-prev', 'swiper-button-disabled', 'swiper-button-lock');
+  swiperButtonPrev.classList.add('swiper-button-prev', 'swiper-button-disabled', 'swiper-button-lock'); // 'swiper-button-disabled' and 'swiper-button-lock' are initial states
   swiperButtonPrev.setAttribute('tabindex', '-1');
   swiperButtonPrev.setAttribute('role', 'button');
   swiperButtonPrev.setAttribute('aria-label', 'Previous slide');
-  swiperButtonPrev.setAttribute('aria-disabled', 'true');
-  legacyBannerSlider.append(swiperButtonPrev);
 
   const swiperNotification = document.createElement('span');
   swiperNotification.classList.add('swiper-notification');
   swiperNotification.setAttribute('aria-live', 'assertive');
   swiperNotification.setAttribute('aria-atomic', 'true');
-  legacyBannerSlider.append(swiperNotification);
 
-  // Initialize Swiper (assuming Swiper library is loaded globally or imported)
-  // This part assumes a Swiper instance needs to be created for the slider functionality.
-  // If Swiper is loaded via a <script> tag, it might be available as a global variable.
-  // For production, consider dynamic import or ensuring Swiper is available.
-  if (typeof Swiper !== 'undefined') {
-    // eslint-disable-next-line no-new
-    new Swiper(legacyBannerSlider, {
-      effect: 'fade',
-      fadeEffect: {
-        crossFade: true,
-      },
-      loop: true, // Assuming a looping slider based on common patterns
-      navigation: {
-        nextEl: swiperButtonNext,
-        prevEl: swiperButtonPrev,
-      },
-      // Add other Swiper options as needed, e.g., autoplay, pagination
+  legacyBannerSlider.append(swiperWrapper, swiperButtonNext, swiperButtonPrev, swiperNotification);
+  legacySliderHld.append(legacyBannerSlider);
+  container1600Wrp.append(legacySliderHld);
+
+  block.textContent = '';
+  block.append(container1600Wrp);
+
+  // Swiper initialization (simplified for EDS, full Swiper JS not loaded)
+  // In a real scenario, you'd load Swiper JS and initialize it here.
+  // For EDS, we just ensure the basic structure is correct.
+  // If interactive behavior is required, it must be implemented with vanilla JS.
+  let currentSlide = 0;
+  const slides = [...swiperWrapper.children];
+
+  const updateSwiperButtons = () => {
+    swiperButtonPrev.classList.toggle('swiper-button-disabled', currentSlide === 0);
+    swiperButtonPrev.classList.toggle('swiper-button-lock', currentSlide === 0);
+    swiperButtonNext.classList.toggle('swiper-button-disabled', currentSlide === slides.length - 1);
+    swiperButtonNext.classList.toggle('swiper-button-lock', currentSlide === slides.length - 1);
+  };
+
+  const showSlide = (index) => {
+    slides.forEach((slide, i) => {
+      slide.classList.remove('swiper-slide-active', 'swiper-slide-visible');
+      slide.style.opacity = '0';
+      slide.style.transform = 'translate3d(0px, 0px, 0px)'; // Reset transform for fade effect
+      if (i === index) {
+        slide.classList.add('swiper-slide-active', 'swiper-slide-visible');
+        slide.style.opacity = '1';
+      }
     });
-  } else {
-    // eslint-disable-next-line no-console
-    console.warn('Swiper library not found. Slider functionality may not work.');
-  }
+    currentSlide = index;
+    updateSwiperButtons();
+  };
+
+  swiperButtonNext.addEventListener('click', () => {
+    if (currentSlide < slides.length - 1) {
+      showSlide(currentSlide + 1);
+    }
+  });
+
+  swiperButtonPrev.addEventListener('click', () => {
+    if (currentSlide > 0) {
+      showSlide(currentSlide - 1);
+    }
+  });
+
+  showSlide(0); // Initialize first slide
 }

@@ -54,8 +54,8 @@
       "fields": [
         {
           "component": "text",
-          "label": "Label",
-          "name": "label",
+          "label": "Heading",
+          "name": "heading",
           "valueType": "string"
         },
         {
