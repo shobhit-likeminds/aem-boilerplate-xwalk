@@ -2,9 +2,8 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const [logoRow, ...sectionRows] = [...block.children];
+  const [logoRow, ...contentRows] = [...block.children];
 
-  // Create the main footer wrapper
   const footerWrp = document.createElement('section');
   footerWrp.classList.add('footer-wrp');
 
@@ -12,154 +11,157 @@ export default function decorate(block) {
   container.classList.add('container-1600-wrp');
   footerWrp.append(container);
 
-  // Logo section
-  const mobLogoWr = document.createElement('div');
-  mobLogoWr.classList.add('mob-logo-wr');
-  moveInstrumentation(logoRow, mobLogoWr);
-
-  const logoPicture = logoRow.querySelector('picture');
-  if (logoPicture) {
-    const img = logoPicture.querySelector('img');
-    if (img) {
-      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '200' }]);
-      optimizedPic.querySelector('img').classList.add('img-fluid');
-      moveInstrumentation(img, optimizedPic.querySelector('img'));
-      mobLogoWr.append(optimizedPic);
+  // Logo
+  if (logoRow) {
+    const mobLogoWr = document.createElement('div');
+    mobLogoWr.classList.add('mob-logo-wr');
+    const picture = logoRow.querySelector('picture');
+    if (picture) {
+      const img = picture.querySelector('img');
+      if (img) {
+        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+        moveInstrumentation(img, optimizedPic.querySelector('img'));
+        mobLogoWr.append(optimizedPic);
+        optimizedPic.querySelector('img').classList.add('img-fluid');
+      }
     }
+    moveInstrumentation(logoRow, mobLogoWr);
+    container.append(mobLogoWr);
   }
-  container.append(mobLogoWr);
 
-  // Footer sections (f1 row)
   const f1Row = document.createElement('div');
   f1Row.classList.add('row', 'f1');
   container.append(f1Row);
 
-  sectionRows.forEach((row) => {
-    // Use content detection instead of index access for robustness
-    const cells = [...row.children];
-    const titleCell = cells.find(cell => !cell.querySelector('ul') && !cell.querySelector('a'));
-    const sectionLinksCell = cells.find(cell => cell.querySelector('ul') || cell.querySelector('a'));
-
-    if (!titleCell || !sectionLinksCell) {
-      // Skip if the row structure is unexpected
-      return;
-    }
-
-    const col = document.createElement('div');
-    col.classList.add('col', 'col-xl-3');
-    moveInstrumentation(row, col);
-
-    const titleText = titleCell.textContent.trim();
-    const sectionLinksContent = sectionLinksCell.innerHTML;
-    const sectionLinksUl = sectionLinksCell.querySelector('ul');
-
-    if (sectionLinksUl) {
-      // This is an accordion item
-      const ttle = document.createElement('a');
-      ttle.href = 'javascript:void(0)';
-      ttle.classList.add('ttle', 'accordion_head2');
-      ttle.textContent = titleText;
-
-      const plusminus = document.createElement('span');
-      plusminus.classList.add('plusminus2');
-      plusminus.textContent = '+';
-      ttle.append(plusminus);
-
-      const ftrSubLinksCvr = document.createElement('div');
-      ftrSubLinksCvr.classList.add('ftr-sub-links-cvr', 'accordion_body2');
-      ftrSubLinksCvr.innerHTML = sectionLinksContent; // Append the raw HTML, including <ul>
-
-      // Add click listener for accordion behavior
-      ttle.addEventListener('click', () => {
-        ftrSubLinksCvr.classList.toggle('active'); // Use 'active' for visibility
-        ttle.classList.toggle('active'); // Use 'active' for trigger state
-        plusminus.textContent = ftrSubLinksCvr.classList.contains('active') ? '-' : '+';
-      });
-
-      col.append(ttle, ftrSubLinksCvr);
-    } else {
-      // This is a simple link item (no sub-links, just a single link or plain text)
-      const link = sectionLinksCell.querySelector('a');
-      const ttle = document.createElement('a');
-      if (link) {
-        // If there's an anchor in sectionLinksCell, use its href and the titleText
-        ttle.href = link.href;
-        ttle.textContent = titleText;
-      } else {
-        // If no link, it's just a title, potentially with rich text content
-        // As per the model, title is text, sectionLinks is richtext.
-        // If sectionLinks has no UL and no A, it's just rich text content.
-        // The original HTML suggests these are always links or accordions.
-        // Fallback to a non-functional link if no actual link is found.
-        ttle.href = '#';
-        ttle.textContent = titleText;
-      }
-      ttle.classList.add('ttle');
-      col.append(ttle);
-    }
-    f1Row.append(col);
-  });
-
-  // Placeholder for f2 and f3 rows based on the original HTML structure
-  // These are not directly driven by the EDS block model, but are structural elements
-  // from the original HTML that need to be replicated.
-  // For this exercise, we'll create the structure as seen in the original HTML,
-  // assuming these are fixed parts of the footer layout.
-
-  // F2 row (Social Media)
   const f2Row = document.createElement('div');
   f2Row.classList.add('row', 'f2', 'justify-content-between');
   container.append(f2Row);
 
-  const socialCol = document.createElement('div');
-  socialCol.classList.add('col', 'col-xl-2', 'ftr-drop-wrp');
-  f2Row.append(socialCol);
-
-  const socialTitle = document.createElement('p');
-  socialTitle.classList.add('ttle', 'accordion_head2');
-  socialTitle.textContent = 'Social Media ';
-  const socialPlusminus = document.createElement('span');
-  socialPlusminus.classList.add('plusminus2');
-  socialPlusminus.textContent = '+';
-  socialTitle.append(socialPlusminus);
-  socialCol.append(socialTitle);
-
-  const socialLinksCvr = document.createElement('div');
-  socialLinksCvr.classList.add('ftr-sub-links-cvr', 'accordion_body2', 'socialIcons');
-  socialCol.append(socialLinksCvr);
-
-  // Example social links (hardcoded as they are not in the EDS model)
-  const socialLinks = [
-    { href: 'https://www.facebook.com/TataMotorsGroup/', icon: 'fab fa-facebook-square' },
-    { href: 'https://www.instagram.com/tatamotorsgroup/', icon: 'fab fa-instagram' },
-    { href: 'https://twitter.com/TataMotors', icon: 'fa-brands fa-square-x-twitter' },
-    { href: 'https://www.linkedin.com/company/tata-motors/', icon: 'fab fa-linkedin' },
-    { href: 'https://www.youtube.com/user/TataMotorsGroup', icon: 'fab fa-youtube-square' },
-  ];
-
-  socialLinks.forEach(item => {
-    const a = document.createElement('a');
-    a.href = item.href;
-    a.classList.add('ftr-link');
-    a.target = '_blank';
-    const i = document.createElement('i');
-    i.classList.add(...item.icon.split(' '));
-    a.append(i);
-    socialLinksCvr.append(a);
-  });
-
-  // Add click listener for social media accordion
-  socialTitle.addEventListener('click', () => {
-    socialLinksCvr.classList.toggle('active');
-    socialTitle.classList.toggle('active');
-    socialPlusminus.textContent = socialLinksCvr.classList.contains('active') ? '-' : '+';
-  });
-
-  // F3 row (Legal and Copyright)
   const f3Row = document.createElement('div');
   f3Row.classList.add('row', 'mt25', 'f3');
   container.append(f3Row);
 
+  contentRows.forEach((row) => {
+    const cells = [...row.children];
+
+    // Detect if this is a "Social Media" row or a regular "Footer Section" row
+    // A social media row will have a title and then a list of social links (likely <a> tags with <i> for icons)
+    // A regular footer section row has a title and then a richtext cell which may contain a UL or just links/text.
+    const isSocialMediaRow = cells.length === 2 && cells[1].querySelector('a i');
+
+    if (isSocialMediaRow) {
+      const [titleCell, socialLinksCell] = cells;
+
+      const socialCol = document.createElement('div');
+      socialCol.classList.add('col', 'col-xl-2', 'ftr-drop-wrp');
+      moveInstrumentation(row, socialCol);
+
+      const socialTitle = document.createElement('p');
+      socialTitle.classList.add('ttle', 'accordion_head2');
+      socialTitle.textContent = titleCell?.textContent.trim() || '';
+      const socialPlusMinus = document.createElement('span');
+      socialPlusMinus.classList.add('plusminus2');
+      socialPlusMinus.textContent = '+';
+      socialTitle.append(socialPlusMinus);
+      socialCol.append(socialTitle);
+
+      const socialLinksCvr = document.createElement('div');
+      socialLinksCvr.classList.add('ftr-sub-links-cvr', 'accordion_body2', 'socialIcons');
+      socialLinksCvr.append(...socialLinksCell.children); // Append all social links directly
+      socialCol.append(socialLinksCvr);
+
+      socialTitle.addEventListener('click', () => {
+        socialLinksCvr.classList.toggle('active');
+        socialTitle.classList.toggle('active');
+        socialPlusMinus.textContent = socialTitle.classList.contains('active') ? '-' : '+';
+      });
+      f2Row.append(socialCol);
+    } else {
+      // This is a regular footer-section item row
+      const [titleCell, sectionLinksCell] = cells;
+
+      const col = document.createElement('div');
+      col.classList.add('col', 'col-xl-3');
+      moveInstrumentation(row, col);
+
+      const sectionLinksContent = sectionLinksCell?.innerHTML.trim();
+      const hasUl = sectionLinksCell?.querySelector('ul');
+
+      if (hasUl) {
+        const ttle = document.createElement('a');
+        ttle.href = 'javascript:void(0)';
+        ttle.classList.add('ttle', 'accordion_head2');
+        ttle.textContent = titleCell?.textContent.trim() || '';
+
+        const plusminus = document.createElement('span');
+        plusminus.classList.add('plusminus2');
+        plusminus.textContent = '+';
+        ttle.append(plusminus);
+
+        const ftrSubLinksCvr = document.createElement('div');
+        ftrSubLinksCvr.classList.add('ftr-sub-links-cvr', 'accordion_body2');
+        ftrSubLinksCvr.append(hasUl); // Move the UL into the wrapper
+
+        ttle.addEventListener('click', () => {
+          ftrSubLinksCvr.classList.toggle('active'); // Use 'active' for state
+          ttle.classList.toggle('active');
+          plusminus.textContent = ttle.classList.contains('active') ? '-' : '+';
+        });
+
+        // Transform nested lists if any
+        hasUl.querySelectorAll('li').forEach(li => {
+          const nestedUl = li.querySelector(':scope > ul');
+          if (nestedUl) {
+            nestedUl.remove(); // Remove to re-wrap
+            const subWrap = document.createElement('div');
+            subWrap.classList.add('has-sub-child'); // Use class from original site CSS
+            subWrap.append(nestedUl);
+            li.append(subWrap);
+
+            const trigger = li.querySelector(':scope > a') || li;
+            trigger.addEventListener('click', (e) => {
+              e.preventDefault();
+              e.stopPropagation(); // Prevents parent accordion from toggling
+              li.classList.toggle('active');
+              subWrap.classList.toggle('active');
+            });
+          }
+        });
+
+        col.append(ttle, ftrSubLinksCvr);
+      } else if (sectionLinksContent) {
+        // If it's just a <p> or plain text, treat it as a single link or text
+        const anchor = document.createElement('a');
+        anchor.classList.add('ttle');
+        const foundLink = sectionLinksCell.querySelector('a');
+        if (foundLink) {
+          anchor.href = foundLink.href;
+          anchor.textContent = titleCell?.textContent.trim() || foundLink.textContent.trim();
+        } else {
+          anchor.href = '#'; // Fallback if no link in rich text
+          anchor.textContent = titleCell?.textContent.trim() || sectionLinksContent;
+        }
+        col.append(anchor);
+      } else {
+        // If only title and no section links (e.g., "Contact" in original HTML)
+        const ttle = document.createElement('a');
+        ttle.classList.add('ttle');
+        const foundLink = titleCell.querySelector('a');
+        if (foundLink) {
+          ttle.href = foundLink.href;
+          ttle.textContent = foundLink.textContent.trim();
+        } else {
+          // If title cell is just text, and no link was found
+          ttle.href = '#'; // Default or if no specific link
+          ttle.textContent = titleCell?.textContent.trim() || '';
+        }
+        col.append(ttle);
+      }
+      f1Row.append(col);
+    }
+  });
+
+  // Legal and Copyright section (These are hardcoded as they are not part of the EDS model)
   const legalCol = document.createElement('div');
   legalCol.classList.add('col-12', 'col-md-6');
   f3Row.append(legalCol);
@@ -178,10 +180,10 @@ export default function decorate(block) {
   copyrightCol.classList.add('col-12', 'col-md-6');
   f3Row.append(copyrightCol);
 
-  const copyrightText = document.createElement('p');
-  copyrightText.classList.add('copy-txt', 'text-md-end');
-  copyrightText.textContent = '© Copyright 2026. All rights reserved. Tata Motors Limited.';
-  copyrightCol.append(copyrightText);
+  const copyrightP = document.createElement('p');
+  copyrightP.classList.add('copy-txt', 'text-md-end');
+  copyrightP.textContent = ' © Copyright 2026. All rights reserved. Tata Motors Limited.';
+  copyrightCol.append(copyrightP);
 
   block.textContent = '';
   block.append(footerWrp);

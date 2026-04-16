@@ -13,14 +13,12 @@ export default function decorate(block) {
     ...navItemRows
   ] = [...block.children];
 
-  block.classList.add('fixed'); // Do NOT add 'nav-up' here, it's a scroll state class
+  block.classList.add('fixed'); // Add 'fixed' class as per original HTML
 
   const topHead = document.createElement('div');
   topHead.classList.add('top-head');
   const topHeadContainer = document.createElement('div');
   topHeadContainer.classList.add('container-1600-wrp');
-  const topHeadUl = document.createElement('ul');
-  topHeadContainer.append(topHeadUl);
   topHead.append(topHeadContainer);
 
   const mainNavBx = document.createElement('div');
@@ -29,136 +27,137 @@ export default function decorate(block) {
   mainNavContainer.classList.add('container-1600-wrp');
   const mainNavRow = document.createElement('div');
   mainNavRow.classList.add('row');
+  mainNavContainer.append(mainNavRow);
+  mainNavBx.append(mainNavContainer);
 
-  const colLeft = document.createElement('div');
-  colLeft.classList.add('col-md-2', 'col-6');
+  // Column 1: Logo, Mobile Logo, Nav Icon, Mode Switch
+  const col1 = document.createElement('div');
+  col1.classList.add('col-md-2', 'col-6');
+  mainNavRow.append(col1);
 
-  const logoWrp = document.createElement('a');
-  logoWrp.classList.add('logo-wrp');
-  const logoLink = logoLinkRow.querySelector('a');
-  if (logoLink) {
-    logoWrp.href = logoLink.href;
+  // Logo
+  const logoLink = document.createElement('a');
+  logoLink.classList.add('logo-wrp');
+  const foundLogoLink = logoLinkRow.querySelector('a');
+  if (foundLogoLink) {
+    logoLink.href = foundLogoLink.href;
   } else {
-    logoWrp.href = '#';
+    logoLink.href = '#'; // Fallback if no link
   }
+  moveInstrumentation(logoLinkRow, logoLink);
 
   const logoPicture = logoRow.querySelector('picture');
   if (logoPicture) {
-    const img = logoPicture.querySelector('img');
-    if (img) {
-      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-      moveInstrumentation(img, optimizedPic.querySelector('img'));
-      logoWrp.append(optimizedPic);
-      optimizedPic.classList.add('img-fluid');
+    const logoImg = logoPicture.querySelector('img');
+    if (logoImg) {
+      const optimizedLogo = createOptimizedPicture(logoImg.src, logoImg.alt, false, [{ width: '100' }]);
+      optimizedLogo.querySelector('img').classList.add('img-fluid');
+      moveInstrumentation(logoRow, optimizedLogo.querySelector('img'));
+      logoLink.append(optimizedLogo);
     }
   }
-  moveInstrumentation(logoRow, logoWrp);
-  moveInstrumentation(logoLinkRow, logoWrp);
-  moveInstrumentation(logoLinkLabelRow, logoWrp);
+  col1.append(logoLink);
 
+  // Mobile Logo
   const mobileLogoPicture = mobileLogoRow.querySelector('picture');
-  const mobileLogoImageHolder = document.createElement('picture');
-  mobileLogoImageHolder.classList.add('image-holder', 'tata-logo-mob');
   if (mobileLogoPicture) {
-    const img = mobileLogoPicture.querySelector('img');
-    if (img) {
-      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-      moveInstrumentation(img, optimizedPic.querySelector('img'));
-      mobileLogoImageHolder.append(optimizedPic);
-      optimizedPic.classList.add('img-fluid');
+    const mobileLogoImg = mobileLogoPicture.querySelector('img');
+    if (mobileLogoImg) {
+      const mobileLogoHolder = document.createElement('picture');
+      mobileLogoHolder.classList.add('image-holder', 'tata-logo-mob');
+      const optimizedMobileLogo = createOptimizedPicture(mobileLogoImg.src, mobileLogoImg.alt, false, [{ width: '100' }]);
+      optimizedMobileLogo.querySelector('img').classList.add('img-fluid');
+      moveInstrumentation(mobileLogoRow, optimizedMobileLogo.querySelector('img'));
+      mobileLogoHolder.append(optimizedMobileLogo.querySelector('img'));
+      col1.append(mobileLogoHolder);
     }
   }
-  moveInstrumentation(mobileLogoRow, mobileLogoImageHolder);
 
-  const navIcon4 = document.createElement('div');
-  navIcon4.id = 'nav-icon4';
-  ['', '', ''].forEach(() => navIcon4.append(document.createElement('span')));
+  // Nav Icon
+  const navIcon = document.createElement('div');
+  navIcon.id = 'nav-icon4';
+  for (let i = 0; i < 3; i += 1) {
+    navIcon.append(document.createElement('span'));
+  }
+  col1.append(navIcon);
 
+  // Mode Switch (hardcoded as per original HTML structure)
   const switchBtn = document.createElement('button');
   switchBtn.id = 'switch2';
-  switchBtn.innerHTML = `Mode <strong><span class="switch2_light">Light</span> <span class="switch2_dark">Dark</span> </strong>`;
-  switchBtn.addEventListener('click', () => {
-    // Implement dark/light mode toggle logic here
-    document.body.classList.toggle('dark-mode'); // Example class
-  });
+  switchBtn.innerHTML = `
+    Mode  
+    <strong>
+      <span class="switch2_light">Light</span> 
+      <span class="switch2_dark">Dark</span> 
+    </strong>
+  `;
+  col1.append(switchBtn);
 
-  colLeft.append(logoWrp, mobileLogoImageHolder, navIcon4, switchBtn);
-
-  const colRight = document.createElement('div');
-  colRight.classList.add('col-md-10', 'col-6', 'hm-main-nav-con');
+  // Column 2: Main Navigation
+  const col2 = document.createElement('div');
+  col2.classList.add('col-md-10', 'col-6', 'hm-main-nav-con');
+  mainNavRow.append(col2);
 
   const navCard = document.createElement('div');
   navCard.classList.add('nav-card');
+  col2.append(navCard);
 
+  // Close Mobile Drop
   const closeMobDrop = document.createElement('a');
-  closeMobDrop.classList.add('close-mob-drop');
   closeMobDrop.href = 'javascript:void(0)';
+  closeMobDrop.classList.add('close-mob-drop');
   const closeImg = document.createElement('img');
-  closeImg.src = '/icons/close.png'; // Placeholder, replace with actual icon if available in block
+  closeImg.src = '/icons/close.png'; // Assuming an icon path, original was hardcoded DAM
   closeImg.alt = '';
   closeImg.classList.add('img-fluid');
   closeMobDrop.append(closeImg);
-  closeMobDrop.addEventListener('click', () => {
-    navCard.classList.remove('active');
-    navIcon4.classList.remove('open');
-    block.classList.remove('nav-open');
-  });
+  navCard.append(closeMobDrop);
 
-  navIcon4.addEventListener('click', () => {
-    navCard.classList.toggle('active');
-    navIcon4.classList.toggle('open');
-    block.classList.toggle('nav-open');
-  });
-
+  // Level 1 Navigation List
   const level1Ul = document.createElement('ul');
   level1Ul.classList.add('level1');
+  navCard.append(level1Ul);
 
   navItemRows.forEach((row) => {
-    const cells = [...row.children];
-    // Based on BlockJson, nav-item has 4 fields: label, link, linkLabel, subLinks
-    // label (text), link (aem-content), linkLabel (text), subLinks (richtext)
-    const labelCell = cells[0];
-    const linkCell = cells[1];
-    const linkLabelCell = cells[2];
-    const subLinksCell = cells[3];
-
+    // Corrected: Using destructuring for navItemRows as per BlockJson model
+    const [labelCell, linkCell, linkLabelCell, subLinksCell] = [...row.children];
     const li = document.createElement('li');
     moveInstrumentation(row, li);
 
     const subList = subLinksCell?.querySelector('ul');
 
     if (subList) {
-      li.classList.add('level1');
-      const anchor = document.createElement('a');
-      anchor.href = 'javascript:void(0)';
-      anchor.textContent = labelCell.textContent.trim();
-      li.append(anchor);
+      li.classList.add('level1'); // Add level1 class for items with sub-menus
+      const triggerLink = document.createElement('a');
+      triggerLink.href = 'javascript:void(0)'; // Trigger for dropdown
+      triggerLink.textContent = labelCell?.textContent.trim() || '';
+      li.append(triggerLink);
 
       const level2Ul = document.createElement('ul');
       level2Ul.classList.add('level2');
+      moveInstrumentation(subLinksCell, level2Ul);
+      // Move all children from subLinksCell to level2Ul
+      while (subLinksCell.firstChild) {
+        level2Ul.append(subLinksCell.firstChild);
+      }
 
+      // Add mob-back item with arrow image (hardcoded as per original HTML structure)
       const mobBackLi = document.createElement('li');
       mobBackLi.classList.add('mob-back');
       const mobBackImg = document.createElement('img');
-      mobBackImg.src = '/icons/mob-level2-arrw.png'; // Placeholder, replace with actual icon if available in block
+      mobBackImg.src = '/icons/mob-level2-arrw.png'; // Assuming an icon path, original was hardcoded DAM
       mobBackImg.alt = '';
       mobBackLi.append(mobBackImg);
-      mobBackLi.addEventListener('click', () => {
-        li.classList.remove('active');
-      });
-      level2Ul.append(mobBackLi);
+      level2Ul.prepend(mobBackLi);
 
-      [...subList.children].forEach((subLi) => {
-        const nestedLi = document.createElement('li');
-        moveInstrumentation(subLi, nestedLi);
-        while (subLi.firstChild) nestedLi.append(subLi.firstChild);
-        level2Ul.append(nestedLi);
-      });
       li.append(level2Ul);
 
-      anchor.addEventListener('click', (e) => {
+      // Event listener for dropdown toggle
+      triggerLink.addEventListener('click', (e) => {
         e.preventDefault();
+        e.stopPropagation();
         li.classList.toggle('active');
+        level2Ul.classList.toggle('active');
       });
     } else {
       li.classList.add('no-arrw-mob');
@@ -171,33 +170,34 @@ export default function decorate(block) {
     level1Ul.append(li);
   });
 
-  const logoWrp2 = document.createElement('a');
-  logoWrp2.classList.add('logo-wrp2');
-  logoWrp2.href = 'https://www.tata.com/';
-  logoWrp2.target = '_blank';
+  // Secondary Logo (for footer-like section in nav-card)
+  const secondaryLogoLink = document.createElement('a');
+  secondaryLogoLink.classList.add('logo-wrp2');
+  secondaryLogoLink.target = '_blank';
+  const foundSecondaryLogoLink = secondaryLogoLinkRow.querySelector('a');
+  if (foundSecondaryLogoLink) {
+    secondaryLogoLink.href = foundSecondaryLogoLink.href;
+  } else {
+    secondaryLogoLink.href = '#'; // Fallback
+  }
+  moveInstrumentation(secondaryLogoLinkRow, secondaryLogoLink);
+
   const secondaryLogoPicture = secondaryLogoRow.querySelector('picture');
   if (secondaryLogoPicture) {
-    const img = secondaryLogoPicture.querySelector('img');
-    if (img) {
-      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-      moveInstrumentation(img, optimizedPic.querySelector('img'));
-      logoWrp2.append(optimizedPic);
+    const secondaryLogoImg = secondaryLogoPicture.querySelector('img');
+    if (secondaryLogoImg) {
+      const optimizedSecondaryLogo = createOptimizedPicture(secondaryLogoImg.src, secondaryLogoImg.alt, false, [{ width: '100' }]);
+      optimizedSecondaryLogo.querySelector('img').alt = 'svg file';
+      moveInstrumentation(secondaryLogoRow, optimizedSecondaryLogo.querySelector('img'));
+      secondaryLogoLink.append(optimizedSecondaryLogo);
     }
   }
-  moveInstrumentation(secondaryLogoRow, logoWrp2);
-  moveInstrumentation(secondaryLogoLinkRow, logoWrp2);
-  moveInstrumentation(secondaryLogoLinkLabelRow, logoWrp2);
+  navCard.append(secondaryLogoLink);
 
-  navCard.append(closeMobDrop, level1Ul, logoWrp2);
-  colRight.append(navCard);
-
-  mainNavRow.append(colLeft, colRight);
-  mainNavContainer.append(mainNavRow);
-  mainNavBx.append(mainNavContainer);
-
+  // Search section (hardcoded as per original HTML structure)
   const cdSearch = document.createElement('div');
   cdSearch.classList.add('cd-search');
-  cdSearch.style.display = 'none'; // Initial state from original HTML
+  cdSearch.style.display = 'none'; // Initially hidden
   cdSearch.innerHTML = `
     <div class="container">
       <div class="input-group">
@@ -211,26 +211,38 @@ export default function decorate(block) {
     </div>
   `;
 
-  // Add event listener for the search button
-  const searchButton = cdSearch.querySelector('.btn.btn-outline-secondary');
-  if (searchButton) {
-    searchButton.addEventListener('click', () => {
-      const searchInput = cdSearch.querySelector('#example-search-input');
-      if (searchInput) {
-        // Implement search logic here, e.g., redirect to search results page
-        console.log('Searching for:', searchInput.value);
-        // window.location.href = `/search?q=${encodeURIComponent(searchInput.value)}`;
-      }
-    });
-  }
-
   block.textContent = '';
   block.append(topHead, mainNavBx, cdSearch);
 
-  // Image optimization
-  block.querySelectorAll('picture > img').forEach((img) => {
-    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-    moveInstrumentation(img, optimizedPic.querySelector('img'));
-    img.closest('picture').replaceWith(optimizedPic);
+  // Toggle mobile navigation
+  navIcon.addEventListener('click', () => {
+    navIcon.classList.toggle('open');
+    navCard.classList.toggle('open');
+    document.body.classList.toggle('no-scroll');
+  });
+
+  closeMobDrop.addEventListener('click', (e) => {
+    e.preventDefault();
+    navIcon.classList.remove('open');
+    navCard.classList.remove('open');
+    document.body.classList.remove('no-scroll');
+  });
+
+  // Toggle dark/light mode
+  switchBtn.addEventListener('click', () => {
+    document.body.classList.toggle('dark-mode'); // Assuming 'dark-mode' class controls the theme
+  });
+
+  // Scroll behavior (as per original site's JS, not in EDS block.js)
+  // This is an example of how to implement the 'nav-up' behavior if needed.
+  // Do NOT add 'nav-up' to initial classList, it will hide the header permanently.
+  let lastScrollY = window.scrollY;
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > lastScrollY && window.scrollY > 100) {
+      block.classList.add('nav-up');
+    } else {
+      block.classList.remove('nav-up');
+    }
+    lastScrollY = window.scrollY;
   });
 }

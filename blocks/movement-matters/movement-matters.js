@@ -2,57 +2,47 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const [headingRow, textRow, ...cardBlurbRows] = [...block.children];
+  const [headingRow, introTextRow, ...cardBlurbRows] = [...block.children];
 
-  // Create the main section wrapper
-  const section = document.createElement('section');
-  section.classList.add('movement-matters');
-  moveInstrumentation(block, section);
-
+  // Main container
   const containerWrapper = document.createElement('div');
   containerWrapper.classList.add('container-1600-wrp');
-  section.append(containerWrapper);
 
   // Heading
   const heading = document.createElement('h2');
   heading.classList.add('common-ttle', 'wow', 'animate__', 'animate__fadeInUp', 'animated');
-  heading.textContent = headingRow.firstElementChild.textContent.trim();
   moveInstrumentation(headingRow, heading);
+  heading.textContent = headingRow.firstElementChild.textContent.trim();
   containerWrapper.append(heading);
 
+  // Movement holder
   const movementHld = document.createElement('div');
   movementHld.classList.add('movement-hld');
   containerWrapper.append(movementHld);
 
-  const rowDiv = document.createElement('div');
-  rowDiv.classList.add('row', 'align-items-lg-center', 'justify-content-lg-between');
-  movementHld.append(rowDiv);
+  const row = document.createElement('div');
+  row.classList.add('row', 'align-items-lg-center', 'justify-content-lg-between');
+  movementHld.append(row);
 
-  // Text content
-  const textCol = document.createElement('div');
-  textCol.classList.add('col-lg-7', 'pb-lg-0', 'pb-4', 'wow', 'animate__', 'animate__fadeInUp', 'animated');
-  moveInstrumentation(textRow, textCol);
-  while (textRow.firstElementChild) {
-    textCol.append(textRow.firstElementChild);
-  }
-  rowDiv.append(textCol);
+  // Intro Text column
+  const introTextCol = document.createElement('div');
+  introTextCol.classList.add('col-lg-7', 'pb-lg-0', 'pb-4', 'wow', 'animate__', 'animate__fadeInUp', 'animated');
+  moveInstrumentation(introTextRow, introTextCol);
+  introTextCol.innerHTML = introTextRow.firstElementChild.innerHTML;
+  row.append(introTextCol);
 
-  // Card Blurbs
-  const cardBlurbsCol = document.createElement('div');
-  cardBlurbsCol.classList.add('col-lg-4');
-  rowDiv.append(cardBlurbsCol);
+  // Card Blurbs column
+  const cardBlurbCol = document.createElement('div');
+  cardBlurbCol.classList.add('col-lg-4');
+  row.append(cardBlurbCol);
 
-  cardBlurbRows.forEach((row) => {
-    // Use content detection for CTA link to avoid issues with decorateButtons wrapping
-    const cells = [...row.children];
-    const titleCell = cells[0];
-    const descriptionCell = cells[1];
-    const ctaLinkCell = cells[2]; // This cell contains the <a> tag for href
-    const ctaLinkLabelCell = cells[3]; // This cell contains the text label for the CTA
+  cardBlurbRows.forEach((cardBlurbRow) => {
+    // The model defines 4 cells for 'card-blurb' items, so direct destructuring is safe.
+    const [titleCell, descriptionCell, ctaLinkCell, ctaLinkLabelCell] = [...cardBlurbRow.children];
 
     const mCardBlurb = document.createElement('div');
     mCardBlurb.classList.add('m-card-blurb', 'wow', 'animate__', 'animate__fadeInUp', 'animated');
-    moveInstrumentation(row, mCardBlurb);
+    moveInstrumentation(cardBlurbRow, mCardBlurb);
 
     const contentDiv = document.createElement('div');
     mCardBlurb.append(contentDiv);
@@ -67,16 +57,17 @@ export default function decorate(block) {
 
     const ctaLink = document.createElement('a');
     ctaLink.classList.add('btn-box');
-    const foundLink = ctaLinkCell.querySelector('a'); // Find the actual <a> tag for its href
-    if (foundLink) {
+    // For type=aem-content, the link is the first child of the cell.
+    const foundLink = ctaLinkCell.firstElementChild;
+    if (foundLink && foundLink.tagName === 'A') {
       ctaLink.href = foundLink.href;
     }
     ctaLink.textContent = ctaLinkLabelCell.textContent.trim();
     mCardBlurb.append(ctaLink);
 
-    cardBlurbsCol.append(mCardBlurb);
+    cardBlurbCol.append(mCardBlurb);
   });
 
   block.textContent = '';
-  block.append(section);
+  block.append(containerWrapper);
 }

@@ -52,7 +52,7 @@
           "component": "container",
           "item": "evolution-blurb",
           "label": "Evolution Blurbs",
-          "name": "blurbs"
+          "name": "evolutionBlurbs"
         }
       ]
     },
@@ -67,8 +67,8 @@
         },
         {
           "component": "text",
-          "label": "Title",
-          "name": "title",
+          "label": "Headline",
+          "name": "headline",
           "valueType": "string"
         },
         {

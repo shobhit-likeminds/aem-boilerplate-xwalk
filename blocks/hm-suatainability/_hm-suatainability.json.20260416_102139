@@ -23,20 +23,19 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Background Image",
-          "name": "backgroundImage",
+          "label": "Image",
+          "name": "image"
+        },
+        {
+          "component": "text",
+          "label": "Sub Ttle",
+          "name": "subTtle",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Subtitle",
-          "name": "subtitle",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Title",
-          "name": "title",
+          "label": "Heading",
+          "name": "heading",
           "valueType": "string"
         },
         {

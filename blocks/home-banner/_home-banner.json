@@ -15,36 +15,6 @@
           }
         }
       }
-    },
-    {
-      "title": "Banner Text",
-      "id": "banner-text",
-      "plugins": {
-        "xwalk": {
-          "page": {
-            "resourceType": "core/franklin/components/block/v1/block/item",
-            "template": {
-              "model": "banner-text",
-              "name": "Banner Text"
-            }
-          }
-        }
-      }
-    },
-    {
-      "title": "Rotator Image",
-      "id": "rotator-image",
-      "plugins": {
-        "xwalk": {
-          "page": {
-            "resourceType": "core/franklin/components/block/v1/block/item",
-            "template": {
-              "model": "rotator-image",
-              "name": "Rotator Image"
-            }
-          }
-        }
-      }
     }
   ],
   "models": [
@@ -54,57 +24,57 @@
         {
           "component": "reference",
           "label": "Background Image",
-          "name": "backgroundImage"
+          "name": "backgroundImage",
+          "valueType": "string"
         },
         {
-          "component": "richtext",
+          "component": "text",
           "label": "Heading",
           "name": "heading",
           "valueType": "string"
         },
         {
-          "component": "container",
-          "item": "banner-text",
-          "label": "Banner Texts",
-          "name": "bannerTexts"
+          "component": "text",
+          "label": "Banner Text 1",
+          "name": "bannerText1",
+          "valueType": "string"
         },
         {
-          "component": "container",
-          "item": "rotator-image",
-          "label": "Rotator Images",
-          "name": "rotatorImages"
-        }
-      ]
-    },
-    {
-      "id": "banner-text",
-      "fields": [
+          "component": "text",
+          "label": "Banner Text 2",
+          "name": "bannerText2",
+          "valueType": "string"
+        },
         {
           "component": "text",
-          "label": "Text",
-          "name": "text",
+          "label": "Banner Text 3",
+          "name": "bannerText3",
           "valueType": "string"
-        }
-      ]
-    },
-    {
-      "id": "rotator-image",
-      "fields": [
+        },
         {
           "component": "reference",
-          "label": "Image",
-          "name": "image"
+          "label": "Rotator Image 1",
+          "name": "rotatorImage1",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Rotator Image 2",
+          "name": "rotatorImage2",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Rotator Image 3",
+          "name": "rotatorImage3",
+          "valueType": "string"
         }
       ]
     }
   ],
   "filters": [
     {
-      "id": "home-banner",
-      "components": [
-        "banner-text",
-        "rotator-image"
-      ]
+      "id": "home-banner"
     }
   ]
 }

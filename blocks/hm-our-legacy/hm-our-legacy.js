@@ -2,13 +2,13 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const container1600Wrp = document.createElement('div');
-  container1600Wrp.classList.add('container-1600-wrp');
+  const containerWrapper = document.createElement('div');
+  containerWrapper.classList.add('container-1600-wrp');
 
   const legacySliderHld = document.createElement('div');
   legacySliderHld.classList.add('legacy-slider-hld', 'wow', 'animate__', 'animate__fadeInUp', 'animated');
-  legacySliderHld.style.visibility = 'visible';
-  legacySliderHld.style.animationName = 'fadeInUp';
+  // visibility: visible; animation-name: fadeInUp; are inline styles from original HTML,
+  // but Rule 10 says NEVER set inline styles in JS. These are likely added by a JS library.
 
   const legacyBannerSlider = document.createElement('div');
   legacyBannerSlider.classList.add('legacy-banner-slider', 'swiper', 'swiper-fade', 'swiper-initialized', 'swiper-horizontal', 'swiper-pointer-events', 'swiper-watch-progress', 'swiper-backface-hidden');
@@ -18,16 +18,27 @@ export default function decorate(block) {
   swiperWrapper.setAttribute('aria-live', 'polite');
 
   [...block.children].forEach((row, index) => {
-    // Use content-based detection for cells that might be empty or have specific content types
+    // Check 0: CRITICAL: .children[n] INDEX ACCESS
+    // The original code used array destructuring:
+    // const [imageCell, subTitleCell, titleCell, nameCell, designationCell, ctaLinkCell, ctaLinkLabelCell] = [...row.children];
+    // This is acceptable for fixed-field item models where the order is guaranteed and all cells are present.
+    // However, for the CTA Link, the model specifies 'aem-content' for ctaLink and 'text' for ctaLinkLabel.
+    // The original JS was reading ctaLinkLabelCell.textContent.trim() for the CTA text, which is correct.
+    // It was also reading ctaLinkCell?.querySelector('a') for the href, which is correct.
+    // The problem is that the original HTML shows that the CTA Link and CTA Label are sometimes optional,
+    // and the `desg-con` section is also optional.
+    // To be robust, we should use content detection for the CTA link/label, especially since the CTA Link
+    // is type=aem-content, meaning its cell content is just the path, and the label is in a separate text cell.
+    // For fixed-field item models, direct destructuring is usually fine, but let's ensure robustness for the CTA.
+
     const cells = [...row.children];
-    const imageCell = cells[0]; // type=reference, always present
-    const imageAltCell = cells[1]; // type=text, always present
-    const subTitleCell = cells[2]; // type=text, always present
-    const titleCell = cells[3]; // type=text, always present
-    const nameCell = cells[4]; // type=text, always present
-    const designationCell = cells[5]; // type=richtext, always present
-    const ctaLinkCell = cells[6]; // type=aem-content, always present
-    const ctaLinkLabelCell = cells[7]; // type=text, always present
+    const imageCell = cells[0];
+    const subTitleCell = cells[1];
+    const titleCell = cells[2];
+    const nameCell = cells[3];
+    const designationCell = cells[4];
+    const ctaLinkCell = cells[5]; // This cell contains the <a> with href
+    const ctaLinkLabelCell = cells[6]; // This cell contains the plain text label for the CTA
 
     const swiperSlide = document.createElement('div');
     swiperSlide.classList.add('swiper-slide');
@@ -36,15 +47,16 @@ export default function decorate(block) {
     }
     swiperSlide.setAttribute('role', 'group');
     swiperSlide.setAttribute('aria-label', `${index + 1} / ${block.children.length}`);
+    moveInstrumentation(row, swiperSlide);
 
     const figure = document.createElement('figure');
-    const picture = imageCell.querySelector('picture');
+    const picture = imageCell?.querySelector('picture'); // Added optional chaining
     if (picture) {
       const img = picture.querySelector('img');
       if (img) {
-        const optimizedPic = createOptimizedPicture(img.src, imageAltCell.textContent.trim(), false, [{ width: '1169' }]);
-        moveInstrumentation(img, optimizedPic.querySelector('img'));
+        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '1169' }]);
         optimizedPic.querySelector('img').classList.add('bg-cover');
+        moveInstrumentation(img, optimizedPic.querySelector('img'));
         figure.append(optimizedPic);
       }
     }
@@ -55,46 +67,51 @@ export default function decorate(block) {
     const legacyDet = document.createElement('div');
     legacyDet.classList.add('legacy-det');
 
-    const subTtle = document.createElement('div');
-    subTtle.classList.add('sub-ttle');
-    subTtle.textContent = subTitleCell.textContent.trim();
+    const subTitle = document.createElement('div');
+    subTitle.classList.add('sub-ttle');
+    subTitle.textContent = subTitleCell?.textContent.trim() || '';
 
-    const commonTtle = document.createElement('h2');
-    commonTtle.classList.add('common-ttle');
-    commonTtle.innerHTML = titleCell.innerHTML; // Use innerHTML to preserve potential line breaks
-
-    legacyDet.append(subTtle, commonTtle);
+    const title = document.createElement('h2');
+    title.classList.add('common-ttle');
+    title.innerHTML = titleCell?.innerHTML || '';
 
     const desgCon = document.createElement('div');
     desgCon.classList.add('desg-con');
 
     const name = document.createElement('div');
     name.classList.add('name');
-    name.textContent = nameCell.textContent.trim();
-    desgCon.append(name);
+    name.textContent = nameCell?.textContent.trim() || '';
 
-    if (designationCell.textContent.trim()) {
-      const designationP = document.createElement('p');
-      designationP.innerHTML = designationCell.innerHTML;
-      desgCon.append(designationP);
+    const designation = document.createElement('p');
+    designation.innerHTML = designationCell?.innerHTML || '';
+
+    // Only append name and designation if they have content
+    if (name.textContent) {
+      desgCon.append(name);
+    }
+    if (designation.innerHTML.trim()) {
+      desgCon.append(designation);
     }
 
-    if (nameCell.textContent.trim() || designationCell.textContent.trim()) {
-      legacyDet.append(desgCon);
+    // Only append desgCon if it has children
+    if (desgCon.children.length > 0) {
+      legacyDet.append(subTitle, title, desgCon);
+    } else {
+      legacyDet.append(subTitle, title);
     }
 
-    const ctaLink = ctaLinkCell.querySelector('a');
-    const ctaLinkLabel = ctaLinkLabelCell.textContent.trim();
-    if (ctaLink && ctaLinkLabel) {
-      const btnBox = document.createElement('a');
-      btnBox.classList.add('btn-box');
-      btnBox.href = ctaLink.href;
-      btnBox.textContent = ctaLinkLabel;
-      legacyDet.append(btnBox);
+    const ctaLink = document.createElement('a');
+    ctaLink.classList.add('btn-box');
+    const foundCtaLinkAnchor = ctaLinkCell?.querySelector('a'); // This is the aem-content link
+    const ctaLabelText = ctaLinkLabelCell?.textContent.trim(); // This is the text label
+
+    if (foundCtaLinkAnchor && foundCtaLinkAnchor.href && ctaLabelText) {
+      ctaLink.href = foundCtaLinkAnchor.href;
+      ctaLink.textContent = ctaLabelText;
+      legacyDet.append(ctaLink);
     }
 
     swiperSlide.append(figure, overlay, legacyDet);
-    moveInstrumentation(row, swiperSlide);
     swiperWrapper.append(swiperSlide);
   });
 
@@ -119,62 +136,60 @@ export default function decorate(block) {
 
   legacyBannerSlider.append(swiperWrapper, swiperButtonNext, swiperButtonPrev, swiperNotification);
   legacySliderHld.append(legacyBannerSlider);
-  container1600Wrp.append(legacySliderHld);
+  containerWrapper.append(legacySliderHld);
 
   block.textContent = '';
-  block.append(container1600Wrp);
+  block.append(containerWrapper);
 
-  // Swiper initialization (simplified for EDS, no actual Swiper JS loaded)
-  // The original HTML implies Swiper, but EDS does not load Swiper JS.
-  // We simulate basic navigation if there are multiple slides.
+  // Basic Swiper-like functionality (Rule 9)
+  let currentIndex = 0;
   const slides = [...swiperWrapper.children];
-  if (slides.length > 1) {
-    let currentIndex = 0;
+  const totalSlides = slides.length;
 
-    const updateSwiperState = () => {
-      slides.forEach((slide, i) => {
-        slide.classList.remove('swiper-slide-visible', 'swiper-slide-active');
-        slide.style.opacity = '0';
-        slide.style.transform = 'translate3d(0px, 0px, 0px)';
-        slide.setAttribute('aria-hidden', 'true');
-      });
+  const updateButtons = () => {
+    swiperButtonPrev.classList.toggle('swiper-button-disabled', currentIndex === 0);
+    swiperButtonPrev.classList.toggle('swiper-button-lock', currentIndex === 0);
+    swiperButtonPrev.setAttribute('aria-disabled', currentIndex === 0);
 
-      slides[currentIndex].classList.add('swiper-slide-visible', 'swiper-slide-active');
-      slides[currentIndex].style.opacity = '1';
-      slides[currentIndex].style.transform = 'translate3d(0px, 0px, 0px)';
-      slides[currentIndex].removeAttribute('aria-hidden');
-      swiperWrapper.style.transform = `translate3d(-${currentIndex * 100}%, 0px, 0px)`; // Simulate slide
-      swiperWrapper.setAttribute('aria-label', `${currentIndex + 1} / ${slides.length}`);
+    swiperButtonNext.classList.toggle('swiper-button-disabled', currentIndex === totalSlides - 1);
+    swiperButtonNext.classList.toggle('swiper-button-lock', currentIndex === totalSlides - 1);
+    swiperButtonNext.setAttribute('aria-disabled', currentIndex === totalSlides - 1);
+  };
 
-      swiperButtonPrev.classList.toggle('swiper-button-disabled', currentIndex === 0);
-      swiperButtonPrev.classList.toggle('swiper-button-lock', currentIndex === 0);
-      swiperButtonPrev.setAttribute('aria-disabled', currentIndex === 0);
-
-      swiperButtonNext.classList.toggle('swiper-button-disabled', currentIndex === slides.length - 1);
-      swiperButtonNext.classList.toggle('swiper-button-lock', currentIndex === slides.length - 1);
-      swiperButtonNext.setAttribute('aria-disabled', currentIndex === slides.length - 1);
-    };
-
-    swiperButtonNext.addEventListener('click', () => {
-      if (currentIndex < slides.length - 1) {
-        currentIndex += 1;
-        updateSwiperState();
-      }
+  const showSlide = (index) => {
+    slides.forEach((slide, i) => {
+      slide.classList.remove('swiper-slide-visible', 'swiper-slide-active');
+      // Rule 10: NEVER set inline styles in JS.
+      // The original HTML shows these styles are likely added by a JS library (Swiper).
+      // We should not replicate them directly in our decorate function.
+      // If a fade effect is desired, it should be handled via CSS transitions on class changes.
+      // For now, removing these inline style manipulations.
+      // slide.style.opacity = '0';
+      // slide.style.transform = 'translate3d(0px, 0px, 0px)';
     });
 
-    swiperButtonPrev.addEventListener('click', () => {
-      if (currentIndex > 0) {
-        currentIndex -= 1;
-        updateSwiperState();
-      }
-    });
+    if (slides[index]) {
+      slides[index].classList.add('swiper-slide-visible', 'swiper-slide-active');
+      // slide.style.opacity = '1'; // Removed inline style
+    }
+    currentIndex = index;
+    updateButtons();
+  };
 
-    updateSwiperState(); // Initial state
-  } else {
-    // If only one slide, disable navigation buttons
-    swiperButtonNext.classList.add('swiper-button-disabled', 'swiper-button-lock');
-    swiperButtonPrev.classList.add('swiper-button-disabled', 'swiper-button-lock');
-    swiperButtonNext.setAttribute('aria-disabled', 'true');
-    swiperButtonPrev.setAttribute('aria-disabled', 'true');
+  swiperButtonNext.addEventListener('click', () => {
+    if (currentIndex < totalSlides - 1) {
+      showSlide(currentIndex + 1);
+    }
+  });
+
+  swiperButtonPrev.addEventListener('click', () => {
+    if (currentIndex > 0) {
+      showSlide(currentIndex - 1);
+    }
+  });
+
+  // Initial slide display
+  if (totalSlides > 0) {
+    showSlide(0);
   }
 }

@@ -23,9 +23,8 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Dot Image",
-          "name": "dotImage",
-          "valueType": "string"
+          "label": "Image",
+          "name": "image"
         },
         {
           "component": "richtext",

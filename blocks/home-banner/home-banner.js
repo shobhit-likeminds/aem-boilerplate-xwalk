@@ -2,15 +2,19 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
+  // Destructure block.children to get individual rows
   const [
     backgroundImageRow,
     headingRow,
-    ...itemRows
+    bannerText1Row,
+    bannerText2Row,
+    bannerText3Row,
+    rotatorImage1Row,
+    rotatorImage2Row,
+    rotatorImage3Row,
   ] = [...block.children];
 
-  block.textContent = '';
-  block.classList.add('home-banner');
-
+  // Main container
   const pentionBnr = document.createElement('div');
   pentionBnr.classList.add('pention_bnr');
 
@@ -20,104 +24,99 @@ export default function decorate(block) {
   // Background Image
   const animBg = document.createElement('div');
   animBg.classList.add('anim-bg');
-  const figureBg = document.createElement('figure');
-  const bgImage = backgroundImageRow.firstElementChild.querySelector('picture');
-  if (bgImage) {
-    const img = bgImage.querySelector('img');
+  const bgFigure = document.createElement('figure');
+
+  // Access the cell within backgroundImageRow
+  const backgroundImageCell = [...backgroundImageRow.children][0];
+  const bgPicture = backgroundImageCell.querySelector('picture');
+  if (bgPicture) {
+    const img = bgPicture.querySelector('img');
     const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '1920' }]);
-    optimizedPic.querySelector('img').classList.add('bg-cover');
     moveInstrumentation(img, optimizedPic.querySelector('img'));
-    figureBg.append(optimizedPic);
+    optimizedPic.querySelector('img').classList.add('bg-cover');
+    bgFigure.append(optimizedPic);
   }
-  moveInstrumentation(backgroundImageRow, figureBg);
-  animBg.append(figureBg);
+  moveInstrumentation(backgroundImageRow, bgFigure);
+  animBg.append(bgFigure);
   bannerHld.append(animBg);
 
+  // Caption and Banner Text
   const container1600Wrp = document.createElement('div');
   container1600Wrp.classList.add('container-1600-wrp');
 
-  // Heading
   const captionWrp = document.createElement('div');
   captionWrp.classList.add('caption-wrp');
-  const h2 = document.createElement('h2');
-  h2.innerHTML = headingRow.firstElementChild.innerHTML;
-  moveInstrumentation(headingRow, h2);
-  captionWrp.append(h2);
+  const heading = document.createElement('h2');
+  // Access the cell within headingRow
+  const headingCell = [...headingRow.children][0];
+  moveInstrumentation(headingRow, heading);
+  heading.innerHTML = headingCell.textContent.trim();
+  captionWrp.append(heading);
   container1600Wrp.append(captionWrp);
 
-  // Banner Texts
-  const bannerTextDiv = document.createElement('div');
-  bannerTextDiv.classList.add('banner-text');
-  // Filter for banner-text items: rows with one child cell containing only text (no picture)
-  const bannerTexts = itemRows.filter((row) => {
-    const cells = [...row.children];
-    return cells.length === 1 && !cells[0].querySelector('picture') && cells[0].textContent.trim();
-  });
-  bannerTexts.forEach((row, index) => {
-    const span = document.createElement('span');
-    span.style.display = 'block';
-    span.style.opacity = index === 0 ? '1' : '0'; // Set first item to visible initially
-    span.textContent = row.firstElementChild.textContent.trim();
-    moveInstrumentation(row, span);
-    bannerTextDiv.append(span);
-  });
-  container1600Wrp.append(bannerTextDiv);
+  const bannerText = document.createElement('div');
+  bannerText.classList.add('banner-text');
+
+  const bannerText1Span = document.createElement('span');
+  // Access the cell within bannerText1Row
+  const bannerText1Cell = [...bannerText1Row.children][0];
+  moveInstrumentation(bannerText1Row, bannerText1Span);
+  bannerText1Span.textContent = bannerText1Cell.textContent.trim();
+  bannerText1Span.style.display = 'block';
+  bannerText1Span.style.opacity = '1';
+  bannerText.append(bannerText1Span);
+
+  const bannerText2Span = document.createElement('span');
+  // Access the cell within bannerText2Row
+  const bannerText2Cell = [...bannerText2Row.children][0];
+  moveInstrumentation(bannerText2Row, bannerText2Span);
+  bannerText2Span.textContent = bannerText2Cell.textContent.trim();
+  bannerText2Span.style.display = 'block';
+  bannerText2Span.style.opacity = '0';
+  bannerText.append(bannerText2Span);
+
+  const bannerText3Span = document.createElement('span');
+  // Access the cell within bannerText3Row
+  const bannerText3Cell = [...bannerText3Row.children][0];
+  moveInstrumentation(bannerText3Row, bannerText3Span);
+  bannerText3Span.textContent = bannerText3Cell.textContent.trim();
+  bannerText3Span.style.display = 'block';
+  bannerText3Span.style.opacity = '0';
+  bannerText.append(bannerText3Span);
+
+  container1600Wrp.append(bannerText);
   bannerHld.append(container1600Wrp);
 
   // Rotator Images
-  const rotatorDiv = document.createElement('div');
-  rotatorDiv.classList.add('rotator');
+  const rotator = document.createElement('div');
+  rotator.classList.add('rotator');
   const rotatorFigure = document.createElement('figure');
-  // Filter for rotator-image items: rows with one child cell containing a picture
-  const rotatorImages = itemRows.filter((row) => {
-    const cells = [...row.children];
-    return cells.length === 1 && cells[0].querySelector('picture');
-  });
+
+  const rotatorImages = [rotatorImage1Row, rotatorImage2Row, rotatorImage3Row];
   rotatorImages.forEach((row, index) => {
-    const picture = row.firstElementChild.querySelector('picture');
+    // Access the cell within each rotator image row
+    const rotatorImageCell = [...row.children][0];
+    const picture = rotatorImageCell.querySelector('picture');
     if (picture) {
       const img = picture.querySelector('img');
       const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '1920' }]);
+      moveInstrumentation(img, optimizedPic.querySelector('img'));
       optimizedPic.querySelector('img').classList.add('bg-cover');
       optimizedPic.querySelector('img').style.display = 'block';
-      optimizedPic.querySelector('img').style.opacity = index === 0 ? '1' : '0.7'; // Set first item to visible initially
-      moveInstrumentation(img, optimizedPic.querySelector('img'));
+      optimizedPic.querySelector('img').style.opacity = index === 0 ? '1' : '0.7'; // First image visible, others semi-transparent
       rotatorFigure.append(optimizedPic);
     }
-    moveInstrumentation(row, rotatorFigure);
   });
-  rotatorDiv.append(rotatorFigure);
-  bannerHld.append(rotatorDiv);
+  rotator.append(rotatorFigure);
+  bannerHld.append(rotator);
 
+  // Banner Overlay
   const bannerOverlay = document.createElement('div');
   bannerOverlay.classList.add('banner-overlay');
   bannerHld.append(bannerOverlay);
 
   pentionBnr.append(bannerHld);
+
+  block.textContent = '';
   block.append(pentionBnr);
-
-  // Implement rotator logic
-  let currentBannerTextIndex = 0;
-  let currentRotatorImageIndex = 0;
-
-  const updateBanner = () => {
-    // Update banner text
-    const bannerTextSpans = bannerTextDiv.querySelectorAll('span');
-    bannerTextSpans.forEach((span, i) => {
-      span.style.opacity = i === currentBannerTextIndex ? '1' : '0';
-    });
-
-    // Update rotator images
-    const rotatorImagesElements = rotatorFigure.querySelectorAll('picture');
-    rotatorImagesElements.forEach((picture, i) => {
-      picture.querySelector('img').style.opacity = i === currentRotatorImageIndex ? '1' : '0.7';
-    });
-
-    currentBannerTextIndex = (currentBannerTextIndex + 1) % bannerTextSpans.length;
-    currentRotatorImageIndex = (currentRotatorImageIndex + 1) % rotatorImagesElements.length;
-  };
-
-  if (bannerTexts.length > 1 || rotatorImages.length > 1) {
-    setInterval(updateBanner, 3000); // Change every 3 seconds
-  }
 }

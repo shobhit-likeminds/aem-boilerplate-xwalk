@@ -2,148 +2,147 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const [dotRightImageRow, dotLeftImageRow, headingRow, introTextRow, ...motionCardRows] = [...block.children];
+  const [
+    dotRightImageRow,
+    dotLeftImageRow,
+    headingRow,
+    descriptionRow,
+    ...motionCardRows
+  ] = [...block.children];
 
   block.classList.add('systems-in-motion');
+  block.textContent = ''; // Clear existing content
 
   // Dot Right Image
-  if (dotRightImageRow) {
-    const dotRightDiv = document.createElement('div');
-    dotRightDiv.classList.add('dot-right');
-    const picture = dotRightImageRow.querySelector('picture');
-    if (picture) {
-      const img = picture.querySelector('img');
-      if (img) {
-        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '267' }]);
-        moveInstrumentation(img, optimizedPic.querySelector('img'));
-        dotRightDiv.append(optimizedPic);
-      }
-    }
-    moveInstrumentation(dotRightImageRow, dotRightDiv);
-    block.append(dotRightDiv);
+  const dotRightDiv = document.createElement('div');
+  dotRightDiv.classList.add('dot-right');
+  const dotRightPicture = dotRightImageRow.querySelector('picture');
+  if (dotRightPicture) {
+    const img = dotRightPicture.querySelector('img');
+    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '267' }]);
+    moveInstrumentation(img, optimizedPic.querySelector('img'));
+    dotRightDiv.append(optimizedPic);
   }
+  moveInstrumentation(dotRightImageRow, dotRightDiv);
+  block.append(dotRightDiv);
 
   // Dot Left Image
-  if (dotLeftImageRow) {
-    const dotLeftDiv = document.createElement('div');
-    dotLeftDiv.classList.add('dot-left');
-    const picture = dotLeftImageRow.querySelector('picture');
-    if (picture) {
-      const img = picture.querySelector('img');
-      if (img) {
-        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '267' }]);
-        moveInstrumentation(img, optimizedPic.querySelector('img'));
-        dotLeftDiv.append(optimizedPic);
-      }
-    }
-    moveInstrumentation(dotLeftImageRow, dotLeftDiv);
-    block.append(dotLeftDiv);
+  const dotLeftDiv = document.createElement('div');
+  dotLeftDiv.classList.add('dot-left');
+  const dotLeftPicture = dotLeftImageRow.querySelector('picture');
+  if (dotLeftPicture) {
+    const img = dotLeftPicture.querySelector('img');
+    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '267' }]);
+    moveInstrumentation(img, optimizedPic.querySelector('img'));
+    dotLeftDiv.append(optimizedPic);
   }
+  moveInstrumentation(dotLeftImageRow, dotLeftDiv);
+  block.append(dotLeftDiv);
 
-  // Container for Heading and Intro Text
-  const containerWrapper = document.createElement('div');
-  containerWrapper.classList.add('container-1600-wrp');
+  // Main Content Container
+  const containerDiv = document.createElement('div');
+  containerDiv.classList.add('container-1600-wrp');
+  moveInstrumentation(headingRow, containerDiv); // Move instrumentation from headingRow to containerDiv
 
   // Heading
-  if (headingRow) {
-    const headingCell = headingRow.firstElementChild;
-    const h2 = document.createElement('h2');
-    h2.classList.add('common-ttle', 'wow', 'animate__', 'animate__fadeInUp', 'animated');
-    h2.textContent = headingCell.textContent.trim();
-    moveInstrumentation(headingRow, h2);
-    containerWrapper.append(h2);
-  }
+  const heading = document.createElement('h2');
+  heading.classList.add('common-ttle', 'wow', 'animate__', 'animate__fadeInUp', 'animated');
+  heading.textContent = headingRow.textContent.trim();
+  containerDiv.append(heading);
 
-  // Intro Text
-  if (introTextRow) {
-    const introTextCell = introTextRow.firstElementChild;
-    const p = document.createElement('p');
-    p.classList.add('wow', 'animate__', 'animate__fadeInUp', 'animated');
-    p.innerHTML = introTextCell.innerHTML;
-    moveInstrumentation(introTextRow, p);
-    containerWrapper.append(p);
-  }
-  block.append(containerWrapper);
+  // Description
+  const description = document.createElement('p');
+  description.classList.add('wow', 'animate__', 'animate__fadeInUp', 'animated');
+  description.innerHTML = descriptionRow.innerHTML;
+  containerDiv.append(description);
+  moveInstrumentation(descriptionRow, description); // Move instrumentation from descriptionRow to description
 
-  // Motion Cards
-  if (motionCardRows.length > 0) {
-    const motionCardHld = document.createElement('div');
-    motionCardHld.classList.add('motion-card-hld');
+  block.append(containerDiv);
 
-    const rowDiv = document.createElement('div');
-    rowDiv.classList.add('row');
+  // Motion Cards Holder
+  const motionCardHld = document.createElement('div');
+  motionCardHld.classList.add('motion-card-hld');
+  const rowDiv = document.createElement('div');
+  rowDiv.classList.add('row');
 
-    motionCardRows.forEach((cardRow, index) => {
-      // CRITICAL FIX: Destructuring for fixed-field item models
-      const [logoCell, titleCell, descriptionCell, ctaLinkCell, ctaLinkLabelCell] = [...cardRow.children];
+  motionCardRows.forEach((row, index) => {
+    // Destructure cells for motion-card item
+    const [logoCell, titleCell, textCell, ctaLinkCell, ctaLinkLabelCell] = [...row.children];
 
-      const colDiv = document.createElement('div');
-      colDiv.classList.add('col-lg-6');
+    const colDiv = document.createElement('div');
+    colDiv.classList.add('col-lg-6');
 
-      const mCardBlurb = document.createElement('div');
-      mCardBlurb.classList.add('m-card-blurb', 'wow', 'animate__', 'animate__fadeInUp', 'animated');
-      mCardBlurb.style.animationDuration = '1s';
-      mCardBlurb.style.animationDelay = `${0.1 + index * 0.1}s`;
+    const mCardBlurb = document.createElement('div');
+    mCardBlurb.classList.add('m-card-blurb', 'wow', 'animate__', 'animate__fadeInUp', 'animated');
+    mCardBlurb.setAttribute('data-wow-duration', '1s');
+    mCardBlurb.setAttribute('data-wow-delay', `${0.1 + index * 0.1}s`);
 
-      const contentDiv = document.createElement('div');
+    const contentDiv = document.createElement('div');
 
-      // Logo
-      if (logoCell) {
-        const figure = document.createElement('figure');
-        const picture = logoCell.querySelector('picture');
-        if (picture) {
-          const img = picture.querySelector('img');
-          if (img) {
-            const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '80' }]);
-            optimizedPic.querySelector('img').classList.add('bg-cover');
-            moveInstrumentation(img, optimizedPic.querySelector('img'));
-            figure.append(optimizedPic);
-          }
-        }
-        contentDiv.append(figure);
-      }
+    // Logo
+    const figure = document.createElement('figure');
+    const logoPicture = logoCell.querySelector('picture');
+    if (logoPicture) {
+      const img = logoPicture.querySelector('img');
+      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '80' }]);
+      optimizedPic.querySelector('img').classList.add('bg-cover');
+      moveInstrumentation(img, optimizedPic.querySelector('img'));
+      figure.append(optimizedPic);
+    }
+    contentDiv.append(figure);
+    moveInstrumentation(logoCell, figure);
 
-      // Title
-      if (titleCell) {
-        const h4 = document.createElement('h4');
-        h4.textContent = titleCell.textContent.trim();
-        contentDiv.append(h4);
-      }
+    // Title
+    const title = document.createElement('h4');
+    title.textContent = titleCell.textContent.trim();
+    contentDiv.append(title);
+    moveInstrumentation(titleCell, title);
 
-      // Description
-      if (descriptionCell) {
-        const p = document.createElement('p');
-        p.innerHTML = descriptionCell.innerHTML;
-        contentDiv.append(p);
-      }
+    // Text
+    const text = document.createElement('p');
+    text.innerHTML = textCell.innerHTML;
+    contentDiv.append(text);
+    moveInstrumentation(textCell, text);
 
-      mCardBlurb.append(contentDiv);
+    mCardBlurb.append(contentDiv);
 
-      // CTA Link
-      if (ctaLinkCell && ctaLinkLabelCell) {
-        const ctaAnchor = ctaLinkCell.querySelector('a'); // Get the anchor from the ctaLinkCell
-        if (ctaAnchor) {
-          const anchor = document.createElement('a');
-          anchor.href = ctaAnchor.href; // Use the href from the aem-content cell
-          anchor.textContent = ctaLinkLabelCell.textContent.trim(); // Use text from ctaLinkLabelCell
-          anchor.classList.add('btn-box');
-          anchor.target = '_blank';
-          mCardBlurb.append(anchor);
-        }
-      }
-      moveInstrumentation(cardRow, mCardBlurb);
-      colDiv.append(mCardBlurb);
-      rowDiv.append(colDiv);
-    });
-    motionCardHld.append(rowDiv);
-    block.append(motionCardHld);
-  }
+    // CTA Link
+    const ctaLinkElement = ctaLinkCell.querySelector('a'); // Get the actual anchor element
+    const ctaLinkLabelText = ctaLinkLabelCell.textContent.trim(); // Get the label text
 
-  // Remove original rows as they have been processed
-  [...block.children].forEach((child) => {
-    if (!child.classList.contains('dot-right') && !child.classList.contains('dot-left') &&
-        !child.classList.contains('container-1600-wrp') && !child.classList.contains('motion-card-hld')) {
-      child.remove();
+    if (ctaLinkElement && ctaLinkElement.href) {
+      const anchor = document.createElement('a');
+      anchor.classList.add('btn-box');
+      anchor.href = ctaLinkElement.href; // Use the href from the aem-content cell
+      anchor.textContent = ctaLinkLabelText; // Use the label from the text cell
+      anchor.target = '_blank'; // Assuming target blank from original HTML
+      mCardBlurb.append(anchor);
+      moveInstrumentation(ctaLinkCell, anchor);
+    } else if (ctaLinkLabelText) {
+      // If no link but label exists, render as a span (or button if interaction is implied)
+      const span = document.createElement('span');
+      span.classList.add('btn-box');
+      span.textContent = ctaLinkLabelText;
+      mCardBlurb.append(span);
+      moveInstrumentation(ctaLinkLabelCell, span);
+    }
+
+    colDiv.append(mCardBlurb);
+    moveInstrumentation(row, colDiv); // Move instrumentation from motion card row to colDiv
+    rowDiv.append(colDiv);
+  });
+
+  motionCardHld.append(rowDiv);
+  block.append(motionCardHld);
+
+  // Image optimization for all pictures in the block
+  block.querySelectorAll('picture > img').forEach((img) => {
+    // Only optimize if not already handled by createOptimizedPicture above
+    if (!img.closest('picture').dataset.optimized) {
+      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+      moveInstrumentation(img, optimizedPic.querySelector('img'));
+      img.closest('picture').replaceWith(optimizedPic);
+      optimizedPic.dataset.optimized = 'true'; // Mark as optimized
     }
   });
 }

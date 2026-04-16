@@ -4,13 +4,13 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
 export default function decorate(block) {
   const [dotRightImageRow, dotLeftImageRow, headingRow, descriptionRow] = [...block.children];
 
-  block.classList.add('hm-welcome'); // Apply block name as class
+  block.classList.add('hm-welcome');
 
   // Dot Right Image
   const dotRightDiv = document.createElement('div');
   dotRightDiv.classList.add('dot-right');
-  const dotRightCell = dotRightImageRow.children[0]; // Get the cell containing the picture
-  const dotRightPicture = dotRightCell ? dotRightCell.querySelector('picture') : null;
+  const [dotRightImageCell] = [...dotRightImageRow.children]; // Destructure cell
+  const dotRightPicture = dotRightImageCell.querySelector('picture');
   if (dotRightPicture) {
     const img = dotRightPicture.querySelector('img');
     const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '267' }]);
@@ -18,13 +18,12 @@ export default function decorate(block) {
     dotRightDiv.append(optimizedPic);
   }
   moveInstrumentation(dotRightImageRow, dotRightDiv);
-  block.append(dotRightDiv);
 
   // Dot Left Image
   const dotLeftDiv = document.createElement('div');
   dotLeftDiv.classList.add('dot-left');
-  const dotLeftCell = dotLeftImageRow.children[0]; // Get the cell containing the picture
-  const dotLeftPicture = dotLeftCell ? dotLeftCell.querySelector('picture') : null;
+  const [dotLeftImageCell] = [...dotLeftImageRow.children]; // Destructure cell
+  const dotLeftPicture = dotLeftImageCell.querySelector('picture');
   if (dotLeftPicture) {
     const img = dotLeftPicture.querySelector('img');
     const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '267' }]);
@@ -32,28 +31,32 @@ export default function decorate(block) {
     dotLeftDiv.append(optimizedPic);
   }
   moveInstrumentation(dotLeftImageRow, dotLeftDiv);
-  block.append(dotLeftDiv);
 
   // Content container
-  const containerDiv = document.createElement('div');
-  containerDiv.classList.add('container-1600-wrp', 'intro-para', 'wow', 'animate__', 'animate__fadeInUp', 'animated');
+  const contentContainer = document.createElement('div');
+  contentContainer.classList.add('container-1600-wrp', 'intro-para', 'wow', 'animate__', 'animate__fadeInUp', 'animated');
 
-  const hmWelcomeConDiv = document.createElement('div');
-  hmWelcomeConDiv.classList.add('hm-welcome-con');
+  const hmWelcomeCon = document.createElement('div');
+  hmWelcomeCon.classList.add('hm-welcome-con');
 
   // Heading
-  const heading = document.createElement('h2');
-  heading.classList.add('common-ttle');
-  heading.textContent = headingRow.children[0].textContent.trim(); // Access content from the cell
-  moveInstrumentation(headingRow, heading);
-  hmWelcomeConDiv.append(heading);
+  const [headingCell] = [...headingRow.children]; // Destructure cell
+  const headingElement = document.createElement('h2');
+  headingElement.classList.add('common-ttle');
+  headingElement.textContent = headingCell.textContent.trim();
+  moveInstrumentation(headingRow, headingElement);
+  hmWelcomeCon.append(headingElement);
 
   // Description
-  const description = document.createElement('p');
-  description.innerHTML = descriptionRow.children[0].innerHTML; // Access content from the cell
-  moveInstrumentation(descriptionRow, description);
-  hmWelcomeConDiv.append(description);
+  const [descriptionCell] = [...descriptionRow.children]; // Destructure cell
+  const descriptionElement = document.createElement('p');
+  descriptionElement.innerHTML = descriptionCell.innerHTML;
+  moveInstrumentation(descriptionRow, descriptionElement);
+  hmWelcomeCon.append(descriptionElement);
 
-  containerDiv.append(hmWelcomeConDiv);
-  block.append(containerDiv);
+  contentContainer.append(hmWelcomeCon);
+
+  // Clear block and append new elements
+  block.textContent = '';
+  block.append(dotRightDiv, dotLeftDiv, contentContainer);
 }

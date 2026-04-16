@@ -24,31 +24,29 @@
         {
           "component": "reference",
           "label": "Image",
-          "name": "image",
+          "name": "image"
+        },
+        {
+          "component": "text",
+          "label": "Sub Ttle",
+          "name": "subTtle",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Sub Title",
-          "name": "subTitle",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Heading",
-          "name": "heading",
+          "label": "Common Ttle",
+          "name": "commonTtle",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "label": "CTA Link",
-          "name": "ctaLink",
-          "valueType": "string"
+          "label": "Button Link",
+          "name": "btnBox"
         },
         {
           "component": "text",
-          "label": "CTA Link Label",
-          "name": "ctaLinkLabel",
+          "label": "Button Label",
+          "name": "btnBoxLabel",
           "valueType": "string"
         }
       ]

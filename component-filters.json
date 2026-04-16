@@ -132,11 +132,7 @@
     "id": "hm-welcome"
   },
   {
-    "id": "home-banner",
-    "components": [
-      "banner-text",
-      "rotator-image"
-    ]
+    "id": "home-banner"
   },
   {
     "id": "legacy-banner-slider",

@@ -44,8 +44,8 @@
         },
         {
           "component": "richtext",
-          "label": "Intro Text",
-          "name": "introText",
+          "label": "Text",
+          "name": "text",
           "valueType": "string"
         },
         {
@@ -79,7 +79,7 @@
         },
         {
           "component": "text",
-          "label": "CTA Link Label",
+          "label": "CTA Label",
           "name": "ctaLinkLabel",
           "valueType": "string"
         }
