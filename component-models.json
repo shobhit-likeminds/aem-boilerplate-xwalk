@@ -500,13 +500,24 @@
       {
         "component": "aem-content",
         "label": "Logo Link",
-        "name": "logoLink"
+        "name": "logoLink",
+        "valueType": "string"
       },
       {
         "component": "text",
         "label": "Logo Link Label",
         "name": "logoLinkLabel",
         "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Mobile Logo",
+        "name": "mobileLogo"
+      },
+      {
+        "component": "reference",
+        "label": "Secondary Logo",
+        "name": "secondaryLogo"
       },
       {
         "component": "container",
@@ -520,11 +531,6 @@
     "id": "nav-item",
     "fields": [
       {
-        "component": "reference",
-        "label": "Icon",
-        "name": "icon"
-      },
-      {
         "component": "text",
         "label": "Label",
         "name": "label",
@@ -533,7 +539,8 @@
       {
         "component": "aem-content",
         "label": "Link",
-        "name": "link"
+        "name": "link",
+        "valueType": "string"
       },
       {
         "component": "text",
