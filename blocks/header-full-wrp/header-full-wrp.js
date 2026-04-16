@@ -13,7 +13,7 @@ export default function decorate(block) {
     ...navItemRows
   ] = [...block.children];
 
-  block.classList.add('fixed'); // 'nav-up' is a scroll state class, do not add initially
+  block.classList.add('fixed'); // Add fixed class as per original HTML, but NOT nav-up
 
   const topHead = document.createElement('div');
   topHead.classList.add('top-head');
@@ -25,121 +25,132 @@ export default function decorate(block) {
   mainNavBx.classList.add('main-nav-bx');
   const mainNavContainer = document.createElement('div');
   mainNavContainer.classList.add('container-1600-wrp');
+  const mainNavRow = document.createElement('div');
+  mainNavRow.classList.add('row');
+  mainNavContainer.append(mainNavRow);
   mainNavBx.append(mainNavContainer);
 
-  const row = document.createElement('div');
-  row.classList.add('row');
-  mainNavContainer.append(row);
+  // Col 1: Logo and Mobile elements
+  const col1 = document.createElement('div');
+  col1.classList.add('col-md-2', 'col-6');
 
-  const colLeft = document.createElement('div');
-  colLeft.classList.add('col-md-2', 'col-6');
-  row.append(colLeft);
+  const logoLink = document.createElement('a');
+  logoLink.classList.add('logo-wrp');
+  const logoHref = logoLinkRow.querySelector('a')?.href || '#';
+  logoLink.href = logoHref;
 
-  const logoWrp = document.createElement('a');
-  logoWrp.classList.add('logo-wrp');
-  const logoLink = logoLinkRow.querySelector('a');
-  if (logoLink) {
-    logoWrp.href = logoLink.href;
-  }
   const logoPicture = logoRow.querySelector('picture');
   if (logoPicture) {
-    const logoImg = logoPicture.querySelector('img');
-    const optimizedLogo = createOptimizedPicture(logoImg.src, logoImg.alt, false, [{ width: '750' }]);
-    moveInstrumentation(logoPicture, optimizedLogo.querySelector('img'));
-    logoWrp.append(optimizedLogo);
+    const img = logoPicture.querySelector('img');
+    if (img) {
+      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '100' }]);
+      moveInstrumentation(img, optimizedPic.querySelector('img'));
+      logoLink.append(optimizedPic);
+    }
   }
-  colLeft.append(logoWrp);
+  moveInstrumentation(logoRow, logoLink);
+  moveInstrumentation(logoLinkRow, logoLink);
+  moveInstrumentation(logoLinkLabelRow, logoLink);
+  col1.append(logoLink);
 
   const mobileLogoPicture = mobileLogoRow.querySelector('picture');
   if (mobileLogoPicture) {
-    const mobileLogoImg = mobileLogoPicture.querySelector('img');
-    const optimizedMobileLogo = createOptimizedPicture(mobileLogoImg.src, mobileLogoImg.alt, false, [{ width: '750' }]);
-    optimizedMobileLogo.classList.add('image-holder', 'tata-logo-mob');
-    moveInstrumentation(mobileLogoPicture, optimizedMobileLogo.querySelector('img'));
-    colLeft.append(optimizedMobileLogo);
+    const mobileLogoHolder = document.createElement('picture');
+    mobileLogoHolder.classList.add('image-holder', 'tata-logo-mob');
+    const img = mobileLogoPicture.querySelector('img');
+    if (img) {
+      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '100' }]);
+      moveInstrumentation(img, optimizedPic.querySelector('img'));
+      mobileLogoHolder.append(optimizedPic);
+    }
+    moveInstrumentation(mobileLogoRow, mobileLogoHolder);
+    col1.append(mobileLogoHolder);
   }
 
   const navIcon = document.createElement('div');
   navIcon.id = 'nav-icon4';
   navIcon.innerHTML = '<span></span><span></span><span></span>';
-  colLeft.append(navIcon);
+  col1.append(navIcon);
 
   const switchBtn = document.createElement('button');
   switchBtn.id = 'switch2';
-  switchBtn.innerHTML = `Mode <strong><span class="switch2_light">Light</span> <span class="switch2_dark">Dark</span></strong>`;
-  colLeft.append(switchBtn);
+  switchBtn.innerHTML = 'Mode <strong><span class="switch2_light">Light</span> <span class="switch2_dark">Dark</span></strong>';
+  col1.append(switchBtn);
 
-  const colRight = document.createElement('div');
-  colRight.classList.add('col-md-10', 'col-6', 'hm-main-nav-con');
-  row.append(colRight);
+  mainNavRow.append(col1);
+
+  // Col 2: Navigation
+  const col2 = document.createElement('div');
+  col2.classList.add('col-md-10', 'col-6', 'hm-main-nav-con');
 
   const navCard = document.createElement('div');
   navCard.classList.add('nav-card');
-  colRight.append(navCard);
 
   const closeMobDrop = document.createElement('a');
   closeMobDrop.href = 'javascript:void(0)';
   closeMobDrop.classList.add('close-mob-drop');
-  // Original HTML has a hardcoded image, but EDS blocks should only use authored content.
-  // If a 'close-icon' field existed, we'd use that. For now, just create the link.
-  // If the original image is critical, it should be part of the block model.
+  // The original HTML uses a hardcoded path for the close image, which is a violation.
+  // Since there is no model field for this image, we cannot create it from authored content.
+  // We will omit the image and rely on CSS for styling the close button if it exists.
+  // If a model field for this image were present, we would use it.
   navCard.append(closeMobDrop);
 
   const level1Ul = document.createElement('ul');
   level1Ul.classList.add('level1');
-  navCard.append(level1Ul);
 
-  navItemRows.forEach((rowItem) => {
-    const [labelCell, linkCell, linkLabelCell, subLinksCell] = [...rowItem.children];
-
+  navItemRows.forEach((row) => {
+    // CRITICAL FIX: Replaced row.children[n] with destructuring based on BlockJson model
+    const [labelCell, linkCell, linkLabelCell, subLinksCell] = [...row.children];
     const li = document.createElement('li');
-    moveInstrumentation(rowItem, li);
+    moveInstrumentation(row, li);
 
     const subList = subLinksCell?.querySelector('ul');
 
     if (subList) {
       li.classList.add('level1');
-      const trigger = document.createElement('a');
-      trigger.href = 'javascript:void(0)';
-      trigger.textContent = labelCell?.textContent.trim() || '';
-      li.append(trigger);
+      const triggerLink = document.createElement('a');
+      triggerLink.href = 'javascript:void(0)'; // Use javascript:void(0) for dropdown triggers
+      triggerLink.textContent = labelCell?.textContent.trim() || '';
+      li.append(triggerLink);
 
       const level2Ul = document.createElement('ul');
       level2Ul.classList.add('level2');
-      moveInstrumentation(subLinksCell, level2Ul);
-      // Original HTML has a hardcoded back button image. If a 'back-icon' field existed, we'd use that.
-      // For now, just create the li.
+
+      // Add mob-back if it exists in original HTML for level2
+      // The original HTML uses a hardcoded path for the mob-back image, which is a violation.
+      // Since there is no model field for this image, we cannot create it from authored content.
+      // We will omit the image and rely on CSS for styling.
+      // If a model field for this image were present, we would use it.
       const mobBackLi = document.createElement('li');
       mobBackLi.classList.add('mob-back');
+      // mobBackLi.append(mobBackImg); // Omitted due to hardcoded path
       level2Ul.append(mobBackLi);
 
-      // Move existing <li> from subList into level2Ul
-      // The original HTML had <ul> directly inside the richtext cell.
-      // We need to parse this HTML and extract the <li> elements.
-      const tempDiv = document.createElement('div');
-      tempDiv.innerHTML = subLinksCell.innerHTML;
-      const originalSubList = tempDiv.querySelector('ul');
-
-      if (originalSubList) {
-        [...originalSubList.children].forEach((subLi) => {
-          const subLiLink = subLi.querySelector('a');
-          if (subLiLink) {
-            const newSubLi = document.createElement('li');
-            const newSubLink = document.createElement('a');
-            newSubLink.href = subLiLink.href;
-            newSubLink.textContent = subLiLink.textContent.trim();
-            newSubLi.append(newSubLink);
-            level2Ul.append(newSubLi);
-          }
-        });
+      // Move subList content into level2Ul
+      while (subList.firstChild) {
+        const subLi = document.createElement('li');
+        moveInstrumentation(subList.firstChild, subLi); // Move instrumentation from original li
+        const subLink = subList.firstChild.querySelector('a');
+        if (subLink) {
+          const newSubLink = document.createElement('a');
+          newSubLink.href = subLink.href;
+          newSubLink.textContent = subLink.textContent.trim();
+          subLi.append(newSubLink);
+          subList.firstChild.remove(); // Remove original li from subList
+        } else {
+          // Handle plain text or other content in sublist
+          subLi.innerHTML = subList.firstChild.innerHTML;
+          subList.firstChild.remove();
+        }
+        level2Ul.append(subLi);
       }
-
       li.append(level2Ul);
 
-      trigger.addEventListener('click', (e) => {
+      triggerLink.addEventListener('click', (e) => {
         e.preventDefault();
         e.stopPropagation();
-        li.classList.toggle('active'); // Use 'active' class for dropdown visibility
+        li.classList.toggle('active'); // Use 'active' for state, let CSS handle display
+        level2Ul.classList.toggle('active');
       });
     } else {
       li.classList.add('no-arrw-mob');
@@ -152,81 +163,71 @@ export default function decorate(block) {
     level1Ul.append(li);
   });
 
-  const logoWrp2 = document.createElement('a');
-  logoWrp2.classList.add('logo-wrp2');
-  logoWrp2.target = '_blank';
+  navCard.append(level1Ul);
 
-  const secondaryLogoLink = secondaryLogoLinkRow.querySelector('a');
-  if (secondaryLogoLink) {
-    logoWrp2.href = secondaryLogoLink.href;
-  } else {
-    // Fallback if no link is authored, as per original HTML's hardcoded link
-    logoWrp2.href = 'https://www.tata.com/';
-  }
+  const secondaryLogoLink = document.createElement('a');
+  secondaryLogoLink.classList.add('logo-wrp2');
+  const secondaryLogoHref = secondaryLogoLinkRow.querySelector('a')?.href || '#';
+  secondaryLogoLink.href = secondaryLogoHref;
+  secondaryLogoLink.target = '_blank'; // Assuming target blank from original HTML context
 
   const secondaryLogoPicture = secondaryLogoRow.querySelector('picture');
   if (secondaryLogoPicture) {
-    const secondaryLogoImg = secondaryLogoPicture.querySelector('img');
-    const optimizedSecondaryLogo = createOptimizedPicture(secondaryLogoImg.src, secondaryLogoImg.alt, false, [{ width: '750' }]);
-    moveInstrumentation(secondaryLogoPicture, optimizedSecondaryLogo.querySelector('img'));
-    logoWrp2.append(optimizedSecondaryLogo);
+    const img = secondaryLogoPicture.querySelector('img');
+    if (img) {
+      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '100' }]);
+      moveInstrumentation(img, optimizedPic.querySelector('img'));
+      secondaryLogoLink.append(optimizedPic);
+    }
   }
-  navCard.append(logoWrp2);
+  moveInstrumentation(secondaryLogoRow, secondaryLogoLink);
+  moveInstrumentation(secondaryLogoLinkRow, secondaryLogoLink);
+  moveInstrumentation(secondaryLogoLinkLabelRow, secondaryLogoLink);
+  navCard.append(secondaryLogoLink);
 
-  const cdSearch = document.createElement('div');
-  cdSearch.classList.add('cd-search');
-  cdSearch.style.display = 'none'; // Initially hidden as per original HTML
-  const searchContainer = document.createElement('div');
-  searchContainer.classList.add('container');
-  const inputGroup = document.createElement('div');
-  inputGroup.classList.add('input-group');
-  inputGroup.innerHTML = `
-    <input class="form-control border-end-0 border" type="search" value="search" id="example-search-input">
-    <span class="input-group-append">
-      <button class="btn btn-outline-secondary bg-white border-start-0 border-bottom-0 border ms-n5" type="button">
-        <i class="fa fa-search"></i>
-      </button>
-    </span>
-  `;
-  searchContainer.append(inputGroup);
-  cdSearch.append(searchContainer);
+  col2.append(navCard);
+  mainNavRow.append(col2);
 
   block.textContent = '';
-  block.append(topHead, mainNavBx, cdSearch);
+  block.append(topHead, mainNavBx);
 
-  // Optimize all images in the block
+  // Optimize all images within the block
   block.querySelectorAll('picture > img').forEach((img) => {
     const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
     moveInstrumentation(img, optimizedPic.querySelector('img'));
     img.closest('picture').replaceWith(optimizedPic);
   });
 
-  // Toggle mobile navigation
+  // Mobile menu toggle
   navIcon.addEventListener('click', () => {
     navCard.classList.toggle('active');
-    navIcon.classList.toggle('open');
-    document.body.classList.toggle('no-scroll');
+    block.classList.toggle('menu-open');
   });
 
   closeMobDrop.addEventListener('click', (e) => {
     e.preventDefault();
     navCard.classList.remove('active');
-    navIcon.classList.remove('open');
-    document.body.classList.remove('no-scroll');
+    block.classList.remove('menu-open');
   });
 
-  // Toggle light/dark mode (assuming 'switch2' button controls this)
+  // Switch button interactivity (Light/Dark mode)
   switchBtn.addEventListener('click', () => {
-    document.body.classList.toggle('dark-mode'); // Example class for dark mode
-    // You might also want to toggle text content or icons within the button
-    const lightSpan = switchBtn.querySelector('.switch2_light');
-    const darkSpan = switchBtn.querySelector('.switch2_dark');
-    if (document.body.classList.contains('dark-mode')) {
-      if (lightSpan) lightSpan.style.display = 'none';
-      if (darkSpan) darkSpan.style.display = 'inline';
+    document.body.classList.toggle('dark-mode');
+    // You might want to store this preference in localStorage
+    // const isDarkMode = document.body.classList.contains('dark-mode');
+    // localStorage.setItem('darkMode', isDarkMode);
+  });
+
+  // Scroll behavior for header (nav-up/nav-down)
+  let lastScrollY = window.scrollY;
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > lastScrollY && window.scrollY > 0) {
+      block.classList.add('nav-up');
+      block.classList.remove('nav-down');
     } else {
-      if (lightSpan) lightSpan.style.display = 'inline';
-      if (darkSpan) darkSpan.style.display = 'none';
+      block.classList.remove('nav-up');
+      block.classList.add('nav-down');
     }
+    lastScrollY = window.scrollY;
   });
 }

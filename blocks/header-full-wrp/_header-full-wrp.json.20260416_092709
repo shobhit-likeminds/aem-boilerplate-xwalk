@@ -49,8 +49,7 @@
         {
           "component": "text",
           "label": "Logo Link Label",
-          "name": "logoLinkLabel",
-          "valueType": "string"
+          "name": "logoLinkLabel"
         },
         {
           "component": "reference",
@@ -70,8 +69,7 @@
         {
           "component": "text",
           "label": "Secondary Logo Link Label",
-          "name": "secondaryLogoLinkLabel",
-          "valueType": "string"
+          "name": "secondaryLogoLinkLabel"
         },
         {
           "component": "container",
@@ -87,8 +85,7 @@
         {
           "component": "text",
           "label": "Label",
-          "name": "label",
-          "valueType": "string"
+          "name": "label"
         },
         {
           "component": "aem-content",
@@ -98,8 +95,7 @@
         {
           "component": "text",
           "label": "Link Label",
-          "name": "linkLabel",
-          "valueType": "string"
+          "name": "linkLabel"
         },
         {
           "component": "richtext",

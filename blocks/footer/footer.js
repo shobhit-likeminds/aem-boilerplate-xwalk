@@ -4,117 +4,101 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
 export default function decorate(block) {
   const [logoRow, ...sectionRows] = [...block.children];
 
-  // Main wrapper
   const footerWrp = document.createElement('section');
   footerWrp.classList.add('footer-wrp');
 
   const container = document.createElement('div');
   container.classList.add('container-1600-wrp');
-  footerWrp.append(container);
 
-  // Logo
-  if (logoRow) {
-    const mobLogoWr = document.createElement('div');
-    mobLogoWr.classList.add('mob-logo-wr');
-    const picture = logoRow.querySelector('picture');
-    if (picture) {
-      const img = picture.querySelector('img');
-      if (img) {
-        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-        moveInstrumentation(img, optimizedPic.querySelector('img'));
-        mobLogoWr.append(optimizedPic);
-        optimizedPic.querySelector('img').classList.add('img-fluid');
-      }
+  // Mobile Logo Wrapper
+  const mobLogoWr = document.createElement('div');
+  mobLogoWr.classList.add('mob-logo-wr');
+  const logoPicture = logoRow.querySelector('picture');
+  if (logoPicture) {
+    const img = logoPicture.querySelector('img');
+    if (img) {
+      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '200' }]);
+      moveInstrumentation(img, optimizedPic.querySelector('img'));
+      optimizedPic.querySelector('img').classList.add('img-fluid');
+      mobLogoWr.append(optimizedPic);
     }
-    moveInstrumentation(logoRow, mobLogoWr);
-    container.append(mobLogoWr);
   }
+  moveInstrumentation(logoRow, mobLogoWr);
+  container.append(mobLogoWr);
 
-  // Sections
-  const row1 = document.createElement('div');
-  row1.classList.add('row', 'f1');
-  container.append(row1);
+  // Main Footer Sections (f1)
+  const f1Row = document.createElement('div');
+  f1Row.classList.add('row', 'f1');
 
   sectionRows.forEach((row) => {
-    // Use content detection instead of index access for robustness
+    // CRITICAL FIX: Replaced index access with content detection
     const cells = [...row.children];
-    const headingCell = cells.find(cell => !cell.querySelector('ul') && !cell.querySelector('a'));
+    const headingCell = cells.find(cell => !cell.querySelector('ul') && !cell.querySelector('p') && !cell.querySelector('a'));
     const sectionLinksCell = cells.find(cell => cell.querySelector('ul') || cell.querySelector('p') || cell.querySelector('a'));
-
-    if (!headingCell || !sectionLinksCell) {
-      // Skip if cells are not found as expected
-      return;
-    }
 
     const col = document.createElement('div');
     col.classList.add('col', 'col-xl-3');
     moveInstrumentation(row, col);
 
-    const headingText = headingCell.textContent.trim();
-    const sectionLinksContent = sectionLinksCell.innerHTML;
-    const hasUl = sectionLinksCell.querySelector('ul');
+    const headingText = headingCell ? headingCell.textContent.trim() : '';
+    const sectionLinksUl = sectionLinksCell ? sectionLinksCell.querySelector('ul') : null;
+    const sectionLinksP = sectionLinksCell ? sectionLinksCell.querySelector('p') : null;
+    const sectionLinksA = sectionLinksCell ? sectionLinksCell.querySelector('a') : null; // Check for direct link
 
-    if (hasUl) {
-      // Accordion item
+    if (sectionLinksUl) {
+      // Accordion / Dropdown
       const ttle = document.createElement('a');
       ttle.href = 'javascript:void(0)';
       ttle.classList.add('ttle', 'accordion_head2');
       ttle.textContent = headingText;
-
       const plusminus = document.createElement('span');
       plusminus.classList.add('plusminus2');
       plusminus.textContent = '+';
       ttle.append(plusminus);
 
-      const ftrDropWrp = document.createElement('div');
-      ftrDropWrp.classList.add('ftr-drop-wrp');
-      ftrDropWrp.append(ttle);
-
       const ftrSubLinksCvr = document.createElement('div');
       ftrSubLinksCvr.classList.add('ftr-sub-links-cvr', 'accordion_body2');
-      ftrSubLinksCvr.innerHTML = sectionLinksContent;
+      ftrSubLinksCvr.append(sectionLinksUl); // Move the authored UL here
 
-      // Add event listener for accordion behavior
       ttle.addEventListener('click', () => {
         ftrSubLinksCvr.classList.toggle('active');
-        plusminus.textContent = ftrSubLinksCvr.classList.contains('active') ? '-' : '+';
+        ttle.classList.toggle('active'); // Add active class to heading as well
+        plusminus.textContent = ttle.classList.contains('active') ? '-' : '+';
       });
 
-      // Ensure all links inside the accordion body have 'ftr-link' class
-      ftrSubLinksCvr.querySelectorAll('a').forEach((link) => {
-        link.classList.add('ftr-link');
-      });
-
-      ftrDropWrp.append(ftrSubLinksCvr);
-      col.append(ftrDropWrp);
+      col.append(ttle, ftrSubLinksCvr);
+    } else if (sectionLinksA) {
+      // Simple link if a single <a> is found in the richtext cell
+      const ttle = document.createElement('a');
+      ttle.href = sectionLinksA.href;
+      ttle.classList.add('ttle');
+      ttle.textContent = headingText;
+      col.append(ttle);
+    } else if (sectionLinksP) {
+      // If it's just a paragraph, render heading as a paragraph
+      const ttle = document.createElement('p');
+      ttle.classList.add('ttle');
+      ttle.textContent = headingText;
+      col.append(ttle);
     } else {
-      // Simple link or text
-      const link = sectionLinksCell.querySelector('a');
-      if (link) {
-        const ttle = document.createElement('a');
-        ttle.href = link.href;
-        ttle.classList.add('ttle');
-        ttle.textContent = headingText;
-        col.append(ttle);
-      } else {
-        const ttle = document.createElement('p'); // Use p for plain text headings without links
-        ttle.classList.add('ttle');
-        ttle.textContent = headingText;
-        col.append(ttle);
-      }
+      // Fallback: render heading as a simple text if no links or lists
+      const ttle = document.createElement('p');
+      ttle.classList.add('ttle');
+      ttle.textContent = headingText;
+      col.append(ttle);
     }
-    row1.append(col);
+
+    f1Row.append(col);
   });
+  container.append(f1Row);
 
-  // Add the row f2 and f3 for social media and legal links/copyright if they exist in the original HTML
-  // (These are not part of the EDS model for this block, but are static elements in the original HTML)
-  // For this exercise, we will assume these are not dynamic and only focus on the block's model.
-  // If these were dynamic, they would need to be part of the EDS model.
-
-  // Example of how to add fixed elements from original HTML if they were hardcoded in decorate:
-  const row2 = document.createElement('div');
-  row2.classList.add('row', 'f2', 'justify-content-between');
-  container.append(row2);
+  // Social Media (f2) - Assuming this is a fixed structure or a specific item type
+  // This part is derived from the ORIGINAL HTML structure, not directly from block.children,
+  // as the block model does not explicitly define a separate social media section.
+  // If social media links were part of a 'footer-section' item, they would be handled above.
+  // For now, we'll create a placeholder based on the original HTML.
+  const f2Row = document.createElement('div');
+  f2Row.classList.add('row', 'f2', 'justify-content-between');
 
   const socialCol = document.createElement('div');
   socialCol.classList.add('col', 'col-xl-2', 'ftr-drop-wrp');
@@ -125,42 +109,66 @@ export default function decorate(block) {
   socialPlusminus.classList.add('plusminus2');
   socialPlusminus.textContent = '+';
   socialTitle.append(socialPlusminus);
-  socialCol.append(socialTitle);
 
   const socialLinksCvr = document.createElement('div');
   socialLinksCvr.classList.add('ftr-sub-links-cvr', 'accordion_body2', 'socialIcons');
-  socialLinksCvr.innerHTML = `
-    <a href="https://www.facebook.com/TataMotorsGroup/" class="ftr-link" target="_blank"><i class="fab fa-facebook-square"></i></a>
-    <a href="https://www.instagram.com/tatamotorsgroup/" class="ftr-link" target="_blank"><i class="fab fa-instagram"></i></a>
-    <a href="https://twitter.com/TataMotors" class="ftr-link" target="_blank"><i class="fa-brands fa-square-x-twitter"></i></a>
-    <a href="https://www.linkedin.com/company/tata-motors/" class="ftr-link" target="_blank"><i class="fab fa-linkedin"></i></a>
-    <a href="https://www.youtube.com/user/TataMotorsGroup" class="ftr-link" target="_blank"><i class="fab fa-youtube-square"></i></a>
-  `;
-  socialCol.append(socialLinksCvr);
+
+  // Hardcoding social links based on ORIGINAL HTML as the block model doesn't provide them.
+  // In a real scenario, these would come from the block model if they were editable.
+  const socialLinks = [
+    { href: 'https://www.facebook.com/TataMotorsGroup/', iconClasses: ['fab', 'fa-facebook-square'] },
+    { href: 'https://www.instagram.com/tatamotorsgroup/', iconClasses: ['fab', 'fa-instagram'] },
+    { href: 'https://twitter.com/TataMotors', iconClasses: ['fa-brands', 'fa-square-x-twitter'] },
+    { href: 'https://www.linkedin.com/company/tata-motors/', iconClasses: ['fab', 'fa-linkedin'] },
+    { href: 'https://www.youtube.com/user/TataMotorsGroup', iconClasses: ['fab', 'fa-youtube-square'] },
+  ];
+
+  socialLinks.forEach(linkData => {
+    const a = document.createElement('a');
+    a.href = linkData.href;
+    a.classList.add('ftr-link');
+    a.target = '_blank';
+    const i = document.createElement('i');
+    i.classList.add(...linkData.iconClasses);
+    a.append(i);
+    socialLinksCvr.append(a);
+  });
+
   socialTitle.addEventListener('click', () => {
     socialLinksCvr.classList.toggle('active');
-    socialPlusminus.textContent = socialLinksCvr.classList.contains('active') ? '-' : '+';
+    socialTitle.classList.toggle('active');
+    socialPlusminus.textContent = socialTitle.classList.contains('active') ? '-' : '+';
   });
-  row2.append(socialCol);
 
-  const row3 = document.createElement('div');
-  row3.classList.add('row', 'mt25', 'f3');
-  container.append(row3);
+  socialCol.append(socialTitle, socialLinksCvr);
+  f2Row.append(socialCol);
+  container.append(f2Row);
+
+  // Legal and Copyright (f3)
+  const f3Row = document.createElement('div');
+  f3Row.classList.add('row', 'mt25', 'f3');
 
   const legalCol = document.createElement('div');
   legalCol.classList.add('col-12', 'col-md-6');
-  legalCol.innerHTML = `
-    <a href="https://www.tatamotors.com/legal-disclaimer">Legal Disclaimer</a>
-    <a href="https://www.tatamotors.com/open-source-license-disclosure">Open Source License Disclosure</a>
-  `;
-  row3.append(legalCol);
+  const legalDisclaimer = document.createElement('a');
+  legalDisclaimer.href = 'https://www.tatamotors.com/legal-disclaimer';
+  legalDisclaimer.textContent = 'Legal Disclaimer';
+  const openSource = document.createElement('a');
+  openSource.href = 'https://www.tatamotors.com/open-source-license-disclosure';
+  openSource.textContent = 'Open Source License Disclosure';
+  legalCol.append(legalDisclaimer, openSource);
 
   const copyrightCol = document.createElement('div');
   copyrightCol.classList.add('col-12', 'col-md-6');
-  copyrightCol.innerHTML = `
-    <p class="copy-txt text-md-end"> © Copyright 2026. All rights reserved. Tata Motors Limited.</p>
-  `;
-  row3.append(copyrightCol);
+  const copyrightP = document.createElement('p');
+  copyrightP.classList.add('copy-txt', 'text-md-end');
+  copyrightP.textContent = '© Copyright 2026. All rights reserved. Tata Motors Limited.';
+  copyrightCol.append(copyrightP);
+
+  f3Row.append(legalCol, copyrightCol);
+  container.append(f3Row);
+
+  footerWrp.append(container);
 
   block.textContent = '';
   block.append(footerWrp);

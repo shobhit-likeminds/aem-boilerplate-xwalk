@@ -50,18 +50,13 @@
         {
           "component": "reference",
           "label": "Image",
-          "name": "image"
-        },
-        {
-          "component": "text",
-          "label": "Alt Text",
-          "name": "altText",
+          "name": "image",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Subtitle",
-          "name": "subtitle",
+          "label": "Sub Title",
+          "name": "subTitle",
           "valueType": "string"
         },
         {
