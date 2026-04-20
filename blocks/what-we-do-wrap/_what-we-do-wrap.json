@@ -38,13 +38,13 @@
       "fields": [
         {
           "component": "text",
-          "label": "Heading",
+          "label": "Section Heading",
           "name": "heading",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Description",
+          "label": "Section Description",
           "name": "description",
           "valueType": "string"
         },
@@ -67,31 +67,19 @@
         },
         {
           "component": "text",
-          "label": "Image Alt Text",
-          "name": "imageAlt",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Image Title",
-          "name": "imageTitle",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
           "label": "Title",
-          "name": "label",
+          "name": "title",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Icon",
-          "name": "icon",
+          "label": "Title Icon",
+          "name": "titleIcon",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "label": "Link",
+          "label": "Business Link",
           "name": "link",
           "valueType": "string"
         }

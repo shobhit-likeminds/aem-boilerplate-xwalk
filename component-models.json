@@ -360,31 +360,31 @@
       {
         "component": "aem-content",
         "label": "Logo Link",
-        "name": "logoLink",
+        "name": "logo-link",
         "valueType": "string"
       },
       {
         "component": "container",
         "item": "social-link-item",
         "label": "Social Links",
-        "name": "socialLinks"
+        "name": "social-links"
       },
       {
         "component": "container",
         "item": "footer-menu-block",
-        "label": "Footer Menu Blocks",
-        "name": "footerMenuBlocks"
+        "label": "Footer Menus",
+        "name": "footer-menus"
       },
       {
         "component": "container",
         "item": "secondary-nav-item",
         "label": "Secondary Navigation",
-        "name": "secondaryNav"
+        "name": "secondary-nav"
       },
       {
         "component": "text",
         "label": "Copyright Text",
-        "name": "copyrightText",
+        "name": "copyright-text",
         "valueType": "string"
       }
     ]
@@ -417,21 +417,21 @@
     "fields": [
       {
         "component": "text",
-        "label": "Block Label",
-        "name": "blockLabel",
+        "label": "Menu Block Title",
+        "name": "title",
         "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "Block Link",
-        "name": "blockLink",
+        "label": "Menu Block Title Link",
+        "name": "title-link",
         "valueType": "string"
       },
       {
         "component": "container",
         "item": "footer-menu-item",
         "label": "Menu Items",
-        "name": "menuItems"
+        "name": "menu-items"
       }
     ]
   },
@@ -451,12 +451,6 @@
         "valueType": "string"
       },
       {
-        "component": "reference",
-        "label": "Menu Item Icon",
-        "name": "icon",
-        "valueType": "string"
-      },
-      {
         "component": "richtext",
         "label": "Menu Item Hierarchy",
         "name": "hierarchy-tree",
@@ -469,13 +463,13 @@
     "fields": [
       {
         "component": "text",
-        "label": "Secondary Nav Label",
+        "label": "Nav Item Label",
         "name": "label",
         "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "Secondary Nav Link",
+        "label": "Nav Item Link",
         "name": "link",
         "valueType": "string"
       }
@@ -1824,13 +1818,13 @@
     "fields": [
       {
         "component": "text",
-        "label": "Heading",
+        "label": "Section Heading",
         "name": "heading",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Description",
+        "label": "Section Description",
         "name": "description",
         "valueType": "string"
       },
@@ -1853,31 +1847,19 @@
       },
       {
         "component": "text",
-        "label": "Image Alt Text",
-        "name": "imageAlt",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Image Title",
-        "name": "imageTitle",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
         "label": "Title",
-        "name": "label",
+        "name": "title",
         "valueType": "string"
       },
       {
         "component": "reference",
-        "label": "Icon",
-        "name": "icon",
+        "label": "Title Icon",
+        "name": "titleIcon",
         "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "Link",
+        "label": "Business Link",
         "name": "link",
         "valueType": "string"
       }
@@ -1888,7 +1870,7 @@
     "fields": [
       {
         "component": "text",
-        "label": "Block Heading",
+        "label": "Section Heading",
         "name": "heading",
         "valueType": "string"
       },
@@ -1912,19 +1894,13 @@
       {
         "component": "text",
         "label": "Image Alt Text",
-        "name": "imageAlt",
+        "name": "alt",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Image Title",
-        "name": "imageTitle",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Slide Heading",
-        "name": "heading",
+        "label": "Slide Title",
+        "name": "title",
         "valueType": "string"
       },
       {
@@ -1935,14 +1911,14 @@
       },
       {
         "component": "aem-content",
-        "label": "CTA Link",
-        "name": "ctaLink",
+        "label": "Button Link",
+        "name": "link",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "CTA Label",
-        "name": "ctaLabel",
+        "label": "Button Label",
+        "name": "linkLabel",
         "valueType": "string"
       }
     ]

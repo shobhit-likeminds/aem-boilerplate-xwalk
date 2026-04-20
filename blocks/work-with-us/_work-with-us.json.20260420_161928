@@ -38,7 +38,7 @@
       "fields": [
         {
           "component": "text",
-          "label": "Section Heading",
+          "label": "Block Heading",
           "name": "heading",
           "valueType": "string"
         },
@@ -62,13 +62,19 @@
         {
           "component": "text",
           "label": "Image Alt Text",
-          "name": "alt",
+          "name": "imageAlt",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Slide Title",
-          "name": "title",
+          "label": "Image Title",
+          "name": "imageTitle",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Slide Heading",
+          "name": "heading",
           "valueType": "string"
         },
         {
@@ -79,14 +85,14 @@
         },
         {
           "component": "aem-content",
-          "label": "Button Link",
-          "name": "link",
+          "label": "CTA Link",
+          "name": "ctaLink",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Button Label",
-          "name": "linkLabel",
+          "label": "CTA Label",
+          "name": "ctaLabel",
           "valueType": "string"
         }
       ]

@@ -90,31 +90,31 @@
         {
           "component": "aem-content",
           "label": "Logo Link",
-          "name": "logo-link",
+          "name": "logoLink",
           "valueType": "string"
         },
         {
           "component": "container",
           "item": "social-link-item",
           "label": "Social Links",
-          "name": "social-links"
+          "name": "socialLinks"
         },
         {
           "component": "container",
           "item": "footer-menu-block",
-          "label": "Footer Menus",
-          "name": "footer-menus"
+          "label": "Footer Menu Blocks",
+          "name": "footerMenuBlocks"
         },
         {
           "component": "container",
           "item": "secondary-nav-item",
           "label": "Secondary Navigation",
-          "name": "secondary-nav"
+          "name": "secondaryNav"
         },
         {
           "component": "text",
           "label": "Copyright Text",
-          "name": "copyright-text",
+          "name": "copyrightText",
           "valueType": "string"
         }
       ]
@@ -147,21 +147,21 @@
       "fields": [
         {
           "component": "text",
-          "label": "Menu Block Title",
-          "name": "title",
+          "label": "Block Label",
+          "name": "blockLabel",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "label": "Menu Block Title Link",
-          "name": "title-link",
+          "label": "Block Link",
+          "name": "blockLink",
           "valueType": "string"
         },
         {
           "component": "container",
           "item": "footer-menu-item",
           "label": "Menu Items",
-          "name": "menu-items"
+          "name": "menuItems"
         }
       ]
     },
@@ -181,6 +181,12 @@
           "valueType": "string"
         },
         {
+          "component": "reference",
+          "label": "Menu Item Icon",
+          "name": "icon",
+          "valueType": "string"
+        },
+        {
           "component": "richtext",
           "label": "Menu Item Hierarchy",
           "name": "hierarchy-tree",
@@ -193,13 +199,13 @@
       "fields": [
         {
           "component": "text",
-          "label": "Nav Item Label",
+          "label": "Secondary Nav Label",
           "name": "label",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "label": "Nav Item Link",
+          "label": "Secondary Nav Link",
           "name": "link",
           "valueType": "string"
         }

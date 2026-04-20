@@ -2,103 +2,108 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const children = [...block.children];
-
-  block.classList.add('section', 'work-with-us', 'pb-0');
+  const [headingRow, ...slideRows] = [...block.children];
 
   // Section Header
-  // The first row is the heading. Find it by checking if it's the only row or if it has only one cell.
-  const blockHeadingRow = children.find(row => row.children.length === 1 || children.indexOf(row) === 0);
-  const slideRows = children.filter(row => row !== blockHeadingRow);
-
   const sectionHeader = document.createElement('div');
   sectionHeader.classList.add('section-header', 'text-center');
-  if (blockHeadingRow) {
-    moveInstrumentation(blockHeadingRow, sectionHeader);
-
-    const heading = document.createElement('h2');
-    heading.classList.add('heading', 'font-regular', 'aos-init', 'aos-animate');
-    heading.textContent = blockHeadingRow.textContent.trim();
-    sectionHeader.append(heading);
-    block.replaceChild(sectionHeader, blockHeadingRow);
-  } else {
-    // If no heading row, prepend the sectionHeader to the block
-    block.prepend(sectionHeader);
+  const heading = document.createElement('h2');
+  heading.classList.add('heading', 'font-regular', 'aos-init', 'aos-animate');
+  // CRITICAL FIX: Use content detection instead of direct index access for headingRow
+  const headingCell = [...headingRow.children].find((cell) => cell.textContent.trim());
+  if (headingCell) {
+    heading.textContent = headingCell.textContent.trim();
+    moveInstrumentation(headingCell, heading);
   }
-
+  sectionHeader.append(heading);
 
   // Slides Container
-  const positionRelative = document.createElement('div');
-  positionRelative.classList.add('position-relative', 'aos-init', 'aos-animate');
+  const positionRelativeDiv = document.createElement('div');
+  positionRelativeDiv.classList.add('position-relative', 'aos-init', 'aos-animate');
 
-  const container = document.createElement('div');
-  container.classList.add('container');
-  positionRelative.append(container);
+  const containerDiv = document.createElement('div');
+  containerDiv.classList.add('container');
 
-  const gridLayout = document.createElement('div');
-  gridLayout.classList.add('grid-layout');
-  container.append(gridLayout);
+  const gridLayoutDiv = document.createElement('div');
+  gridLayoutDiv.classList.add('grid-layout');
 
   slideRows.forEach((row) => {
-    // Destructuring is safe here as per EDS Block Structure for item rows
-    const [imageCell, imageAltCell, imageTitleCell, slideHeadingCell, descriptionCell, ctaLinkCell, ctaLabelCell] = [...row.children];
+    const cells = [...row.children];
+    // Destructuring is safe here as per EDS Block Structure for uniform item rows
+    const imageCell = cells[0];
+    const altTextCell = cells[1];
+    const titleCell = cells[2];
+    const descriptionCell = cells[3];
+    const linkCell = cells[4];
+    const linkLabelCell = cells[5];
 
     const slideDiv = document.createElement('div');
     slideDiv.classList.add('slides');
-    moveInstrumentation(row, slideDiv);
 
     const wrapDiv = document.createElement('div');
     wrapDiv.classList.add('wrap');
-    slideDiv.append(wrapDiv);
 
     // Image
+    const imageWrapDiv = document.createElement('div');
+    imageWrapDiv.classList.add('image-wrap');
     const picture = imageCell.querySelector('picture');
     if (picture) {
-      const imageWrap = document.createElement('div');
-      imageWrap.classList.add('image-wrap');
       const img = picture.querySelector('img');
       if (img) {
-        const optimizedPic = createOptimizedPicture(img.src, imageAltCell.textContent.trim(), false, [{ width: '750' }]);
+        const optimizedPic = createOptimizedPicture(img.src, altTextCell?.textContent.trim() || '', false, [{ width: '750' }]);
         optimizedPic.querySelector('img').classList.add('img-fluid');
-        // Ensure alt and title attributes are set on the img within the optimized picture
-        optimizedPic.querySelector('img').alt = imageAltCell.textContent.trim();
-        optimizedPic.querySelector('img').title = imageTitleCell.textContent.trim();
-        moveInstrumentation(img, optimizedPic.querySelector('img'));
-        imageWrap.append(optimizedPic);
+        moveInstrumentation(picture, optimizedPic.querySelector('img'));
+        imageWrapDiv.append(optimizedPic);
       }
-      wrapDiv.append(imageWrap);
     }
+    moveInstrumentation(imageCell, imageWrapDiv);
 
     // Content
-    const contentWrap = document.createElement('div');
-    contentWrap.classList.add('content-wrap');
-    wrapDiv.append(contentWrap);
+    const contentWrapDiv = document.createElement('div');
+    contentWrapDiv.classList.add('content-wrap');
 
     const contentSectionHeader = document.createElement('div');
     contentSectionHeader.classList.add('section-header');
-    contentWrap.append(contentSectionHeader);
 
-    const slideHeading = document.createElement('h3');
-    slideHeading.classList.add('heading', 'font-regular');
-    slideHeading.textContent = slideHeadingCell.textContent.trim();
-    contentSectionHeader.append(slideHeading);
+    const title = document.createElement('h3');
+    title.classList.add('heading', 'font-regular');
+    if (titleCell) {
+      title.textContent = titleCell.textContent.trim();
+      moveInstrumentation(titleCell, title);
+    }
 
     const description = document.createElement('p');
     description.classList.add('text-size-body');
-    description.textContent = descriptionCell.textContent.trim();
-    contentSectionHeader.append(description);
-
-    const ctaLinkAnchor = ctaLinkCell.querySelector('a'); // Get the anchor from the ctaLinkCell
-    if (ctaLinkAnchor) {
-      const ctaAnchor = document.createElement('a');
-      ctaAnchor.classList.add('btn', 'btn-primary', 'stretched-link');
-      ctaAnchor.href = ctaLinkAnchor.href; // Use the href from the anchor
-      ctaAnchor.textContent = ctaLabelCell.textContent.trim();
-      contentSectionHeader.append(ctaAnchor);
+    if (descriptionCell) {
+      description.textContent = descriptionCell.textContent.trim();
+      moveInstrumentation(descriptionCell, description);
     }
 
-    gridLayout.append(slideDiv);
+    const link = document.createElement('a');
+    link.classList.add('btn', 'btn-primary', 'stretched-link');
+    const foundLink = linkCell.querySelector('a');
+    if (foundLink) {
+      // CRITICAL FIX: Read href from the <a> tag, not textContent of the cell
+      link.href = foundLink.href;
+      link.textContent = linkLabelCell?.textContent.trim();
+      moveInstrumentation(linkLabelCell, link);
+      moveInstrumentation(linkCell, link); // Also move instrumentation from the link cell itself
+    }
+
+
+    contentSectionHeader.append(title, description, link);
+    contentWrapDiv.append(contentSectionHeader);
+
+    wrapDiv.append(imageWrapDiv, contentWrapDiv);
+    slideDiv.append(wrapDiv);
+    moveInstrumentation(row, slideDiv);
+    gridLayoutDiv.append(slideDiv);
   });
 
-  block.append(positionRelative);
+  containerDiv.append(gridLayoutDiv);
+  positionRelativeDiv.append(containerDiv);
+
+  block.innerHTML = '';
+  block.classList.add('section', 'work-with-us', 'pb-0');
+  block.append(sectionHeader, positionRelativeDiv);
 }
