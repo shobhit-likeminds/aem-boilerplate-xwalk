@@ -1,0 +1,136 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  const sections = [];
+  let currentSection = null;
+
+  [...block.children].forEach((row) => {
+    const cells = [...row.children];
+    // Detect if it's a spirit-of-rise-section row (3 cells, where the last is a container)
+    // The model indicates 3 fields: heading, description, cards (container)
+    if (cells.length === 3) {
+      const headingCell = cells.find(cell => !cell.querySelector('picture') && !cell.querySelector('a') && cell.textContent.trim() !== 'Cards value');
+      const descriptionCell = cells.find(cell => cell !== headingCell && !cell.querySelector('picture') && !cell.querySelector('a') && cell.textContent.trim() !== 'Cards value');
+
+      currentSection = {
+        heading: headingCell ? headingCell.textContent.trim() : '',
+        description: descriptionCell ? descriptionCell.textContent.trim() : '',
+        cards: [],
+      };
+      sections.push(currentSection);
+      moveInstrumentation(row, document.createElement('div')); // Move instrumentation to a dummy element
+      row.remove(); // Remove the original row
+    }
+    // Detect if it's a spirit-of-rise-card row (4 cells)
+    else if (cells.length === 4 && currentSection) {
+      const imageCell = cells.find(cell => cell.querySelector('picture'));
+      const mobileImageCell = cells.find(cell => cell !== imageCell && cell.querySelector('picture'));
+      const linkCell = cells.find(cell => cell.querySelector('a'));
+      const descriptionCell = cells.find(cell => cell !== imageCell && cell !== mobileImageCell && cell !== linkCell && !cell.querySelector('picture') && !cell.querySelector('a'));
+
+      const linkElement = linkCell ? linkCell.querySelector('a') : null;
+      const cardLink = linkElement ? linkElement.href : '#';
+
+      const imagePicture = imageCell ? imageCell.querySelector('picture') : null;
+      const mobileImagePicture = mobileImageCell ? mobileImageCell.querySelector('picture') : null;
+
+      currentSection.cards.push({
+        image: imagePicture,
+        mobileImage: mobileImagePicture,
+        link: cardLink,
+        description: descriptionCell ? descriptionCell.textContent.trim() : '',
+      });
+      moveInstrumentation(row, document.createElement('div')); // Move instrumentation to a dummy element
+      row.remove(); // Remove the original row
+    }
+  });
+
+  block.innerHTML = ''; // Clear the block content
+
+  sections.forEach((sectionData, index) => {
+    const sectionEl = document.createElement('section');
+    sectionEl.classList.add('section', 'spirit-of-rise');
+    if (index % 2 !== 0) { // Apply grey-bg to alternate sections based on original HTML
+      sectionEl.classList.add('grey-bg');
+    }
+
+    const sectionHeader = document.createElement('div');
+    sectionHeader.classList.add('section-header', 'text-center', 'pb-3');
+
+    const heading = document.createElement('h2');
+    heading.classList.add('heading', 'font-regular', 'aos-init', 'aos-animate');
+    heading.textContent = sectionData.heading;
+    // Add AOS attributes if needed, but not critical for basic functionality
+    // heading.setAttribute('data-aos-easing', 'ease-in-out');
+    // heading.setAttribute('data-aos', 'fade-up');
+    // heading.setAttribute('data-aos-delay', '200');
+
+    const description = document.createElement('p');
+    description.classList.add('aos-init', 'aos-animate');
+    description.textContent = sectionData.description;
+    // Add AOS attributes if needed
+    // description.setAttribute('data-aos', 'fade-up');
+    // description.setAttribute('data-aos-offset', '100');
+    // description.setAttribute('data-aos-duration', '650');
+    // description.setAttribute('data-aos-easing', 'ease-in-out');
+
+    sectionHeader.append(heading, description);
+
+    const performanceDriven = document.createElement('div');
+    performanceDriven.classList.add('performance-driven', 'performace-driven-home');
+
+    const container = document.createElement('div');
+    container.classList.add('container');
+
+    const cardsWrapper = document.createElement('div');
+    cardsWrapper.classList.add('performace-driven-cards');
+
+    sectionData.cards.forEach((cardData) => {
+      const cardLink = document.createElement('a');
+      cardLink.classList.add('performace-driven-cards-link');
+      cardLink.href = cardData.link;
+      cardLink.target = '_blank'; // Assuming target blank from original HTML
+
+      const cardWrapper = document.createElement('div');
+      cardWrapper.classList.add('performace-driven-card-wrapper');
+
+      const cardImageDiv = document.createElement('div');
+      cardImageDiv.classList.add('card-image');
+
+      if (cardData.image || cardData.mobileImage) {
+        const picture = document.createElement('picture');
+        if (cardData.mobileImage) {
+          const source = document.createElement('source');
+          source.media = '(max-width: 576px)';
+          source.srcset = cardData.mobileImage.querySelector('img').src;
+          picture.append(source);
+        }
+        if (cardData.image) {
+          const img = cardData.image.querySelector('img');
+          const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ media: '(max-width: 576px)', width: '576' }, { width: '750' }]);
+          moveInstrumentation(img, optimizedPic.querySelector('img'));
+          picture.append(...optimizedPic.children);
+        }
+        cardImageDiv.append(picture);
+      }
+
+      const cardBox = document.createElement('div');
+      cardBox.classList.add('performace-driven-home-box-card');
+
+      const cardDesc = document.createElement('p');
+      cardDesc.classList.add('desc');
+      cardDesc.innerHTML = cardData.description.replace(/\n/g, '<br>'); // Preserve line breaks
+
+      cardBox.append(cardDesc);
+      cardWrapper.append(cardImageDiv, cardBox);
+      cardLink.append(cardWrapper);
+      cardsWrapper.append(cardLink);
+    });
+
+    container.append(cardsWrapper);
+    performanceDriven.append(container);
+    sectionEl.append(sectionHeader, performanceDriven);
+    block.append(sectionEl);
+  });
+}
