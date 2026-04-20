@@ -702,7 +702,7 @@
           }
         },
         {
-          "title": "Main-Header",
+          "title": "Main Header",
           "id": "main-header",
           "plugins": {
             "xwalk": {
@@ -711,14 +711,14 @@
                 "template": {
                   "filter": "main-header",
                   "model": "main-header",
-                  "name": "Main-Header"
+                  "name": "Main Header"
                 }
               }
             }
           }
         },
         {
-          "title": "Navigation-Item",
+          "title": "Navigation Item",
           "id": "navigation-item",
           "plugins": {
             "xwalk": {
@@ -726,14 +726,29 @@
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
                   "model": "navigation-item",
-                  "name": "Navigation-Item"
+                  "name": "Navigation Item"
                 }
               }
             }
           }
         },
         {
-          "title": "Press-Release-Item",
+          "title": "Icon Nav Item",
+          "id": "icon-nav-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "icon-nav-item",
+                  "name": "Icon Nav Item"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Press Release Item",
           "id": "press-release-item",
           "plugins": {
             "xwalk": {
@@ -741,22 +756,7 @@
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
                   "model": "press-release-item",
-                  "name": "Press-Release-Item"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Icon-Link-Item",
-          "id": "icon-link-item",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block/item",
-                "template": {
-                  "model": "icon-link-item",
-                  "name": "Icon-Link-Item"
+                  "name": "Press Release Item"
                 }
               }
             }

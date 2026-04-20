@@ -1,17 +1,11 @@
 import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
-const SVG_ARROW_ICON = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><path fill="#FF0000" d="M6.03 3.429L10.601 8l-4.571 4.571L7.43 14 13.43 8 7.43 2z"/></svg>';
-const SVG_SEARCH_ICON_WHITE = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><path fill="#fff" d="M19.795 18.205L15.34 13.75c1.07-1.307 1.71-2.99 1.71-4.85C17.05 4.04 13.01 0 8.525 0S0 4.04 0 8.9c0 4.86 4.04 8.9 8.525 8.9c1.86 0 3.543-.64 4.85-1.71l4.455 4.455c.27.27.67.36 1.01.27c.34-.09.6-.35.69-.69c.09-.34 0-.74-.27-1.01zM8.525 15.05c-3.39 0-6.15-2.76-6.15-6.15s2.76-6.15 6.15-6.15s6.15 2.76 6.15 6.15s-2.76 6.15-6.15 6.15z"/></svg>';
-const SVG_SEARCH_ICON_BLACK = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><path fill="#000" d="M19.795 18.205L15.34 13.75c1.07-1.307 1.71-2.99 1.71-4.85C17.05 4.04 13.01 0 8.525 0S0 4.04 0 8.9c0 4.86 4.04 8.9 8.525 8.9c1.86 0 3.543-.64 4.85-1.71l4.455 4.455c.27.27.67.36 1.01.27c.34-.09.6-.35.69-.69c.09-.34 0-.74-.27-1.01zM8.525 15.05c-3.39 0-6.15-2.76-6.15-6.15s2.76-6.15 6.15-6.15s6.15 2.76 6.15 6.15s-2.76 6.15-6.15 6.15z"/></svg>';
-const SVG_MAIL_ICON = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="16" viewBox="0 0 20 16"><path fill="#000" d="M18.8 0H1.2C.54 0 0 .54 0 1.2v13.6c0 .66.54 1.2 1.2 1.2h17.6c.66 0 1.2-.54 1.2-1.2V1.2c0-.66-.54-1.2-1.2-1.2zm-1.2 1.2L10 8.13L2.4 1.2h15.2zM1.2 14.8V2.17l8.8 7.8L18.8 2.17V14.8H1.2z"/></svg>';
-const SVG_SUBMIT_ICON = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><path fill="#000" d="M14.5 7.5L2 1l1.5 6.5L2 14z"/></svg>';
-
 function transformNestedLists(rootUl) {
   rootUl.querySelectorAll('li').forEach((li) => {
     const nested = li.querySelector(':scope > ul');
-    // Handle label-only nodes
     const anchor = li.querySelector(':scope > a');
+
     if (!anchor) {
       const textNode = [...li.childNodes].find(
         (n) => n.nodeType === Node.TEXT_NODE && n.textContent.trim(),
@@ -23,6 +17,7 @@ function transformNestedLists(rootUl) {
         li.prepend(span);
       }
     }
+
     if (nested) {
       nested.remove();
       const subWrap = document.createElement('div');
@@ -31,9 +26,6 @@ function transformNestedLists(rootUl) {
       li.append(subWrap);
       const trigger = li.querySelector(':scope > a, :scope > span');
       if (trigger) {
-        const iconSpan = document.createElement('span');
-        iconSpan.innerHTML = SVG_ARROW_ICON;
-        trigger.appendChild(iconSpan);
         trigger.addEventListener('click', (e) => {
           e.preventDefault();
           e.stopPropagation();
@@ -41,600 +33,480 @@ function transformNestedLists(rootUl) {
           subWrap.classList.toggle('active');
         });
       }
-    }
-  });
-}
-
-function transformInnerNestedLists(rootUl) {
-  rootUl.querySelectorAll('li').forEach((li) => {
-    const nested = li.querySelector(':scope > ul');
-    const anchor = li.querySelector(':scope > a');
-    if (!anchor) {
-      const textNode = [...li.childNodes].find(
-        (n) => n.nodeType === Node.TEXT_NODE && n.textContent.trim(),
-      );
-      if (textNode) {
-        const span = document.createElement('span');
-        span.textContent = textNode.textContent.trim();
-        textNode.remove();
-        li.prepend(span);
-      }
-    }
-
-    if (nested) {
-      nested.remove();
-      const subWrap = document.createElement('div');
-      subWrap.classList.add('has-inner-sub-child');
-      subWrap.append(nested);
-      li.append(subWrap);
-      const trigger = li.querySelector(':scope > a, :scope > span');
-      if (trigger) {
-        const iconSpan = document.createElement('span');
-        iconSpan.innerHTML = SVG_ARROW_ICON;
-        trigger.appendChild(iconSpan);
-        trigger.addEventListener('click', (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          li.classList.toggle('active-child');
-          subWrap.classList.toggle('active-child');
-        });
-      }
+      transformNestedLists(nested);
     }
   });
 }
 
 export default function decorate(block) {
-  const children = [...block.children];
+  const [
+    logoRow,
+    logoLinkRow,
+    year80LogoRow,
+    year80LogoLinkRow,
+    ...itemRows
+  ] = [...block.children];
 
-  // Root fields are identified by content type, not fixed index, as per best practice.
-  // The first 4 rows are root fields, the rest are item rows.
-  const rootRows = children.slice(0, 4);
-  const itemRows = children.slice(4);
-
-  const logoRow = rootRows.find(row => row.querySelector('picture'));
-  const logoLinkRow = rootRows.find(row => row.querySelector('a') && row.querySelector('a').href.includes('/content/site/logo-link'));
-  const anniversaryLogoRow = rootRows.find(row => row.querySelector('picture') && !row.isEqualNode(logoRow));
-  const anniversaryLogoLinkRow = rootRows.find(row => row.querySelector('a') && row.querySelector('a').href.includes('/content/site/anniversary-logo-link'));
-
-  const header = document.createElement('header');
-  header.classList.add('main-header'); // Do not add 'nav-up' or state classes initially
+  block.innerHTML = '';
+  block.classList.add('with-marquee', 'solid');
 
   const container = document.createElement('div');
   container.classList.add('container');
-  header.appendChild(container);
+  block.append(container);
 
   const wrap = document.createElement('div');
   wrap.classList.add('wrap');
-  container.appendChild(wrap);
+  container.append(wrap);
 
-  // Logo
+  // Main Logo
   const logoDiv = document.createElement('div');
   logoDiv.classList.add('logo');
   const logoLink = document.createElement('a');
-  if (logoLinkRow) {
-    logoLink.href = logoLinkRow.querySelector('a')?.href || '#';
-  } else {
-    logoLink.href = '#';
+  const logoAnchor = logoLinkRow.querySelector('a');
+  if (logoAnchor) {
+    logoLink.href = logoAnchor.href;
   }
-  if (logoRow) {
-    const logoPicture = logoRow.querySelector('picture');
-    if (logoPicture) {
-      const img = logoPicture.querySelector('img');
+  const logoPicture = logoRow.querySelector('picture');
+  if (logoPicture) {
+    const img = logoPicture.querySelector('img');
+    if (img) {
       const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '200' }]);
       moveInstrumentation(img, optimizedPic.querySelector('img'));
-      logoLink.appendChild(optimizedPic);
+      optimizedPic.querySelector('img').classList.add('hiddenlogo1');
+      logoLink.append(optimizedPic);
     }
   }
-  logoDiv.appendChild(logoLink);
-  wrap.appendChild(logoDiv);
+  moveInstrumentation(logoRow, logoLink);
+  logoDiv.append(logoLink);
+  wrap.append(logoDiv);
 
   // Hamburger
   const hamburger = document.createElement('div');
   hamburger.classList.add('hamburger');
-  const ulHamburger = document.createElement('ul');
+  hamburger.setAttribute('data-once', 'hamburger-click nav-close-search');
+  const hamburgerUl = document.createElement('ul');
   for (let i = 0; i < 3; i += 1) {
-    ulHamburger.appendChild(document.createElement('li'));
+    hamburgerUl.append(document.createElement('li'));
   }
-  hamburger.appendChild(ulHamburger);
-  wrap.appendChild(hamburger);
+  hamburger.append(hamburgerUl);
+  wrap.append(hamburger);
 
-  // Navigation
-  const nav = document.createElement('nav');
-  nav.classList.add('main-nav');
-  const navUl = document.createElement('ul');
-  navUl.setAttribute('itemscope', '');
-  navUl.setAttribute('itemtype', 'http://www.schema.org/SiteNavigationElement');
-  nav.appendChild(navUl);
+  // Main Nav
+  const mainNav = document.createElement('nav');
+  mainNav.classList.add('main-nav');
+  mainNav.setAttribute('data-once', 'initSubChildToggle');
+  const mainUl = document.createElement('ul');
+  mainUl.setAttribute('itemscope', '');
+  mainUl.setAttribute('itemtype', 'http://www.schema.org/SiteNavigationElement');
+  mainNav.append(mainUl);
+  wrap.append(mainNav);
 
-  const navigationItems = itemRows.filter((row) => [...row.children].length === 7);
-  const pressReleaseItems = itemRows.filter((row) => [...row.children].length === 4);
-  const iconLinkItems = itemRows.filter((row) => [...row.children].length === 3);
+  // Separate item rows
+  const navigationItems = itemRows.filter((row) => row.children.length === 7);
+  const iconNavItems = itemRows.filter((row) => row.children.length === 3);
+  const pressReleaseItems = itemRows.filter((row) => row.children.length === 4);
 
   navigationItems.forEach((row) => {
-    const cells = [...row.children];
-    const labelCell = cells.find(cell => !cell.querySelector('a') && !cell.querySelector('picture') && cell.textContent.trim().length > 0);
-    const linkCell = cells.find(cell => cell.querySelector('a'));
-    const iconCell = cells.find(cell => cell.querySelector('picture'));
-    const hierarchyCell = cells.find(cell => cell.querySelector('ul'));
-    const leftHeadingCell = cells.find(cell => cell.textContent.trim() && cell !== labelCell && cell !== leftDescCell && cell !== leftSubDescCell);
-    const leftDescCell = cells.find(cell => cell.textContent.trim() && cell !== labelCell && cell !== leftHeadingCell && cell !== leftSubDescCell);
-    const leftSubDescCell = cells.find(cell => cell.textContent.trim() && cell !== labelCell && cell !== leftHeadingCell && cell !== leftDescCell);
-
+    const [labelCell, linkCell, iconCell, hierarchyCell, headingCell, descriptionCell, subDescriptionCell] = [...row.children];
 
     const li = document.createElement('li');
     li.classList.add('has-child', 'hover-red');
     li.setAttribute('itemprop', 'name');
+    li.setAttribute('data-once', 'nav-close-search');
 
-    const anchor = document.createElement('a');
-    const foundLink = linkCell?.querySelector('a');
-    if (foundLink) anchor.href = foundLink.href;
-    anchor.textContent = labelCell?.textContent.trim() || '';
-    anchor.setAttribute('itemprop', 'url');
-    li.appendChild(anchor);
+    const linkEl = document.createElement('a');
+    const foundLink = linkCell.querySelector('a');
+    if (foundLink) {
+      linkEl.href = foundLink.href;
+    }
+    linkEl.setAttribute('itemprop', 'url');
+    linkEl.textContent = labelCell.textContent.trim();
+    moveInstrumentation(linkCell, linkEl);
+    li.append(linkEl);
 
-    const iconSpan = document.createElement('span');
-    const iconPicture = iconCell?.querySelector('picture');
+    const iconPicture = iconCell.querySelector('picture');
     if (iconPicture) {
       const img = iconPicture.querySelector('img');
-      // Replace with inline SVG if it's an SVG, otherwise use optimized picture
-      if (img.src.endsWith('.svg') || img.src.includes('.svg+xml')) {
-        iconSpan.innerHTML = SVG_ARROW_ICON;
-      } else {
+      if (img) {
+        const span = document.createElement('span');
         const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '16' }]);
         moveInstrumentation(img, optimizedPic.querySelector('img'));
-        iconSpan.appendChild(optimizedPic);
+        span.append(optimizedPic);
+        li.append(span);
       }
-    } else {
-      iconSpan.innerHTML = SVG_ARROW_ICON; // Default arrow icon
     }
-    li.appendChild(iconSpan);
 
     const megaMenu = document.createElement('div');
     megaMenu.classList.add('mega-menu');
     const megaMenuWrap = document.createElement('div');
     megaMenuWrap.classList.add('wrap', 'container');
-    megaMenu.appendChild(megaMenuWrap);
     const centerDiv = document.createElement('div');
     centerDiv.classList.add('center-div');
-    megaMenuWrap.appendChild(centerDiv);
 
     const leftDiv = document.createElement('div');
     leftDiv.classList.add('left-div');
-    centerDiv.appendChild(leftDiv);
-
-    const leftHeading = document.createElement('h4');
-    leftHeading.classList.add('left-div-heading');
+    const heading = document.createElement('h4');
+    heading.classList.add('left-div-heading');
     const headingAnchor = document.createElement('a');
-    headingAnchor.textContent = leftHeadingCell?.textContent.trim() || '';
-    leftHeading.appendChild(headingAnchor);
-    leftDiv.appendChild(leftHeading);
+    headingAnchor.textContent = headingCell.textContent.trim();
+    heading.append(headingAnchor);
+    leftDiv.append(heading);
 
-    const leftDesc = document.createElement('p');
-    leftDesc.classList.add('left-div-desc');
-    leftDesc.textContent = leftDescCell?.textContent.trim() || '';
-    leftDiv.appendChild(leftDesc);
+    if (descriptionCell.textContent.trim()) {
+      const desc = document.createElement('p');
+      desc.classList.add('left-div-desc');
+      desc.textContent = descriptionCell.textContent.trim();
+      leftDiv.append(desc);
+    }
 
-    const leftSubDesc = document.createElement('p');
-    leftSubDesc.classList.add('left-div-subdesc');
-    leftSubDesc.textContent = leftSubDescCell?.textContent.trim() || '';
-    leftDiv.appendChild(leftSubDesc);
+    if (subDescriptionCell.textContent.trim()) {
+      const subDesc = document.createElement('p');
+      subDesc.classList.add('left-div-subdesc');
+      subDesc.textContent = subDescriptionCell.textContent.trim();
+      leftDiv.append(subDesc);
+    }
+    centerDiv.append(leftDiv);
 
     const subNavWrap = document.createElement('div');
     subNavWrap.classList.add('sub-nav-wrap');
-    centerDiv.appendChild(subNavWrap);
+    if (labelCell.textContent.trim().toLowerCase() === 'who we are') {
+      subNavWrap.classList.add('about-us-sub-nav');
+    } else if (labelCell.textContent.trim().toLowerCase() === 'what we do') {
+      subNavWrap.classList.add('what-we-do');
+    } else if (labelCell.textContent.trim().toLowerCase() === 'investor relations') {
+      leftDiv.classList.add('ir-left-div');
+      subNavWrap.classList.add('element-block');
+    } else if (labelCell.textContent.trim().toLowerCase() === 'newsroom') {
+      leftDiv.classList.add('newsroom-left-div');
+      const latestPressReleaseDiv = document.createElement('div');
+      latestPressReleaseDiv.classList.add('latest-two-press-release');
+      const slidesDiv = document.createElement('div');
+      slidesDiv.classList.add('slides');
+      const slidesWrap = document.createElement('div');
+      slidesWrap.classList.add('wrap');
+      const contentDiv = document.createElement('div');
+      contentDiv.classList.add('content');
+      const descDiv = document.createElement('div');
+      descDiv.classList.add('desc');
+      const dateDiv = document.createElement('div');
+      dateDiv.classList.add('date');
+      pressReleaseItems.forEach((prRow) => {
+        const [prLinkCell, prTitleCell, prDateCell, prCategoryCell] = [...prRow.children];
+        const prP = document.createElement('p');
+        const prAnchor = document.createElement('a');
+        const foundPrLink = prLinkCell.querySelector('a');
+        if (foundPrLink) {
+          prAnchor.href = foundPrLink.href;
+        }
+        prAnchor.textContent = prTitleCell.textContent.trim();
+        prP.append(prAnchor);
+        descDiv.append(prP);
+        const dateEm = document.createElement('em');
+        dateEm.textContent = prDateCell.textContent.trim();
+        const categoryEm = document.createElement('em');
+        categoryEm.textContent = prCategoryCell.textContent.trim();
+        dateDiv.append(dateEm, categoryEm);
+        contentDiv.append(descDiv, dateDiv);
+        slidesWrap.append(contentDiv);
+        slidesDiv.append(slidesWrap);
+        latestPressReleaseDiv.append(slidesDiv);
+        moveInstrumentation(prRow, prP);
+      });
+      leftDiv.append(latestPressReleaseDiv);
+    } else if (labelCell.textContent.trim().toLowerCase() === 'careers') {
+      leftDiv.classList.add('career-left-div');
+      subNavWrap.classList.add('careers-div');
+    }
 
-    if (hierarchyCell) {
-      const tempDiv = document.createElement('div');
-      tempDiv.innerHTML = hierarchyCell.innerHTML;
-      moveInstrumentation(hierarchyCell, tempDiv);
+    // Handle hierarchy-tree richtext field
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = hierarchyCell.innerHTML;
+    const hierarchyRoot = tempDiv.querySelector('ul');
 
-      const hierarchyRoot = tempDiv.querySelector('ul');
-      if (hierarchyRoot) {
-        // Apply classes from ORIGINAL HTML to nested elements
-        hierarchyRoot.querySelectorAll('li').forEach(item => item.classList.add('top-level-li'));
-        hierarchyRoot.querySelectorAll('li > a').forEach(a => a.classList.add('top-level-li')); // Example, adjust based on actual HTML
-        hierarchyRoot.querySelectorAll('ul').forEach(ul => ul.classList.add('has-sub-child', 'active')); // Example, adjust based on actual HTML
-        hierarchyRoot.querySelectorAll('li > div > ul').forEach(ul => ul.classList.add('has-inner-sub-child', 'active-child')); // Example, adjust based on actual HTML
+    if (hierarchyRoot) {
+      // Apply classes from ORIGINAL HTML to the nested elements
+      hierarchyRoot.querySelectorAll('li').forEach(liElement => {
+        // Example: if ORIGINAL HTML has <li class="top-level-li">, add it here
+        if (liElement.querySelector(':scope > ul')) {
+          liElement.classList.add('top-level-li');
+        }
+        if (liElement.parentElement === hierarchyRoot) {
+          // Add specific classes for top-level list items if needed
+        }
+      });
+      hierarchyRoot.querySelectorAll('a').forEach(aElement => {
+        // Add specific classes for anchors if needed
+      });
 
-        subNavWrap.appendChild(hierarchyRoot);
-        transformNestedLists(hierarchyRoot);
-        hierarchyRoot.querySelectorAll('.has-sub-child > ul').forEach(transformInnerNestedLists);
+      if (labelCell.textContent.trim().toLowerCase() === 'investor relations') {
+        const ulOneLink = document.createElement('ul');
+        ulOneLink.classList.add('sub-nav-wrap-one-link');
+        const firstLi = hierarchyRoot.querySelector('li');
+        if (firstLi) {
+          ulOneLink.append(firstLi);
+        }
+        subNavWrap.append(ulOneLink);
+        const innerSubNavWrapList = document.createElement('div');
+        innerSubNavWrapList.classList.add('inner-sub-nav-wrap-list');
+        const remainingUl = document.createElement('ul');
+        [...hierarchyRoot.children].slice(1).forEach((child) => {
+          remainingUl.append(child);
+        });
+        innerSubNavWrapList.append(remainingUl);
+        subNavWrap.append(innerSubNavWrapList);
+      } else {
+        subNavWrap.append(hierarchyRoot);
+      }
+      moveInstrumentation(hierarchyCell, hierarchyRoot); // Move instrumentation for the whole hierarchy
+      transformNestedLists(hierarchyRoot);
+    }
+    centerDiv.append(subNavWrap);
+    megaMenuWrap.append(centerDiv);
+    megaMenu.append(megaMenuWrap);
+    li.append(megaMenu);
+    mainUl.append(li);
+    moveInstrumentation(row, li);
+  });
+
+  // Icon Nav for mobile
+  const mobileIconNav = document.createElement('div');
+  mobileIconNav.classList.add('icon-nav', 'mobile-menus-icon');
+  const mobileIconUl = document.createElement('ul');
+  mobileIconNav.append(mobileIconUl);
+  mainUl.append(mobileIconNav);
+
+  // Icon Nav for desktop
+  const desktopIconNav = document.createElement('div');
+  desktopIconNav.classList.add('icon-nav', 'desktop-menus-icon');
+  const desktopIconUl = document.createElement('ul');
+  desktopIconNav.append(desktopIconUl);
+  mainNav.append(desktopIconNav);
+
+  iconNavItems.forEach((row) => {
+    const [iconCell, linkCell, labelCell] = [...row.children];
+
+    const iconLiMobile = document.createElement('li');
+    const iconLiDesktop = document.createElement('li');
+
+    const iconAnchorMobile = document.createElement('a');
+    const iconAnchorDesktop = document.createElement('a');
+
+    const foundLink = linkCell.querySelector('a');
+    if (foundLink) {
+      iconAnchorMobile.href = foundLink.href;
+      iconAnchorDesktop.href = foundLink.href;
+    } else {
+      iconAnchorMobile.href = '#';
+      iconAnchorDesktop.href = '#';
+    }
+
+    const iconPicture = iconCell.querySelector('picture');
+    if (iconPicture) {
+      const img = iconPicture.querySelector('img');
+      if (img) {
+        const optimizedPicMobile = createOptimizedPicture(img.src, img.alt, false, [{ width: '24' }]);
+        const optimizedPicDesktop = createOptimizedPicture(img.src, img.alt, false, [{ width: '24' }]);
+        moveInstrumentation(img, optimizedPicMobile.querySelector('img'));
+        moveInstrumentation(img, optimizedPicDesktop.querySelector('img'));
+        iconAnchorMobile.append(optimizedPicMobile);
+        iconAnchorDesktop.append(optimizedPicDesktop);
       }
     }
 
-    li.appendChild(megaMenu);
-    navUl.appendChild(li);
+    if (labelCell.textContent.trim().toLowerCase() === 'contact us') {
+      iconLiMobile.classList.add('mail');
+      iconAnchorMobile.textContent = labelCell.textContent.trim();
+    } else if (labelCell.textContent.trim().toLowerCase() === 'search') {
+      iconLiMobile.classList.add('search');
+      iconLiMobile.setAttribute('data-once', 'search-toggle search-stop-propagation');
+      iconAnchorMobile.setAttribute('data-once', 'search-stop-propagation');
+      const searchSpan = document.createElement('span');
+      searchSpan.setAttribute('data-once', 'search-stop-propagation');
+      searchSpan.textContent = labelCell.textContent.trim();
+      iconAnchorMobile.append(searchSpan);
 
-    // Event listener for mega-menu toggle
-    const toggleElements = [anchor, iconSpan];
-    toggleElements.forEach((el) => {
-      el.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        li.classList.toggle('active');
-        megaMenu.classList.toggle('active');
-      });
-    });
+      iconLiDesktop.classList.add('search');
+      iconLiDesktop.setAttribute('data-once', 'search-toggle search-stop-propagation');
+      iconAnchorDesktop.setAttribute('data-once', 'search-stop-propagation');
+    }
+
+    iconLiMobile.append(iconAnchorMobile);
+    mobileIconUl.append(iconLiMobile);
+
+    iconLiDesktop.append(iconAnchorDesktop);
+    desktopIconUl.append(iconLiDesktop);
+    moveInstrumentation(row, iconLiMobile);
   });
 
-  // Newsroom item (special handling for latest press releases)
-  const newsroomLi = document.createElement('li');
-  newsroomLi.classList.add('has-child', 'hover-red');
-  newsroomLi.setAttribute('itemprop', 'name');
+  // Search screen wrap
+  const searchScreenWrap = document.createElement('div');
+  searchScreenWrap.classList.add('search-screen-wrap');
+  searchScreenWrap.setAttribute('data-once', 'search-stop-propagation');
+  const searchWrapInner = document.createElement('div');
+  searchWrapInner.classList.add('wrap');
+  searchWrapInner.setAttribute('data-once', 'search-stop-propagation');
+  searchScreenWrap.append(searchWrapInner);
 
-  const newsroomAnchor = document.createElement('a');
-  newsroomAnchor.href = 'https://www.mahindra.com/newsroom'; // Specific newsroom link from ORIGINAL HTML
-  newsroomAnchor.textContent = 'newsroom';
-  newsroomAnchor.setAttribute('itemprop', 'url');
-  newsroomLi.appendChild(newsroomAnchor);
+  const searchForm = document.createElement('form');
+  searchForm.action = 'https://www.mahindra.com/search';
+  searchForm.method = 'get';
+  searchForm.id = 'search-block-form';
+  searchForm.setAttribute('accept-charset', 'UTF-8');
+  searchForm.setAttribute('data-drupal-form-fields', 'edit-keys');
+  searchForm.setAttribute('data-once', 'search-stop-propagation');
+  searchWrapInner.append(searchForm);
 
-  const newsroomIconSpan = document.createElement('span');
-  newsroomIconSpan.innerHTML = SVG_ARROW_ICON;
-  newsroomLi.appendChild(newsroomIconSpan);
+  const searchInputWrap = document.createElement('div');
+  searchInputWrap.classList.add('search-wrap');
+  searchInputWrap.setAttribute('data-once', 'search-stop-propagation');
+  searchForm.append(searchInputWrap);
 
-  const newsroomMegaMenu = document.createElement('div');
-  newsroomMegaMenu.classList.add('mega-menu');
-  const newsroomMegaMenuWrap = document.createElement('div');
-  newsroomMegaMenuWrap.classList.add('wrap', 'container');
-  newsroomMegaMenu.appendChild(newsroomMegaMenuWrap);
-  const newsroomCenterDiv = document.createElement('div');
-  newsroomCenterDiv.classList.add('center-div');
-  newsroomMegaMenuWrap.appendChild(newsroomCenterDiv);
+  const searchIconDiv = document.createElement('div');
+  searchIconDiv.classList.add('search-icon');
+  searchIconDiv.setAttribute('data-once', 'search-stop-propagation');
+  searchIconDiv.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><path d="M15.707 14.293L11.5 10.086A6.476 6.476 0 0 0 13 6.5C13 2.916 10.084 0 6.5 0S0 2.916 0 6.5 2.916 13 6.5 13a6.476 6.476 0 0 0 3.586-1.293l4.217 4.217a1 1 0 0 0 1.414-1.414zM6.5 11C4.019 11 2 8.981 2 6.5S4.019 2 6.5 2 11 4.019 11 6.5 8.981 11 6.5 11z"/></svg>'; // Example SVG
+  searchInputWrap.append(searchIconDiv);
 
-  const newsroomLeftDiv = document.createElement('div');
-  newsroomLeftDiv.classList.add('left-div', 'newsroom-left-div');
-  newsroomCenterDiv.appendChild(newsroomLeftDiv);
+  const searchInput = document.createElement('input');
+  searchInput.type = 'text';
+  searchInput.classList.add('input-text', 'searchtext');
+  searchInput.required = true;
+  searchInput.name = 'key';
+  searchInput.id = 'searchInput';
+  searchInput.autocomplete = 'off';
+  searchInput.setAttribute('data-once', 'search-stop-propagation');
+  searchInputWrap.append(searchInput);
 
-  const newsroomLeftHeading = document.createElement('h4');
-  newsroomLeftHeading.classList.add('left-div-heading');
-  const newsroomHeadingAnchor = document.createElement('a');
-  newsroomHeadingAnchor.textContent = 'Newsroom';
-  newsroomLeftHeading.appendChild(newsroomHeadingAnchor);
-  newsroomLeftDiv.appendChild(newsroomLeftHeading);
+  const submitButton = document.createElement('button');
+  submitButton.classList.add('submit-button');
+  submitButton.setAttribute('data-once', 'search-stop-propagation');
+  const submitLabel = document.createElement('div');
+  submitLabel.classList.add('label');
+  submitLabel.setAttribute('data-once', 'search-stop-propagation');
+  submitLabel.textContent = 'Submit';
+  submitButton.append(submitLabel);
+  submitButton.innerHTML += '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><path d="M15.707 14.293L11.5 10.086A6.476 6.476 0 0 0 13 6.5C13 2.916 10.084 0 6.5 0S0 2.916 0 6.5 2.916 13 6.5 13a6.476 6.476 0 0 0 3.586-1.293l4.217 4.217a1 1 0 0 0 1.414-1.414zM6.5 11C4.019 11 2 8.981 2 6.5S4.019 2 6.5 2 11 4.019 11 6.5 8.981 11 6.5 11z"/></svg>'; // Example SVG
+  searchInputWrap.append(submitButton);
 
-  const latestPressReleasesDiv = document.createElement('div');
-  latestPressReleasesDiv.classList.add('latest-two-press-release');
-  newsroomLeftDiv.appendChild(latestPressReleasesDiv);
+  const searchResultBox = document.createElement('div');
+  searchResultBox.classList.add('searchResultBox');
+  searchResultBox.style.display = 'none';
+  searchResultBox.setAttribute('data-once', 'search-stop-propagation');
+  searchForm.append(searchResultBox);
 
-  pressReleaseItems.slice(0, 2).forEach((row) => { // Only show latest two
-    const cells = [...row.children];
-    const prLinkCell = cells.find(cell => cell.querySelector('a'));
-    const prTitleCell = cells.find(cell => !cell.querySelector('a') && !cell.querySelector('picture') && cell.textContent.trim().length > 0);
-    const prDateCell = cells.find(cell => cell.textContent.trim().match(/\d{1,2}\s\w+\s\d{4}/)); // Basic date detection
-    const prCategoryCell = cells.find(cell => cell.textContent.trim().length > 0 && cell !== prTitleCell && cell !== prDateCell);
-
-    const slidesDiv = document.createElement('div');
-    slidesDiv.classList.add('slides');
-    const slidesWrap = document.createElement('div');
-    slidesWrap.classList.add('wrap');
-    slidesDiv.appendChild(slidesWrap);
-    const contentDiv = document.createElement('div');
-    contentDiv.classList.add('content');
-    slidesWrap.appendChild(contentDiv);
-    const descDiv = document.createElement('div');
-    descDiv.classList.add('desc');
-    contentDiv.appendChild(descDiv);
-
-    const p = document.createElement('p');
-    const prAnchor = document.createElement('a');
-    const foundPrLink = prLinkCell?.querySelector('a');
-    if (foundPrLink) prAnchor.href = foundPrLink.href;
-    prAnchor.textContent = prTitleCell?.textContent.trim() || '';
-    p.appendChild(prAnchor);
-    descDiv.appendChild(p);
-
-    const dateDiv = document.createElement('div');
-    dateDiv.classList.add('date');
-    const emDate = document.createElement('em');
-    emDate.textContent = prDateCell?.textContent.trim() || '';
-    dateDiv.appendChild(emDate);
-    const emCategory = document.createElement('em');
-    emCategory.textContent = prCategoryCell?.textContent.trim() || '';
-    dateDiv.appendChild(emCategory);
-    descDiv.appendChild(dateDiv);
-
-    latestPressReleasesDiv.appendChild(slidesDiv);
-  });
-
-  const newsroomSubNavWrap = document.createElement('div');
-  newsroomSubNavWrap.classList.add('sub-nav-wrap');
-  newsroomCenterDiv.appendChild(newsroomSubNavWrap);
-
-  const newsroomUl1 = document.createElement('ul');
-  const newsroomLi1 = document.createElement('li');
-  const newsroomLink1 = document.createElement('a');
-  newsroomLink1.href = 'https://www.mahindra.com/newsroom/press-release';
-  newsroomLink1.textContent = 'Press Releases';
-  newsroomLi1.appendChild(newsroomLink1);
-  newsroomUl1.appendChild(newsroomLi1);
-
-  const newsroomLi2 = document.createElement('li');
-  const newsroomLink2 = document.createElement('a');
-  newsroomLink2.href = 'https://www.mahindra.com/newsroom/corporate-doc';
-  newsroomLink2.textContent = 'Media Resources';
-  newsroomLi2.appendChild(newsroomLink2);
-  newsroomUl1.appendChild(newsroomLi2);
-  newsroomSubNavWrap.appendChild(newsroomUl1);
-
-  const newsroomUl2 = document.createElement('ul');
-  const newsroomLi3 = document.createElement('li');
-  const newsroomLink3 = document.createElement('a');
-  newsroomLink3.href = 'https://www.mahindra.com/newsroom#in-the-news';
-  newsroomLink3.textContent = 'In The News';
-  newsroomLi3.appendChild(newsroomLink3);
-  newsroomUl2.appendChild(newsroomLi3);
-  newsroomSubNavWrap.appendChild(newsroomUl2);
-
-  newsroomLi.appendChild(newsroomMegaMenu);
-  navUl.appendChild(newsroomLi);
-
-  // Event listener for newsroom mega-menu toggle
-  [newsroomAnchor, newsroomIconSpan].forEach((el) => {
-    el.addEventListener('click', (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      newsroomLi.classList.toggle('active');
-      newsroomMegaMenu.classList.toggle('active');
-    });
-  });
-
-  // Icon Links
-  const iconNavMobile = document.createElement('div');
-  iconNavMobile.classList.add('icon-nav', 'mobile-menus-icon');
-  const ulIconMobile = document.createElement('ul');
-  iconNavMobile.appendChild(ulIconMobile);
-
-  const iconNavDesktop = document.createElement('div');
-  iconNavDesktop.classList.add('icon-nav', 'desktop-menus-icon');
-  const ulIconDesktop = document.createElement('ul');
-  iconNavDesktop.appendChild(ulIconDesktop);
-
-  iconLinkItems.forEach((row) => {
-    const cells = [...row.children];
-    const linkCell = cells.find(cell => cell.querySelector('a'));
-    const iconCell = cells.find(cell => cell.querySelector('picture'));
-    const labelCell = cells.find(cell => !cell.querySelector('a') && !cell.querySelector('picture') && cell.textContent.trim().length > 0);
-
+  const searchSuggestionsWrap = document.createElement('div');
+  searchSuggestionsWrap.classList.add('search-suggestions-wrap');
+  searchSuggestionsWrap.setAttribute('data-once', 'search-stop-propagation');
+  const popularKeywordsLabel = document.createElement('div');
+  popularKeywordsLabel.classList.add('label');
+  popularKeywordsLabel.setAttribute('data-once', 'search-stop-propagation');
+  popularKeywordsLabel.textContent = 'Popular Keywords:';
+  searchSuggestionsWrap.append(popularKeywordsLabel);
+  const popularKeywordsTokens = document.createElement('div');
+  popularKeywordsTokens.classList.add('tokens-wrap');
+  popularKeywordsTokens.setAttribute('data-once', 'search-stop-propagation');
+  const popularKeywordsUl = document.createElement('ul');
+  popularKeywordsUl.setAttribute('data-once', 'search-stop-propagation');
+  ['Business', 'FY 21', 'Brands', 'XUV700', 'Global', 'Nanhi Kali'].forEach((keyword) => {
     const li = document.createElement('li');
-    const anchor = document.createElement('a');
-    const foundLink = linkCell?.querySelector('a');
-    if (foundLink) anchor.href = foundLink.href;
-    anchor.textContent = labelCell?.textContent.trim() || '';
-
-    const iconPicture = iconCell?.querySelector('picture');
-    if (iconPicture) {
-      const img = iconPicture.querySelector('img');
-      // Replace with inline SVG if it's an SVG
-      if (img.src.endsWith('.svg') || img.src.includes('.svg+xml')) {
-        let svgContent = '';
-        if (labelCell?.textContent.trim().toLowerCase() === 'contact us') {
-          svgContent = SVG_MAIL_ICON;
-          li.classList.add('mail');
-        } else if (labelCell?.textContent.trim().toLowerCase() === 'search') {
-          svgContent = SVG_SEARCH_ICON_WHITE; // Mobile search icon
-          li.classList.add('search');
-        }
-        if (svgContent) {
-          const iconSpan = document.createElement('span');
-          iconSpan.innerHTML = svgContent;
-          anchor.prepend(iconSpan);
-        }
-      } else {
-        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '20' }]);
-        moveInstrumentation(img, optimizedPic.querySelector('img'));
-        anchor.prepend(optimizedPic);
-      }
-    }
-    li.appendChild(anchor);
-    ulIconMobile.appendChild(li.cloneNode(true)); // Add to mobile nav
-
-    // Desktop icons might be different or have different labels
-    const desktopLi = document.createElement('li');
-    const desktopAnchor = document.createElement('a');
-    if (foundLink) desktopAnchor.href = foundLink.href;
-
-    if (iconPicture) {
-      const img = iconPicture.querySelector('img');
-      if (img.src.endsWith('.svg') || img.src.includes('.svg+xml')) {
-        let svgContent = '';
-        if (labelCell?.textContent.trim().toLowerCase() === 'contact us') {
-          svgContent = SVG_MAIL_ICON;
-          desktopLi.classList.add('mail');
-        } else if (labelCell?.textContent.trim().toLowerCase() === 'search') {
-          svgContent = SVG_SEARCH_ICON_WHITE; // Desktop search icon
-          desktopLi.classList.add('search');
-        }
-        if (svgContent) {
-          const iconSpan = document.createElement('span');
-          iconSpan.innerHTML = svgContent;
-          desktopAnchor.prepend(iconSpan);
-        }
-      } else {
-        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '20' }]);
-        moveInstrumentation(img, optimizedPic.querySelector('img'));
-        desktopAnchor.prepend(optimizedPic);
-      }
-    }
-    desktopLi.appendChild(desktopAnchor);
-    ulIconDesktop.appendChild(desktopLi);
+    li.setAttribute('data-once', 'search-stop-propagation');
+    li.textContent = keyword;
+    popularKeywordsUl.append(li);
   });
+  popularKeywordsTokens.append(popularKeywordsUl);
+  searchSuggestionsWrap.append(popularKeywordsTokens);
+  searchWrapInner.append(searchSuggestionsWrap);
 
-  nav.appendChild(iconNavMobile);
-  nav.appendChild(iconNavDesktop);
-  wrap.appendChild(nav);
+  const recommendedSuggestionsWrap = document.createElement('div');
+  recommendedSuggestionsWrap.classList.add('search-suggestions-wrap');
+  recommendedSuggestionsWrap.setAttribute('data-once', 'search-stop-propagation');
+  const recommendedLabel = document.createElement('div');
+  recommendedLabel.classList.add('label');
+  recommendedLabel.setAttribute('data-once', 'search-stop-propagation');
+  recommendedLabel.textContent = 'Recommended for you:';
+  recommendedSuggestionsWrap.append(recommendedLabel);
+  const recommendedTokens = document.createElement('div');
+  recommendedTokens.classList.add('tokens-wrap');
+  recommendedTokens.setAttribute('data-once', 'search-stop-propagation');
+  const recommendedUl = document.createElement('ul');
+  recommendedUl.setAttribute('data-once', 'search-stop-propagation');
+  ['Annual Report 2021 - 2022', 'Leadership Announcement', 'Latest Press Release', 'Brand Guidelines'].forEach((keyword) => {
+    const li = document.createElement('li');
+    li.setAttribute('data-once', 'search-stop-propagation');
+    li.textContent = keyword;
+    recommendedUl.append(li);
+  });
+  recommendedTokens.append(recommendedUl);
+  recommendedSuggestionsWrap.append(recommendedTokens);
+  searchWrapInner.append(recommendedSuggestionsWrap);
 
-  // Search functionality
-  const searchMobileLi = ulIconMobile.querySelector('.search');
-  const searchDesktopLi = ulIconDesktop.querySelector('.search');
-
-  const createSearchScreen = () => {
-    const searchScreenWrap = document.createElement('div');
-    searchScreenWrap.classList.add('search-screen-wrap');
-    const searchWrapInner = document.createElement('div');
-    searchWrapInner.classList.add('wrap');
-    searchScreenWrap.appendChild(searchWrapInner);
-
-    const form = document.createElement('form');
-    form.action = '/search'; // Placeholder
-    form.method = 'get';
-    form.id = 'search-block-form';
-    form.setAttribute('accept-charset', 'UTF-8');
-    form.setAttribute('data-drupal-form-fields', 'edit-keys');
-    searchWrapInner.appendChild(form);
-
-    const searchInputWrap = document.createElement('div');
-    searchInputWrap.classList.add('search-wrap');
-    form.appendChild(searchInputWrap);
-
-    const searchIconDiv = document.createElement('div');
-    searchIconDiv.classList.add('search-icon');
-    searchIconDiv.innerHTML = SVG_SEARCH_ICON_BLACK;
-    searchInputWrap.appendChild(searchIconDiv);
-
-    const input = document.createElement('input');
-    input.type = 'text';
-    input.classList.add('input-text', 'searchtext');
-    input.required = true;
-    input.name = 'key';
-    input.id = 'searchInput';
-    input.autocomplete = 'off';
-    searchInputWrap.appendChild(input);
-
-    const submitButton = document.createElement('button');
-    submitButton.classList.add('submit-button');
-    const submitLabel = document.createElement('div');
-    submitLabel.classList.add('label');
-    submitLabel.textContent = 'Submit';
-    submitButton.appendChild(submitLabel);
-    const submitIcon = document.createElement('span');
-    submitIcon.innerHTML = SVG_SUBMIT_ICON;
-    submitButton.appendChild(submitIcon);
-    searchInputWrap.appendChild(submitButton);
-
-    // Placeholder for search results and suggestions
-    const searchResultBox = document.createElement('div');
-    searchResultBox.classList.add('searchResultBox');
-    searchResultBox.style.display = 'none';
-    form.appendChild(searchResultBox);
-
-    const searchSuggestionsWrap1 = document.createElement('div');
-    searchSuggestionsWrap1.classList.add('search-suggestions-wrap');
-    const label1 = document.createElement('div');
-    label1.classList.add('label');
-    label1.textContent = 'Popular Keywords:';
-    searchSuggestionsWrap1.appendChild(label1);
-    const tokensWrap1 = document.createElement('div');
-    tokensWrap1.classList.add('tokens-wrap');
-    const ul1 = document.createElement('ul');
-    ['Business', 'FY 21', 'Brands', 'XUV700', 'Global', 'Nanhi Kali'].forEach((keyword) => {
-      const li = document.createElement('li');
-      li.textContent = keyword;
-      ul1.appendChild(li);
-    });
-    tokensWrap1.appendChild(ul1);
-    searchSuggestionsWrap1.appendChild(tokensWrap1);
-    searchWrapInner.appendChild(searchSuggestionsWrap1);
-
-    const searchSuggestionsWrap2 = document.createElement('div');
-    searchSuggestionsWrap2.classList.add('search-suggestions-wrap');
-    const label2 = document.createElement('div');
-    label2.classList.add('label');
-    label2.textContent = 'Recommended for you:';
-    searchSuggestionsWrap2.appendChild(label2);
-    const tokensWrap2 = document.createElement('div');
-    tokensWrap2.classList.add('tokens-wrap');
-    const ul2 = document.createElement('ul');
-    ['Annual Report 2021 - 2022', 'Leadership Announcement', 'Latest Press Release', 'Brand Guidelines'].forEach((keyword) => {
-      const li = document.createElement('li');
-      li.textContent = keyword;
-      ul2.appendChild(li);
-    });
-    tokensWrap2.appendChild(ul2);
-    searchSuggestionsWrap2.appendChild(tokensWrap2);
-    searchWrapInner.appendChild(searchSuggestionsWrap2);
-
-    return searchScreenWrap;
-  };
-
-  if (searchMobileLi) {
-    const searchAnchor = searchMobileLi.querySelector('a');
-    if (searchAnchor) {
-      const searchScreen = createSearchScreen();
-      searchMobileLi.appendChild(searchScreen);
-      searchAnchor.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        searchScreen.classList.toggle('active');
-        document.body.classList.toggle('search-open');
-      });
-      searchScreen.addEventListener('click', (e) => {
-        if (e.target === searchScreen) {
-          searchScreen.classList.remove('active');
-          document.body.classList.remove('search-open');
-        }
-      });
-    }
+  // Append search screen wrap to the search list item for both mobile and desktop
+  const mobileSearchLi = mobileIconUl.querySelector('.search');
+  if (mobileSearchLi) {
+    mobileSearchLi.append(searchScreenWrap.cloneNode(true)); // Clone for mobile
+  }
+  const desktopSearchLi = desktopIconUl.querySelector('.search');
+  if (desktopSearchLi) {
+    desktopSearchLi.append(searchScreenWrap); // Original for desktop
   }
 
-  if (searchDesktopLi) {
-    const searchAnchor = searchDesktopLi.querySelector('a');
-    if (searchAnchor) {
-      const searchScreen = createSearchScreen();
-      searchDesktopLi.appendChild(searchScreen);
-      searchAnchor.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        searchScreen.classList.toggle('active');
-        document.body.classList.toggle('search-open');
-      });
-      searchScreen.addEventListener('click', (e) => {
-        if (e.target === searchScreen) {
-          searchScreen.classList.remove('active');
-          document.body.classList.remove('search-open');
-        }
-      });
-    }
+  // 80th Year Logo
+  const year80LogoDiv = document.createElement('div');
+  year80LogoDiv.classList.add('logo', 'year-80-logo');
+  const year80LogoLink = document.createElement('a');
+  const year80LogoAnchor = year80LogoLinkRow.querySelector('a');
+  if (year80LogoAnchor) {
+    year80LogoLink.href = year80LogoAnchor.href;
   }
-
-  // Anniversary Logo
-  const anniversaryLogoDiv = document.createElement('div');
-  anniversaryLogoDiv.classList.add('logo', 'year-80-logo');
-  const anniversaryLogoLink = document.createElement('a');
-  if (anniversaryLogoLinkRow) {
-    anniversaryLogoLink.href = anniversaryLogoLinkRow.querySelector('a')?.href || '#';
-  } else {
-    anniversaryLogoLink.href = '#';
-  }
-  if (anniversaryLogoRow) {
-    const anniversaryLogoPicture = anniversaryLogoRow.querySelector('picture');
-    if (anniversaryLogoPicture) {
-      const img = anniversaryLogoPicture.querySelector('img');
+  const year80LogoPicture = year80LogoRow.querySelector('picture');
+  if (year80LogoPicture) {
+    const img = year80LogoPicture.querySelector('img');
+    if (img) {
       const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '74' }]);
       moveInstrumentation(img, optimizedPic.querySelector('img'));
       optimizedPic.querySelector('img').classList.add('hiddenlogo1', 'years-80');
-      optimizedPic.querySelector('img').width = 74;
-      optimizedPic.querySelector('img').height = 60;
-      anniversaryLogoLink.appendChild(optimizedPic);
+      year80LogoLink.append(optimizedPic);
     }
   }
-  anniversaryLogoDiv.appendChild(anniversaryLogoLink);
-  wrap.appendChild(anniversaryLogoDiv);
+  moveInstrumentation(year80LogoRow, year80LogoLink);
+  year80LogoDiv.append(year80LogoLink);
+  wrap.append(year80LogoDiv);
 
-  block.replaceWith(header);
-
-  // Hamburger menu toggle
+  // Event Listeners for Hamburger
   hamburger.addEventListener('click', () => {
-    nav.classList.toggle('active');
+    mainNav.classList.toggle('active');
     hamburger.classList.toggle('active');
-    document.body.classList.toggle('menu-open');
+    block.classList.toggle('active');
+    document.body.classList.toggle('overflow-hidden');
   });
 
-  // Close menu on outside click
+  // Event Listeners for Search
+  const searchTriggers = block.querySelectorAll('.search > a');
+  searchTriggers.forEach((trigger) => {
+    trigger.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const searchScreen = trigger.closest('.search').querySelector('.search-screen-wrap');
+      if (searchScreen) {
+        searchScreen.classList.toggle('active');
+        trigger.closest('.search').classList.toggle('active');
+      }
+    });
+  });
+
+  // Close search when clicking outside
   document.addEventListener('click', (e) => {
-    if (!header.contains(e.target) && nav.classList.contains('active')) {
-      nav.classList.remove('active');
-      hamburger.classList.remove('active');
-      document.body.classList.remove('menu-open');
+    const activeSearch = block.querySelector('.search.active');
+    if (activeSearch && !activeSearch.contains(e.target)) {
+      activeSearch.querySelector('.search-screen-wrap').classList.remove('active');
+      activeSearch.classList.remove('active');
     }
+  });
+
+  // Prevent closing search when clicking inside search screen wrap
+  block.querySelectorAll('.search-screen-wrap').forEach((searchScreen) => {
+    searchScreen.addEventListener('click', (e) => {
+      e.stopPropagation();
+    });
   });
 }

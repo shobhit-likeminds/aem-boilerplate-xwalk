@@ -175,8 +175,8 @@
     "id": "main-header",
     "components": [
       "navigation-item",
-      "press-release-item",
-      "icon-link-item"
+      "icon-nav-item",
+      "press-release-item"
     ]
   },
   {
