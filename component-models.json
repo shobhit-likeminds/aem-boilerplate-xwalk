@@ -360,47 +360,47 @@
       {
         "component": "aem-content",
         "label": "Logo Link",
-        "name": "logo-link",
+        "name": "logoLink",
         "valueType": "string"
       },
       {
         "component": "container",
-        "item": "footer-social-link",
+        "item": "social-link-item",
         "label": "Social Links",
-        "name": "social-links"
+        "name": "socialLinks"
       },
       {
         "component": "container",
-        "item": "footer-link-block",
-        "label": "Footer Link Blocks",
-        "name": "footer-link-blocks"
+        "item": "footer-menu-block",
+        "label": "Footer Menu Blocks",
+        "name": "footerMenuBlocks"
       },
       {
         "component": "container",
-        "item": "footer-secondary-link",
-        "label": "Secondary Links",
-        "name": "secondary-links"
+        "item": "secondary-nav-item",
+        "label": "Secondary Navigation",
+        "name": "secondaryNav"
       },
       {
-        "component": "richtext",
+        "component": "text",
         "label": "Copyright Text",
-        "name": "copyright-text",
+        "name": "copyrightText",
         "valueType": "string"
       }
     ]
   },
   {
-    "id": "footer-social-link",
+    "id": "social-link-item",
     "fields": [
       {
         "component": "reference",
-        "label": "Social Icon",
+        "label": "Icon",
         "name": "icon",
         "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "Social Link",
+        "label": "Link",
         "name": "link",
         "valueType": "string"
       },
@@ -413,69 +413,69 @@
     ]
   },
   {
-    "id": "footer-link-block",
+    "id": "footer-menu-block",
     "fields": [
       {
         "component": "text",
-        "label": "Block Title",
-        "name": "block-title",
+        "label": "Block Label",
+        "name": "blockLabel",
         "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "Block Title Link",
-        "name": "block-title-link",
+        "label": "Block Link",
+        "name": "blockLink",
         "valueType": "string"
       },
       {
         "component": "container",
-        "item": "footer-link-item",
-        "label": "Footer Links",
-        "name": "footer-links"
+        "item": "footer-menu-item",
+        "label": "Menu Items",
+        "name": "menuItems"
       }
     ]
   },
   {
-    "id": "footer-link-item",
+    "id": "footer-menu-item",
     "fields": [
       {
         "component": "text",
-        "label": "Link Label",
+        "label": "Menu Item Label",
         "name": "label",
         "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "Link URL",
+        "label": "Menu Item Link",
         "name": "link",
         "valueType": "string"
       },
       {
         "component": "reference",
-        "label": "Link Icon",
+        "label": "Menu Item Icon",
         "name": "icon",
         "valueType": "string"
       },
       {
         "component": "richtext",
-        "label": "Navigation Hierarchy",
+        "label": "Menu Item Hierarchy",
         "name": "hierarchy-tree",
         "valueType": "string"
       }
     ]
   },
   {
-    "id": "footer-secondary-link",
+    "id": "secondary-nav-item",
     "fields": [
       {
         "component": "text",
-        "label": "Secondary Link Label",
+        "label": "Secondary Nav Label",
         "name": "label",
         "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "Secondary Link URL",
+        "label": "Secondary Nav Link",
         "name": "link",
         "valueType": "string"
       }
@@ -1248,14 +1248,14 @@
       {
         "component": "container",
         "item": "press-release-item",
-        "label": "Press Releases",
-        "name": "press-releases"
+        "label": "Latest Press Releases",
+        "name": "latest-press-releases"
       },
       {
         "component": "container",
-        "item": "icon-nav-item",
-        "label": "Icon Nav",
-        "name": "icon-nav"
+        "item": "icon-link-item",
+        "label": "Icon Links",
+        "name": "icon-links"
       }
     ]
   },
@@ -1288,14 +1288,20 @@
       },
       {
         "component": "text",
-        "label": "Description",
-        "name": "description",
+        "label": "Left Heading",
+        "name": "left-heading",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Sub Description",
-        "name": "sub-description",
+        "label": "Left Description",
+        "name": "left-desc",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Left Sub Description",
+        "name": "left-subdesc",
         "valueType": "string"
       }
     ]
@@ -1306,42 +1312,42 @@
       {
         "component": "aem-content",
         "label": "Press Release Link",
-        "name": "link",
+        "name": "press-release-link",
         "valueType": "string"
       },
       {
         "component": "text",
         "label": "Press Release Title",
-        "name": "title",
+        "name": "press-release-title",
         "valueType": "string"
       },
       {
         "component": "date-time",
         "label": "Press Release Date",
-        "name": "date",
+        "name": "press-release-date",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Category",
-        "name": "category",
+        "label": "Press Release Category",
+        "name": "press-release-category",
         "valueType": "string"
       }
     ]
   },
   {
-    "id": "icon-nav-item",
+    "id": "icon-link-item",
     "fields": [
-      {
-        "component": "reference",
-        "label": "Icon",
-        "name": "icon",
-        "valueType": "string"
-      },
       {
         "component": "aem-content",
         "label": "Link",
         "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Icon",
+        "name": "icon",
         "valueType": "string"
       },
       {
@@ -1882,8 +1888,8 @@
     "fields": [
       {
         "component": "text",
-        "label": "Section Title",
-        "name": "title",
+        "label": "Block Heading",
+        "name": "heading",
         "valueType": "string"
       },
       {
@@ -1899,7 +1905,7 @@
     "fields": [
       {
         "component": "reference",
-        "label": "Slide Image",
+        "label": "Image",
         "name": "image",
         "valueType": "string"
       },

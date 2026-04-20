@@ -38,8 +38,8 @@
       "fields": [
         {
           "component": "text",
-          "label": "Block Heading",
-          "name": "heading",
+          "label": "Section Title",
+          "name": "title",
           "valueType": "string"
         },
         {
@@ -55,7 +55,7 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Image",
+          "label": "Slide Image",
           "name": "image",
           "valueType": "string"
         },

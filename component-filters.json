@@ -104,10 +104,10 @@
   {
     "id": "footer-main",
     "components": [
-      "footer-social-link",
-      "footer-link-block",
-      "footer-link-item",
-      "footer-secondary-link"
+      "social-link-item",
+      "footer-menu-block",
+      "footer-menu-item",
+      "secondary-nav-item"
     ]
   },
   {
@@ -176,7 +176,7 @@
     "components": [
       "navigation-item",
       "press-release-item",
-      "icon-nav-item"
+      "icon-link-item"
     ]
   },
   {
