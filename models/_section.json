@@ -50,7 +50,17 @@
         "hero",
         "cards",
         "columns",
-        "fragment"
+        "fragment",
+        "header-comp",
+        "banner-section",
+        "w-100-pt-3-pt-sm-3",
+        "text-banner",
+        "product-selection-component",
+        "card-carousel",
+        "stay-social",
+        "buy-now-card",
+        "scroll-to-top",
+        "footer"
       ]
     }
   ]

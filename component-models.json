@@ -142,6 +142,185 @@
     ]
   },
   {
+    "id": "banner-section",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Background Image (Desktop)",
+        "name": "backgroundImageDesktop",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Background Image (Mobile)",
+        "name": "backgroundImageMobile",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "CTA Link",
+        "name": "ctaLink",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "CTA Label",
+        "name": "ctaLabel",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "buy-now-card"
+  },
+  {
+    "id": "card-carousel",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Carousel Title",
+        "name": "title",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Carousel Subtitle",
+        "name": "subtitle",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Carousel Previous Button Icon",
+        "name": "carouselPrevIcon",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Carousel Next Button Icon",
+        "name": "carouselNextIcon",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "View All Link",
+        "name": "ctaLink",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "View All Button Label",
+        "name": "ctaLabel",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "recipe-card",
+        "label": "Recipe Cards",
+        "name": "recipes"
+      },
+      {
+        "component": "container",
+        "item": "social-media-share-item",
+        "label": "Social Media Share Items",
+        "name": "socialMediaShare"
+      }
+    ]
+  },
+  {
+    "id": "recipe-card",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Recipe Card Link",
+        "name": "cardLink",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Recipe Image",
+        "name": "image",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Recipe Title",
+        "name": "title",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Recipe Description",
+        "name": "description",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Recipe Tag (optional)",
+        "name": "tag",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Info Icon (right side in info row)",
+        "name": "infoIcon",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Time Icon",
+        "name": "timeIcon",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Time Text",
+        "name": "timeText",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Serves Icon",
+        "name": "servesIcon",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Serves Text",
+        "name": "servesText",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Navigation Hierarchy",
+        "name": "hierarchy-tree",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "social-media-share-item",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Social Media Share Link",
+        "name": "shareLink",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Social Media Icon",
+        "name": "icon",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Social Media Label",
+        "name": "label",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "card",
     "fields": [
       {
@@ -180,12 +359,240 @@
     ]
   },
   {
+    "id": "footer",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Primary Logo",
+        "name": "primaryLogo"
+      },
+      {
+        "component": "aem-content",
+        "label": "Primary Logo Link",
+        "name": "primaryLogoLink"
+      },
+      {
+        "component": "reference",
+        "label": "Secondary Logo",
+        "name": "secondaryLogo"
+      },
+      {
+        "component": "container",
+        "item": "footer-navigation-item",
+        "label": "Primary Navigation Links",
+        "name": "primaryNavigation"
+      },
+      {
+        "component": "container",
+        "item": "footer-navigation-item",
+        "label": "Secondary Navigation Links",
+        "name": "secondaryNavigation"
+      },
+      {
+        "component": "container",
+        "item": "footer-link-item",
+        "label": "Footer Left Links (Secondary Row)",
+        "name": "footerLeftLinks"
+      },
+      {
+        "component": "text",
+        "label": "Copyright Text",
+        "name": "copyrightText"
+      },
+      {
+        "component": "container",
+        "item": "footer-social-link-item",
+        "label": "Footer Social Links",
+        "name": "socialLinks"
+      }
+    ]
+  },
+  {
+    "id": "footer-navigation-item",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Label",
+        "name": "label"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link"
+      },
+      {
+        "component": "richtext",
+        "label": "Navigation Hierarchy",
+        "name": "hierarchy-tree",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "footer-link-item",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Label",
+        "name": "label"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link",
+        "name": "link"
+      }
+    ]
+  },
+  {
+    "id": "footer-social-link-item",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Social Icon",
+        "name": "icon"
+      },
+      {
+        "component": "aem-content",
+        "label": "Social Link",
+        "name": "link"
+      }
+    ]
+  },
+  {
     "id": "fragment",
     "fields": [
       {
         "component": "aem-content",
         "name": "reference",
         "label": "Reference"
+      }
+    ]
+  },
+  {
+    "id": "header-comp",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Logo Image",
+        "name": "logoImage",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Logo Link",
+        "name": "logoLink",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "header-menu-item",
+        "label": "Menu Items",
+        "name": "menuItems"
+      },
+      {
+        "component": "reference",
+        "label": "Search Icon",
+        "name": "searchIcon",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Search Label",
+        "name": "searchLabel",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "header-menu-item",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Menu Icon (Mobile)",
+        "name": "icon",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Menu Label",
+        "name": "label",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Menu Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Arrow Icon (Dropdown)",
+        "name": "arrowIcon",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "header-sub-menu-item",
+        "label": "Sub Menu Items",
+        "name": "subMenuItems"
+      },
+      {
+        "component": "richtext",
+        "label": "Navigation Hierarchy",
+        "name": "hierarchy-tree",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "header-sub-menu-item",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Sub Menu Label",
+        "name": "label",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Sub Menu Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Sub Menu Arrow Icon Desktop",
+        "name": "arrowIconDesktop",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Sub Menu Arrow Icon Mobile",
+        "name": "arrowIconMobile",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "header-sub-sub-menu-item",
+        "label": "Sub-Sub Menu Items",
+        "name": "subSubMenuItems"
+      }
+    ]
+  },
+  {
+    "id": "header-sub-sub-menu-item",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Sub-Sub Menu Label",
+        "name": "label",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Sub-Sub Menu Link",
+        "name": "link",
+        "valueType": "string"
       }
     ]
   },
@@ -214,5 +621,211 @@
         "valueType": "string"
       }
     ]
+  },
+  {
+    "id": "product-selection-component",
+    "fields": [
+      {
+        "component": "richtext",
+        "label": "Main Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "product-item",
+        "label": "Product List",
+        "name": "products"
+      },
+      {
+        "component": "container",
+        "item": "product-content-item",
+        "label": "Product Content Panels",
+        "name": "productContents"
+      }
+    ]
+  },
+  {
+    "id": "product-item",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Product Icon Image",
+        "name": "iconImage",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Product Label",
+        "name": "label",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "product-content-item",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Desktop Background Image",
+        "name": "backgroundDesktop",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Mobile Background Image",
+        "name": "backgroundMobile",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Headline (Before Download)",
+        "name": "headlineBefore",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "CTA Icon (Before Download)",
+        "name": "ctaIconBefore",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "CTA Link (Before Download)",
+        "name": "ctaLinkBefore",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "CTA Label (Before Download)",
+        "name": "ctaLabelBefore",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Headline (After Download)",
+        "name": "headlineAfter",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "CTA Icon (After Download)",
+        "name": "ctaIconAfter",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "CTA Label (After Download)",
+        "name": "ctaLabelAfter",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Whatsapp Link",
+        "name": "whatsappLink",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "scroll-to-top",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Button Icon",
+        "name": "buttonIcon",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "stay-social",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Main Title",
+        "name": "title",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Subtext",
+        "name": "subtext",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "CTA Link",
+        "name": "ctaLink",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "CTA Label",
+        "name": "ctaLabel",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "stay-social-card",
+        "label": "Social Cards",
+        "name": "cards"
+      }
+    ]
+  },
+  {
+    "id": "stay-social-card",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Card Image (Desktop)",
+        "name": "imageDesktop",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Card Image (Mobile)",
+        "name": "imageMobile",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Card Link",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "text-banner",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Banner Title",
+        "name": "title",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Banner Description",
+        "name": "description",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "CTA Link",
+        "name": "ctaLink",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "CTA Label",
+        "name": "ctaLabel",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "w-100-pt-3-pt-sm-3"
   }
 ]

@@ -15,7 +15,30 @@
       "hero",
       "cards",
       "columns",
-      "fragment"
+      "fragment",
+      "header-comp",
+      "banner-section",
+      "w-100-pt-3-pt-sm-3",
+      "text-banner",
+      "product-selection-component",
+      "card-carousel",
+      "stay-social",
+      "buy-now-card",
+      "scroll-to-top",
+      "footer"
+    ]
+  },
+  {
+    "id": "banner-section"
+  },
+  {
+    "id": "buy-now-card"
+  },
+  {
+    "id": "card-carousel",
+    "components": [
+      "recipe-card",
+      "social-media-share-item"
     ]
   },
   {
@@ -38,5 +61,43 @@
       "button",
       "title"
     ]
+  },
+  {
+    "id": "footer",
+    "components": [
+      "footer-navigation-item",
+      "footer-link-item",
+      "footer-social-link-item"
+    ]
+  },
+  {
+    "id": "header-comp",
+    "components": [
+      "header-menu-item",
+      "header-sub-menu-item",
+      "header-sub-sub-menu-item"
+    ]
+  },
+  {
+    "id": "product-selection-component",
+    "components": [
+      "product-item",
+      "product-content-item"
+    ]
+  },
+  {
+    "id": "scroll-to-top"
+  },
+  {
+    "id": "stay-social",
+    "components": [
+      "stay-social-card"
+    ]
+  },
+  {
+    "id": "text-banner"
+  },
+  {
+    "id": "w-100-pt-3-pt-sm-3"
   }
 ]
