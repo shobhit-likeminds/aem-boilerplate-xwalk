@@ -38,20 +38,20 @@
       "fields": [
         {
           "component": "text",
-          "label": "Carousel Title",
+          "label": "Title",
           "name": "title",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Carousel Subtitle",
+          "label": "Subtitle",
           "name": "subtitle",
           "valueType": "string"
         },
         {
           "component": "container",
           "item": "product-card",
-          "label": "Product Cards",
+          "label": "Cards",
           "name": "cards"
         }
       ]
@@ -61,32 +61,26 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Main Product Image",
-          "name": "mainImage",
+          "label": "Background Image",
+          "name": "backgroundImage",
           "valueType": "string"
         },
         {
           "component": "richtext",
-          "label": "Card Title \u0026 Description",
+          "label": "Card Title HTML",
           "name": "cardTitle",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Thumbnail/Product Icon",
-          "name": "thumbnailImage",
+          "label": "Main Product Image",
+          "name": "mainImage",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "label": "Product Link",
-          "name": "productLink",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "CTA Label",
-          "name": "ctaLabel",
+          "label": "Main Image Link",
+          "name": "mainImageLink",
           "valueType": "string"
         },
         {

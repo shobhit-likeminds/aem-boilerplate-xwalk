@@ -85,7 +85,9 @@
   {
     "id": "header-comp",
     "components": [
-      "navigation-item"
+      "navigation-item",
+      "sub-menu-item",
+      "search-action"
     ]
   },
   {
@@ -97,7 +99,9 @@
   {
     "id": "product-selection-component",
     "components": [
-      "product-item"
+      "product-item",
+      "report-section",
+      "milk-section"
     ]
   },
   {
