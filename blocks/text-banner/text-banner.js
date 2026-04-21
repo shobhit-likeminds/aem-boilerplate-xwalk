@@ -2,13 +2,11 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const [headingRow, descriptionRow, ctaLinkRow, ctaLinkLabelRow] = [...block.children];
+  const [titleRow, descriptionRow, ...ctaRows] = [...block.children];
 
   const section = document.createElement('section');
   section.classList.add('text-banner--wrapper', 'position-relative', 'bg-maroon-700');
-  moveInstrumentation(block, section);
 
-  // Background circles and curves
   const bgCircleLeft = document.createElement('div');
   bgCircleLeft.classList.add('position-absolute', 'opacity-60', 'bg-circle-left');
   section.append(bgCircleLeft);
@@ -41,71 +39,89 @@ export default function decorate(block) {
   contentWrapper.classList.add('d-flex', 'flex-column', 'align-items-center');
   textBannerContainer.append(contentWrapper);
 
-  // Heading
-  if (headingRow) {
-    const headingDiv = document.createElement('div');
-    const heading = document.createElement('h2');
-    heading.classList.add('font-baskerville', 'font-md-40', 'font-24', 'text-banner--title');
-    heading.textContent = headingRow.firstElementChild?.textContent.trim() || '';
-    moveInstrumentation(headingRow, heading);
-    headingDiv.append(heading);
-    contentWrapper.append(headingDiv);
+  // Title
+  if (titleRow) {
+    const titleDiv = document.createElement('div');
+    const title = document.createElement('h2');
+    title.classList.add('font-baskerville', 'font-md-40', 'font-24', 'text-banner--title');
+    moveInstrumentation(titleRow, title);
+    // Use content detection for the title cell
+    const titleCell = [...titleRow.children].find(cell => cell.textContent.trim() !== '');
+    if (titleCell) {
+      title.textContent = titleCell.textContent.trim();
+    }
+    titleDiv.append(title);
+    contentWrapper.append(titleDiv);
   }
 
   // Description
   if (descriptionRow) {
     const descriptionDiv = document.createElement('div');
     descriptionDiv.classList.add('mt-sm-8', 'mt-5', 'text-banner--description');
-    const descriptionTextWrapper = document.createElement('div');
-    descriptionTextWrapper.classList.add('font-md-18', 'font-default', 'leading-24', 'text-center', 'promise-text-padding');
-    descriptionTextWrapper.innerHTML = descriptionRow.firstElementChild?.innerHTML || '';
-    moveInstrumentation(descriptionRow, descriptionTextWrapper);
-    descriptionDiv.append(descriptionTextWrapper);
+    const descriptionText = document.createElement('div');
+    descriptionText.classList.add('font-md-18', 'font-default', 'leading-24', 'text-center', 'promise-text-padding');
+    moveInstrumentation(descriptionRow, descriptionText);
+    // Use content detection for the description cell
+    const descriptionCell = [...descriptionRow.children].find(cell => cell.innerHTML.trim() !== '');
+    if (descriptionCell) {
+      descriptionText.innerHTML = descriptionCell.innerHTML;
+    }
+    descriptionDiv.append(descriptionText);
     contentWrapper.append(descriptionDiv);
   }
 
-  // CTA Link
-  if (ctaLinkRow && ctaLinkLabelRow) {
+  // CTAs
+  if (ctaRows.length > 0) {
     const ctaWrapper = document.createElement('div');
     ctaWrapper.classList.add('text-banner--cta', 'mt-12', 'mt-lg-16');
 
-    const ctaLink = document.createElement('a');
-    const originalLink = ctaLinkRow.firstElementChild?.querySelector('a');
-    if (originalLink) {
-      ctaLink.href = originalLink.href;
-    }
-    ctaLink.classList.add(
-      'svasti-cta',
-      'cta-analytics',
-      'w-fit',
-      'text-decoration-none',
-      'd-flex',
-      'align-items-center',
-      'primary',
-      'px-8',
-      'pb-3',
-      'text-black',
-      'border',
-      'border-2',
-      'border-cream-100',
-      'border-cream-500-hover',
-      'border-cream-500-active',
-      'bg-cream-100',
-      'bg-cream-500-hover',
-      'bg-cream-100-active',
-    );
+    ctaRows.forEach((ctaRow) => {
+      // Correctly destructure cells for CTA rows as per model
+      const [labelCell, linkCell] = [...ctaRow.children];
 
-    const ctaLabelSpan = document.createElement('span');
-    ctaLabelSpan.classList.add('svasti-cta__label', 'fw-semibold', 'fs-default', 'leading-26');
-    ctaLabelSpan.textContent = ctaLinkLabelRow.firstElementChild?.textContent.trim() || '';
-    moveInstrumentation(ctaLinkLabelRow, ctaLabelSpan);
-    ctaLink.append(ctaLabelSpan);
+      const link = document.createElement('a');
+      link.classList.add(
+        'svasti-cta',
+        'cta-analytics',
+        'w-fit',
+        'text-decoration-none',
+        'd-flex',
+        'align-items-center',
+        'primary',
+        'px-8',
+        'pb-3',
+        'text-black',
+        'border',
+        'border-2',
+        'border-cream-100',
+        'border-cream-500-hover',
+        'border-cream-500-active',
+        'bg-cream-100',
+        'bg-cream-500-hover',
+        'bg-cream-100-active',
+      );
 
-    moveInstrumentation(ctaLinkRow, ctaLink);
-    ctaWrapper.append(ctaLink);
+      const foundLink = linkCell.querySelector('a');
+      if (foundLink) {
+        link.href = foundLink.href;
+      }
+
+      const span = document.createElement('span');
+      span.classList.add('svasti-cta__label', 'fw-semibold', 'fs-default', 'leading-26');
+      span.textContent = labelCell.textContent.trim();
+      link.append(span);
+
+      moveInstrumentation(ctaRow, link);
+      ctaWrapper.append(link);
+    });
     textBannerContainer.append(ctaWrapper);
   }
 
-  block.textContent = '';
-  block.append(section);
+  block.replaceChildren(section);
+
+  section.querySelectorAll('picture > img').forEach((img) => {
+    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+    moveInstrumentation(img, optimizedPic.querySelector('img'));
+    img.closest('picture').replaceWith(optimizedPic);
+  });
 }

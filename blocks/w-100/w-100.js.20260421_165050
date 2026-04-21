@@ -1,0 +1,19 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  // The original HTML shows a div with specific classes and an inline style.
+  // The EDS block structure for 'w-100' is an empty div, meaning the block itself
+  // is a container whose purpose is to apply specific styling.
+  // We will create a new div and apply the classes and style from the original HTML.
+
+  const newDiv = document.createElement('div');
+  newDiv.classList.add('w-100', 'pt-3', 'pt-sm-3');
+  newDiv.style.background = ''; // Copy the inline style if present
+
+  // Since the block itself is an empty container and has no authored child rows
+  // (block.children is an empty HTMLCollection), we don't need to move instrumentation
+  // from any child rows. We simply replace the original block div with our new div.
+  block.replaceWith(newDiv);
+}
+

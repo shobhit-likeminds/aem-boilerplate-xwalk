@@ -26,35 +26,29 @@ export default function decorate(block) {
   if (picture) {
     const img = picture.querySelector('img');
     if (img) {
-      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '48' }]);
+      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
       moveInstrumentation(img, optimizedPic.querySelector('img'));
       button.append(optimizedPic);
     }
   }
 
-  moveInstrumentation(iconRow, button);
+  button.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
 
-  block.textContent = '';
-  block.append(button);
-
-  const showButton = () => {
-    if (window.scrollY > 200) {
+  const handleScroll = () => {
+    if (window.scrollY > 200) { // Show button after scrolling down 200px
       button.style.display = 'flex';
     } else {
       button.style.display = 'none';
     }
   };
 
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    });
-  };
+  // Initial check and add scroll listener
+  handleScroll();
+  window.addEventListener('scroll', handleScroll);
 
-  window.addEventListener('scroll', showButton);
-  button.addEventListener('click', scrollToTop);
-
-  // Initial check
-  showButton();
+  moveInstrumentation(iconRow, button);
+  block.replaceChildren(button);
+  block.classList.add('scroll-to-top');
 }

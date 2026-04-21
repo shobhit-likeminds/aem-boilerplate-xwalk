@@ -34,7 +34,10 @@
     ]
   },
   {
-    "id": "banner-section"
+    "id": "banner-section",
+    "components": [
+      "banner-cta-item"
+    ]
   },
   {
     "id": "buy-now-card"
@@ -75,13 +78,14 @@
   {
     "id": "footer",
     "components": [
-      "footer-section"
+      "footer-nav-item",
+      "footer-social-link-item"
     ]
   },
   {
     "id": "header-comp",
     "components": [
-      "nav-item"
+      "navigation-item"
     ]
   },
   {
@@ -93,7 +97,7 @@
   {
     "id": "product-selection-component",
     "components": [
-      "product"
+      "product-item"
     ]
   },
   {
@@ -111,11 +115,14 @@
   {
     "id": "stay-social",
     "components": [
-      "stay-social-card"
+      "social-card"
     ]
   },
   {
-    "id": "text-banner"
+    "id": "text-banner",
+    "components": [
+      "text-banner-cta"
+    ]
   },
   {
     "id": "w-100-pt-3-pt-sm-3"

@@ -5,20 +5,19 @@ export default function decorate(block) {
   const [
     titleRow,
     subtextRow,
+    ctaLabelRow,
     ctaLinkRow,
-    ctaLinkLabelRow,
-    ...cardRows
+    ...socialCardRows
   ] = [...block.children];
 
-  block.classList.add('pt-14', 'py-lg-11', 'bg-cream-300');
-
+  // Create main container
   const container = document.createElement('div');
   container.classList.add('container', 'gx-8', 'gx-sm-0');
+  moveInstrumentation(block, container); // Move block instrumentation to the new container
 
   // Title
-  const titleEl = document.createElement('h2');
-  moveInstrumentation(titleRow, titleEl);
-  titleEl.classList.add(
+  const title = document.createElement('h2');
+  title.classList.add(
     'stay-social__title',
     'font-24',
     'leading-34',
@@ -28,13 +27,13 @@ export default function decorate(block) {
     'text-center',
     'fw-bold',
   );
-  titleEl.textContent = titleRow.firstElementChild.textContent.trim();
-  container.append(titleEl);
+  moveInstrumentation(titleRow, title);
+  title.textContent = titleRow.textContent.trim();
+  container.append(title);
 
   // Subtext
-  const subtextEl = document.createElement('h3');
-  moveInstrumentation(subtextRow, subtextEl);
-  subtextEl.classList.add(
+  const subtext = document.createElement('h3');
+  subtext.classList.add(
     'stay-social__subtext',
     'font-16',
     'leading-24',
@@ -44,17 +43,17 @@ export default function decorate(block) {
     'fw-medium',
     'mt-4',
   );
-  subtextEl.textContent = subtextRow.firstElementChild.textContent.trim();
-  container.append(subtextEl);
+  moveInstrumentation(subtextRow, subtext);
+  subtext.textContent = subtextRow.textContent.trim();
+  container.append(subtext);
 
-  // Main content wrapper for cards
-  const mainDiv = document.createElement('div');
-  mainDiv.classList.add('stay-social__main', 'mt-8');
-  container.append(mainDiv);
+  // Social cards section
+  const mainWrapper = document.createElement('div');
+  mainWrapper.classList.add('stay-social__main', 'mt-8');
+  container.append(mainWrapper);
 
-  // Cards List
-  const cardsUl = document.createElement('ul');
-  cardsUl.classList.add(
+  const cardsList = document.createElement('ul');
+  cardsList.classList.add(
     'stay-social__cards',
     'd-grid',
     'gap-5',
@@ -62,93 +61,65 @@ export default function decorate(block) {
     'w-fit',
     'mx-auto',
   );
-  mainDiv.append(cardsUl);
+  mainWrapper.append(cardsList);
 
-  cardRows.forEach((row) => {
-    // Use content detection instead of index access for card cells
-    const cells = [...row.children];
-    const imageCell = cells.find(cell => cell.querySelector('picture'));
-    const linkCell = cells.find(cell => cell.querySelector('a'));
-    const linkLabelCell = cells.find(cell => !cell.querySelector('picture') && !cell.querySelector('a')); // Assuming linkLabel is plain text
+  socialCardRows.forEach((row) => {
+    const [imageCell, linkCell] = [...row.children];
 
-    const li = document.createElement('li');
-    moveInstrumentation(row, li);
-    li.classList.add('stay-social__card', 'overflow-hidden', 'ratio-1x1', 'ratio'); // Default ratio-1x1
+    const listItem = document.createElement('li');
+    listItem.classList.add('stay-social__card', 'overflow-hidden', 'ratio-1x1', 'ratio'); // ratio-1x1 is default, will be overridden by original HTML if needed
 
     const linkEl = document.createElement('a');
-    linkEl.classList.add('stay-social__card--link', 'd-block', 'w-100', 'h-100');
-    if (linkCell) {
-      const foundLink = linkCell.querySelector('a');
-      if (foundLink) {
-        linkEl.href = foundLink.href;
-        linkEl.target = '_blank'; // Original HTML has target="_blank"
+    linkEl.classList.add(
+      'stay-social__card--link',
+      'd-block',
+      'w-100',
+      'h-100',
+    );
+    const foundLink = linkCell.querySelector('a');
+    if (foundLink) {
+      linkEl.href = foundLink.href;
+      linkEl.target = '_blank'; // Add target="_blank" as per original HTML
+      const screenReaderSpan = document.createElement('span');
+      screenReaderSpan.classList.add('cmp-link__screen-reader-only');
+      screenReaderSpan.textContent = 'opens in a new tab';
+      linkEl.append(screenReaderSpan);
+    }
+    moveInstrumentation(row, listItem); // Move instrumentation from row to listItem
+
+    const picture = imageCell.querySelector('picture');
+    if (picture) {
+      const img = picture.querySelector('img');
+      if (img) {
+        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+        moveInstrumentation(img, optimizedPic.querySelector('img'));
+        linkEl.append(optimizedPic);
+        optimizedPic.querySelector('img').classList.add(
+          'stay-social__card--image',
+          'w-100',
+          'h-100',
+          'object-fit-cover',
+        );
       }
     }
 
-    if (imageCell) {
-      const picture = imageCell.querySelector('picture');
-      if (picture) {
-        const img = picture.querySelector('img');
-        if (img) {
-          // Check for 9x16 ratio based on image dimensions if available
-          // For now, we'll assume the original HTML's ratio-9x16 class is the source of truth
-          // and apply it if the original HTML had it.
-          // In a real scenario, you might derive this from image metadata or a specific class.
-          // The original HTML shows examples of both ratio-1x1 and ratio-9x16.
-          // We need to ensure the correct ratio is applied.
-          // Since the EDS structure doesn't provide a direct field for ratio,
-          // we'll check the original image's natural dimensions if possible,
-          // or rely on a class if it were passed from the original HTML.
-          // For this review, we'll simulate the detection based on common aspect ratios.
-          // A more robust solution would involve loading the image to get naturalWidth/Height.
-          // For now, we'll add a placeholder for ratio detection.
-          // If the original HTML had `ratio-9x16` on the `li`, we should reflect that.
-          // As we don't have direct access to the original `li`'s classes here,
-          // we'll add a simple heuristic or assume a default if not explicitly provided.
-          // For this exercise, let's assume we can infer from the image itself or a data attribute.
-          // A common way to handle this is if the image source itself implies a ratio.
-          // Given the original HTML has `ratio-9x16` on some `li` elements,
-          // we need a way to determine this. Since the block structure doesn't provide it,
-          // we'll add a simple check for image dimensions if they were available.
-          // For now, let's assume if an image is portrait-like, it's 9x16.
-          // This is a simplification for the review.
-          const tempImg = new Image();
-          tempImg.onload = () => {
-            if (tempImg.naturalWidth && tempImg.naturalHeight) {
-              const aspectRatio = tempImg.naturalWidth / tempImg.naturalHeight;
-              // Check if it's closer to 9:16 (0.5625) than 1:1 (1)
-              if (Math.abs(aspectRatio - (9 / 16)) < Math.abs(aspectRatio - 1)) {
-                li.classList.replace('ratio-1x1', 'ratio-9x16');
-              }
-            }
-          };
-          tempImg.src = img.src; // This will trigger onload when image is loaded
-
-          const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '600' }]);
-          optimizedPic.querySelector('img').classList.add('stay-social__card--image', 'w-100', 'h-100', 'object-fit-cover');
-          linkEl.append(optimizedPic);
-        }
-      }
-    }
-
-    // Screen reader text for external link
-    const srOnlySpan = document.createElement('span');
-    srOnlySpan.classList.add('cmp-link__screen-reader-only');
-    srOnlySpan.textContent = 'opens in a new tab';
-    linkEl.append(srOnlySpan);
-
-    li.append(linkEl);
-    cardsUl.append(li);
+    listItem.append(linkEl);
+    cardsList.append(listItem);
   });
 
-  // CTA Button
+  // CTA button section
   const ctaWrapper = document.createElement('div');
-  ctaWrapper.classList.add('d-flex', 'align-items-center', 'justify-content-center', 'mt-8', 'mt-lg-10');
+  ctaWrapper.classList.add(
+    'd-flex',
+    'align-items-center',
+    'justify-content-center',
+    'mt-8',
+    'mt-lg-10',
+  );
   container.append(ctaWrapper);
 
-  const ctaLinkEl = document.createElement('a');
-  moveInstrumentation(ctaLinkRow, ctaLinkEl);
-  ctaLinkEl.classList.add(
+  const ctaLink = document.createElement('a');
+  ctaLink.classList.add(
     'svasti-cta',
     'w-fit',
     'text-decoration-none',
@@ -169,24 +140,26 @@ export default function decorate(block) {
   );
   const foundCtaLink = ctaLinkRow.querySelector('a');
   if (foundCtaLink) {
-    ctaLinkEl.href = foundCtaLink.href;
-    ctaLinkEl.target = '_blank'; // Original HTML has target="_blank"
+    ctaLink.href = foundCtaLink.href;
+    ctaLink.target = '_blank'; // Add target="_blank" as per original HTML
   }
+  moveInstrumentation(ctaLinkRow, ctaLink);
 
   const ctaLabelSpan = document.createElement('span');
-  moveInstrumentation(ctaLinkLabelRow, ctaLabelSpan);
   ctaLabelSpan.classList.add('svasti-cta__label', 'fw-semibold', 'fs-default', 'leading-26');
-  ctaLabelSpan.textContent = ctaLinkLabelRow.firstElementChild.textContent.trim();
-  ctaLinkEl.append(ctaLabelSpan);
+  moveInstrumentation(ctaLabelRow, ctaLabelSpan);
+  ctaLabelSpan.textContent = ctaLabelRow.textContent.trim();
+  ctaLink.append(ctaLabelSpan);
 
-  // Screen reader text for external link
-  const ctaSrOnlySpan = document.createElement('span');
-  ctaSrOnlySpan.classList.add('cmp-link__screen-reader-only');
-  ctaSrOnlySpan.textContent = 'opens in a new tab';
-  ctaLinkEl.append(ctaSrOnlySpan);
+  const screenReaderSpan = document.createElement('span');
+  screenReaderSpan.classList.add('cmp-link__screen-reader-only');
+  screenReaderSpan.textContent = 'opens in a new tab';
+  ctaLink.append(screenReaderSpan);
 
-  ctaWrapper.append(ctaLinkEl);
+  ctaWrapper.append(ctaLink);
 
-  block.textContent = '';
-  block.append(container);
+  // Replace the original block content with the new structure
+  block.replaceChildren(container);
+
+  block.classList.add('pt-14', 'py-lg-11', 'bg-cream-300');
 }

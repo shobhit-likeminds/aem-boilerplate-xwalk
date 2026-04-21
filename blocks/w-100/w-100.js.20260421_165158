@@ -1,0 +1,21 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  // The w-100 block is a simple container with no authored content fields.
+  // It only serves to apply specific styling classes.
+  // We just need to apply the classes from the ORIGINAL HTML to the block itself.
+
+  // Original HTML classes: w-100, pt-3, pt-sm-3
+  // The 'w-100' class is already on the block, so we add the others.
+  block.classList.add('pt-3', 'pt-sm-3');
+
+  // The original HTML also shows a style attribute: style="background: ;"
+  // This indicates that the background might be configurable, but the current block model
+  // does not expose a field for it. Since the value is empty, we don't need to set it.
+  // If a background field were added to the model, we would read it and set the style.
+
+  // Since there are no authored rows or cells in the block model for this component,
+  // there's no need to create new elements or move instrumentation.
+  // The block itself is the final decorated element.
+}

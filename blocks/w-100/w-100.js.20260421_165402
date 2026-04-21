@@ -1,0 +1,13 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  // The w-100 block is a simple container with no authored content.
+  // It only serves to apply specific styling classes.
+  // The original HTML shows it has 'pt-3' and 'pt-sm-3' classes.
+  // The block itself already has 'w-100' from the block name.
+  block.classList.add('pt-3', 'pt-sm-3');
+
+  // Since there are no authored rows or cells, there's no instrumentation to move.
+  // The block itself is the final element.
+}

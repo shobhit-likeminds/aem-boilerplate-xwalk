@@ -2,48 +2,31 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const [imageRow, mobileImageRow, ctaLinkRow, ctaLinkLabelRow] = [...block.children];
+  const children = [...block.children];
+  const [bannerImageRow, ...ctaRows] = children;
 
   const wrapper = document.createElement('div');
   wrapper.classList.add('position-relative', 'banner-section__wrapper', 'asp-ratio-9x16', 'asp-ratio-sm-16x9', 'd-flex', 'justify-content-center');
 
-  // Image
-  const [imageCell] = [...imageRow.children];
-  const [mobileImageCell] = [...mobileImageRow.children];
-
-  const picture = document.createElement('picture');
-  picture.classList.add('d-block', 'w-100', 'h-100');
-
-  const mobileImg = mobileImageCell.querySelector('img');
-  if (mobileImg) {
-    const sourceMobile = document.createElement('source');
-    sourceMobile.setAttribute('media', '(max-width:600px)');
-    sourceMobile.setAttribute('srcset', createOptimizedPicture(mobileImg.src, mobileImg.alt, false, [{ width: '600' }]).querySelector('img').src);
-    picture.appendChild(sourceMobile);
+  // Banner Image
+  const pictureCell = bannerImageRow.firstElementChild;
+  const picture = pictureCell?.querySelector('picture');
+  if (picture) {
+    const img = picture.querySelector('img');
+    if (img) {
+      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '600', media: '(max-width:600px)' }, { width: '1920' }]);
+      // Move instrumentation from the original img to the new optimized img
+      moveInstrumentation(img, optimizedPic.querySelector('img'));
+      picture.replaceWith(optimizedPic);
+      optimizedPic.classList.add('d-block', 'w-100', 'h-100');
+      optimizedPic.querySelector('img').classList.add('w-100', 'h-100', 'object-fit-cover', 'banner-media', 'd-block');
+      wrapper.append(optimizedPic);
+    }
   }
-
-  const desktopImg = imageCell.querySelector('img');
-  if (desktopImg) {
-    const sourceDesktop = document.createElement('source');
-    sourceDesktop.setAttribute('srcset', createOptimizedPicture(desktopImg.src, desktopImg.alt, false, [{ width: '1600' }]).querySelector('img').src);
-    picture.appendChild(sourceDesktop);
-
-    const img = document.createElement('img');
-    img.src = createOptimizedPicture(desktopImg.src, desktopImg.alt, false, [{ width: '1600' }]).querySelector('img').src;
-    img.alt = desktopImg.alt;
-    img.setAttribute('loading', 'eager');
-    img.setAttribute('fetchpriority', 'high');
-    img.classList.add('w-100', 'h-100', 'object-fit-cover', 'banner-media', 'd-block');
-    picture.appendChild(img);
-  }
-
-  moveInstrumentation(imageRow, picture);
-  moveInstrumentation(mobileImageRow, picture);
-  wrapper.appendChild(picture);
 
   const overlayDiv = document.createElement('div');
   overlayDiv.classList.add('position-absolute', 'start-0', 'bottom-0', 'w-100', 'h-100');
-  wrapper.appendChild(overlayDiv);
+  wrapper.append(overlayDiv);
 
   const bannerContent = document.createElement('div');
   bannerContent.classList.add('position-absolute', 'banner-content');
@@ -51,17 +34,20 @@ export default function decorate(block) {
   const container = document.createElement('div');
   container.classList.add('container', 'sticky-element', 'gx-8', 'gx-lg-0', 'd-flex', 'justify-content-center', 'align-items-center', 'flex-column', 'start-0', 'end-0', 'bottom-0');
 
-  const span = document.createElement('span');
-  span.classList.add('text-capitalize', 'mt-6', 'mt-md-3', 'mt-lg-9', 'mb-7');
+  const ctaSpan = document.createElement('span');
+  ctaSpan.classList.add('text-capitalize', 'mt-6', 'mt-md-3', 'mt-lg-9', 'mb-7');
 
-  const [ctaLinkCell] = [...ctaLinkRow.children];
-  const ctaLink = ctaLinkCell.querySelector('a');
+  ctaRows.forEach((row) => {
+    // Use content detection instead of fixed indices
+    const cells = [...row.children];
+    const labelCell = cells.find(cell => !cell.querySelector('a')); // Label cell contains plain text
+    const linkCell = cells.find(cell => cell.querySelector('a'));   // Link cell contains an <a> tag
 
-  const [ctaLinkLabelCell] = [...ctaLinkLabelRow.children];
-  const ctaLinkLabel = ctaLinkLabelCell.textContent.trim();
-
-  if (ctaLink && ctaLinkLabel) {
     const anchor = document.createElement('a');
+    const foundLink = linkCell?.querySelector('a');
+    if (foundLink) {
+      anchor.href = foundLink.href;
+    }
     anchor.classList.add(
       'svasti-cta',
       'cta-analytics',
@@ -82,23 +68,21 @@ export default function decorate(block) {
       'bg-maroon-100-hover',
       'bg-red-300-active',
     );
-    anchor.href = ctaLink.href;
 
     const labelSpan = document.createElement('span');
     labelSpan.classList.add('svasti-cta__label', 'fw-semibold', 'fs-default', 'leading-26');
-    labelSpan.textContent = ctaLinkLabel;
-    anchor.appendChild(labelSpan);
+    labelSpan.textContent = labelCell?.textContent.trim() || '';
+    anchor.append(labelSpan);
 
-    moveInstrumentation(ctaLinkRow, anchor);
-    moveInstrumentation(ctaLinkLabelRow, anchor);
-    span.appendChild(anchor);
-  }
+    moveInstrumentation(row, anchor); // Move instrumentation from the original row to the new anchor
+    ctaSpan.append(anchor);
+  });
 
-  container.appendChild(span);
-  bannerContent.appendChild(container);
-  wrapper.appendChild(bannerContent);
+  container.append(ctaSpan);
+  bannerContent.append(container);
+  wrapper.append(bannerContent);
 
-  block.textContent = '';
+  // Replace the block content with the new structure
+  block.replaceChildren(wrapper);
   block.classList.add('banner-section');
-  block.appendChild(wrapper);
 }

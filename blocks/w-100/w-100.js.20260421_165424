@@ -1,0 +1,14 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  // The w-100 block is an empty container block.
+  // It simply applies the specified classes to itself.
+  // No content is expected within this block.
+  block.classList.add('pt-3', 'pt-sm-3');
+  block.style.background = ''; // This style is from the original HTML, but its value is empty.
+                               // Setting it explicitly ensures consistency if CSS relies on it.
+
+  // Since there are no fields in the model, there are no authored rows to process or move instrumentation from.
+  // The block itself is the only element, and its classes are applied directly.
+}

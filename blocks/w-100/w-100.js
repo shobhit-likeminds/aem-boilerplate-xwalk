@@ -2,18 +2,37 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  // The block model "w-100" has no fields, so the block div will be empty.
-  // The original HTML shows that it's a simple div with specific classes and an inline style.
-  // We need to apply these classes and the inline style to the block element itself.
+  // The block has no defined model fields or item components in BlockJson.
+  // The original HTML only contains the block container with some classes and an empty style.
+  // Therefore, the decorate function should primarily ensure these classes are present
+  // and handle any potential content if the model were to evolve.
 
-  // Clear any existing content in the block, though it should be empty based on the model.
-  block.textContent = '';
+  // Add classes from the original HTML if they are not already present.
+  // The block already has 'w-100' from the block name.
+  block.classList.add('pt-3', 'pt-sm-3');
 
-  // Apply classes from the ORIGINAL HTML
-  block.classList.add('w-100', 'pt-3', 'pt-sm-3');
+  // The original HTML had `style="background: ;"`.
+  // If there's no authored background property, setting it to an empty string is fine.
+  // However, if the block is truly empty and has no content to process,
+  // this line might be redundant if the CSS handles default backgrounds.
+  // For now, we'll keep it as it reflects the original HTML's style attribute.
+  block.style.background = '';
 
-  // Apply inline style from the ORIGINAL HTML
-  // Note: The original HTML has `style="background: ;"`, which is an empty background style.
-  // We will replicate this exactly. If it had a value, we would copy that value.
-  block.style.background = ''; // This sets an empty background style, matching the original.
+  // Since BlockJson indicates no fields or components, there's no content to read or transform.
+  // If the block were to contain rows, we would process them here.
+  // Example for future expansion:
+  // if (block.children.length > 0) {
+  //   // Process rows if any content is added to the block later
+  //   [...block.children].forEach((row) => {
+  //     // Example: if a text field was added
+  // FIXED: Using content detection instead of index access
+  const cells = [...row.children];
+  const textCell = cells.find(cell => !cell.querySelector('picture') && !cell.querySelector('a')) || cells[0];
+  //     // const p = document.createElement('p');
+  //     // moveInstrumentation(row, p);
+  //     // p.textContent = textCell.textContent.trim();
+  //     // block.append(p);
+  //     // row.remove(); // Remove original row after processing
+  //   });
+  // }
 }
