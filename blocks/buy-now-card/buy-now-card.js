@@ -3,19 +3,26 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
   // The buy-now-card block has no fields defined in its model.
-  // This means it's an empty block that serves as a container or a placeholder,
-  // or its content is entirely managed by its parent component in the original HTML.
-  // Based on the provided original HTML, it only has container classes.
+  // This means it's an empty block that serves as a container or a placeholder
+  // for content that might be injected dynamically or handled by other means
+  // outside of the standard EDS content structure.
 
-  // Create a new div element to act as the root of the decorated block.
-  const buyNowCardDiv = document.createElement('div');
+  // In such cases, if the block is truly meant to be empty or its content
+  // is generated entirely by external means, we can simply add the
+  // necessary wrapper classes from the original HTML.
+  // If there were any authored rows, they would appear as children of 'block',
+  // but since the model is empty, 'block.children' will be empty.
 
-  // Apply the class names from the ORIGINAL HTML.
-  // The original HTML shows: <div class="buyNowCard aem-GridColumn aem-GridColumn--default--12">
-  buyNowCardDiv.classList.add('buyNowCard', 'aem-GridColumn', 'aem-GridColumn--default--12');
+  // Apply classes from ORIGINAL HTML to the block itself.
+  block.classList.add('buyNowCard', 'aem-GridColumn', 'aem-GridColumn--default--12');
 
-  // Since the block has no fields, there are no authored rows to move instrumentation from.
-  // The block itself is the authored element, so we replace its children.
-  // If there were any default content in the block, it would be removed.
-  block.replaceChildren(buyNowCardDiv);
+  // Since there are no fields in the block model, there's no content to
+  // process or transform from the block's children.
+  // If this block were intended to have content, the model definition
+  // in BlockJson would include 'fields'. Without fields, there's nothing
+  // to moveInstrumentation or replace.
+
+  // If there were any default content or a placeholder structure
+  // expected for an empty block, it would be created here.
+  // For this specific block, based on the provided model, it's an empty container.
 }

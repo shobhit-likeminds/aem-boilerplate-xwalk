@@ -45,7 +45,7 @@
   {
     "id": "card-carousel",
     "components": [
-      "product-card"
+      "card-carousel-item"
     ]
   },
   {
@@ -78,8 +78,9 @@
   {
     "id": "footer",
     "components": [
-      "footer-nav-item",
-      "footer-social-link-item"
+      "footer-navigation-link",
+      "footer-inline-link",
+      "footer-social-link"
     ]
   },
   {
@@ -99,9 +100,7 @@
   {
     "id": "product-selection-component",
     "components": [
-      "product-item",
-      "report-section",
-      "milk-section"
+      "product-item"
     ]
   },
   {

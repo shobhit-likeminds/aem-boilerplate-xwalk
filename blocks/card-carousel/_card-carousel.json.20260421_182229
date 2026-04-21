@@ -17,15 +17,15 @@
       }
     },
     {
-      "title": "Card-Carousel-Item",
-      "id": "card-carousel-item",
+      "title": "Product-Card",
+      "id": "product-card",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "card-carousel-item",
-              "name": "Card-Carousel-Item"
+              "model": "product-card",
+              "name": "Product-Card"
             }
           }
         }
@@ -38,43 +38,43 @@
       "fields": [
         {
           "component": "text",
-          "label": "Title",
+          "label": "Carousel Title",
           "name": "title",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Subtitle",
+          "label": "Carousel Subtitle",
           "name": "subtitle",
           "valueType": "string"
         },
         {
           "component": "container",
-          "item": "card-carousel-item",
-          "label": "Cards",
-          "name": "items"
+          "item": "product-card",
+          "label": "Product Cards",
+          "name": "cards"
         }
       ]
     },
     {
-      "id": "card-carousel-item",
+      "id": "product-card",
       "fields": [
         {
           "component": "reference",
-          "label": "Main Image",
+          "label": "Main Product Image",
           "name": "mainImage",
           "valueType": "string"
         },
         {
           "component": "richtext",
-          "label": "Card Title",
+          "label": "Card Title \u0026 Description",
           "name": "cardTitle",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Product Image",
-          "name": "productImage",
+          "label": "Thumbnail/Product Icon",
+          "name": "thumbnailImage",
           "valueType": "string"
         },
         {
@@ -84,15 +84,15 @@
           "valueType": "string"
         },
         {
-          "component": "aem-content",
-          "label": "CTA Link",
-          "name": "ctaLink",
-          "valueType": "string"
-        },
-        {
           "component": "text",
           "label": "CTA Label",
           "name": "ctaLabel",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "CTA Link",
+          "name": "ctaLink",
           "valueType": "string"
         }
       ]
@@ -102,7 +102,7 @@
     {
       "id": "card-carousel",
       "components": [
-        "card-carousel-item"
+        "product-card"
       ]
     }
   ]

@@ -2,11 +2,7 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const [titleRow, subtitleRow, ...cardRows] = [...block.children];
-
-  const section = document.createElement('section');
-  section.classList.add('card-carousel');
-  moveInstrumentation(block, section);
+  const [titleRow, subtitleRow, ...itemRows] = [...block.children];
 
   const container = document.createElement('div');
   container.classList.add('container', 'gx-8', 'gx-sm-0');
@@ -42,14 +38,12 @@ export default function decorate(block) {
   subtitle.textContent = subtitleRow.textContent.trim();
   container.append(subtitle);
 
-  section.append(container);
+  const swiperSection = document.createElement('div');
+  swiperSection.classList.add('card-carousel__swiper', 'swiper', 'container', 'gx-0');
+  swiperSection.setAttribute('data-loop', 'false');
 
   const swiperContainer = document.createElement('div');
-  swiperContainer.classList.add('card-carousel__swiper', 'swiper', 'container', 'gx-0');
-  swiperContainer.setAttribute('data-loop', 'false');
-
-  const swiperWrapperOuter = document.createElement('div');
-  swiperWrapperOuter.classList.add('card-carousel__swiper--container', 'mt-8', 'mt-sm-10');
+  swiperContainer.classList.add('card-carousel__swiper--container', 'mt-8', 'mt-sm-10');
 
   const productCardsContainer = document.createElement('div');
   productCardsContainer.classList.add(
@@ -66,8 +60,8 @@ export default function decorate(block) {
   const swiperWrapper = document.createElement('div');
   swiperWrapper.classList.add('swiper-wrapper', 'slide-in-anim');
 
-  cardRows.forEach((row) => {
-    const [mainImageCell, cardTitleCell, thumbnailImageCell, productLinkCell, ctaLabelCell, ctaLinkCell] = [...row.children];
+  itemRows.forEach((row) => {
+    const [mainImageCell, cardTitleCell, productImageCell, productLinkCell, ctaLinkCell, ctaLabelCell] = [...row.children];
 
     const card = document.createElement('div');
     card.classList.add(
@@ -79,26 +73,24 @@ export default function decorate(block) {
     );
     moveInstrumentation(row, card);
 
-    const media = document.createElement('div');
-    media.classList.add('product-cards__card-media', 'position-relative');
+    const cardMedia = document.createElement('div');
+    cardMedia.classList.add('product-cards__card-media', 'position-relative');
 
     const ratioWrapper = document.createElement('div');
     ratioWrapper.classList.add('ratio', 'ratio-3x4', 'position-relative', 'product-cards__card-video-wrapper');
 
     const mainImagePicture = mainImageCell.querySelector('picture');
     if (mainImagePicture) {
-      const mainImg = mainImagePicture.querySelector('img');
-      if (mainImg) {
-        const optimizedMainPic = createOptimizedPicture(mainImg.src, mainImg.alt, false, [{ width: '750' }]);
-        optimizedMainPic.querySelector('img').classList.add('product-cards__card-thumb', 'object-fit-cover');
-        ratioWrapper.append(optimizedMainPic);
-      }
+      const img = mainImagePicture.querySelector('img');
+      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+      optimizedPic.querySelector('img').classList.add('product-cards__card-thumb', 'object-fit-cover');
+      ratioWrapper.append(optimizedPic);
     }
 
     const cardGradient = document.createElement('div');
     cardGradient.classList.add('card-gradient', 'position-absolute', 'top-0', 'bottom-0', 'start-0', 'end-0');
     ratioWrapper.append(cardGradient);
-    media.append(ratioWrapper);
+    cardMedia.append(ratioWrapper);
 
     const cardTitle = document.createElement('div');
     cardTitle.classList.add(
@@ -112,10 +104,10 @@ export default function decorate(block) {
       'leading-32',
     );
     cardTitle.innerHTML = cardTitleCell.innerHTML;
-    media.append(cardTitle);
+    cardMedia.append(cardTitle);
 
-    const cardImgWrapper = document.createElement('div');
-    cardImgWrapper.classList.add(
+    const productImageDiv = document.createElement('div');
+    productImageDiv.classList.add(
       'product-cards__card-img',
       'pt-lg-8',
       'pt-sm-6',
@@ -128,35 +120,33 @@ export default function decorate(block) {
       'rounded-top-circle',
     );
 
-    const ratio1x1 = document.createElement('div');
-    ratio1x1.classList.add('ratio', 'ratio-1x1');
+    const productImageRatio = document.createElement('div');
+    productImageRatio.classList.add('ratio', 'ratio-1x1');
 
-    const productLink = document.createElement('a');
-    productLink.classList.add('cta-analytics');
-    const productLinkHref = productLinkCell.querySelector('a')?.href;
-    if (productLinkHref) {
-      productLink.href = productLinkHref;
+    const productLinkAnchor = document.createElement('a');
+    productLinkAnchor.classList.add('cta-analytics');
+    const productLink = productLinkCell.querySelector('a');
+    if (productLink) {
+      productLinkAnchor.href = productLink.href;
     }
 
-    const thumbnailImagePicture = thumbnailImageCell.querySelector('picture');
-    if (thumbnailImagePicture) {
-      const thumbnailImg = thumbnailImagePicture.querySelector('img');
-      if (thumbnailImg) {
-        const optimizedThumbnailPic = createOptimizedPicture(thumbnailImg.src, thumbnailImg.alt, false, [{ width: '750' }]);
-        optimizedThumbnailPic.querySelector('img').classList.add('w-100', 'h-100', 'object-fit-contain');
-        productLink.append(optimizedThumbnailPic);
-      }
+    const productImagePicture = productImageCell.querySelector('picture');
+    if (productImagePicture) {
+      const img = productImagePicture.querySelector('img');
+      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+      optimizedPic.querySelector('img').classList.add('w-100', 'h-100', 'object-fit-contain');
+      productLinkAnchor.append(optimizedPic);
     }
-    ratio1x1.append(productLink);
-    cardImgWrapper.append(ratio1x1);
-    media.append(cardImgWrapper);
-    card.append(media);
+    productImageRatio.append(productLinkAnchor);
+    productImageDiv.append(productImageRatio);
+    cardMedia.append(productImageDiv);
+    card.append(cardMedia);
 
     const ctaWrapper = document.createElement('div');
     ctaWrapper.classList.add('mt-6', 'align-self-center');
 
-    const ctaLink = document.createElement('a');
-    ctaLink.classList.add(
+    const ctaAnchor = document.createElement('a');
+    ctaAnchor.classList.add(
       'cta-analytics',
       'svasti-cta',
       'w-fit',
@@ -176,19 +166,19 @@ export default function decorate(block) {
       'bg-maroon-100-hover',
       'bg-red-300-active',
     );
-    const ctaLinkHref = ctaLinkCell.querySelector('a')?.href;
-    if (ctaLinkHref) {
-      ctaLink.href = ctaLinkHref;
+    const ctaLink = ctaLinkCell.querySelector('a');
+    if (ctaLink) {
+      ctaAnchor.href = ctaLink.href;
     }
-    ctaLink.textContent = ctaLabelCell.textContent.trim();
-    ctaWrapper.append(ctaLink);
+    ctaAnchor.textContent = ctaLabelCell.textContent.trim();
+    ctaWrapper.append(ctaAnchor);
     card.append(ctaWrapper);
 
     swiperWrapper.append(card);
   });
 
   productCardsContainer.append(swiperWrapper);
-  swiperWrapperOuter.append(productCardsContainer);
+  swiperContainer.append(productCardsContainer);
 
   const prevButton = document.createElement('button');
   prevButton.classList.add(
@@ -208,11 +198,12 @@ export default function decorate(block) {
   );
   prevButton.disabled = true;
   const prevImg = document.createElement('img');
-  prevImg.alt = 'svg file';
-  // TODO: The icon path should be authored, not hardcoded. Add a field to the model for this.
-  prevImg.src = '/icons/arrow-left.svg';
+  // TODO: Add a model field for 'prevIcon' (type=reference) to avoid hardcoding SVG path.
+  // For now, using a placeholder.
+  prevImg.src = '/icons/arrow-left.svg'; // Placeholder, ideally should come from authored content
+  prevImg.alt = 'Previous';
   prevButton.append(prevImg);
-  swiperWrapperOuter.append(prevButton);
+  swiperContainer.append(prevButton);
 
   const nextButton = document.createElement('button');
   nextButton.classList.add(
@@ -231,13 +222,14 @@ export default function decorate(block) {
     'd-sm-flex',
   );
   const nextImg = document.createElement('img');
-  nextImg.alt = 'svg file';
-  // TODO: The icon path should be authored, not hardcoded. Add a field to the model for this.
-  nextImg.src = '/icons/arrow-right.svg';
+  // TODO: Add a model field for 'nextIcon' (type=reference) to avoid hardcoding SVG path.
+  // For now, using a placeholder.
+  nextImg.src = '/icons/arrow-right.svg'; // Placeholder, ideally should come from authored content
+  nextImg.alt = 'Next';
   nextButton.append(nextImg);
-  swiperWrapperOuter.append(nextButton);
+  swiperContainer.append(nextButton);
 
-  swiperContainer.append(swiperWrapperOuter);
+  swiperSection.append(swiperContainer);
 
   const pagination = document.createElement('div');
   pagination.classList.add(
@@ -251,71 +243,52 @@ export default function decorate(block) {
     'mx-auto',
     'w-fit',
   );
-  swiperContainer.append(pagination);
+  pagination.style.width = '140px';
+  swiperSection.append(pagination);
 
-  section.append(swiperContainer);
+  block.replaceChildren(container, swiperSection);
 
-  block.replaceChildren(section);
+  // Initialize Swiper after all elements are in the DOM
+  // eslint-disable-next-line import/no-unresolved, import/extensions
+  import('https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js').then((SwiperModule) => {
+    const Swiper = SwiperModule.default;
 
-  // Swiper initialization (simplified, full Swiper logic would be in a separate script)
-  let currentIndex = 0;
-  const slides = [...swiperWrapper.children];
-  // Calculate slideWidth dynamically, considering potential margins.
-  // This assumes all slides have the same width and margin.
-  // A more robust solution might involve a ResizeObserver or Swiper's internal calculations.
-  const firstSlide = slides[0];
-  let slideWidth = 0;
-  if (firstSlide) {
-    const slideStyle = window.getComputedStyle(firstSlide);
-    const marginRight = parseFloat(slideStyle.marginRight);
-    slideWidth = firstSlide.offsetWidth + marginRight;
-  }
-
-  function updateCarousel() {
-    swiperWrapper.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
-    prevButton.disabled = currentIndex === 0;
-    nextButton.disabled = currentIndex >= slides.length - 1;
-
-    // Update pagination bullets (simplified)
-    pagination.innerHTML = '';
-    slides.forEach((_, i) => {
-      const bullet = document.createElement('span');
-      bullet.classList.add('swiper-pagination-bullet');
-      if (i === currentIndex) {
-        bullet.classList.add('swiper-pagination-bullet-active', 'swiper-pagination-bullet-active-main');
-      }
-      bullet.addEventListener('click', () => {
-        currentIndex = i;
-        updateCarousel();
-      });
-      pagination.append(bullet);
+    // eslint-disable-next-line no-unused-vars
+    const swiper = new Swiper(swiperSection, {
+      slidesPerView: 1,
+      spaceBetween: 32,
+      loop: false,
+      navigation: {
+        nextEl: nextButton,
+        prevEl: prevButton,
+      },
+      pagination: {
+        el: pagination,
+        clickable: true,
+        renderBullet: (index, className) => `<span class="${className}" style="left: ${index * 20}px;"></span>`,
+      },
+      breakpoints: {
+        600: {
+          slidesPerView: 2,
+        },
+        900: {
+          slidesPerView: 3,
+        },
+      },
+      on: {
+        init: () => {
+          prevButton.classList.toggle('d-none', swiper.isBeginning && window.innerWidth >= 600);
+          nextButton.classList.toggle('d-none', swiper.isEnd && window.innerWidth >= 600);
+        },
+        slideChange: () => {
+          prevButton.classList.toggle('d-none', swiper.isBeginning && window.innerWidth >= 600);
+          nextButton.classList.toggle('d-none', swiper.isEnd && window.innerWidth >= 600);
+        },
+        resize: () => {
+          prevButton.classList.toggle('d-none', swiper.isBeginning && window.innerWidth >= 600);
+          nextButton.classList.toggle('d-none', swiper.isEnd && window.innerWidth >= 600);
+        },
+      },
     });
-  }
-
-  prevButton.addEventListener('click', () => {
-    if (currentIndex > 0) {
-      currentIndex--;
-      updateCarousel();
-    }
-  });
-
-  nextButton.addEventListener('click', () => {
-    if (currentIndex < slides.length - 1) {
-      currentIndex++;
-      updateCarousel();
-    }
-  });
-
-  // Initial update to set correct state
-  updateCarousel();
-
-  // Optional: Add a resize listener to recalculate slideWidth if layout changes
-  window.addEventListener('resize', () => {
-    if (slides[0]) {
-      const slideStyle = window.getComputedStyle(slides[0]);
-      const marginRight = parseFloat(slideStyle.marginRight);
-      slideWidth = slides[0].offsetWidth + marginRight;
-      updateCarousel(); // Re-render carousel position based on new width
-    }
   });
 }

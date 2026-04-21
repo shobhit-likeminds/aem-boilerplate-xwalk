@@ -183,43 +183,43 @@
     "fields": [
       {
         "component": "text",
-        "label": "Carousel Title",
+        "label": "Title",
         "name": "title",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Carousel Subtitle",
+        "label": "Subtitle",
         "name": "subtitle",
         "valueType": "string"
       },
       {
         "component": "container",
-        "item": "product-card",
-        "label": "Product Cards",
-        "name": "cards"
+        "item": "card-carousel-item",
+        "label": "Cards",
+        "name": "items"
       }
     ]
   },
   {
-    "id": "product-card",
+    "id": "card-carousel-item",
     "fields": [
       {
         "component": "reference",
-        "label": "Main Product Image",
+        "label": "Main Image",
         "name": "mainImage",
         "valueType": "string"
       },
       {
         "component": "richtext",
-        "label": "Card Title & Description",
+        "label": "Card Title",
         "name": "cardTitle",
         "valueType": "string"
       },
       {
         "component": "reference",
-        "label": "Thumbnail/Product Icon",
-        "name": "thumbnailImage",
+        "label": "Product Image",
+        "name": "productImage",
         "valueType": "string"
       },
       {
@@ -229,15 +229,15 @@
         "valueType": "string"
       },
       {
-        "component": "text",
-        "label": "CTA Label",
-        "name": "ctaLabel",
-        "valueType": "string"
-      },
-      {
         "component": "aem-content",
         "label": "CTA Link",
         "name": "ctaLink",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "CTA Label",
+        "name": "ctaLabel",
         "valueType": "string"
       }
     ]
@@ -325,32 +325,32 @@
       },
       {
         "component": "container",
-        "item": "footer-nav-item",
-        "label": "Navigation Links",
-        "name": "navLinks"
+        "item": "footer-navigation-link",
+        "label": "Footer Navigation Links",
+        "name": "navigationLinks"
       },
       {
         "component": "container",
-        "item": "footer-social-link-item",
-        "label": "Social Links",
-        "name": "socialLinks"
-      },
-      {
-        "component": "aem-content",
-        "label": "ITC Portal Link",
-        "name": "itcPortalLink",
-        "valueType": "string"
+        "item": "footer-inline-link",
+        "label": "Inline Footer Links",
+        "name": "inlineLinks"
       },
       {
         "component": "text",
         "label": "Copyright Text",
-        "name": "copyrightText",
+        "name": "copyright",
         "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "footer-social-link",
+        "label": "Social Links",
+        "name": "socialLinks"
       }
     ]
   },
   {
-    "id": "footer-nav-item",
+    "id": "footer-navigation-link",
     "fields": [
       {
         "component": "text",
@@ -373,7 +373,7 @@
     ]
   },
   {
-    "id": "footer-social-link-item",
+    "id": "footer-social-link",
     "fields": [
       {
         "component": "reference",
@@ -384,6 +384,23 @@
       {
         "component": "aem-content",
         "label": "Social Link",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "footer-inline-link",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Inline Link Label",
+        "name": "label",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Inline Link",
         "name": "link",
         "valueType": "string"
       }
@@ -582,7 +599,7 @@
     "fields": [
       {
         "component": "text",
-        "label": "Main Heading",
+        "label": "Heading",
         "name": "heading",
         "valueType": "string"
       },
@@ -591,18 +608,6 @@
         "item": "product-item",
         "label": "Products",
         "name": "products"
-      },
-      {
-        "component": "container",
-        "item": "report-section",
-        "label": "Report Sections",
-        "name": "reportSections"
-      },
-      {
-        "component": "container",
-        "item": "milk-section",
-        "label": "Milk Sections",
-        "name": "milkSections"
       }
     ]
   },
@@ -619,88 +624,6 @@
         "component": "text",
         "label": "Product Label",
         "name": "label",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
-    "id": "report-section",
-    "fields": [
-      {
-        "component": "reference",
-        "label": "Background Image Desktop",
-        "name": "backgroundImageDesktop",
-        "valueType": "string"
-      },
-      {
-        "component": "reference",
-        "label": "Background Image Mobile",
-        "name": "backgroundImageMobile",
-        "valueType": "string"
-      },
-      {
-        "component": "richtext",
-        "label": "Report Heading",
-        "name": "reportHeading",
-        "valueType": "string"
-      },
-      {
-        "component": "reference",
-        "label": "Download Button Icon",
-        "name": "downloadIcon",
-        "valueType": "string"
-      },
-      {
-        "component": "aem-content",
-        "label": "Download Link",
-        "name": "downloadLink",
-        "valueType": "string"
-      },
-      {
-        "component": "reference",
-        "label": "Downloaded Button Icon",
-        "name": "downloadedIcon",
-        "valueType": "string"
-      },
-      {
-        "component": "richtext",
-        "label": "Downloaded Text",
-        "name": "downloadedText",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
-    "id": "milk-section",
-    "fields": [
-      {
-        "component": "reference",
-        "label": "Background Image Desktop",
-        "name": "backgroundImageDesktop",
-        "valueType": "string"
-      },
-      {
-        "component": "reference",
-        "label": "Background Image Mobile",
-        "name": "backgroundImageMobile",
-        "valueType": "string"
-      },
-      {
-        "component": "richtext",
-        "label": "Milk Heading",
-        "name": "milkHeading",
-        "valueType": "string"
-      },
-      {
-        "component": "reference",
-        "label": "Milk Icon",
-        "name": "milkIcon",
-        "valueType": "string"
-      },
-      {
-        "component": "aem-content",
-        "label": "WhatsApp Link",
-        "name": "whatsappLink",
         "valueType": "string"
       }
     ]

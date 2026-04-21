@@ -30,36 +30,6 @@
           }
         }
       }
-    },
-    {
-      "title": "Report-Section",
-      "id": "report-section",
-      "plugins": {
-        "xwalk": {
-          "page": {
-            "resourceType": "core/franklin/components/block/v1/block/item",
-            "template": {
-              "model": "report-section",
-              "name": "Report-Section"
-            }
-          }
-        }
-      }
-    },
-    {
-      "title": "Milk-Section",
-      "id": "milk-section",
-      "plugins": {
-        "xwalk": {
-          "page": {
-            "resourceType": "core/franklin/components/block/v1/block/item",
-            "template": {
-              "model": "milk-section",
-              "name": "Milk-Section"
-            }
-          }
-        }
-      }
     }
   ],
   "models": [
@@ -68,7 +38,7 @@
       "fields": [
         {
           "component": "text",
-          "label": "Main Heading",
+          "label": "Heading",
           "name": "heading",
           "valueType": "string"
         },
@@ -77,18 +47,6 @@
           "item": "product-item",
           "label": "Products",
           "name": "products"
-        },
-        {
-          "component": "container",
-          "item": "report-section",
-          "label": "Report Sections",
-          "name": "reportSections"
-        },
-        {
-          "component": "container",
-          "item": "milk-section",
-          "label": "Milk Sections",
-          "name": "milkSections"
         }
       ]
     },
@@ -108,97 +66,13 @@
           "valueType": "string"
         }
       ]
-    },
-    {
-      "id": "report-section",
-      "fields": [
-        {
-          "component": "reference",
-          "label": "Background Image Desktop",
-          "name": "backgroundImageDesktop",
-          "valueType": "string"
-        },
-        {
-          "component": "reference",
-          "label": "Background Image Mobile",
-          "name": "backgroundImageMobile",
-          "valueType": "string"
-        },
-        {
-          "component": "richtext",
-          "label": "Report Heading",
-          "name": "reportHeading",
-          "valueType": "string"
-        },
-        {
-          "component": "reference",
-          "label": "Download Button Icon",
-          "name": "downloadIcon",
-          "valueType": "string"
-        },
-        {
-          "component": "aem-content",
-          "label": "Download Link",
-          "name": "downloadLink",
-          "valueType": "string"
-        },
-        {
-          "component": "reference",
-          "label": "Downloaded Button Icon",
-          "name": "downloadedIcon",
-          "valueType": "string"
-        },
-        {
-          "component": "richtext",
-          "label": "Downloaded Text",
-          "name": "downloadedText",
-          "valueType": "string"
-        }
-      ]
-    },
-    {
-      "id": "milk-section",
-      "fields": [
-        {
-          "component": "reference",
-          "label": "Background Image Desktop",
-          "name": "backgroundImageDesktop",
-          "valueType": "string"
-        },
-        {
-          "component": "reference",
-          "label": "Background Image Mobile",
-          "name": "backgroundImageMobile",
-          "valueType": "string"
-        },
-        {
-          "component": "richtext",
-          "label": "Milk Heading",
-          "name": "milkHeading",
-          "valueType": "string"
-        },
-        {
-          "component": "reference",
-          "label": "Milk Icon",
-          "name": "milkIcon",
-          "valueType": "string"
-        },
-        {
-          "component": "aem-content",
-          "label": "WhatsApp Link",
-          "name": "whatsappLink",
-          "valueType": "string"
-        }
-      ]
     }
   ],
   "filters": [
     {
       "id": "product-selection-component",
       "components": [
-        "product-item",
-        "report-section",
-        "milk-section"
+        "product-item"
       ]
     }
   ]
