@@ -32,15 +32,30 @@
       }
     },
     {
-      "title": "Product Detail Item",
-      "id": "product-detail-item",
+      "title": "Ghee Product Panel",
+      "id": "ghee-product-panel",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "product-detail-item",
-              "name": "Product Detail Item"
+              "model": "ghee-product-panel",
+              "name": "Ghee Product Panel"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Milk Product Panel",
+      "id": "milk-product-panel",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "milk-product-panel",
+              "name": "Milk Product Panel"
             }
           }
         }
@@ -53,20 +68,26 @@
       "fields": [
         {
           "component": "richtext",
-          "label": "Main Heading",
+          "label": "Headline",
           "name": "headline"
         },
         {
           "component": "container",
           "item": "product-selector-item",
-          "label": "Product Selectors",
-          "name": "products"
+          "label": "Product Selector Items",
+          "name": "productSelectorItems"
         },
         {
           "component": "container",
-          "item": "product-detail-item",
-          "label": "Product Details",
-          "name": "productDetails"
+          "item": "ghee-product-panel",
+          "label": "Ghee Product Panels",
+          "name": "gheeProductPanels"
+        },
+        {
+          "component": "container",
+          "item": "milk-product-panel",
+          "label": "Milk Product Panels",
+          "name": "milkProductPanels"
         }
       ]
     },
@@ -80,72 +101,92 @@
         },
         {
           "component": "text",
-          "label": "Product Name",
+          "label": "Product Label",
           "name": "productLabel"
         }
       ]
     },
     {
-      "id": "product-detail-item",
+      "id": "ghee-product-panel",
       "fields": [
         {
           "component": "reference",
-          "label": "Background Image (Desktop)",
+          "label": "Desktop Background Image",
           "name": "backgroundDesktop"
         },
         {
           "component": "reference",
-          "label": "Background Image (Mobile)",
+          "label": "Mobile Background Image",
           "name": "backgroundMobile"
         },
         {
           "component": "richtext",
           "label": "Headline (Before Download)",
-          "name": "headlineBeforeDownload"
+          "name": "headlineBefore"
         },
         {
           "component": "reference",
           "label": "CTA Icon (Before Download)",
-          "name": "ctaIconBeforeDownload"
+          "name": "ctaIcon"
         },
         {
           "component": "aem-content",
           "label": "Download Link (Before Download)",
-          "name": "downloadLink"
+          "name": "ctaLink"
         },
         {
           "component": "text",
           "label": "Download Button Label (Before Download)",
-          "name": "downloadLabel"
+          "name": "ctaLabel"
         },
         {
           "component": "richtext",
           "label": "Headline (After Download)",
-          "name": "headlineAfterDownload"
-        },
-        {
-          "component": "reference",
-          "label": "CTA Icon (After Download)",
-          "name": "ctaIconAfterDownload"
-        },
-        {
-          "component": "text",
-          "label": "Download Button Label (After Download)",
-          "name": "downloadLabelAfter"
+          "name": "headlineAfter"
         },
         {
           "component": "reference",
           "label": "Confirmation Icon (After Download)",
-          "name": "confirmationIconAfterDownload"
+          "name": "confirmationIcon"
+        },
+        {
+          "component": "text",
+          "label": "Download Button Label (After Download)",
+          "name": "ctaLabelAfter"
+        }
+      ]
+    },
+    {
+      "id": "milk-product-panel",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Desktop Background Image",
+          "name": "backgroundDesktop"
+        },
+        {
+          "component": "reference",
+          "label": "Mobile Background Image",
+          "name": "backgroundMobile"
+        },
+        {
+          "component": "richtext",
+          "label": "Milk Headline",
+          "name": "headline"
+        },
+        {
+          "component": "reference",
+          "label": "Milk Panel Icon",
+          "name": "milkIcon"
         },
         {
           "component": "aem-content",
-          "label": "Whatsapp Link",
+          "label": "WhatsApp Link",
           "name": "whatsappLink"
         },
         {
           "component": "text",
-          "label": "Whatsapp Link Label",
+          "label": "WhatsApp Link Label",
           "name": "whatsappLabel"
         }
       ]
@@ -156,7 +197,8 @@
       "id": "product-selection-component",
       "components": [
         "product-selector-item",
-        "product-detail-item"
+        "ghee-product-panel",
+        "milk-product-panel"
       ]
     }
   ]

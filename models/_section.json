@@ -72,7 +72,9 @@
         "yippee-banner-carousel",
         "our-values",
         "social",
-        "footer-new"
+        "footer-new",
+        "w-100",
+        "footer-brand"
       ]
     }
   ]

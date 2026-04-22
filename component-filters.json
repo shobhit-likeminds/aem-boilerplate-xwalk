@@ -37,7 +37,9 @@
       "yippee-banner-carousel",
       "our-values",
       "social",
-      "footer-new"
+      "footer-new",
+      "w-100",
+      "footer-brand"
     ]
   },
   {
@@ -49,8 +51,7 @@
   {
     "id": "card-carousel",
     "components": [
-      "recipe-card",
-      "social-media-share-icon"
+      "product-card-item"
     ]
   },
   {
@@ -87,6 +88,13 @@
     ]
   },
   {
+    "id": "footer-brand",
+    "components": [
+      "footer-nav-link",
+      "footer-social-link"
+    ]
+  },
+  {
     "id": "footer-new",
     "components": [
       "footer-navigation-group",
@@ -105,10 +113,8 @@
   {
     "id": "header-comp",
     "components": [
-      "navigation-item",
-      "submenu-item",
-      "subsubmenu-item",
-      "search-item"
+      "nav-menu-item",
+      "search-icon-item"
     ]
   },
   {
@@ -136,8 +142,7 @@
     "id": "product-selection-component",
     "components": [
       "product-selector-item",
-      "ghee-product-panel",
-      "milk-product-panel"
+      "product-detail-item"
     ]
   },
   {
@@ -183,6 +188,9 @@
   },
   {
     "id": "w-100-pt-3-pt-sm-3"
+  },
+  {
+    "id": "w-100"
   },
   {
     "id": "yippee-banner-carousel",

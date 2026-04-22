@@ -1,7 +1,7 @@
 {
   "definitions": [
     {
-      "title": "Header Comp",
+      "title": "Header-Comp",
       "id": "header-comp",
       "plugins": {
         "xwalk": {
@@ -10,67 +10,67 @@
             "template": {
               "filter": "header-comp",
               "model": "header-comp",
-              "name": "Header Comp"
+              "name": "Header-Comp"
             }
           }
         }
       }
     },
     {
-      "title": "Nav Menu Item",
-      "id": "nav-menu-item",
+      "title": "Navigation-Item",
+      "id": "navigation-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "nav-menu-item",
-              "name": "Nav Menu Item"
+              "model": "navigation-item",
+              "name": "Navigation-Item"
             }
           }
         }
       }
     },
     {
-      "title": "Sub Menu Item",
-      "id": "sub-menu-item",
+      "title": "Submenu-Item",
+      "id": "submenu-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "sub-menu-item",
-              "name": "Sub Menu Item"
+              "model": "submenu-item",
+              "name": "Submenu-Item"
             }
           }
         }
       }
     },
     {
-      "title": "Sub Sub Menu Item",
-      "id": "sub-sub-menu-item",
+      "title": "Subsubmenu-Item",
+      "id": "subsubmenu-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "sub-sub-menu-item",
-              "name": "Sub Sub Menu Item"
+              "model": "subsubmenu-item",
+              "name": "Subsubmenu-Item"
             }
           }
         }
       }
     },
     {
-      "title": "Search Icon",
-      "id": "search-icon-item",
+      "title": "Search-Item",
+      "id": "search-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "search-icon-item",
-              "name": "Search Icon"
+              "model": "search-item",
+              "name": "Search-Item"
             }
           }
         }
@@ -95,37 +95,37 @@
         },
         {
           "component": "container",
-          "item": "nav-menu-item",
-          "label": "Navigation Menu Items",
-          "name": "navMenuItems"
+          "item": "navigation-item",
+          "label": "Navigation Menu",
+          "name": "navigationMenu"
         },
         {
           "component": "container",
-          "item": "search-icon-item",
-          "label": "Search Icons",
-          "name": "searchIcons"
+          "item": "search-item",
+          "label": "Search",
+          "name": "search"
         }
       ]
     },
     {
-      "id": "nav-menu-item",
+      "id": "navigation-item",
       "fields": [
         {
           "component": "reference",
-          "label": "Menu Icon (Mobile)",
-          "name": "menuIcon",
+          "label": "Menu Icon Image (Mobile)",
+          "name": "iconImage",
           "valueType": "string"
         },
         {
           "component": "text",
           "label": "Menu Label",
-          "name": "menuLabel",
+          "name": "label",
           "valueType": "string"
         },
         {
           "component": "aem-content",
           "label": "Menu Link",
-          "name": "menuLink",
+          "name": "link",
           "valueType": "string"
         },
         {
@@ -142,9 +142,9 @@
         },
         {
           "component": "container",
-          "item": "sub-menu-item",
-          "label": "Sub Menu Items",
-          "name": "subMenuItems"
+          "item": "submenu-item",
+          "label": "Submenu Items",
+          "name": "submenuItems"
         },
         {
           "component": "richtext",
@@ -155,18 +155,18 @@
       ]
     },
     {
-      "id": "sub-menu-item",
+      "id": "submenu-item",
       "fields": [
         {
           "component": "text",
-          "label": "Sub Menu Label",
-          "name": "subMenuLabel",
+          "label": "Submenu Label",
+          "name": "label",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "label": "Sub Menu Link",
-          "name": "subMenuLink",
+          "label": "Submenu Link",
+          "name": "link",
           "valueType": "string"
         },
         {
@@ -183,35 +183,35 @@
         },
         {
           "component": "container",
-          "item": "sub-sub-menu-item",
-          "label": "Sub Sub Menu Items",
-          "name": "subSubMenuItems"
+          "item": "subsubmenu-item",
+          "label": "Subsubmenu Items",
+          "name": "subsubmenuItems"
         }
       ]
     },
     {
-      "id": "sub-sub-menu-item",
+      "id": "subsubmenu-item",
       "fields": [
         {
           "component": "text",
-          "label": "Sub Sub Menu Label",
-          "name": "subSubMenuLabel",
+          "label": "Subsubmenu Label",
+          "name": "label",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "label": "Sub Sub Menu Link",
-          "name": "subSubMenuLink",
+          "label": "Subsubmenu Link",
+          "name": "link",
           "valueType": "string"
         }
       ]
     },
     {
-      "id": "search-icon-item",
+      "id": "search-item",
       "fields": [
         {
           "component": "reference",
-          "label": "Search Icon Image",
+          "label": "Search Icon",
           "name": "searchIcon",
           "valueType": "string"
         },
@@ -228,8 +228,10 @@
     {
       "id": "header-comp",
       "components": [
-        "nav-menu-item",
-        "search-icon-item"
+        "navigation-item",
+        "submenu-item",
+        "subsubmenu-item",
+        "search-item"
       ]
     }
   ]

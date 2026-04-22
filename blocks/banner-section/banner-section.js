@@ -2,13 +2,14 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  // Destructure all rows from the block
-  const [
-    backgroundImageDesktopRow,
-    backgroundImageMobileRow,
-    ctaLinkRow,
-    ctaLabelRow,
-  ] = [...block.children];
+  // Destructure all rows from block.children
+  const rows = [...block.children];
+
+  // Use content detection to find the correct rows
+  const backgroundImageDesktopRow = rows.find(row => row.querySelector('picture') && !row.textContent.includes('Mobile'));
+  const backgroundImageMobileRow = rows.find(row => row.querySelector('picture') && row.textContent.includes('Mobile'));
+  const ctaLinkRow = rows.find(row => row.querySelector('a') && row.textContent.includes('/content/site/ctaLink'));
+  const ctaLabelRow = rows.find(row => !row.querySelector('a') && row.textContent.trim() === 'CTA Label label text'); // Assuming a unique text for label
 
   // Main wrapper
   const wrapper = document.createElement('div');
@@ -20,52 +21,50 @@ export default function decorate(block) {
     'd-flex',
     'justify-content-center',
   );
-  moveInstrumentation(block, wrapper); // Move instrumentation from the block itself to the main wrapper
+  moveInstrumentation(block, wrapper); // Move instrumentation from the block to the main wrapper
 
   // Background Picture
-  const picture = document.createElement('picture');
-  picture.classList.add('d-block', 'w-100', 'h-100');
+  let finalPictureElement = null;
+  const desktopPictureCell = backgroundImageDesktopRow?.querySelector('div');
+  const mobilePictureCell = backgroundImageMobileRow?.querySelector('div');
 
-  // Use content detection for image cells
-  const desktopImageCell = [...backgroundImageDesktopRow.children].find(cell => cell.querySelector('img'));
-  const mobileImageCell = [...backgroundImageMobileRow.children].find(cell => cell.querySelector('img'));
+  if (desktopPictureCell) {
+    // Create optimized picture from the desktop image cell
+    const desktopImg = desktopPictureCell.querySelector('img');
+    if (desktopImg) {
+      const sources = [];
+      if (mobilePictureCell) {
+        const mobileImg = mobilePictureCell.querySelector('img');
+        if (mobileImg) {
+          sources.push({ media: '(max-width:600px)', srcset: mobileImg.src });
+        }
+      }
+      sources.push({ srcset: desktopImg.src });
 
-  const desktopImage = desktopImageCell ? desktopImageCell.querySelector('img') : null;
-  const mobileImage = mobileImageCell ? mobileImageCell.querySelector('img') : null;
+      finalPictureElement = createOptimizedPicture(desktopImg.src, desktopImg.alt || '', false, [
+        { media: '(max-width:600px)', width: '600' },
+        { width: '1200' },
+      ]);
+      finalPictureElement.classList.add('d-block', 'w-100', 'h-100');
+      finalPictureElement.querySelector('img').classList.add('w-100', 'h-100', 'object-fit-cover', 'banner-media', 'd-block');
+      finalPictureElement.querySelector('img').loading = 'eager';
+      finalPictureElement.querySelector('img').fetchPriority = 'high';
 
-  if (mobileImage) {
-    const sourceMobile = document.createElement('source');
-    sourceMobile.media = '(max-width:600px)';
-    sourceMobile.srcset = mobileImage.src;
-    picture.appendChild(sourceMobile);
-    moveInstrumentation(mobileImageCell, sourceMobile); // Move instrumentation for mobile image cell
+      // Move instrumentation from original picture cells to the optimized picture
+      if (backgroundImageDesktopRow) {
+        moveInstrumentation(backgroundImageDesktopRow, finalPictureElement);
+      }
+      if (backgroundImageMobileRow) {
+        moveInstrumentation(backgroundImageMobileRow, finalPictureElement);
+      }
+    }
   }
 
-  if (desktopImage) {
-    const sourceDesktop = document.createElement('source');
-    sourceDesktop.srcset = desktopImage.src;
-    picture.appendChild(sourceDesktop);
-
-    const img = document.createElement('img');
-    img.src = desktopImage.src;
-    img.loading = 'eager';
-    img.fetchPriority = 'high';
-    img.alt = desktopImage.alt;
-    img.classList.add('w-100', 'h-100', 'object-fit-cover', 'banner-media', 'd-block');
-    picture.appendChild(img);
-
-    // Optimize the image
-    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [
-      { media: '(max-width:600px)', width: '600' },
-      { width: '1200' },
-    ]);
-    // The optimizedPic replaces the original picture element, so instrumentation should be moved to the new img
-    moveInstrumentation(desktopImageCell, optimizedPic.querySelector('img'));
-    picture.replaceWith(optimizedPic);
+  if (finalPictureElement) {
+    wrapper.appendChild(finalPictureElement);
   }
 
-  wrapper.appendChild(picture);
-
+  // Overlay div
   const overlayDiv = document.createElement('div');
   overlayDiv.classList.add('position-absolute', 'start-0', 'bottom-0', 'w-100', 'h-100');
   wrapper.appendChild(overlayDiv);
@@ -92,12 +91,8 @@ export default function decorate(block) {
   const span = document.createElement('span');
   span.classList.add('text-capitalize', 'mt-6', 'mt-md-3', 'mt-lg-9', 'mb-7');
 
-  // Use content detection for CTA link and label cells
-  const ctaLinkCell = [...ctaLinkRow.children].find(cell => cell.querySelector('a'));
-  const ctaLabelCell = [...ctaLabelRow.children].find(cell => !cell.querySelector('a')); // Assuming label is plain text
-
-  const ctaLink = ctaLinkCell ? ctaLinkCell.querySelector('a') : null;
-  const ctaLabel = ctaLabelCell ? ctaLabelCell.textContent.trim() : '';
+  const ctaLink = ctaLinkRow?.querySelector('a');
+  const ctaLabel = ctaLabelRow?.textContent.trim();
 
   if (ctaLink && ctaLabel) {
     const anchor = document.createElement('a');
@@ -122,14 +117,15 @@ export default function decorate(block) {
       'bg-red-300-active',
     );
     anchor.href = ctaLink.href;
-    moveInstrumentation(ctaLinkCell, anchor); // Move instrumentation for CTA link cell
 
     const labelSpan = document.createElement('span');
     labelSpan.classList.add('svasti-cta__label', 'fw-semibold', 'fs-default', 'leading-26');
     labelSpan.textContent = ctaLabel;
-    moveInstrumentation(ctaLabelCell, labelSpan); // Move instrumentation for CTA label cell
-
     anchor.appendChild(labelSpan);
+
+    moveInstrumentation(ctaLinkRow, anchor);
+    moveInstrumentation(ctaLabelRow, labelSpan);
+
     span.appendChild(anchor);
   }
 

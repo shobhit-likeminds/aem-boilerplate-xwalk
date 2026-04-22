@@ -1,56 +1,8 @@
 import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
-function transformNestedLists(rootUl) {
-  rootUl.querySelectorAll('li').forEach((li) => {
-    const nested = li.querySelector(':scope > ul');
-    const anchor = li.querySelector(':scope > a');
-
-    if (!anchor) {
-      const textNode = [...li.childNodes].find(
-        (n) => n.nodeType === Node.TEXT_NODE && n.textContent.trim(),
-      );
-      if (textNode) {
-        const span = document.createElement('span');
-        span.textContent = textNode.textContent.trim();
-        textNode.remove();
-        li.prepend(span);
-      }
-    }
-
-    if (nested) {
-      nested.remove();
-      const subWrap = document.createElement('div');
-      // Using a generic class, as 'has-sub-child' was not in the provided ORIGINAL HTML class list.
-      // If a specific class from ORIGINAL HTML is intended, it should be added to the allowlist.
-      subWrap.classList.add('nested-list-wrapper');
-      subWrap.append(nested);
-      li.append(subWrap);
-
-      const trigger = li.querySelector(':scope > a, :scope > span');
-      if (trigger) {
-        trigger.addEventListener('click', (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          li.classList.toggle('active');
-          subWrap.classList.toggle('active');
-        });
-      }
-    }
-  });
-}
-
 export default function decorate(block) {
-  const [
-    titleRow,
-    subtitleRow,
-    ctaLinkRow,
-    ctaLabelRow,
-    ...itemRows
-  ] = [...block.children];
-
-  const recipeCards = itemRows.filter((row) => row.children.length === 11);
-  const socialShareIcons = itemRows.filter((row) => row.children.length === 3);
+  const [titleRow, subtitleRow, ...itemRows] = [...block.children];
 
   const section = document.createElement('section');
   section.classList.add('card-carousel');
@@ -61,16 +13,7 @@ export default function decorate(block) {
 
   if (titleRow) {
     const title = document.createElement('h2');
-    title.classList.add(
-      'card-carousel__title',
-      'font-24',
-      'leading-28',
-      'font-sm-40',
-      'leading-sm-50',
-      'text-dark-gray-100',
-      'text-center',
-      'font-baskerville',
-    );
+    title.classList.add('card-carousel__title', 'font-24', 'leading-28', 'font-sm-40', 'leading-sm-50', 'text-dark-gray-100', 'text-center', 'font-baskerville');
     moveInstrumentation(titleRow, title);
     title.textContent = titleRow.textContent.trim();
     container.append(title);
@@ -78,606 +21,225 @@ export default function decorate(block) {
 
   if (subtitleRow) {
     const subtitle = document.createElement('p');
-    subtitle.classList.add(
-      'card-carousel__subtitle',
-      'font-default',
-      'leading-24',
-      'font-sm-18',
-      'leading-sm-32',
-      'text-dark-gray-100',
-      'text-center',
-      'mt-4',
-      'fw-medium',
-    );
+    subtitle.classList.add('card-carousel__subtitle', 'font-default', 'leading-24', 'font-sm-18', 'leading-sm-32', 'text-dark-gray-100', 'text-center', 'mt-4', 'fw-medium');
     moveInstrumentation(subtitleRow, subtitle);
     subtitle.textContent = subtitleRow.textContent.trim();
     container.append(subtitle);
   }
 
   const swiperContainer = document.createElement('div');
-  swiperContainer.classList.add(
-    'card-carousel__swiper',
-    'swiper',
-    'container',
-    'gx-0',
-  );
-  swiperContainer.setAttribute('data-loop', 'true');
+  swiperContainer.classList.add('card-carousel__swiper', 'swiper', 'container', 'gx-0');
+  swiperContainer.setAttribute('data-loop', 'false');
   section.append(swiperContainer);
 
+  const swiperWrapperOuter = document.createElement('div');
+  swiperWrapperOuter.classList.add('card-carousel__swiper--container', 'mt-8', 'mt-sm-10');
+  swiperContainer.append(swiperWrapperOuter);
+
+  const productCardsGrid = document.createElement('div');
+  productCardsGrid.classList.add('product-cards__card-container', 'mx-4', 'mx-sm-0', 'overflow-hidden', 'add-margin', 'swiper-initialized', 'swiper-horizontal', 'swiper-backface-hidden');
+  swiperWrapperOuter.append(productCardsGrid);
+
   const swiperWrapper = document.createElement('div');
-  swiperWrapper.classList.add('card-carousel__swiper--container', 'mt-8', 'mt-sm-10');
-  swiperContainer.append(swiperWrapper);
+  swiperWrapper.classList.add('swiper-wrapper', 'slide-in-anim');
+  productCardsGrid.append(swiperWrapper);
 
-  const popularRecipeSection = document.createElement('section');
-  popularRecipeSection.classList.add('popular-recipe', 'slide-in-anim');
-  swiperWrapper.append(popularRecipeSection);
-
-  const popularRecipeData = document.createElement('div');
-  popularRecipeData.classList.add('popular-recipe__data', 'd-none');
-  // Data attributes are for client-side JS, not for EDS
-  popularRecipeSection.append(popularRecipeData);
-
-  const popularRecipeContainer = document.createElement('div');
-  popularRecipeContainer.classList.add(
-    'popular-recipe__container',
-    'overflow-hidden',
-    'swiper-initialized',
-    'swiper-horizontal',
-    'swiper-backface-hidden',
-  );
-  popularRecipeContainer.setAttribute('data-swiper-init-async', 'true');
-  popularRecipeSection.append(popularRecipeContainer);
-
-  const recipeSwiperWrapper = document.createElement('div');
-  recipeSwiperWrapper.classList.add('swiper-wrapper', 'popular-recipe__recipe-wrapper');
-  popularRecipeContainer.append(recipeSwiperWrapper);
-
-  recipeCards.forEach((row) => {
+  itemRows.forEach((row, index) => {
     const [
-      linkCell,
-      imageCell,
-      titleCell,
-      descriptionCell,
-      tagCell,
-      infoIconCell,
-      timeIconCell,
-      timeCell,
-      servesIconCell,
-      servesCell,
-      hierarchyTreeCell,
+      cardThumbImageCell,
+      cardThumbImageAltCell,
+      cardTitleCell,
+      cardMainImageCell,
+      cardMainImageAltCell,
+      cardMainImageLinkCell,
+      ctaLinkCell,
+      ctaLabelCell,
     ] = [...row.children];
 
-    const swiperSlide = document.createElement('div');
-    swiperSlide.classList.add('swiper-slide');
-    moveInstrumentation(row, swiperSlide);
-    recipeSwiperWrapper.append(swiperSlide);
-
-    const recipeCard = document.createElement('div');
-    recipeCard.classList.add('recipe-card', 'bg-cream-100', 'h-100');
-    swiperSlide.append(recipeCard);
-
-    const recipeLink = document.createElement('a');
-    recipeLink.classList.add('recipe-card__link', 'd-block', 'position-relative');
-    const foundLink = linkCell.querySelector('a');
-    if (foundLink) {
-      recipeLink.href = foundLink.href;
+    const card = document.createElement('div');
+    card.classList.add('product-cards__card', 'swiper-slide', 'd-flex', 'flex-column', 'cursor-pointer');
+    if (index === 0) {
+      card.classList.add('swiper-slide-active');
+    } else if (index === 1) {
+      card.classList.add('swiper-slide-next');
     }
-    recipeCard.append(recipeLink);
+    moveInstrumentation(row, card);
 
-    const imagePicture = imageCell.querySelector('picture');
-    if (imagePicture) {
-      const img = imagePicture.querySelector('img');
-      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-      moveInstrumentation(img, optimizedPic.querySelector('img'));
-      recipeLink.append(optimizedPic);
-      optimizedPic.querySelector('img').classList.add('recipe-card__image', 'object-fit-cover', 'w-100');
-    }
+    const cardMedia = document.createElement('div');
+    cardMedia.classList.add('product-cards__card-media', 'position-relative');
+    card.append(cardMedia);
 
-    const contentDiv = document.createElement('div');
-    contentDiv.classList.add('recipe-card__content', 'py-6');
-    recipeLink.append(contentDiv);
+    const ratioWrapper = document.createElement('div');
+    ratioWrapper.classList.add('ratio', 'ratio-3x4', 'position-relative', 'product-cards__card-video-wrapper');
+    cardMedia.append(ratioWrapper);
 
-    const infoDiv = document.createElement('div');
-    infoDiv.classList.add('recipe-card__info', 'd-flex', 'align-items-center', 'justify-content-between');
-    contentDiv.append(infoDiv);
-
-    const tagSpan = document.createElement('span');
-    tagSpan.classList.add(
-      'recipe-card__tag',
-      'text-uppercase',
-      'text-red-100',
-      'font-14',
-      'font-xl-default',
-      'leading-24',
-      'fw-semibold',
-    );
-    tagSpan.textContent = tagCell.textContent.trim();
-    infoDiv.append(tagSpan);
-
-    const infoIconPicture = infoIconCell.querySelector('picture');
-    if (infoIconPicture) {
-      const img = infoIconPicture.querySelector('img');
-      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-      moveInstrumentation(img, optimizedPic.querySelector('img'));
-      infoDiv.append(optimizedPic);
-    }
-
-    const textDiv = document.createElement('div');
-    textDiv.classList.add('recipe-card__text');
-    contentDiv.append(textDiv);
-
-    const titleH3 = document.createElement('h3');
-    titleH3.classList.add(
-      'recipe-card__title',
-      'font-20',
-      'font-xl-24',
-      'leading-24',
-      'leading-xl-30',
-      'font-baskerville',
-      'fw-bold',
-      'text-dark-gray-100',
-      'mt-4',
-    );
-    titleH3.textContent = titleCell.textContent.trim();
-    textDiv.append(titleH3);
-
-    const descP = document.createElement('p');
-    descP.classList.add(
-      'recipe-card__desc',
-      'font-default',
-      'font-xl-18',
-      'leading-24',
-      'fw-medium',
-      'text-dark-gray-100',
-      'mt-4',
-    );
-    descP.textContent = descriptionCell.textContent.trim();
-    textDiv.append(descP);
-
-    const waveDiv = document.createElement('div');
-    waveDiv.classList.add('recipe-card__wave', 'mt-11', 'mt-xl-7', 'w-100');
-    contentDiv.append(waveDiv);
-
-    const propertiesUl = document.createElement('ul');
-    propertiesUl.classList.add(
-      'recipe-card__properties',
-      'mt-4',
-      'd-flex',
-      'align-items-center',
-      'mt-4',
-    );
-    contentDiv.append(propertiesUl);
-
-    const timeLi = document.createElement('li');
-    timeLi.classList.add(
-      'recipe-card__property',
-      'recipe-card__property--left',
-      'd-flex',
-      'align-items-center',
-    );
-    propertiesUl.append(timeLi);
-
-    const timeIconPicture = timeIconCell.querySelector('picture');
-    if (timeIconPicture) {
-      const img = timeIconPicture.querySelector('img');
-      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-      moveInstrumentation(img, optimizedPic.querySelector('img'));
-      timeLi.append(optimizedPic);
-    }
-
-    const timeSpan = document.createElement('span');
-    timeSpan.classList.add(
-      'recipe-card__time',
-      'text-dark-gray-100',
-      'font-14',
-      'font-xl-default',
-      'leading-20',
-      'fw-medium',
-      'ms-2',
-      'd-inline-block',
-      'text-nowrap',
-    );
-    timeSpan.textContent = timeCell.textContent.trim();
-    timeLi.append(timeSpan);
-
-    const servesLi = document.createElement('li');
-    servesLi.classList.add(
-      'recipe-card__property',
-      'recipe-card__property--right',
-      'flex-fill',
-      'd-flex',
-      'align-items-center',
-      'justify-content-end',
-    );
-    propertiesUl.append(servesLi);
-
-    const servesIconPicture = servesIconCell.querySelector('picture');
-    if (servesIconPicture) {
-      const img = servesIconPicture.querySelector('img');
-      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-      moveInstrumentation(img, optimizedPic.querySelector('img'));
-      servesLi.append(optimizedPic);
-    }
-
-    const servesSpan = document.createElement('span');
-    servesSpan.classList.add(
-      'serve-content',
-      'recipe-card__serves',
-      'text-dark-gray-100',
-      'font-14',
-      'font-xl-default',
-      'leading-20',
-      'fw-medium',
-      'ms-2',
-      'd-inline-block',
-    );
-    servesSpan.textContent = servesCell.textContent.trim();
-    servesLi.append(servesSpan);
-
-    const hierarchyRoot = hierarchyTreeCell?.querySelector('ul');
-    if (hierarchyRoot) {
-      const hierarchyWrapper = document.createElement('div');
-      hierarchyWrapper.classList.add('recipe-card__hierarchy'); // Generic class
-      moveInstrumentation(hierarchyTreeCell, hierarchyWrapper); // Move instrumentation from original cell
-      
-      // Create a temporary div to parse and process the innerHTML
-      const tempDiv = document.createElement('div');
-      tempDiv.innerHTML = hierarchyTreeCell.innerHTML;
-
-      // Apply classes to nested elements from ORIGINAL HTML if they exist
-      tempDiv.querySelectorAll('a').forEach(a => a.classList.add('nav-menu-link', 'text-decoration-none'));
-      tempDiv.querySelectorAll('ul').forEach(ul => ul.classList.add('nav-menu-list', 'list-unstyled'));
-      tempDiv.querySelectorAll('li').forEach(li => li.classList.add('nav-menu-item', 'list-item'));
-
-      // Move processed children from tempDiv to hierarchyWrapper
-      while (tempDiv.firstChild) {
-        hierarchyWrapper.append(tempDiv.firstChild);
+    if (cardThumbImageCell) {
+      const thumbPicture = cardThumbImageCell.querySelector('picture');
+      if (thumbPicture) {
+        const thumbImg = thumbPicture.querySelector('img');
+        const optimizedThumbPic = createOptimizedPicture(thumbImg.src, cardThumbImageAltCell.textContent.trim(), false, [{ width: '750' }]);
+        optimizedThumbPic.querySelector('img').classList.add('product-cards__card-thumb', 'object-fit-cover');
+        moveInstrumentation(thumbImg, optimizedThumbPic.querySelector('img'));
+        ratioWrapper.append(optimizedThumbPic);
       }
-      
-      contentDiv.append(hierarchyWrapper);
-      transformNestedLists(hierarchyWrapper); // Apply interactivity to the nested lists
-    }
-  });
-
-  const shareDiv = document.createElement('div');
-  shareDiv.classList.add('popular-recipe__share');
-  popularRecipeSection.append(shareDiv);
-
-  const socialMediaShareSection = document.createElement('section');
-  socialMediaShareSection.classList.add(
-    'social-media-share',
-    'd-none',
-    'w-100',
-    'justify-content-center',
-    'align-items-center',
-    'position-fixed',
-    'top-0',
-    'start-0',
-    'end-0',
-    'bottom-0',
-    'z-2',
-  );
-  shareDiv.append(socialMediaShareSection);
-
-  const socialMediaWrapper = document.createElement('div');
-  socialMediaWrapper.classList.add(
-    'social-media-share__wrapper',
-    'bg-cream-100',
-    'py-8',
-    'px-3',
-    'px-md-8',
-  );
-  socialMediaShareSection.append(socialMediaWrapper);
-
-  const titleCloseDiv = document.createElement('div');
-  titleCloseDiv.classList.add(
-    'social-media-share__wrapper--title-close',
-    'pb-8',
-    'd-flex',
-    'mx-3',
-    'mx-md-0',
-    'border-bottom',
-    'border-dark-gray-100',
-    'align-items-center',
-    'justify-content-between',
-  );
-  socialMediaWrapper.append(titleCloseDiv);
-
-  const closeDiv = document.createElement('div');
-  closeDiv.classList.add('social-media-share__wrapper--close');
-  titleCloseDiv.append(closeDiv);
-
-  // Close icon from original HTML - if it's a fixed asset, it should be in the block model.
-  // For now, we'll create a placeholder or read from a dedicated cell if one existed.
-  // If the model had a field for this icon, we would read it from there.
-  // As per instructions, DO NOT hardcode DAM paths.
-  // Assuming this icon is part of the block's fixed UI, but its source is not authored.
-  // If it needs to be dynamic, a new field in the block model is required.
-  // For now, we'll add a placeholder and a TODO.
-  const closeIcon = document.createElement('img');
-  closeIcon.alt = 'Close icon';
-  // TODO: Add a field to the block model for the close icon if its source needs to be authored.
-  // For now, it will be an empty img or rely on CSS background-image.
-  closeDiv.append(closeIcon);
-
-  // Add event listener for the close button
-  closeDiv.addEventListener('click', () => {
-    socialMediaShareSection.classList.add('d-none');
-  });
-
-  const socialIconsWrapper = document.createElement('div');
-  socialIconsWrapper.classList.add(
-    'social-media-share__wrapper--social-icons',
-    'pt-8',
-    'd-flex',
-    'overflow-hidden',
-    'swiper-initialized',
-    'swiper-horizontal',
-  );
-  socialMediaWrapper.append(socialIconsWrapper);
-
-  const socialIconsSwiperWrapper = document.createElement('div');
-  socialIconsSwiperWrapper.classList.add(
-    'social-media-share__wrapper--social-icons-wrapper',
-    'swiper-wrapper',
-    'px-3',
-    'px-md-0',
-  );
-  socialIconsSwiperWrapper.setAttribute('data-page-url', '#');
-  socialIconsWrapper.append(socialIconsSwiperWrapper);
-
-  socialShareIcons.forEach((row) => {
-    const [linkCell, iconCell, labelCell] = [...row.children];
-
-    const iconLabelDiv = document.createElement('div');
-    iconLabelDiv.classList.add('social-media-share__wrapper--icon-label', 'swiper-slide', 'd-flex', 'align-items-center');
-    moveInstrumentation(row, iconLabelDiv); // Move instrumentation for social share icon row
-    socialIconsSwiperWrapper.append(iconLabelDiv);
-
-    const socialLink = document.createElement('a');
-    socialLink.classList.add(
-      'social-media-share__link',
-      'd-flex',
-      'align-items-center',
-      'text-decoration-none',
-      'gap-4',
-      'w-fit',
-      'flex-md-column',
-      'justify-content-center',
-    );
-    const foundLink = linkCell.querySelector('a');
-    if (foundLink) {
-      socialLink.href = foundLink.href;
-    }
-    socialLink.target = '_blank';
-    iconLabelDiv.append(socialLink);
-
-    const iconDiv = document.createElement('div');
-    iconDiv.classList.add(
-      'social-media-share__wrapper--icons',
-      'rounded-circle',
-      'bg-white',
-      'd-flex',
-      'justify-content-center',
-      'align-items-center',
-    );
-    socialLink.append(iconDiv);
-
-    const linkDiv = document.createElement('div');
-    linkDiv.classList.add('social-media-share__wrapper--link', 'text-decoration-none');
-    // linkDiv.target = '_blank'; // target attribute is for <a>, not <div>
-    iconDiv.append(linkDiv);
-
-    const iconPicture = iconCell.querySelector('picture');
-    if (iconPicture) {
-      const img = iconPicture.querySelector('img');
-      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-      moveInstrumentation(img, optimizedPic.querySelector('img'));
-      linkDiv.append(optimizedPic);
     }
 
-    const labelDiv = document.createElement('div');
-    labelDiv.classList.add(
-      'social-media-share__wrapper--label',
-      'text-center',
-      'font-16',
-      'leading-22',
-      'text-black',
-    );
-    labelDiv.textContent = labelCell.textContent.trim();
-    socialLink.append(labelDiv);
+    const cardGradient = document.createElement('div');
+    cardGradient.classList.add('card-gradient', 'position-absolute', 'top-0', 'bottom-0', 'start-0', 'end-0');
+    ratioWrapper.append(cardGradient);
 
-    const screenReaderSpan = document.createElement('span');
-    screenReaderSpan.classList.add('cmp-link__screen-reader-only');
-    screenReaderSpan.textContent = 'opens in a new tab';
-    socialLink.append(screenReaderSpan);
+    if (cardTitleCell) {
+      const cardTitle = document.createElement('div');
+      cardTitle.classList.add('product-cards__card-title', 'position-absolute', 'top-0', 'text-white', 'px-5', 'pt-4', 'text-cream-100', 'leading-32');
+      moveInstrumentation(cardTitleCell, cardTitle); // Added moveInstrumentation for richtext cell
+      cardTitle.innerHTML = cardTitleCell.innerHTML;
+      cardMedia.append(cardTitle);
+    }
 
-    const hiddenInput = document.createElement('input');
-    hiddenInput.type = 'hidden';
-    hiddenInput.classList.add('social-media-share__wrapper--url');
-    hiddenInput.value = labelCell.textContent.trim().toLowerCase().replace(/\s/g, ''); // Derive value from label
-    iconLabelDiv.append(hiddenInput);
+    const cardImgWrapper = document.createElement('div');
+    cardImgWrapper.classList.add('product-cards__card-img', 'pt-lg-8', 'pt-sm-6', 'pt-8', 'pb-3', 'bg-cream-300', 'position-absolute', 'start-50', 'top-100', 'rounded-top-circle');
+    cardMedia.append(cardImgWrapper);
+
+    const ratio1x1 = document.createElement('div');
+    ratio1x1.classList.add('ratio', 'ratio-1x1');
+    cardImgWrapper.append(ratio1x1);
+
+    if (cardMainImageCell && cardMainImageLinkCell) {
+      const mainImageLink = document.createElement('a');
+      mainImageLink.classList.add('cta-analytics');
+      const foundLink = cardMainImageLinkCell.querySelector('a');
+      if (foundLink) {
+        mainImageLink.href = foundLink.href;
+      }
+
+      const mainPicture = cardMainImageCell.querySelector('picture');
+      if (mainPicture) {
+        const mainImg = mainPicture.querySelector('img');
+        const optimizedMainPic = createOptimizedPicture(mainImg.src, cardMainImageAltCell.textContent.trim(), false, [{ width: '750' }]);
+        optimizedMainPic.querySelector('img').classList.add('w-100', 'h-100', 'object-fit-contain');
+        moveInstrumentation(mainImg, optimizedMainPic.querySelector('img'));
+        mainImageLink.append(optimizedMainPic);
+      }
+      ratio1x1.append(mainImageLink);
+    }
+
+    if (ctaLinkCell && ctaLabelCell) {
+      const ctaWrapper = document.createElement('div');
+      ctaWrapper.classList.add('mt-6', 'align-self-center');
+      card.append(ctaWrapper);
+
+      const ctaLink = document.createElement('a');
+      ctaLink.classList.add('cta-analytics', 'svasti-cta', 'w-fit', 'text-decoration-none', 'd-flex', 'align-items-center', 'primary', 'px-8', 'pb-3', 'text-cream-100', 'border', 'border-2', 'border-red-100', 'border-maroon-100-hover', 'border-red-300-active', 'bg-red-100', 'bg-maroon-100-hover', 'bg-red-300-active');
+      const foundCtaLink = ctaLinkCell.querySelector('a');
+      if (foundCtaLink) {
+        ctaLink.href = foundCtaLink.href;
+      }
+      ctaLink.textContent = ctaLabelCell.textContent.trim();
+      ctaWrapper.append(ctaLink);
+    }
+
+    swiperWrapper.append(card);
   });
 
   const prevButton = document.createElement('button');
-  prevButton.classList.add(
-    'social-media-share__button',
-    'bg-transparent',
-    'border-0',
-    'social-media-share__prev',
-    'd-none',
-    'z-2',
-    'd-md-block',
-    'position-absolute',
-    'swiper-button-prev',
-  );
-  // Omit image src for now as it's not in the model and hardcoding is forbidden.
-  // TODO: Add a field to the block model for the prev button icon if its source needs to be authored.
-  socialIconsWrapper.append(prevButton);
+  prevButton.classList.add('card-carousel__swiper--prev', 'card-carousel__navigation', 'cursor-pointer', 'rounded-circle', 'bg-transparent', 'text-red-100', 'text-maroon-600-hover', 'justify-content-center', 'align-items-center', 'position-absolute', 'd-none', 'd-sm-flex', 'opacity-30');
+  prevButton.setAttribute('disabled', '');
+  const prevImg = document.createElement('img');
+  // TODO: Replace with actual SVG loader or read from a model field if available
+  prevImg.alt = 'Previous'; // Changed alt text to be more descriptive
+  prevButton.append(prevImg);
+  swiperWrapperOuter.append(prevButton);
 
   const nextButton = document.createElement('button');
-  nextButton.classList.add(
-    'social-media-share__button',
-    'bg-transparent',
-    'border-0',
-    'social-media-share__next',
-    'd-none',
-    'z-2',
-    'd-md-block',
-    'position-absolute',
-    'swiper-button-next',
-  );
-  // Omit image src for now as it's not in the model and hardcoding is forbidden.
-  // TODO: Add a field to the block model for the next button icon if its source needs to be authored.
-  socialIconsWrapper.append(nextButton);
+  nextButton.classList.add('card-carousel__swiper--next', 'card-carousel__navigation', 'cursor-pointer', 'rounded-circle', 'bg-transparent', 'text-red-100', 'text-maroon-600-hover', 'justify-content-center', 'align-items-center', 'position-absolute', 'end-0', 'd-none', 'd-sm-flex');
+  const nextImg = document.createElement('img');
+  // TODO: Replace with actual SVG loader or read from a model field if available
+  nextImg.alt = 'Next'; // Changed alt text to be more descriptive
+  nextButton.append(nextImg);
+  swiperWrapperOuter.append(nextButton);
 
-  const inputButtonDiv = document.createElement('div');
-  inputButtonDiv.classList.add(
-    'social-media-share__wrapper--input-button',
-    'd-flex',
-    'align-items-center',
-    'mt-8',
-    'justify-content-md-center',
-    'flex-column',
-    'flex-md-row',
-  );
-  socialMediaWrapper.append(inputButtonDiv);
-
-  const inputField = document.createElement('input');
-  inputField.type = 'text';
-  inputField.classList.add(
-    'social-media-share__wrapper--input',
-    'bg-white',
-    'font-16',
-    'leading-22',
-    'px-4',
-    'py-3',
-    'shadow-none',
-  );
-  inputButtonDiv.append(inputField);
-
-  const copyButton = document.createElement('button');
-  copyButton.classList.add(
-    'social-media-share__wrapper--button',
-    'font-18',
-    'leading-24',
-    'py-4',
-    'px-8',
-    'fw-bold',
-    'text-white',
-  );
-  copyButton.textContent = 'Copy';
-  inputButtonDiv.append(copyButton);
-
-  // Add event listener for the copy button
-  copyButton.addEventListener('click', async () => {
-    try {
-      await navigator.clipboard.writeText(inputField.value);
-      // Optionally provide user feedback
-      console.log('Link copied to clipboard!');
-    } catch (err) {
-      console.error('Failed to copy: ', err);
-    }
-  });
-
-  const carouselPrevButton = document.createElement('button');
-  carouselPrevButton.classList.add(
-    'card-carousel__swiper--prev',
-    'card-carousel__navigation',
-    'cursor-pointer',
-    'rounded-circle',
-    'bg-transparent',
-    'text-red-100',
-    'text-maroon-600-hover',
-    'justify-content-center',
-    'align-items-center',
-    'position-absolute',
-    'd-none',
-    'd-sm-flex',
-  );
-  // Omit image src for now as it's not in the model and hardcoding is forbidden.
-  // TODO: Add a field to the block model for the carousel prev button icon if its source needs to be authored.
-  swiperWrapper.append(carouselPrevButton);
-
-  const carouselNextButton = document.createElement('button');
-  carouselNextButton.classList.add(
-    'card-carousel__swiper--next',
-    'card-carousel__navigation',
-    'cursor-pointer',
-    'rounded-circle',
-    'bg-transparent',
-    'text-red-100',
-    'text-maroon-600-hover',
-    'justify-content-center',
-    'align-items-center',
-    'position-absolute',
-    'end-0',
-    'd-none',
-    'd-sm-flex',
-  );
-  // Omit image src for now as it's not in the model and hardcoding is forbidden.
-  // TODO: Add a field to the block model for the carousel next button icon if its source needs to be authored.
-  swiperWrapper.append(carouselNextButton);
-
-  const paginationDiv = document.createElement('div');
-  paginationDiv.classList.add(
-    'card-carousel__swiper--pagination',
-    'mt-10',
-    'cursor-pointer',
-    'position-relative',
-    'swiper-pagination-clickable',
-    'swiper-pagination-bullets',
-    'swiper-pagination-horizontal',
-    'mx-auto',
-    'w-fit',
-  );
-  swiperContainer.append(paginationDiv);
-
-  const ctaDiv = document.createElement('div');
-  ctaDiv.classList.add('d-flex', 'justify-content-center', 'align-items-center', 'mt-8');
-  section.append(ctaDiv);
-
-  if (ctaLinkRow && ctaLabelRow) {
-    const ctaLink = document.createElement('a');
-    ctaLink.classList.add(
-      'svasti-cta',
-      'cta-analytics',
-      'w-fit',
-      'text-decoration-none',
-      'd-flex',
-      'align-items-center',
-      'primary',
-      'px-8',
-      'pb-3',
-      'text-cream-100',
-      'border',
-      'border-2',
-      'border-red-100',
-      'border-maroon-100-hover',
-      'border-red-300-active',
-      'bg-red-100',
-      'bg-maroon-100-hover',
-      'bg-red-300-active',
-    );
-    const foundCtaLink = ctaLinkRow.querySelector('a');
-    if (foundCtaLink) {
-      ctaLink.href = foundCtaLink.href;
-    }
-    moveInstrumentation(ctaLinkRow, ctaLink);
-
-    const ctaLabelSpan = document.createElement('span');
-    ctaLabelSpan.classList.add('svasti-cta__label', 'fw-semibold', 'fs-default', 'leading-26');
-    ctaLabelSpan.textContent = ctaLabelRow.textContent.trim();
-    moveInstrumentation(ctaLabelRow, ctaLabelSpan);
-    ctaLink.append(ctaLabelSpan);
-    ctaDiv.append(ctaLink);
-  }
+  const pagination = document.createElement('div');
+  pagination.classList.add('card-carousel__swiper--pagination', 'mt-10', 'cursor-pointer', 'position-relative', 'swiper-pagination-clickable', 'swiper-pagination-bullets', 'swiper-pagination-horizontal', 'mx-auto', 'w-fit');
+  swiperContainer.append(pagination);
 
   block.replaceChildren(section);
 
+  // Image optimization for all pictures within the block
   section.querySelectorAll('picture > img').forEach((img) => {
     const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
     moveInstrumentation(img, optimizedPic.querySelector('img'));
     img.closest('picture').replaceWith(optimizedPic);
   });
+
+  // Basic Swiper-like functionality (simplified for EDS)
+  let currentIndex = 0;
+  const slides = swiperWrapper.querySelectorAll('.swiper-slide');
+  const totalSlides = slides.length;
+  // Determine visible slides dynamically or from a responsive breakpoint config
+  // For now, assuming 3 visible slides based on original HTML structure for desktop
+  const getVisibleSlides = () => {
+    // This is a simplified example. In a real scenario, you'd check window width
+    // and apply different values based on breakpoints.
+    if (window.innerWidth < 768) return 1; // Example for mobile
+    return 3; // Example for desktop
+  };
+
+  function updateCarousel() {
+    const visibleSlides = getVisibleSlides();
+    const slideWidth = 100 / visibleSlides; // Percentage width for each visible slide
+
+    slides.forEach((slide, i) => {
+      slide.classList.remove('swiper-slide-active', 'swiper-slide-next');
+      if (i === currentIndex) {
+        slide.classList.add('swiper-slide-active');
+      } else if (i === currentIndex + 1) {
+        slide.classList.add('swiper-slide-next');
+      }
+      // Apply transform to shift the wrapper, not individual slides
+      // Each slide should have a width defined by CSS (e.g., flex-basis: calc(100% / var(--visible-slides)))
+      // For this simplified JS, we'll adjust the wrapper's transform
+    });
+
+    // Apply transform to the swiperWrapper to simulate sliding
+    swiperWrapper.style.transform = `translateX(-${currentIndex * slideWidth}%)`;
+    swiperWrapper.style.transition = 'transform 0.3s ease-in-out'; // Smooth transition
+
+    prevButton.disabled = currentIndex === 0;
+    nextButton.disabled = currentIndex >= totalSlides - visibleSlides;
+
+    // Update pagination
+    pagination.innerHTML = '';
+    const totalPages = Math.ceil(totalSlides / visibleSlides);
+    for (let i = 0; i < totalPages; i += 1) {
+      const bullet = document.createElement('span');
+      bullet.classList.add('swiper-pagination-bullet');
+      if (i === Math.floor(currentIndex / visibleSlides)) {
+        bullet.classList.add('swiper-pagination-bullet-active', 'swiper-pagination-bullet-active-main');
+      }
+      bullet.addEventListener('click', () => {
+        currentIndex = i * visibleSlides;
+        updateCarousel();
+      });
+      pagination.append(bullet);
+    }
+  }
+
+  prevButton.addEventListener('click', () => {
+    if (currentIndex > 0) {
+      currentIndex -= 1;
+      updateCarousel();
+    }
+  });
+
+  nextButton.addEventListener('click', () => {
+    const visibleSlides = getVisibleSlides();
+    if (currentIndex < totalSlides - visibleSlides) {
+      currentIndex += 1;
+      updateCarousel();
+    }
+  });
+
+  // Initial update and add resize listener for responsive carousel
+  updateCarousel();
+  window.addEventListener('resize', updateCarousel);
 }

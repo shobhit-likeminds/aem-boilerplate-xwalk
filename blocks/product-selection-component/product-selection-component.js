@@ -3,28 +3,10 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
   const children = [...block.children];
+  const [headlineRow, ...itemRows] = children;
 
-  const headlineRow = children[0];
-  const itemRows = children.slice(1);
-
-  const productSelectorItems = [];
-  const gheeProductPanels = [];
-  const milkProductPanels = [];
-
-  itemRows.forEach((row) => {
-    // Product Selector Item has 2 cells
-    if (row.children.length === 2) {
-      productSelectorItems.push(row);
-    }
-    // Ghee Product Panel has 9 cells
-    else if (row.children.length === 9) {
-      gheeProductPanels.push(row);
-    }
-    // Milk Product Panel has 6 cells
-    else if (row.children.length === 6) {
-      milkProductPanels.push(row);
-    }
-  });
+  const productSelectorItems = itemRows.filter((row) => row.children.length === 2);
+  const productDetailItems = itemRows.filter((row) => row.children.length === 12);
 
   const mainWrapper = document.createElement('div');
   mainWrapper.classList.add('container-xl', 'annualReport_mainBox', 'product-selection-component');
@@ -38,199 +20,187 @@ export default function decorate(block) {
   rowDiv.classList.add('row', 'gx-5');
   accountMainBox.append(rowDiv);
 
-  // Left Section
+  // Left Section - Product Selectors
   const leftSection = document.createElement('div');
   leftSection.classList.add('mt-8', 'mt-md-10', 'col-lg-4');
   rowDiv.append(leftSection);
 
-  // Headline
-  const headlineP = document.createElement('p');
-  headlineP.classList.add(
-    'font-24',
-    'font-md-40',
-    'fw-bold',
-    'product-container_heading',
-    'font-baskerville',
-  );
-  moveInstrumentation(headlineRow, headlineP);
-  headlineP.innerHTML = headlineRow.innerHTML; // Corrected to read full richtext
-  leftSection.append(headlineP);
+  const heading = document.createElement('p');
+  heading.classList.add('font-24', 'font-md-40', 'fw-bold', 'product-container_heading', 'font-baskerville');
+  moveInstrumentation(headlineRow, heading);
+  // Corrected: Use innerHTML for richtext field
+  heading.innerHTML = headlineRow.firstElementChild.innerHTML;
+  leftSection.append(heading);
 
-  // Product Selector
   const productMainBox = document.createElement('div');
   productMainBox.classList.add('product-mainbox', 'mt-10', 'mt-md-12');
   leftSection.append(productMainBox);
+
+  const productDetailBoxes = [];
 
   productSelectorItems.forEach((row, index) => {
     const [thumbnailImageCell, productLabelCell] = [...row.children];
 
     const productDiv = document.createElement('div');
     moveInstrumentation(row, productDiv);
+    productMainBox.append(productDiv);
 
-    const productItem = document.createElement('div');
-    productItem.classList.add('milk_ghee_smallImag'); // Removed initial ghee-packet/milk-packet
+    const productHoverDiv = document.createElement('div');
+    productHoverDiv.classList.add('milk_ghee_smallImag', 'product-hover');
     if (index === 0) {
-      productItem.classList.add('ghee-packet', 'product-hover'); // Default active
-    } else if (index === 1) {
-      productItem.classList.add('milk-packet');
+      productHoverDiv.classList.add('ghee-packet');
+      productHoverDiv.classList.add('active'); // Set first item as active by default
+    } else {
+      productHoverDiv.classList.add('milk-packet');
     }
+    productDiv.append(productHoverDiv);
 
     const picture = thumbnailImageCell.querySelector('picture');
     if (picture) {
       const img = picture.querySelector('img');
       const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
       moveInstrumentation(img, optimizedPic.querySelector('img'));
-      productItem.append(optimizedPic);
       optimizedPic.querySelector('img').classList.add('left-section-gheeBox', 'object-fit-contain');
+      productHoverDiv.append(optimizedPic);
     }
 
-    const productLabelP = document.createElement('p');
-    productLabelP.classList.add('product-subnames');
-    productLabelP.innerHTML = productLabelCell.innerHTML; // Corrected to read richtext
-    productItem.append(productLabelP);
+    const productName = document.createElement('p');
+    productName.classList.add('product-subnames');
+    productName.textContent = productLabelCell.textContent.trim();
+    productHoverDiv.append(productName);
 
-    productDiv.append(productItem);
-    productMainBox.append(productDiv);
+    // Add click listener to switch active product
+    productHoverDiv.addEventListener('click', () => {
+      productMainBox.querySelectorAll('.product-hover').forEach((item) => item.classList.remove('active'));
+      productHoverDiv.classList.add('active');
 
-    productItem.addEventListener('click', () => {
-      document.querySelectorAll('.product-hover').forEach((item) => {
-        item.classList.remove('product-hover');
+      productDetailBoxes.forEach((box, detailIndex) => {
+        if (index === detailIndex) {
+          box.classList.add('active');
+        } else {
+          box.classList.remove('active');
+        }
       });
-      productItem.classList.add('product-hover');
-      document.querySelectorAll('.ghee_box, .milk-section_image').forEach((panel) => {
-        panel.classList.remove('active');
-      });
-
-      if (index === 0) {
-        document.querySelector('.ghee_box').classList.add('active');
-      } else if (index === 1) {
-        document.querySelector('.milk-section_image').classList.add('active');
-      }
     });
   });
 
-  // Right Section
+  // Right Section - Product Details
   const rightSection = document.createElement('div');
   rightSection.classList.add('right-section', 'mt-10', 'py-0', 'position-relative', 'col-lg-8');
   rowDiv.append(rightSection);
 
-  // Ghee Product Panel
-  gheeProductPanels.forEach((row, index) => {
+  productDetailItems.forEach((row, index) => {
     const [
       backgroundDesktopCell,
       backgroundMobileCell,
-      headlineBeforeCell,
-      ctaIconCell,
-      ctaLinkCell,
-      ctaLabelCell,
-      headlineAfterCell,
-      confirmationIconCell,
-      ctaLabelAfterCell,
+      headlineBeforeDownloadCell,
+      ctaIconBeforeDownloadCell,
+      downloadLinkCell,
+      downloadLabelCell,
+      headlineAfterDownloadCell,
+      ctaIconAfterDownloadCell,
+      downloadLabelAfterCell,
+      confirmationIconAfterDownloadCell, // This field is present in the model but not used in the JS
+      whatsappLinkCell,
+      whatsappLabelCell,
     ] = [...row.children];
 
     const gheeBox = document.createElement('div');
     gheeBox.classList.add('ghee_box');
-    moveInstrumentation(row, gheeBox);
     if (index === 0) {
-      gheeBox.classList.add('active'); // Default active
+      gheeBox.classList.add('active'); // Set first detail item as active by default
+    } else {
+      gheeBox.classList.add('milk-section_image');
     }
+    productDetailBoxes.push(gheeBox);
     rightSection.append(gheeBox);
+    moveInstrumentation(row, gheeBox);
 
     const accountMainBgBox = document.createElement('div');
     accountMainBgBox.classList.add('account-mainBg-box', 'w-100');
     gheeBox.append(accountMainBgBox);
 
-    // Desktop Background
+    // Desktop background image
     const desktopBgOverlay = document.createElement('div');
-    desktopBgOverlay.classList.add(
-      'annual-background_image--overlay',
-      'd-flex',
-      'annual-bg-desktop',
-    );
+    desktopBgOverlay.classList.add('annual-background_image--overlay', 'd-flex', 'annual-bg-desktop');
     accountMainBgBox.append(desktopBgOverlay);
     const desktopPicture = backgroundDesktopCell.querySelector('picture');
     if (desktopPicture) {
       const img = desktopPicture.querySelector('img');
       const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
       moveInstrumentation(img, optimizedPic.querySelector('img'));
-      desktopBgOverlay.append(optimizedPic);
       optimizedPic.querySelector('img').classList.add('account-bgImg', 'with-overlay');
+      optimizedPic.querySelector('img').setAttribute('height', '392px');
+      desktopBgOverlay.append(optimizedPic);
     }
-    const desktopOverlayDiv = document.createElement('div');
-    desktopOverlayDiv.classList.add('overlay');
-    desktopBgOverlay.append(desktopOverlayDiv);
+    const desktopOverlay = document.createElement('div');
+    desktopOverlay.classList.add('overlay');
+    desktopBgOverlay.append(desktopOverlay);
 
-    // Mobile Background
+    // Mobile background image
     const mobileBgOverlay = document.createElement('div');
-    mobileBgOverlay.classList.add(
-      'annual-background_image--overlay',
-      'd-flex',
-      'annual-bg-mobile',
-    );
+    mobileBgOverlay.classList.add('annual-background_image--overlay', 'd-flex', 'annual-bg-mobile');
     accountMainBgBox.append(mobileBgOverlay);
     const mobilePicture = backgroundMobileCell.querySelector('picture');
     if (mobilePicture) {
       const img = mobilePicture.querySelector('img');
       const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
       moveInstrumentation(img, optimizedPic.querySelector('img'));
-      mobileBgOverlay.append(optimizedPic);
       optimizedPic.querySelector('img').classList.add('account-bgImg', 'with-overlay');
+      optimizedPic.querySelector('img').setAttribute('height', '447px');
+      mobileBgOverlay.append(optimizedPic);
     }
-    const mobileOverlayDiv = document.createElement('div');
-    mobileOverlayDiv.classList.add('overlay');
-    mobileBgOverlay.append(mobileOverlayDiv);
+    const mobileOverlay = document.createElement('div');
+    mobileOverlay.classList.add('overlay');
+    mobileBgOverlay.append(mobileOverlay);
 
     // Before Download Section
-    const rightSubtextBefore = document.createElement('div');
-    rightSubtextBefore.classList.add(
+    const beforeDownloadSection = document.createElement('div');
+    beforeDownloadSection.classList.add(
       'right-subtext',
       'position-absolute',
       'start-0',
       'end-0',
       'bottom-0',
-      'right-subtext__BeforeDownload',
+      'right-subtext__BeforeDownload'
     );
-    accountMainBgBox.append(rightSubtextBefore);
+    accountMainBgBox.append(beforeDownloadSection);
 
-    const beforeContent = document.createElement('div');
-    beforeContent.classList.add('d-flex', 'flex-column', 'align-items-center');
-    rightSubtextBefore.append(beforeContent);
+    const beforeDownloadContent = document.createElement('div');
+    beforeDownloadContent.classList.add('d-flex', 'flex-column', 'align-items-center');
+    beforeDownloadSection.append(beforeDownloadContent);
 
-    const gheeMobileHeadingBefore = document.createElement('div');
-    gheeMobileHeadingBefore.classList.add(
-      'ghee-mobile-heading',
-      'text-center',
-      'font-md-18',
-      'font-baskerville',
-      'leading-32',
-    );
-    gheeMobileHeadingBefore.innerHTML = headlineBeforeCell.innerHTML;
-    beforeContent.append(gheeMobileHeadingBefore);
+    const headlineBefore = document.createElement('div');
+    headlineBefore.classList.add('ghee-mobile-heading', 'text-center', 'font-md-18', 'font-baskerville', 'leading-32');
+    // Corrected: Use innerHTML for richtext field
+    headlineBefore.innerHTML = headlineBeforeDownloadCell.innerHTML;
+    beforeDownloadContent.append(headlineBefore);
 
-    const downloadButtonBefore = document.createElement('button');
-    downloadButtonBefore.classList.add('annual-report_DownloadBtn', 'my-9');
-    beforeContent.append(downloadButtonBefore);
+    const downloadButton = document.createElement('button');
+    downloadButton.classList.add('annual-report_DownloadBtn', 'my-9');
+    beforeDownloadContent.append(downloadButton);
 
     const downloadIconDiv = document.createElement('div');
     downloadIconDiv.classList.add('download_icon');
-    downloadButtonBefore.append(downloadIconDiv);
+    downloadButton.append(downloadIconDiv);
 
-    const ctaIconImg = ctaIconCell.querySelector('picture > img');
-    if (ctaIconImg) {
-      const optimizedPic = createOptimizedPicture(ctaIconImg.src, ctaIconImg.alt, false, [{ width: '750' }]);
-      moveInstrumentation(ctaIconImg, optimizedPic.querySelector('img'));
+    const ctaIconBefore = ctaIconBeforeDownloadCell.querySelector('picture');
+    if (ctaIconBefore) {
+      const img = ctaIconBefore.querySelector('img');
+      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+      moveInstrumentation(img, optimizedPic.querySelector('img'));
       downloadIconDiv.append(optimizedPic);
     }
 
-    const downloadLinkDiv = document.createElement('div');
-    downloadLinkDiv.classList.add('d-flex', 'mb-6');
-    beforeContent.append(downloadLinkDiv);
-
     const downloadLinkWrapper = document.createElement('div');
-    downloadLinkDiv.append(downloadLinkWrapper);
+    downloadLinkWrapper.classList.add('d-flex', 'mb-6');
+    beforeDownloadContent.append(downloadLinkWrapper);
 
-    const downloadLink = document.createElement('a');
-    downloadLink.classList.add(
+    const downloadLinkDiv = document.createElement('div');
+    downloadLinkWrapper.append(downloadLinkDiv);
+
+    const downloadAnchor = document.createElement('a');
+    downloadAnchor.classList.add(
       'text-decoration-none',
       'download-report_btn',
       'cta-analytics',
@@ -243,213 +213,111 @@ export default function decorate(block) {
       'border-red-300-active',
       'bg-red-100',
       'bg-maroon-100-hover',
-      'bg-red-300-active',
+      'bg-red-300-active'
     );
-    const foundCtaLink = ctaLinkCell.querySelector('a');
-    if (foundCtaLink) {
-      downloadLink.href = foundCtaLink.href;
-      downloadLink.setAttribute('download', 'report.pdf'); // Assuming a PDF download
+    const foundDownloadLink = downloadLinkCell.querySelector('a');
+    if (foundDownloadLink) {
+      downloadAnchor.href = foundDownloadLink.href;
+      downloadAnchor.setAttribute('download', 'report.pdf'); // Assuming default download name
     }
-    downloadLink.innerHTML = ctaLabelCell.innerHTML; // Corrected to read richtext
-    downloadLinkWrapper.append(downloadLink);
+    downloadAnchor.textContent = downloadLabelCell.textContent.trim();
+    downloadLinkDiv.append(downloadAnchor);
+
+    const whatsappLinkWrapper = document.createElement('div');
+    whatsappLinkWrapper.classList.add('Whatsapp-link', 'mb-8', 'text-center');
+    beforeDownloadContent.append(whatsappLinkWrapper);
 
     // After Download Section
-    const rightSubtextAfter = document.createElement('div');
-    rightSubtextAfter.classList.add(
+    const afterDownloadSection = document.createElement('div');
+    afterDownloadSection.classList.add(
       'right-subtext',
       'position-absolute',
       'start-0',
       'end-0',
       'bottom-0',
       'right-section_subtextafter',
-      'right-subtext__AfterDownload',
+      'right-subtext__AfterDownload'
     );
-    gheeBox.append(rightSubtextAfter);
+    accountMainBgBox.append(afterDownloadSection);
 
-    const afterContent = document.createElement('div');
-    afterContent.classList.add(
-      'd-flex',
-      'flex-column',
-      'align-items-center',
-      'justify-content-around',
-    );
-    rightSubtextAfter.append(afterContent);
+    const afterDownloadContent = document.createElement('div');
+    afterDownloadContent.classList.add('d-flex', 'flex-column', 'align-items-center', 'justify-content-around');
+    afterDownloadSection.append(afterDownloadContent);
 
-    const gheeMobileHeadingAfter = document.createElement('div');
-    gheeMobileHeadingAfter.classList.add(
-      'ghee-mobile-heading',
-      'text-center',
-      'font-md-18',
-      'font-baskerville',
-      'leading-32',
-    );
-    gheeMobileHeadingAfter.innerHTML = headlineAfterCell.innerHTML;
-    afterContent.append(gheeMobileHeadingAfter);
+    const headlineAfter = document.createElement('div');
+    headlineAfter.classList.add('ghee-mobile-heading', 'text-center', 'font-md-18', 'font-baskerville', 'leading-32');
+    // Corrected: Use innerHTML for richtext field
+    headlineAfter.innerHTML = headlineAfterDownloadCell.innerHTML;
+    afterDownloadContent.append(headlineAfter);
 
-    const downloadButtonAfter = document.createElement('button');
-    downloadButtonAfter.classList.add('annual-report_DownloadBtn', 'my-9');
-    afterContent.append(downloadButtonAfter);
+    const afterDownloadButton = document.createElement('button');
+    afterDownloadButton.classList.add('annual-report_DownloadBtn', 'my-9');
+    afterDownloadContent.append(afterDownloadButton);
 
     const tickDownloadDiv = document.createElement('div');
     tickDownloadDiv.classList.add('tick_download');
-    downloadButtonAfter.append(tickDownloadDiv);
+    afterDownloadButton.append(tickDownloadDiv);
 
-    const confirmationIconImg = confirmationIconCell.querySelector('picture > img');
-    if (confirmationIconImg) {
-      const optimizedPic = createOptimizedPicture(confirmationIconImg.src, confirmationIconImg.alt, false, [{ width: '750' }]);
-      moveInstrumentation(confirmationIconImg, optimizedPic.querySelector('img'));
+    const ctaIconAfter = ctaIconAfterDownloadCell.querySelector('picture');
+    if (ctaIconAfter) {
+      const img = ctaIconAfter.querySelector('img');
+      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+      moveInstrumentation(img, optimizedPic.querySelector('img'));
       tickDownloadDiv.append(optimizedPic);
     }
 
-    const downloadLinkAfterDiv = document.createElement('div');
-    downloadLinkAfterDiv.classList.add('d-flex', 'mb-6');
-    afterContent.append(downloadLinkAfterDiv);
+    const afterDownloadLinkWrapper = document.createElement('div');
+    afterDownloadLinkWrapper.classList.add('d-flex', 'mb-6');
+    afterDownloadContent.append(afterDownloadLinkWrapper);
 
-    const downloadLinkAfterWrapper = document.createElement('div');
-    downloadLinkAfterDiv.append(downloadLinkAfterWrapper);
+    const afterDownloadLinkDiv = document.createElement('div');
+    afterDownloadLinkWrapper.append(afterDownloadLinkDiv);
 
-    const downloadLinkAfter = document.createElement('button');
-    downloadLinkAfter.classList.add(
+    const afterDownloadButtonText = document.createElement('button');
+    afterDownloadButtonText.classList.add(
       'download-report_btn',
       'download_report_btnAfter',
       'disabled',
       'bg-light-pink',
       'border-light-pink',
-      'text-cream-100',
+      'text-cream-100'
     );
-    downloadLinkAfter.innerHTML = ctaLabelAfterCell.innerHTML; // Corrected to read richtext
-    downloadLinkAfterWrapper.append(downloadLinkAfter);
+    afterDownloadButtonText.textContent = downloadLabelAfterCell.textContent.trim();
+    afterDownloadLinkDiv.append(afterDownloadButtonText);
 
-    // Event listener for download button
-    downloadButtonBefore.addEventListener('click', () => {
-      // Simulate download
-      setTimeout(() => {
-        rightSubtextBefore.style.display = 'none';
-        rightSubtextAfter.style.display = 'flex';
-      }, 100); // Small delay to simulate download
-    });
-  });
+    const afterWhatsappLinkWrapper = document.createElement('div');
+    afterWhatsappLinkWrapper.classList.add('Whatsapp-link', 'mb-8', 'text-center');
+    afterDownloadContent.append(afterWhatsappLinkWrapper);
 
-  // Milk Product Panel
-  milkProductPanels.forEach((row, index) => {
-    const [
-      backgroundDesktopCell,
-      backgroundMobileCell,
-      headlineCell,
-      milkIconCell,
-      whatsappLinkCell,
-      whatsappLabelCell,
-    ] = [...row.children];
+    // Whatsapp Link (common for both states)
+    const whatsappLink = whatsappLinkCell.querySelector('a');
+    if (whatsappLink && whatsappLabelCell.textContent.trim()) {
+      const whatsappP = document.createElement('p');
+      whatsappP.textContent = 'Check Your Milk Report Card on ';
 
-    const milkSectionImage = document.createElement('div');
-    milkSectionImage.classList.add('position-relative', 'milk-section_image');
-    moveInstrumentation(row, milkSectionImage);
-    rightSection.append(milkSectionImage);
-
-    const accountMainBgBox = document.createElement('div');
-    accountMainBgBox.classList.add('w-100', 'account-mainBg-box', 'd-flex');
-    milkSectionImage.append(accountMainBgBox);
-
-    // Desktop Background
-    const desktopBgOverlay = document.createElement('div');
-    desktopBgOverlay.classList.add(
-      'annual-background_image--overlay',
-      'd-flex',
-      'annual-bg-desktop',
-    );
-    accountMainBgBox.append(desktopBgOverlay);
-    const desktopPicture = backgroundDesktopCell.querySelector('picture');
-    if (desktopPicture) {
-      const img = desktopPicture.querySelector('img');
-      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-      moveInstrumentation(img, optimizedPic.querySelector('img'));
-      desktopBgOverlay.append(optimizedPic);
-      optimizedPic.querySelector('img').classList.add('account-bgImg', 'with-overlay');
-    }
-    const desktopOverlayDiv = document.createElement('div');
-    desktopOverlayDiv.classList.add('overlay');
-    desktopBgOverlay.append(desktopOverlayDiv);
-
-    // Mobile Background
-    const mobileBgOverlay = document.createElement('div');
-    mobileBgOverlay.classList.add(
-      'annual-background_image--overlay',
-      'd-flex',
-      'annual-bg-mobile',
-    );
-    accountMainBgBox.append(mobileBgOverlay);
-    const mobilePicture = backgroundMobileCell.querySelector('picture');
-    if (mobilePicture) {
-      const img = mobilePicture.querySelector('img');
-      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-      moveInstrumentation(img, optimizedPic.querySelector('img'));
-      mobileBgOverlay.append(optimizedPic);
-      optimizedPic.querySelector('img').classList.add('account-bgImg', 'with-overlay');
-    }
-    const mobileOverlayDiv = document.createElement('div');
-    mobileOverlayDiv.classList.add('overlay');
-    mobileBgOverlay.append(mobileOverlayDiv);
-
-    const rightSubtextMilk = document.createElement('div');
-    rightSubtextMilk.classList.add(
-      'right-subtext',
-      'position-absolute',
-      'start-0',
-      'end-0',
-      'bottom-0',
-      'right-subtext-milk',
-    );
-    milkSectionImage.append(rightSubtextMilk);
-
-    const milkContent = document.createElement('div');
-    milkContent.classList.add('d-flex', 'flex-column', 'align-items-center');
-    rightSubtextMilk.append(milkContent);
-
-    const gheeMobileHeading = document.createElement('div');
-    gheeMobileHeading.classList.add(
-      'ghee-mobile-heading',
-      'text-center',
-      'font-md-18',
-      'font-baskerville',
-      'leading-32',
-    );
-    gheeMobileHeading.innerHTML = headlineCell.innerHTML;
-    milkContent.append(gheeMobileHeading);
-
-    const mt6Div = document.createElement('div');
-    mt6Div.classList.add('font-md-18', 'mt-6', 'text-center');
-    milkContent.append(mt6Div);
-
-    const my9Div = document.createElement('div');
-    my9Div.classList.add('my-9');
-    milkContent.append(my9Div);
-
-    const milkIconImg = milkIconCell.querySelector('picture > img');
-    if (milkIconImg) {
-      const optimizedPic = createOptimizedPicture(milkIconImg.src, milkIconImg.alt, false, [{ width: '750' }]);
-      moveInstrumentation(milkIconImg, optimizedPic.querySelector('img'));
-      my9Div.append(optimizedPic);
-    }
-
-    const whatsappLinkDiv = document.createElement('div');
-    whatsappLinkDiv.classList.add('Whatsapp-link', 'mb-8', 'text-center');
-    milkContent.append(whatsappLinkDiv);
-
-    const whatsappP = document.createElement('p');
-    const whatsappAnchor = document.createElement('a');
-    const foundWhatsappLink = whatsappLinkCell.querySelector('a');
-    if (foundWhatsappLink) {
-      whatsappAnchor.href = foundWhatsappLink.href;
+      const whatsappAnchor = document.createElement('a');
+      whatsappAnchor.href = whatsappLink.href;
+      whatsappAnchor.textContent = whatsappLabelCell.textContent.trim();
       whatsappAnchor.setAttribute('target', '_blank');
       whatsappAnchor.setAttribute('rel', 'noopener noreferrer');
+      const screenReaderOnlySpan = document.createElement('span');
+      screenReaderOnlySpan.classList.add('cmp-link__screen-reader-only');
+      screenReaderOnlySpan.textContent = 'opens in a new tab';
+      whatsappAnchor.append(screenReaderOnlySpan);
+
+      whatsappP.append(whatsappAnchor);
+      whatsappLinkWrapper.append(whatsappP);
+      // Corrected: Clone the entire paragraph to ensure all elements and instrumentation are copied
+      afterWhatsappLinkWrapper.append(whatsappP.cloneNode(true));
     }
-    whatsappAnchor.innerHTML = whatsappLabelCell.innerHTML; // Corrected to read richtext
-    const screenReaderSpan = document.createElement('span');
-    screenReaderSpan.classList.add('cmp-link__screen-reader-only');
-    screenReaderSpan.textContent = 'opens in a new tab';
-    whatsappAnchor.append(screenReaderSpan);
-    whatsappP.append('Check Your Milk Report Card on ', whatsappAnchor);
-    whatsappLinkDiv.append(whatsappP);
+
+    // Event listeners for download button
+    downloadButton.addEventListener('click', () => {
+      beforeDownloadSection.classList.remove('right-subtext__BeforeDownload');
+      beforeDownloadSection.style.display = 'none';
+      afterDownloadSection.classList.add('right-subtext__AfterDownload');
+      afterDownloadSection.style.display = 'flex'; // Use flex to match original
+    });
   });
 
   block.replaceChildren(mainWrapper);

@@ -43,7 +43,7 @@ export default function decorate(block) {
   const titleDiv = document.createElement('div');
   const title = document.createElement('h2');
   title.classList.add('font-baskerville', 'font-md-40', 'font-24', 'text-banner--title');
-  const titleCell = [...titleRow.children].find((cell) => cell.textContent.trim());
+  const titleCell = [...titleRow.children].find(c => c.textContent.trim() !== ''); // Find the cell with text content
   if (titleCell) {
     moveInstrumentation(titleRow, title);
     title.textContent = titleCell.textContent.trim();
@@ -56,7 +56,7 @@ export default function decorate(block) {
   descriptionDiv.classList.add('mt-sm-8', 'mt-5', 'text-banner--description');
   const descriptionText = document.createElement('div');
   descriptionText.classList.add('font-md-18', 'font-default', 'leading-24', 'text-center', 'promise-text-padding');
-  const descriptionCell = [...descriptionRow.children].find((cell) => cell.innerHTML.trim());
+  const descriptionCell = [...descriptionRow.children].find(c => c.innerHTML.trim() !== ''); // Find the cell with rich text content
   if (descriptionCell) {
     moveInstrumentation(descriptionRow, descriptionText);
     descriptionText.innerHTML = descriptionCell.innerHTML;
@@ -65,41 +65,32 @@ export default function decorate(block) {
   contentWrapper.append(descriptionDiv);
 
   // CTA
-  const ctaDiv = document.createElement('div');
-  ctaDiv.classList.add('text-banner--cta', 'mt-12', 'mt-lg-16');
-  const ctaLink = document.createElement('a');
-  ctaLink.classList.add(
-    'svasti-cta', 'cta-analytics', 'w-fit', 'text-decoration-none', 'd-flex', 'align-items-center',
-    'primary', 'px-8', 'pb-3', 'text-black', 'border', 'border-2', 'border-cream-100',
-    'border-cream-500-hover', 'border-cream-500-active', 'bg-cream-100', 'bg-cream-500-hover',
-    'bg-cream-100-active',
-  );
+  const ctaWrapper = document.createElement('div');
+  ctaWrapper.classList.add('text-banner--cta', 'mt-12', 'mt-lg-16');
+  textBannerContainer.append(ctaWrapper);
 
-  const ctaLinkCell = [...ctaLinkRow.children].find((cell) => cell.querySelector('a'));
-  if (ctaLinkCell) {
-    const foundCtaLink = ctaLinkCell.querySelector('a');
-    if (foundCtaLink) {
-      ctaLink.href = foundCtaLink.href;
-    }
-    moveInstrumentation(ctaLinkRow, ctaLink);
-  }
+  const ctaLink = ctaLinkRow.querySelector('a');
+  const ctaLabelCell = [...ctaLabelRow.children].find(c => c.textContent.trim() !== ''); // Find the cell with text content
+  const ctaLabel = ctaLabelCell ? ctaLabelCell.textContent.trim() : '';
 
-  const ctaLabelSpan = document.createElement('span');
-  ctaLabelSpan.classList.add('svasti-cta__label', 'fw-semibold', 'fs-default', 'leading-26');
-  const ctaLabelCell = [...ctaLabelRow.children].find((cell) => cell.textContent.trim());
-  if (ctaLabelCell) {
-    moveInstrumentation(ctaLabelRow, ctaLabelSpan);
-    ctaLabelSpan.textContent = ctaLabelCell.textContent.trim();
+  if (ctaLink && ctaLabel) {
+    const anchor = document.createElement('a');
+    anchor.classList.add(
+      'svasti-cta', 'cta-analytics', 'w-fit', 'text-decoration-none', 'd-flex',
+      'align-items-center', 'primary', 'px-8', 'pb-3', 'text-black', 'border',
+      'border-2', 'border-cream-100', 'border-cream-500-hover', 'border-cream-500-active',
+      'bg-cream-100', 'bg-cream-500-hover', 'bg-cream-100-active'
+    );
+    anchor.href = ctaLink.href;
+    moveInstrumentation(ctaLinkRow, anchor); // Move instrumentation from ctaLinkRow
+    moveInstrumentation(ctaLabelRow, anchor); // Move instrumentation from ctaLabelRow
+
+    const span = document.createElement('span');
+    span.classList.add('svasti-cta__label', 'fw-semibold', 'fs-default', 'leading-26');
+    span.textContent = ctaLabel;
+    anchor.append(span);
+    ctaWrapper.append(anchor);
   }
-  ctaLink.append(ctaLabelSpan);
-  ctaDiv.append(ctaLink);
-  textBannerContainer.append(ctaDiv);
 
   block.replaceChildren(wrapper);
-
-  wrapper.querySelectorAll('picture > img').forEach((img) => {
-    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-    moveInstrumentation(img, optimizedPic.querySelector('img'));
-    img.closest('picture').replaceWith(optimizedPic);
-  });
 }

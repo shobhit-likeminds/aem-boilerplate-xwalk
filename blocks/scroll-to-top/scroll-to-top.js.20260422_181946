@@ -21,13 +21,18 @@ export default function decorate(block) {
     'bg-red-100',
   );
 
-  const iconCell = iconRow.firstElementChild;
-  const picture = iconCell.querySelector('picture');
-  if (picture) {
-    const img = picture.querySelector('img');
-    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-    moveInstrumentation(img, optimizedPic.querySelector('img'));
-    button.append(optimizedPic);
+  const iconCell = iconRow.querySelector('div');
+  if (iconCell) {
+    const picture = iconCell.querySelector('picture');
+    if (picture) {
+      const img = picture.querySelector('img');
+      if (img) {
+        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+        moveInstrumentation(img, optimizedPic.querySelector('img'));
+        button.append(optimizedPic);
+      }
+    }
+    moveInstrumentation(iconRow, button);
   }
 
   button.addEventListener('click', () => {
@@ -37,17 +42,13 @@ export default function decorate(block) {
     });
   });
 
-  const handleScroll = () => {
-    if (window.scrollY > 100) {
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 200) {
       button.style.display = 'flex';
     } else {
       button.style.display = 'none';
     }
-  };
+  });
 
-  window.addEventListener('scroll', handleScroll);
-  handleScroll(); // Set initial state
-
-  moveInstrumentation(iconRow, button);
   block.replaceChildren(button);
 }

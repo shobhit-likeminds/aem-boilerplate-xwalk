@@ -131,30 +131,15 @@
           }
         },
         {
-          "title": "Recipe Card",
-          "id": "recipe-card",
+          "title": "Product Card Item",
+          "id": "product-card-item",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "recipe-card",
-                  "name": "Recipe Card"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Social Media Share Icon",
-          "id": "social-media-share-icon",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block/item",
-                "template": {
-                  "model": "social-media-share-icon",
-                  "name": "Social Media Share Icon"
+                  "model": "product-card-item",
+                  "name": "Product Card Item"
                 }
               }
             }
@@ -299,6 +284,52 @@
           }
         },
         {
+          "title": "Footer Brand",
+          "id": "footer-brand",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "footer-brand",
+                  "model": "footer-brand",
+                  "name": "Footer Brand"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Footer Nav Link",
+          "id": "footer-nav-link",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "footer-nav-link",
+                  "name": "Footer Nav Link"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Footer Social Link",
+          "id": "footer-social-link",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "footer-social-link",
+                  "name": "Footer Social Link"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Footer-New",
           "id": "footer-new",
           "plugins": {
@@ -436,7 +467,7 @@
           }
         },
         {
-          "title": "Header-Comp",
+          "title": "Header Comp",
           "id": "header-comp",
           "plugins": {
             "xwalk": {
@@ -445,67 +476,67 @@
                 "template": {
                   "filter": "header-comp",
                   "model": "header-comp",
-                  "name": "Header-Comp"
+                  "name": "Header Comp"
                 }
               }
             }
           }
         },
         {
-          "title": "Navigation-Item",
-          "id": "navigation-item",
+          "title": "Nav Menu Item",
+          "id": "nav-menu-item",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "navigation-item",
-                  "name": "Navigation-Item"
+                  "model": "nav-menu-item",
+                  "name": "Nav Menu Item"
                 }
               }
             }
           }
         },
         {
-          "title": "Submenu-Item",
-          "id": "submenu-item",
+          "title": "Sub Menu Item",
+          "id": "sub-menu-item",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "submenu-item",
-                  "name": "Submenu-Item"
+                  "model": "sub-menu-item",
+                  "name": "Sub Menu Item"
                 }
               }
             }
           }
         },
         {
-          "title": "Subsubmenu-Item",
-          "id": "subsubmenu-item",
+          "title": "Sub Sub Menu Item",
+          "id": "sub-sub-menu-item",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "subsubmenu-item",
-                  "name": "Subsubmenu-Item"
+                  "model": "sub-sub-menu-item",
+                  "name": "Sub Sub Menu Item"
                 }
               }
             }
           }
         },
         {
-          "title": "Search-Item",
-          "id": "search-item",
+          "title": "Search Icon",
+          "id": "search-icon-item",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "search-item",
-                  "name": "Search-Item"
+                  "model": "search-icon-item",
+                  "name": "Search Icon"
                 }
               }
             }
@@ -696,30 +727,15 @@
           }
         },
         {
-          "title": "Ghee Product Panel",
-          "id": "ghee-product-panel",
+          "title": "Product Detail Item",
+          "id": "product-detail-item",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "ghee-product-panel",
-                  "name": "Ghee Product Panel"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Milk Product Panel",
-          "id": "milk-product-panel",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block/item",
-                "template": {
-                  "model": "milk-product-panel",
-                  "name": "Milk Product Panel"
+                  "model": "product-detail-item",
+                  "name": "Product Detail Item"
                 }
               }
             }
@@ -969,6 +985,22 @@
                   "filter": "w-100-pt-3-pt-sm-3",
                   "model": "w-100-pt-3-pt-sm-3",
                   "name": "W-100-Pt-3-Pt-Sm-3"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "W-100",
+          "id": "w-100",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "w-100",
+                  "model": "w-100",
+                  "name": "W-100"
                 }
               }
             }
