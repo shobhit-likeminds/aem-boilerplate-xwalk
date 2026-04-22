@@ -23,8 +23,8 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Scroll To Top Icon",
-          "name": "icon",
+          "label": "Button Icon",
+          "name": "buttonIcon",
           "valueType": "string"
         }
       ]

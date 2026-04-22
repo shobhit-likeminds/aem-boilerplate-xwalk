@@ -38,7 +38,7 @@
       "fields": [
         {
           "component": "text",
-          "label": "Title",
+          "label": "Main Title",
           "name": "title",
           "valueType": "string"
         },
@@ -49,10 +49,10 @@
           "valueType": "string"
         },
         {
-          "component": "container",
-          "item": "stay-social-card",
-          "label": "Social Cards",
-          "name": "cards"
+          "component": "aem-content",
+          "label": "CTA Link",
+          "name": "ctaLink",
+          "valueType": "string"
         },
         {
           "component": "text",
@@ -61,10 +61,10 @@
           "valueType": "string"
         },
         {
-          "component": "aem-content",
-          "label": "CTA Link",
-          "name": "ctaLink",
-          "valueType": "string"
+          "component": "container",
+          "item": "stay-social-card",
+          "label": "Social Cards",
+          "name": "cards"
         }
       ]
     },
@@ -73,20 +73,20 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Card Desktop Image",
-          "name": "desktopImage",
+          "label": "Card Image (Desktop)",
+          "name": "imageDesktop",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Card Mobile Image",
-          "name": "mobileImage",
+          "label": "Card Image (Mobile)",
+          "name": "imageMobile",
           "valueType": "string"
         },
         {
           "component": "aem-content",
           "label": "Card Link",
-          "name": "cardLink",
+          "name": "link",
           "valueType": "string"
         }
       ]

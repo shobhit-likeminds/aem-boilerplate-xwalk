@@ -2,22 +2,21 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  // The buy-now-card block has no fields in its model, meaning it's an empty container.
-  // This typically indicates that the block's content is entirely driven by its CSS
-  // or that it serves as a placeholder for other components to be injected.
-  // Since there are no authored rows or cells to process, we only need to apply
-  // the appropriate class names from the ORIGINAL HTML.
+  // The buy-now-card block has no defined fields in its model.
+  // This means it's an empty block that serves as a container or
+  // is meant to be populated by other means (e.g., client-side rendering
+  // or a different block type with dynamic content).
+  //
+  // Since there are no fields, there's no authored content to transform.
+  // We simply apply the necessary class names from the ORIGINAL HTML.
 
   // Apply classes from ORIGINAL HTML to the block itself.
-  // The original HTML shows the block div having these classes:
-  // <div class="buyNowCard aem-GridColumn aem-GridColumn--default--12">
+  // The ORIGINAL HTML shows: <div class="buyNowCard aem-GridColumn aem-GridColumn--default--12">
   block.classList.add('buyNowCard', 'aem-GridColumn', 'aem-GridColumn--default--12');
 
-  // Since there are no fields defined in the model, there are no children
-  // to process or move instrumentation from. The block itself is the only
-  // element that needs decoration.
-
-  // If this block were intended to contain content, its model would have fields,
-  // and we would iterate over block.children, create new elements, move instrumentation,
-  // and append content. As it stands, it's an empty container.
+  // If there were any child elements (rows) in the block, and we intended
+  // to replace them, we would need to call moveInstrumentation for each.
+  // However, for an empty block, there are no authored rows to process.
+  // If this block were intended to contain other blocks or client-side content,
+  // that logic would go here. For now, it's just a div with specific classes.
 }

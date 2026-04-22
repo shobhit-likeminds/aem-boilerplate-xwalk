@@ -1,0 +1,336 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  const [
+    titleRow,
+    subtitleRow,
+    navigationPrevIconRow,
+    navigationNextIconRow,
+    ...cardRows
+  ] = [...block.children];
+
+  const section = document.createElement('section');
+  section.classList.add('card-carousel');
+  moveInstrumentation(block, section);
+
+  // Title and Subtitle
+  const containerDiv = document.createElement('div');
+  containerDiv.classList.add('container', 'gx-8', 'gx-sm-0');
+
+  const titleEl = document.createElement('h2');
+  titleEl.classList.add(
+    'card-carousel__title',
+    'font-24',
+    'leading-28',
+    'font-sm-40',
+    'leading-sm-50',
+    'text-dark-gray-100',
+    'text-center',
+    'font-baskerville',
+  );
+  moveInstrumentation(titleRow, titleEl);
+  titleEl.textContent = titleRow.textContent.trim();
+  containerDiv.append(titleEl);
+
+  const subtitleEl = document.createElement('p');
+  subtitleEl.classList.add(
+    'card-carousel__subtitle',
+    'font-default',
+    'leading-24',
+    'font-sm-18',
+    'leading-sm-32',
+    'text-dark-gray-100',
+    'text-center',
+    'mt-4',
+    'fw-medium',
+  );
+  moveInstrumentation(subtitleRow, subtitleEl);
+  subtitleEl.textContent = subtitleRow.textContent.trim();
+  containerDiv.append(subtitleEl);
+
+  section.append(containerDiv);
+
+  // Swiper Container
+  const swiperContainer = document.createElement('div');
+  swiperContainer.classList.add('card-carousel__swiper', 'swiper', 'container', 'gx-0');
+  swiperContainer.setAttribute('data-loop', 'false');
+
+  const swiperWrapperContainer = document.createElement('div');
+  swiperWrapperContainer.classList.add('card-carousel__swiper--container', 'mt-8', 'mt-sm-10');
+  swiperContainer.append(swiperWrapperContainer);
+
+  const productCardsGrid = document.createElement('div');
+  productCardsGrid.classList.add('aem-Grid', 'aem-Grid--12', 'aem-Grid--default--12');
+  swiperWrapperContainer.append(productCardsGrid);
+
+  const productCardsColumn = document.createElement('div');
+  productCardsColumn.classList.add('productCards', 'aem-GridColumn', 'aem-GridColumn--default--12');
+  productCardsGrid.append(productCardsColumn);
+
+  const productCardsCardContainer = document.createElement('div');
+  productCardsCardContainer.classList.add(
+    'product-cards__card-container',
+    'mx-4',
+    'mx-sm-0',
+    'overflow-hidden',
+    'add-margin',
+  );
+  productCardsColumn.append(productCardsCardContainer);
+
+  const swiperWrapper = document.createElement('div');
+  swiperWrapper.classList.add('swiper-wrapper', 'slide-in-anim');
+  productCardsCardContainer.append(swiperWrapper);
+
+  cardRows.forEach((row) => {
+    const [
+      mainImageCell,
+      titleRichCell,
+      productImageCell,
+      productLinkCell,
+      ctaLabelCell,
+      ctaLinkCell,
+    ] = [...row.children];
+
+    const card = document.createElement('div');
+    card.classList.add('product-cards__card', 'swiper-slide', 'd-flex', 'flex-column', 'cursor-pointer');
+    moveInstrumentation(row, card);
+
+    const cardMedia = document.createElement('div');
+    cardMedia.classList.add('product-cards__card-media', 'position-relative');
+    card.append(cardMedia);
+
+    const ratioDiv = document.createElement('div');
+    ratioDiv.classList.add('ratio', 'ratio-3x4', 'position-relative', 'product-cards__card-video-wrapper');
+    cardMedia.append(ratioDiv);
+
+    const mainImagePicture = mainImageCell.querySelector('picture');
+    if (mainImagePicture) {
+      const img = mainImagePicture.querySelector('img');
+      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+      optimizedPic.querySelector('img').classList.add('product-cards__card-thumb', 'object-fit-cover');
+      moveInstrumentation(img, optimizedPic.querySelector('img'));
+      ratioDiv.append(optimizedPic);
+    }
+
+    const cardGradient = document.createElement('div');
+    cardGradient.classList.add('card-gradient', 'position-absolute', 'top-0', 'bottom-0', 'start-0', 'end-0');
+    cardMedia.append(cardGradient);
+
+    const cardTitle = document.createElement('div');
+    cardTitle.classList.add(
+      'product-cards__card-title',
+      'position-absolute',
+      'top-0',
+      'text-white',
+      'px-5',
+      'pt-4',
+      'text-cream-100',
+      'leading-32',
+    );
+    cardTitle.innerHTML = titleRichCell.innerHTML;
+    cardMedia.append(cardTitle);
+
+    const cardImgWrapper = document.createElement('div');
+    cardImgWrapper.classList.add(
+      'product-cards__card-img',
+      'pt-lg-8',
+      'pt-sm-6',
+      'pt-8',
+      'pb-3',
+      'bg-cream-300',
+      'position-absolute',
+      'start-50',
+      'top-100',
+      'rounded-top-circle',
+    );
+    cardMedia.append(cardImgWrapper);
+
+    const ratio1x1 = document.createElement('div');
+    ratio1x1.classList.add('ratio', 'ratio-1x1');
+    cardImgWrapper.append(ratio1x1);
+
+    const productLink = document.createElement('a');
+    productLink.classList.add('cta-analytics');
+    const foundProductLink = productLinkCell.querySelector('a');
+    if (foundProductLink) {
+      productLink.href = foundProductLink.href;
+      moveInstrumentation(productLinkCell, productLink); // Move instrumentation for the link
+    }
+
+    const productImagePicture = productImageCell.querySelector('picture');
+    if (productImagePicture) {
+      const img = productImagePicture.querySelector('img');
+      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+      optimizedPic.querySelector('img').classList.add('w-100', 'h-100', 'object-fit-contain');
+      moveInstrumentation(img, optimizedPic.querySelector('img'));
+      productLink.append(optimizedPic);
+    }
+    ratio1x1.append(productLink);
+
+    const ctaWrapper = document.createElement('div');
+    ctaWrapper.classList.add('mt-6', 'align-self-center');
+    card.append(ctaWrapper);
+
+    const ctaLink = document.createElement('a');
+    ctaLink.classList.add(
+      'cta-analytics',
+      'svasti-cta',
+      'w-fit',
+      'text-decoration-none',
+      'd-flex',
+      'align-items-center',
+      'primary',
+      'px-8',
+      'pb-3',
+      'text-cream-100',
+      'border',
+      'border-2',
+      'border-red-100',
+      'border-maroon-100-hover',
+      'border-red-300-active',
+      'bg-red-100',
+      'bg-maroon-100-hover',
+      'bg-red-300-active',
+    );
+    const foundCtaLink = ctaLinkCell.querySelector('a');
+    if (foundCtaLink) {
+      ctaLink.href = foundCtaLink.href;
+      moveInstrumentation(ctaLinkCell, ctaLink); // Move instrumentation for the link
+    }
+    ctaLink.textContent = ctaLabelCell.textContent.trim();
+    ctaWrapper.append(ctaLink);
+
+    swiperWrapper.append(card);
+  });
+
+  const prevButton = document.createElement('button');
+  prevButton.classList.add(
+    'card-carousel__swiper--prev',
+    'card-carousel__navigation',
+    'cursor-pointer',
+    'rounded-circle',
+    'bg-transparent',
+    'text-red-100',
+    'text-maroon-600-hover',
+    'justify-content-center',
+    'align-items-center',
+    'position-absolute',
+    'd-none',
+    'd-sm-flex',
+    'opacity-30',
+  );
+  prevButton.disabled = true;
+  const prevIcon = navigationPrevIconRow.querySelector('picture');
+  if (prevIcon) {
+    const img = prevIcon.querySelector('img');
+    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+    moveInstrumentation(img, optimizedPic.querySelector('img'));
+    prevButton.append(optimizedPic);
+  }
+  swiperWrapperContainer.append(prevButton);
+
+  const nextButton = document.createElement('button');
+  nextButton.classList.add(
+    'card-carousel__swiper--next',
+    'card-carousel__navigation',
+    'cursor-pointer',
+    'rounded-circle',
+    'bg-transparent',
+    'text-red-100',
+    'text-maroon-600-hover',
+    'justify-content-center',
+    'align-items-center',
+    'position-absolute',
+    'end-0',
+    'd-none',
+    'd-sm-flex',
+  );
+  const nextIcon = navigationNextIconRow.querySelector('picture');
+  if (nextIcon) {
+    const img = nextIcon.querySelector('img');
+    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+    moveInstrumentation(img, optimizedPic.querySelector('img'));
+    nextButton.append(optimizedPic);
+  }
+  swiperWrapperContainer.append(nextButton);
+
+  const pagination = document.createElement('div');
+  pagination.classList.add(
+    'card-carousel__swiper--pagination',
+    'mt-10',
+    'cursor-pointer',
+    'position-relative',
+    'swiper-pagination-clickable',
+    'swiper-pagination-bullets',
+    'swiper-pagination-horizontal',
+    'mx-auto',
+    'w-fit',
+  );
+  swiperContainer.append(pagination);
+
+  section.append(swiperContainer);
+  block.replaceChildren(section);
+
+  // Swiper initialization (simplified for EDS, no actual Swiper library)
+  let currentIndex = 0;
+  const slides = [...swiperWrapper.children];
+  const totalSlides = slides.length;
+  const slidesPerView = 1; // Assuming 1 slide visible at a time for simplicity
+
+  const updateCarousel = () => {
+    slides.forEach((slide, i) => {
+      if (i >= currentIndex && i < currentIndex + slidesPerView) {
+        slide.style.display = 'flex';
+      } else {
+        slide.style.display = 'none';
+      }
+    });
+
+    prevButton.disabled = currentIndex === 0;
+    nextButton.disabled = currentIndex >= totalSlides - slidesPerView;
+
+    if (prevButton.disabled) {
+      prevButton.classList.add('opacity-30');
+    } else {
+      prevButton.classList.remove('opacity-30');
+    }
+
+    if (nextButton.disabled) {
+      nextButton.classList.add('opacity-30');
+    } else {
+      nextButton.classList.remove('opacity-30');
+    }
+
+    // Update pagination
+    pagination.innerHTML = '';
+    for (let i = 0; i < totalSlides; i += 1) {
+      const bullet = document.createElement('span');
+      bullet.classList.add('swiper-pagination-bullet');
+      if (i === currentIndex) {
+        bullet.classList.add('swiper-pagination-bullet-active', 'swiper-pagination-bullet-active-main');
+      }
+      bullet.addEventListener('click', () => {
+        currentIndex = i;
+        updateCarousel();
+      });
+      pagination.append(bullet);
+    }
+  };
+
+  prevButton.addEventListener('click', () => {
+    if (currentIndex > 0) {
+      currentIndex -= 1;
+      updateCarousel();
+    }
+  });
+
+  nextButton.addEventListener('click', () => {
+    if (currentIndex < totalSlides - slidesPerView) {
+      currentIndex += 1;
+      updateCarousel();
+    }
+  });
+
+  updateCarousel(); // Initial render
+}

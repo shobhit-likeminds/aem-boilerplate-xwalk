@@ -3,12 +3,13 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
   const [
-    backgroundImageDesktopRow,
-    backgroundImageMobileRow,
+    backgroundDesktopRow,
+    backgroundMobileRow,
     ctaLinkRow,
     ctaLabelRow,
   ] = [...block.children];
 
+  // Main wrapper
   const wrapper = document.createElement('div');
   wrapper.classList.add(
     'position-relative',
@@ -18,54 +19,53 @@ export default function decorate(block) {
     'd-flex',
     'justify-content-center',
   );
-  moveInstrumentation(block, wrapper);
 
-  // Background Image (Mobile)
-  const mobilePicture = backgroundImageMobileRow.querySelector('picture');
+  // Background Picture
+  const picture = document.createElement('picture');
+  picture.classList.add('d-block', 'w-100', 'h-100');
+
+  const desktopPicture = backgroundDesktopRow.querySelector('picture');
+  const mobilePicture = backgroundMobileRow.querySelector('picture');
+
   if (mobilePicture) {
     const mobileImg = mobilePicture.querySelector('img');
-    const optimizedMobilePic = createOptimizedPicture(
-      mobileImg.src,
-      mobileImg.alt,
-      false,
-      [{ media: '(max-width:600px)', width: '750' }],
-    );
-    optimizedMobilePic.classList.add('d-block', 'w-100', 'h-100');
-    moveInstrumentation(backgroundImageMobileRow, optimizedMobilePic);
-    wrapper.append(optimizedMobilePic);
+    const sourceMobile = document.createElement('source');
+    sourceMobile.media = '(max-width:600px)';
+    sourceMobile.srcset = mobileImg.src;
+    picture.appendChild(sourceMobile);
+    moveInstrumentation(mobilePicture, sourceMobile);
   }
 
-  // Background Image (Desktop)
-  const desktopPicture = backgroundImageDesktopRow.querySelector('picture');
   if (desktopPicture) {
     const desktopImg = desktopPicture.querySelector('img');
-    const optimizedDesktopPic = createOptimizedPicture(
-      desktopImg.src,
-      desktopImg.alt,
-      true,
-      [{ width: '1920' }],
-    );
-    optimizedDesktopPic.classList.add(
-      'w-100',
-      'h-100',
-      'object-fit-cover',
-      'banner-media',
-      'd-block',
-    );
-    moveInstrumentation(backgroundImageDesktopRow, optimizedDesktopPic);
-    wrapper.append(optimizedDesktopPic);
+    const sourceDesktop = document.createElement('source');
+    sourceDesktop.srcset = desktopImg.src;
+    picture.appendChild(sourceDesktop);
+
+    const img = document.createElement('img');
+    img.src = desktopImg.src;
+    img.alt = desktopImg.alt;
+    img.loading = 'eager';
+    img.fetchPriority = 'high';
+    img.classList.add('w-100', 'h-100', 'object-fit-cover', 'banner-media', 'd-block');
+    picture.appendChild(img);
+    moveInstrumentation(desktopPicture, img);
   }
 
-  const overlayDiv = document.createElement('div');
-  overlayDiv.classList.add(
-    'position-absolute',
-    'start-0',
-    'bottom-0',
-    'w-100',
-    'h-100',
-  );
-  wrapper.append(overlayDiv);
+  // Optimize images
+  picture.querySelectorAll('img').forEach((img) => {
+    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+    moveInstrumentation(img, optimizedPic.querySelector('img'));
+    img.closest('picture').replaceWith(optimizedPic);
+  });
 
+  wrapper.appendChild(picture);
+
+  const overlayDiv = document.createElement('div');
+  overlayDiv.classList.add('position-absolute', 'start-0', 'bottom-0', 'w-100', 'h-100');
+  wrapper.appendChild(overlayDiv);
+
+  // Banner content
   const bannerContent = document.createElement('div');
   bannerContent.classList.add('position-absolute', 'banner-content');
 
@@ -84,8 +84,8 @@ export default function decorate(block) {
     'bottom-0',
   );
 
-  const spanWrapper = document.createElement('span');
-  spanWrapper.classList.add(
+  const span = document.createElement('span');
+  span.classList.add(
     'text-capitalize',
     'mt-6',
     'mt-md-3',
@@ -119,24 +119,19 @@ export default function decorate(block) {
       'bg-red-300-active',
     );
     anchor.href = ctaLink.href;
-    moveInstrumentation(ctaLinkRow, anchor);
 
-    const labelSpan = document.createElement('span');
-    labelSpan.classList.add(
-      'svasti-cta__label',
-      'fw-semibold',
-      'fs-default',
-      'leading-26',
-    );
-    labelSpan.textContent = ctaLabel;
-    moveInstrumentation(ctaLabelRow, labelSpan);
-    anchor.append(labelSpan);
-    spanWrapper.append(anchor);
+    const ctaLabelSpan = document.createElement('span');
+    ctaLabelSpan.classList.add('svasti-cta__label', 'fw-semibold', 'fs-default', 'leading-26');
+    ctaLabelSpan.textContent = ctaLabel;
+    anchor.appendChild(ctaLabelSpan);
+    moveInstrumentation(ctaLinkRow, anchor);
+    moveInstrumentation(ctaLabelRow, ctaLabelSpan);
+    span.appendChild(anchor);
   }
 
-  container.append(spanWrapper);
-  bannerContent.append(container);
-  wrapper.append(bannerContent);
+  container.appendChild(span);
+  bannerContent.appendChild(container);
+  wrapper.appendChild(bannerContent);
 
   block.replaceChildren(wrapper);
 }
