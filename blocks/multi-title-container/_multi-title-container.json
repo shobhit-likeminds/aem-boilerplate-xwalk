@@ -1,0 +1,86 @@
+{
+  "definitions": [
+    {
+      "title": "Multi-Title Container",
+      "id": "multi-title-container",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "multi-title-container",
+              "model": "multi-title-container",
+              "name": "Multi-Title Container"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Title Item",
+      "id": "title-item",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "title-item",
+              "name": "Title Item"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "multi-title-container",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Aria Label",
+          "name": "ariaLabel"
+        },
+        {
+          "component": "reference",
+          "label": "Background Image (Desktop)",
+          "name": "backgroundDesktop"
+        },
+        {
+          "component": "reference",
+          "label": "Background Image (Mobile)",
+          "name": "backgroundMobile"
+        },
+        {
+          "component": "container",
+          "item": "title-item",
+          "label": "Titles",
+          "name": "titles"
+        },
+        {
+          "component": "richtext",
+          "label": "Description",
+          "name": "description"
+        }
+      ]
+    },
+    {
+      "id": "title-item",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Title Text",
+          "name": "title"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "multi-title-container",
+      "components": [
+        "title-item"
+      ]
+    }
+  ]
+}

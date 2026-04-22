@@ -1,0 +1,97 @@
+{
+  "definitions": [
+    {
+      "title": "Social",
+      "id": "social",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "social",
+              "model": "social",
+              "name": "Social"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Social-Image-Item",
+      "id": "social-image-item",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "social-image-item",
+              "name": "Social-Image-Item"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "social",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Section Title",
+          "name": "title",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Section Subtitle",
+          "name": "subtitle",
+          "valueType": "string"
+        },
+        {
+          "component": "container",
+          "item": "social-image-item",
+          "label": "Social Images",
+          "name": "images"
+        },
+        {
+          "component": "aem-content",
+          "label": "CTA Link",
+          "name": "ctaLink",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "CTA Label",
+          "name": "ctaLabel",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "social-image-item",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Social Image",
+          "name": "image",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Image Link",
+          "name": "link",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "social",
+      "components": [
+        "social-image-item"
+      ]
+    }
+  ]
+}

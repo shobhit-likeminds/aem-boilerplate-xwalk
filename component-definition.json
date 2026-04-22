@@ -168,23 +168,116 @@
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block",
                 "template": {
-                  "name": "Cards",
-                  "filter": "cards"
+                  "filter": "cards",
+                  "model": "cards",
+                  "name": "Cards"
                 }
               }
             }
           }
         },
         {
-          "title": "Card",
-          "id": "card",
+          "title": "Cmp-Header",
+          "id": "cmp-header",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "cmp-header",
+                  "model": "cmp-header",
+                  "name": "Cmp-Header"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Navigation-Item",
+          "id": "navigation-item",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "name": "Card",
-                  "model": "card"
+                  "model": "navigation-item",
+                  "name": "Navigation-Item"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Policy-Link-Item",
+          "id": "policy-link-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "policy-link-item",
+                  "name": "Policy-Link-Item"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Social-Link-Item",
+          "id": "social-link-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "social-link-item",
+                  "name": "Social-Link-Item"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Icon-Link-Item",
+          "id": "icon-link-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "icon-link-item",
+                  "name": "Icon-Link-Item"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Cmp-Product-Tabs",
+          "id": "cmp-product-tabs",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "cmp-product-tabs",
+                  "model": "cmp-product-tabs",
+                  "name": "Cmp-Product-Tabs"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Product-Carousel-Item",
+          "id": "product-carousel-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "product-carousel-item",
+                  "name": "Product-Carousel-Item"
                 }
               }
             }
@@ -200,6 +293,67 @@
                 "template": {
                   "columns": "2",
                   "rows": "1"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Footer-New",
+          "id": "footer-new",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "footer-new",
+                  "model": "footer-new",
+                  "name": "Footer-New"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Footer-Nav-Item",
+          "id": "footer-nav-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "footer-nav-item",
+                  "name": "Footer-Nav-Item"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Footer-Social-Item",
+          "id": "footer-social-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "footer-social-item",
+                  "name": "Footer-Social-Item"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Footer-Titles-Item",
+          "id": "footer-titles-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "footer-titles-item",
+                  "name": "Footer-Titles-Item"
                 }
               }
             }
@@ -373,6 +527,68 @@
           }
         },
         {
+          "title": "Multi-Title Container",
+          "id": "multi-title-container",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "multi-title-container",
+                  "model": "multi-title-container",
+                  "name": "Multi-Title Container"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Title Item",
+          "id": "title-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "title-item",
+                  "name": "Title Item"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Our-Values",
+          "id": "our-values",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "our-values",
+                  "model": "our-values",
+                  "name": "Our-Values"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Our-Values-Item",
+          "id": "our-values-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "our-values-item",
+                  "name": "Our-Values-Item"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Product Selection Component",
           "id": "product-selection-component",
           "plugins": {
@@ -434,6 +650,98 @@
           }
         },
         {
+          "title": "Product-Tabs",
+          "id": "product-tabs",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "product-tabs",
+                  "model": "product-tabs",
+                  "name": "Product-Tabs"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Product-Tab",
+          "id": "product-tab",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "product-tab",
+                  "name": "Product-Tab"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Product-Carousel-Item",
+          "id": "product-carousel-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "product-carousel-item",
+                  "name": "Product-Carousel-Item"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Recipe Group",
+          "id": "recipe-group",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "recipe-group",
+                  "model": "recipe-group",
+                  "name": "Recipe Group"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Recipe Tab",
+          "id": "recipe-tab",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "recipe-tab",
+                  "name": "Recipe Tab"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Recipe Card",
+          "id": "recipe-card",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "recipe-card",
+                  "name": "Recipe Card"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Scroll-To-Top",
           "id": "scroll-to-top",
           "plugins": {
@@ -444,6 +752,84 @@
                   "filter": "scroll-to-top",
                   "model": "scroll-to-top",
                   "name": "Scroll-To-Top"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Search",
+          "id": "search",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "search",
+                  "model": "search",
+                  "name": "Search"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Search-Category-Item",
+          "id": "search-category-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "search-category-item",
+                  "name": "Search-Category-Item"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Separator",
+          "id": "separator",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "separator",
+                  "model": "separator",
+                  "name": "Separator"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Social",
+          "id": "social",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "social",
+                  "model": "social",
+                  "name": "Social"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Social-Image-Item",
+          "id": "social-image-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "social-image-item",
+                  "name": "Social-Image-Item"
                 }
               }
             }
@@ -507,6 +893,53 @@
                   "filter": "w-100-pt-3-pt-sm-3",
                   "model": "w-100-pt-3-pt-sm-3",
                   "name": "W-100-Pt-3-Pt-Sm-3"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Yippee-Banner-Carousel",
+          "id": "yippee-banner-carousel",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "yippee-banner-carousel",
+                  "model": "yippee-banner-carousel",
+                  "name": "Yippee-Banner-Carousel"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Yippee-Banner-Carousel-Item",
+          "id": "yippee-banner-carousel-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "yippee-banner-carousel-item",
+                  "name": "Yippee-Banner-Carousel-Item"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Yippee-Banner",
+          "id": "yippee-banner",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "yippee-banner",
+                  "model": "yippee-banner",
+                  "name": "Yippee-Banner"
                 }
               }
             }

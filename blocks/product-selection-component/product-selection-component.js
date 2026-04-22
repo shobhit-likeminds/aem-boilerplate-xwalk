@@ -168,7 +168,7 @@ export default function decorate(block) {
       'annual-bg-mobile',
     );
     accountMainBgBox.append(mobileBgOverlay);
-    const mobilePicture = mobileBackgroundCell.querySelector('picture');
+    const mobilePicture = backgroundMobileCell.querySelector('picture');
     if (mobilePicture) {
       const img = mobilePicture.querySelector('img');
       const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);

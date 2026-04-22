@@ -25,7 +25,19 @@
       "stay-social",
       "buy-now-card",
       "scroll-to-top",
-      "footer"
+      "footer",
+      "cmp-header",
+      "search",
+      "yippee-banner",
+      "multi-title-container",
+      "product-tabs",
+      "cmp-product-tabs",
+      "separator",
+      "recipe-group",
+      "yippee-banner-carousel",
+      "our-values",
+      "social",
+      "footer-new"
     ]
   },
   {
@@ -42,9 +54,21 @@
     ]
   },
   {
-    "id": "cards",
+    "id": "cards"
+  },
+  {
+    "id": "cmp-header",
     "components": [
-      "card"
+      "navigation-item",
+      "policy-link-item",
+      "social-link-item",
+      "icon-link-item"
+    ]
+  },
+  {
+    "id": "cmp-product-tabs",
+    "components": [
+      "product-carousel-item"
     ]
   },
   {
@@ -60,6 +84,14 @@
       "image",
       "button",
       "title"
+    ]
+  },
+  {
+    "id": "footer-new",
+    "components": [
+      "footer-nav-item",
+      "footer-titles-item",
+      "footer-social-item"
     ]
   },
   {
@@ -80,6 +112,18 @@
     ]
   },
   {
+    "id": "multi-title-container",
+    "components": [
+      "title-item"
+    ]
+  },
+  {
+    "id": "our-values",
+    "components": [
+      "our-values-item"
+    ]
+  },
+  {
     "id": "product-selection-component",
     "components": [
       "product-selector-item",
@@ -88,7 +132,36 @@
     ]
   },
   {
+    "id": "product-tabs",
+    "components": [
+      "product-tab",
+      "product-carousel-item"
+    ]
+  },
+  {
+    "id": "recipe-group",
+    "components": [
+      "recipe-tab",
+      "recipe-card"
+    ]
+  },
+  {
     "id": "scroll-to-top"
+  },
+  {
+    "id": "search",
+    "components": [
+      "search-category-item"
+    ]
+  },
+  {
+    "id": "separator"
+  },
+  {
+    "id": "social",
+    "components": [
+      "social-image-item"
+    ]
   },
   {
     "id": "stay-social",
@@ -101,5 +174,14 @@
   },
   {
     "id": "w-100-pt-3-pt-sm-3"
+  },
+  {
+    "id": "yippee-banner-carousel",
+    "components": [
+      "yippee-banner-carousel-item"
+    ]
+  },
+  {
+    "id": "yippee-banner"
   }
 ]

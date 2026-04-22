@@ -60,7 +60,19 @@
         "stay-social",
         "buy-now-card",
         "scroll-to-top",
-        "footer"
+        "footer",
+        "cmp-header",
+        "search",
+        "yippee-banner",
+        "multi-title-container",
+        "product-tabs",
+        "cmp-product-tabs",
+        "separator",
+        "recipe-group",
+        "yippee-banner-carousel",
+        "our-values",
+        "social",
+        "footer-new"
       ]
     }
   ]

@@ -12,8 +12,6 @@
 
 @keyframes animatetop{0%{opacity:0;top:-300px}to{opacity:1;top:40%}}
 
-.color-background-default { background:#ff7f00 }
-
 @font-face{font-display:swap;font-family:icomoon;font-style:normal;font-weight:400;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fsunfeastyippee.com%2Fclientlib-yippee%2Fresources%2Ficon-font%2Ffonts%2Ficomoon.eot%3Fh77yfi');src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fsunfeastyippee.com%2Fclientlib-yippee%2Fresources%2Ficon-font%2Ffonts%2Ficomoon.eot%3Fh77yfi%23iefix') format("embedded-opentype"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fsunfeastyippee.com%2Fclientlib-yippee%2Fresources%2Ficon-font%2Ffonts%2Ficomoon.ttf%3Fh77yfi') format("truetype"),url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fsunfeastyippee.com%2Fclientlib-yippee%2Fresources%2Ficon-font%2Ffonts%2Ficomoon.woff%3Fh77yfi') format("woff"),url(clientlib-yippee/resources/icon-font/fonts/icomoon.svg?h77yfi#icomoon) format("svg")}
 
 @font-face{font-display:swap;font-family:Gang Of Three;font-style:normal;font-weight:400;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fsunfeastyippee.com%2Fclientlib-yippee%2Fresources%2Ficon-font%2Ffonts%2Fgang-of-three.ttf') format("truetype")}
@@ -22,91 +20,65 @@
 
 @font-face{font-display:swap;font-family:Cobbler;font-style:normal;font-weight:700;src:url('http://localhost:3000/asset-proxy?url=https%3A%2F%2Fsunfeastyippee.com%2Fclientlib-yippee%2Fresources%2Ficon-font%2Ffonts%2FCobblerBold.otf') format("opentype")}
 
-.body-3 { font-family:Lato,sans-serif;font-size:1.125rem }
+.cmp-search { margin:0 auto;max-width:1366px;padding:2.125rem 0;position:relative }
 
-@media only screen and (max-width:1023px) { .body-3 { font-size:1rem } }
+@media only screen and (max-width:1023px) { .cmp-search { padding:1.1875rem 1.875rem .8125rem 1.375rem;position:fixed;top:0;width:100%;z-index:3 } }
 
-.title-star-icon { align-items:center;display:flex }
+.cmp-search, .cmp-search .cmp-search__clear, .cmp-search .cmp-search__input { background-color:#ff7f00 }
 
-.title-star-icon:after, .title-star-icon:before { speak:never;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;font-family:icomoon!important;font-size:1.5rem;font-style:normal;font-variant:normal;font-weight:400;line-height:1;text-transform:none }
-
-@media only screen and (max-width:1023px) { .title-star-icon:after, .title-star-icon:before { font-size:1.125rem } }
-
-.title-star-icon:before { content:"";margin-right:1rem }
-
-@media only screen and (max-width:1023px) { .title-star-icon:before { margin-right:.625rem } }
-
-.title-star-icon:after { content:"";margin-left:1rem }
-
-@media only screen and (max-width:1023px) { .title-star-icon:after { margin-left:.625rem } }
+.cmp-search .cmp-search__clear, .cmp-search .cmp-search__icon, .cmp-search .cmp-search__input, .cmp-search .cmp-search__input::placeholder { color:#000 }
 
 @keyframes cmp-search__loading-indicator-spin{0%{transform:rotate(0deg)}to{transform:rotate(1turn)}}
 
-.slick-slider { -webkit-touch-callout:none;-webkit-tap-highlight-color:rgba(0,0,0,0);box-sizing:border-box;-ms-touch-action:pan-y;touch-action:pan-y;-webkit-user-select:none;-khtml-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none }
+.cmp-search .cmp-search__form { margin:0 auto;width:45.875rem }
 
-.slick-slider { display:block;position:relative }
+@media only screen and (max-width:1023px) { .cmp-search .cmp-search__form { width:100% } }
 
-.slick-dotted.slick-slider { margin-bottom:30px }
+.cmp-search .cmp-search__form .cmp-search__field { align-items:center;display:flex;flex-direction:row-reverse }
 
-.cmp-carousel .cmp-carousel__container { margin-bottom:0!important;position:relative }
+.cmp-search .cmp-search__form .cmp-search__field .cmp-search__clear { border:none;cursor:pointer;padding:0 }
 
-.cmp-carousel[data-item-count-per-slide="3"] .cmp-carousel__container { padding:0 5.8125rem }
+.cmp-search .cmp-search__form .cmp-search__field .cmp-search__clear-icon { speak:never;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;font-family:icomoon!important;font-size:1.5rem;font-style:normal;font-variant:normal;font-weight:400;line-height:1;text-transform:none }
 
-@media only screen and (max-width:1023px) { .cmp-carousel[data-item-count-per-slide="3"] .cmp-carousel__container { padding:0 } }
+.cmp-search .cmp-search__form .cmp-search__field .cmp-search__clear-icon:before { content:"" }
 
-.cmp-cards { background-position:50%;background-size:cover;margin:0 auto;max-width:85.375rem;overflow:hidden }
+@media only screen and (max-width:1023px) { .cmp-search .cmp-search__form .cmp-search__field .cmp-search__clear-icon { font-size:1.1875rem } }
 
-@media only screen and (max-width:1023px) { .cmp-cards { padding:2.5rem 0 2.5rem 1rem } }
+.cmp-search .cmp-search__form .cmp-search__field .cmp-search__input { border:none;border-bottom:.0625rem solid #000;font-size:1.125rem;line-height:1.75rem;margin:0 1.5rem;padding:0 1rem .8125rem 0;width:40.5rem }
 
-.cmp-cards .cmp-cards__heading { -webkit-line-clamp:1;-webkit-box-orient:vertical;color:#000;display:-webkit-box;margin-bottom:0;overflow:hidden }
+.cmp-search .cmp-search__form .cmp-search__field .cmp-search__input::placeholder { opacity:1 }
 
-@media only screen and (max-width:1023px) { .cmp-cards .cmp-cards__heading { -webkit-line-clamp:2;-webkit-box-orient:vertical;display:-webkit-box;margin-bottom:0;overflow:hidden } }
+@media only screen and (max-width:1023px) { .cmp-search .cmp-search__form .cmp-search__field .cmp-search__input { font-size:1rem;line-height:1.75rem;margin:0 1.6875rem 0 1.9375rem;padding:0 1rem .5rem 0;width:100% } }
 
-.cmp-cards .cmp-cards__sub-heading { -webkit-line-clamp:1;-webkit-box-orient:vertical;color:#000;display:-webkit-box;margin-bottom:0;overflow:hidden }
+.cmp-search .cmp-search__form .cmp-search__field .cmp-search__loading-indicator { animation:cmp-search__loading-indicator-spin 2s linear infinite;border:.125rem solid #000;border-radius:50%;border-top-color:#ff7f00;display:none;height:.875rem;width:.875rem }
 
-@media only screen and (max-width:1023px) { .cmp-cards .cmp-cards__sub-heading { -webkit-line-clamp:2;-webkit-box-orient:vertical;display:-webkit-box;margin-bottom:0;overflow:hidden } }
+@media only screen and (max-width:1023px) { .cmp-search .cmp-search__form .cmp-search__field .cmp-search__loading-indicator { height:1.25rem;width:1.25rem } }
 
-.cmp-cards .text-center { text-align:center }
+.cmp-search .cmp-search__form .cmp-search__field .cmp-search__icon { speak:never;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;font-family:icomoon!important;font-size:.875rem;font-style:normal;font-variant:normal;font-weight:400;line-height:1;text-transform:none }
+
+@media only screen and (max-width:1023px) { .cmp-search .cmp-search__form .cmp-search__field .cmp-search__icon { font-size:1.25rem } }
+
+.cmp-search .cmp-search__form .cmp-search__field .cmp-search__icon:before { content:"" }
+
+.cmp-search .cmp-search__results { background:#fff;display:none;left:50%;margin-left:.3125rem;padding:0 1.875rem 1.8125rem 2rem;top:5.75rem;transform:translateX(-50%);width:40.5rem;z-index:1 }
+
+@media only screen and (max-width:1023px) { .cmp-search .cmp-search__results { background:#fff;border-radius:0;left:0;margin:0;padding:0 1.875rem .8125rem 1.375rem;position:absolute;top:5.5rem;transform:none;width:100% } }
+
+.cmp-search .cmp-search__results:not(:has(.cmp-search__item)) { padding-bottom:1.0625rem }
+
+@media only screen and (max-width:1023px) { .cmp-search .cmp-search__results:not(:has(.cmp-search__item)) { padding-bottom:.0625rem } }
+
+.cmp-search .cmp-search__results:not(:has(.cmp-search__item) { display:none!important }
 
 @keyframes recipeChallengeLoaderSpin{to{transform:translate(-50%,-50%) rotate(1turn)}}
 
-.cmp-carousel:has(.banner) { display:flex;justify-content:center }
+.cmp-search { padding:7rem 0 .0625rem }
 
-.cmp-carousel:has(.banner) .cmp-carousel__container { max-width:85.375rem;width:85.375rem }
+@media only screen and (max-width:1023px) { .cmp-search { padding:.0625rem 0;position:unset } }
 
-@media only screen and (max-width:1365px) { .cmp-carousel:has(.banner) .cmp-carousel__container { max-width:100%;width:100% } }
+.cmp-search .cmp-search__results { border:.0625rem solid #e8e8e8;border-radius:1.3125rem;position:absolute;top:10rem;width:47.5rem }
 
-.cmp-cards { padding:4rem 7.0625rem 3.8125rem }
-
-@media only screen and (max-width:1023px) { .cmp-cards { padding:2.5rem 0 2.5rem 1.5rem } }
-
-@media only screen and (min-width:1024px)and (max-width:1365px) { .cmp-cards { padding:2.5rem 0 2rem 1rem } }
-
-.cmp-cards .cmp-cards__heading { font-size:2rem }
-
-@media only screen and (max-width:1023px) { .cmp-cards .cmp-cards__heading { font-size:1.5rem;padding-right:1.5rem } }
-
-.cmp-cards .cmp-cards__sub-heading { margin-top:1rem }
-
-@media only screen and (max-width:1023px) { .cmp-cards .cmp-cards__sub-heading { margin-top:.75rem;padding-right:1.5rem } }
-
-.cmp-cards--yippee-diy { border-radius:0 4.6875rem 4.6875rem 0;padding:4rem 7.0625rem }
-
-@media only screen and (max-width:1023px) { .cmp-cards--yippee-diy { border-radius:0 3.125rem 3.125rem 0;padding:2.5rem 0 3.125rem 1.5rem } }
-
-@media only screen and (min-width:1024px)and (max-width:1365px) { .cmp-cards--yippee-diy { padding:2.5rem 0 5rem 1rem } }
-
-.cmp-cards--yippee-diy .carousel { margin-top:2.5rem }
-
-@media only screen and (max-width:1023px) { .cmp-cards--yippee-diy .carousel { margin-top:3.625rem } }
-
-.cmp-cards--yippee-diy .carousel .cmp-carousel__container { padding:0 2.625rem 0 4.625rem }
-
-@media only screen and (max-width:1023px) { .cmp-cards--yippee-diy .carousel .cmp-carousel__container { padding:0 } }
-
-@media only screen and (min-width:1024px)and (max-width:1365px) { .cmp-cards--yippee-diy .carousel .cmp-carousel__container { padding:0 2.5rem 0 4.375rem } }
-
-@media only screen and (max-width:375px) { .cmp-cards--yippee-diy .carousel .cmp-carousel__container { margin-right:1.5rem } }
+@media only screen and (max-width:1023px) { .cmp-search .cmp-search__results { border:none;border-bottom:.0625rem solid #e8e8e8;border-radius:unset;margin-top:-1.25rem;padding-top:1.25rem;width:100% } }
 
 @font-face {
   font-family: 'Potta One';
