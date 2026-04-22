@@ -37,8 +37,7 @@
   {
     "id": "card-carousel",
     "components": [
-      "recipe-card",
-      "social-media-share-icon"
+      "product-card"
     ]
   },
   {
@@ -73,16 +72,17 @@
   {
     "id": "header-comp",
     "components": [
-      "navigation-item",
-      "submenu-item"
+      "menu-item",
+      "sub-menu-item",
+      "sub-sub-menu-item",
+      "search-icon-item"
     ]
   },
   {
     "id": "product-selection-component",
     "components": [
-      "product-option-item",
-      "ghee-product-info",
-      "milk-product-info"
+      "product-selector-item",
+      "product-detail-item"
     ]
   },
   {
