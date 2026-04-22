@@ -68,7 +68,7 @@
   {
     "id": "cmp-product-tabs",
     "components": [
-      "product-carousel-item"
+      "cmp-product-tabs-carousel-item"
     ]
   },
   {
@@ -89,9 +89,9 @@
   {
     "id": "footer-new",
     "components": [
-      "footer-nav-item",
-      "footer-titles-item",
-      "footer-social-item"
+      "footer-navigation-item",
+      "footer-bottom-link-item",
+      "footer-social-link-item"
     ]
   },
   {
@@ -109,6 +109,15 @@
       "submenu-item",
       "subsubmenu-item",
       "search-item"
+    ]
+  },
+  {
+    "id": "cmp-header",
+    "components": [
+      "navigation-item",
+      "policy-link-item",
+      "social-icon-item",
+      "nav-icon-item"
     ]
   },
   {
@@ -135,14 +144,14 @@
     "id": "product-tabs",
     "components": [
       "product-tab",
-      "product-carousel-item"
+      "product-tab-item"
     ]
   },
   {
     "id": "recipe-group",
     "components": [
-      "recipe-tab",
-      "recipe-card"
+      "recipe-tab-item",
+      "recipe-card-item"
     ]
   },
   {

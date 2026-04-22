@@ -17,30 +17,30 @@
       }
     },
     {
-      "title": "Recipe Tab Item",
-      "id": "recipe-tab-item",
+      "title": "Recipe Tab",
+      "id": "recipe-tab",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "recipe-tab-item",
-              "name": "Recipe Tab Item"
+              "model": "recipe-tab",
+              "name": "Recipe Tab"
             }
           }
         }
       }
     },
     {
-      "title": "Recipe Card Item",
-      "id": "recipe-card-item",
+      "title": "Recipe Card",
+      "id": "recipe-card",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "recipe-card-item",
-              "name": "Recipe Card Item"
+              "model": "recipe-card",
+              "name": "Recipe Card"
             }
           }
         }
@@ -53,56 +53,56 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Background Image (Desktop)",
-          "name": "backgroundImageDesktop",
+          "label": "Background Image",
+          "name": "backgroundImage",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Section Title",
+          "label": "Main Title",
           "name": "title",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Section Subtitle",
+          "label": "Subtitle",
           "name": "subtitle",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Content Title",
-          "name": "contentTitle",
+          "label": "Carousel Title",
+          "name": "carouselTitle",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "label": "CTA Link",
-          "name": "ctaLink",
+          "label": "View All Recipes Link",
+          "name": "viewAllLink",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "CTA Label",
-          "name": "ctaLabel",
+          "label": "View All Recipes Label",
+          "name": "viewAllLabel",
           "valueType": "string"
         },
         {
           "component": "container",
-          "item": "recipe-tab-item",
+          "item": "recipe-tab",
           "label": "Recipe Tabs",
           "name": "tabs"
         },
         {
           "component": "container",
-          "item": "recipe-card-item",
+          "item": "recipe-card",
           "label": "Recipe Cards",
           "name": "cards"
         }
       ]
     },
     {
-      "id": "recipe-tab-item",
+      "id": "recipe-tab",
       "fields": [
         {
           "component": "reference",
@@ -119,30 +119,30 @@
       ]
     },
     {
-      "id": "recipe-card-item",
+      "id": "recipe-card",
       "fields": [
         {
           "component": "reference",
-          "label": "Recipe Card Image",
-          "name": "cardImage",
+          "label": "Recipe Thumbnail",
+          "name": "thumbnail",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Recipe Card Title",
-          "name": "cardTitle",
+          "label": "Recipe Title",
+          "name": "title",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Time Value (Minutes)",
-          "name": "timeValue",
+          "label": "Preparation Time (Minutes)",
+          "name": "time",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Time Unit Label (e.g. Mins)",
-          "name": "timeUnitLabel",
+          "label": "Time Label (e.g. 'Mins')",
+          "name": "timeLabel",
           "valueType": "string"
         }
       ]
@@ -152,8 +152,8 @@
     {
       "id": "recipe-group",
       "components": [
-        "recipe-tab-item",
-        "recipe-card-item"
+        "recipe-tab",
+        "recipe-card"
       ]
     }
   ]

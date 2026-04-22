@@ -2,42 +2,45 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const children = [...block.children];
+  const [
+    titleRow,
+    backgroundImageRow,
+    ctaLabelRow,
+    ...itemRows
+  ] = [...block.children];
 
-  const titleRow = children[0];
-  const backgroundImageRow = children[1];
-  const viewAllLabelRow = children[2];
-  const itemRows = children.slice(3);
+  const root = document.createElement('div');
+  root.classList.add('cmp-product-tabs', 'cmp-product-tabs--yippee-without-image');
 
-  const newBlock = document.createElement('div');
-  newBlock.classList.add('cmp-product-tabs', 'cmp-product-tabs--yippee-without-image');
-  moveInstrumentation(block, newBlock);
-
-  // Background Image URL is type=text, read from textContent
-  const backgroundImage = backgroundImageRow.querySelector('div')?.textContent.trim();
+  const backgroundImage = backgroundImageRow.firstElementChild.textContent.trim();
   if (backgroundImage) {
-    newBlock.style.backgroundImage = `url(${backgroundImage})`;
+    root.style.backgroundImage = `url(${backgroundImage})`;
   }
 
+  // Temporary images container (from original HTML)
   const tempImages = document.createElement('div');
   tempImages.classList.add('cmp-product-tabs__temp-images');
-  newBlock.append(tempImages);
+  for (let i = 0; i < 6; i += 1) {
+    const lazyImageContainer = document.createElement('div');
+    lazyImageContainer.classList.add('lazy-image-container');
+    tempImages.append(lazyImageContainer);
+  }
+  root.append(tempImages);
 
-  // Title is type=richtext, read from innerHTML
+  // Block Title
   const title = document.createElement('h2');
   title.classList.add('cmp-product-tabs__title');
   moveInstrumentation(titleRow, title);
-  title.innerHTML = titleRow.querySelector('div')?.innerHTML || ''; // Ensure it reads from the inner div
-  newBlock.append(title);
+  // Title is richtext, so use innerHTML
+  title.innerHTML = titleRow.firstElementChild.innerHTML;
+  root.append(title);
 
   // Content wrapper for carousel
   const content = document.createElement('div');
   content.classList.add('cmp-product-tabs__content');
-  newBlock.append(content);
 
   const carouselWrapper = document.createElement('div');
   carouselWrapper.classList.add('slickcarousel', 'carousel', 'panelcontainer');
-  content.append(carouselWrapper);
 
   const carousel = document.createElement('div');
   carousel.classList.add('cmp-carousel');
@@ -51,175 +54,213 @@ export default function decorate(block) {
   carousel.setAttribute('data-reveal-next-item-partially', 'false');
   carousel.setAttribute('data-show-center-zoom', 'false');
   carousel.setAttribute('data-slides-to-scroll', '3');
-  carouselWrapper.append(carousel);
+  carousel.setAttribute('data-initialized', 'true');
 
   const carouselContainer = document.createElement('div');
   carouselContainer.classList.add('cmp-carousel__container', 'slick-initialized', 'slick-slider', 'slick-dotted');
-  carousel.append(carouselContainer);
 
+  // Slick Prev Button
   const prevButton = document.createElement('button');
   prevButton.classList.add('slick-prev', 'slick-arrow', 'slick-disabled');
   prevButton.setAttribute('aria-label', 'Previous');
   prevButton.setAttribute('type', 'button');
   prevButton.setAttribute('aria-disabled', 'true');
+  // Background image for button is usually set by CSS, if not, it should be an authored asset.
+  // Removed hardcoded style attribute.
   carouselContainer.append(prevButton);
 
   const slickList = document.createElement('div');
   slickList.classList.add('slick-list', 'draggable');
-  carouselContainer.append(slickList);
 
   const slickTrack = document.createElement('div');
   slickTrack.classList.add('slick-track');
   slickTrack.style.opacity = '1';
+  // Width and transform are handled by Slick.js, so we don't set them here.
   slickList.append(slickTrack);
 
   itemRows.forEach((row, index) => {
-    // Corrected: Use content detection instead of direct index access for item cells
-    const cells = [...row.children];
-    const imageCell = cells.find(cell => cell.querySelector('picture'));
-    const linkCell = cells.find(cell => cell.querySelector('a'));
+    const [imageCell, linkCell] = [...row.children];
 
     const carouselItem = document.createElement('div');
     carouselItem.classList.add('cmp-carousel__item', 'slick-slide');
-    if (index === 0) {
+    if (index === 0) { // First item is active by default
       carouselItem.classList.add('slick-current', 'slick-active');
+      carouselItem.setAttribute('aria-hidden', 'false');
+      carouselItem.setAttribute('tabindex', '0');
+    } else {
+      carouselItem.setAttribute('aria-hidden', 'true');
+      carouselItem.setAttribute('tabindex', '-1');
     }
     carouselItem.setAttribute('data-slick-index', index);
-    carouselItem.setAttribute('aria-hidden', index !== 0);
-    carouselItem.setAttribute('tabindex', index === 0 ? '0' : '-1');
     carouselItem.setAttribute('role', 'tabpanel');
     carouselItem.id = `slick-slide3${index}`;
     carouselItem.setAttribute('aria-describedby', `slick-slide-control3${index}`);
-    moveInstrumentation(row, carouselItem);
-    slickTrack.append(carouselItem);
+    // Width is handled by Slick.js, so we don't set it here.
 
     const lazyImageContainer = document.createElement('div');
     lazyImageContainer.classList.add('lazy-image-container');
-    carouselItem.append(lazyImageContainer);
+    const link = linkCell.querySelector('a');
+    if (link) {
+      lazyImageContainer.setAttribute('data-redirection-url', link.href);
+    }
 
-    // Corrected: productLink is type=aem-content, read from a.href
-    const productLink = linkCell?.querySelector('a')?.href || '#';
-    lazyImageContainer.setAttribute('data-redirection-url', productLink);
-
-    if (imageCell) {
-      const picture = imageCell.querySelector('picture');
-      if (picture) {
-        const img = picture.querySelector('img');
-        if (img) {
-          const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-          moveInstrumentation(img, optimizedPic.querySelector('img'));
-          lazyImageContainer.append(optimizedPic);
-          optimizedPic.querySelector('img').classList.add('is-clickable', 'lazy-image', 'loaded');
-        }
+    const picture = imageCell.querySelector('picture');
+    if (picture) {
+      const img = picture.querySelector('img');
+      if (img) {
+        // Use createOptimizedPicture with the correct alt text and loading state
+        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+        moveInstrumentation(img, optimizedPic.querySelector('img'));
+        lazyImageContainer.append(optimizedPic);
+        const optimizedImg = optimizedPic.querySelector('img');
+        optimizedImg.classList.add('is-clickable', 'lazy-image', 'loaded');
+        // Opacity and transition are handled by CSS/JS, not directly set here.
       }
     }
+    moveInstrumentation(row, carouselItem); // Move instrumentation from row to carouselItem
+    carouselItem.append(lazyImageContainer);
+    slickTrack.append(carouselItem);
   });
 
+  carouselContainer.append(slickList);
+
+  // Slick Next Button
   const nextButton = document.createElement('button');
   nextButton.classList.add('slick-next', 'slick-arrow');
   nextButton.setAttribute('aria-label', 'Next');
   nextButton.setAttribute('type', 'button');
+  // Background image for button is usually set by CSS, if not, it should be an authored asset.
+  // Removed hardcoded style attribute.
+  nextButton.setAttribute('aria-disabled', 'false');
   carouselContainer.append(nextButton);
 
+  // Slick Dots (pagination)
   const slickDots = document.createElement('ul');
   slickDots.classList.add('slick-dots');
   slickDots.setAttribute('role', 'tablist');
+  // Style is handled by Slick.js, so we don't set it here.
+
+  // Dynamically add dots based on itemRows
+  itemRows.forEach((_, index) => {
+    const li = document.createElement('li');
+    li.setAttribute('role', 'presentation');
+    if (index === 0) {
+      li.classList.add('slick-active');
+    }
+    const button = document.createElement('button');
+    button.setAttribute('type', 'button');
+    button.setAttribute('role', 'tab');
+    button.id = `slick-slide-control3${index}`;
+    button.setAttribute('aria-controls', `slick-slide3${index}`);
+    button.setAttribute('aria-label', `${index + 1} of ${itemRows.length}`);
+    button.textContent = index + 1;
+    if (index === 0) {
+      button.setAttribute('tabindex', '0');
+      button.setAttribute('aria-selected', 'true');
+    } else {
+      button.setAttribute('tabindex', '-1');
+    }
+    li.append(button);
+    slickDots.append(li);
+  });
   carouselContainer.append(slickDots);
 
-  // View All Button
-  const viewAllButtonDiv = document.createElement('div');
-  viewAllButtonDiv.classList.add('button', 'cmp-button--primary', 'cmp-button--primary-undefined', 'cmp-product-tabs__button-range');
-  newBlock.append(viewAllButtonDiv);
+  carousel.append(carouselContainer);
+  carouselWrapper.append(carousel);
+  content.append(carouselWrapper);
+  root.append(content);
 
-  const viewAllButton = document.createElement('button');
-  viewAllButton.classList.add('cmp-button');
-  viewAllButton.setAttribute('type', 'button');
-  moveInstrumentation(viewAllLabelRow, viewAllButton);
-  viewAllButtonDiv.append(viewAllButton);
+  // CTA Button
+  const ctaButtonContainer = document.createElement('div');
+  ctaButtonContainer.classList.add('button', 'cmp-button--primary', 'cmp-button--primary-undefined', 'cmp-product-tabs__button-range');
 
-  const viewAllButtonText = document.createElement('span');
-  viewAllButtonText.classList.add('cmp-button__text');
-  // View All Button Label is type=text, read from textContent
-  viewAllButtonText.textContent = viewAllLabelRow.querySelector('div')?.textContent.trim() || '';
-  viewAllButton.append(viewAllButtonText);
+  const ctaButton = document.createElement('button');
+  ctaButton.classList.add('cmp-button');
+  ctaButton.setAttribute('type', 'button');
 
-  block.replaceChildren(newBlock);
+  const ctaSpan = document.createElement('span');
+  ctaSpan.classList.add('cmp-button__text');
+  moveInstrumentation(ctaLabelRow, ctaSpan);
+  ctaSpan.textContent = ctaLabelRow.firstElementChild.textContent.trim();
+  ctaButton.append(ctaSpan);
+  ctaButtonContainer.append(ctaButton);
+  root.append(ctaButtonContainer);
 
-  // Basic carousel functionality (for demonstration, a full slick.js implementation would be more complex)
+  block.replaceChildren(root);
+
+  // --- Interactivity (Slick.js-like behavior) ---
   let currentIndex = 0;
-  const totalItems = itemRows.length;
-  const itemsPerSlide = parseInt(carousel.getAttribute('data-item-count-per-slide'), 10);
+  const totalSlides = itemRows.length;
+  const slidesPerView = parseInt(carousel.getAttribute('data-item-count-per-slide'), 10) || 1;
 
   const updateCarousel = () => {
-    const trackWidth = totalItems * 339; // Assuming item width is 339px from original HTML
-    slickTrack.style.width = `${trackWidth}px`;
-    const offset = -currentIndex * 339;
-    slickTrack.style.transform = `translate3d(${offset}px, 0px, 0px)`;
+    const track = root.querySelector('.slick-track');
+    const items = root.querySelectorAll('.cmp-carousel__item');
+    const dots = root.querySelectorAll('.slick-dots li');
 
-    [...slickTrack.children].forEach((item, i) => {
-      if (i >= currentIndex && i < currentIndex + itemsPerSlide) {
-        item.classList.add('slick-active');
+    // Update slide visibility and active state
+    items.forEach((item, i) => {
+      if (i >= currentIndex && i < currentIndex + slidesPerView) {
+        item.classList.add('slick-current', 'slick-active');
         item.setAttribute('aria-hidden', 'false');
         item.setAttribute('tabindex', '0');
       } else {
-        item.classList.remove('slick-active');
+        item.classList.remove('slick-current', 'slick-active');
         item.setAttribute('aria-hidden', 'true');
         item.setAttribute('tabindex', '-1');
       }
-      if (i === currentIndex) {
-        item.classList.add('slick-current');
+    });
+
+    // Update dots
+    dots.forEach((dot, i) => {
+      if (i === Math.floor(currentIndex / slidesPerView)) {
+        dot.classList.add('slick-active');
+        dot.querySelector('button').setAttribute('aria-selected', 'true');
+        dot.querySelector('button').setAttribute('tabindex', '0');
       } else {
-        item.classList.remove('slick-current');
+        dot.classList.remove('slick-active');
+        dot.querySelector('button').setAttribute('aria-selected', 'false');
+        dot.querySelector('button').setAttribute('tabindex', '-1');
       }
     });
 
-    prevButton.classList.toggle('slick-disabled', currentIndex === 0);
+    // Update prev/next button states
     prevButton.setAttribute('aria-disabled', currentIndex === 0);
-    nextButton.classList.toggle('slick-disabled', currentIndex >= totalItems - itemsPerSlide);
-    nextButton.setAttribute('aria-disabled', currentIndex >= totalItems - itemsPerSlide);
+    prevButton.classList.toggle('slick-disabled', currentIndex === 0);
 
-    // Update dots
-    slickDots.innerHTML = '';
-    const totalDots = Math.ceil(totalItems / itemsPerSlide);
-    for (let i = 0; i < totalDots; i += 1) {
-      const dotLi = document.createElement('li');
-      dotLi.setAttribute('role', 'presentation');
-      const dotButton = document.createElement('button');
-      dotButton.setAttribute('type', 'button');
-      dotButton.setAttribute('role', 'tab');
-      dotButton.id = `slick-slide-control3${i}`;
-      dotButton.setAttribute('aria-controls', `slick-slide3${i * itemsPerSlide}`);
-      dotButton.setAttribute('aria-label', `${i + 1} of ${totalDots}`);
-      dotButton.textContent = i + 1;
-      if (i === Math.floor(currentIndex / itemsPerSlide)) {
-        dotLi.classList.add('slick-active');
-        dotButton.setAttribute('aria-selected', 'true');
-        dotButton.setAttribute('tabindex', '0');
-      } else {
-        dotButton.setAttribute('tabindex', '-1');
-      }
-      dotButton.addEventListener('click', () => {
-        currentIndex = i * itemsPerSlide;
-        updateCarousel();
-      });
-      dotLi.append(dotButton);
-      slickDots.append(dotLi);
-    }
+    nextButton.setAttribute('aria-disabled', currentIndex >= totalSlides - slidesPerView);
+    nextButton.classList.toggle('slick-disabled', currentIndex >= totalSlides - slidesPerView);
+
+    // Simulate transform for slick-track (simplified, actual Slick.js is more complex)
+    const itemWidth = items.length > 0 ? items[0].offsetWidth : 0;
+    track.style.transform = `translate3d(-${currentIndex * itemWidth}px, 0px, 0px)`;
   };
 
   prevButton.addEventListener('click', () => {
     if (currentIndex > 0) {
-      currentIndex -= 1;
+      currentIndex -= slidesPerView;
+      if (currentIndex < 0) currentIndex = 0;
       updateCarousel();
     }
   });
 
   nextButton.addEventListener('click', () => {
-    if (currentIndex < totalItems - itemsPerSlide) {
-      currentIndex += 1;
+    if (currentIndex < totalSlides - slidesPerView) {
+      currentIndex += slidesPerView;
+      if (currentIndex > totalSlides - slidesPerView) currentIndex = totalSlides - slidesPerView;
       updateCarousel();
     }
   });
 
+  slickDots.addEventListener('click', (event) => {
+    const button = event.target.closest('button');
+    if (button && button.parentElement.tagName === 'LI') {
+      const dotIndex = Array.from(button.parentElement.parentElement.children).indexOf(button.parentElement);
+      currentIndex = dotIndex * slidesPerView;
+      updateCarousel();
+    }
+  });
+
+  // Initial update
   updateCarousel();
 }

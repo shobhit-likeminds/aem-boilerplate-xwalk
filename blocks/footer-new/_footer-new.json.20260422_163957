@@ -17,45 +17,45 @@
       }
     },
     {
-      "title": "Footer-Navigation-Item",
-      "id": "footer-navigation-item",
+      "title": "Footer-Nav-Item",
+      "id": "footer-nav-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "footer-navigation-item",
-              "name": "Footer-Navigation-Item"
+              "model": "footer-nav-item",
+              "name": "Footer-Nav-Item"
             }
           }
         }
       }
     },
     {
-      "title": "Footer-Social-Link-Item",
-      "id": "footer-social-link-item",
+      "title": "Footer-Social-Item",
+      "id": "footer-social-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "footer-social-link-item",
-              "name": "Footer-Social-Link-Item"
+              "model": "footer-social-item",
+              "name": "Footer-Social-Item"
             }
           }
         }
       }
     },
     {
-      "title": "Footer-Bottom-Link-Item",
-      "id": "footer-bottom-link-item",
+      "title": "Footer-Titles-Item",
+      "id": "footer-titles-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "footer-bottom-link-item",
-              "name": "Footer-Bottom-Link-Item"
+              "model": "footer-titles-item",
+              "name": "Footer-Titles-Item"
             }
           }
         }
@@ -68,7 +68,7 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Top Content Background Image Desktop",
+          "label": "Top Content Background Image (Desktop)",
           "name": "backgroundImageDesktop",
           "valueType": "string"
         },
@@ -86,26 +86,26 @@
         },
         {
           "component": "container",
-          "item": "footer-navigation-item",
-          "label": "Footer Navigation Items",
-          "name": "navigationItems"
+          "item": "footer-nav-item",
+          "label": "Navigation Links",
+          "name": "navigationLinks"
         },
         {
           "component": "container",
-          "item": "footer-bottom-link-item",
-          "label": "Footer Bottom Links",
-          "name": "bottomLinks"
+          "item": "footer-titles-item",
+          "label": "Footer Titles",
+          "name": "footerTitles"
         },
         {
           "component": "container",
-          "item": "footer-social-link-item",
+          "item": "footer-social-item",
           "label": "Social Media Links",
           "name": "socialLinks"
         }
       ]
     },
     {
-      "id": "footer-navigation-item",
+      "id": "footer-nav-item",
       "fields": [
         {
           "component": "text",
@@ -128,11 +128,28 @@
       ]
     },
     {
-      "id": "footer-social-link-item",
+      "id": "footer-titles-item",
       "fields": [
         {
           "component": "text",
-          "label": "Social Icon Class (e.g. icon-instagram)",
+          "label": "Footer Title Text",
+          "name": "label",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Footer Title Link",
+          "name": "link",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "footer-social-item",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Social Icon Class",
           "name": "iconClass",
           "valueType": "string"
         },
@@ -143,32 +160,15 @@
           "valueType": "string"
         }
       ]
-    },
-    {
-      "id": "footer-bottom-link-item",
-      "fields": [
-        {
-          "component": "text",
-          "label": "Bottom Link Label",
-          "name": "label",
-          "valueType": "string"
-        },
-        {
-          "component": "aem-content",
-          "label": "Bottom Link",
-          "name": "link",
-          "valueType": "string"
-        }
-      ]
     }
   ],
   "filters": [
     {
       "id": "footer-new",
       "components": [
-        "footer-navigation-item",
-        "footer-bottom-link-item",
-        "footer-social-link-item"
+        "footer-nav-item",
+        "footer-titles-item",
+        "footer-social-item"
       ]
     }
   ]

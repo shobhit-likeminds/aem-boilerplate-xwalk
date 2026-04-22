@@ -17,15 +17,15 @@
       }
     },
     {
-      "title": "Cmp-Product-Tabs-Carousel-Item",
-      "id": "cmp-product-tabs-carousel-item",
+      "title": "Product-Carousel-Item",
+      "id": "product-carousel-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "cmp-product-tabs-carousel-item",
-              "name": "Cmp-Product-Tabs-Carousel-Item"
+              "model": "product-carousel-item",
+              "name": "Product-Carousel-Item"
             }
           }
         }
@@ -38,32 +38,32 @@
       "fields": [
         {
           "component": "richtext",
-          "label": "Block Title",
+          "label": "Tabs Title",
           "name": "title",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Background Image URL (inline style)",
+          "label": "Background Image URL",
           "name": "backgroundImage",
           "valueType": "string"
         },
         {
           "component": "container",
-          "item": "cmp-product-tabs-carousel-item",
+          "item": "product-carousel-item",
           "label": "Carousel Items",
           "name": "carouselItems"
         },
         {
           "component": "text",
-          "label": "CTA Button Label",
-          "name": "ctaLabel",
+          "label": "View All Button Label",
+          "name": "viewAllLabel",
           "valueType": "string"
         }
       ]
     },
     {
-      "id": "cmp-product-tabs-carousel-item",
+      "id": "product-carousel-item",
       "fields": [
         {
           "component": "reference",
@@ -73,8 +73,8 @@
         },
         {
           "component": "aem-content",
-          "label": "Product Link Redirection",
-          "name": "link",
+          "label": "Product Redirection URL",
+          "name": "productLink",
           "valueType": "string"
         }
       ]
@@ -84,7 +84,7 @@
     {
       "id": "cmp-product-tabs",
       "components": [
-        "cmp-product-tabs-carousel-item"
+        "product-carousel-item"
       ]
     }
   ]

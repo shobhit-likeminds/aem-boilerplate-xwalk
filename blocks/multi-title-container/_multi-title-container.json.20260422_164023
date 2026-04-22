@@ -38,21 +38,18 @@
       "fields": [
         {
           "component": "text",
-          "label": "Container Aria Label",
-          "name": "ariaLabel",
-          "valueType": "string"
+          "label": "Aria Label",
+          "name": "ariaLabel"
         },
         {
           "component": "reference",
           "label": "Background Image (Desktop)",
-          "name": "backgroundImageDesktop",
-          "valueType": "string"
+          "name": "backgroundDesktop"
         },
         {
           "component": "reference",
           "label": "Background Image (Mobile)",
-          "name": "backgroundImageMobile",
-          "valueType": "string"
+          "name": "backgroundMobile"
         },
         {
           "component": "container",
@@ -63,8 +60,7 @@
         {
           "component": "richtext",
           "label": "Description",
-          "name": "description",
-          "valueType": "string"
+          "name": "description"
         }
       ]
     },
@@ -74,8 +70,7 @@
         {
           "component": "text",
           "label": "Title Text",
-          "name": "titleText",
-          "valueType": "string"
+          "name": "title"
         }
       ]
     }
