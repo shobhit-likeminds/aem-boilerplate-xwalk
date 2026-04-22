@@ -331,12 +331,14 @@
       {
         "component": "reference",
         "label": "Logo Image",
-        "name": "logoImage"
+        "name": "logo",
+        "valueType": "string"
       },
       {
         "component": "aem-content",
         "label": "Logo Link",
-        "name": "logoLink"
+        "name": "logoLink",
+        "valueType": "string"
       },
       {
         "component": "container",
@@ -353,14 +355,14 @@
       {
         "component": "container",
         "item": "social-link-item",
-        "label": "Social Links",
+        "label": "Social Media Links",
         "name": "socialLinks"
       },
       {
         "component": "container",
-        "item": "icon-link-item",
-        "label": "Nav Icon Links",
-        "name": "iconLinks"
+        "item": "nav-icon-item",
+        "label": "Header Icons (Accessibility, Search, Login)",
+        "name": "navIcons"
       }
     ]
   },
@@ -369,13 +371,15 @@
     "fields": [
       {
         "component": "text",
-        "label": "Navigation Label",
-        "name": "label"
+        "label": "Menu Label",
+        "name": "label",
+        "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "Navigation Link",
-        "name": "link"
+        "label": "Menu Link",
+        "name": "link",
+        "valueType": "string"
       },
       {
         "component": "richtext",
@@ -391,12 +395,14 @@
       {
         "component": "text",
         "label": "Policy Label",
-        "name": "label"
+        "name": "label",
+        "valueType": "string"
       },
       {
         "component": "aem-content",
         "label": "Policy Link",
-        "name": "link"
+        "name": "link",
+        "valueType": "string"
       }
     ]
   },
@@ -405,33 +411,44 @@
     "fields": [
       {
         "component": "text",
-        "label": "Social Platform",
-        "name": "platform"
+        "label": "Icon Class",
+        "name": "iconClass",
+        "valueType": "string"
       },
       {
         "component": "aem-content",
         "label": "Social Link",
-        "name": "link"
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Social Type",
+        "name": "socialType",
+        "valueType": "string"
       }
     ]
   },
   {
-    "id": "icon-link-item",
+    "id": "nav-icon-item",
     "fields": [
       {
         "component": "reference",
-        "label": "Icon",
-        "name": "icon"
+        "label": "Icon (SVG or Image)",
+        "name": "icon",
+        "valueType": "string"
       },
       {
         "component": "aem-content",
         "label": "Icon Link",
-        "name": "link"
+        "name": "link",
+        "valueType": "string"
       },
       {
         "component": "text",
         "label": "Icon Label",
-        "name": "label"
+        "name": "label",
+        "valueType": "string"
       }
     ]
   },
@@ -505,14 +522,14 @@
     "fields": [
       {
         "component": "reference",
-        "label": "Top Content Background Image Desktop",
+        "label": "Top Content Background Image (Desktop)",
         "name": "backgroundImageDesktop",
         "valueType": "string"
       },
       {
         "component": "reference",
         "label": "Logo Image",
-        "name": "logo",
+        "name": "logoImage",
         "valueType": "string"
       },
       {
@@ -523,21 +540,44 @@
       },
       {
         "component": "container",
+        "item": "footer-navigation-group",
+        "label": "Navigation Groups",
+        "name": "navigationGroups"
+      },
+      {
+        "component": "container",
+        "item": "footer-social-link",
+        "label": "Social Media Links",
+        "name": "socialLinks"
+      },
+      {
+        "component": "aem-content",
+        "label": "ITC Portal Link",
+        "name": "itcPortalLink",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Copyright Text",
+        "name": "copyrightText",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "footer-navigation-group",
+    "fields": [
+      {
+        "component": "container",
         "item": "footer-navigation-item",
-        "label": "Footer Navigation Items",
+        "label": "Navigation Items",
         "name": "navigationItems"
       },
       {
-        "component": "container",
-        "item": "footer-bottom-link-item",
-        "label": "Footer Bottom Links",
-        "name": "bottomLinks"
-      },
-      {
-        "component": "container",
-        "item": "footer-social-link-item",
-        "label": "Social Media Links",
-        "name": "socialLinks"
+        "component": "richtext",
+        "label": "Navigation Hierarchy",
+        "name": "hierarchy-tree",
+        "valueType": "string"
       }
     ]
   },
@@ -555,45 +595,22 @@
         "label": "Navigation Link",
         "name": "link",
         "valueType": "string"
-      },
-      {
-        "component": "richtext",
-        "label": "Navigation Hierarchy",
-        "name": "hierarchy-tree",
-        "valueType": "string"
       }
     ]
   },
   {
-    "id": "footer-social-link-item",
+    "id": "footer-social-link",
     "fields": [
       {
         "component": "text",
-        "label": "Social Icon Class (e.g. icon-instagram)",
+        "label": "Social Icon Class",
         "name": "iconClass",
         "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "Social Link",
-        "name": "link",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
-    "id": "footer-bottom-link-item",
-    "fields": [
-      {
-        "component": "text",
-        "label": "Bottom Link Label",
-        "name": "label",
-        "valueType": "string"
-      },
-      {
-        "component": "aem-content",
-        "label": "Bottom Link",
-        "name": "link",
+        "label": "Social Media Link",
+        "name": "socialLink",
         "valueType": "string"
       }
     ]
@@ -1008,21 +1025,21 @@
     "id": "multi-title-container",
     "fields": [
       {
+        "component": "reference",
+        "label": "Background Image Desktop",
+        "name": "backgroundDesktop",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Background Image Mobile",
+        "name": "backgroundMobile",
+        "valueType": "string"
+      },
+      {
         "component": "text",
-        "label": "Container Aria Label",
+        "label": "Aria Label",
         "name": "ariaLabel",
-        "valueType": "string"
-      },
-      {
-        "component": "reference",
-        "label": "Background Image (Desktop)",
-        "name": "backgroundImageDesktop",
-        "valueType": "string"
-      },
-      {
-        "component": "reference",
-        "label": "Background Image (Mobile)",
-        "name": "backgroundImageMobile",
         "valueType": "string"
       },
       {
@@ -1408,20 +1425,8 @@
         "valueType": "string"
       },
       {
-        "component": "text",
-        "label": "No Results Title",
-        "name": "noResultsTitle",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "No Results Description",
-        "name": "noResultsDescription",
-        "valueType": "string"
-      },
-      {
         "component": "number",
-        "label": "Minimum Characters to Search",
+        "label": "Minimum Search Length",
         "name": "minLength",
         "valueType": "number"
       },
@@ -1438,10 +1443,28 @@
         "valueType": "number"
       },
       {
+        "component": "text",
+        "label": "No Results Title",
+        "name": "noResultsTitle",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "No Results Description",
+        "name": "noResultsDescription",
+        "valueType": "string"
+      },
+      {
         "component": "container",
         "item": "search-category-item",
         "label": "No Results Categories",
         "name": "categories"
+      },
+      {
+        "component": "container",
+        "item": "search-result-item",
+        "label": "Search Results",
+        "name": "searchResults"
       }
     ]
   },
@@ -1458,6 +1481,23 @@
         "component": "aem-content",
         "label": "Category URL",
         "name": "categoryURL",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "search-result-item",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Result Title",
+        "name": "title",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Result URL",
+        "name": "url",
         "valueType": "string"
       }
     ]

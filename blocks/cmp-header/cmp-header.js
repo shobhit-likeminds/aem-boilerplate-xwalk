@@ -2,41 +2,44 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 function transformNestedLists(rootUl) {
-  rootUl.classList.add('cmp-navigation__group', 'cmp-navigation__group--level-1'); // Add classes from original HTML if applicable
   rootUl.querySelectorAll('li').forEach((li) => {
-    li.classList.add('cmp-navigation__item', 'cmp-navigation__item--level-1'); // Add classes from original HTML if applicable
-    const nested = li.querySelector(':scope > ul');
-    const anchor = li.querySelector(':scope > a');
+    // Apply classes from original HTML to li elements
+    li.classList.add('cmp-navigation__item', 'cmp-navigation__item--level-1'); // Assuming nested items are level-1 or higher
 
+    const nested = li.querySelector(':scope > ul');
+    // Handle label-only nodes
+    const anchor = li.querySelector(':scope > a');
     if (anchor) {
-      anchor.classList.add('cmp-navigation__item-link'); // Add classes from original HTML if applicable
+      // Apply classes from original HTML to anchor elements
+      anchor.classList.add('cmp-navigation__item-link');
     } else {
       const textNode = [...li.childNodes].find(
-        (n) => n.nodeType === Node.TEXT_NODE && n.textContent.trim(),
+        (n) => n.nodeType === Node.TEXT_NODE && n.textContent.trim()
       );
       if (textNode) {
         const span = document.createElement('span');
         span.textContent = textNode.textContent.trim();
-        span.classList.add('cmp-navigation__item-link'); // Add classes from original HTML if applicable
+        span.classList.add('cmp-navigation__item-link'); // Apply link class for consistency
         textNode.remove();
         li.prepend(span);
       }
     }
-
     if (nested) {
-      nested.remove();
+      // Apply classes from original HTML to ul elements
+      nested.classList.add('cmp-navigation__group', 'cmp-header__mobile-list');
+
+      nested.remove(); // Remove to re-append in a wrapper
       const subWrap = document.createElement('div');
-      subWrap.classList.add('nav-dropdown'); // Class from ORIGINAL HTML
+      subWrap.classList.add('cmp-header__mobile-list'); // Using a class from the original HTML for nested lists
       subWrap.append(nested);
       li.append(subWrap);
-
       const trigger = li.querySelector(':scope > a, :scope > span');
       if (trigger) {
         trigger.addEventListener('click', (e) => {
           e.preventDefault();
           e.stopPropagation();
-          li.classList.toggle('active');
-          subWrap.classList.toggle('active');
+          li.classList.toggle('active'); // Use 'active' for state
+          subWrap.classList.toggle('active'); // Use 'active' for state
         });
       }
     }
@@ -46,21 +49,21 @@ function transformNestedLists(rootUl) {
 export default function decorate(block) {
   const children = [...block.children];
 
-  const header = document.createElement('div');
-  header.classList.add('cmp-header');
+  const [logoRow, logoLinkRow, ...itemRows] = children;
+
+  const headerWrapper = document.createElement('div');
+  headerWrapper.classList.add('cmp-header');
+  moveInstrumentation(block, headerWrapper);
 
   const hamburgerInput = document.createElement('input');
   hamburgerInput.classList.add('cmp-header__hamburger');
   hamburgerInput.type = 'checkbox';
-  header.append(hamburgerInput);
+  headerWrapper.append(hamburgerInput);
 
-  // Logo Image and Link
-  // Use destructuring for the first two rows as per BlockJson
-  const [logoImageRow, logoLinkRow, ...itemRows] = children;
-
+  // Logo
   const logoDiv = document.createElement('div');
   logoDiv.classList.add('logo', 'image', 'cmp-header__logo');
-  moveInstrumentation(logoImageRow, logoDiv);
+  moveInstrumentation(logoRow, logoDiv);
 
   const logoLink = document.createElement('a');
   logoLink.classList.add('cmp-image__link');
@@ -70,19 +73,17 @@ export default function decorate(block) {
   }
   moveInstrumentation(logoLinkRow, logoLink);
 
-  const picture = logoImageRow.querySelector('picture');
+  const picture = logoRow.querySelector('picture');
   if (picture) {
     const img = picture.querySelector('img');
-    if (img) {
-      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-      // moveInstrumentation should be on the new img element, not the original img
-      moveInstrumentation(img, optimizedPic.querySelector('img'));
-      logoLink.append(optimizedPic);
-    }
+    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+    moveInstrumentation(img, optimizedPic.querySelector('img'));
+    logoLink.append(optimizedPic);
   }
   logoDiv.append(logoLink);
-  header.append(logoDiv);
+  headerWrapper.append(logoDiv);
 
+  // Navigation Links
   const navLinksDiv = document.createElement('div');
   navLinksDiv.classList.add('cmp-header__nav-links');
 
@@ -93,8 +94,8 @@ export default function decorate(block) {
   nav.classList.add('cmp-navigation');
   nav.setAttribute('role', 'navigation');
 
-  const mainNavUl = document.createElement('ul');
-  mainNavUl.classList.add('cmp-navigation__group', 'cmp-header__nav-group');
+  const navGroup = document.createElement('ul');
+  navGroup.classList.add('cmp-navigation__group', 'cmp-header__nav-group');
 
   const mobileListDiv = document.createElement('div');
   mobileListDiv.classList.add('cmp-header__mobile-list');
@@ -105,147 +106,153 @@ export default function decorate(block) {
   const socialMediaDiv = document.createElement('div');
   socialMediaDiv.classList.add('cmp-header__social-media');
 
-  // Process item rows (all rows after logoImage and logoLink)
+  // Nav Icons container - created here to be appended to later
+  const navIconsDiv = document.createElement('div');
+  navIconsDiv.classList.add('cmp-header__nav-icons');
+  headerWrapper.append(navIconsDiv);
+
   itemRows.forEach((row) => {
     const cells = [...row.children];
 
-    // Navigation Menu Items (3 cells: label, link, hierarchy-tree)
-    // Check for 3 cells and the presence of a <ul> in the third cell for hierarchy-tree
+    // Navigation Item (3 cells: label, link, hierarchy-tree)
     if (cells.length === 3 && cells[2].querySelector('ul')) {
       const [labelCell, linkCell, hierarchyCell] = cells;
       const li = document.createElement('li');
       li.classList.add('cmp-navigation__item', 'cmp-navigation__item--level-0', 'cmp-header__nav-products');
+      moveInstrumentation(row, li);
 
-      const foundLink = linkCell.querySelector('a');
+      const foundLink = linkCell?.querySelector('a');
       let rootEl;
       if (foundLink) {
         rootEl = document.createElement('a');
         rootEl.href = foundLink.href;
         rootEl.classList.add('cmp-navigation__item-link');
       } else {
-        rootEl = document.createElement('span'); // Use span if no link, as per transformNestedLists
-        rootEl.classList.add('cmp-navigation__item-link'); // Apply link class for consistent styling
+        rootEl = document.createElement('span'); // Use span for non-linked labels
+        rootEl.classList.add('cmp-navigation__item-link'); // Apply link class for consistency
       }
-      rootEl.textContent = labelCell.textContent.trim();
-      moveInstrumentation(row, rootEl);
+      rootEl.textContent = labelCell?.textContent.trim() || '';
       li.appendChild(rootEl);
 
-      const hierarchyRoot = hierarchyCell.querySelector('ul');
+      // Handle hierarchy-tree richtext
+      const tempDiv = document.createElement('div');
+      moveInstrumentation(hierarchyCell, tempDiv); // Move instrumentation from the original cell
+      tempDiv.innerHTML = hierarchyCell.innerHTML; // Read innerHTML to preserve structure
+
+      const hierarchyRoot = tempDiv.querySelector('ul');
       if (hierarchyRoot) {
+        // Apply classes to the root ul of the hierarchy
+        hierarchyRoot.classList.add('cmp-navigation__group', 'cmp-header__mobile-list');
+
+        // Apply classes to all nested <a>, <li>, <ul> elements
+        hierarchyRoot.querySelectorAll('a').forEach(a => a.classList.add('cmp-navigation__item-link'));
+        hierarchyRoot.querySelectorAll('li').forEach(liItem => liItem.classList.add('cmp-navigation__item', 'cmp-navigation__item--level-1')); // Assuming level-1 for direct children
+        hierarchyRoot.querySelectorAll('ul').forEach(ulItem => ulItem.classList.add('cmp-navigation__group', 'cmp-header__mobile-list'));
+
         const wrapper = document.createElement('div');
-        wrapper.classList.add('nav-dropdown'); // Class from ORIGINAL HTML
-        // Move instrumentation from the original cell to the new wrapper
-        moveInstrumentation(hierarchyCell, wrapper);
-        // Use innerHTML to preserve the nested structure
-        const tempDiv = document.createElement('div');
-        tempDiv.innerHTML = hierarchyCell.innerHTML;
-        const ulToTransform = tempDiv.querySelector('ul');
-        if (ulToTransform) {
-          transformNestedLists(ulToTransform);
-          while (ulToTransform.firstChild) {
-            wrapper.append(ulToTransform.firstChild);
-          }
+        wrapper.classList.add('cmp-header__mobile-list'); // Use a class from original HTML
+        while (hierarchyRoot.firstChild) { // Move children from hierarchyRoot to wrapper
+          wrapper.append(hierarchyRoot.firstChild);
         }
+        wrapper.append(hierarchyRoot); // Append the now empty hierarchyRoot (with classes)
+
         rootEl.addEventListener('click', (e) => {
           e.preventDefault();
           e.stopPropagation();
-          wrapper.classList.toggle('active');
-          li.classList.toggle('active');
+          wrapper.classList.toggle('active'); // Use 'active' for state
+          li.classList.toggle('active'); // Use 'active' for state
         });
         li.appendChild(wrapper);
+        transformNestedLists(hierarchyRoot); // Apply transformation to the hierarchyRoot
+      } else {
+        li.classList.add('cmp-header__no-items');
       }
-      mainNavUl.append(li);
+      navGroup.append(li);
     }
-    // Policy Link Items (2 cells: label, link)
-    // Check for 2 cells, and ensure no picture in either cell to distinguish from icon links
-    else if (cells.length === 2 && !cells[0].querySelector('picture') && !cells[1].querySelector('picture')) {
+    // Policy Link Item (2 cells: label, link)
+    else if (cells.length === 2 && !cells[0].querySelector('picture')) {
       const [labelCell, linkCell] = cells;
       const li = document.createElement('li');
       li.classList.add('cmp-header__policy-list');
+      moveInstrumentation(row, li);
 
       const anchor = document.createElement('a');
-      const foundLink = linkCell.querySelector('a');
-      if (foundLink) {
-        anchor.href = foundLink.href;
-      }
-      anchor.textContent = labelCell.textContent.trim();
-      moveInstrumentation(row, anchor);
+      const foundLink = linkCell?.querySelector('a');
+      if (foundLink) anchor.href = foundLink.href;
+      anchor.textContent = labelCell?.textContent.trim() || '';
       li.append(anchor);
       policyUl.append(li);
     }
-    // Social Link Items (2 cells: platform, link)
-    // Check for 2 cells, no picture, and content that indicates a social platform
-    else if (cells.length === 2 && !cells[0].querySelector('picture') && !cells[1].querySelector('picture') && cells[0].textContent.trim()) {
-      const [platformCell, linkCell] = cells;
+    // Social Link Item (3 cells: iconClass, link, socialType)
+    else if (cells.length === 3 && !cells[0].querySelector('picture') && cells[2].textContent.trim()) {
+      const [iconClassCell, linkCell, socialTypeCell] = cells;
       const anchor = document.createElement('a');
-      const foundLink = linkCell.querySelector('a');
-      if (foundLink) {
-        anchor.href = foundLink.href;
-      }
-      const platform = platformCell.textContent.trim().toLowerCase();
-      anchor.setAttribute('data-social', platform);
-      // Corrected class names from ORIGINAL HTML
-      if (platform === 'instagram') anchor.classList.add('icon-instagram');
-      else if (platform === 'facebook') anchor.classList.add('icon-facebok'); // Typo in original HTML: facebok
-      else if (platform === 'twitter') anchor.classList.add('icon-twitter');
-      else if (platform === 'youtube') anchor.classList.add('icon-youtube');
-      else anchor.classList.add(`icon-${platform}`); // Fallback for other platforms
+      const foundLink = linkCell?.querySelector('a');
+      if (foundLink) anchor.href = foundLink.href;
+      anchor.classList.add(iconClassCell?.textContent.trim() || '');
+      anchor.setAttribute('data-social', socialTypeCell?.textContent.trim() || '');
       moveInstrumentation(row, anchor);
       socialMediaDiv.append(anchor);
     }
-    // Icon Link Items (3 cells: icon, link, label)
-    // Check for 3 cells and the presence of a picture in the first cell
-    else if (cells.length === 3 && cells[0].querySelector('picture')) {
+    // Nav Icon Item (3 cells: icon, link, label)
+    else if (cells.length === 3 && cells[0].querySelector('picture') || cells[0].textContent.trim().startsWith('icon-')) { // Check for picture or icon class
       const [iconCell, linkCell, labelCell] = cells;
-      const iconLinkDiv = document.createElement('div');
-      iconLinkDiv.classList.add('cmp-header__accessbility', 'cmp-header__hide-icon'); // Classes from ORIGINAL HTML
+      const iconWrapper = document.createElement('div');
+      // Default classes, specific ones added below based on icon type
 
       const anchor = document.createElement('a');
       anchor.classList.add('cmp-header__icon-img');
-      const foundLink = linkCell.querySelector('a');
-      if (foundLink) {
-        anchor.href = foundLink.href;
-      }
+      const foundLink = linkCell?.querySelector('a');
+      if (foundLink) anchor.href = foundLink.href;
+      moveInstrumentation(row, anchor);
 
-      const pictureElement = iconCell.querySelector('picture');
-      if (pictureElement) {
-        const img = pictureElement.querySelector('img');
-        if (img) {
-          const iconDiv = document.createElement('div');
-          // Use alt text for icon class, as per ORIGINAL HTML pattern (e.g., icon-accessibility)
-          iconDiv.classList.add(`icon-${img.alt.toLowerCase().replace(/\s/g, '-')}`);
-          anchor.append(iconDiv);
+      const iconDiv = document.createElement('div');
+      const picture = iconCell.querySelector('picture');
+      if (picture) {
+        const img = picture.querySelector('img');
+        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '48' }]); // Assuming small icon size
+        moveInstrumentation(img, optimizedPic.querySelector('img'));
+        iconDiv.append(optimizedPic);
+      } else {
+        // If it's an SVG icon, it might be directly in the cell as text or a class
+        const iconClass = iconCell.textContent.trim();
+        if (iconClass) {
+          iconDiv.classList.add(iconClass);
         }
       }
 
-      const labelText = labelCell.textContent.trim();
+      const labelText = labelCell?.textContent.trim();
       if (labelText) {
         const textDiv = document.createElement('div');
         textDiv.classList.add('cmp-header__icon-text');
         textDiv.textContent = labelText;
-        anchor.append(textDiv);
+        anchor.append(iconDiv, textDiv);
+      } else {
+        anchor.append(iconDiv);
       }
-      moveInstrumentation(row, anchor);
-      iconLinkDiv.append(anchor);
 
-      // Append to the nav icons container
-      let navIconsDiv = header.querySelector('.cmp-header__nav-icons');
-      if (!navIconsDiv) {
-        navIconsDiv = document.createElement('div');
-        navIconsDiv.classList.add('cmp-header__nav-icons');
-        header.append(navIconsDiv);
+      // Determine specific classes for the iconWrapper based on iconDiv content
+      if (iconDiv.classList.contains('icon-accessibility')) {
+        iconWrapper.classList.add('cmp-header__accessbility', 'cmp-header__hide-icon');
+      } else if (iconDiv.classList.contains('icon-search')) {
+        iconWrapper.classList.add('cmp-header__search');
+      } else if (iconDiv.classList.contains('icon-profile')) {
+        iconWrapper.classList.add('cmp-header__login', 'cmp-header__hide-icon');
+      } else {
+        iconWrapper.classList.add('cmp-header__hide-icon'); // Hide by default if unknown
       }
-      navIconsDiv.append(iconLinkDiv);
+
+      iconWrapper.append(anchor);
+      navIconsDiv.append(iconWrapper); // Append to the navIconsDiv created earlier
     }
   });
 
-  nav.append(mainNavUl);
-  mobileListDiv.append(policyUl);
-  mobileListDiv.append(socialMediaDiv);
+  nav.append(navGroup);
+  mobileListDiv.append(policyUl, socialMediaDiv);
   nav.append(mobileListDiv);
   navigationDiv.append(nav);
   navLinksDiv.append(navigationDiv);
-  header.append(navLinksDiv);
+  headerWrapper.append(navLinksDiv);
 
-  block.replaceChildren(header);
+  block.replaceChildren(headerWrapper);
 }

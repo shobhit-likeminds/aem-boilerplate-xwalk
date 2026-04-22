@@ -62,15 +62,15 @@
       }
     },
     {
-      "title": "Nav-Icon-Item",
-      "id": "nav-icon-item",
+      "title": "Icon-Link-Item",
+      "id": "icon-link-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "nav-icon-item",
-              "name": "Nav-Icon-Item"
+              "model": "icon-link-item",
+              "name": "Icon-Link-Item"
             }
           }
         }
@@ -84,14 +84,12 @@
         {
           "component": "reference",
           "label": "Logo Image",
-          "name": "logo",
-          "valueType": "string"
+          "name": "logoImage"
         },
         {
           "component": "aem-content",
           "label": "Logo Link",
-          "name": "logoLink",
-          "valueType": "string"
+          "name": "logoLink"
         },
         {
           "component": "container",
@@ -108,14 +106,14 @@
         {
           "component": "container",
           "item": "social-link-item",
-          "label": "Social Media Links",
+          "label": "Social Links",
           "name": "socialLinks"
         },
         {
           "component": "container",
-          "item": "nav-icon-item",
-          "label": "Header Icons (Accessibility, Search, Login)",
-          "name": "navIcons"
+          "item": "icon-link-item",
+          "label": "Nav Icon Links",
+          "name": "iconLinks"
         }
       ]
     },
@@ -124,15 +122,13 @@
       "fields": [
         {
           "component": "text",
-          "label": "Menu Label",
-          "name": "label",
-          "valueType": "string"
+          "label": "Navigation Label",
+          "name": "label"
         },
         {
           "component": "aem-content",
-          "label": "Menu Link",
-          "name": "link",
-          "valueType": "string"
+          "label": "Navigation Link",
+          "name": "link"
         },
         {
           "component": "richtext",
@@ -148,14 +144,12 @@
         {
           "component": "text",
           "label": "Policy Label",
-          "name": "label",
-          "valueType": "string"
+          "name": "label"
         },
         {
           "component": "aem-content",
           "label": "Policy Link",
-          "name": "link",
-          "valueType": "string"
+          "name": "link"
         }
       ]
     },
@@ -164,44 +158,33 @@
       "fields": [
         {
           "component": "text",
-          "label": "Icon Class",
-          "name": "iconClass",
-          "valueType": "string"
+          "label": "Social Platform",
+          "name": "platform"
         },
         {
           "component": "aem-content",
           "label": "Social Link",
-          "name": "link",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Social Type",
-          "name": "socialType",
-          "valueType": "string"
+          "name": "link"
         }
       ]
     },
     {
-      "id": "nav-icon-item",
+      "id": "icon-link-item",
       "fields": [
         {
           "component": "reference",
-          "label": "Icon (SVG or Image)",
-          "name": "icon",
-          "valueType": "string"
+          "label": "Icon",
+          "name": "icon"
         },
         {
           "component": "aem-content",
           "label": "Icon Link",
-          "name": "link",
-          "valueType": "string"
+          "name": "link"
         },
         {
           "component": "text",
           "label": "Icon Label",
-          "name": "label",
-          "valueType": "string"
+          "name": "label"
         }
       ]
     }
@@ -213,7 +196,7 @@
         "navigation-item",
         "policy-link-item",
         "social-link-item",
-        "nav-icon-item"
+        "icon-link-item"
       ]
     }
   ]

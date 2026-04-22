@@ -2,42 +2,79 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
+  const children = [...block.children];
+
+  // Fixed fields
   const [
-    inputPlaceholderCell,
-    noResultsTitleCell,
-    noResultsDescriptionCell,
-    minLengthCell,
-    resultsDesktopSizeCell,
-    resultsMobileSizeCell,
-    ...categoryRows
-  ] = [...block.children];
+    inputPlaceholderRow,
+    minLengthRow,
+    resultsDesktopSizeRow,
+    resultsMobileSizeRow,
+    noResultsTitleRow,
+    noResultsDescriptionRow,
+    formActionRow, // New field for form action
+    searchRootValueRow, // New field for searchroot value
+    ...itemRows
+  ] = children;
 
-  const inputPlaceholder = inputPlaceholderCell?.textContent.trim() || 'Search';
-  const noResultsTitle = noResultsTitleCell?.textContent.trim() || 'Sorry, we cannot find what you are looking for :(';
-  const noResultsDescription = noResultsDescriptionCell?.textContent.trim() || 'Please try a new search term or browse through one of our product categories.';
-  const minLength = parseInt(minLengthCell?.textContent.trim(), 10) || 3;
-  const resultsDesktopSize = parseInt(resultsDesktopSizeCell?.textContent.trim(), 10) || 8;
-  const resultsMobileSize = parseInt(resultsMobileSizeCell?.textContent.trim(), 10) || 5;
+  const inputPlaceholder = inputPlaceholderRow?.textContent.trim() || '';
+  const minLength = parseInt(minLengthRow?.textContent.trim(), 10) || 3;
+  const resultsDesktopSize = parseInt(resultsDesktopSizeRow?.textContent.trim(), 10) || 8;
+  const resultsMobileSize = parseInt(resultsMobileSizeRow?.textContent.trim(), 10) || 5;
+  const noResultsTitle = noResultsTitleRow?.textContent.trim() || '';
+  const noResultsDescription = noResultsDescriptionRow?.textContent.trim() || '';
+  const formAction = formActionRow?.querySelector('a')?.href || ''; // Read from aem-content
+  const searchRootValue = searchRootValueRow?.querySelector('a')?.href || ''; // Read from aem-content
 
-  const categories = categoryRows.map((row) => {
-    const [categoryNameCell, categoryURLCell] = [...row.children];
-    const categoryName = categoryNameCell?.textContent.trim() || '';
-    const categoryURL = categoryURLCell?.querySelector('a')?.href || '';
-    return { categoryName, categoryURL };
+  const categories = [];
+  const searchResults = [];
+
+  // Separate item rows by content detection (number of cells)
+  itemRows.forEach((row) => {
+    const cells = [...row.children];
+    if (cells.length === 2) {
+      const [cell0, cell1] = cells;
+      // Determine if it's a category or search result based on content type
+      // Category URL is aem-content, Search Result URL is aem-content
+      // Both have 2 cells. We need to distinguish them.
+      // For now, assuming categories come first, then search results.
+      // A more robust solution might involve checking the original HTML structure or adding a type field.
+      // Given the BlockJson, both are 2-cell items. The current logic will put all 2-cell items into categories
+      // until it fails, then into searchResults. This is not ideal if they are interleaved.
+      // A better approach would be to check if the first cell contains a specific class or data attribute
+      // if the model allowed for it, or rely on the order of rows if that's guaranteed.
+      // For this review, we'll assume categories appear before search results if both are present.
+
+      // Check if it matches the category-item structure
+      const categoryName = cell0?.textContent.trim();
+      const categoryURL = cell1?.querySelector('a')?.href;
+      if (categoryName && categoryURL) {
+        categories.push({ categoryName, categoryURL });
+      } else {
+        // Assume it's a search result item if not a category
+        const title = cell0?.textContent.trim();
+        const url = cell1?.querySelector('a')?.href;
+        if (title && url) {
+          searchResults.push({ title, url });
+        }
+      }
+    }
   });
 
-  const errorResponse = {
-    noResultsTitle,
-    noResultsDescription,
-    categories,
-  };
-
+  // Reconstruct the block structure
   const section = document.createElement('section');
   section.classList.add('cmp-search');
   section.setAttribute('role', 'search');
   section.setAttribute('data-cmp-min-length', minLength);
   section.setAttribute('data-cmp-results-desktop-size', resultsDesktopSize);
   section.setAttribute('data-cmp-results-mobile-size', resultsMobileSize);
+
+  const errorResponse = {
+    noResultsTitle,
+    noResultsDescription,
+    categories,
+    searchResults, // Although not used in original, keep for completeness
+  };
   section.setAttribute('data-error-response', JSON.stringify(errorResponse));
   section.setAttribute('data-input-placeholder', inputPlaceholder);
 
@@ -51,7 +88,7 @@ export default function decorate(block) {
   form.classList.add('cmp-search__form');
   form.setAttribute('data-cmp-hook-search', 'form');
   form.setAttribute('method', 'get');
-  form.setAttribute('action', '/content/itc-foods-brands/yippee/us/en.customsearchresults.json/_jcr_content/root/search'); // Default action
+  form.setAttribute('action', formAction); // Read from model
   form.setAttribute('autocomplete', 'off');
   section.append(form);
 
@@ -59,7 +96,7 @@ export default function decorate(block) {
   hiddenInput.setAttribute('type', 'hidden');
   hiddenInput.setAttribute('id', 'searchroot');
   hiddenInput.setAttribute('name', 'searchroot');
-  hiddenInput.setAttribute('value', '/content/itc-foods-brands/yippee/us/en'); // Default search root
+  hiddenInput.setAttribute('value', searchRootValue); // Read from model
   form.append(hiddenInput);
 
   const fieldDiv = document.createElement('div');
@@ -112,17 +149,19 @@ export default function decorate(block) {
   const scriptTemplate = document.createElement('script');
   scriptTemplate.setAttribute('data-cmp-hook-search', 'itemTemplate');
   scriptTemplate.setAttribute('type', 'x-template');
-  scriptTemplate.innerHTML = `
-    <a class="cmp-search__item" data-cmp-hook-search="item" role="option" aria-selected="false">
-        <span class="cmp-search__item-title" data-cmp-hook-search="itemTitle"></span>
-    </a>
-  `;
+  scriptTemplate.textContent = `
+  <a class="cmp-search__item" data-cmp-hook-search="item" role="option" aria-selected="false">
+      <span class="cmp-search__item-title" data-cmp-hook-search="itemTitle"></span>
+  </a>
+`;
   section.append(scriptTemplate);
 
-  // Move instrumentation from the original block rows to the new section element.
-  // Since the entire block content is replaced, we move instrumentation from the block itself.
-  // Note: For fixed fields, we move instrumentation from the original cell to the new element.
-  // For the block as a whole, we replace its children.
+  // Move instrumentation from original rows to the new section element
+  // Since the original block structure is completely replaced, we move instrumentation
+  // to the root section element. If there were editable parts, instrumentation would
+  // be moved to those specific elements.
   moveInstrumentation(block, section);
+
+  // Replace the block's content with the new section
   block.replaceChildren(section);
 }

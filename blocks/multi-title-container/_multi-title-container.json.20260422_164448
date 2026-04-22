@@ -37,21 +37,21 @@
       "id": "multi-title-container",
       "fields": [
         {
-          "component": "reference",
-          "label": "Background Image Desktop",
-          "name": "backgroundDesktop",
-          "valueType": "string"
-        },
-        {
-          "component": "reference",
-          "label": "Background Image Mobile",
-          "name": "backgroundMobile",
-          "valueType": "string"
-        },
-        {
           "component": "text",
-          "label": "Aria Label",
+          "label": "Container Aria Label",
           "name": "ariaLabel",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Background Image (Desktop)",
+          "name": "backgroundImageDesktop",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Background Image (Mobile)",
+          "name": "backgroundImageMobile",
           "valueType": "string"
         },
         {

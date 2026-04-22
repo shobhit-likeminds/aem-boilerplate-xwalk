@@ -62,7 +62,7 @@
       "navigation-item",
       "policy-link-item",
       "social-link-item",
-      "icon-link-item"
+      "nav-icon-item"
     ]
   },
   {
@@ -89,9 +89,9 @@
   {
     "id": "footer-new",
     "components": [
+      "footer-navigation-group",
       "footer-navigation-item",
-      "footer-bottom-link-item",
-      "footer-social-link-item"
+      "footer-social-link"
     ]
   },
   {
@@ -160,7 +160,8 @@
   {
     "id": "search",
     "components": [
-      "search-category-item"
+      "search-category-item",
+      "search-result-item"
     ]
   },
   {
