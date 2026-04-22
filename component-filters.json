@@ -51,7 +51,7 @@
   {
     "id": "card-carousel",
     "components": [
-      "product-card-item"
+      "product-card"
     ]
   },
   {
@@ -105,8 +105,7 @@
   {
     "id": "footer",
     "components": [
-      "footer-navigation-item",
-      "footer-secondary-link-item",
+      "footer-nav-item",
       "footer-social-link-item"
     ]
   },

@@ -1,7 +1,7 @@
 {
   "definitions": [
     {
-      "title": "Card-Carousel",
+      "title": "Card Carousel",
       "id": "card-carousel",
       "plugins": {
         "xwalk": {
@@ -10,22 +10,22 @@
             "template": {
               "filter": "card-carousel",
               "model": "card-carousel",
-              "name": "Card-Carousel"
+              "name": "Card Carousel"
             }
           }
         }
       }
     },
     {
-      "title": "Product-Card",
-      "id": "product-card",
+      "title": "Product Card Item",
+      "id": "product-card-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "product-card",
-              "name": "Product-Card"
+              "model": "product-card-item",
+              "name": "Product Card Item"
             }
           }
         }
@@ -50,49 +50,61 @@
         },
         {
           "component": "container",
-          "item": "product-card",
+          "item": "product-card-item",
           "label": "Product Cards",
           "name": "productCards"
         }
       ]
     },
     {
-      "id": "product-card",
+      "id": "product-card-item",
       "fields": [
         {
           "component": "reference",
-          "label": "Main Image (Card Thumbnail)",
-          "name": "mainImage",
+          "label": "Card Thumbnail Image",
+          "name": "cardThumbImage",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Card Thumbnail Alt Text",
+          "name": "cardThumbImageAlt",
           "valueType": "string"
         },
         {
           "component": "richtext",
-          "label": "Card Title (Rich)",
+          "label": "Card Title (Rich Text)",
           "name": "cardTitle",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Secondary Image (Product Image in Circle)",
-          "name": "secondaryImage",
-          "valueType": "string"
-        },
-        {
-          "component": "aem-content",
-          "label": "Product Link",
-          "name": "productLink",
+          "label": "Card Main Image (Link Image)",
+          "name": "cardMainImage",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "CTA Button Label",
-          "name": "ctaLabel",
+          "label": "Card Main Image Alt Text",
+          "name": "cardMainImageAlt",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "label": "CTA Button Link",
+          "label": "Card Main Image Link",
+          "name": "cardMainImageLink",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "CTA Link",
           "name": "ctaLink",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "CTA Label",
+          "name": "ctaLabel",
           "valueType": "string"
         }
       ]
@@ -102,7 +114,7 @@
     {
       "id": "card-carousel",
       "components": [
-        "product-card"
+        "product-card-item"
       ]
     }
   ]

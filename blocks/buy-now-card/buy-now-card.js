@@ -2,24 +2,22 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  // The buy-now-card block has no fields in its model,
-  // so it will be rendered as an empty div by EDS.
-  // The original HTML shows it as a container with specific grid classes.
-  // We need to ensure these classes are applied.
+  // The buy-now-card block has no fields defined in its model.
+  // This implies that the block itself is a placeholder or a container
+  // that does not render any specific content from authored rows.
+  // The original HTML also shows an empty div with only grid classes.
 
-  // The block itself is the root element we need to decorate.
-  // We apply the classes from the ORIGINAL HTML directly to the block element.
+  // According to the problem description, if the block model has no fields,
+  // we should assume it's a structural container and copy the classes.
+  // Since there are no authored rows to process or move instrumentation from,
+  // we simply apply the classes from the ORIGINAL HTML to the block itself.
+
+  // Apply classes from ORIGINAL HTML to the block element.
+  // The original HTML shows: <div class="buyNowCard aem-GridColumn aem-GridColumn--default--12">
   block.classList.add('buyNowCard', 'aem-GridColumn', 'aem-GridColumn--default--12');
 
-  // Since the block model is empty, there are no authored rows or cells to process.
-  // We simply ensure the block has the correct container classes.
-
-  // If there were any child elements authored in the block (which is not
-  // indicated by the empty model), they would be moved or transformed here.
-  // For an empty model, we assume the block itself is the only element to style.
-
-  // No instrumentation to move as there are no inner authored rows/cells
-  // to replace or wrap. The block itself is the target.
-
-  // No pictures to optimize as there are no image fields in the model.
+  // Since there are no rows or cells to transform or move instrumentation from,
+  // and the block is essentially an empty container with specific styling,
+  // no further DOM manipulation is needed.
+  // The block element itself is the final rendered element with the correct classes.
 }

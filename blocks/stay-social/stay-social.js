@@ -4,7 +4,7 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
 export default function decorate(block) {
   const [
     titleRow,
-    subtitleRow,
+    subtextRow,
     ctaLinkRow,
     ctaLabelRow,
     ...cardRows
@@ -12,128 +12,131 @@ export default function decorate(block) {
 
   const section = document.createElement('section');
   section.classList.add('stay-social', 'pt-14', 'py-lg-11', 'bg-cream-300');
+  moveInstrumentation(block, section);
 
   const container = document.createElement('div');
   container.classList.add('container', 'gx-8', 'gx-sm-0');
   section.append(container);
 
   // Title
-  if (titleRow) {
-    const title = document.createElement('h2');
-    title.classList.add(
-      'stay-social__title',
-      'font-24',
-      'leading-34',
-      'text-dark-gray-100',
-      'font-baskerville',
-      'font-sm-40',
-      'text-center',
-      'fw-bold',
+  const title = document.createElement('h2');
+  title.classList.add(
+    'stay-social__title',
+    'font-24',
+    'leading-34',
+    'text-dark-gray-100',
+    'font-baskerville',
+    'font-sm-40',
+    'text-center',
+    'fw-bold',
+  );
+  moveInstrumentation(titleRow, title);
+  title.textContent = titleRow.textContent.trim();
+  container.append(title);
+
+  // Subtext
+  const subtext = document.createElement('h3');
+  subtext.classList.add(
+    'stay-social__subtext',
+    'font-16',
+    'leading-24',
+    'text-dark-gray-100',
+    'font-sm-18',
+    'text-center',
+    'fw-medium',
+    'mt-4',
+  );
+  moveInstrumentation(subtextRow, subtext);
+  subtext.textContent = subtextRow.textContent.trim();
+  container.append(subtext);
+
+  // Main content for cards
+  const main = document.createElement('div');
+  main.classList.add('stay-social__main', 'mt-8');
+  container.append(main);
+
+  const cardsList = document.createElement('ul');
+  cardsList.classList.add(
+    'stay-social__cards',
+    'd-grid',
+    'gap-5',
+    'gap-sm-8',
+    'w-fit',
+    'mx-auto',
+  );
+  main.append(cardsList);
+
+  cardRows.forEach((row) => {
+    const [imageMobileCell, imageDesktopCell, linkCell] = [...row.children];
+
+    const listItem = document.createElement('li');
+    listItem.classList.add(
+      'stay-social__card',
+      'overflow-hidden',
+      'ratio',
     );
-    moveInstrumentation(titleRow, title);
-    title.textContent = titleRow.textContent.trim();
-    container.append(title);
-  }
+    // Check for ratio-9x16 class from original HTML
+    if (row.classList.contains('ratio-9x16')) {
+      listItem.classList.add('ratio-9x16');
+    } else {
+      listItem.classList.add('ratio-1x1');
+    }
 
-  // Subtitle
-  if (subtitleRow) {
-    const subtitle = document.createElement('h3');
-    subtitle.classList.add(
-      'stay-social__subtext',
-      'font-16',
-      'leading-24',
-      'text-dark-gray-100',
-      'font-sm-18',
-      'text-center',
-      'fw-medium',
-      'mt-4',
+    const cardLink = document.createElement('a');
+    cardLink.classList.add(
+      'stay-social__card--link',
+      'd-block',
+      'w-100',
+      'h-100',
     );
-    moveInstrumentation(subtitleRow, subtitle);
-    subtitle.textContent = subtitleRow.textContent.trim();
-    container.append(subtitle);
-  }
+    const foundLink = linkCell.querySelector('a');
+    if (foundLink) {
+      cardLink.href = foundLink.href;
+      cardLink.target = '_blank'; // Assuming all social links open in new tab
+    }
+    moveInstrumentation(row, cardLink); // Move instrumentation from the item row to the link
 
-  // Cards
-  if (cardRows.length > 0) {
-    const mainDiv = document.createElement('div');
-    mainDiv.classList.add('stay-social__main', 'mt-8');
-    container.append(mainDiv);
+    const pictureMobile = imageMobileCell.querySelector('picture');
+    const pictureDesktop = imageDesktopCell.querySelector('picture');
 
-    const cardsList = document.createElement('ul');
-    cardsList.classList.add(
-      'stay-social__cards',
-      'd-grid',
-      'gap-5',
-      'gap-sm-8',
-      'w-fit',
-      'mx-auto',
-    );
-    mainDiv.append(cardsList);
+    if (pictureMobile && pictureDesktop) {
+      const imgMobile = pictureMobile.querySelector('img');
+      const imgDesktop = pictureDesktop.querySelector('img');
 
-    cardRows.forEach((row) => {
-      const cells = [...row.children];
-      const imageDesktopCell = cells.find(cell => cell.querySelector('picture') && cell.querySelector('img[alt*="Desktop"]'));
-      const imageMobileCell = cells.find(cell => cell.querySelector('picture') && cell.querySelector('img[alt*="Mobile"]'));
-      const linkCell = cells.find(cell => cell.querySelector('a'));
-
-      const cardItem = document.createElement('li');
-      cardItem.classList.add('stay-social__card', 'overflow-hidden', 'ratio');
-      // Determine ratio based on content or default to 1x1 if not explicitly found in original HTML
-      // For simplicity, defaulting to 1x1, but could be enhanced with more specific detection
-      const originalRatioClass = [...row.classList].find(cls => cls.startsWith('ratio-'));
-      if (originalRatioClass) {
-        cardItem.classList.add(originalRatioClass);
-      } else {
-        cardItem.classList.add('ratio-1x1'); // Default if not found
-      }
-      moveInstrumentation(row, cardItem);
-
-      const cardLink = document.createElement('a');
-      cardLink.classList.add(
-        'stay-social__card--link',
-        'd-block',
-        'w-100',
-        'h-100',
-      );
-      const foundLink = linkCell?.querySelector('a');
-      if (foundLink) {
-        cardLink.href = foundLink.href;
-        cardLink.setAttribute('target', '_blank'); // Assuming all social links open in new tab
-        const screenReaderSpan = document.createElement('span');
-        screenReaderSpan.classList.add('cmp-link__screen-reader-only');
-        screenReaderSpan.textContent = 'opens in a new tab';
-        cardLink.append(screenReaderSpan);
-      }
-
-      const picture = document.createElement('picture');
-      const desktopImg = imageDesktopCell?.querySelector('img');
-      const mobileImg = imageMobileCell?.querySelector('img');
-
-      if (mobileImg) {
-        const sourceMobile = document.createElement('source');
-        sourceMobile.srcset = mobileImg.src;
-        sourceMobile.media = '(max-width:600px)';
-        picture.append(sourceMobile);
-      }
-
-      if (desktopImg) {
-        // createOptimizedPicture returns a <picture> element, not just an <img>
-        const optimizedPicture = createOptimizedPicture(desktopImg.src, desktopImg.alt, false, [{ width: '750' }]);
-        // We need to append the img from the optimized picture to our new picture element
-        const imgElement = optimizedPicture.querySelector('img');
-        if (imgElement) {
-          imgElement.classList.add('stay-social__card--image', 'w-100', 'h-100', 'object-fit-cover');
-          picture.append(imgElement);
+      if (imgMobile && imgDesktop) {
+        // Create optimized picture for mobile
+        const optimizedPicMobile = createOptimizedPicture(imgMobile.src, imgMobile.alt, false, [{ width: '600' }]);
+        const sourceMobile = optimizedPicMobile.querySelector('source');
+        if (sourceMobile) {
+          sourceMobile.media = '(max-width:600px)';
         }
+
+        // Create optimized picture for desktop
+        const optimizedPicDesktop = createOptimizedPicture(imgDesktop.src, imgDesktop.alt, false, [{ width: '750' }]);
+        const imgDesktopElement = optimizedPicDesktop.querySelector('img');
+        if (imgDesktopElement) {
+          imgDesktopElement.classList.add('stay-social__card--image', 'w-100', 'h-100', 'object-fit-cover');
+          imgDesktopElement.loading = 'lazy';
+        }
+
+        // Append mobile source to desktop picture for responsive image
+        if (sourceMobile) {
+          optimizedPicDesktop.prepend(sourceMobile);
+        }
+        cardLink.append(optimizedPicDesktop);
       }
+    }
 
-      cardLink.prepend(picture);
-      cardItem.append(cardLink);
-      cardsList.append(cardItem);
-    });
-  }
+    const screenReaderOnly = document.createElement('span');
+    screenReaderOnly.classList.add('cmp-link__screen-reader-only');
+    screenReaderOnly.textContent = 'opens in a new tab';
+    cardLink.append(screenReaderOnly);
 
-  // CTA Button
+    listItem.append(cardLink);
+    cardsList.append(listItem);
+  });
+
+  // CTA button
   const ctaWrapper = document.createElement('div');
   ctaWrapper.classList.add(
     'd-flex',
@@ -165,15 +168,12 @@ export default function decorate(block) {
     'bg-red-300-active',
   );
 
-  const ctaLink = ctaLinkRow?.querySelector('a');
+  const ctaLink = ctaLinkRow.querySelector('a');
   if (ctaLink) {
     ctaAnchor.href = ctaLink.href;
-    ctaAnchor.setAttribute('target', '_blank'); // Assuming CTA also opens in new tab
-    const screenReaderSpan = document.createElement('span');
-    screenReaderSpan.classList.add('cmp-link__screen-reader-only');
-    screenReaderSpan.textContent = 'opens in a new tab';
-    ctaAnchor.append(screenReaderSpan);
+    ctaAnchor.target = '_blank'; // Assuming CTA also opens in new tab
   }
+  moveInstrumentation(ctaLinkRow, ctaAnchor);
 
   const ctaLabelSpan = document.createElement('span');
   ctaLabelSpan.classList.add(
@@ -183,10 +183,14 @@ export default function decorate(block) {
     'leading-26',
   );
   moveInstrumentation(ctaLabelRow, ctaLabelSpan);
-  ctaLabelSpan.textContent = ctaLabelRow?.textContent.trim() || '';
-  ctaAnchor.prepend(ctaLabelSpan);
+  ctaLabelSpan.textContent = ctaLabelRow.textContent.trim();
+  ctaAnchor.append(ctaLabelSpan);
 
-  moveInstrumentation(ctaLinkRow, ctaAnchor); // Move instrumentation from ctaLinkRow to the new anchor
+  const ctaScreenReaderOnly = document.createElement('span');
+  ctaScreenReaderOnly.classList.add('cmp-link__screen-reader-only');
+  ctaScreenReaderOnly.textContent = 'opens in a new tab';
+  ctaAnchor.append(ctaScreenReaderOnly);
+
   ctaWrapper.append(ctaAnchor);
 
   block.replaceChildren(section);
