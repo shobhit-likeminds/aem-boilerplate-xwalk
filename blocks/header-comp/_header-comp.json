@@ -17,60 +17,60 @@
       }
     },
     {
-      "title": "Menu-Item",
-      "id": "menu-item",
+      "title": "Navigation-Item",
+      "id": "navigation-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "menu-item",
-              "name": "Menu-Item"
+              "model": "navigation-item",
+              "name": "Navigation-Item"
             }
           }
         }
       }
     },
     {
-      "title": "Sub-Menu-Item",
-      "id": "sub-menu-item",
+      "title": "Submenu-Item",
+      "id": "submenu-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "sub-menu-item",
-              "name": "Sub-Menu-Item"
+              "model": "submenu-item",
+              "name": "Submenu-Item"
             }
           }
         }
       }
     },
     {
-      "title": "Sub-Sub-Menu-Item",
-      "id": "sub-sub-menu-item",
+      "title": "Subsubmenu-Item",
+      "id": "subsubmenu-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "sub-sub-menu-item",
-              "name": "Sub-Sub-Menu-Item"
+              "model": "subsubmenu-item",
+              "name": "Subsubmenu-Item"
             }
           }
         }
       }
     },
     {
-      "title": "Search-Icon-Item",
-      "id": "search-icon-item",
+      "title": "Search-Item",
+      "id": "search-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "search-icon-item",
-              "name": "Search-Icon-Item"
+              "model": "search-item",
+              "name": "Search-Item"
             }
           }
         }
@@ -84,60 +84,67 @@
         {
           "component": "reference",
           "label": "Logo Image",
-          "name": "logoImage"
+          "name": "logoImage",
+          "valueType": "string"
         },
         {
           "component": "aem-content",
           "label": "Logo Link",
-          "name": "logoLink"
+          "name": "logoLink",
+          "valueType": "string"
         },
         {
           "component": "container",
-          "item": "menu-item",
-          "label": "Main Menu Items",
-          "name": "mainMenu"
+          "item": "navigation-item",
+          "label": "Navigation Menu",
+          "name": "navigationMenu"
         },
         {
           "component": "container",
-          "item": "search-icon-item",
-          "label": "Search Icons",
-          "name": "searchIcons"
+          "item": "search-item",
+          "label": "Search",
+          "name": "search"
         }
       ]
     },
     {
-      "id": "menu-item",
+      "id": "navigation-item",
       "fields": [
         {
           "component": "reference",
-          "label": "Menu Icon (mobile)",
-          "name": "menuIcon"
+          "label": "Menu Icon Image (Mobile)",
+          "name": "iconImage",
+          "valueType": "string"
         },
         {
           "component": "text",
           "label": "Menu Label",
-          "name": "menuLabel"
+          "name": "label",
+          "valueType": "string"
         },
         {
           "component": "aem-content",
           "label": "Menu Link",
-          "name": "menuLink"
+          "name": "link",
+          "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Arrow Icon (Desktop Dropdown)",
-          "name": "arrowIconDesktop"
+          "label": "Arrow Icon (Desktop)",
+          "name": "arrowIconDesktop",
+          "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Arrow Icon (Mobile Dropdown)",
-          "name": "arrowIconMobile"
+          "label": "Arrow Icon (Mobile)",
+          "name": "arrowIconMobile",
+          "valueType": "string"
         },
         {
           "component": "container",
-          "item": "sub-menu-item",
-          "label": "Sub Menu Items",
-          "name": "subMenu"
+          "item": "submenu-item",
+          "label": "Submenu Items",
+          "name": "submenuItems"
         },
         {
           "component": "richtext",
@@ -148,63 +155,71 @@
       ]
     },
     {
-      "id": "sub-menu-item",
+      "id": "submenu-item",
       "fields": [
         {
           "component": "text",
-          "label": "Sub Menu Label",
-          "name": "subMenuLabel"
+          "label": "Submenu Label",
+          "name": "label",
+          "valueType": "string"
         },
         {
           "component": "aem-content",
-          "label": "Sub Menu Link",
-          "name": "subMenuLink"
+          "label": "Submenu Link",
+          "name": "link",
+          "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Arrow Icon (Desktop Dropdown)",
-          "name": "arrowIconDesktop"
+          "label": "Arrow Icon (Desktop)",
+          "name": "arrowIconDesktop",
+          "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Arrow Icon (Mobile Dropdown)",
-          "name": "arrowIconMobile"
+          "label": "Arrow Icon (Mobile)",
+          "name": "arrowIconMobile",
+          "valueType": "string"
         },
         {
           "component": "container",
-          "item": "sub-sub-menu-item",
-          "label": "Sub-Sub Menu Items",
-          "name": "subSubMenu"
+          "item": "subsubmenu-item",
+          "label": "Subsubmenu Items",
+          "name": "subsubmenuItems"
         }
       ]
     },
     {
-      "id": "sub-sub-menu-item",
+      "id": "subsubmenu-item",
       "fields": [
         {
           "component": "text",
-          "label": "Sub-Sub Menu Label",
-          "name": "subSubMenuLabel"
+          "label": "Subsubmenu Label",
+          "name": "label",
+          "valueType": "string"
         },
         {
           "component": "aem-content",
-          "label": "Sub-Sub Menu Link",
-          "name": "subSubMenuLink"
+          "label": "Subsubmenu Link",
+          "name": "link",
+          "valueType": "string"
         }
       ]
     },
     {
-      "id": "search-icon-item",
+      "id": "search-item",
       "fields": [
         {
           "component": "reference",
-          "label": "Search Icon Image",
-          "name": "searchIcon"
+          "label": "Search Icon",
+          "name": "searchIcon",
+          "valueType": "string"
         },
         {
           "component": "text",
           "label": "Search Label",
-          "name": "searchLabel"
+          "name": "searchLabel",
+          "valueType": "string"
         }
       ]
     }
@@ -213,10 +228,10 @@
     {
       "id": "header-comp",
       "components": [
-        "menu-item",
-        "sub-menu-item",
-        "sub-sub-menu-item",
-        "search-icon-item"
+        "navigation-item",
+        "submenu-item",
+        "subsubmenu-item",
+        "search-item"
       ]
     }
   ]

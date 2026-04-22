@@ -2,9 +2,10 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
+  // Destructure all rows from the block
   const [
-    backgroundDesktopRow,
-    backgroundMobileRow,
+    backgroundImageDesktopRow,
+    backgroundImageMobileRow,
     ctaLinkRow,
     ctaLabelRow,
   ] = [...block.children];
@@ -19,45 +20,49 @@ export default function decorate(block) {
     'd-flex',
     'justify-content-center',
   );
+  moveInstrumentation(block, wrapper); // Move instrumentation from the block itself to the main wrapper
 
   // Background Picture
   const picture = document.createElement('picture');
   picture.classList.add('d-block', 'w-100', 'h-100');
 
-  const desktopPicture = backgroundDesktopRow.querySelector('picture');
-  const mobilePicture = backgroundMobileRow.querySelector('picture');
+  // Use content detection for image cells
+  const desktopImageCell = [...backgroundImageDesktopRow.children].find(cell => cell.querySelector('img'));
+  const mobileImageCell = [...backgroundImageMobileRow.children].find(cell => cell.querySelector('img'));
 
-  if (mobilePicture) {
-    const mobileImg = mobilePicture.querySelector('img');
+  const desktopImage = desktopImageCell ? desktopImageCell.querySelector('img') : null;
+  const mobileImage = mobileImageCell ? mobileImageCell.querySelector('img') : null;
+
+  if (mobileImage) {
     const sourceMobile = document.createElement('source');
     sourceMobile.media = '(max-width:600px)';
-    sourceMobile.srcset = mobileImg.src;
+    sourceMobile.srcset = mobileImage.src;
     picture.appendChild(sourceMobile);
-    moveInstrumentation(mobilePicture, sourceMobile);
+    moveInstrumentation(mobileImageCell, sourceMobile); // Move instrumentation for mobile image cell
   }
 
-  if (desktopPicture) {
-    const desktopImg = desktopPicture.querySelector('img');
+  if (desktopImage) {
     const sourceDesktop = document.createElement('source');
-    sourceDesktop.srcset = desktopImg.src;
+    sourceDesktop.srcset = desktopImage.src;
     picture.appendChild(sourceDesktop);
 
     const img = document.createElement('img');
-    img.src = desktopImg.src;
-    img.alt = desktopImg.alt;
+    img.src = desktopImage.src;
     img.loading = 'eager';
     img.fetchPriority = 'high';
+    img.alt = desktopImage.alt;
     img.classList.add('w-100', 'h-100', 'object-fit-cover', 'banner-media', 'd-block');
     picture.appendChild(img);
-    moveInstrumentation(desktopPicture, img);
-  }
 
-  // Optimize images
-  picture.querySelectorAll('img').forEach((img) => {
-    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-    moveInstrumentation(img, optimizedPic.querySelector('img'));
-    img.closest('picture').replaceWith(optimizedPic);
-  });
+    // Optimize the image
+    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [
+      { media: '(max-width:600px)', width: '600' },
+      { width: '1200' },
+    ]);
+    // The optimizedPic replaces the original picture element, so instrumentation should be moved to the new img
+    moveInstrumentation(desktopImageCell, optimizedPic.querySelector('img'));
+    picture.replaceWith(optimizedPic);
+  }
 
   wrapper.appendChild(picture);
 
@@ -65,7 +70,7 @@ export default function decorate(block) {
   overlayDiv.classList.add('position-absolute', 'start-0', 'bottom-0', 'w-100', 'h-100');
   wrapper.appendChild(overlayDiv);
 
-  // Banner content
+  // Banner Content
   const bannerContent = document.createElement('div');
   bannerContent.classList.add('position-absolute', 'banner-content');
 
@@ -85,16 +90,14 @@ export default function decorate(block) {
   );
 
   const span = document.createElement('span');
-  span.classList.add(
-    'text-capitalize',
-    'mt-6',
-    'mt-md-3',
-    'mt-lg-9',
-    'mb-7',
-  );
+  span.classList.add('text-capitalize', 'mt-6', 'mt-md-3', 'mt-lg-9', 'mb-7');
 
-  const ctaLink = ctaLinkRow.querySelector('a');
-  const ctaLabel = ctaLabelRow.textContent.trim();
+  // Use content detection for CTA link and label cells
+  const ctaLinkCell = [...ctaLinkRow.children].find(cell => cell.querySelector('a'));
+  const ctaLabelCell = [...ctaLabelRow.children].find(cell => !cell.querySelector('a')); // Assuming label is plain text
+
+  const ctaLink = ctaLinkCell ? ctaLinkCell.querySelector('a') : null;
+  const ctaLabel = ctaLabelCell ? ctaLabelCell.textContent.trim() : '';
 
   if (ctaLink && ctaLabel) {
     const anchor = document.createElement('a');
@@ -119,13 +122,14 @@ export default function decorate(block) {
       'bg-red-300-active',
     );
     anchor.href = ctaLink.href;
+    moveInstrumentation(ctaLinkCell, anchor); // Move instrumentation for CTA link cell
 
-    const ctaLabelSpan = document.createElement('span');
-    ctaLabelSpan.classList.add('svasti-cta__label', 'fw-semibold', 'fs-default', 'leading-26');
-    ctaLabelSpan.textContent = ctaLabel;
-    anchor.appendChild(ctaLabelSpan);
-    moveInstrumentation(ctaLinkRow, anchor);
-    moveInstrumentation(ctaLabelRow, ctaLabelSpan);
+    const labelSpan = document.createElement('span');
+    labelSpan.classList.add('svasti-cta__label', 'fw-semibold', 'fs-default', 'leading-26');
+    labelSpan.textContent = ctaLabel;
+    moveInstrumentation(ctaLabelCell, labelSpan); // Move instrumentation for CTA label cell
+
+    anchor.appendChild(labelSpan);
     span.appendChild(anchor);
   }
 

@@ -1,0 +1,158 @@
+{
+  "definitions": [
+    {
+      "title": "Product Selection Component",
+      "id": "product-selection-component",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "product-selection-component",
+              "model": "product-selection-component",
+              "name": "Product Selection Component"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Product Selector Item",
+      "id": "product-selector-item",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "product-selector-item",
+              "name": "Product Selector Item"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Product Detail Item",
+      "id": "product-detail-item",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "product-detail-item",
+              "name": "Product Detail Item"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "product-selection-component",
+      "fields": [
+        {
+          "component": "richtext",
+          "label": "Main Heading",
+          "name": "heading"
+        },
+        {
+          "component": "container",
+          "item": "product-selector-item",
+          "label": "Product Selector Items",
+          "name": "products"
+        },
+        {
+          "component": "container",
+          "item": "product-detail-item",
+          "label": "Product Detail Items",
+          "name": "productDetails"
+        }
+      ]
+    },
+    {
+      "id": "product-selector-item",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Product Image",
+          "name": "productImage"
+        },
+        {
+          "component": "text",
+          "label": "Product Label",
+          "name": "productLabel"
+        }
+      ]
+    },
+    {
+      "id": "product-detail-item",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Desktop Background Image",
+          "name": "backgroundDesktop"
+        },
+        {
+          "component": "reference",
+          "label": "Mobile Background Image",
+          "name": "backgroundMobile"
+        },
+        {
+          "component": "richtext",
+          "label": "Headline (Before Download)",
+          "name": "headlineBefore"
+        },
+        {
+          "component": "reference",
+          "label": "CTA Icon (Before Download)",
+          "name": "ctaIconBefore"
+        },
+        {
+          "component": "aem-content",
+          "label": "CTA Link (Before Download)",
+          "name": "ctaLinkBefore"
+        },
+        {
+          "component": "text",
+          "label": "CTA Label (Before Download)",
+          "name": "ctaLabelBefore"
+        },
+        {
+          "component": "richtext",
+          "label": "Headline (After Download)",
+          "name": "headlineAfter"
+        },
+        {
+          "component": "reference",
+          "label": "CTA Icon (After Download)",
+          "name": "ctaIconAfter"
+        },
+        {
+          "component": "text",
+          "label": "CTA Label (After Download)",
+          "name": "ctaLabelAfter"
+        },
+        {
+          "component": "aem-content",
+          "label": "WhatsApp Link",
+          "name": "whatsappLink"
+        },
+        {
+          "component": "text",
+          "label": "WhatsApp Label",
+          "name": "whatsappLabel"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "product-selection-component",
+      "components": [
+        "product-selector-item",
+        "product-detail-item"
+      ]
+    }
+  ]
+}

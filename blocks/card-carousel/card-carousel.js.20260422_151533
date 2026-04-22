@@ -1,0 +1,345 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  const [
+    titleRow,
+    subtitleRow,
+    prevArrowIconRow,
+    nextArrowIconRow,
+    ...cardRows
+  ] = [...block.children];
+
+  const section = document.createElement('section');
+  section.classList.add('card-carousel');
+
+  const container = document.createElement('div');
+  container.classList.add('container', 'gx-8', 'gx-sm-0');
+
+  // Title
+  const title = document.createElement('h2');
+  title.classList.add(
+    'card-carousel__title',
+    'font-24',
+    'leading-28',
+    'font-sm-40',
+    'leading-sm-50',
+    'text-dark-gray-100',
+    'text-center',
+    'font-baskerville',
+  );
+  moveInstrumentation(titleRow, title);
+  title.textContent = titleRow.textContent.trim();
+  container.append(title);
+
+  // Subtitle
+  const subtitle = document.createElement('p');
+  subtitle.classList.add(
+    'card-carousel__subtitle',
+    'font-default',
+    'leading-24',
+    'font-sm-18',
+    'leading-sm-32',
+    'text-dark-gray-100',
+    'text-center',
+    'mt-4',
+    'fw-medium',
+  );
+  moveInstrumentation(subtitleRow, subtitle);
+    subtitle.textContent = subtitleRow.textContent.trim();
+  container.append(subtitle);
+
+  section.append(container);
+
+  const swiperContainer = document.createElement('div');
+  swiperContainer.classList.add('card-carousel__swiper', 'swiper', 'container', 'gx-0');
+  swiperContainer.setAttribute('data-loop', 'false');
+
+  const swiperWrapperContainer = document.createElement('div');
+  swiperWrapperContainer.classList.add('card-carousel__swiper--container', 'mt-8', 'mt-sm-10');
+
+  const productCardsGrid = document.createElement('div');
+  productCardsGrid.classList.add('aem-Grid', 'aem-Grid--12', 'aem-Grid--default--12');
+
+  const productCardsColumn = document.createElement('div');
+  productCardsColumn.classList.add('productCards', 'aem-GridColumn', 'aem-GridColumn--default--12');
+
+  const productCardsCardContainer = document.createElement('div');
+  productCardsCardContainer.classList.add(
+    'product-cards__card-container',
+    'mx-4',
+    'mx-sm-0',
+    'overflow-hidden',
+    'add-margin',
+    'swiper-initialized',
+    'swiper-horizontal',
+    'swiper-backface-hidden',
+  );
+
+  const swiperWrapper = document.createElement('div');
+  swiperWrapper.classList.add('swiper-wrapper', 'slide-in-anim');
+
+  cardRows.forEach((row) => {
+    const [
+      mainImageCell,
+      titleRichtextCell,
+      cardProductImageCell,
+      cardProductLinkCell,
+      ctaLinkCell,
+      ctaLabelCell,
+    ] = [...row.children];
+
+    const card = document.createElement('div');
+    card.classList.add(
+      'product-cards__card',
+      'swiper-slide',
+      'd-flex',
+      'flex-column',
+      'cursor-pointer',
+    );
+    moveInstrumentation(row, card);
+
+    const media = document.createElement('div');
+    media.classList.add('product-cards__card-media', 'position-relative');
+
+    const ratioWrapper = document.createElement('div');
+    ratioWrapper.classList.add(
+      'ratio',
+      'ratio-3x4',
+      'position-relative',
+      'product-cards__card-video-wrapper',
+    );
+
+    const mainImagePicture = mainImageCell.querySelector('picture');
+    if (mainImagePicture) {
+      const img = mainImagePicture.querySelector('img');
+      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+      moveInstrumentation(img, optimizedPic.querySelector('img'));
+      optimizedPic.classList.add('product-cards__card-thumb', 'object-fit-cover');
+      ratioWrapper.append(optimizedPic);
+    }
+
+    const gradient = document.createElement('div');
+    gradient.classList.add(
+      'card-gradient',
+      'position-absolute',
+      'top-0',
+      'bottom-0',
+      'start-0',
+      'end-0',
+    );
+    ratioWrapper.append(gradient);
+    media.append(ratioWrapper);
+
+    const cardTitle = document.createElement('div');
+    cardTitle.classList.add(
+      'product-cards__card-title',
+      'position-absolute',
+      'top-0',
+      'text-white',
+      'px-5',
+      'pt-4',
+      'text-cream-100',
+      'leading-32',
+    );
+    cardTitle.innerHTML = titleRichtextCell.innerHTML;
+    media.append(cardTitle);
+
+    const cardProductImg = document.createElement('div');
+    cardProductImg.classList.add(
+      'product-cards__card-img',
+      'pt-lg-8',
+      'pt-sm-6',
+      'pt-8',
+      'pb-3',
+      'bg-cream-300',
+      'position-absolute',
+      'start-50',
+      'top-100',
+      'rounded-top-circle',
+    );
+
+    const productRatio = document.createElement('div');
+    productRatio.classList.add('ratio', 'ratio-1x1');
+
+    const productLink = document.createElement('a');
+    productLink.classList.add('cta-analytics');
+    const productLinkHref = cardProductLinkCell.querySelector('a')?.href;
+    if (productLinkHref) {
+      productLink.href = productLinkHref;
+    }
+
+    const cardProductImagePicture = cardProductImageCell.querySelector('picture');
+    if (cardProductImagePicture) {
+      const img = cardProductImagePicture.querySelector('img');
+      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+      moveInstrumentation(img, optimizedPic.querySelector('img'));
+      optimizedPic.classList.add('w-100', 'h-100', 'object-fit-contain');
+      productLink.append(optimizedPic);
+    }
+    productRatio.append(productLink);
+    cardProductImg.append(productRatio);
+    media.append(cardProductImg);
+    card.append(media);
+
+    const ctaWrapper = document.createElement('div');
+    ctaWrapper.classList.add('mt-6', 'align-self-center');
+
+    const cta = document.createElement('a');
+    cta.classList.add(
+      'cta-analytics',
+      'svasti-cta',
+      'w-fit',
+      'text-decoration-none',
+      'd-flex',
+      'align-items-center',
+      'primary',
+      'px-8',
+      'pb-3',
+      'text-cream-100',
+      'border',
+      'border-2',
+      'border-red-100',
+      'border-maroon-100-hover',
+      'border-red-300-active',
+      'bg-red-100',
+      'bg-maroon-100-hover',
+      'bg-red-300-active',
+    );
+    const ctaLinkHref = ctaLinkCell.querySelector('a')?.href;
+    if (ctaLinkHref) {
+      cta.href = ctaLinkHref;
+    }
+    cta.textContent = ctaLabelCell.textContent.trim();
+    ctaWrapper.append(cta);
+    card.append(ctaWrapper);
+
+    swiperWrapper.append(card);
+  });
+
+  productCardsCardContainer.append(swiperWrapper);
+  productCardsColumn.append(productCardsCardContainer);
+  productCardsGrid.append(productCardsColumn);
+  swiperWrapperContainer.append(productCardsGrid);
+
+  // Previous Arrow Button
+  const prevButton = document.createElement('button');
+  prevButton.classList.add(
+    'card-carousel__swiper--prev',
+    'card-carousel__navigation',
+    'cursor-pointer',
+    'rounded-circle',
+    'bg-transparent',
+    'text-red-100',
+    'text-maroon-600-hover',
+    'justify-content-center',
+    'align-items-center',
+    'position-absolute',
+    'd-none',
+    'd-sm-flex',
+    'opacity-30',
+  );
+  prevButton.disabled = true;
+
+  const prevArrowImg = prevArrowIconRow.querySelector('img');
+  if (prevArrowImg) {
+    const optimizedPic = createOptimizedPicture(prevArrowImg.src, prevArrowImg.alt, false, [{ width: '24' }]);
+    moveInstrumentation(prevArrowImg, optimizedPic.querySelector('img'));
+    prevButton.append(optimizedPic); // Append the picture element
+  }
+  swiperWrapperContainer.append(prevButton);
+
+  // Next Arrow Button
+  const nextButton = document.createElement('button');
+  nextButton.classList.add(
+    'card-carousel__swiper--next',
+    'card-carousel__navigation',
+    'cursor-pointer',
+    'rounded-circle',
+    'bg-transparent',
+    'text-red-100',
+    'text-maroon-600-hover',
+    'justify-content-center',
+    'align-items-center',
+    'position-absolute',
+    'end-0',
+    'd-none',
+    'd-sm-flex',
+  );
+
+  const nextArrowImg = nextArrowIconRow.querySelector('img');
+  if (nextArrowImg) {
+    const optimizedPic = createOptimizedPicture(nextArrowImg.src, nextArrowImg.alt, false, [{ width: '24' }]);
+    moveInstrumentation(nextArrowImg, optimizedPic.querySelector('img'));
+    nextButton.append(optimizedPic); // Append the picture element
+  }
+  swiperWrapperContainer.append(nextButton);
+
+  swiperContainer.append(swiperWrapperContainer);
+
+  const pagination = document.createElement('div');
+  pagination.classList.add(
+    'card-carousel__swiper--pagination',
+    'mt-10',
+    'cursor-pointer',
+    'position-relative',
+    'swiper-pagination-clickable',
+    'swiper-pagination-bullets',
+    'swiper-pagination-horizontal',
+    'mx-auto',
+    'w-fit',
+  );
+  swiperContainer.append(pagination);
+
+  section.append(swiperContainer);
+
+  block.replaceChildren(section);
+
+  // Swiper initialization
+  let swiperInstance;
+
+  function initializeSwiper() {
+    // eslint-disable-next-line import/no-unresolved, no-undef
+    swiperInstance = new Swiper(productCardsCardContainer, {
+      slidesPerView: 1,
+      spaceBetween: 32,
+      loop: false,
+      navigation: {
+        nextEl: nextButton,
+        prevEl: prevButton,
+      },
+      pagination: {
+        el: pagination,
+        clickable: true,
+      },
+      breakpoints: {
+        768: {
+          slidesPerView: 3,
+          spaceBetween: 32,
+        },
+      },
+      on: {
+        init: () => {
+          prevButton.disabled = true;
+          nextButton.disabled = swiperInstance.isEnd;
+        },
+        slideChange: () => {
+          prevButton.disabled = swiperInstance.isBeginning;
+          nextButton.disabled = swiperInstance.isEnd;
+        },
+      },
+    });
+  }
+
+  // Load Swiper library
+  const swiperScript = document.createElement('script');
+  swiperScript.src = 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js';
+  swiperScript.onload = initializeSwiper;
+  document.head.append(swiperScript);
+
+  const swiperCss = document.createElement('link');
+  swiperCss.rel = 'stylesheet';
+  swiperCss.href = 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css';
+  document.head.append(swiperCss);
+}
+

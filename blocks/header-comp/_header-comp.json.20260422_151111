@@ -1,0 +1,223 @@
+{
+  "definitions": [
+    {
+      "title": "Header-Comp",
+      "id": "header-comp",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "header-comp",
+              "model": "header-comp",
+              "name": "Header-Comp"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Menu-Item",
+      "id": "menu-item",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "menu-item",
+              "name": "Menu-Item"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Sub-Menu-Item",
+      "id": "sub-menu-item",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "sub-menu-item",
+              "name": "Sub-Menu-Item"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Sub-Sub-Menu-Item",
+      "id": "sub-sub-menu-item",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "sub-sub-menu-item",
+              "name": "Sub-Sub-Menu-Item"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Search-Icon-Item",
+      "id": "search-icon-item",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "search-icon-item",
+              "name": "Search-Icon-Item"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "header-comp",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Logo Image",
+          "name": "logoImage"
+        },
+        {
+          "component": "aem-content",
+          "label": "Logo Link",
+          "name": "logoLink"
+        },
+        {
+          "component": "container",
+          "item": "menu-item",
+          "label": "Main Menu Items",
+          "name": "mainMenu"
+        },
+        {
+          "component": "container",
+          "item": "search-icon-item",
+          "label": "Search Icons",
+          "name": "searchIcons"
+        }
+      ]
+    },
+    {
+      "id": "menu-item",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Menu Icon (mobile)",
+          "name": "menuIcon"
+        },
+        {
+          "component": "text",
+          "label": "Menu Label",
+          "name": "menuLabel"
+        },
+        {
+          "component": "aem-content",
+          "label": "Menu Link",
+          "name": "menuLink"
+        },
+        {
+          "component": "reference",
+          "label": "Arrow Icon (Desktop Dropdown)",
+          "name": "arrowIconDesktop"
+        },
+        {
+          "component": "reference",
+          "label": "Arrow Icon (Mobile Dropdown)",
+          "name": "arrowIconMobile"
+        },
+        {
+          "component": "container",
+          "item": "sub-menu-item",
+          "label": "Sub Menu Items",
+          "name": "subMenu"
+        },
+        {
+          "component": "richtext",
+          "label": "Navigation Hierarchy",
+          "name": "hierarchy-tree",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "sub-menu-item",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Sub Menu Label",
+          "name": "subMenuLabel"
+        },
+        {
+          "component": "aem-content",
+          "label": "Sub Menu Link",
+          "name": "subMenuLink"
+        },
+        {
+          "component": "reference",
+          "label": "Arrow Icon (Desktop Dropdown)",
+          "name": "arrowIconDesktop"
+        },
+        {
+          "component": "reference",
+          "label": "Arrow Icon (Mobile Dropdown)",
+          "name": "arrowIconMobile"
+        },
+        {
+          "component": "container",
+          "item": "sub-sub-menu-item",
+          "label": "Sub-Sub Menu Items",
+          "name": "subSubMenu"
+        }
+      ]
+    },
+    {
+      "id": "sub-sub-menu-item",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Sub-Sub Menu Label",
+          "name": "subSubMenuLabel"
+        },
+        {
+          "component": "aem-content",
+          "label": "Sub-Sub Menu Link",
+          "name": "subSubMenuLink"
+        }
+      ]
+    },
+    {
+      "id": "search-icon-item",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Search Icon Image",
+          "name": "searchIcon"
+        },
+        {
+          "component": "text",
+          "label": "Search Label",
+          "name": "searchLabel"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "header-comp",
+      "components": [
+        "menu-item",
+        "sub-menu-item",
+        "sub-sub-menu-item",
+        "search-icon-item"
+      ]
+    }
+  ]
+}

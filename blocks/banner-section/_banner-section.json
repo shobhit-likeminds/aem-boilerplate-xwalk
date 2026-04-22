@@ -24,13 +24,13 @@
         {
           "component": "reference",
           "label": "Background Image (Desktop)",
-          "name": "backgroundDesktop",
+          "name": "backgroundImageDesktop",
           "valueType": "string"
         },
         {
           "component": "reference",
           "label": "Background Image (Mobile)",
-          "name": "backgroundMobile",
+          "name": "backgroundImageMobile",
           "valueType": "string"
         },
         {

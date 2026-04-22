@@ -23,13 +23,13 @@
       "fields": [
         {
           "component": "text",
-          "label": "Title",
+          "label": "Banner Title",
           "name": "title",
           "valueType": "string"
         },
         {
           "component": "richtext",
-          "label": "Description",
+          "label": "Banner Description",
           "name": "description",
           "valueType": "string"
         },

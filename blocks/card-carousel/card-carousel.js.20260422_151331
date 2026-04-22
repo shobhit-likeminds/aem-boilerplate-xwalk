@@ -1,0 +1,667 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+function transformNestedLists(rootUl) {
+  rootUl.querySelectorAll('li').forEach((li) => {
+    const nested = li.querySelector(':scope > ul');
+    const anchor = li.querySelector(':scope > a');
+
+    if (!anchor) {
+      const textNode = [...li.childNodes].find(
+        (n) => n.nodeType === Node.TEXT_NODE && n.textContent.trim(),
+      );
+      if (textNode) {
+        const span = document.createElement('span');
+        span.textContent = textNode.textContent.trim();
+        textNode.remove();
+        li.prepend(span);
+      }
+    }
+
+    if (nested) {
+      nested.remove();
+      const subWrap = document.createElement('div');
+      subWrap.classList.add('has-sub-child'); // Use original HTML class
+      subWrap.append(nested);
+      li.append(subWrap);
+
+      const trigger = li.querySelector(':scope > a, :scope > span');
+      if (trigger) {
+        trigger.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          li.classList.toggle('active');
+          subWrap.classList.toggle('active');
+        });
+      }
+    }
+  });
+}
+
+export default function decorate(block) {
+  const children = [...block.children];
+
+  const [
+    titleRow,
+    subtitleRow,
+    prevButtonIconRow,
+    nextButtonIconRow,
+    ctaLinkRow,
+    ctaLabelRow,
+    ...itemRows
+  ] = children;
+
+  const recipes = itemRows.filter((row) => row.children.length === 12);
+  const socialMediaShares = itemRows.filter((row) => row.children.length === 3);
+
+  const container = document.createElement('div');
+  container.classList.add('container', 'gx-8', 'gx-sm-0');
+  moveInstrumentation(block, container);
+
+  const title = document.createElement('h2');
+  title.classList.add(
+    'card-carousel__title',
+    'font-24',
+    'leading-28',
+    'font-sm-40',
+    'leading-sm-50',
+    'text-dark-gray-100',
+    'text-center',
+    'font-baskerville',
+  );
+  moveInstrumentation(titleRow, title);
+  title.textContent = titleRow.textContent.trim();
+  container.append(title);
+
+  const subtitle = document.createElement('p');
+  subtitle.classList.add(
+    'card-carousel__subtitle',
+    'font-default',
+    'leading-24',
+    'font-sm-18',
+    'leading-sm-32',
+    'mt-4',
+    'fw-medium',
+    'text-dark-gray-100',
+    'text-center',
+  );
+  moveInstrumentation(subtitleRow, subtitle);
+  subtitle.textContent = subtitleRow.textContent.trim();
+  container.append(subtitle);
+
+  const swiperContainer = document.createElement('div');
+  swiperContainer.classList.add('card-carousel__swiper', 'swiper', 'container', 'gx-0');
+
+  const swiperWrapper = document.createElement('div');
+  swiperWrapper.classList.add('card-carousel__swiper--container', 'mt-8', 'mt-sm-10');
+
+  const popularRecipeSection = document.createElement('section');
+  popularRecipeSection.classList.add('popular-recipe', 'slide-in-anim');
+
+  const popularRecipeContainer = document.createElement('div');
+  popularRecipeContainer.classList.add(
+    'popular-recipe__container',
+    'overflow-hidden',
+    'swiper-initialized',
+    'swiper-horizontal',
+    'swiper-backface-hidden',
+  );
+
+  const recipeWrapper = document.createElement('div');
+  recipeWrapper.classList.add('swiper-wrapper', 'popular-recipe__recipe-wrapper');
+
+  recipes.forEach((row) => {
+    const [
+      linkCell,
+      imageCell,
+      imageAltCell,
+      tagCell,
+      tagIconCell,
+      recipeTitleCell,
+      descriptionCell,
+      timeIconCell,
+      timeCell,
+      servesIconCell,
+      servesCell,
+      hierarchyTreeCell,
+    ] = [...row.children];
+
+    const slide = document.createElement('div');
+    slide.classList.add('swiper-slide');
+    moveInstrumentation(row, slide);
+
+    const recipeCard = document.createElement('div');
+    recipeCard.classList.add('recipe-card', 'bg-cream-100', 'h-100');
+
+    const recipeLink = document.createElement('a');
+    recipeLink.classList.add('recipe-card__link', 'd-block', 'position-relative');
+    const foundLink = linkCell.querySelector('a');
+    if (foundLink) {
+      recipeLink.href = foundLink.href;
+    }
+
+    const picture = imageCell.querySelector('picture');
+    if (picture) {
+      const img = picture.querySelector('img');
+      const optimizedPic = createOptimizedPicture(img.src, imageAltCell.textContent.trim(), false, [{ width: '750' }]);
+      moveInstrumentation(img, optimizedPic.querySelector('img'));
+      recipeLink.append(optimizedPic);
+    }
+
+    const content = document.createElement('div');
+    content.classList.add('recipe-card__content', 'py-6');
+
+    const info = document.createElement('div');
+    info.classList.add(
+      'recipe-card__info',
+      'd-flex',
+      'align-items-center',
+      'justify-content-between',
+    );
+
+    const tagSpan = document.createElement('span');
+    tagSpan.classList.add(
+      'recipe-card__tag',
+      'text-uppercase',
+      'text-red-100',
+      'font-14',
+      'font-xl-default',
+      'leading-24',
+      'fw-semibold',
+    );
+    tagSpan.textContent = tagCell.textContent.trim();
+    info.append(tagSpan);
+
+    const tagIcon = tagIconCell.querySelector('picture');
+    if (tagIcon) {
+      info.append(tagIcon);
+    }
+    content.append(info);
+
+    const textDiv = document.createElement('div');
+    textDiv.classList.add('recipe-card__text');
+
+    const recipeTitle = document.createElement('h3');
+    recipeTitle.classList.add(
+      'recipe-card__title',
+      'font-20',
+      'font-xl-24',
+      'leading-24',
+      'leading-xl-30',
+      'font-baskerville',
+      'fw-bold',
+      'text-dark-gray-100',
+      'mt-4',
+    );
+    recipeTitle.textContent = recipeTitleCell.textContent.trim();
+    textDiv.append(recipeTitle);
+
+    const description = document.createElement('p');
+    description.classList.add(
+      'recipe-card__desc',
+      'font-default',
+      'font-xl-18',
+      'leading-24',
+      'fw-medium',
+      'text-dark-gray-100',
+      'mt-4',
+    );
+    description.textContent = descriptionCell.textContent.trim();
+    textDiv.append(description);
+    content.append(textDiv);
+
+    const wave = document.createElement('div');
+    wave.classList.add('recipe-card__wave', 'mt-11', 'mt-xl-7', 'w-100');
+    content.append(wave);
+
+    const properties = document.createElement('ul');
+    properties.classList.add(
+      'recipe-card__properties',
+      'mt-4',
+      'd-flex',
+      'align-items-center',
+      'mt-4',
+    );
+
+    const timeProperty = document.createElement('li');
+    timeProperty.classList.add(
+      'recipe-card__property',
+      'recipe-card__property--left',
+      'd-flex',
+      'align-items-center',
+    );
+    const timeIcon = timeIconCell.querySelector('picture');
+    if (timeIcon) {
+      timeProperty.append(timeIcon);
+    }
+    const timeSpan = document.createElement('span');
+    timeSpan.classList.add(
+      'recipe-card__time',
+      'text-dark-gray-100',
+      'font-14',
+      'font-xl-default',
+      'leading-20',
+      'fw-medium',
+      'ms-2',
+      'd-inline-block',
+      'text-nowrap',
+    );
+    timeSpan.textContent = timeCell.textContent.trim();
+    timeProperty.append(timeSpan);
+    properties.append(timeProperty);
+
+    const servesProperty = document.createElement('li');
+    servesProperty.classList.add(
+      'recipe-card__property',
+      'recipe-card__property--right',
+      'flex-fill',
+      'd-flex',
+      'align-items-center',
+      'justify-content-end',
+    );
+    const servesIcon = servesIconCell.querySelector('picture');
+    if (servesIcon) {
+      servesProperty.append(servesIcon);
+    }
+    const servesSpan = document.createElement('span');
+    servesSpan.classList.add(
+      'serve-content',
+      'recipe-card__serves',
+      'text-dark-gray-100',
+      'font-14',
+      'font-xl-default',
+      'leading-20',
+      'fw-medium',
+      'ms-2',
+      'd-inline-block',
+    );
+    servesSpan.textContent = servesCell.textContent.trim();
+    servesProperty.append(servesSpan);
+    properties.append(servesProperty);
+    content.append(properties);
+
+    // Handle hierarchy-tree richtext field
+    const hierarchyTreeDiv = document.createElement('div');
+    hierarchyTreeDiv.classList.add('recipe-card__hierarchy-tree'); // Add a class for styling
+    if (hierarchyTreeCell) {
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = hierarchyTreeCell.innerHTML;
+      moveInstrumentation(hierarchyTreeCell, tempDiv); // Move instrumentation from original cell to tempDiv
+
+      // Apply classes to nested elements if needed, based on ORIGINAL HTML structure
+      tempDiv.querySelectorAll('ul').forEach(ul => ul.classList.add('hierarchy-list'));
+      tempDiv.querySelectorAll('li').forEach(li => li.classList.add('hierarchy-item'));
+      tempDiv.querySelectorAll('a').forEach(a => a.classList.add('hierarchy-link'));
+
+      while (tempDiv.firstChild) {
+        hierarchyTreeDiv.append(tempDiv.firstChild);
+      }
+      transformNestedLists(hierarchyTreeDiv.querySelector('ul')); // Apply the nested list transformation
+    }
+    content.append(hierarchyTreeDiv); // Append the processed hierarchy tree
+
+    recipeLink.append(content);
+    recipeCard.append(recipeLink);
+    slide.append(recipeCard);
+    recipeWrapper.append(slide);
+  });
+
+  popularRecipeContainer.append(recipeWrapper);
+  popularRecipeSection.append(popularRecipeContainer);
+
+  const shareSection = document.createElement('section');
+  shareSection.classList.add(
+    'social-media-share',
+    'd-none',
+    'w-100',
+    'justify-content-center',
+    'align-items-center',
+    'position-fixed',
+    'top-0',
+    'start-0',
+    'end-0',
+    'bottom-0',
+    'z-2',
+  );
+
+  const shareWrapper = document.createElement('div');
+  shareWrapper.classList.add(
+    'social-media-share__wrapper',
+    'bg-cream-100',
+    'py-8',
+    'px-3',
+    'px-md-8',
+  );
+
+  const titleCloseDiv = document.createElement('div');
+  titleCloseDiv.classList.add(
+    'social-media-share__wrapper--title-close',
+    'pb-8',
+    'd-flex',
+    'mx-3',
+    'mx-md-0',
+    'border-bottom',
+    'border-dark-gray-100',
+    'align-items-center',
+    'justify-content-between',
+  );
+
+  const closeButtonDiv = document.createElement('div');
+  closeButtonDiv.classList.add('social-media-share__wrapper--close');
+  // Assuming the close icon is an SVG. If it's a picture, retrieve it from a cell.
+  // For now, creating a placeholder img.
+  const closeIcon = document.createElement('img');
+  closeIcon.alt = 'Close button';
+  // If there was a cell for close icon, its src would be read from there.
+  // Since there isn't, we will not hardcode it.
+  closeButtonDiv.append(closeIcon);
+  titleCloseDiv.append(closeButtonDiv);
+  shareWrapper.append(titleCloseDiv);
+
+  const socialIconsDiv = document.createElement('div');
+  socialIconsDiv.classList.add(
+    'social-media-share__wrapper--social-icons',
+    'pt-8',
+    'd-flex',
+    'overflow-hidden',
+    'swiper-initialized',
+    'swiper-horizontal',
+  );
+
+  const socialIconsWrapper = document.createElement('div');
+  socialIconsWrapper.classList.add(
+    'social-media-share__wrapper--social-icons-wrapper',
+    'swiper-wrapper',
+    'px-3',
+    'px-md-0',
+  );
+
+  socialMediaShares.forEach((row) => {
+    const [socialLinkCell, socialIconCell, socialLabelCell] = [...row.children];
+
+    const iconLabelDiv = document.createElement('div');
+    iconLabelDiv.classList.add(
+      'social-media-share__wrapper--icon-label',
+      'swiper-slide',
+      'd-flex',
+      'align-items-center',
+    );
+
+    const socialLink = document.createElement('a');
+    socialLink.classList.add(
+      'social-media-share__link',
+      'd-flex',
+      'align-items-center',
+      'text-decoration-none',
+      'gap-4',
+      'w-fit',
+      'flex-md-column',
+      'justify-content-center',
+    );
+    const foundSocialLink = socialLinkCell.querySelector('a');
+    if (foundSocialLink) {
+      socialLink.href = foundSocialLink.href;
+      socialLink.target = '_blank';
+    }
+
+    const iconsWrapper = document.createElement('div');
+    iconsWrapper.classList.add(
+      'social-media-share__wrapper--icons',
+      'rounded-circle',
+      'bg-white',
+      'd-flex',
+      'justify-content-center',
+      'align-items-center',
+    );
+
+    const linkDiv = document.createElement('div');
+    linkDiv.classList.add('social-media-share__wrapper--link', 'text-decoration-none');
+    const socialIcon = socialIconCell.querySelector('picture');
+    if (socialIcon) {
+      linkDiv.append(socialIcon);
+    }
+    iconsWrapper.append(linkDiv);
+    socialLink.append(iconsWrapper);
+
+    const labelDiv = document.createElement('div');
+    labelDiv.classList.add(
+      'social-media-share__wrapper--label',
+      'text-center',
+      'font-16',
+      'leading-22',
+      'text-black',
+    );
+    labelDiv.textContent = socialLabelCell.textContent.trim();
+    socialLink.append(labelDiv);
+
+    const screenReaderOnlySpan = document.createElement('span');
+    screenReaderOnlySpan.classList.add('cmp-link__screen-reader-only');
+    screenReaderOnlySpan.textContent = 'opens in a new tab';
+    socialLink.append(screenReaderOnlySpan);
+
+    iconLabelDiv.append(socialLink);
+
+    const hiddenInput = document.createElement('input');
+    hiddenInput.type = 'hidden';
+    hiddenInput.classList.add('social-media-share__wrapper--url');
+    hiddenInput.value = socialLabelCell.textContent.trim().toLowerCase(); // Use label as value
+    iconLabelDiv.append(hiddenInput);
+
+    socialIconsWrapper.append(iconLabelDiv);
+  });
+
+  socialIconsDiv.append(socialIconsWrapper);
+  shareWrapper.append(socialIconsDiv);
+
+  const prevButton = document.createElement('button');
+  prevButton.classList.add(
+    'social-media-share__button',
+    'bg-transparent',
+    'border-0',
+    'social-media-share__prev',
+    'd-none',
+    'z-2',
+    'd-md-block',
+    'position-absolute',
+    'swiper-button-prev',
+  );
+  const prevIcon = prevButtonIconRow.querySelector('picture');
+  if (prevIcon) {
+    prevButton.append(prevIcon);
+  }
+  socialIconsDiv.append(prevButton);
+
+  const nextButton = document.createElement('button');
+  nextButton.classList.add(
+    'social-media-share__button',
+    'bg-transparent',
+    'border-0',
+    'social-media-share__next',
+    'd-none',
+    'z-2',
+    'd-md-block',
+    'position-absolute',
+    'swiper-button-next',
+  );
+  const nextIcon = nextButtonIconRow.querySelector('picture');
+  if (nextIcon) {
+    nextButton.append(nextIcon);
+  }
+  socialIconsDiv.append(nextButton);
+
+  const inputButtonDiv = document.createElement('div');
+  inputButtonDiv.classList.add(
+    'social-media-share__wrapper--input-button',
+    'd-flex',
+    'align-items-center',
+    'mt-8',
+    'justify-content-md-center',
+    'flex-column',
+    'flex-md-row',
+  );
+
+  const input = document.createElement('input');
+  input.type = 'text';
+  input.classList.add(
+    'social-media-share__wrapper--input',
+    'bg-white',
+    'font-16',
+    'leading-22',
+    'px-4',
+    'py-3',
+    'shadow-none',
+  );
+  inputButtonDiv.append(input);
+
+  const copyButton = document.createElement('button');
+  copyButton.classList.add(
+    'social-media-share__wrapper--button',
+    'font-18',
+    'leading-24',
+    'py-4',
+    'px-8',
+    'fw-bold',
+    'text-white',
+  );
+  copyButton.textContent = 'Copy';
+  inputButtonDiv.append(copyButton);
+
+  shareWrapper.append(inputButtonDiv);
+  shareSection.append(shareWrapper);
+  popularRecipeSection.append(shareSection);
+
+  swiperWrapper.append(popularRecipeSection);
+  swiperContainer.append(swiperWrapper);
+
+  const carouselPrevButton = document.createElement('button');
+  carouselPrevButton.classList.add(
+    'card-carousel__swiper--prev',
+    'card-carousel__navigation',
+    'cursor-pointer',
+    'rounded-circle',
+    'bg-transparent',
+    'text-red-100',
+    'text-maroon-600-hover',
+    'justify-content-center',
+    'align-items-center',
+    'position-absolute',
+    'd-none',
+    'd-sm-flex',
+  );
+  const carouselPrevIcon = prevButtonIconRow.querySelector('picture');
+  if (carouselPrevIcon) {
+    carouselPrevButton.append(carouselPrevIcon.cloneNode(true)); // Clone since it's used elsewhere
+  }
+  swiperWrapper.append(carouselPrevButton);
+
+  const carouselNextButton = document.createElement('button');
+  carouselNextButton.classList.add(
+    'card-carousel__swiper--next',
+    'card-carousel__navigation',
+    'cursor-pointer',
+    'rounded-circle',
+    'bg-transparent',
+    'text-red-100',
+    'text-maroon-600-hover',
+    'justify-content-center',
+    'align-items-center',
+    'position-absolute',
+    'end-0',
+    'd-none',
+    'd-sm-flex',
+  );
+  const carouselNextIcon = nextButtonIconRow.querySelector('picture');
+  if (carouselNextIcon) {
+    carouselNextButton.append(carouselNextIcon.cloneNode(true)); // Clone since it's used elsewhere
+  }
+  swiperWrapper.append(carouselNextButton);
+
+  const paginationDiv = document.createElement('div');
+  paginationDiv.classList.add(
+    'card-carousel__swiper--pagination',
+    'mt-10',
+    'cursor-pointer',
+    'position-relative',
+    'swiper-pagination-clickable',
+    'swiper-pagination-bullets',
+    'swiper-pagination-horizontal',
+    'mx-auto',
+    'w-fit',
+  );
+  swiperContainer.append(paginationDiv);
+
+  container.append(swiperContainer);
+
+  const ctaWrapper = document.createElement('div');
+  ctaWrapper.classList.add('d-flex', 'justify-content-center', 'align-items-center', 'mt-8');
+
+  const ctaLink = document.createElement('a');
+  ctaLink.classList.add(
+    'svasti-cta',
+    'cta-analytics',
+    'w-fit',
+    'text-decoration-none',
+    'd-flex',
+    'align-items-center',
+    'primary',
+    'px-8',
+    'pb-3',
+    'text-cream-100',
+    'border',
+    'border-2',
+    'border-red-100',
+    'border-maroon-100-hover',
+    'border-red-300-active',
+    'bg-red-100',
+    'bg-maroon-100-hover',
+    'bg-red-300-active',
+  );
+  const ctaAnchor = ctaLinkRow.querySelector('a');
+  if (ctaAnchor) {
+    ctaLink.href = ctaAnchor.href;
+  }
+  moveInstrumentation(ctaLinkRow, ctaLink);
+
+  const ctaLabel = document.createElement('span');
+  ctaLabel.classList.add('svasti-cta__label', 'fw-semibold', 'fs-default', 'leading-26');
+  ctaLabel.textContent = ctaLabelRow.textContent.trim();
+  ctaLink.append(ctaLabel);
+  moveInstrumentation(ctaLabelRow, ctaLabel);
+  ctaWrapper.append(ctaLink);
+
+  container.append(ctaWrapper);
+
+  block.replaceChildren(container);
+
+  // Image optimization
+  block.querySelectorAll('picture > img').forEach((img) => {
+    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+    moveInstrumentation(img, optimizedPic.querySelector('img'));
+    img.closest('picture').replaceWith(optimizedPic);
+  });
+
+  // Add event listeners for social media share modal
+  const shareButton = block.querySelector('.social-media-share__button'); // Assuming there's a button to open the share modal
+  if (shareButton) {
+    shareButton.addEventListener('click', () => {
+      shareSection.classList.toggle('d-none'); // Toggle visibility
+    });
+  }
+
+  const closeShareButton = block.querySelector('.social-media-share__wrapper--close');
+  if (closeShareButton) {
+    closeShareButton.addEventListener('click', () => {
+      shareSection.classList.add('d-none'); // Hide the modal
+    });
+  }
+
+  const copyShareButton = block.querySelector('.social-media-share__wrapper--button');
+  const shareInput = block.querySelector('.social-media-share__wrapper--input');
+  if (copyShareButton && shareInput) {
+    copyShareButton.addEventListener('click', () => {
+      shareInput.select();
+      navigator.clipboard.writeText(shareInput.value);
+      // Optionally provide user feedback
+    });
+  }
+}
