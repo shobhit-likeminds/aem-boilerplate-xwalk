@@ -331,14 +331,12 @@
       {
         "component": "reference",
         "label": "Logo Image",
-        "name": "logo",
-        "valueType": "string"
+        "name": "logoImage"
       },
       {
         "component": "aem-content",
         "label": "Logo Link",
-        "name": "logoLink",
-        "valueType": "string"
+        "name": "logoLink"
       },
       {
         "component": "container",
@@ -355,14 +353,14 @@
       {
         "component": "container",
         "item": "social-link-item",
-        "label": "Social Media Links",
+        "label": "Social Links",
         "name": "socialLinks"
       },
       {
         "component": "container",
-        "item": "nav-icon-item",
-        "label": "Header Icons (Accessibility, Search, Login)",
-        "name": "navIcons"
+        "item": "header-icon-item",
+        "label": "Header Icons",
+        "name": "headerIcons"
       }
     ]
   },
@@ -372,14 +370,12 @@
       {
         "component": "text",
         "label": "Menu Label",
-        "name": "label",
-        "valueType": "string"
+        "name": "label"
       },
       {
         "component": "aem-content",
         "label": "Menu Link",
-        "name": "link",
-        "valueType": "string"
+        "name": "link"
       },
       {
         "component": "richtext",
@@ -394,15 +390,13 @@
     "fields": [
       {
         "component": "text",
-        "label": "Policy Label",
-        "name": "label",
-        "valueType": "string"
+        "label": "Policy Link Label",
+        "name": "label"
       },
       {
         "component": "aem-content",
         "label": "Policy Link",
-        "name": "link",
-        "valueType": "string"
+        "name": "link"
       }
     ]
   },
@@ -411,44 +405,33 @@
     "fields": [
       {
         "component": "text",
-        "label": "Icon Class",
-        "name": "iconClass",
-        "valueType": "string"
+        "label": "Social Media Type",
+        "name": "socialType"
       },
       {
         "component": "aem-content",
-        "label": "Social Link",
-        "name": "link",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Social Type",
-        "name": "socialType",
-        "valueType": "string"
+        "label": "Social Media Link",
+        "name": "link"
       }
     ]
   },
   {
-    "id": "nav-icon-item",
+    "id": "header-icon-item",
     "fields": [
       {
-        "component": "reference",
-        "label": "Icon (SVG or Image)",
-        "name": "icon",
-        "valueType": "string"
+        "component": "text",
+        "label": "Icon Type",
+        "name": "iconType"
       },
       {
         "component": "aem-content",
         "label": "Icon Link",
-        "name": "link",
-        "valueType": "string"
+        "name": "link"
       },
       {
         "component": "text",
         "label": "Icon Label",
-        "name": "label",
-        "valueType": "string"
+        "name": "label"
       }
     ]
   },
@@ -1025,21 +1008,27 @@
     "id": "multi-title-container",
     "fields": [
       {
-        "component": "reference",
-        "label": "Background Image Desktop",
-        "name": "backgroundDesktop",
-        "valueType": "string"
-      },
-      {
-        "component": "reference",
-        "label": "Background Image Mobile",
-        "name": "backgroundMobile",
-        "valueType": "string"
-      },
-      {
         "component": "text",
         "label": "Aria Label",
         "name": "ariaLabel",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Background Image (Desktop)",
+        "name": "backgroundImageDesktop",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Background Image (Mobile)",
+        "name": "backgroundImageMobile",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Description",
+        "name": "description",
         "valueType": "string"
       },
       {
@@ -1047,12 +1036,6 @@
         "item": "title-item",
         "label": "Titles",
         "name": "titles"
-      },
-      {
-        "component": "richtext",
-        "label": "Description",
-        "name": "description",
-        "valueType": "string"
       }
     ]
   },
@@ -1063,6 +1046,12 @@
         "component": "text",
         "label": "Title Text",
         "name": "titleText",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Title Color Class",
+        "name": "titleColorClass",
         "valueType": "string"
       }
     ]
@@ -1258,14 +1247,27 @@
     "fields": [
       {
         "component": "richtext",
-        "label": "Tabs Section Title",
-        "name": "title"
+        "label": "Title",
+        "name": "title",
+        "valueType": "string"
       },
       {
         "component": "container",
         "item": "product-tab",
         "label": "Tabs",
         "name": "tabs"
+      },
+      {
+        "component": "container",
+        "item": "product-carousel-item",
+        "label": "Carousel Items",
+        "name": "carouselItems"
+      },
+      {
+        "component": "text",
+        "label": "View All Button Label",
+        "name": "viewAllLabel",
+        "valueType": "string"
       }
     ]
   },
@@ -1275,33 +1277,25 @@
       {
         "component": "text",
         "label": "Tab Label",
-        "name": "tabLabel"
-      },
-      {
-        "component": "container",
-        "item": "product-tab-item",
-        "label": "Tab Products",
-        "name": "products"
-      },
-      {
-        "component": "text",
-        "label": "Tab CTA Label",
-        "name": "ctaLabel"
+        "name": "label",
+        "valueType": "string"
       }
     ]
   },
   {
-    "id": "product-tab-item",
+    "id": "product-carousel-item",
     "fields": [
       {
         "component": "reference",
         "label": "Product Image",
-        "name": "image"
+        "name": "image",
+        "valueType": "string"
       },
       {
         "component": "aem-content",
         "label": "Product Link",
-        "name": "link"
+        "name": "link",
+        "valueType": "string"
       }
     ]
   },
@@ -1420,27 +1414,27 @@
     "fields": [
       {
         "component": "text",
-        "label": "Input Placeholder",
-        "name": "inputPlaceholder",
+        "label": "Minimum Search Length",
+        "name": "minLength",
         "valueType": "string"
       },
       {
-        "component": "number",
-        "label": "Minimum Search Length",
-        "name": "minLength",
-        "valueType": "number"
-      },
-      {
-        "component": "number",
-        "label": "Results Desktop Size",
+        "component": "text",
+        "label": "Results Size (Desktop)",
         "name": "resultsDesktopSize",
-        "valueType": "number"
+        "valueType": "string"
       },
       {
-        "component": "number",
-        "label": "Results Mobile Size",
+        "component": "text",
+        "label": "Results Size (Mobile)",
         "name": "resultsMobileSize",
-        "valueType": "number"
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Input Placeholder",
+        "name": "inputPlaceholder",
+        "valueType": "string"
       },
       {
         "component": "text",
@@ -1456,20 +1450,14 @@
       },
       {
         "component": "container",
-        "item": "search-category-item",
+        "item": "search-category",
         "label": "No Results Categories",
         "name": "categories"
-      },
-      {
-        "component": "container",
-        "item": "search-result-item",
-        "label": "Search Results",
-        "name": "searchResults"
       }
     ]
   },
   {
-    "id": "search-category-item",
+    "id": "search-category",
     "fields": [
       {
         "component": "text",
@@ -1480,24 +1468,7 @@
       {
         "component": "aem-content",
         "label": "Category URL",
-        "name": "categoryURL",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
-    "id": "search-result-item",
-    "fields": [
-      {
-        "component": "text",
-        "label": "Result Title",
-        "name": "title",
-        "valueType": "string"
-      },
-      {
-        "component": "aem-content",
-        "label": "Result URL",
-        "name": "url",
+        "name": "categoryUrl",
         "valueType": "string"
       }
     ]

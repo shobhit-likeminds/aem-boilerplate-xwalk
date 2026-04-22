@@ -62,7 +62,7 @@
       "navigation-item",
       "policy-link-item",
       "social-link-item",
-      "nav-icon-item"
+      "header-icon-item"
     ]
   },
   {
@@ -144,7 +144,7 @@
     "id": "product-tabs",
     "components": [
       "product-tab",
-      "product-tab-item"
+      "product-carousel-item"
     ]
   },
   {
@@ -160,8 +160,7 @@
   {
     "id": "search",
     "components": [
-      "search-category-item",
-      "search-result-item"
+      "search-category"
     ]
   },
   {

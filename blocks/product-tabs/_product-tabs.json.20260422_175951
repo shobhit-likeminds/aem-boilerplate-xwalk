@@ -32,15 +32,15 @@
       }
     },
     {
-      "title": "Product-Carousel-Item",
-      "id": "product-carousel-item",
+      "title": "Product-Tab-Item",
+      "id": "product-tab-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "product-carousel-item",
-              "name": "Product-Carousel-Item"
+              "model": "product-tab-item",
+              "name": "Product-Tab-Item"
             }
           }
         }
@@ -53,27 +53,14 @@
       "fields": [
         {
           "component": "richtext",
-          "label": "Title",
-          "name": "title",
-          "valueType": "string"
+          "label": "Tabs Section Title",
+          "name": "title"
         },
         {
           "component": "container",
           "item": "product-tab",
           "label": "Tabs",
           "name": "tabs"
-        },
-        {
-          "component": "container",
-          "item": "product-carousel-item",
-          "label": "Carousel Items",
-          "name": "carouselItems"
-        },
-        {
-          "component": "text",
-          "label": "View All Button Label",
-          "name": "viewAllLabel",
-          "valueType": "string"
         }
       ]
     },
@@ -83,25 +70,33 @@
         {
           "component": "text",
           "label": "Tab Label",
-          "name": "label",
-          "valueType": "string"
+          "name": "tabLabel"
+        },
+        {
+          "component": "container",
+          "item": "product-tab-item",
+          "label": "Tab Products",
+          "name": "products"
+        },
+        {
+          "component": "text",
+          "label": "Tab CTA Label",
+          "name": "ctaLabel"
         }
       ]
     },
     {
-      "id": "product-carousel-item",
+      "id": "product-tab-item",
       "fields": [
         {
           "component": "reference",
           "label": "Product Image",
-          "name": "image",
-          "valueType": "string"
+          "name": "image"
         },
         {
           "component": "aem-content",
           "label": "Product Link",
-          "name": "link",
-          "valueType": "string"
+          "name": "link"
         }
       ]
     }
@@ -111,7 +106,7 @@
       "id": "product-tabs",
       "components": [
         "product-tab",
-        "product-carousel-item"
+        "product-tab-item"
       ]
     }
   ]

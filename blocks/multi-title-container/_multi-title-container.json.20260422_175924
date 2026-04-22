@@ -37,27 +37,21 @@
       "id": "multi-title-container",
       "fields": [
         {
+          "component": "reference",
+          "label": "Background Image Desktop",
+          "name": "backgroundDesktop",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Background Image Mobile",
+          "name": "backgroundMobile",
+          "valueType": "string"
+        },
+        {
           "component": "text",
           "label": "Aria Label",
           "name": "ariaLabel",
-          "valueType": "string"
-        },
-        {
-          "component": "reference",
-          "label": "Background Image (Desktop)",
-          "name": "backgroundImageDesktop",
-          "valueType": "string"
-        },
-        {
-          "component": "reference",
-          "label": "Background Image (Mobile)",
-          "name": "backgroundImageMobile",
-          "valueType": "string"
-        },
-        {
-          "component": "richtext",
-          "label": "Description",
-          "name": "description",
           "valueType": "string"
         },
         {
@@ -65,6 +59,12 @@
           "item": "title-item",
           "label": "Titles",
           "name": "titles"
+        },
+        {
+          "component": "richtext",
+          "label": "Description",
+          "name": "description",
+          "valueType": "string"
         }
       ]
     },
@@ -75,12 +75,6 @@
           "component": "text",
           "label": "Title Text",
           "name": "titleText",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Title Color Class",
-          "name": "titleColorClass",
           "valueType": "string"
         }
       ]

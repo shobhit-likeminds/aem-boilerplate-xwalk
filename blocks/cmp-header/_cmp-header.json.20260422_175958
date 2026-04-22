@@ -1,7 +1,7 @@
 {
   "definitions": [
     {
-      "title": "CMP-Header",
+      "title": "Cmp-Header",
       "id": "cmp-header",
       "plugins": {
         "xwalk": {
@@ -10,7 +10,7 @@
             "template": {
               "filter": "cmp-header",
               "model": "cmp-header",
-              "name": "CMP-Header"
+              "name": "Cmp-Header"
             }
           }
         }
@@ -62,15 +62,15 @@
       }
     },
     {
-      "title": "Header-Icon-Item",
-      "id": "header-icon-item",
+      "title": "Nav-Icon-Item",
+      "id": "nav-icon-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "header-icon-item",
-              "name": "Header-Icon-Item"
+              "model": "nav-icon-item",
+              "name": "Nav-Icon-Item"
             }
           }
         }
@@ -84,12 +84,14 @@
         {
           "component": "reference",
           "label": "Logo Image",
-          "name": "logoImage"
+          "name": "logo",
+          "valueType": "string"
         },
         {
           "component": "aem-content",
           "label": "Logo Link",
-          "name": "logoLink"
+          "name": "logoLink",
+          "valueType": "string"
         },
         {
           "component": "container",
@@ -106,14 +108,14 @@
         {
           "component": "container",
           "item": "social-link-item",
-          "label": "Social Links",
+          "label": "Social Media Links",
           "name": "socialLinks"
         },
         {
           "component": "container",
-          "item": "header-icon-item",
-          "label": "Header Icons",
-          "name": "headerIcons"
+          "item": "nav-icon-item",
+          "label": "Header Icons (Accessibility, Search, Login)",
+          "name": "navIcons"
         }
       ]
     },
@@ -123,12 +125,14 @@
         {
           "component": "text",
           "label": "Menu Label",
-          "name": "label"
+          "name": "label",
+          "valueType": "string"
         },
         {
           "component": "aem-content",
           "label": "Menu Link",
-          "name": "link"
+          "name": "link",
+          "valueType": "string"
         },
         {
           "component": "richtext",
@@ -143,13 +147,15 @@
       "fields": [
         {
           "component": "text",
-          "label": "Policy Link Label",
-          "name": "label"
+          "label": "Policy Label",
+          "name": "label",
+          "valueType": "string"
         },
         {
           "component": "aem-content",
           "label": "Policy Link",
-          "name": "link"
+          "name": "link",
+          "valueType": "string"
         }
       ]
     },
@@ -158,33 +164,44 @@
       "fields": [
         {
           "component": "text",
-          "label": "Social Media Type",
-          "name": "socialType"
+          "label": "Icon Class",
+          "name": "iconClass",
+          "valueType": "string"
         },
         {
           "component": "aem-content",
-          "label": "Social Media Link",
-          "name": "link"
+          "label": "Social Link",
+          "name": "link",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Social Type",
+          "name": "socialType",
+          "valueType": "string"
         }
       ]
     },
     {
-      "id": "header-icon-item",
+      "id": "nav-icon-item",
       "fields": [
         {
-          "component": "text",
-          "label": "Icon Type",
-          "name": "iconType"
+          "component": "reference",
+          "label": "Icon (SVG or Image)",
+          "name": "icon",
+          "valueType": "string"
         },
         {
           "component": "aem-content",
           "label": "Icon Link",
-          "name": "link"
+          "name": "link",
+          "valueType": "string"
         },
         {
           "component": "text",
           "label": "Icon Label",
-          "name": "label"
+          "name": "label",
+          "valueType": "string"
         }
       ]
     }
@@ -196,7 +213,7 @@
         "navigation-item",
         "policy-link-item",
         "social-link-item",
-        "header-icon-item"
+        "nav-icon-item"
       ]
     }
   ]

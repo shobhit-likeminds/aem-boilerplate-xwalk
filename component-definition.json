@@ -177,7 +177,7 @@
           }
         },
         {
-          "title": "Cmp-Header",
+          "title": "CMP-Header",
           "id": "cmp-header",
           "plugins": {
             "xwalk": {
@@ -186,7 +186,7 @@
                 "template": {
                   "filter": "cmp-header",
                   "model": "cmp-header",
-                  "name": "Cmp-Header"
+                  "name": "CMP-Header"
                 }
               }
             }
@@ -238,15 +238,15 @@
           }
         },
         {
-          "title": "Nav-Icon-Item",
-          "id": "nav-icon-item",
+          "title": "Header-Icon-Item",
+          "id": "header-icon-item",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "nav-icon-item",
-                  "name": "Nav-Icon-Item"
+                  "model": "header-icon-item",
+                  "name": "Header-Icon-Item"
                 }
               }
             }
@@ -757,15 +757,15 @@
           }
         },
         {
-          "title": "Product-Tab-Item",
-          "id": "product-tab-item",
+          "title": "Product-Carousel-Item",
+          "id": "product-carousel-item",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "product-tab-item",
-                  "name": "Product-Tab-Item"
+                  "model": "product-carousel-item",
+                  "name": "Product-Carousel-Item"
                 }
               }
             }
@@ -850,30 +850,15 @@
           }
         },
         {
-          "title": "Search-Category-Item",
-          "id": "search-category-item",
+          "title": "Search-Category",
+          "id": "search-category",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "search-category-item",
-                  "name": "Search-Category-Item"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Search-Result-Item",
-          "id": "search-result-item",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block/item",
-                "template": {
-                  "model": "search-result-item",
-                  "name": "Search-Result-Item"
+                  "model": "search-category",
+                  "name": "Search-Category"
                 }
               }
             }
