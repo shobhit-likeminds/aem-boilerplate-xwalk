@@ -68,14 +68,13 @@
       "fields": [
         {
           "component": "richtext",
-          "label": "Headline",
-          "name": "headline",
-          "valueType": "string"
+          "label": "Main Heading",
+          "name": "heading"
         },
         {
           "component": "container",
           "item": "product-item",
-          "label": "Product Selector Items",
+          "label": "Product Icons",
           "name": "products"
         },
         {
@@ -98,14 +97,12 @@
         {
           "component": "reference",
           "label": "Product Image",
-          "name": "productImage",
-          "valueType": "string"
+          "name": "productImage"
         },
         {
           "component": "text",
           "label": "Product Label",
-          "name": "productLabel",
-          "valueType": "string"
+          "name": "productLabel"
         }
       ]
     },
@@ -115,56 +112,42 @@
         {
           "component": "reference",
           "label": "Desktop Background Image",
-          "name": "backgroundDesktop",
-          "valueType": "string"
+          "name": "backgroundDesktop"
         },
         {
           "component": "reference",
           "label": "Mobile Background Image",
-          "name": "backgroundMobile",
-          "valueType": "string"
+          "name": "backgroundMobile"
         },
         {
           "component": "richtext",
-          "label": "Headline (Before Download)",
-          "name": "headlineBefore",
-          "valueType": "string"
+          "label": "Headline (before download)",
+          "name": "headlineBefore"
         },
         {
           "component": "reference",
-          "label": "CTA Icon (Before Download)",
-          "name": "ctaIconBefore",
-          "valueType": "string"
+          "label": "CTA Icon",
+          "name": "ctaIcon"
         },
         {
           "component": "aem-content",
-          "label": "CTA Link (Before Download)",
-          "name": "ctaLinkBefore",
-          "valueType": "string"
+          "label": "CTA Link",
+          "name": "ctaLink"
         },
         {
           "component": "text",
-          "label": "CTA Label (Before Download)",
-          "name": "ctaLabelBefore",
-          "valueType": "string"
+          "label": "CTA Label",
+          "name": "ctaLabel"
         },
         {
           "component": "richtext",
-          "label": "Headline (After Download)",
-          "name": "headlineAfter",
-          "valueType": "string"
+          "label": "Headline (after download)",
+          "name": "headlineAfter"
         },
         {
           "component": "reference",
-          "label": "CTA Icon (After Download)",
-          "name": "ctaIconAfter",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "CTA Label (After Download)",
-          "name": "ctaLabelAfter",
-          "valueType": "string"
+          "label": "Confirmation Icon",
+          "name": "confirmationIcon"
         }
       ]
     },
@@ -174,38 +157,32 @@
         {
           "component": "reference",
           "label": "Desktop Background Image",
-          "name": "backgroundDesktop",
-          "valueType": "string"
+          "name": "backgroundDesktop"
         },
         {
           "component": "reference",
           "label": "Mobile Background Image",
-          "name": "backgroundMobile",
-          "valueType": "string"
+          "name": "backgroundMobile"
         },
         {
           "component": "richtext",
           "label": "Headline",
-          "name": "headline",
-          "valueType": "string"
+          "name": "headline"
         },
         {
           "component": "reference",
-          "label": "CTA Icon",
-          "name": "ctaIcon",
-          "valueType": "string"
+          "label": "Confirmation Icon",
+          "name": "confirmationIcon"
         },
         {
           "component": "aem-content",
           "label": "WhatsApp Link",
-          "name": "whatsappLink",
-          "valueType": "string"
+          "name": "whatsappLink"
         },
         {
           "component": "text",
-          "label": "WhatsApp Label",
-          "name": "whatsappLabel",
-          "valueType": "string"
+          "label": "WhatsApp Link Label",
+          "name": "whatsappLabel"
         }
       ]
     }

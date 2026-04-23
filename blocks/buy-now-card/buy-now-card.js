@@ -2,12 +2,11 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  // The buy-now-card block has no fields in its model,
-  // so it's an empty container with only CSS classes.
-  // We apply the classes from the original HTML to the block itself.
+  // The buy-now-card block has an empty model, meaning it doesn't contain any authored content.
+  // It only exists as a container for other components or for styling purposes.
+  // Therefore, we only need to apply the class names from the original HTML.
   block.classList.add('buyNowCard', 'aem-GridColumn', 'aem-GridColumn--default--12');
 
-  // Since there are no fields, there's no content to move or transform.
-  // If the block had content, we would iterate through block.children
-  // and move instrumentation to newly created elements.
+  // Since there are no authored rows or cells to process, there's no need to
+  // create new elements or move instrumentation. The block itself is the final element.
 }

@@ -17,52 +17,52 @@
       }
     },
     {
-      "title": "Navigation Item",
-      "id": "navigation-item",
+      "title": "Menu Item",
+      "id": "menu-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "navigation-item",
-              "name": "Navigation Item"
+              "model": "menu-item",
+              "name": "Menu Item"
             }
           }
         }
       }
     },
     {
-      "title": "Sub Navigation Item",
-      "id": "sub-navigation-item",
+      "title": "Submenu Item",
+      "id": "submenu-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "sub-navigation-item",
-              "name": "Sub Navigation Item"
+              "model": "submenu-item",
+              "name": "Submenu Item"
             }
           }
         }
       }
     },
     {
-      "title": "Sub Sub Navigation Item",
-      "id": "sub-sub-navigation-item",
+      "title": "Submenu Link Item",
+      "id": "submenu-link-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "sub-sub-navigation-item",
-              "name": "Sub Sub Navigation Item"
+              "model": "submenu-link-item",
+              "name": "Submenu Link Item"
             }
           }
         }
       }
     },
     {
-      "title": "Search Icon",
+      "title": "Search Icon Item",
       "id": "search-icon-item",
       "plugins": {
         "xwalk": {
@@ -70,7 +70,7 @@
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
               "model": "search-icon-item",
-              "name": "Search Icon"
+              "name": "Search Icon Item"
             }
           }
         }
@@ -83,8 +83,8 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Logo Image",
-          "name": "logoImage",
+          "label": "Logo",
+          "name": "logo",
           "valueType": "string"
         },
         {
@@ -95,25 +95,25 @@
         },
         {
           "component": "container",
-          "item": "navigation-item",
-          "label": "Navigation Items",
-          "name": "navigationItems"
+          "item": "menu-item",
+          "label": "Menu Items",
+          "name": "menuItems"
         },
         {
           "component": "container",
           "item": "search-icon-item",
-          "label": "Search Icon",
-          "name": "searchIcon"
+          "label": "Search Icons",
+          "name": "searchIcons"
         }
       ]
     },
     {
-      "id": "navigation-item",
+      "id": "menu-item",
       "fields": [
         {
           "component": "reference",
-          "label": "Menu Icon Image (Mobile)",
-          "name": "iconImage",
+          "label": "Menu Icon (mobile)",
+          "name": "icon",
           "valueType": "string"
         },
         {
@@ -131,7 +131,7 @@
         {
           "component": "reference",
           "label": "Arrow Icon (Desktop)",
-          "name": "arrowIcon",
+          "name": "arrowIconDesktop",
           "valueType": "string"
         },
         {
@@ -142,9 +142,9 @@
         },
         {
           "component": "container",
-          "item": "sub-navigation-item",
-          "label": "Sub Navigation Items",
-          "name": "subNavigationItems"
+          "item": "submenu-item",
+          "label": "Submenu Items",
+          "name": "submenuItems"
         },
         {
           "component": "richtext",
@@ -155,24 +155,24 @@
       ]
     },
     {
-      "id": "sub-navigation-item",
+      "id": "submenu-item",
       "fields": [
         {
           "component": "text",
-          "label": "Sub Menu Label",
+          "label": "Submenu Label",
           "name": "label",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "label": "Sub Menu Link",
+          "label": "Submenu Link",
           "name": "link",
           "valueType": "string"
         },
         {
           "component": "reference",
           "label": "Arrow Icon (Desktop)",
-          "name": "arrowIcon",
+          "name": "arrowIconDesktop",
           "valueType": "string"
         },
         {
@@ -183,24 +183,24 @@
         },
         {
           "component": "container",
-          "item": "sub-sub-navigation-item",
-          "label": "Sub Sub Navigation Items",
-          "name": "subSubNavigationItems"
+          "item": "submenu-link-item",
+          "label": "Submenu Link Items",
+          "name": "submenuLinks"
         }
       ]
     },
     {
-      "id": "sub-sub-navigation-item",
+      "id": "submenu-link-item",
       "fields": [
         {
           "component": "text",
-          "label": "Sub Sub Menu Label",
+          "label": "Submenu Link Label",
           "name": "label",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "label": "Sub Sub Menu Link",
+          "label": "Submenu Link URL",
           "name": "link",
           "valueType": "string"
         }
@@ -211,14 +211,14 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Search Icon Image",
-          "name": "searchIconImage",
+          "label": "Search Icon",
+          "name": "icon",
           "valueType": "string"
         },
         {
           "component": "text",
           "label": "Search Label",
-          "name": "searchLabel",
+          "name": "label",
           "valueType": "string"
         }
       ]
@@ -228,9 +228,7 @@
     {
       "id": "header-comp",
       "components": [
-        "navigation-item",
-        "sub-navigation-item",
-        "sub-sub-navigation-item",
+        "menu-item",
         "search-icon-item"
       ]
     }

@@ -46,7 +46,10 @@
     ]
   },
   {
-    "id": "banner-section"
+    "id": "banner-section",
+    "components": [
+      "banner-cta"
+    ]
   },
   {
     "id": "buy-now-card"
@@ -54,7 +57,8 @@
   {
     "id": "card-carousel",
     "components": [
-      "product-card"
+      "recipe-card",
+      "social-media-share-item"
     ]
   },
   {
@@ -111,15 +115,16 @@
   {
     "id": "footer",
     "components": [
-      "footer-navigation-item",
-      "footer-secondary-link-item",
-      "footer-social-item"
+      "footer-link",
+      "footer-social-link"
     ]
   },
   {
     "id": "header-comp",
     "components": [
-      "menu-item",
+      "navigation-item",
+      "sub-navigation-item",
+      "sub-sub-navigation-item",
       "search-icon-item"
     ]
   },

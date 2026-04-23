@@ -44,8 +44,8 @@
         },
         {
           "component": "text",
-          "label": "Subtext",
-          "name": "subtext",
+          "label": "Subtitle",
+          "name": "subtitle",
           "valueType": "string"
         },
         {
@@ -55,15 +55,15 @@
           "name": "cards"
         },
         {
-          "component": "text",
-          "label": "CTA Label",
-          "name": "ctaLabel",
-          "valueType": "string"
-        },
-        {
           "component": "aem-content",
           "label": "CTA Link",
           "name": "ctaLink",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "CTA Label",
+          "name": "ctaLabel",
           "valueType": "string"
         }
       ]
@@ -73,20 +73,20 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Card Image (Desktop)",
-          "name": "imageDesktop",
-          "valueType": "string"
-        },
-        {
-          "component": "reference",
           "label": "Card Image (Mobile)",
           "name": "imageMobile",
           "valueType": "string"
         },
         {
+          "component": "reference",
+          "label": "Card Image (Desktop)",
+          "name": "imageDesktop",
+          "valueType": "string"
+        },
+        {
           "component": "aem-content",
           "label": "Card Link",
-          "name": "cardLink",
+          "name": "link",
           "valueType": "string"
         }
       ]

@@ -15,6 +15,21 @@
           }
         }
       }
+    },
+    {
+      "title": "Banner CTA",
+      "id": "banner-cta",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "banner-cta",
+              "name": "Banner CTA"
+            }
+          }
+        }
+      }
     }
   ],
   "models": [
@@ -23,14 +38,31 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Desktop Banner Image",
-          "name": "desktopImage",
+          "label": "Desktop Background Image",
+          "name": "backgroundDesktop",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Mobile Banner Image",
-          "name": "mobileImage",
+          "label": "Mobile Background Image",
+          "name": "backgroundMobile",
+          "valueType": "string"
+        },
+        {
+          "component": "container",
+          "item": "banner-cta",
+          "label": "CTA Buttons",
+          "name": "ctas"
+        }
+      ]
+    },
+    {
+      "id": "banner-cta",
+      "fields": [
+        {
+          "component": "text",
+          "label": "CTA Label",
+          "name": "ctaLabel",
           "valueType": "string"
         },
         {
@@ -38,19 +70,16 @@
           "label": "CTA Link",
           "name": "ctaLink",
           "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "CTA Label",
-          "name": "ctaLabel",
-          "valueType": "string"
         }
       ]
     }
   ],
   "filters": [
     {
-      "id": "banner-section"
+      "id": "banner-section",
+      "components": [
+        "banner-cta"
+      ]
     }
   ]
 }
