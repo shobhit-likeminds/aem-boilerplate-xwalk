@@ -115,8 +115,9 @@
   {
     "id": "footer",
     "components": [
-      "footer-link",
-      "footer-social-link"
+      "footer-navigation-item",
+      "footer-secondary-link-item",
+      "footer-social-link-item"
     ]
   },
   {
