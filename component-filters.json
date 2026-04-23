@@ -39,7 +39,8 @@
       "social",
       "footer-new",
       "w-100",
-      "footer-brand"
+      "footer-brand",
+      "space-adder"
     ]
   },
   {
@@ -51,7 +52,8 @@
   {
     "id": "card-carousel",
     "components": [
-      "product-card"
+      "recipe-card",
+      "social-media-share-item"
     ]
   },
   {
@@ -105,15 +107,19 @@
   {
     "id": "footer",
     "components": [
-      "footer-nav-item",
+      "footer-navigation-item",
+      "footer-secondary-link-item",
       "footer-social-link-item"
     ]
   },
   {
     "id": "header-comp",
     "components": [
-      "nav-menu-item",
-      "search-icon-item"
+      "header-nav-item",
+      "header-nav-submenu-item",
+      "header-nav-subsubmenu-item",
+      "header-nav-simple-item",
+      "header-search-icon"
     ]
   },
   {
@@ -141,7 +147,7 @@
     "id": "product-selection-component",
     "components": [
       "product-selector-item",
-      "product-detail-item"
+      "product-panel"
     ]
   },
   {
@@ -175,6 +181,9 @@
     "components": [
       "social-image-item"
     ]
+  },
+  {
+    "id": "space-adder"
   },
   {
     "id": "stay-social",

@@ -10,15 +10,12 @@ export default function decorate(block) {
     ...cardRows
   ] = [...block.children];
 
-  const section = document.createElement('section');
-  section.classList.add('stay-social', 'pt-14', 'py-lg-11', 'bg-cream-300');
-  moveInstrumentation(block, section);
+  block.classList.add('pt-14', 'py-lg-11', 'bg-cream-300');
 
   const container = document.createElement('div');
   container.classList.add('container', 'gx-8', 'gx-sm-0');
-  section.append(container);
+  moveInstrumentation(block, container);
 
-  // Title
   const title = document.createElement('h2');
   title.classList.add(
     'stay-social__title',
@@ -34,7 +31,6 @@ export default function decorate(block) {
   title.textContent = titleRow.textContent.trim();
   container.append(title);
 
-  // Subtext
   const subtext = document.createElement('h3');
   subtext.classList.add(
     'stay-social__subtext',
@@ -50,7 +46,6 @@ export default function decorate(block) {
   subtext.textContent = subtextRow.textContent.trim();
   container.append(subtext);
 
-  // Main content for cards
   const main = document.createElement('div');
   main.classList.add('stay-social__main', 'mt-8');
   container.append(main);
@@ -67,64 +62,45 @@ export default function decorate(block) {
   main.append(cardsList);
 
   cardRows.forEach((row) => {
-    const [imageMobileCell, imageDesktopCell, linkCell] = [...row.children];
+    const [imageDesktopCell, imageMobileCell, cardLinkCell] = [...row.children];
 
-    const listItem = document.createElement('li');
-    listItem.classList.add(
-      'stay-social__card',
-      'overflow-hidden',
-      'ratio',
-    );
-    // Check for ratio-9x16 class from original HTML
-    if (row.classList.contains('ratio-9x16')) {
-      listItem.classList.add('ratio-9x16');
-    } else {
-      listItem.classList.add('ratio-1x1');
-    }
+    const li = document.createElement('li');
+    li.classList.add('stay-social__card', 'overflow-hidden', 'ratio-1x1', 'ratio');
+    moveInstrumentation(row, li);
 
     const cardLink = document.createElement('a');
-    cardLink.classList.add(
-      'stay-social__card--link',
-      'd-block',
-      'w-100',
-      'h-100',
-    );
-    const foundLink = linkCell.querySelector('a');
+    cardLink.classList.add('stay-social__card--link', 'd-block', 'w-100', 'h-100');
+    const foundLink = cardLinkCell.querySelector('a');
     if (foundLink) {
       cardLink.href = foundLink.href;
-      cardLink.target = '_blank'; // Assuming all social links open in new tab
+      cardLink.target = '_blank'; // Original HTML has target="_blank"
     }
-    moveInstrumentation(row, cardLink); // Move instrumentation from the item row to the link
 
-    const pictureMobile = imageMobileCell.querySelector('picture');
     const pictureDesktop = imageDesktopCell.querySelector('picture');
+    const pictureMobile = imageMobileCell.querySelector('picture');
 
-    if (pictureMobile && pictureDesktop) {
-      const imgMobile = pictureMobile.querySelector('img');
-      const imgDesktop = pictureDesktop.querySelector('img');
+    if (pictureDesktop || pictureMobile) {
+      const imgDesktop = pictureDesktop ? pictureDesktop.querySelector('img') : null;
+      const imgMobile = pictureMobile ? pictureMobile.querySelector('img') : null;
 
-      if (imgMobile && imgDesktop) {
-        // Create optimized picture for mobile
-        const optimizedPicMobile = createOptimizedPicture(imgMobile.src, imgMobile.alt, false, [{ width: '600' }]);
-        const sourceMobile = optimizedPicMobile.querySelector('source');
-        if (sourceMobile) {
-          sourceMobile.media = '(max-width:600px)';
-        }
+      const picture = document.createElement('picture');
 
-        // Create optimized picture for desktop
-        const optimizedPicDesktop = createOptimizedPicture(imgDesktop.src, imgDesktop.alt, false, [{ width: '750' }]);
-        const imgDesktopElement = optimizedPicDesktop.querySelector('img');
-        if (imgDesktopElement) {
-          imgDesktopElement.classList.add('stay-social__card--image', 'w-100', 'h-100', 'object-fit-cover');
-          imgDesktopElement.loading = 'lazy';
-        }
-
-        // Append mobile source to desktop picture for responsive image
-        if (sourceMobile) {
-          optimizedPicDesktop.prepend(sourceMobile);
-        }
-        cardLink.append(optimizedPicDesktop);
+      if (imgMobile) {
+        const sourceMobile = document.createElement('source');
+        sourceMobile.srcset = imgMobile.src;
+        sourceMobile.media = '(max-width:600px)';
+        picture.append(sourceMobile);
       }
+
+      if (imgDesktop) {
+        const img = document.createElement('img');
+        img.loading = 'lazy';
+        img.classList.add('stay-social__card--image', 'w-100', 'h-100', 'object-fit-cover');
+        img.src = imgDesktop.src;
+        img.alt = imgDesktop.alt;
+        picture.append(img);
+      }
+      cardLink.append(picture);
     }
 
     const screenReaderOnly = document.createElement('span');
@@ -132,11 +108,10 @@ export default function decorate(block) {
     screenReaderOnly.textContent = 'opens in a new tab';
     cardLink.append(screenReaderOnly);
 
-    listItem.append(cardLink);
-    cardsList.append(listItem);
+    li.append(cardLink);
+    cardsList.append(li);
   });
 
-  // CTA button
   const ctaWrapper = document.createElement('div');
   ctaWrapper.classList.add(
     'd-flex',
@@ -145,10 +120,10 @@ export default function decorate(block) {
     'mt-8',
     'mt-lg-10',
   );
-  section.append(ctaWrapper);
+  container.append(ctaWrapper);
 
-  const ctaAnchor = document.createElement('a');
-  ctaAnchor.classList.add(
+  const ctaLink = document.createElement('a');
+  ctaLink.classList.add(
     'svasti-cta',
     'w-fit',
     'text-decoration-none',
@@ -168,30 +143,31 @@ export default function decorate(block) {
     'bg-red-300-active',
   );
 
-  const ctaLink = ctaLinkRow.querySelector('a');
-  if (ctaLink) {
-    ctaAnchor.href = ctaLink.href;
-    ctaAnchor.target = '_blank'; // Assuming CTA also opens in new tab
+  const foundCtaLink = ctaLinkRow.querySelector('a');
+  if (foundCtaLink) {
+    ctaLink.href = foundCtaLink.href;
+    ctaLink.target = '_blank'; // Original HTML has target="_blank"
   }
-  moveInstrumentation(ctaLinkRow, ctaAnchor);
+  moveInstrumentation(ctaLinkRow, ctaLink);
 
   const ctaLabelSpan = document.createElement('span');
-  ctaLabelSpan.classList.add(
-    'svasti-cta__label',
-    'fw-semibold',
-    'fs-default',
-    'leading-26',
-  );
+  ctaLabelSpan.classList.add('svasti-cta__label', 'fw-semibold', 'fs-default', 'leading-26');
   moveInstrumentation(ctaLabelRow, ctaLabelSpan);
   ctaLabelSpan.textContent = ctaLabelRow.textContent.trim();
-  ctaAnchor.append(ctaLabelSpan);
+  ctaLink.append(ctaLabelSpan);
 
   const ctaScreenReaderOnly = document.createElement('span');
   ctaScreenReaderOnly.classList.add('cmp-link__screen-reader-only');
   ctaScreenReaderOnly.textContent = 'opens in a new tab';
-  ctaAnchor.append(ctaScreenReaderOnly);
+  ctaLink.append(ctaScreenReaderOnly);
 
-  ctaWrapper.append(ctaAnchor);
+  ctaWrapper.append(ctaLink);
 
-  block.replaceChildren(section);
+  block.replaceChildren(container);
+
+  block.querySelectorAll('picture > img').forEach((img) => {
+    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+    moveInstrumentation(img, optimizedPic.querySelector('img'));
+    img.closest('picture').replaceWith(optimizedPic);
+  });
 }

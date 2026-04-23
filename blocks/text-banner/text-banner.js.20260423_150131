@@ -2,13 +2,11 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  // Destructure rows based on the BlockJson model
   const [titleRow, descriptionRow, ctaLinkRow, ctaLabelRow] = [...block.children];
 
   const wrapper = document.createElement('section');
   wrapper.classList.add('text-banner--wrapper', 'position-relative', 'bg-maroon-700');
 
-  // Background elements
   const bgCircleLeft = document.createElement('div');
   bgCircleLeft.classList.add('position-absolute', 'opacity-60', 'bg-circle-left');
   wrapper.append(bgCircleLeft);
@@ -34,13 +32,7 @@ export default function decorate(block) {
   container.append(row);
 
   const textBannerContainer = document.createElement('div');
-  textBannerContainer.classList.add(
-    'text-banner--container',
-    'd-flex',
-    'flex-column',
-    'align-items-center',
-    'justify-content-between',
-  );
+  textBannerContainer.classList.add('text-banner--container', 'd-flex', 'flex-column', 'align-items-center', 'justify-content-between');
   row.append(textBannerContainer);
 
   const contentWrapper = document.createElement('div');
@@ -50,11 +42,10 @@ export default function decorate(block) {
   // Title
   const titleDiv = document.createElement('div');
   const title = document.createElement('h2');
-  moveInstrumentation(titleRow, title);
   title.classList.add('font-baskerville', 'font-md-40', 'font-24', 'text-banner--title');
-  // The title cell is the first child of titleRow
-  const titleCell = [...titleRow.children][0];
+  const titleCell = [...titleRow.children].find((cell) => cell.textContent.trim());
   if (titleCell) {
+    moveInstrumentation(titleRow, title);
     title.textContent = titleCell.textContent.trim();
   }
   titleDiv.append(title);
@@ -62,68 +53,53 @@ export default function decorate(block) {
 
   // Description
   const descriptionDiv = document.createElement('div');
-  moveInstrumentation(descriptionRow, descriptionDiv);
-  descriptionDiv.classList.add(
-    'mt-sm-8',
-    'mt-5',
-    'text-banner--description',
-    'font-md-18',
-    'font-default',
-    'leading-24',
-    'text-center',
-    'promise-text-padding',
-  );
-  // The description cell is the first child of descriptionRow
-  const descriptionCell = [...descriptionRow.children][0];
+  descriptionDiv.classList.add('mt-sm-8', 'mt-5', 'text-banner--description');
+  const descriptionText = document.createElement('div');
+  descriptionText.classList.add('font-md-18', 'font-default', 'leading-24', 'text-center', 'promise-text-padding');
+  const descriptionCell = [...descriptionRow.children].find((cell) => cell.innerHTML.trim());
   if (descriptionCell) {
-    descriptionDiv.innerHTML = descriptionCell.innerHTML; // Use innerHTML for richtext
+    moveInstrumentation(descriptionRow, descriptionText);
+    descriptionText.innerHTML = descriptionCell.innerHTML;
   }
+  descriptionDiv.append(descriptionText);
   contentWrapper.append(descriptionDiv);
 
   // CTA
   const ctaDiv = document.createElement('div');
   ctaDiv.classList.add('text-banner--cta', 'mt-12', 'mt-lg-16');
-  textBannerContainer.append(ctaDiv);
+  const ctaLink = document.createElement('a');
+  ctaLink.classList.add(
+    'svasti-cta', 'cta-analytics', 'w-fit', 'text-decoration-none', 'd-flex', 'align-items-center',
+    'primary', 'px-8', 'pb-3', 'text-black', 'border', 'border-2', 'border-cream-100',
+    'border-cream-500-hover', 'border-cream-500-active', 'bg-cream-100', 'bg-cream-500-hover',
+    'bg-cream-100-active',
+  );
 
-  // CTA Link and Label cells
-  const ctaLinkCell = [...ctaLinkRow.children][0];
-  const ctaLabelCell = [...ctaLabelRow.children][0];
-
-  const ctaLink = ctaLinkCell ? ctaLinkCell.querySelector('a') : null;
-  const ctaLabel = ctaLabelCell ? ctaLabelCell.textContent.trim() : '';
-
-  if (ctaLink && ctaLabel) {
-    const anchor = document.createElement('a');
-    moveInstrumentation(ctaLinkRow, anchor); // Instrument the row for the link
-    anchor.classList.add(
-      'svasti-cta',
-      'cta-analytics',
-      'w-fit',
-      'text-decoration-none',
-      'd-flex',
-      'align-items-center',
-      'primary',
-      'px-8',
-      'pb-3',
-      'text-black',
-      'border',
-      'border-2',
-      'border-cream-100',
-      'border-cream-500-hover',
-      'border-cream-500-active',
-      'bg-cream-100',
-      'bg-cream-500-hover',
-      'bg-cream-100-active',
-    );
-    anchor.href = ctaLink.href;
-
-    const span = document.createElement('span');
-    moveInstrumentation(ctaLabelRow, span); // Instrument the row for the label
-    span.classList.add('svasti-cta__label', 'fw-semibold', 'fs-default', 'leading-26');
-    span.textContent = ctaLabel;
-    anchor.append(span);
-    ctaDiv.append(anchor);
+  const ctaLinkCell = [...ctaLinkRow.children].find((cell) => cell.querySelector('a'));
+  if (ctaLinkCell) {
+    const foundCtaLink = ctaLinkCell.querySelector('a');
+    if (foundCtaLink) {
+      ctaLink.href = foundCtaLink.href;
+    }
+    moveInstrumentation(ctaLinkRow, ctaLink);
   }
 
+  const ctaLabelSpan = document.createElement('span');
+  ctaLabelSpan.classList.add('svasti-cta__label', 'fw-semibold', 'fs-default', 'leading-26');
+  const ctaLabelCell = [...ctaLabelRow.children].find((cell) => cell.textContent.trim());
+  if (ctaLabelCell) {
+    moveInstrumentation(ctaLabelRow, ctaLabelSpan);
+    ctaLabelSpan.textContent = ctaLabelCell.textContent.trim();
+  }
+  ctaLink.append(ctaLabelSpan);
+  ctaDiv.append(ctaLink);
+  textBannerContainer.append(ctaDiv);
+
   block.replaceChildren(wrapper);
+
+  wrapper.querySelectorAll('picture > img').forEach((img) => {
+    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+    moveInstrumentation(img, optimizedPic.querySelector('img'));
+    img.closest('picture').replaceWith(optimizedPic);
+  });
 }

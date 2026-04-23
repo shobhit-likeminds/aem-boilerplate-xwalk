@@ -74,7 +74,8 @@
         "social",
         "footer-new",
         "w-100",
-        "footer-brand"
+        "footer-brand",
+        "space-adder"
       ]
     }
   ]

@@ -146,14 +146,14 @@
     "fields": [
       {
         "component": "reference",
-        "label": "Background Image (Desktop)",
-        "name": "backgroundImageDesktop",
+        "label": "Background Image (Mobile)",
+        "name": "backgroundImageMobile",
         "valueType": "string"
       },
       {
         "component": "reference",
-        "label": "Background Image (Mobile)",
-        "name": "backgroundImageMobile",
+        "label": "Background Image (Desktop)",
+        "name": "backgroundImageDesktop",
         "valueType": "string"
       },
       {
@@ -189,50 +189,139 @@
         "valueType": "string"
       },
       {
-        "component": "container",
-        "item": "product-card",
-        "label": "Product Cards",
-        "name": "productCards"
-      }
-    ]
-  },
-  {
-    "id": "product-card",
-    "fields": [
-      {
         "component": "reference",
-        "label": "Main Image (Card Thumbnail)",
-        "name": "mainImage",
-        "valueType": "string"
-      },
-      {
-        "component": "richtext",
-        "label": "Card Title (Rich)",
-        "name": "cardTitle",
+        "label": "Navigation Previous Button Icon",
+        "name": "navigationPrevIcon",
         "valueType": "string"
       },
       {
         "component": "reference",
-        "label": "Secondary Image (Product Image in Circle)",
-        "name": "secondaryImage",
+        "label": "Navigation Next Button Icon",
+        "name": "navigationNextIcon",
         "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "Product Link",
-        "name": "productLink",
+        "label": "CTA Link",
+        "name": "ctaLink",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "CTA Button Label",
+        "label": "CTA Label",
         "name": "ctaLabel",
         "valueType": "string"
       },
       {
+        "component": "container",
+        "item": "recipe-card",
+        "label": "Recipe Cards",
+        "name": "recipes"
+      },
+      {
+        "component": "container",
+        "item": "social-media-share-item",
+        "label": "Social Media Share Items",
+        "name": "socialMediaShareItems"
+      }
+    ]
+  },
+  {
+    "id": "recipe-card",
+    "fields": [
+      {
         "component": "aem-content",
-        "label": "CTA Button Link",
-        "name": "ctaLink",
+        "label": "Recipe Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Recipe Image",
+        "name": "image",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Recipe Tag",
+        "name": "tag",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Tag Icon (SVG right of tag)",
+        "name": "tagIcon",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Recipe Title",
+        "name": "title",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Recipe Description",
+        "name": "description",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Wave Separator Image (SVG below description)",
+        "name": "waveImage",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Time Icon (SVG left property)",
+        "name": "timeIcon",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Preparation Time",
+        "name": "time",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Serves Icon (SVG right property)",
+        "name": "servesIcon",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Serves Text",
+        "name": "serves",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Navigation Hierarchy",
+        "name": "hierarchy-tree",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "social-media-share-item",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Social Media Link URL",
+        "name": "socialLink",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Social Icon",
+        "name": "icon",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Social Platform Label",
+        "name": "label",
         "valueType": "string"
       }
     ]
@@ -625,39 +714,39 @@
     "fields": [
       {
         "component": "reference",
-        "label": "Main Logo",
-        "name": "mainLogo"
+        "label": "Primary Logo",
+        "name": "logo",
+        "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "Main Logo Link",
-        "name": "mainLogoLink"
+        "label": "Primary Logo Link",
+        "name": "logoLink",
+        "valueType": "string"
       },
       {
         "component": "reference",
         "label": "Secondary Logo",
-        "name": "secondaryLogo"
+        "name": "secondaryLogo",
+        "valueType": "string"
       },
       {
         "component": "container",
-        "item": "footer-nav-item",
+        "item": "footer-navigation-item",
         "label": "Footer Navigation Items",
-        "name": "footerNavItems"
+        "name": "footerNavigationItems"
       },
       {
-        "component": "aem-content",
-        "label": "ITC Portal Link",
-        "name": "itcPortalLink"
-      },
-      {
-        "component": "text",
-        "label": "ITC Portal Label",
-        "name": "itcPortalLabel"
+        "component": "container",
+        "item": "footer-secondary-link-item",
+        "label": "Footer Secondary Links",
+        "name": "footerSecondaryLinks"
       },
       {
         "component": "text",
         "label": "Copyright Text",
-        "name": "copyright"
+        "name": "copyrightText",
+        "valueType": "string"
       },
       {
         "component": "container",
@@ -668,17 +757,19 @@
     ]
   },
   {
-    "id": "footer-nav-item",
+    "id": "footer-navigation-item",
     "fields": [
       {
         "component": "text",
         "label": "Navigation Label",
-        "name": "label"
+        "name": "label",
+        "valueType": "string"
       },
       {
         "component": "aem-content",
         "label": "Navigation Link",
-        "name": "link"
+        "name": "link",
+        "valueType": "string"
       },
       {
         "component": "richtext",
@@ -689,17 +780,42 @@
     ]
   },
   {
+    "id": "footer-secondary-link-item",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Secondary Link Label",
+        "name": "label",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Secondary Link URL",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "footer-social-link-item",
     "fields": [
       {
         "component": "reference",
         "label": "Social Icon",
-        "name": "icon"
+        "name": "icon",
+        "valueType": "string"
       },
       {
         "component": "aem-content",
         "label": "Social Link",
-        "name": "link"
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Icon Alt Text",
+        "name": "altText",
+        "valueType": "string"
       }
     ]
   },
@@ -719,7 +835,7 @@
       {
         "component": "reference",
         "label": "Logo Image",
-        "name": "logoImage",
+        "name": "logo",
         "valueType": "string"
       },
       {
@@ -730,55 +846,61 @@
       },
       {
         "component": "container",
-        "item": "nav-menu-item",
-        "label": "Navigation Menu Items",
-        "name": "navMenuItems"
+        "item": "header-nav-item",
+        "label": "Navigation Items",
+        "name": "navigationItems"
       },
       {
         "component": "container",
-        "item": "search-icon-item",
+        "item": "header-nav-simple-item",
+        "label": "Simple Navigation Items",
+        "name": "simpleNavigationItems"
+      },
+      {
+        "component": "container",
+        "item": "header-search-icon",
         "label": "Search Icons",
         "name": "searchIcons"
       }
     ]
   },
   {
-    "id": "nav-menu-item",
+    "id": "header-nav-item",
     "fields": [
       {
         "component": "reference",
-        "label": "Menu Icon (Mobile)",
-        "name": "menuIcon",
+        "label": "Nav Item Icon (Mobile)",
+        "name": "icon",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Menu Label",
-        "name": "menuLabel",
+        "label": "Nav Item Label",
+        "name": "label",
         "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "Menu Link",
-        "name": "menuLink",
+        "label": "Nav Item Link",
+        "name": "link",
         "valueType": "string"
       },
       {
         "component": "reference",
-        "label": "Arrow Icon (Desktop)",
-        "name": "arrowIconDesktop",
+        "label": "Dropdown Arrow Icon (Desktop)",
+        "name": "dropdownArrowIconDesktop",
         "valueType": "string"
       },
       {
         "component": "reference",
-        "label": "Arrow Icon (Mobile)",
-        "name": "arrowIconMobile",
+        "label": "Dropdown Arrow Icon (Mobile)",
+        "name": "dropdownArrowIconMobile",
         "valueType": "string"
       },
       {
         "component": "container",
-        "item": "sub-menu-item",
-        "label": "Sub Menu Items",
+        "item": "header-nav-submenu-item",
+        "label": "Submenu Items",
         "name": "subMenuItems"
       },
       {
@@ -790,70 +912,93 @@
     ]
   },
   {
-    "id": "sub-menu-item",
+    "id": "header-nav-submenu-item",
     "fields": [
       {
         "component": "text",
-        "label": "Sub Menu Label",
-        "name": "subMenuLabel",
+        "label": "Submenu Item Label",
+        "name": "label",
         "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "Sub Menu Link",
-        "name": "subMenuLink",
+        "label": "Submenu Item Link",
+        "name": "link",
         "valueType": "string"
       },
       {
         "component": "reference",
-        "label": "Arrow Icon (Desktop)",
-        "name": "arrowIconDesktop",
+        "label": "Submenu Arrow Icon (Desktop)",
+        "name": "submenuArrowIconDesktop",
         "valueType": "string"
       },
       {
         "component": "reference",
-        "label": "Arrow Icon (Mobile)",
-        "name": "arrowIconMobile",
+        "label": "Submenu Arrow Icon (Mobile)",
+        "name": "submenuArrowIconMobile",
         "valueType": "string"
       },
       {
         "component": "container",
-        "item": "sub-sub-menu-item",
-        "label": "Sub Sub Menu Items",
+        "item": "header-nav-subsubmenu-item",
+        "label": "Sub-Submenu Items",
         "name": "subSubMenuItems"
       }
     ]
   },
   {
-    "id": "sub-sub-menu-item",
+    "id": "header-nav-subsubmenu-item",
     "fields": [
       {
         "component": "text",
-        "label": "Sub Sub Menu Label",
-        "name": "subSubMenuLabel",
+        "label": "Sub-Submenu Item Label",
+        "name": "label",
         "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "Sub Sub Menu Link",
-        "name": "subSubMenuLink",
+        "label": "Sub-Submenu Item Link",
+        "name": "link",
         "valueType": "string"
       }
     ]
   },
   {
-    "id": "search-icon-item",
+    "id": "header-nav-simple-item",
     "fields": [
       {
         "component": "reference",
-        "label": "Search Icon Image",
-        "name": "searchIcon",
+        "label": "Simple Nav Item Icon (Mobile)",
+        "name": "icon",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Simple Nav Item Label",
+        "name": "label",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Simple Nav Item Link",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "header-search-icon",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Search Icon",
+        "name": "icon",
         "valueType": "string"
       },
       {
         "component": "text",
         "label": "Search Label",
-        "name": "searchLabel",
+        "name": "label",
         "valueType": "string"
       }
     ]
@@ -1115,19 +1260,20 @@
       {
         "component": "richtext",
         "label": "Main Heading",
-        "name": "headline"
+        "name": "heading",
+        "valueType": "string"
       },
       {
         "component": "container",
         "item": "product-selector-item",
-        "label": "Product Selectors",
-        "name": "products"
+        "label": "Product Selector Items",
+        "name": "productSelectors"
       },
       {
         "component": "container",
-        "item": "product-detail-item",
-        "label": "Product Details",
-        "name": "productDetails"
+        "item": "product-panel",
+        "label": "Product Panels",
+        "name": "productPanels"
       }
     ]
   },
@@ -1136,78 +1282,92 @@
     "fields": [
       {
         "component": "reference",
-        "label": "Product Thumbnail Image",
-        "name": "thumbnailImage"
+        "label": "Product Icon",
+        "name": "productIcon",
+        "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Product Name",
-        "name": "productLabel"
+        "label": "Product Label",
+        "name": "productLabel",
+        "valueType": "string"
       }
     ]
   },
   {
-    "id": "product-detail-item",
+    "id": "product-panel",
     "fields": [
       {
         "component": "reference",
-        "label": "Background Image (Desktop)",
-        "name": "backgroundDesktop"
+        "label": "Desktop Background Image",
+        "name": "backgroundDesktop",
+        "valueType": "string"
       },
       {
         "component": "reference",
-        "label": "Background Image (Mobile)",
-        "name": "backgroundMobile"
+        "label": "Mobile Background Image",
+        "name": "backgroundMobile",
+        "valueType": "string"
       },
       {
         "component": "richtext",
-        "label": "Headline (Before Download)",
-        "name": "headlineBeforeDownload"
+        "label": "Headline (before download)",
+        "name": "headlineBefore",
+        "valueType": "string"
       },
       {
         "component": "reference",
-        "label": "CTA Icon (Before Download)",
-        "name": "ctaIconBeforeDownload"
+        "label": "CTA Icon (before download)",
+        "name": "ctaIcon",
+        "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "Download Link (Before Download)",
-        "name": "downloadLink"
+        "label": "CTA Link (Download Report)",
+        "name": "ctaLink",
+        "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Download Button Label (Before Download)",
-        "name": "downloadLabel"
+        "label": "CTA Label (Download Report)",
+        "name": "ctaLabel",
+        "valueType": "string"
       },
       {
         "component": "richtext",
-        "label": "Headline (After Download)",
-        "name": "headlineAfterDownload"
+        "label": "Headline (after download)",
+        "name": "headlineAfter",
+        "valueType": "string"
       },
       {
         "component": "reference",
-        "label": "CTA Icon (After Download)",
-        "name": "ctaIconAfterDownload"
+        "label": "Confirmation Icon (after download)",
+        "name": "confirmationIcon",
+        "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Download Button Label (After Download)",
-        "name": "downloadLabelAfter"
+        "label": "CTA Label (after download)",
+        "name": "ctaLabelAfter",
+        "valueType": "string"
       },
       {
         "component": "reference",
-        "label": "Confirmation Icon (After Download)",
-        "name": "confirmationIconAfterDownload"
+        "label": "Milk Panel Icon",
+        "name": "milkPanelIcon",
+        "valueType": "string"
       },
       {
         "component": "aem-content",
         "label": "Whatsapp Link",
-        "name": "whatsappLink"
+        "name": "whatsappLink",
+        "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Whatsapp Link Label",
-        "name": "whatsappLabel"
+        "label": "Whatsapp Label",
+        "name": "whatsappLabel",
+        "valueType": "string"
       }
     ]
   },
@@ -1498,6 +1658,9 @@
     ]
   },
   {
+    "id": "space-adder"
+  },
+  {
     "id": "stay-social",
     "fields": [
       {
@@ -1537,20 +1700,20 @@
     "fields": [
       {
         "component": "reference",
-        "label": "Card Image (Mobile)",
-        "name": "imageMobile",
-        "valueType": "string"
-      },
-      {
-        "component": "reference",
         "label": "Card Image (Desktop)",
         "name": "imageDesktop",
         "valueType": "string"
       },
       {
+        "component": "reference",
+        "label": "Card Image (Mobile)",
+        "name": "imageMobile",
+        "valueType": "string"
+      },
+      {
         "component": "aem-content",
         "label": "Card Link",
-        "name": "link",
+        "name": "cardLink",
         "valueType": "string"
       }
     ]

@@ -848,6 +848,10 @@
 
 .border-0 { border:0!important }
 
+.border-bottom { border-bottom:var(--bs-border-width) var(--bs-border-style) var(--bs-border-color)!important }
+
+.border-dark-gray-100 { --bs-border-opacity:1;border-color:#343434!important }
+
 .border-red-100 { --bs-border-opacity:1;border-color:#da001c!important }
 
 .border-red-300-active:active { --bs-border-opacity:1;border-color:#dd3830!important }
@@ -870,6 +874,8 @@
 
 .h-100 { height:100%!important }
 
+.flex-fill { -webkit-box-flex:1!important;-ms-flex:1 1 auto!important;flex:1 1 auto!important }
+
 .flex-column { -webkit-box-direction:normal!important }
 
 .flex-column { -webkit-box-orient:vertical!important;-ms-flex-direction:column!important;flex-direction:column!important }
@@ -877,6 +883,8 @@
 .flex-wrap { -ms-flex-wrap:wrap!important;flex-wrap:wrap!important }
 
 .justify-content-start { -webkit-box-pack:start!important;-ms-flex-pack:start!important;justify-content:flex-start!important }
+
+.justify-content-end { -webkit-box-pack:end!important;-ms-flex-pack:end!important;justify-content:flex-end!important }
 
 .justify-content-center { -webkit-box-pack:center!important;-ms-flex-pack:center!important;justify-content:center!important }
 
@@ -894,6 +902,8 @@
 
 .m-0 { margin:0!important }
 
+.mx-3 { margin-left:.75rem!important;margin-right:.75rem!important }
+
 .mx-4 { margin-left:1rem!important;margin-right:1rem!important }
 
 .mx-auto { margin-left:auto!important;margin-right:auto!important }
@@ -909,6 +919,8 @@
 .mt-8 { margin-top:2rem!important }
 
 .mt-10 { margin-top:2.5rem!important }
+
+.mt-11 { margin-top:2.75rem!important }
 
 .mt-12 { margin-top:3rem!important }
 
@@ -926,11 +938,17 @@
 
 .mb-8 { margin-bottom:2rem!important }
 
+.ms-2 { margin-left:.5rem!important }
+
 .p-0 { padding:0!important }
 
 .p-4 { padding:1rem!important }
 
 .px-0 { padding-left:0!important;padding-right:0!important }
+
+.px-3 { padding-left:.75rem!important;padding-right:.75rem!important }
+
+.px-4 { padding-left:1rem!important;padding-right:1rem!important }
 
 .px-5 { padding-left:1.25rem!important;padding-right:1.25rem!important }
 
@@ -940,7 +958,13 @@
 
 .py-0 { padding-bottom:0!important;padding-top:0!important }
 
+.py-3 { padding-bottom:.75rem!important;padding-top:.75rem!important }
+
 .py-4 { padding-bottom:1rem!important;padding-top:1rem!important }
+
+.py-6 { padding-bottom:1.5rem!important;padding-top:1.5rem!important }
+
+.py-8 { padding-bottom:2rem!important;padding-top:2rem!important }
 
 .pt-2 { padding-top:.5rem!important }
 
@@ -962,6 +986,8 @@
 
 .pb-5 { padding-bottom:1.25rem!important }
 
+.pb-8 { padding-bottom:2rem!important }
+
 .ps-0 { padding-left:0!important }
 
 .gap-4 { gap:1rem!important }
@@ -982,7 +1008,11 @@
 
 .text-decoration-none { text-decoration:none!important }
 
+.text-uppercase { text-transform:uppercase!important }
+
 .text-capitalize { text-transform:capitalize!important }
+
+.text-nowrap { white-space:nowrap!important }
 
 .text-black { --bs-text-opacity:1;color:#000!important }
 
@@ -1188,7 +1218,11 @@
 
 .font-12 { font-size:.75rem }
 
+.font-14 { font-size:.875rem }
+
 .font-18 { font-size:1.125rem }
+
+.font-20 { font-size:1.25rem }
 
 .font-24 { font-size:1.5rem }
 
@@ -1201,6 +1235,8 @@
 @media(min-width:1200px){.font-xl-default{font-size:1rem}.font-xl-10{font-size:.625rem}.font-xl-12{font-size:.75rem}.font-xl-14{font-size:.875rem}.font-xl-18{font-size:1.125rem}.font-xl-20{font-size:1.25rem}.font-xl-24{font-size:1.5rem}.font-xl-32{font-size:2rem}.font-xl-40{font-size:2.5rem}}
 
 .leading-20 { line-height:1.25rem }
+
+.leading-22 { line-height:1.375rem }
 
 .leading-24 { line-height:1.5rem }
 
@@ -1782,6 +1818,8 @@ body .root{margin:auto;max-width:100rem;overflow:hidden}
 
 @media(min-width:1200px){.our-promise--info-card-img{max-width:calc(100% - 13.75rem)}}
 
+.popular-recipe__container { padding-left:1rem;padding-right:1rem }
+
 @media(min-width:576px){.popular-recipe__container{margin-left:4.0625rem;margin-right:4.0625rem;padding:0}}
 
 @media(min-width:768px){.popular-recipe__container{margin-left:4.6875rem;margin-right:4.6875rem}}
@@ -1790,13 +1828,39 @@ body .root{margin:auto;max-width:100rem;overflow:hidden}
 
 @media(min-width:1200px){.popular-recipe__container{margin-left:4.625rem;margin-right:4.625rem}}
 
+.popular-recipe__container .swiper-slide { height:auto!important }
+
+.popular-recipe__container .recipe-card { border-radius:1rem }
+
+.popular-recipe__container .recipe-card__link { text-decoration:none }
+
+.popular-recipe__container .recipe-card__image { border-top-left-radius:1rem!important;border-top-right-radius:1rem!important }
+
+.popular-recipe__container .recipe-card__content { padding-left:.875rem;padding-right:.875rem }
+
+.popular-recipe__container .recipe-card__text { min-height:7rem }
+
 @media(min-width:1200px){.popular-recipe__container .recipe-card__text{min-height:7.75rem}}
+
+.popular-recipe__container .recipe-card__properties { min-height:1.25rem }
 
 @media(min-width:1200px){.popular-recipe__container .recipe-card__property .icon{height:1.25rem;width:1.25rem}}
 
+.popular-recipe__container .recipe-card__wave { background-image:url(clientlib-site/resources/images/static/curved_line_wave_2.svg);background-position:50%;background-repeat:repeat-x;background-size:contain;height:.375rem }
+
+.popular-recipe__container .recipe-card__desc, .popular-recipe__container .recipe-card__title { -webkit-box-orient:vertical;-webkit-line-clamp:2;display:-webkit-box;overflow:hidden }
+
+.popular-recipe__container .recipe-card__tag { border-radius:0 .625rem .625rem 0;top:1.25rem }
+
+.popular-recipe__container .recipe-card__property--left { border-right:.0875rem solid #343434;min-width:50%;padding-right:.375rem }
+
 @media(min-width:1200px){.popular-recipe__container .recipe-card__property--left{padding-right:.625rem}}
 
+.popular-recipe__container .recipe-card__property--right { padding-left:.375rem }
+
 @media(min-width:1200px){.popular-recipe__container .recipe-card__property--right{padding-left:.625rem}}
+
+.serve-content { height:20px }
 
 @media(min-width:992px){.product-cards__card-container.add-margin{margin-left:4.5rem!important;margin-right:4.5rem!important}}
 
@@ -1878,7 +1942,13 @@ body .root{margin:auto;max-width:100rem;overflow:hidden}
 
 .scroll-to-top__btn:hover { -webkit-box-shadow:0 0 .375rem rgba(218,0,28,.4);box-shadow:0 0 .375rem rgba(218,0,28,.4);opacity:1 }
 
+.social-media-share { background-color:rgba(45,45,45,.8) }
+
+.social-media-share .social-media-share__wrapper { border-radius:.625rem;width:83% }
+
 @media(min-width:768px){.social-media-share .social-media-share__wrapper{max-width:64rem;position:relative;width:71%}}
+
+.social-media-share .social-media-share__wrapper .social-media-share__wrapper--title-close .social-media-share__wrapper--close { cursor:pointer;height:1.5rem;width:1.5rem }
 
 @media(min-width:768px){.social-media-share .social-media-share__wrapper .social-media-share__wrapper--title-close .social-media-share__wrapper--close{height:1.875rem;width:1.875rem}.social-media-share .social-media-share__wrapper .social-media-share__wrapper--social-icons{margin-left:3.125rem;margin-right:3.125rem}}
 
@@ -1890,11 +1960,33 @@ body .root{margin:auto;max-width:100rem;overflow:hidden}
 
 @media(min-width:768px){.social-media-share .social-media-share__wrapper .social-media-share__wrapper--social-icons .social-media-share__wrapper--social-icons-wrapper .social-media-share__wrapper--icon-label{-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column;gap:1rem}}
 
+.social-media-share .social-media-share__wrapper .social-media-share__wrapper--social-icons .social-media-share__wrapper--social-icons-wrapper .social-media-share__wrapper--icon-label .social-media-share__wrapper--icons { cursor:pointer;height:3rem;width:3rem }
+
 @media(min-width:768px){.social-media-share .social-media-share__wrapper .social-media-share__wrapper--social-icons .social-media-share__wrapper--social-icons-wrapper .social-media-share__wrapper--icon-label .social-media-share__wrapper--icons{height:5.625rem;width:5.625rem}}
 
 @media(min-width:768px){.social-media-share .social-media-share__wrapper .social-media-share__wrapper--social-icons .social-media-share__wrapper--social-icons-wrapper .social-media-share__wrapper--icon-label .social-media-share__wrapper--icons .social-media-share__wrapper--images{height:3rem;width:3rem}}
 
+.social-media-share .social-media-share__wrapper .social-media-share__wrapper--social-icons .social-media-share__wrapper--social-icons-wrapper:has(+.swiper-button-lock) { -webkit-box-pack:center;-ms-flex-pack:center;justify-content:center }
+
+.social-media-share .social-media-share__wrapper .social-media-share__wrapper--social-icons .social-media-share__button { cursor:pointer;height:1.5rem;top:45%;width:.75rem }
+
+.social-media-share .social-media-share__wrapper .social-media-share__wrapper--social-icons .social-media-share__prev { left:4rem }
+
+.social-media-share .social-media-share__wrapper .social-media-share__wrapper--social-icons .social-media-share__next { right:4rem }
+
+.social-media-share .social-media-share__wrapper .social-media-share__wrapper--input-button { -webkit-column-gap:1rem;-moz-column-gap:1rem;column-gap:1rem;row-gap:1.5rem }
+
+.social-media-share .social-media-share__wrapper .social-media-share__wrapper--input-button .social-media-share__wrapper--input { border-radius:.3125rem;padding:.625rem 0;width:100% }
+
 @media(min-width:768px){.social-media-share .social-media-share__wrapper .social-media-share__wrapper--input-button .social-media-share__wrapper--input{width:53.4%}}
+
+.social-media-share .social-media-share__wrapper .social-media-share__wrapper--input-button .social-media-share__wrapper--button { background-color:#da001c;border-radius:.3125rem;cursor:pointer }
+
+.social-media-share .social-media-share__wrapper .social-media-share__wrapper--input-button .social-media-share__wrapper--button:hover { background-color:#bf271b }
+
+.social-media-share .social-media-share__wrapper .social-media-share__wrapper--input-button .social-media-share__wrapper--button:active { background-color:#dd3830 }
+
+.social-media-share .social-media-share__wrapper .social-media-share__wrapper--input-button .social-media-share__wrapper--button:disabled { opacity:.4 }
 
 @media(min-width:576px){.similar-products .similar-products__container{margin-left:4.0625rem;margin-right:4.0625rem;padding:0}}
 
