@@ -50,8 +50,8 @@ export default function decorate(block) {
   const logoDiv = document.createElement('div');
   logoDiv.classList.add('logo', 'image', 'cmp-header__logo');
 
-  const logoImageCell = logoImageRow.querySelector('div');
-  const logoLinkCell = logoLinkRow.querySelector('div');
+  const logoImageCell = logoImageRow?.querySelector('div');
+  const logoLinkCell = logoLinkRow?.querySelector('div');
 
   const logoAnchor = document.createElement('a');
   logoAnchor.classList.add('cmp-image__link');
@@ -72,7 +72,7 @@ export default function decorate(block) {
       logoAnchor.append(optimizedPic);
     }
   }
-  moveInstrumentation(logoImageRow, logoAnchor);
+  if (logoImageRow) moveInstrumentation(logoImageRow, logoAnchor);
   logoDiv.append(logoAnchor);
   block.append(logoDiv);
 

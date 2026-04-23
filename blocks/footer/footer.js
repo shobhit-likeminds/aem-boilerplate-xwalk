@@ -85,32 +85,32 @@ export default function decorate(block) {
   const logoLink = document.createElement('a');
   logoLink.classList.add('footer-brand__logo', 'd-inline-block', 'cta-analytics');
   logoLink.setAttribute('aria-label', 'logo');
-  const foundLogoLink = logoLinkRow.querySelector('a');
+  const foundLogoLink = logoLinkRow?.querySelector('a');
   if (foundLogoLink) {
     logoLink.href = foundLogoLink.href;
   }
-  const primaryLogoPicture = logoRow.querySelector('picture');
+  const primaryLogoPicture = logoRow?.querySelector('picture');
   if (primaryLogoPicture) {
     const img = primaryLogoPicture.querySelector('img');
     const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
     moveInstrumentation(img, optimizedPic.querySelector('img'));
     logoLink.append(optimizedPic);
   }
-  moveInstrumentation(logoRow, logoLink);
-  moveInstrumentation(logoLinkRow, logoLink);
+  if (logoRow) moveInstrumentation(logoRow, logoLink);
+  if (logoLinkRow) moveInstrumentation(logoLinkRow, logoLink);
   footerBrandLeft.append(logoLink);
 
   // Secondary Logo
   const secondaryLogoDiv = document.createElement('div');
   secondaryLogoDiv.classList.add('footer-brand__secondary--logo', 'd-inline-block');
-  const secondaryLogoPicture = secondaryLogoRow.querySelector('picture');
+  const secondaryLogoPicture = secondaryLogoRow?.querySelector('picture');
   if (secondaryLogoPicture) {
     const img = secondaryLogoPicture.querySelector('img');
     const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
     moveInstrumentation(img, optimizedPic.querySelector('img'));
     secondaryLogoDiv.append(optimizedPic);
   }
-  moveInstrumentation(secondaryLogoRow, secondaryLogoDiv);
+  if (secondaryLogoRow) moveInstrumentation(secondaryLogoRow, secondaryLogoDiv);
   footerBrandLeft.append(secondaryLogoDiv);
 
   const footerBrandRight = document.createElement('section');
