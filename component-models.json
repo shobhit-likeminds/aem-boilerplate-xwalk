@@ -641,40 +641,44 @@
       {
         "component": "reference",
         "label": "Primary Logo",
-        "name": "primaryLogo"
+        "name": "primaryLogo",
+        "valueType": "string"
       },
       {
         "component": "aem-content",
         "label": "Primary Logo Link",
-        "name": "primaryLogoLink"
+        "name": "primaryLogoLink",
+        "valueType": "string"
       },
       {
         "component": "reference",
         "label": "Secondary Logo",
-        "name": "secondaryLogo"
+        "name": "secondaryLogo",
+        "valueType": "string"
       },
       {
         "component": "container",
         "item": "footer-navigation-item",
-        "label": "Footer Navigation Sections",
-        "name": "footerNavigationSections"
+        "label": "Footer Navigation Items",
+        "name": "navigationItems"
       },
       {
         "component": "container",
-        "item": "footer-link-item",
+        "item": "footer-secondary-link-item",
         "label": "Footer Secondary Links",
-        "name": "footerSecondaryLinks"
+        "name": "secondaryLinks"
       },
       {
         "component": "text",
         "label": "Copyright Text",
-        "name": "copyright"
+        "name": "copyrightText",
+        "valueType": "string"
       },
       {
         "component": "container",
-        "item": "footer-social-link-item",
-        "label": "Footer Social Links",
-        "name": "footerSocialLinks"
+        "item": "footer-social-item",
+        "label": "Social Media Links",
+        "name": "socialLinks"
       }
     ]
   },
@@ -683,13 +687,15 @@
     "fields": [
       {
         "component": "text",
-        "label": "Link Label",
-        "name": "label"
+        "label": "Navigation Label",
+        "name": "label",
+        "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "Link",
-        "name": "link"
+        "label": "Navigation Link",
+        "name": "link",
+        "valueType": "string"
       },
       {
         "component": "richtext",
@@ -700,32 +706,42 @@
     ]
   },
   {
-    "id": "footer-link-item",
+    "id": "footer-secondary-link-item",
     "fields": [
       {
         "component": "text",
-        "label": "Link Label",
-        "name": "label"
+        "label": "Secondary Link Label",
+        "name": "label",
+        "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "Link",
-        "name": "link"
+        "label": "Secondary Link URL",
+        "name": "link",
+        "valueType": "string"
       }
     ]
   },
   {
-    "id": "footer-social-link-item",
+    "id": "footer-social-item",
     "fields": [
       {
         "component": "reference",
         "label": "Social Icon",
-        "name": "icon"
+        "name": "icon",
+        "valueType": "string"
       },
       {
         "component": "aem-content",
         "label": "Social Link",
-        "name": "link"
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Social Platform Name",
+        "name": "label",
+        "valueType": "string"
       }
     ]
   },
