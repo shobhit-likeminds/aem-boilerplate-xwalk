@@ -32,15 +32,15 @@
       }
     },
     {
-      "title": "Footer-Link-Item",
-      "id": "footer-link-item",
+      "title": "Footer-Brand-Left-Link-Item",
+      "id": "footer-brand-left-link-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "footer-link-item",
-              "name": "Footer-Link-Item"
+              "model": "footer-brand-left-link-item",
+              "name": "Footer-Brand-Left-Link-Item"
             }
           }
         }
@@ -69,12 +69,12 @@
         {
           "component": "reference",
           "label": "Primary Logo",
-          "name": "primaryLogo"
+          "name": "logo"
         },
         {
           "component": "aem-content",
           "label": "Primary Logo Link",
-          "name": "primaryLogoLink"
+          "name": "logoLink"
         },
         {
           "component": "reference",
@@ -84,25 +84,25 @@
         {
           "component": "container",
           "item": "footer-navigation-item",
-          "label": "Footer Navigation Sections",
-          "name": "footerNavigationSections"
+          "label": "Navigation Items",
+          "name": "navigationItems"
         },
         {
           "component": "container",
-          "item": "footer-link-item",
-          "label": "Footer Secondary Links",
-          "name": "footerSecondaryLinks"
+          "item": "footer-brand-left-link-item",
+          "label": "Brand Left Links",
+          "name": "brandLeftLinks"
         },
         {
           "component": "text",
           "label": "Copyright Text",
-          "name": "copyright"
+          "name": "copyrightText"
         },
         {
           "component": "container",
           "item": "footer-social-link-item",
-          "label": "Footer Social Links",
-          "name": "footerSocialLinks"
+          "label": "Social Links",
+          "name": "socialLinks"
         }
       ]
     },
@@ -111,12 +111,12 @@
       "fields": [
         {
           "component": "text",
-          "label": "Link Label",
+          "label": "Navigation Label",
           "name": "label"
         },
         {
           "component": "aem-content",
-          "label": "Link",
+          "label": "Navigation Link",
           "name": "link"
         },
         {
@@ -128,16 +128,16 @@
       ]
     },
     {
-      "id": "footer-link-item",
+      "id": "footer-brand-left-link-item",
       "fields": [
         {
           "component": "text",
-          "label": "Link Label",
+          "label": "Brand Left Link Label",
           "name": "label"
         },
         {
           "component": "aem-content",
-          "label": "Link",
+          "label": "Brand Left Link",
           "name": "link"
         }
       ]
@@ -163,7 +163,7 @@
       "id": "footer",
       "components": [
         "footer-navigation-item",
-        "footer-link-item",
+        "footer-brand-left-link-item",
         "footer-social-link-item"
       ]
     }

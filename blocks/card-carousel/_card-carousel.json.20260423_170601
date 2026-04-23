@@ -1,7 +1,7 @@
 {
   "definitions": [
     {
-      "title": "Card-Carousel",
+      "title": "Card Carousel",
       "id": "card-carousel",
       "plugins": {
         "xwalk": {
@@ -10,14 +10,14 @@
             "template": {
               "filter": "card-carousel",
               "model": "card-carousel",
-              "name": "Card-Carousel"
+              "name": "Card Carousel"
             }
           }
         }
       }
     },
     {
-      "title": "Product-Card",
+      "title": "Product Card",
       "id": "product-card",
       "plugins": {
         "xwalk": {
@@ -25,7 +25,7 @@
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
               "model": "product-card",
-              "name": "Product-Card"
+              "name": "Product Card"
             }
           }
         }
@@ -50,21 +50,21 @@
         },
         {
           "component": "reference",
-          "label": "Previous Button Icon",
-          "name": "prevButtonIcon",
+          "label": "Navigation Previous Icon",
+          "name": "navPrevIcon",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Next Button Icon",
-          "name": "nextButtonIcon",
+          "label": "Navigation Next Icon",
+          "name": "navNextIcon",
           "valueType": "string"
         },
         {
           "component": "container",
           "item": "product-card",
           "label": "Product Cards",
-          "name": "cards"
+          "name": "products"
         }
       ]
     },
@@ -73,19 +73,19 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Card Main Image",
+          "label": "Main Product Image (Background)",
           "name": "mainImage",
           "valueType": "string"
         },
         {
           "component": "richtext",
-          "label": "Card Title Richtext (can include bold and line breaks)",
+          "label": "Product Title Rich Text",
           "name": "titleRich",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Product Image (bottom of card)",
+          "label": "Product Image (Foreground/Packshot)",
           "name": "productImage",
           "valueType": "string"
         },
@@ -96,15 +96,15 @@
           "valueType": "string"
         },
         {
-          "component": "aem-content",
-          "label": "CTA Link",
-          "name": "ctaLink",
-          "valueType": "string"
-        },
-        {
           "component": "text",
           "label": "CTA Label",
           "name": "ctaLabel",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "CTA Link",
+          "name": "ctaLink",
           "valueType": "string"
         }
       ]

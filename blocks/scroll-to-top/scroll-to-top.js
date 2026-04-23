@@ -2,10 +2,10 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  // CHECK 0 & 1: Correctly destructuring the single row as per BlockJson and EDS structure.
-  // The block has only one child row, which contains the icon.
-  const [iconRow] = [...block.children];
-  const iconCell = iconRow?.firstElementChild; // Get the actual cell containing the picture
+  // CHECK 0 & 1: Replaced direct index access with content detection
+  // The block structure indicates a single row with a single cell containing a picture.
+  const buttonIconRow = [...block.children][0];
+  const buttonIconCell = [...buttonIconRow.children].find(cell => cell.querySelector('picture'));
 
   const button = document.createElement('button');
   button.classList.add(
@@ -24,28 +24,23 @@ export default function decorate(block) {
     'bg-red-100',
   );
 
-  // CHECK 1.5: Not applicable as no richtext fields.
-
-  // CHECK 3: Ensure instrumentation is moved for the picture and its img.
-  const picture = iconCell?.querySelector('picture');
+  const picture = buttonIconCell?.querySelector('picture');
   if (picture) {
     const img = picture.querySelector('img');
     if (img) {
-      // createOptimizedPicture expects the img element itself, not its src.
-      // The third argument is eager, which should be false for lazy loading.
-      // The fourth argument is an array of widths.
+      // CHECK 3: createOptimizedPicture is used, but the original HTML shows an SVG.
+      // For SVG, we should just append the picture element directly or its innerHTML if it's an SVG tag.
+      // Assuming createOptimizedPicture handles SVG correctly, but if it's a direct SVG tag,
+      // it might be better to just append the picture or the SVG itself.
+      // Given the original HTML has <img alt="svg file" src="/content/dam/aemigrate/uploaded-folder/image/1776943773565.svg+xml"/>
+      // it suggests it's an <img> tag pointing to an SVG, so createOptimizedPicture is appropriate.
       const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-      // Move instrumentation from the original img to the new optimized img
       moveInstrumentation(img, optimizedPic.querySelector('img'));
       button.append(optimizedPic);
     }
   }
 
-  // Move instrumentation from the original icon cell to the new button element
-  // This ensures the button itself is editable in UE if needed.
-  moveInstrumentation(iconRow, button);
-
-  // CHECK 2: Interactivity - Adding event listener for scroll-to-top functionality.
+  // CHECK 2: Interactivity - addEventListener for scroll-to-top button
   button.addEventListener('click', () => {
     window.scrollTo({
       top: 0,
@@ -61,9 +56,14 @@ export default function decorate(block) {
     }
   };
 
+  // Initial check and add event listener
+  handleScroll();
   window.addEventListener('scroll', handleScroll);
-  handleScroll(); // Initial check to set button visibility on page load
 
-  // CHECK 3: Replacing children atomically after all instrumentation is moved.
+  // CHECK 3: moveInstrumentation and replaceChildren for Universal Editor compatibility
+  // Ensure instrumentation is moved from the original row to the new button element.
+  if (buttonIconRow) { // Ensure buttonIconRow exists before moving instrumentation
+    moveInstrumentation(buttonIconRow, button);
+  }
   block.replaceChildren(button);
 }

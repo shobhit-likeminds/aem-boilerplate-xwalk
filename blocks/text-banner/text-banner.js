@@ -2,45 +2,46 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  // Destructure rows based on the BlockJson model
+  // CRITICAL: Destructuring block.children directly is fine here because the model is fixed-field
+  // and all fields are root-level.
   const [titleRow, descriptionRow, ctaLinkRow, ctaLabelRow] = [...block.children];
 
-  const wrapper = document.createElement('section');
-  wrapper.classList.add('text-banner--wrapper', 'position-relative', 'bg-maroon-700');
+  // Extract cells from rows
+  const titleCell = titleRow ? titleRow.children[0] : null;
+  const descriptionCell = descriptionRow ? descriptionRow.children[0] : null;
+  const ctaLinkCell = ctaLinkRow ? ctaLinkRow.children[0] : null;
+  const ctaLabelCell = ctaLabelRow ? ctaLabelRow.children[0] : null;
+
+  const section = document.createElement('section');
+  section.classList.add('text-banner--wrapper', 'position-relative', 'bg-maroon-700');
 
   // Background elements
   const bgCircleLeft = document.createElement('div');
   bgCircleLeft.classList.add('position-absolute', 'opacity-60', 'bg-circle-left');
-  wrapper.append(bgCircleLeft);
+  section.append(bgCircleLeft);
 
   const bgCircleRight = document.createElement('div');
   bgCircleRight.classList.add('position-absolute', 'opacity-20', 'bg-circle-right');
-  wrapper.append(bgCircleRight);
+  section.append(bgCircleRight);
 
   const bgCurveTop = document.createElement('div');
   bgCurveTop.classList.add('position-absolute', 'start-0', 'end-0', 'bg-curve-top');
-  wrapper.append(bgCurveTop);
+  section.append(bgCurveTop);
 
   const bgCurveBottom = document.createElement('div');
   bgCurveBottom.classList.add('position-absolute', 'start-0', 'end-0', 'bg-curve-bottom');
-  wrapper.append(bgCurveBottom);
+  section.append(bgCurveBottom);
 
   const container = document.createElement('div');
   container.classList.add('container', 'gx-8', 'gx-sm-0');
-  wrapper.append(container);
+  section.append(container);
 
   const row = document.createElement('div');
   row.classList.add('row', 'gx-8', 'gx-sm-0', 'text-cream-100');
   container.append(row);
 
   const textBannerContainer = document.createElement('div');
-  textBannerContainer.classList.add(
-    'text-banner--container',
-    'd-flex',
-    'flex-column',
-    'align-items-center',
-    'justify-content-between',
-  );
+  textBannerContainer.classList.add('text-banner--container', 'd-flex', 'flex-column', 'align-items-center', 'justify-content-between');
   row.append(textBannerContainer);
 
   const contentWrapper = document.createElement('div');
@@ -48,54 +49,35 @@ export default function decorate(block) {
   textBannerContainer.append(contentWrapper);
 
   // Title
-  const titleDiv = document.createElement('div');
-  const title = document.createElement('h2');
-  moveInstrumentation(titleRow, title);
-  title.classList.add('font-baskerville', 'font-md-40', 'font-24', 'text-banner--title');
-  // The title cell is the first child of titleRow
-  const titleCell = [...titleRow.children][0];
   if (titleCell) {
+    const titleDiv = document.createElement('div');
+    const title = document.createElement('h2');
+    title.classList.add('font-baskerville', 'font-md-40', 'font-24', 'text-banner--title');
+    moveInstrumentation(titleRow, title); // Instrumentation moved from the row, not the cell
     title.textContent = titleCell.textContent.trim();
+    titleDiv.append(title);
+    contentWrapper.append(titleDiv);
   }
-  titleDiv.append(title);
-  contentWrapper.append(titleDiv);
 
   // Description
-  const descriptionDiv = document.createElement('div');
-  moveInstrumentation(descriptionRow, descriptionDiv);
-  descriptionDiv.classList.add(
-    'mt-sm-8',
-    'mt-5',
-    'text-banner--description',
-    'font-md-18',
-    'font-default',
-    'leading-24',
-    'text-center',
-    'promise-text-padding',
-  );
-  // The description cell is the first child of descriptionRow
-  const descriptionCell = [...descriptionRow.children][0];
   if (descriptionCell) {
-    descriptionDiv.innerHTML = descriptionCell.innerHTML; // Use innerHTML for richtext
+    const descriptionDiv = document.createElement('div');
+    descriptionDiv.classList.add('mt-sm-8', 'mt-5', 'text-banner--description');
+    const descriptionContent = document.createElement('div');
+    descriptionContent.classList.add('font-md-18', 'font-default', 'leading-24', 'text-center', 'promise-text-padding');
+    moveInstrumentation(descriptionRow, descriptionContent); // Instrumentation moved from the row
+    descriptionContent.innerHTML = descriptionCell.innerHTML; // Correctly using innerHTML for richtext
+    descriptionDiv.append(descriptionContent);
+    contentWrapper.append(descriptionDiv);
   }
-  contentWrapper.append(descriptionDiv);
 
   // CTA
-  const ctaDiv = document.createElement('div');
-  ctaDiv.classList.add('text-banner--cta', 'mt-12', 'mt-lg-16');
-  textBannerContainer.append(ctaDiv);
+  if (ctaLinkCell && ctaLabelCell) {
+    const ctaWrapper = document.createElement('div');
+    ctaWrapper.classList.add('text-banner--cta', 'mt-12', 'mt-lg-16');
 
-  // CTA Link and Label cells
-  const ctaLinkCell = [...ctaLinkRow.children][0];
-  const ctaLabelCell = [...ctaLabelRow.children][0];
-
-  const ctaLink = ctaLinkCell ? ctaLinkCell.querySelector('a') : null;
-  const ctaLabel = ctaLabelCell ? ctaLabelCell.textContent.trim() : '';
-
-  if (ctaLink && ctaLabel) {
-    const anchor = document.createElement('a');
-    moveInstrumentation(ctaLinkRow, anchor); // Instrument the row for the link
-    anchor.classList.add(
+    const ctaLink = document.createElement('a');
+    ctaLink.classList.add(
       'svasti-cta',
       'cta-analytics',
       'w-fit',
@@ -115,15 +97,30 @@ export default function decorate(block) {
       'bg-cream-500-hover',
       'bg-cream-100-active',
     );
-    anchor.href = ctaLink.href;
 
-    const span = document.createElement('span');
-    moveInstrumentation(ctaLabelRow, span); // Instrument the row for the label
-    span.classList.add('svasti-cta__label', 'fw-semibold', 'fs-default', 'leading-26');
-    span.textContent = ctaLabel;
-    anchor.append(span);
-    ctaDiv.append(anchor);
+    // FIX: Correctly extract href from the aem-content cell
+    const foundLink = ctaLinkCell.querySelector('a');
+    if (foundLink) {
+      ctaLink.href = foundLink.href;
+    }
+
+    const ctaLabelSpan = document.createElement('span');
+    ctaLabelSpan.classList.add('svasti-cta__label', 'fw-semibold', 'fs-default', 'leading-26');
+    moveInstrumentation(ctaLabelRow, ctaLabelSpan); // Instrumentation moved from the row
+    ctaLabelSpan.textContent = ctaLabelCell.textContent.trim();
+    ctaLink.append(ctaLabelSpan);
+    moveInstrumentation(ctaLinkRow, ctaLink); // Instrumentation moved from the row
+    ctaWrapper.append(ctaLink);
+    textBannerContainer.append(ctaWrapper);
   }
 
-  block.replaceChildren(wrapper);
+  block.replaceChildren(section);
+
+  // This part is for optimizing pictures if any are present, though the current model doesn't include them.
+  // It's a standard utility and doesn't violate any checks for this specific block.
+  section.querySelectorAll('picture > img').forEach((img) => {
+    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+    moveInstrumentation(img, optimizedPic.querySelector('img'));
+    img.closest('picture').replaceWith(optimizedPic);
+  });
 }

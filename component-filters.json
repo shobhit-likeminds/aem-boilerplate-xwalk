@@ -40,7 +40,9 @@
       "footer-new",
       "w-100",
       "footer-brand",
-      "space-adder"
+      "space-adder",
+      "site-header",
+      "empty-background-block"
     ]
   },
   {
@@ -89,6 +91,9 @@
     ]
   },
   {
+    "id": "empty-background-block"
+  },
+  {
     "id": "footer-brand",
     "components": [
       "footer-nav-link",
@@ -107,7 +112,7 @@
     "id": "footer",
     "components": [
       "footer-navigation-item",
-      "footer-brand-left-link-item",
+      "footer-link-item",
       "footer-social-link-item"
     ]
   },
@@ -143,8 +148,8 @@
     "id": "product-selection-component",
     "components": [
       "product-item",
-      "ghee-detail",
-      "milk-detail"
+      "ghee-panel",
+      "milk-panel"
     ]
   },
   {
@@ -172,6 +177,13 @@
   },
   {
     "id": "separator"
+  },
+  {
+    "id": "site-header",
+    "components": [
+      "navigation-item",
+      "search-icon"
+    ]
   },
   {
     "id": "social",

@@ -83,7 +83,7 @@
       "id": "blocks",
       "components": [
         {
-          "title": "Banner-Section",
+          "title": "Banner Section",
           "id": "banner-section",
           "plugins": {
             "xwalk": {
@@ -92,7 +92,7 @@
                 "template": {
                   "filter": "banner-section",
                   "model": "banner-section",
-                  "name": "Banner-Section"
+                  "name": "Banner Section"
                 }
               }
             }
@@ -115,7 +115,7 @@
           }
         },
         {
-          "title": "Card Carousel",
+          "title": "Card-Carousel",
           "id": "card-carousel",
           "plugins": {
             "xwalk": {
@@ -124,14 +124,14 @@
                 "template": {
                   "filter": "card-carousel",
                   "model": "card-carousel",
-                  "name": "Card Carousel"
+                  "name": "Card-Carousel"
                 }
               }
             }
           }
         },
         {
-          "title": "Product Card",
+          "title": "Product-Card",
           "id": "product-card",
           "plugins": {
             "xwalk": {
@@ -139,7 +139,7 @@
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
                   "model": "product-card",
-                  "name": "Product Card"
+                  "name": "Product-Card"
                 }
               }
             }
@@ -284,6 +284,22 @@
           }
         },
         {
+          "title": "Empty-Background-Block",
+          "id": "empty-background-block",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "empty-background-block",
+                  "model": "empty-background-block",
+                  "name": "Empty-Background-Block"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Footer Brand",
           "id": "footer-brand",
           "plugins": {
@@ -422,15 +438,15 @@
           }
         },
         {
-          "title": "Footer-Brand-Left-Link-Item",
-          "id": "footer-brand-left-link-item",
+          "title": "Footer-Link-Item",
+          "id": "footer-link-item",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "footer-brand-left-link-item",
-                  "name": "Footer-Brand-Left-Link-Item"
+                  "model": "footer-link-item",
+                  "name": "Footer-Link-Item"
                 }
               }
             }
@@ -727,30 +743,30 @@
           }
         },
         {
-          "title": "Ghee Detail",
-          "id": "ghee-detail",
+          "title": "Ghee Panel",
+          "id": "ghee-panel",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "ghee-detail",
-                  "name": "Ghee Detail"
+                  "model": "ghee-panel",
+                  "name": "Ghee Panel"
                 }
               }
             }
           }
         },
         {
-          "title": "Milk Detail",
-          "id": "milk-detail",
+          "title": "Milk Panel",
+          "id": "milk-panel",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "milk-detail",
-                  "name": "Milk Detail"
+                  "model": "milk-panel",
+                  "name": "Milk Panel"
                 }
               }
             }
@@ -906,6 +922,82 @@
                   "filter": "separator",
                   "model": "separator",
                   "name": "Separator"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Site Header",
+          "id": "site-header",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "site-header",
+                  "model": "site-header",
+                  "name": "Site Header"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Navigation Item",
+          "id": "navigation-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "navigation-item",
+                  "name": "Navigation Item"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Sub Navigation Item",
+          "id": "sub-navigation-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "sub-navigation-item",
+                  "name": "Sub Navigation Item"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Sub Sub Navigation Item",
+          "id": "sub-sub-navigation-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "sub-sub-navigation-item",
+                  "name": "Sub Sub Navigation Item"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Search Icon",
+          "id": "search-icon",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "search-icon",
+                  "name": "Search Icon"
                 }
               }
             }

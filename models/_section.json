@@ -75,7 +75,9 @@
         "footer-new",
         "w-100",
         "footer-brand",
-        "space-adder"
+        "space-adder",
+        "site-header",
+        "empty-background-block"
       ]
     }
   ]
