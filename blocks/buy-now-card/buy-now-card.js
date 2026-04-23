@@ -2,20 +2,20 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  // The buy-now-card block has no fields defined in its model.
-  // This means it's likely a placeholder or a block that renders no content directly
-  // from authored cells, but instead relies on its presence for styling or
-  // to trigger some other client-side behavior not handled by EDS.
+  // The buy-now-card block has no explicit fields in its model.
+  // This implies it's either a container for other blocks (which EDS does not support directly
+  // via decorate for nested blocks) or it's meant to be an empty placeholder
+  // that gets content injected by other means (e.g., client-side JS fetching data).
 
-  // According to the original HTML, it only has container classes.
-  // We should apply these classes to the block itself if they are not already there.
-  // Since there are no authored rows to process, we simply ensure the block
-  // has the correct container classes.
+  // Based on the provided original HTML, it seems to be a simple wrapper div
+  // with specific AEM Grid System classes.
+  // We should ensure these classes are applied to the block itself.
 
-  // The block element itself is the root of the component.
-  // The original HTML shows classes applied directly to this root div.
+  // The block element itself is the root of this component.
+  // The original HTML shows the classes applied directly to the outer div.
   block.classList.add('buyNowCard', 'aem-GridColumn', 'aem-GridColumn--default--12');
 
-  // Since there are no fields, there are no children to process or move instrumentation from.
-  // The block itself is the final rendered element.
+  // Since there are no fields defined in the blockJson,
+  // there are no authored rows to process or move instrumentation from.
+  // The block itself is the final decorated element.
 }

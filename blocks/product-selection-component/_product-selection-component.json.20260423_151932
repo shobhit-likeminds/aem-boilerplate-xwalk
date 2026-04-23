@@ -17,45 +17,30 @@
       }
     },
     {
-      "title": "Product Item",
-      "id": "product-item",
+      "title": "Product Selector Item",
+      "id": "product-selector-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "product-item",
-              "name": "Product Item"
+              "model": "product-selector-item",
+              "name": "Product Selector Item"
             }
           }
         }
       }
     },
     {
-      "title": "Ghee Detail",
-      "id": "ghee-detail",
+      "title": "Product Panel",
+      "id": "product-panel",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "ghee-detail",
-              "name": "Ghee Detail"
-            }
-          }
-        }
-      }
-    },
-    {
-      "title": "Milk Detail",
-      "id": "milk-detail",
-      "plugins": {
-        "xwalk": {
-          "page": {
-            "resourceType": "core/franklin/components/block/v1/block/item",
-            "template": {
-              "model": "milk-detail",
-              "name": "Milk Detail"
+              "model": "product-panel",
+              "name": "Product Panel"
             }
           }
         }
@@ -69,125 +54,114 @@
         {
           "component": "richtext",
           "label": "Main Heading",
-          "name": "mainHeading"
+          "name": "heading",
+          "valueType": "string"
         },
         {
           "component": "container",
-          "item": "product-item",
-          "label": "Product Items",
-          "name": "products"
+          "item": "product-selector-item",
+          "label": "Product Selector Items",
+          "name": "productSelectors"
         },
         {
           "component": "container",
-          "item": "ghee-detail",
-          "label": "Ghee Details",
-          "name": "gheeDetails"
-        },
-        {
-          "component": "container",
-          "item": "milk-detail",
-          "label": "Milk Details",
-          "name": "milkDetails"
+          "item": "product-panel",
+          "label": "Product Panels",
+          "name": "productPanels"
         }
       ]
     },
     {
-      "id": "product-item",
+      "id": "product-selector-item",
       "fields": [
         {
           "component": "reference",
-          "label": "Product Thumbnail Image",
-          "name": "productImage"
+          "label": "Product Icon",
+          "name": "productIcon",
+          "valueType": "string"
         },
         {
           "component": "text",
           "label": "Product Label",
-          "name": "productLabel"
+          "name": "productLabel",
+          "valueType": "string"
         }
       ]
     },
     {
-      "id": "ghee-detail",
+      "id": "product-panel",
       "fields": [
         {
           "component": "reference",
           "label": "Desktop Background Image",
-          "name": "backgroundDesktop"
+          "name": "backgroundDesktop",
+          "valueType": "string"
         },
         {
           "component": "reference",
           "label": "Mobile Background Image",
-          "name": "backgroundMobile"
+          "name": "backgroundMobile",
+          "valueType": "string"
         },
         {
           "component": "richtext",
           "label": "Headline (before download)",
-          "name": "headlineBefore"
+          "name": "headlineBefore",
+          "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "CTA Icon",
-          "name": "ctaIcon"
+          "label": "CTA Icon (before download)",
+          "name": "ctaIcon",
+          "valueType": "string"
         },
         {
           "component": "aem-content",
-          "label": "CTA Download Link",
-          "name": "ctaLink"
+          "label": "CTA Link (Download Report)",
+          "name": "ctaLink",
+          "valueType": "string"
         },
         {
           "component": "text",
-          "label": "CTA Label",
-          "name": "ctaLabel"
+          "label": "CTA Label (Download Report)",
+          "name": "ctaLabel",
+          "valueType": "string"
         },
         {
           "component": "richtext",
           "label": "Headline (after download)",
-          "name": "headlineAfter"
+          "name": "headlineAfter",
+          "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Confirmation Icon",
-          "name": "confirmationIcon"
+          "label": "Confirmation Icon (after download)",
+          "name": "confirmationIcon",
+          "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Disabled Download Button Label",
-          "name": "disabledDownloadLabel"
-        }
-      ]
-    },
-    {
-      "id": "milk-detail",
-      "fields": [
-        {
-          "component": "reference",
-          "label": "Desktop Background Image",
-          "name": "backgroundDesktop"
+          "label": "CTA Label (after download)",
+          "name": "ctaLabelAfter",
+          "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Mobile Background Image",
-          "name": "backgroundMobile"
-        },
-        {
-          "component": "richtext",
-          "label": "Milk Headline",
-          "name": "headline"
-        },
-        {
-          "component": "reference",
-          "label": "Confirmation Icon",
-          "name": "confirmationIcon"
+          "label": "Milk Panel Icon",
+          "name": "milkPanelIcon",
+          "valueType": "string"
         },
         {
           "component": "aem-content",
           "label": "Whatsapp Link",
-          "name": "whatsappLink"
+          "name": "whatsappLink",
+          "valueType": "string"
         },
         {
           "component": "text",
           "label": "Whatsapp Label",
-          "name": "whatsappLabel"
+          "name": "whatsappLabel",
+          "valueType": "string"
         }
       ]
     }
@@ -196,9 +170,8 @@
     {
       "id": "product-selection-component",
       "components": [
-        "product-item",
-        "ghee-detail",
-        "milk-detail"
+        "product-selector-item",
+        "product-panel"
       ]
     }
   ]

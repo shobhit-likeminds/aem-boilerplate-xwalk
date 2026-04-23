@@ -52,8 +52,7 @@
   {
     "id": "card-carousel",
     "components": [
-      "recipe-card",
-      "social-media-share-item"
+      "product-card"
     ]
   },
   {
@@ -108,18 +107,15 @@
     "id": "footer",
     "components": [
       "footer-navigation-item",
-      "footer-secondary-link-item",
+      "footer-brand-left-link-item",
       "footer-social-link-item"
     ]
   },
   {
     "id": "header-comp",
     "components": [
-      "header-nav-item",
-      "header-nav-submenu-item",
-      "header-nav-subsubmenu-item",
-      "header-nav-simple-item",
-      "header-search-icon"
+      "menu-item",
+      "search-icon-item"
     ]
   },
   {
@@ -146,8 +142,9 @@
   {
     "id": "product-selection-component",
     "components": [
-      "product-selector-item",
-      "product-panel"
+      "product-item",
+      "ghee-detail",
+      "milk-detail"
     ]
   },
   {

@@ -131,30 +131,15 @@
           }
         },
         {
-          "title": "Recipe Card",
-          "id": "recipe-card",
+          "title": "Product Card",
+          "id": "product-card",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "recipe-card",
-                  "name": "Recipe Card"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Social Media Share Item",
-          "id": "social-media-share-item",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block/item",
-                "template": {
-                  "model": "social-media-share-item",
-                  "name": "Social Media Share Item"
+                  "model": "product-card",
+                  "name": "Product Card"
                 }
               }
             }
@@ -437,15 +422,15 @@
           }
         },
         {
-          "title": "Footer-Secondary-Link-Item",
-          "id": "footer-secondary-link-item",
+          "title": "Footer-Brand-Left-Link-Item",
+          "id": "footer-brand-left-link-item",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "footer-secondary-link-item",
-                  "name": "Footer-Secondary-Link-Item"
+                  "model": "footer-brand-left-link-item",
+                  "name": "Footer-Brand-Left-Link-Item"
                 }
               }
             }
@@ -482,7 +467,7 @@
           }
         },
         {
-          "title": "Header-Comp",
+          "title": "Header Comp",
           "id": "header-comp",
           "plugins": {
             "xwalk": {
@@ -491,82 +476,67 @@
                 "template": {
                   "filter": "header-comp",
                   "model": "header-comp",
-                  "name": "Header-Comp"
+                  "name": "Header Comp"
                 }
               }
             }
           }
         },
         {
-          "title": "Header-Nav-Item",
-          "id": "header-nav-item",
+          "title": "Menu Item",
+          "id": "menu-item",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "header-nav-item",
-                  "name": "Header-Nav-Item"
+                  "model": "menu-item",
+                  "name": "Menu Item"
                 }
               }
             }
           }
         },
         {
-          "title": "Header-Nav-Submenu-Item",
-          "id": "header-nav-submenu-item",
+          "title": "Submenu Item",
+          "id": "submenu-item",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "header-nav-submenu-item",
-                  "name": "Header-Nav-Submenu-Item"
+                  "model": "submenu-item",
+                  "name": "Submenu Item"
                 }
               }
             }
           }
         },
         {
-          "title": "Header-Nav-Subsubmenu-Item",
-          "id": "header-nav-subsubmenu-item",
+          "title": "Submenu Link Item",
+          "id": "submenu-link-item",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "header-nav-subsubmenu-item",
-                  "name": "Header-Nav-Subsubmenu-Item"
+                  "model": "submenu-link-item",
+                  "name": "Submenu Link Item"
                 }
               }
             }
           }
         },
         {
-          "title": "Header-Nav-Simple-Item",
-          "id": "header-nav-simple-item",
+          "title": "Search Icon Item",
+          "id": "search-icon-item",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "header-nav-simple-item",
-                  "name": "Header-Nav-Simple-Item"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Header-Search-Icon",
-          "id": "header-search-icon",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block/item",
-                "template": {
-                  "model": "header-search-icon",
-                  "name": "Header-Search-Icon"
+                  "model": "search-icon-item",
+                  "name": "Search Icon Item"
                 }
               }
             }
@@ -742,30 +712,45 @@
           }
         },
         {
-          "title": "Product Selector Item",
-          "id": "product-selector-item",
+          "title": "Product Item",
+          "id": "product-item",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "product-selector-item",
-                  "name": "Product Selector Item"
+                  "model": "product-item",
+                  "name": "Product Item"
                 }
               }
             }
           }
         },
         {
-          "title": "Product Panel",
-          "id": "product-panel",
+          "title": "Ghee Detail",
+          "id": "ghee-detail",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "product-panel",
-                  "name": "Product Panel"
+                  "model": "ghee-detail",
+                  "name": "Ghee Detail"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Milk Detail",
+          "id": "milk-detail",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "milk-detail",
+                  "name": "Milk Detail"
                 }
               }
             }
