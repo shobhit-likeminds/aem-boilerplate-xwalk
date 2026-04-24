@@ -33,30 +33,25 @@ function transformNestedLists(rootUl) {
           subWrap.classList.toggle('active');
         });
       }
-      transformNestedLists(nested); // Recursively transform nested lists
     }
   });
 }
 
 export default function decorate(block) {
-  const children = [...block.children];
-
   const [
     titleRow,
     subtitleRow,
-    carouselNavPrevIconRow,
-    carouselNavNextIconRow,
-    ctaLinkRow,
-    ctaLabelRow,
+    viewAllLinkRow,
+    viewAllLabelRow,
     ...itemRows
-  ] = children;
+  ] = [...block.children];
 
-  const section = document.createElement('section');
-  section.classList.add('card-carousel');
-  moveInstrumentation(block, section);
+  const mainContainer = document.createElement('section');
+  mainContainer.classList.add('card-carousel');
 
-  const container = document.createElement('div');
-  container.classList.add('container', 'gx-8', 'gx-sm-0');
+  const containerDiv = document.createElement('div');
+  containerDiv.classList.add('container', 'gx-8', 'gx-sm-0');
+  mainContainer.append(containerDiv);
 
   const title = document.createElement('h2');
   title.classList.add(
@@ -70,8 +65,8 @@ export default function decorate(block) {
     'font-baskerville',
   );
   moveInstrumentation(titleRow, title);
-  title.innerHTML = titleRow.firstElementChild.innerHTML;
-  container.append(title);
+  title.textContent = titleRow.textContent.trim();
+  containerDiv.append(title);
 
   const subtitle = document.createElement('p');
   subtitle.classList.add(
@@ -86,10 +81,8 @@ export default function decorate(block) {
     'fw-medium',
   );
   moveInstrumentation(subtitleRow, subtitle);
-  subtitle.innerHTML = subtitleRow.firstElementChild.innerHTML;
-  container.append(subtitle);
-
-  section.append(container);
+  subtitle.textContent = subtitleRow.textContent.trim();
+  containerDiv.append(subtitle);
 
   const swiperContainer = document.createElement('div');
   swiperContainer.classList.add(
@@ -99,16 +92,39 @@ export default function decorate(block) {
     'gx-0',
   );
   swiperContainer.setAttribute('data-loop', 'true');
+  mainContainer.append(swiperContainer);
 
-  const swiperWrapperOuter = document.createElement('div');
-  swiperWrapperOuter.classList.add(
+  const swiperWrapper = document.createElement('div');
+  swiperWrapper.classList.add(
     'card-carousel__swiper--container',
     'mt-8',
     'mt-sm-10',
   );
+  swiperContainer.append(swiperWrapper);
+
+  const popularRecipeDiv = document.createElement('div');
+  popularRecipeDiv.classList.add(
+    'aem-Grid',
+    'aem-Grid--12',
+    'aem-Grid--default--12',
+  );
+  swiperWrapper.append(popularRecipeDiv);
+
+  const popularRecipeColumn = document.createElement('div');
+  popularRecipeColumn.classList.add(
+    'popularRecipe',
+    'aem-GridColumn',
+    'aem-GridColumn--default--12',
+  );
+  popularRecipeDiv.append(popularRecipeColumn);
 
   const popularRecipeSection = document.createElement('section');
   popularRecipeSection.classList.add('popular-recipe', 'slide-in-anim');
+  popularRecipeColumn.append(popularRecipeSection);
+
+  const popularRecipeData = document.createElement('div');
+  popularRecipeData.classList.add('popular-recipe__data', 'd-none');
+  popularRecipeSection.append(popularRecipeData);
 
   const popularRecipeContainer = document.createElement('div');
   popularRecipeContainer.classList.add(
@@ -119,87 +135,98 @@ export default function decorate(block) {
     'swiper-backface-hidden',
   );
   popularRecipeContainer.setAttribute('data-swiper-init-async', 'true');
+  popularRecipeSection.append(popularRecipeContainer);
 
-  const swiperWrapper = document.createElement('div');
-  swiperWrapper.classList.add('swiper-wrapper', 'popular-recipe__recipe-wrapper');
+  const swiperRecipeWrapper = document.createElement('div');
+  swiperRecipeWrapper.classList.add('swiper-wrapper', 'popular-recipe__recipe-wrapper');
+  popularRecipeContainer.append(swiperRecipeWrapper);
 
   const socialMediaShareItems = [];
   const recipeCards = [];
 
   itemRows.forEach((row) => {
-    // Recipe Card item detection
-    const cells = [...row.children];
-    if (cells.length === 13) {
+    if (row.children.length === 12) {
+      // Recipe Card
       recipeCards.push(row);
-    }
-    // Social Media Share Item detection
-    else if (cells.length === 3) {
+    } else if (row.children.length === 3) {
+      // Social Media Share Item
       socialMediaShareItems.push(row);
     }
   });
 
-  recipeCards.forEach((row) => {
+  recipeCards.forEach((row, index) => {
     const [
-      recipeLinkCell,
+      linkCell,
       imageCell,
       imageAltCell,
       tagCell,
       tagIconCell,
       titleCell,
       descriptionCell,
-      waveDividerCell,
       timeIconCell,
-      timeTextCell,
+      timeCell,
       servesIconCell,
-      servesTextCell,
+      servesCell,
       hierarchyTreeCell,
     ] = [...row.children];
 
-    const swiperSlide = document.createElement('div');
-    swiperSlide.classList.add('swiper-slide');
-    moveInstrumentation(row, swiperSlide);
+    const slide = document.createElement('div');
+    slide.classList.add('swiper-slide');
+    if (index === 0) {
+      slide.classList.add('swiper-slide-active');
+    } else if (index === 1) {
+      slide.classList.add('swiper-slide-next');
+    }
+    slide.setAttribute('data-swiper-slide-index', index);
+    swiperRecipeWrapper.append(slide);
 
     const recipeCard = document.createElement('div');
     recipeCard.classList.add('recipe-card', 'bg-cream-100', 'h-100');
+    moveInstrumentation(row, recipeCard);
+    slide.append(recipeCard);
 
-    const recipeCardLink = document.createElement('a');
-    recipeCardLink.classList.add(
+    const link = document.createElement('a');
+    link.classList.add(
       'recipe-card__link',
       'd-block',
       'position-relative',
     );
-    recipeCardLink.href = recipeLinkCell.querySelector('a')?.href || '#';
+    link.href = linkCell?.querySelector('a')?.href || '#';
+    recipeCard.append(link);
 
-    const imagePicture = imageCell.querySelector('picture');
+    const imagePicture = imageCell?.querySelector('picture');
     if (imagePicture) {
       const img = imagePicture.querySelector('img');
       const optimizedPic = createOptimizedPicture(
         img.src,
-        imageAltCell.textContent.trim(),
+        imageAltCell?.textContent.trim() || img.alt,
         false,
         [{ width: '750' }],
       );
-      optimizedPic.classList.add(
+      optimizedPic.querySelector('img').classList.add(
         'recipe-card__image',
         'object-fit-cover',
         'w-100',
       );
-      recipeCardLink.append(optimizedPic);
+      link.append(optimizedPic);
+      moveInstrumentation(img, optimizedPic.querySelector('img'));
     }
 
-    const recipeCardContent = document.createElement('div');
-    recipeCardContent.classList.add('recipe-card__content', 'py-6');
+    const contentDiv = document.createElement('div');
+    contentDiv.classList.add('recipe-card__content', 'py-6');
+    link.append(contentDiv);
 
-    const recipeCardInfo = document.createElement('div');
-    recipeCardInfo.classList.add(
+    const infoDiv = document.createElement('div');
+    infoDiv.classList.add(
       'recipe-card__info',
       'd-flex',
       'align-items-center',
       'justify-content-between',
     );
+    contentDiv.append(infoDiv);
 
-    const recipeCardTag = document.createElement('span');
-    recipeCardTag.classList.add(
+    const tagSpan = document.createElement('span');
+    tagSpan.classList.add(
       'recipe-card__tag',
       'text-uppercase',
       'text-red-100',
@@ -208,22 +235,28 @@ export default function decorate(block) {
       'leading-24',
       'fw-semibold',
     );
-    recipeCardTag.textContent = tagCell.textContent.trim();
-    recipeCardInfo.append(recipeCardTag);
+    tagSpan.textContent = tagCell?.textContent.trim() || '';
+    infoDiv.append(tagSpan);
 
-    const tagIconPicture = tagIconCell.querySelector('picture');
+    const tagIconPicture = tagIconCell?.querySelector('picture');
     if (tagIconPicture) {
-      const img = tagIconPicture.querySelector('img');
-      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-      recipeCardInfo.append(optimizedPic);
+      const tagIconImg = tagIconPicture.querySelector('img');
+      const optimizedTagIcon = createOptimizedPicture(
+        tagIconImg.src,
+        tagIconImg.alt,
+        false,
+        [{ width: '32' }],
+      );
+      infoDiv.append(optimizedTagIcon);
+      moveInstrumentation(tagIconImg, optimizedTagIcon.querySelector('img'));
     }
-    recipeCardContent.append(recipeCardInfo);
 
-    const recipeCardText = document.createElement('div');
-    recipeCardText.classList.add('recipe-card__text');
+    const textDiv = document.createElement('div');
+    textDiv.classList.add('recipe-card__text');
+    contentDiv.append(textDiv);
 
-    const recipeCardTitle = document.createElement('h3');
-    recipeCardTitle.classList.add(
+    const titleH3 = document.createElement('h3');
+    titleH3.classList.add(
       'recipe-card__title',
       'font-20',
       'font-xl-24',
@@ -234,11 +267,11 @@ export default function decorate(block) {
       'text-dark-gray-100',
       'mt-4',
     );
-    recipeCardTitle.textContent = titleCell.textContent.trim();
-    recipeCardText.append(recipeCardTitle);
+    titleH3.textContent = titleCell?.textContent.trim() || '';
+    textDiv.append(titleH3);
 
-    const recipeCardDesc = document.createElement('p');
-    recipeCardDesc.classList.add(
+    const descriptionP = document.createElement('p');
+    descriptionP.classList.add(
       'recipe-card__desc',
       'font-default',
       'font-xl-18',
@@ -247,46 +280,44 @@ export default function decorate(block) {
       'text-dark-gray-100',
       'mt-4',
     );
-    recipeCardDesc.innerHTML = descriptionCell.innerHTML;
-    recipeCardText.append(recipeCardDesc);
-    recipeCardContent.append(recipeCardText);
+    descriptionP.textContent = descriptionCell?.textContent.trim() || '';
+    textDiv.append(descriptionP);
 
-    const recipeCardWave = document.createElement('div');
-    recipeCardWave.classList.add(
-      'recipe-card__wave',
-      'mt-11',
-      'mt-xl-7',
-      'w-100',
-    );
-    const waveDividerPicture = waveDividerCell.querySelector('picture');
-    if (waveDividerPicture) {
-      const img = waveDividerPicture.querySelector('img');
-      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-      recipeCardWave.append(optimizedPic);
-    }
-    recipeCardContent.append(recipeCardWave);
+    const waveDiv = document.createElement('div');
+    waveDiv.classList.add('recipe-card__wave', 'mt-11', 'mt-xl-7', 'w-100');
+    contentDiv.append(waveDiv);
 
-    const recipeCardProperties = document.createElement('ul');
-    recipeCardProperties.classList.add(
+    const propertiesUl = document.createElement('ul');
+    propertiesUl.classList.add(
       'recipe-card__properties',
       'mt-4',
       'd-flex',
       'align-items-center',
     );
+    contentDiv.append(propertiesUl);
 
-    const timeProperty = document.createElement('li');
-    timeProperty.classList.add(
+    const timeLi = document.createElement('li');
+    timeLi.classList.add(
       'recipe-card__property',
       'recipe-card__property--left',
       'd-flex',
       'align-items-center',
     );
-    const timeIconPicture = timeIconCell.querySelector('picture');
+    propertiesUl.append(timeLi);
+
+    const timeIconPicture = timeIconCell?.querySelector('picture');
     if (timeIconPicture) {
-      const img = timeIconPicture.querySelector('img');
-      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-      timeProperty.append(optimizedPic);
+      const timeIconImg = timeIconPicture.querySelector('img');
+      const optimizedTimeIcon = createOptimizedPicture(
+        timeIconImg.src,
+        timeIconImg.alt,
+        false,
+        [{ width: '24' }],
+      );
+      timeLi.append(optimizedTimeIcon);
+      moveInstrumentation(timeIconImg, optimizedTimeIcon.querySelector('img'));
     }
+
     const timeSpan = document.createElement('span');
     timeSpan.classList.add(
       'recipe-card__time',
@@ -299,12 +330,11 @@ export default function decorate(block) {
       'd-inline-block',
       'text-nowrap',
     );
-    timeSpan.textContent = timeTextCell.textContent.trim();
-    timeProperty.append(timeSpan);
-    recipeCardProperties.append(timeProperty);
+    timeSpan.textContent = timeCell?.textContent.trim() || '';
+    timeLi.append(timeSpan);
 
-    const servesProperty = document.createElement('li');
-    servesProperty.classList.add(
+    const servesLi = document.createElement('li');
+    servesLi.classList.add(
       'recipe-card__property',
       'recipe-card__property--right',
       'flex-fill',
@@ -312,12 +342,21 @@ export default function decorate(block) {
       'align-items-center',
       'justify-content-end',
     );
-    const servesIconPicture = servesIconCell.querySelector('picture');
+    propertiesUl.append(servesLi);
+
+    const servesIconPicture = servesIconCell?.querySelector('picture');
     if (servesIconPicture) {
-      const img = servesIconPicture.querySelector('img');
-      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-      servesProperty.append(optimizedPic);
+      const servesIconImg = servesIconPicture.querySelector('img');
+      const optimizedServesIcon = createOptimizedPicture(
+        servesIconImg.src,
+        servesIconImg.alt,
+        false,
+        [{ width: '24' }],
+      );
+      servesLi.append(optimizedServesIcon);
+      moveInstrumentation(servesIconImg, optimizedServesIcon.querySelector('img'));
     }
+
     const servesSpan = document.createElement('span');
     servesSpan.classList.add(
       'serve-content',
@@ -330,43 +369,37 @@ export default function decorate(block) {
       'ms-2',
       'd-inline-block',
     );
-    servesSpan.textContent = servesTextCell.textContent.trim();
-    servesProperty.append(servesSpan);
-    recipeCardProperties.append(servesProperty);
+    servesSpan.textContent = servesCell?.textContent.trim() || '';
+    servesLi.append(servesSpan);
 
-    recipeCardContent.append(recipeCardProperties);
-    recipeCardLink.append(recipeCardContent);
-    recipeCard.append(recipeCardLink);
-    swiperSlide.append(recipeCard);
-    swiperWrapper.append(swiperSlide);
-
-    const hierarchyRoot = hierarchyTreeCell.querySelector('ul');
+    const hierarchyRoot = hierarchyTreeCell?.querySelector('ul');
     if (hierarchyRoot) {
-      // Create a temporary div to hold the hierarchy content and apply classes
+      // Create a temporary div to hold the hierarchy content and apply instrumentation
       const tempDiv = document.createElement('div');
-      tempDiv.innerHTML = hierarchyTreeCell.innerHTML;
+      tempDiv.innerHTML = hierarchyTreeCell.innerHTML; // Use innerHTML to preserve structure
       moveInstrumentation(hierarchyTreeCell, tempDiv);
 
-      // Apply classes to nested elements as per ORIGINAL HTML if needed for styling
-      tempDiv.querySelectorAll('ul').forEach(ul => ul.classList.add('nav-menu-list'));
-      tempDiv.querySelectorAll('li').forEach(li => li.classList.add('nav-menu-item', 'list-item'));
-      tempDiv.querySelectorAll('a').forEach(a => a.classList.add('nav-menu-link'));
+      // Apply classes to nested elements if needed, based on original HTML structure
+      tempDiv.querySelectorAll('a').forEach(a => a.classList.add('nav-menu-link')); // Example class
+      tempDiv.querySelectorAll('li').forEach(li => li.classList.add('nav-menu-item', 'list-item')); // Example class
+      tempDiv.querySelectorAll('ul').forEach(ul => ul.classList.add('nav-menu-list')); // Example class
 
-      // If this hierarchy needs to be rendered, append it to a suitable parent.
-      // For now, as per the comment, it's not rendered directly in the card.
-      // We ensure instrumentation is moved and the content is processed correctly.
-      // If it needs to be displayed, e.g., in a modal, the tempDiv can be used.
+      // Transform nested lists for interactivity
+      transformNestedLists(tempDiv.querySelector('ul'));
+
+      // Append the processed hierarchy content to a suitable location if it's meant to be rendered
+      // For now, it's just processed, assuming it might be used for navigation or other features
+      // If it needs to be rendered, append it to a specific element, e.g., recipeCard.append(tempDiv);
+      // For this block, the hierarchy-tree is processed but not directly rendered in the card.
     }
   });
 
-  popularRecipeContainer.append(swiperWrapper);
-  popularRecipeSection.append(popularRecipeContainer);
-
   const popularRecipeShare = document.createElement('div');
   popularRecipeShare.classList.add('popular-recipe__share');
+  popularRecipeSection.append(popularRecipeShare);
 
-  const socialMediaShare = document.createElement('section');
-  socialMediaShare.classList.add(
+  const socialMediaShareSection = document.createElement('section');
+  socialMediaShareSection.classList.add(
     'social-media-share',
     'd-none',
     'w-100',
@@ -379,6 +412,7 @@ export default function decorate(block) {
     'bottom-0',
     'z-2',
   );
+  popularRecipeShare.append(socialMediaShareSection);
 
   const socialMediaShareWrapper = document.createElement('div');
   socialMediaShareWrapper.classList.add(
@@ -388,9 +422,10 @@ export default function decorate(block) {
     'px-3',
     'px-md-8',
   );
+  socialMediaShareSection.append(socialMediaShareWrapper);
 
-  const socialMediaShareTitleClose = document.createElement('div');
-  socialMediaShareTitleClose.classList.add(
+  const titleCloseDiv = document.createElement('div');
+  titleCloseDiv.classList.add(
     'social-media-share__wrapper--title-close',
     'pb-8',
     'd-flex',
@@ -401,17 +436,23 @@ export default function decorate(block) {
     'align-items-center',
     'justify-content-between',
   );
+  socialMediaShareWrapper.append(titleCloseDiv);
 
-  const socialMediaShareClose = document.createElement('div');
-  socialMediaShareClose.classList.add('social-media-share__wrapper--close');
+  const closeDiv = document.createElement('div');
+  closeDiv.classList.add('social-media-share__wrapper--close');
+  titleCloseDiv.append(closeDiv);
+  // Add a placeholder for the close icon, as its source is hardcoded in original HTML
+  const closeIcon = document.createElement('img');
+  closeIcon.alt = 'Close Icon';
+  // TODO: Make closeIcon.src authorable via a new model field if it's dynamic.
+  // For now, using a placeholder.
+  closeIcon.src = '/icons/close.svg';
+  closeDiv.append(closeIcon);
+
   // Add event listener for the close button
-  socialMediaShareClose.addEventListener('click', () => {
-    socialMediaShare.classList.add('d-none');
+  closeDiv.addEventListener('click', () => {
+    socialMediaShareSection.classList.add('d-none');
   });
-  // Assuming a close icon image is provided or hardcoded (if not authored)
-  // For now, it's an empty div as no image is provided in the block structure for close.
-  socialMediaShareTitleClose.append(socialMediaShareClose);
-  socialMediaShareWrapper.append(socialMediaShareTitleClose);
 
   const socialIconsWrapper = document.createElement('div');
   socialIconsWrapper.classList.add(
@@ -422,9 +463,10 @@ export default function decorate(block) {
     'swiper-initialized',
     'swiper-horizontal',
   );
+  socialMediaShareWrapper.append(socialIconsWrapper);
 
   socialMediaShareItems.forEach((row) => {
-    const [socialLinkCell, iconCell, labelCell] = [...row.children];
+    const [iconCell, linkCell, labelCell] = [...row.children];
 
     const iconLabelDiv = document.createElement('div');
     iconLabelDiv.classList.add(
@@ -433,10 +475,10 @@ export default function decorate(block) {
       'd-flex',
       'align-items-center',
     );
-    moveInstrumentation(row, iconLabelDiv);
+    socialIconsWrapper.append(iconLabelDiv);
 
-    const socialLink = document.createElement('a');
-    socialLink.classList.add(
+    const shareLink = document.createElement('a');
+    shareLink.classList.add(
       'social-media-share__link',
       'd-flex',
       'align-items-center',
@@ -446,11 +488,12 @@ export default function decorate(block) {
       'flex-md-column',
       'justify-content-center',
     );
-    socialLink.href = socialLinkCell.querySelector('a')?.href || '#';
-    socialLink.target = '_blank';
+    shareLink.target = '_blank';
+    shareLink.href = linkCell?.querySelector('a')?.href || '#';
+    iconLabelDiv.append(shareLink);
 
-    const iconWrapper = document.createElement('div');
-    iconWrapper.classList.add(
+    const iconsDiv = document.createElement('div');
+    iconsDiv.classList.add(
       'social-media-share__wrapper--icons',
       'rounded-circle',
       'bg-white',
@@ -458,19 +501,25 @@ export default function decorate(block) {
       'justify-content-center',
       'align-items-center',
     );
+    shareLink.append(iconsDiv);
 
-    const iconLink = document.createElement('div'); // This should likely be an <a> tag if it's clickable
-    iconLink.classList.add('social-media-share__wrapper--link', 'text-decoration-none');
-    // iconLink.target = '_blank'; // target should be on the <a> tag
+    const iconLinkDiv = document.createElement('div');
+    iconLinkDiv.classList.add('social-media-share__wrapper--link', 'text-decoration-none');
+    iconLinkDiv.target = '_blank';
+    iconsDiv.append(iconLinkDiv);
 
-    const iconPicture = iconCell.querySelector('picture');
+    const iconPicture = iconCell?.querySelector('picture');
     if (iconPicture) {
-      const img = iconPicture.querySelector('img');
-      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-      iconLink.append(optimizedPic);
+      const iconImg = iconPicture.querySelector('img');
+      const optimizedIcon = createOptimizedPicture(
+        iconImg.src,
+        iconImg.alt,
+        false,
+        [{ width: '32' }],
+      );
+      iconLinkDiv.append(optimizedIcon);
+      moveInstrumentation(iconImg, optimizedIcon.querySelector('img'));
     }
-    iconWrapper.append(iconLink);
-    socialLink.append(iconWrapper);
 
     const labelDiv = document.createElement('div');
     labelDiv.classList.add(
@@ -480,32 +529,102 @@ export default function decorate(block) {
       'leading-22',
       'text-black',
     );
-    labelDiv.textContent = labelCell.textContent.trim();
-    socialLink.append(labelDiv);
+    labelDiv.textContent = labelCell?.textContent.trim() || '';
+    labelDiv.setAttribute('data-socialmedia-name', labelCell?.textContent.trim().toLowerCase() || '');
+    shareLink.append(labelDiv);
 
-    const screenReaderOnly = document.createElement('span');
-    screenReaderOnly.classList.add('cmp-link__screen-reader-only');
-    screenReaderOnly.textContent = 'opens in a new tab';
-    socialLink.append(screenReaderOnly);
+    const screenReaderSpan = document.createElement('span');
+    screenReaderSpan.classList.add('cmp-link__screen-reader-only');
+    screenReaderSpan.textContent = 'opens in a new tab';
+    shareLink.append(screenReaderSpan);
 
     const hiddenInput = document.createElement('input');
     hiddenInput.type = 'hidden';
     hiddenInput.classList.add('social-media-share__wrapper--url');
-    // Assuming data-socialmedia-name comes from the label text or a specific field
-    hiddenInput.value = labelCell.textContent.trim().toLowerCase().replace(/\s/g, '');
-    iconLabelDiv.append(socialLink, hiddenInput);
-    socialIconsWrapper.append(iconLabelDiv);
+    hiddenInput.value = labelCell?.textContent.trim().toLowerCase() || '';
+    iconLabelDiv.append(hiddenInput);
   });
-
-  socialMediaShareWrapper.append(socialIconsWrapper);
-  socialMediaShare.append(socialMediaShareWrapper);
-  popularRecipeShare.append(socialMediaShare);
-  popularRecipeSection.append(popularRecipeShare);
-
-  swiperWrapperOuter.append(popularRecipeSection);
 
   const prevButton = document.createElement('button');
   prevButton.classList.add(
+    'social-media-share__button',
+    'bg-transparent',
+    'border-0',
+    'social-media-share__prev',
+    'd-none',
+    'z-2',
+    'd-md-block',
+    'position-absolute',
+    'swiper-button-prev',
+  );
+  const prevIcon = document.createElement('img');
+  prevIcon.alt = 'Previous';
+  // TODO: Make prevIcon.src authorable via a new model field if it's dynamic.
+  // For now, using a placeholder.
+  prevIcon.src = '/icons/arrow-left.svg';
+  prevButton.append(prevIcon);
+  socialIconsWrapper.append(prevButton);
+
+  const nextButton = document.createElement('button');
+  nextButton.classList.add(
+    'social-media-share__button',
+    'bg-transparent',
+    'border-0',
+    'social-media-share__next',
+    'd-none',
+    'z-2',
+    'd-md-block',
+    'position-absolute',
+    'swiper-button-next',
+  );
+  const nextIcon = document.createElement('img');
+  nextIcon.alt = 'Next';
+  // TODO: Make nextIcon.src authorable via a new model field if it's dynamic.
+  // For now, using a placeholder.
+  nextIcon.src = '/icons/arrow-right.svg';
+  nextButton.append(nextIcon);
+  socialIconsWrapper.append(nextButton);
+
+  const inputButtonDiv = document.createElement('div');
+  inputButtonDiv.classList.add(
+    'social-media-share__wrapper--input-button',
+    'd-flex',
+    'align-items-center',
+    'mt-8',
+    'justify-content-md-center',
+    'flex-column',
+    'flex-md-row',
+  );
+  socialMediaShareWrapper.append(inputButtonDiv);
+
+  const inputField = document.createElement('input');
+  inputField.type = 'text';
+  inputField.classList.add(
+    'social-media-share__wrapper--input',
+    'bg-white',
+    'font-16',
+    'leading-22',
+    'px-4',
+    'py-3',
+    'shadow-none',
+  );
+  inputButtonDiv.append(inputField);
+
+  const copyButton = document.createElement('button');
+  copyButton.classList.add(
+    'social-media-share__wrapper--button',
+    'font-18',
+    'leading-24',
+    'py-4',
+    'px-8',
+    'fw-bold',
+    'text-white',
+  );
+  copyButton.textContent = 'Copy';
+  inputButtonDiv.append(copyButton);
+
+  const carouselPrevButton = document.createElement('button');
+  carouselPrevButton.classList.add(
     'card-carousel__swiper--prev',
     'card-carousel__navigation',
     'cursor-pointer',
@@ -519,16 +638,16 @@ export default function decorate(block) {
     'd-none',
     'd-sm-flex',
   );
-  const prevIconPicture = carouselNavPrevIconRow.querySelector('picture');
-  if (prevIconPicture) {
-    const img = prevIconPicture.querySelector('img');
-    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-    prevButton.append(optimizedPic);
-  }
-  moveInstrumentation(carouselNavPrevIconRow, prevButton);
+  const carouselPrevIcon = document.createElement('img');
+  carouselPrevIcon.alt = 'Previous';
+  // TODO: Make carouselPrevIcon.src authorable via a new model field if it's dynamic.
+  // For now, using a placeholder.
+  carouselPrevIcon.src = '/icons/arrow-left.svg';
+  carouselPrevButton.append(carouselPrevIcon);
+  swiperWrapper.append(carouselPrevButton);
 
-  const nextButton = document.createElement('button');
-  nextButton.classList.add(
+  const carouselNextButton = document.createElement('button');
+  carouselNextButton.classList.add(
     'card-carousel__swiper--next',
     'card-carousel__navigation',
     'cursor-pointer',
@@ -543,18 +662,16 @@ export default function decorate(block) {
     'd-none',
     'd-sm-flex',
   );
-  const nextIconPicture = carouselNavNextIconRow.querySelector('picture');
-  if (nextIconPicture) {
-    const img = nextIconPicture.querySelector('img');
-    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-    nextButton.append(optimizedPic);
-  }
-  moveInstrumentation(carouselNavNextIconRow, nextButton);
+  const carouselNextIcon = document.createElement('img');
+  carouselNextIcon.alt = 'Next';
+  // TODO: Make carouselNextIcon.src authorable via a new model field if it's dynamic.
+  // For now, using a placeholder.
+  carouselNextIcon.src = '/icons/arrow-right.svg';
+  carouselNextButton.append(carouselNextIcon);
+  swiperWrapper.append(carouselNextButton);
 
-  swiperWrapperOuter.append(prevButton, nextButton);
-
-  const pagination = document.createElement('div');
-  pagination.classList.add(
+  const paginationDiv = document.createElement('div');
+  paginationDiv.classList.add(
     'card-carousel__swiper--pagination',
     'mt-10',
     'cursor-pointer',
@@ -565,10 +682,7 @@ export default function decorate(block) {
     'mx-auto',
     'w-fit',
   );
-  swiperWrapperOuter.append(pagination);
-
-  swiperContainer.append(swiperWrapperOuter);
-  section.append(swiperContainer);
+  swiperContainer.append(paginationDiv);
 
   const ctaWrapper = document.createElement('div');
   ctaWrapper.classList.add(
@@ -577,9 +691,10 @@ export default function decorate(block) {
     'align-items-center',
     'mt-8',
   );
+  mainContainer.append(ctaWrapper);
 
-  const ctaLink = document.createElement('a');
-  ctaLink.classList.add(
+  const viewAllLink = document.createElement('a');
+  viewAllLink.classList.add(
     'svasti-cta',
     'cta-analytics',
     'w-fit',
@@ -599,20 +714,25 @@ export default function decorate(block) {
     'bg-maroon-100-hover',
     'bg-red-300-active',
   );
-  ctaLink.href = ctaLinkRow.querySelector('a')?.href || '#';
-  moveInstrumentation(ctaLinkRow, ctaLink);
+  viewAllLink.href = viewAllLinkRow?.querySelector('a')?.href || '#';
+  moveInstrumentation(viewAllLinkRow, viewAllLink);
+  ctaWrapper.append(viewAllLink);
 
-  const ctaLabel = document.createElement('span');
-  ctaLabel.classList.add('svasti-cta__label', 'fw-semibold', 'fs-default', 'leading-26');
-  ctaLabel.textContent = ctaLabelRow.textContent.trim();
-  moveInstrumentation(ctaLabelRow, ctaLabel);
-  ctaLink.append(ctaLabel);
-  ctaWrapper.append(ctaLink);
-  section.append(ctaWrapper);
+  const viewAllLabelSpan = document.createElement('span');
+  viewAllLabelSpan.classList.add(
+    'svasti-cta__label',
+    'fw-semibold',
+    'fs-default',
+    'leading-26',
+  );
+  viewAllLabelSpan.textContent = viewAllLabelRow?.textContent.trim() || '';
+  moveInstrumentation(viewAllLabelRow, viewAllLabelSpan);
+  viewAllLink.append(viewAllLabelSpan);
 
-  block.replaceChildren(section);
+  block.replaceChildren(mainContainer);
 
-  section.querySelectorAll('picture > img').forEach((img) => {
+  // Image optimization for all pictures in the block
+  mainContainer.querySelectorAll('picture > img').forEach((img) => {
     const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
     moveInstrumentation(img, optimizedPic.querySelector('img'));
     img.closest('picture').replaceWith(optimizedPic);

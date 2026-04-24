@@ -78,9 +78,10 @@
   {
     "id": "header-comp",
     "components": [
-      "navigation-item",
-      "sub-menu-item",
-      "search-icon-item"
+      "header-menu-item",
+      "header-search-icon",
+      "header-sub-menu-item",
+      "header-sub-sub-menu-item"
     ]
   },
   {

@@ -17,60 +17,45 @@
       }
     },
     {
-      "title": "Header-Menu-Item",
-      "id": "header-menu-item",
+      "title": "Navigation-Item",
+      "id": "navigation-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "header-menu-item",
-              "name": "Header-Menu-Item"
+              "model": "navigation-item",
+              "name": "Navigation-Item"
             }
           }
         }
       }
     },
     {
-      "title": "Header-Sub-Menu-Item",
-      "id": "header-sub-menu-item",
+      "title": "Sub-Menu-Item",
+      "id": "sub-menu-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "header-sub-menu-item",
-              "name": "Header-Sub-Menu-Item"
+              "model": "sub-menu-item",
+              "name": "Sub-Menu-Item"
             }
           }
         }
       }
     },
     {
-      "title": "Header-Sub-Sub-Menu-Item",
-      "id": "header-sub-sub-menu-item",
+      "title": "Search-Icon-Item",
+      "id": "search-icon-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "header-sub-sub-menu-item",
-              "name": "Header-Sub-Sub-Menu-Item"
-            }
-          }
-        }
-      }
-    },
-    {
-      "title": "Header-Search-Icon",
-      "id": "header-search-icon",
-      "plugins": {
-        "xwalk": {
-          "page": {
-            "resourceType": "core/franklin/components/block/v1/block/item",
-            "template": {
-              "model": "header-search-icon",
-              "name": "Header-Search-Icon"
+              "model": "search-icon-item",
+              "name": "Search-Icon-Item"
             }
           }
         }
@@ -84,7 +69,7 @@
         {
           "component": "reference",
           "label": "Logo Image",
-          "name": "logoImage",
+          "name": "logo",
           "valueType": "string"
         },
         {
@@ -95,42 +80,54 @@
         },
         {
           "component": "container",
-          "item": "header-menu-item",
-          "label": "Menu Items",
-          "name": "menuItems"
+          "item": "navigation-item",
+          "label": "Navigation Menu",
+          "name": "navigationMenu"
         },
         {
           "component": "container",
-          "item": "header-search-icon",
+          "item": "search-icon-item",
           "label": "Search Icons",
           "name": "searchIcons"
         }
       ]
     },
     {
-      "id": "header-menu-item",
+      "id": "navigation-item",
       "fields": [
         {
           "component": "reference",
           "label": "Menu Icon (Mobile)",
-          "name": "menuIcon",
+          "name": "icon",
           "valueType": "string"
         },
         {
           "component": "text",
           "label": "Menu Label",
-          "name": "menuLabel",
+          "name": "label",
           "valueType": "string"
         },
         {
           "component": "aem-content",
           "label": "Menu Link",
-          "name": "menuLink",
+          "name": "link",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Dropdown Arrow Icon (Desktop)",
+          "name": "dropdownArrowIconDesktop",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Dropdown Arrow Icon (Mobile)",
+          "name": "dropdownArrowIconMobile",
           "valueType": "string"
         },
         {
           "component": "container",
-          "item": "header-sub-menu-item",
+          "item": "sub-menu-item",
           "label": "Sub Menu Items",
           "name": "subMenuItems"
         },
@@ -143,58 +140,53 @@
       ]
     },
     {
-      "id": "header-sub-menu-item",
+      "id": "sub-menu-item",
       "fields": [
         {
           "component": "text",
           "label": "Sub Menu Label",
-          "name": "subMenuLabel",
+          "name": "label",
           "valueType": "string"
         },
         {
           "component": "aem-content",
           "label": "Sub Menu Link",
-          "name": "subMenuLink",
+          "name": "link",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Arrow Icon (Desktop)",
+          "name": "arrowIconDesktop",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Arrow Icon (Mobile)",
+          "name": "arrowIconMobile",
           "valueType": "string"
         },
         {
           "component": "container",
-          "item": "header-sub-sub-menu-item",
-          "label": "Sub Sub Menu Items",
-          "name": "subSubMenuItems"
+          "item": "sub-menu-item",
+          "label": "Child Sub Menu Items",
+          "name": "childSubMenuItems"
         }
       ]
     },
     {
-      "id": "header-sub-sub-menu-item",
-      "fields": [
-        {
-          "component": "text",
-          "label": "Sub Sub Menu Label",
-          "name": "subSubMenuLabel",
-          "valueType": "string"
-        },
-        {
-          "component": "aem-content",
-          "label": "Sub Sub Menu Link",
-          "name": "subSubMenuLink",
-          "valueType": "string"
-        }
-      ]
-    },
-    {
-      "id": "header-search-icon",
+      "id": "search-icon-item",
       "fields": [
         {
           "component": "reference",
           "label": "Search Icon",
-          "name": "searchIcon",
+          "name": "icon",
           "valueType": "string"
         },
         {
           "component": "text",
           "label": "Search Label",
-          "name": "searchLabel",
+          "name": "label",
           "valueType": "string"
         }
       ]
@@ -204,10 +196,9 @@
     {
       "id": "header-comp",
       "components": [
-        "header-menu-item",
-        "header-search-icon",
-        "header-sub-menu-item",
-        "header-sub-sub-menu-item"
+        "navigation-item",
+        "sub-menu-item",
+        "search-icon-item"
       ]
     }
   ]
