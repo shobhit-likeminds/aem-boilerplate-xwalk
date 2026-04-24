@@ -130,7 +130,7 @@
           }
         },
         {
-          "title": "Card Carousel",
+          "title": "Card-Carousel",
           "id": "card-carousel",
           "plugins": {
             "xwalk": {
@@ -139,14 +139,14 @@
                 "template": {
                   "filter": "card-carousel",
                   "model": "card-carousel",
-                  "name": "Card Carousel"
+                  "name": "Card-Carousel"
                 }
               }
             }
           }
         },
         {
-          "title": "Recipe Card",
+          "title": "Recipe-Card",
           "id": "recipe-card",
           "plugins": {
             "xwalk": {
@@ -154,22 +154,22 @@
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
                   "model": "recipe-card",
-                  "name": "Recipe Card"
+                  "name": "Recipe-Card"
                 }
               }
             }
           }
         },
         {
-          "title": "Social Media Share",
-          "id": "social-media-share",
+          "title": "Social-Media-Share-Item",
+          "id": "social-media-share-item",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "social-media-share",
-                  "name": "Social Media Share"
+                  "model": "social-media-share-item",
+                  "name": "Social-Media-Share-Item"
                 }
               }
             }
@@ -429,6 +429,67 @@
                 "template": {
                   "model": "milk-product-details",
                   "name": "Milk Product Details"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Product Selection",
+          "id": "product-selection",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "product-selection",
+                  "model": "product-selection",
+                  "name": "Product Selection"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Product Icon Item",
+          "id": "product-icon-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "product-icon-item",
+                  "name": "Product Icon Item"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Product Variant (Ghee)",
+          "id": "product-variant-ghee",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "product-variant-ghee",
+                  "name": "Product Variant (Ghee)"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Product Variant (Milk)",
+          "id": "product-variant-milk",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "product-variant-milk",
+                  "name": "Product Variant (Milk)"
                 }
               }
             }

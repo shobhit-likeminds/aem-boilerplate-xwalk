@@ -24,7 +24,8 @@
       "card-carousel",
       "stay-social",
       "buy-now-card",
-      "footer"
+      "footer",
+      "product-selection"
     ]
   },
   {
@@ -40,7 +41,7 @@
     "id": "card-carousel",
     "components": [
       "recipe-card",
-      "social-media-share"
+      "social-media-share-item"
     ]
   },
   {
@@ -88,6 +89,14 @@
       "product-selector-item",
       "ghee-product-details",
       "milk-product-details"
+    ]
+  },
+  {
+    "id": "product-selection",
+    "components": [
+      "product-icon-item",
+      "product-variant-ghee",
+      "product-variant-milk"
     ]
   },
   {

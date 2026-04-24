@@ -188,40 +188,52 @@
     "id": "card-carousel",
     "fields": [
       {
-        "component": "text",
+        "component": "richtext",
         "label": "Carousel Title",
         "name": "title",
         "valueType": "string"
       },
       {
-        "component": "text",
+        "component": "richtext",
         "label": "Carousel Subtitle",
         "name": "subtitle",
         "valueType": "string"
       },
       {
+        "component": "reference",
+        "label": "Carousel Navigation Previous Icon",
+        "name": "carouselNavPrevIcon",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Carousel Navigation Next Icon",
+        "name": "carouselNavNextIcon",
+        "valueType": "string"
+      },
+      {
         "component": "aem-content",
-        "label": "View All Recipes Link",
-        "name": "viewAllLink",
+        "label": "CTA Link (View All)",
+        "name": "ctaLink",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "View All Recipes Label",
-        "name": "viewAllLabel",
+        "label": "CTA Label (View All)",
+        "name": "ctaLabel",
         "valueType": "string"
       },
       {
         "component": "container",
         "item": "recipe-card",
         "label": "Recipe Cards",
-        "name": "recipes"
+        "name": "recipeCards"
       },
       {
         "component": "container",
-        "item": "social-media-share",
-        "label": "Social Media Share",
-        "name": "socialMediaShare"
+        "item": "social-media-share-item",
+        "label": "Social Media Share Icons",
+        "name": "socialMediaShareItems"
       }
     ]
   },
@@ -231,7 +243,7 @@
       {
         "component": "aem-content",
         "label": "Recipe Link",
-        "name": "link",
+        "name": "recipeLink",
         "valueType": "string"
       },
       {
@@ -254,7 +266,7 @@
       },
       {
         "component": "reference",
-        "label": "Recipe Tag Icon",
+        "label": "Tag Icon (Right of Tag)",
         "name": "tagIcon",
         "valueType": "string"
       },
@@ -265,33 +277,39 @@
         "valueType": "string"
       },
       {
-        "component": "text",
+        "component": "richtext",
         "label": "Recipe Description",
         "name": "description",
         "valueType": "string"
       },
       {
         "component": "reference",
-        "label": "Time Icon",
+        "label": "Wave Divider Image",
+        "name": "waveDivider",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Time Icon (Left Property)",
         "name": "timeIcon",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Time Required",
-        "name": "time",
+        "label": "Time Text (e.g. 45 mins, 1 hr)",
+        "name": "timeText",
         "valueType": "string"
       },
       {
         "component": "reference",
-        "label": "Serves Icon",
+        "label": "Serves Icon (Right Property)",
         "name": "servesIcon",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Serves Text",
-        "name": "serves",
+        "label": "Serves Text (e.g. For 4 people)",
+        "name": "servesText",
         "valueType": "string"
       },
       {
@@ -303,64 +321,23 @@
     ]
   },
   {
-    "id": "social-media-share",
-    "fields": [
-      {
-        "component": "reference",
-        "label": "Close Icon",
-        "name": "closeIcon",
-        "valueType": "string"
-      },
-      {
-        "component": "container",
-        "item": "social-media-share-item",
-        "label": "Social Media Share Items",
-        "name": "shareItems"
-      },
-      {
-        "component": "reference",
-        "label": "Previous Button Icon",
-        "name": "prevButtonIcon",
-        "valueType": "string"
-      },
-      {
-        "component": "reference",
-        "label": "Next Button Icon",
-        "name": "nextButtonIcon",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Input Placeholder",
-        "name": "inputPlaceholder",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Copy Button Label",
-        "name": "copyButtonLabel",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
     "id": "social-media-share-item",
     "fields": [
       {
         "component": "aem-content",
-        "label": "Social Link",
-        "name": "link",
+        "label": "Social Media Share Link",
+        "name": "socialLink",
         "valueType": "string"
       },
       {
         "component": "reference",
-        "label": "Social Icon",
+        "label": "Social Media Icon",
         "name": "icon",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Social Label",
+        "label": "Social Media Label",
         "name": "label",
         "valueType": "string"
       }
@@ -788,6 +765,134 @@
       {
         "component": "text",
         "label": "WhatsApp Label",
+        "name": "whatsappLabel"
+      }
+    ]
+  },
+  {
+    "id": "product-selection",
+    "fields": [
+      {
+        "component": "richtext",
+        "label": "Main Heading",
+        "name": "mainHeading"
+      },
+      {
+        "component": "container",
+        "item": "product-icon-item",
+        "label": "Product Icons (Left Panel)",
+        "name": "productIcons"
+      },
+      {
+        "component": "container",
+        "item": "product-variant-ghee",
+        "label": "Product Variant - Ghee (Right Panel)",
+        "name": "productVariantGhee"
+      },
+      {
+        "component": "container",
+        "item": "product-variant-milk",
+        "label": "Product Variant - Milk (Right Panel)",
+        "name": "productVariantMilk"
+      }
+    ]
+  },
+  {
+    "id": "product-icon-item",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Product Icon Image",
+        "name": "iconImage"
+      },
+      {
+        "component": "text",
+        "label": "Product Label",
+        "name": "productLabel"
+      }
+    ]
+  },
+  {
+    "id": "product-variant-ghee",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Ghee Background Image (Desktop)",
+        "name": "backgroundDesktop"
+      },
+      {
+        "component": "reference",
+        "label": "Ghee Background Image (Mobile)",
+        "name": "backgroundMobile"
+      },
+      {
+        "component": "richtext",
+        "label": "Headline (Before Download)",
+        "name": "headlineBefore"
+      },
+      {
+        "component": "reference",
+        "label": "Download Button Icon",
+        "name": "ctaIcon"
+      },
+      {
+        "component": "aem-content",
+        "label": "Download Report Link",
+        "name": "ctaLink"
+      },
+      {
+        "component": "text",
+        "label": "Download Report Button Label",
+        "name": "ctaLabel"
+      },
+      {
+        "component": "richtext",
+        "label": "Headline (After Download)",
+        "name": "headlineAfter"
+      },
+      {
+        "component": "reference",
+        "label": "Confirmation Icon (After Download)",
+        "name": "confirmationIcon"
+      },
+      {
+        "component": "text",
+        "label": "Download Button Label (After Download)",
+        "name": "ctaLabelAfter"
+      }
+    ]
+  },
+  {
+    "id": "product-variant-milk",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Milk Background Image (Desktop)",
+        "name": "backgroundDesktop"
+      },
+      {
+        "component": "reference",
+        "label": "Milk Background Image (Mobile)",
+        "name": "backgroundMobile"
+      },
+      {
+        "component": "richtext",
+        "label": "Headline",
+        "name": "headline"
+      },
+      {
+        "component": "reference",
+        "label": "Confirmation Icon",
+        "name": "ctaIcon"
+      },
+      {
+        "component": "aem-content",
+        "label": "Whatsapp Link",
+        "name": "whatsappLink"
+      },
+      {
+        "component": "text",
+        "label": "Whatsapp Link Label",
         "name": "whatsappLabel"
       }
     ]

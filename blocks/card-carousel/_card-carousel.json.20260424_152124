@@ -1,7 +1,7 @@
 {
   "definitions": [
     {
-      "title": "Card-Carousel",
+      "title": "Card Carousel",
       "id": "card-carousel",
       "plugins": {
         "xwalk": {
@@ -10,14 +10,14 @@
             "template": {
               "filter": "card-carousel",
               "model": "card-carousel",
-              "name": "Card-Carousel"
+              "name": "Card Carousel"
             }
           }
         }
       }
     },
     {
-      "title": "Recipe-Card",
+      "title": "Recipe Card",
       "id": "recipe-card",
       "plugins": {
         "xwalk": {
@@ -25,22 +25,22 @@
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
               "model": "recipe-card",
-              "name": "Recipe-Card"
+              "name": "Recipe Card"
             }
           }
         }
       }
     },
     {
-      "title": "Social-Media-Share-Item",
-      "id": "social-media-share-item",
+      "title": "Social Media Share",
+      "id": "social-media-share",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "social-media-share-item",
-              "name": "Social-Media-Share-Item"
+              "model": "social-media-share",
+              "name": "Social Media Share"
             }
           }
         }
@@ -52,52 +52,40 @@
       "id": "card-carousel",
       "fields": [
         {
-          "component": "richtext",
+          "component": "text",
           "label": "Carousel Title",
           "name": "title",
           "valueType": "string"
         },
         {
-          "component": "richtext",
+          "component": "text",
           "label": "Carousel Subtitle",
           "name": "subtitle",
           "valueType": "string"
         },
         {
-          "component": "reference",
-          "label": "Carousel Navigation Previous Icon",
-          "name": "carouselNavPrevIcon",
-          "valueType": "string"
-        },
-        {
-          "component": "reference",
-          "label": "Carousel Navigation Next Icon",
-          "name": "carouselNavNextIcon",
-          "valueType": "string"
-        },
-        {
           "component": "aem-content",
-          "label": "CTA Link (View All)",
-          "name": "ctaLink",
+          "label": "View All Recipes Link",
+          "name": "viewAllLink",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "CTA Label (View All)",
-          "name": "ctaLabel",
+          "label": "View All Recipes Label",
+          "name": "viewAllLabel",
           "valueType": "string"
         },
         {
           "component": "container",
           "item": "recipe-card",
           "label": "Recipe Cards",
-          "name": "recipeCards"
+          "name": "recipes"
         },
         {
           "component": "container",
-          "item": "social-media-share-item",
-          "label": "Social Media Share Icons",
-          "name": "socialMediaShareItems"
+          "item": "social-media-share",
+          "label": "Social Media Share",
+          "name": "socialMediaShare"
         }
       ]
     },
@@ -107,7 +95,7 @@
         {
           "component": "aem-content",
           "label": "Recipe Link",
-          "name": "recipeLink",
+          "name": "link",
           "valueType": "string"
         },
         {
@@ -130,7 +118,7 @@
         },
         {
           "component": "reference",
-          "label": "Tag Icon (Right of Tag)",
+          "label": "Recipe Tag Icon",
           "name": "tagIcon",
           "valueType": "string"
         },
@@ -141,39 +129,33 @@
           "valueType": "string"
         },
         {
-          "component": "richtext",
+          "component": "text",
           "label": "Recipe Description",
           "name": "description",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Wave Divider Image",
-          "name": "waveDivider",
-          "valueType": "string"
-        },
-        {
-          "component": "reference",
-          "label": "Time Icon (Left Property)",
+          "label": "Time Icon",
           "name": "timeIcon",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Time Text (e.g. 45 mins, 1 hr)",
-          "name": "timeText",
+          "label": "Time Required",
+          "name": "time",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Serves Icon (Right Property)",
+          "label": "Serves Icon",
           "name": "servesIcon",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Serves Text (e.g. For 4 people)",
-          "name": "servesText",
+          "label": "Serves Text",
+          "name": "serves",
           "valueType": "string"
         },
         {
@@ -185,23 +167,64 @@
       ]
     },
     {
-      "id": "social-media-share-item",
+      "id": "social-media-share",
       "fields": [
         {
-          "component": "aem-content",
-          "label": "Social Media Share Link",
-          "name": "socialLink",
+          "component": "reference",
+          "label": "Close Icon",
+          "name": "closeIcon",
+          "valueType": "string"
+        },
+        {
+          "component": "container",
+          "item": "social-media-share-item",
+          "label": "Social Media Share Items",
+          "name": "shareItems"
+        },
+        {
+          "component": "reference",
+          "label": "Previous Button Icon",
+          "name": "prevButtonIcon",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Social Media Icon",
+          "label": "Next Button Icon",
+          "name": "nextButtonIcon",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Input Placeholder",
+          "name": "inputPlaceholder",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Copy Button Label",
+          "name": "copyButtonLabel",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "social-media-share-item",
+      "fields": [
+        {
+          "component": "aem-content",
+          "label": "Social Link",
+          "name": "link",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Social Icon",
           "name": "icon",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Social Media Label",
+          "label": "Social Label",
           "name": "label",
           "valueType": "string"
         }
@@ -213,7 +236,7 @@
       "id": "card-carousel",
       "components": [
         "recipe-card",
-        "social-media-share-item"
+        "social-media-share"
       ]
     }
   ]
