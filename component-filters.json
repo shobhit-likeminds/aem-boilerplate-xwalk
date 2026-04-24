@@ -15,7 +15,32 @@
       "hero",
       "cards",
       "columns",
-      "fragment"
+      "fragment",
+      "header-comp",
+      "banner-section",
+      "empty-block",
+      "text-banner",
+      "product-selection-component",
+      "card-carousel",
+      "stay-social",
+      "buy-now-card",
+      "footer"
+    ]
+  },
+  {
+    "id": "banner-section",
+    "components": [
+      "banner-cta-item"
+    ]
+  },
+  {
+    "id": "buy-now-card"
+  },
+  {
+    "id": "card-carousel",
+    "components": [
+      "recipe-card",
+      "social-media-share"
     ]
   },
   {
@@ -38,5 +63,40 @@
       "button",
       "title"
     ]
+  },
+  {
+    "id": "empty-block"
+  },
+  {
+    "id": "footer",
+    "components": [
+      "footer-link-item",
+      "footer-social-link-item"
+    ]
+  },
+  {
+    "id": "header-comp",
+    "components": [
+      "navigation-item",
+      "sub-menu-item",
+      "search-icon-item"
+    ]
+  },
+  {
+    "id": "product-selection-component",
+    "components": [
+      "product-selector-item",
+      "ghee-product-details",
+      "milk-product-details"
+    ]
+  },
+  {
+    "id": "stay-social",
+    "components": [
+      "stay-social-card"
+    ]
+  },
+  {
+    "id": "text-banner"
   }
 ]

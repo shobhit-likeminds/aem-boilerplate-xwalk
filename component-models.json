@@ -142,6 +142,231 @@
     ]
   },
   {
+    "id": "banner-section",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Background Image (Desktop)",
+        "name": "backgroundImageDesktop",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Background Image (Mobile)",
+        "name": "backgroundImageMobile",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "banner-cta-item",
+        "label": "CTA Items",
+        "name": "ctaItems"
+      }
+    ]
+  },
+  {
+    "id": "banner-cta-item",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "CTA Link",
+        "name": "ctaLink",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "CTA Label",
+        "name": "ctaLabel",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "buy-now-card"
+  },
+  {
+    "id": "card-carousel",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Carousel Title",
+        "name": "title",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Carousel Subtitle",
+        "name": "subtitle",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "View All Recipes Link",
+        "name": "viewAllLink",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "View All Recipes Label",
+        "name": "viewAllLabel",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "recipe-card",
+        "label": "Recipe Cards",
+        "name": "recipes"
+      },
+      {
+        "component": "container",
+        "item": "social-media-share",
+        "label": "Social Media Share",
+        "name": "socialMediaShare"
+      }
+    ]
+  },
+  {
+    "id": "recipe-card",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Recipe Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Recipe Image",
+        "name": "image",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Recipe Image Alt Text",
+        "name": "imageAlt",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Recipe Tag",
+        "name": "tag",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Recipe Tag Icon",
+        "name": "tagIcon",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Recipe Title",
+        "name": "title",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Recipe Description",
+        "name": "description",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Time Icon",
+        "name": "timeIcon",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Time Required",
+        "name": "time",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Serves Icon",
+        "name": "servesIcon",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Serves Text",
+        "name": "serves",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Navigation Hierarchy",
+        "name": "hierarchy-tree",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "social-media-share",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Close Icon",
+        "name": "closeIcon",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "social-media-share-item",
+        "label": "Social Media Share Items",
+        "name": "shareItems"
+      },
+      {
+        "component": "reference",
+        "label": "Previous Button Icon",
+        "name": "prevButtonIcon",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Next Button Icon",
+        "name": "nextButtonIcon",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Input Placeholder",
+        "name": "inputPlaceholder",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Copy Button Label",
+        "name": "copyButtonLabel",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "social-media-share-item",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Social Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Social Icon",
+        "name": "icon",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Social Label",
+        "name": "label",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "card",
     "fields": [
       {
@@ -180,12 +405,236 @@
     ]
   },
   {
+    "id": "empty-block"
+  },
+  {
+    "id": "footer",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Main Logo",
+        "name": "logo",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Main Logo Link",
+        "name": "logoLink",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Secondary Logo (FSSAI)",
+        "name": "secondaryLogo",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "footer-link-item",
+        "label": "Footer Links",
+        "name": "footerLinks"
+      },
+      {
+        "component": "text",
+        "label": "Copyright Notice",
+        "name": "copyright",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "ITC Portal Link",
+        "name": "itcPortalLink",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "ITC Portal Link Label",
+        "name": "itcPortalLabel",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "footer-social-link-item",
+        "label": "Footer Social Links",
+        "name": "footerSocialLinks"
+      }
+    ]
+  },
+  {
+    "id": "footer-link-item",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Link Label",
+        "name": "label",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link URL",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Navigation Hierarchy",
+        "name": "hierarchy-tree",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "footer-social-link-item",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Social Link URL",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Social Icon",
+        "name": "icon",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "fragment",
     "fields": [
       {
         "component": "aem-content",
         "name": "reference",
         "label": "Reference"
+      }
+    ]
+  },
+  {
+    "id": "header-comp",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Logo Image",
+        "name": "logo",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Logo Link",
+        "name": "logoLink",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "navigation-item",
+        "label": "Navigation Menu",
+        "name": "navigationMenu"
+      },
+      {
+        "component": "container",
+        "item": "search-icon-item",
+        "label": "Search Icons",
+        "name": "searchIcons"
+      }
+    ]
+  },
+  {
+    "id": "navigation-item",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Menu Icon (Mobile)",
+        "name": "icon",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Menu Label",
+        "name": "label",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Menu Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Dropdown Arrow Icon (Desktop)",
+        "name": "dropdownArrowIconDesktop",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Dropdown Arrow Icon (Mobile)",
+        "name": "dropdownArrowIconMobile",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "sub-menu-item",
+        "label": "Sub Menu Items",
+        "name": "subMenuItems"
+      },
+      {
+        "component": "richtext",
+        "label": "Navigation Hierarchy",
+        "name": "hierarchy-tree",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "sub-menu-item",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Sub Menu Label",
+        "name": "label",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Sub Menu Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Arrow Icon (Desktop)",
+        "name": "arrowIconDesktop",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Arrow Icon (Mobile)",
+        "name": "arrowIconMobile",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "sub-menu-item",
+        "label": "Child Sub Menu Items",
+        "name": "childSubMenuItems"
+      }
+    ]
+  },
+  {
+    "id": "search-icon-item",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Search Icon",
+        "name": "icon",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Search Label",
+        "name": "label",
+        "valueType": "string"
       }
     ]
   },
@@ -211,6 +660,221 @@
         "name": "text",
         "value": "",
         "label": "Text",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "product-selection-component",
+    "fields": [
+      {
+        "component": "richtext",
+        "label": "Main Heading",
+        "name": "heading"
+      },
+      {
+        "component": "container",
+        "item": "product-selector-item",
+        "label": "Product Selector Items",
+        "name": "productSelectorItems"
+      },
+      {
+        "component": "container",
+        "item": "ghee-product-details",
+        "label": "Ghee Product Details",
+        "name": "gheeProductDetails"
+      },
+      {
+        "component": "container",
+        "item": "milk-product-details",
+        "label": "Milk Product Details",
+        "name": "milkProductDetails"
+      }
+    ]
+  },
+  {
+    "id": "product-selector-item",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Product Thumbnail Image",
+        "name": "productImage"
+      },
+      {
+        "component": "text",
+        "label": "Product Label",
+        "name": "productLabel"
+      }
+    ]
+  },
+  {
+    "id": "ghee-product-details",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Desktop Background Image",
+        "name": "backgroundDesktop"
+      },
+      {
+        "component": "reference",
+        "label": "Mobile Background Image",
+        "name": "backgroundMobile"
+      },
+      {
+        "component": "richtext",
+        "label": "Headline (before download)",
+        "name": "headlineBefore"
+      },
+      {
+        "component": "reference",
+        "label": "CTA Icon (before download)",
+        "name": "ctaIcon"
+      },
+      {
+        "component": "aem-content",
+        "label": "CTA Link (Download PDF)",
+        "name": "ctaLink"
+      },
+      {
+        "component": "text",
+        "label": "CTA Label (Download Button)",
+        "name": "ctaLabel"
+      },
+      {
+        "component": "richtext",
+        "label": "Headline (after download)",
+        "name": "headlineAfter"
+      },
+      {
+        "component": "reference",
+        "label": "Confirmation Icon (after download)",
+        "name": "confirmationIcon"
+      },
+      {
+        "component": "text",
+        "label": "CTA Label (After Download Button)",
+        "name": "ctaLabelAfter"
+      }
+    ]
+  },
+  {
+    "id": "milk-product-details",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Desktop Background Image",
+        "name": "backgroundDesktop"
+      },
+      {
+        "component": "reference",
+        "label": "Mobile Background Image",
+        "name": "backgroundMobile"
+      },
+      {
+        "component": "richtext",
+        "label": "Headline",
+        "name": "headline"
+      },
+      {
+        "component": "reference",
+        "label": "CTA Icon",
+        "name": "ctaIcon"
+      },
+      {
+        "component": "aem-content",
+        "label": "WhatsApp Link",
+        "name": "whatsappLink"
+      },
+      {
+        "component": "text",
+        "label": "WhatsApp Label",
+        "name": "whatsappLabel"
+      }
+    ]
+  },
+  {
+    "id": "stay-social",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Section Title",
+        "name": "title",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Section Subtext",
+        "name": "subtext",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "stay-social-card",
+        "label": "Social Cards",
+        "name": "cards"
+      },
+      {
+        "component": "text",
+        "label": "CTA Label",
+        "name": "ctaLabel",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "CTA Link",
+        "name": "ctaLink",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "stay-social-card",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Card Image (Desktop)",
+        "name": "imageDesktop",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Card Image (Mobile)",
+        "name": "imageMobile",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Card Link",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "text-banner",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Banner Title",
+        "name": "title",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Banner Description",
+        "name": "description",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "CTA Link",
+        "name": "ctaLink",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "CTA Label",
+        "name": "ctaLabel",
         "valueType": "string"
       }
     ]

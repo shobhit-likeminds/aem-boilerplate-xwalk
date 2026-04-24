@@ -1,0 +1,205 @@
+{
+  "definitions": [
+    {
+      "title": "Product Selection Component",
+      "id": "product-selection-component",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "product-selection-component",
+              "model": "product-selection-component",
+              "name": "Product Selection Component"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Product Selector Item",
+      "id": "product-selector-item",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "product-selector-item",
+              "name": "Product Selector Item"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Ghee Product Details",
+      "id": "ghee-product-details",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "ghee-product-details",
+              "name": "Ghee Product Details"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Milk Product Details",
+      "id": "milk-product-details",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "milk-product-details",
+              "name": "Milk Product Details"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "product-selection-component",
+      "fields": [
+        {
+          "component": "richtext",
+          "label": "Main Heading",
+          "name": "heading"
+        },
+        {
+          "component": "container",
+          "item": "product-selector-item",
+          "label": "Product Selector Items",
+          "name": "productSelectorItems"
+        },
+        {
+          "component": "container",
+          "item": "ghee-product-details",
+          "label": "Ghee Product Details",
+          "name": "gheeProductDetails"
+        },
+        {
+          "component": "container",
+          "item": "milk-product-details",
+          "label": "Milk Product Details",
+          "name": "milkProductDetails"
+        }
+      ]
+    },
+    {
+      "id": "product-selector-item",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Product Thumbnail Image",
+          "name": "productImage"
+        },
+        {
+          "component": "text",
+          "label": "Product Label",
+          "name": "productLabel"
+        }
+      ]
+    },
+    {
+      "id": "ghee-product-details",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Desktop Background Image",
+          "name": "backgroundDesktop"
+        },
+        {
+          "component": "reference",
+          "label": "Mobile Background Image",
+          "name": "backgroundMobile"
+        },
+        {
+          "component": "richtext",
+          "label": "Headline (before download)",
+          "name": "headlineBefore"
+        },
+        {
+          "component": "reference",
+          "label": "CTA Icon (before download)",
+          "name": "ctaIcon"
+        },
+        {
+          "component": "aem-content",
+          "label": "CTA Link (Download PDF)",
+          "name": "ctaLink"
+        },
+        {
+          "component": "text",
+          "label": "CTA Label (Download Button)",
+          "name": "ctaLabel"
+        },
+        {
+          "component": "richtext",
+          "label": "Headline (after download)",
+          "name": "headlineAfter"
+        },
+        {
+          "component": "reference",
+          "label": "Confirmation Icon (after download)",
+          "name": "confirmationIcon"
+        },
+        {
+          "component": "text",
+          "label": "CTA Label (After Download Button)",
+          "name": "ctaLabelAfter"
+        }
+      ]
+    },
+    {
+      "id": "milk-product-details",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Desktop Background Image",
+          "name": "backgroundDesktop"
+        },
+        {
+          "component": "reference",
+          "label": "Mobile Background Image",
+          "name": "backgroundMobile"
+        },
+        {
+          "component": "richtext",
+          "label": "Headline",
+          "name": "headline"
+        },
+        {
+          "component": "reference",
+          "label": "CTA Icon",
+          "name": "ctaIcon"
+        },
+        {
+          "component": "aem-content",
+          "label": "WhatsApp Link",
+          "name": "whatsappLink"
+        },
+        {
+          "component": "text",
+          "label": "WhatsApp Label",
+          "name": "whatsappLabel"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "product-selection-component",
+      "components": [
+        "product-selector-item",
+        "ghee-product-details",
+        "milk-product-details"
+      ]
+    }
+  ]
+}

@@ -83,6 +83,99 @@
       "id": "blocks",
       "components": [
         {
+          "title": "Banner-Section",
+          "id": "banner-section",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "banner-section",
+                  "model": "banner-section",
+                  "name": "Banner-Section"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Banner-CTA-Item",
+          "id": "banner-cta-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "banner-cta-item",
+                  "name": "Banner-CTA-Item"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Buy-Now-Card",
+          "id": "buy-now-card",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "buy-now-card",
+                  "model": "buy-now-card",
+                  "name": "Buy-Now-Card"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Card Carousel",
+          "id": "card-carousel",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "card-carousel",
+                  "model": "card-carousel",
+                  "name": "Card Carousel"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Recipe Card",
+          "id": "recipe-card",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "recipe-card",
+                  "name": "Recipe Card"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Social Media Share",
+          "id": "social-media-share",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "social-media-share",
+                  "name": "Social Media Share"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Cards",
           "id": "cards",
           "plugins": {
@@ -128,6 +221,68 @@
           }
         },
         {
+          "title": "Empty-Block",
+          "id": "empty-block",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "empty-block",
+                  "model": "empty-block",
+                  "name": "Empty-Block"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Footer",
+          "id": "footer",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "footer",
+                  "model": "footer",
+                  "name": "Footer"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Footer-Link-Item",
+          "id": "footer-link-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "footer-link-item",
+                  "name": "Footer-Link-Item"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Footer-Social-Link-Item",
+          "id": "footer-social-link-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "footer-social-link-item",
+                  "name": "Footer-Social-Link-Item"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Fragment",
           "id": "fragment",
           "plugins": {
@@ -143,6 +298,67 @@
           }
         },
         {
+          "title": "Header-Comp",
+          "id": "header-comp",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "header-comp",
+                  "model": "header-comp",
+                  "name": "Header-Comp"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Navigation-Item",
+          "id": "navigation-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "navigation-item",
+                  "name": "Navigation-Item"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Sub-Menu-Item",
+          "id": "sub-menu-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "sub-menu-item",
+                  "name": "Sub-Menu-Item"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Search-Icon-Item",
+          "id": "search-icon-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "search-icon-item",
+                  "name": "Search-Icon-Item"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Hero",
           "id": "hero",
           "plugins": {
@@ -152,6 +368,114 @@
                 "template": {
                   "name": "Hero",
                   "model": "hero"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Product Selection Component",
+          "id": "product-selection-component",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "product-selection-component",
+                  "model": "product-selection-component",
+                  "name": "Product Selection Component"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Product Selector Item",
+          "id": "product-selector-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "product-selector-item",
+                  "name": "Product Selector Item"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Ghee Product Details",
+          "id": "ghee-product-details",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "ghee-product-details",
+                  "name": "Ghee Product Details"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Milk Product Details",
+          "id": "milk-product-details",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "milk-product-details",
+                  "name": "Milk Product Details"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Stay-Social",
+          "id": "stay-social",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "stay-social",
+                  "model": "stay-social",
+                  "name": "Stay-Social"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Stay-Social-Card",
+          "id": "stay-social-card",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "stay-social-card",
+                  "name": "Stay-Social-Card"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Text-Banner",
+          "id": "text-banner",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "text-banner",
+                  "model": "text-banner",
+                  "name": "Text-Banner"
                 }
               }
             }
