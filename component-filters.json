@@ -42,7 +42,7 @@
     "id": "card-carousel",
     "components": [
       "recipe-card",
-      "social-media-share-icon"
+      "social-media-share-item"
     ]
   },
   {
@@ -87,16 +87,17 @@
   {
     "id": "footer",
     "components": [
-      "footer-nav-item",
-      "footer-link-item",
-      "footer-social-item"
+      "footer-navigation-item",
+      "footer-social-item",
+      "footer-link-item"
     ]
   },
   {
     "id": "header-comp",
     "components": [
-      "header-navigation-item",
-      "header-sub-navigation-item"
+      "nav-menu-item",
+      "nav-submenu-item",
+      "nav-tertiary-item"
     ]
   },
   {

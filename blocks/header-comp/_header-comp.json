@@ -17,30 +17,45 @@
       }
     },
     {
-      "title": "Header-Navigation-Item",
-      "id": "header-navigation-item",
+      "title": "Nav-Menu-Item",
+      "id": "nav-menu-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "header-navigation-item",
-              "name": "Header-Navigation-Item"
+              "model": "nav-menu-item",
+              "name": "Nav-Menu-Item"
             }
           }
         }
       }
     },
     {
-      "title": "Header-Sub-Navigation-Item",
-      "id": "header-sub-navigation-item",
+      "title": "Nav-Submenu-Item",
+      "id": "nav-submenu-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "header-sub-navigation-item",
-              "name": "Header-Sub-Navigation-Item"
+              "model": "nav-submenu-item",
+              "name": "Nav-Submenu-Item"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Nav-Tertiary-Item",
+      "id": "nav-tertiary-item",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "nav-tertiary-item",
+              "name": "Nav-Tertiary-Item"
             }
           }
         }
@@ -53,79 +68,150 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Logo Image",
-          "name": "logo"
+          "label": "Brand Logo",
+          "name": "brandLogo",
+          "valueType": "string"
         },
         {
           "component": "aem-content",
-          "label": "Logo Link",
-          "name": "logoLink"
+          "label": "Brand Logo Link",
+          "name": "brandLogoLink",
+          "valueType": "string"
+        },
+        {
+          "component": "container",
+          "item": "nav-menu-item",
+          "label": "Navigation Menu Items",
+          "name": "navMenuItems"
         },
         {
           "component": "reference",
           "label": "Search Icon",
-          "name": "searchIcon"
+          "name": "searchIcon",
+          "valueType": "string"
         },
         {
           "component": "text",
           "label": "Search Label",
-          "name": "searchLabel"
+          "name": "searchLabel",
+          "valueType": "string"
         },
         {
-          "component": "container",
-          "item": "header-navigation-item",
-          "label": "Navigation Menu",
-          "name": "navigationMenu"
+          "component": "reference",
+          "label": "Global Search Close Icon",
+          "name": "globalSearchCloseIcon",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Global Search Button Icon",
+          "name": "globalSearchButtonIcon",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Global Search Placeholder",
+          "name": "globalSearchPlaceholder",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Global Search Error Message",
+          "name": "globalSearchError",
+          "valueType": "string"
         }
       ]
     },
     {
-      "id": "header-navigation-item",
+      "id": "nav-menu-item",
       "fields": [
         {
           "component": "reference",
-          "label": "Menu Icon",
-          "name": "icon"
+          "label": "Menu Icon (mobile)",
+          "name": "menuIcon",
+          "valueType": "string"
         },
         {
           "component": "text",
           "label": "Menu Label",
-          "name": "label"
+          "name": "menuLabel",
+          "valueType": "string"
         },
         {
           "component": "aem-content",
           "label": "Menu Link",
-          "name": "link"
+          "name": "menuLink",
+          "valueType": "string"
         },
         {
           "component": "reference",
           "label": "Dropdown Arrow Icon",
-          "name": "dropdownArrowIcon"
+          "name": "arrowIcon",
+          "valueType": "string"
+        },
+        {
+          "component": "container",
+          "item": "nav-submenu-item",
+          "label": "Sub Menu Items",
+          "name": "subMenuItems"
         },
         {
           "component": "richtext",
-          "label": "Submenu Hierarchy",
-          "name": "hierarchy-tree"
+          "label": "Navigation Hierarchy",
+          "name": "hierarchy-tree",
+          "valueType": "string"
         }
       ]
     },
     {
-      "id": "header-sub-navigation-item",
+      "id": "nav-submenu-item",
       "fields": [
         {
           "component": "text",
           "label": "Submenu Label",
-          "name": "label"
+          "name": "submenuLabel",
+          "valueType": "string"
         },
         {
           "component": "aem-content",
           "label": "Submenu Link",
-          "name": "link"
+          "name": "submenuLink",
+          "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Submenu Arrow Icon",
-          "name": "arrowIcon"
+          "label": "Submenu Arrow Icon (Desktop)",
+          "name": "submenuArrowIcon",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Submenu Arrow Icon (Mobile)",
+          "name": "submenuArrowIconMobile",
+          "valueType": "string"
+        },
+        {
+          "component": "container",
+          "item": "nav-tertiary-item",
+          "label": "Tertiary Menu Items",
+          "name": "tertiaryMenuItems"
+        }
+      ]
+    },
+    {
+      "id": "nav-tertiary-item",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Tertiary Menu Label",
+          "name": "tertiaryLabel",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Tertiary Menu Link",
+          "name": "tertiaryLink",
+          "valueType": "string"
         }
       ]
     }
@@ -134,8 +220,9 @@
     {
       "id": "header-comp",
       "components": [
-        "header-navigation-item",
-        "header-sub-navigation-item"
+        "nav-menu-item",
+        "nav-submenu-item",
+        "nav-tertiary-item"
       ]
     }
   ]

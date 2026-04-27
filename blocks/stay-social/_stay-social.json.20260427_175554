@@ -44,8 +44,8 @@
         },
         {
           "component": "text",
-          "label": "Section Subtitle",
-          "name": "subtitle",
+          "label": "Section Subtext",
+          "name": "subtext",
           "valueType": "string"
         },
         {
@@ -72,21 +72,21 @@
       "id": "social-card",
       "fields": [
         {
-          "component": "aem-content",
-          "label": "Card Link",
-          "name": "cardLink",
-          "valueType": "string"
-        },
-        {
           "component": "reference",
-          "label": "Image (Desktop)",
+          "label": "Card Image (Desktop)",
           "name": "imageDesktop",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Image (Mobile)",
+          "label": "Card Image (Mobile)",
           "name": "imageMobile",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Card Link",
+          "name": "link",
           "valueType": "string"
         }
       ]

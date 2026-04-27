@@ -4,7 +4,7 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
 export default function decorate(block) {
   const [
     titleRow,
-    subtextRow,
+    subtitleRow,
     ctaLinkRow,
     ctaLabelRow,
     ...cardRows
@@ -18,7 +18,7 @@ export default function decorate(block) {
   container.classList.add('container', 'gx-8', 'gx-sm-0');
   section.append(container);
 
-  // Section Title
+  // Title
   const title = document.createElement('h2');
   title.classList.add(
     'stay-social__title',
@@ -31,12 +31,12 @@ export default function decorate(block) {
     'fw-bold',
   );
   moveInstrumentation(titleRow, title);
-  title.textContent = titleRow.firstElementChild.textContent.trim();
+  title.textContent = titleRow.textContent.trim();
   container.append(title);
 
-  // Section Subtext
-  const subtext = document.createElement('h3');
-  subtext.classList.add(
+  // Subtitle
+  const subtitle = document.createElement('h3');
+  subtitle.classList.add(
     'stay-social__subtext',
     'font-16',
     'leading-24',
@@ -46,85 +46,110 @@ export default function decorate(block) {
     'fw-medium',
     'mt-4',
   );
-  moveInstrumentation(subtextRow, subtext);
-  subtext.textContent = subtextRow.firstElementChild.textContent.trim();
-  container.append(subtext);
+  moveInstrumentation(subtitleRow, subtitle);
+  subtitle.textContent = subtitleRow.textContent.trim();
+  container.append(subtitle);
 
-  // Social Cards
-  if (cardRows.length > 0) {
-    const main = document.createElement('div');
-    main.classList.add('stay-social__main', 'mt-8');
-    container.append(main);
+  // Main content area for cards
+  const main = document.createElement('div');
+  main.classList.add('stay-social__main', 'mt-8');
+  container.append(main);
 
-    const cardsList = document.createElement('ul');
-    cardsList.classList.add(
-      'stay-social__cards',
-      'd-grid',
-      'gap-5',
-      'gap-sm-8',
-      'w-fit',
-      'mx-auto',
+  // Cards list
+  const cardsList = document.createElement('ul');
+  cardsList.classList.add(
+    'stay-social__cards',
+    'd-grid',
+    'gap-5',
+    'gap-sm-8',
+    'w-fit',
+    'mx-auto',
+  );
+  main.append(cardsList);
+
+  cardRows.forEach((row) => {
+    const cells = [...row.children];
+    // Use content detection instead of index access for robustness
+    const cardLinkCell = cells.find((cell) => cell.querySelector('a'));
+    const imageDesktopCell = cells.find((cell) => cell.querySelector('picture') && !cell.querySelector('picture source[media="(max-width: 600px)"]'));
+    const imageMobileCell = cells.find((cell) => cell.querySelector('picture source[media="(max-width: 600px)"]'));
+
+    const li = document.createElement('li');
+    li.classList.add(
+      'stay-social__card',
+      'overflow-hidden',
+      'ratio-1x1', // Default, might be overridden by content
+      'ratio',
     );
-    main.append(cardsList);
+    moveInstrumentation(row, li);
 
-    cardRows.forEach((row) => {
-      const cells = [...row.children];
-      // Use content detection for cells as per EDS block structure guide
-      const imageDesktopCell = cells.find((cell) => cell.querySelector('picture') && cell.textContent.includes('Card Image (Desktop)'));
-      const imageMobileCell = cells.find((cell) => cell.querySelector('picture') && cell.textContent.includes('Card Image (Mobile)'));
-      const linkCell = cells.find((cell) => cell.querySelector('a'));
-
-      const li = document.createElement('li');
-      li.classList.add('stay-social__card', 'overflow-hidden', 'ratio-1x1', 'ratio'); // ratio-1x1 is default, will be overridden by ratio-9x16 if present in original HTML
-      moveInstrumentation(row, li);
-
-      const cardLink = document.createElement('a');
-      cardLink.classList.add(
-        'stay-social__card--link',
-        'd-block',
-        'w-100',
-        'h-100',
-      );
-      const foundLink = linkCell?.querySelector('a');
+    const cardLink = document.createElement('a');
+    cardLink.classList.add(
+      'stay-social__card--link',
+      'd-block',
+      'w-100',
+      'h-100',
+    );
+    if (cardLinkCell) {
+      const foundLink = cardLinkCell.querySelector('a');
       if (foundLink) {
         cardLink.href = foundLink.href;
-        cardLink.target = '_blank'; // Assuming target blank from original HTML
+        cardLink.target = '_blank'; // Assuming all social links open in new tab
       }
+    }
 
-      const picture = document.createElement('picture');
-      const imgDesktop = imageDesktopCell?.querySelector('img');
-      const imgMobile = imageMobileCell?.querySelector('img');
+    const pictureDesktop = imageDesktopCell ? imageDesktopCell.querySelector('picture') : null;
+    const pictureMobile = imageMobileCell ? imageMobileCell.querySelector('picture') : null;
 
-      if (imgMobile) {
-        const sourceMobile = document.createElement('source');
-        sourceMobile.srcset = imgMobile.src;
-        sourceMobile.media = '(max-width:600px)';
-        picture.append(sourceMobile);
-      }
+    if (pictureDesktop && pictureMobile) {
+      const imgDesktop = pictureDesktop.querySelector('img');
+      const imgMobileSource = pictureMobile.querySelector('source[media="(max-width: 600px)"]');
 
-      if (imgDesktop) {
-        const optimizedPic = createOptimizedPicture(imgDesktop.src, imgDesktop.alt, false, [{ width: '750' }]);
-        const optimizedImg = optimizedPic.querySelector('img');
-        optimizedImg.classList.add(
+      if (imgDesktop && imgMobileSource) {
+        const optimizedPicture = createOptimizedPicture(
+          imgDesktop.src,
+          imgDesktop.alt,
+          false,
+          [
+            { media: '(max-width: 600px)', width: '600', src: imgMobileSource.srcset },
+            { width: '750' },
+          ],
+        );
+        optimizedPicture.querySelector('img').classList.add(
           'stay-social__card--image',
           'w-100',
           'h-100',
           'object-fit-cover',
         );
-        picture.append(optimizedImg);
+        cardLink.append(optimizedPicture);
       }
+    } else if (pictureDesktop) {
+      const imgDesktop = pictureDesktop.querySelector('img');
+      if (imgDesktop) {
+        const optimizedPicture = createOptimizedPicture(
+          imgDesktop.src,
+          imgDesktop.alt,
+          false,
+          [{ width: '750' }],
+        );
+        optimizedPicture.querySelector('img').classList.add(
+          'stay-social__card--image',
+          'w-100',
+          'h-100',
+          'object-fit-cover',
+        );
+        cardLink.append(optimizedPicture);
+      }
+    }
 
-      cardLink.append(picture);
+    const screenReaderSpan = document.createElement('span');
+    screenReaderSpan.classList.add('cmp-link__screen-reader-only');
+    screenReaderSpan.textContent = 'opens in a new tab';
+    cardLink.append(screenReaderSpan);
 
-      const screenReaderOnly = document.createElement('span');
-      screenReaderOnly.classList.add('cmp-link__screen-reader-only');
-      screenReaderOnly.textContent = 'opens in a new tab';
-      cardLink.append(screenReaderOnly);
-
-      li.append(cardLink);
-      cardsList.append(li);
-    });
-  }
+    li.append(cardLink);
+    cardsList.append(li);
+  });
 
   // CTA Button
   const ctaWrapper = document.createElement('div');
@@ -157,23 +182,24 @@ export default function decorate(block) {
     'bg-maroon-100-hover',
     'bg-red-300-active',
   );
+  moveInstrumentation(ctaLinkRow, ctaLink);
+
   const foundCtaLink = ctaLinkRow.querySelector('a');
   if (foundCtaLink) {
     ctaLink.href = foundCtaLink.href;
-    ctaLink.target = '_blank'; // Assuming target blank from original HTML
+    ctaLink.target = '_blank'; // Assuming CTA also opens in new tab
   }
-  moveInstrumentation(ctaLinkRow, ctaLink);
 
-  const ctaLabel = document.createElement('span');
-  ctaLabel.classList.add('svasti-cta__label', 'fw-semibold', 'fs-default', 'leading-26');
-  moveInstrumentation(ctaLabelRow, ctaLabel);
-  ctaLabel.textContent = ctaLabelRow.firstElementChild.textContent.trim();
-  ctaLink.append(ctaLabel);
+  const ctaLabelSpan = document.createElement('span');
+  ctaLabelSpan.classList.add('svasti-cta__label', 'fw-semibold', 'fs-default', 'leading-26');
+  moveInstrumentation(ctaLabelRow, ctaLabelSpan);
+  ctaLabelSpan.textContent = ctaLabelRow.textContent.trim();
+  ctaLink.append(ctaLabelSpan);
 
-  const ctaScreenReaderOnly = document.createElement('span');
-  ctaScreenReaderOnly.classList.add('cmp-link__screen-reader-only');
-  ctaScreenReaderOnly.textContent = 'opens in a new tab';
-  ctaLink.append(ctaScreenReaderOnly);
+  const ctaScreenReaderSpan = document.createElement('span');
+  ctaScreenReaderSpan.classList.add('cmp-link__screen-reader-only');
+  ctaScreenReaderSpan.textContent = 'opens in a new tab';
+  ctaLink.append(ctaScreenReaderSpan);
 
   ctaWrapper.append(ctaLink);
 
