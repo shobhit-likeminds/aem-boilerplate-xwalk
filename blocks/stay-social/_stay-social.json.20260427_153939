@@ -38,13 +38,13 @@
       "fields": [
         {
           "component": "text",
-          "label": "Title",
+          "label": "Section Title",
           "name": "title",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Subtext",
+          "label": "Section Subtext",
           "name": "subtext",
           "valueType": "string"
         },
@@ -55,15 +55,15 @@
           "name": "cards"
         },
         {
-          "component": "aem-content",
-          "label": "CTA Link",
-          "name": "ctaLink",
-          "valueType": "string"
-        },
-        {
           "component": "text",
           "label": "CTA Label",
           "name": "ctaLabel",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "CTA Link",
+          "name": "ctaLink",
           "valueType": "string"
         }
       ]

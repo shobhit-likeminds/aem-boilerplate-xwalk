@@ -15,6 +15,21 @@
           }
         }
       }
+    },
+    {
+      "title": "Banner-CTA-Item",
+      "id": "banner-cta-item",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "banner-cta-item",
+              "name": "Banner-CTA-Item"
+            }
+          }
+        }
+      }
     }
   ],
   "models": [
@@ -34,6 +49,17 @@
           "valueType": "string"
         },
         {
+          "component": "container",
+          "item": "banner-cta-item",
+          "label": "CTA Items",
+          "name": "ctaItems"
+        }
+      ]
+    },
+    {
+      "id": "banner-cta-item",
+      "fields": [
+        {
           "component": "aem-content",
           "label": "CTA Link",
           "name": "ctaLink",
@@ -50,7 +76,10 @@
   ],
   "filters": [
     {
-      "id": "banner-section"
+      "id": "banner-section",
+      "components": [
+        "banner-cta-item"
+      ]
     }
   ]
 }

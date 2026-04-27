@@ -25,14 +25,13 @@
       "stay-social",
       "buy-now-card",
       "footer",
-      "product-selection"
+      "product-selection",
+      "w-100-pt-3-pt-sm-3",
+      "scroll-to-top"
     ]
   },
   {
-    "id": "banner-section",
-    "components": [
-      "banner-cta-item"
-    ]
+    "id": "banner-section"
   },
   {
     "id": "buy-now-card"
@@ -70,17 +69,16 @@
   {
     "id": "footer",
     "components": [
-      "footer-link-item",
+      "footer-navigation-item",
+      "footer-secondary-link-item",
       "footer-social-link-item"
     ]
   },
   {
     "id": "header-comp",
     "components": [
-      "header-menu-item",
-      "header-search-icon",
-      "header-sub-menu-item",
-      "header-sub-sub-menu-item"
+      "header-navigation-item",
+      "header-sub-navigation-item"
     ]
   },
   {
@@ -94,10 +92,13 @@
   {
     "id": "product-selection",
     "components": [
-      "product-icon-item",
-      "product-variant-ghee",
-      "product-variant-milk"
+      "product-option",
+      "ghee-panel",
+      "milk-panel"
     ]
+  },
+  {
+    "id": "scroll-to-top"
   },
   {
     "id": "stay-social",
@@ -107,5 +108,8 @@
   },
   {
     "id": "text-banner"
+  },
+  {
+    "id": "w-100-pt-3-pt-sm-3"
   }
 ]

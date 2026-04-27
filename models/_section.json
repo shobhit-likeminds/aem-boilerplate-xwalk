@@ -60,7 +60,9 @@
         "stay-social",
         "buy-now-card",
         "footer",
-        "product-selection"
+        "product-selection",
+        "w-100-pt-3-pt-sm-3",
+        "scroll-to-top"
       ]
     }
   ]

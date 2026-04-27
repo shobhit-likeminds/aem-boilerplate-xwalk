@@ -8,12 +8,8 @@
 
 .ratio>* { height:100%;left:0;position:absolute;top:0;width:100% }
 
-@media(min-width:576px) { .d-sm-flex { display:-webkit-box!important;display:-ms-flexbox!important;display:flex!important }
+@media(min-width:576px) { .gap-sm-8 { gap:2rem!important } }
 
-.mx-sm-0 { margin-left:0!important;margin-right:0!important }
+@media(min-width:992px) { .mt-lg-10 { margin-top:2.5rem!important }
 
-.mt-sm-10 { margin-top:2.5rem!important }
-
-.pt-sm-6 { padding-top:1.5rem!important } }
-
-@media(min-width:992px) { .pt-lg-8 { padding-top:2rem!important } }
+.py-lg-11 { padding-bottom:2.75rem!important;padding-top:2.75rem!important } }

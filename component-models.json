@@ -157,17 +157,6 @@
         "valueType": "string"
       },
       {
-        "component": "container",
-        "item": "banner-cta-item",
-        "label": "CTA Items",
-        "name": "ctaItems"
-      }
-    ]
-  },
-  {
-    "id": "banner-cta-item",
-    "fields": [
-      {
         "component": "aem-content",
         "label": "CTA Link",
         "name": "ctaLink",
@@ -200,16 +189,10 @@
         "valueType": "string"
       },
       {
-        "component": "aem-content",
-        "label": "View All Link",
-        "name": "viewAllLink",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "View All Button Label",
-        "name": "viewAllLabel",
-        "valueType": "string"
+        "component": "container",
+        "item": "product-card",
+        "label": "Product Cards",
+        "name": "cards"
       }
     ]
   },
@@ -217,39 +200,33 @@
     "id": "product-card",
     "fields": [
       {
-        "component": "aem-content",
-        "label": "Product Link",
-        "name": "productLink",
-        "valueType": "string"
-      },
-      {
         "component": "reference",
-        "label": "Background Image",
-        "name": "backgroundImage",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Background Image Alt Text",
-        "name": "backgroundImageAlt",
+        "label": "Main Product Image",
+        "name": "mainImage",
         "valueType": "string"
       },
       {
         "component": "richtext",
-        "label": "Card Title Overlay",
-        "name": "cardTitle",
+        "label": "Card Headline/Title Richtext",
+        "name": "headline",
         "valueType": "string"
       },
       {
         "component": "reference",
-        "label": "Product Image",
-        "name": "productImage",
+        "label": "Secondary Image (Bottom Circle Image)",
+        "name": "secondaryImage",
         "valueType": "string"
       },
       {
-        "component": "text",
-        "label": "Product Image Alt Text",
-        "name": "productImageAlt",
+        "component": "aem-content",
+        "label": "Secondary Image Link",
+        "name": "secondaryImageLink",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "CTA Link",
+        "name": "ctaLink",
         "valueType": "string"
       },
       {
@@ -307,65 +284,59 @@
       {
         "component": "reference",
         "label": "Main Logo",
-        "name": "logo",
+        "name": "mainLogo",
         "valueType": "string"
       },
       {
         "component": "aem-content",
         "label": "Main Logo Link",
-        "name": "logoLink",
+        "name": "mainLogoLink",
         "valueType": "string"
       },
       {
         "component": "reference",
-        "label": "Secondary Logo (FSSAI)",
+        "label": "Secondary Logo",
         "name": "secondaryLogo",
         "valueType": "string"
       },
       {
         "component": "container",
-        "item": "footer-link-item",
-        "label": "Footer Links",
-        "name": "footerLinks"
+        "item": "footer-navigation-item",
+        "label": "Footer Navigation Items",
+        "name": "navigationItems"
+      },
+      {
+        "component": "container",
+        "item": "footer-secondary-link-item",
+        "label": "Footer Secondary Links",
+        "name": "secondaryLinks"
       },
       {
         "component": "text",
-        "label": "Copyright Notice",
+        "label": "Copyright Text",
         "name": "copyright",
-        "valueType": "string"
-      },
-      {
-        "component": "aem-content",
-        "label": "ITC Portal Link",
-        "name": "itcPortalLink",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "ITC Portal Link Label",
-        "name": "itcPortalLabel",
         "valueType": "string"
       },
       {
         "component": "container",
         "item": "footer-social-link-item",
         "label": "Footer Social Links",
-        "name": "footerSocialLinks"
+        "name": "socialLinks"
       }
     ]
   },
   {
-    "id": "footer-link-item",
+    "id": "footer-navigation-item",
     "fields": [
       {
         "component": "text",
-        "label": "Link Label",
+        "label": "Navigation Label",
         "name": "label",
         "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "Link URL",
+        "label": "Navigation Link",
         "name": "link",
         "valueType": "string"
       },
@@ -378,18 +349,35 @@
     ]
   },
   {
-    "id": "footer-social-link-item",
+    "id": "footer-secondary-link-item",
     "fields": [
       {
-        "component": "aem-content",
-        "label": "Social Link URL",
-        "name": "link",
+        "component": "text",
+        "label": "Secondary Link Label",
+        "name": "label",
         "valueType": "string"
       },
+      {
+        "component": "aem-content",
+        "label": "Secondary Link URL",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "footer-social-link-item",
+    "fields": [
       {
         "component": "reference",
         "label": "Social Icon",
         "name": "icon",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Social Link URL",
+        "name": "link",
         "valueType": "string"
       }
     ]
@@ -410,118 +398,78 @@
       {
         "component": "reference",
         "label": "Logo Image",
-        "name": "logoImage",
-        "valueType": "string"
+        "name": "logo"
       },
       {
         "component": "aem-content",
         "label": "Logo Link",
-        "name": "logoLink",
-        "valueType": "string"
+        "name": "logoLink"
       },
-      {
-        "component": "container",
-        "item": "header-menu-item",
-        "label": "Menu Items",
-        "name": "menuItems"
-      },
-      {
-        "component": "container",
-        "item": "header-search-icon",
-        "label": "Search Icons",
-        "name": "searchIcons"
-      }
-    ]
-  },
-  {
-    "id": "header-menu-item",
-    "fields": [
-      {
-        "component": "reference",
-        "label": "Menu Icon (Mobile)",
-        "name": "menuIcon",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Menu Label",
-        "name": "menuLabel",
-        "valueType": "string"
-      },
-      {
-        "component": "aem-content",
-        "label": "Menu Link",
-        "name": "menuLink",
-        "valueType": "string"
-      },
-      {
-        "component": "container",
-        "item": "header-sub-menu-item",
-        "label": "Sub Menu Items",
-        "name": "subMenuItems"
-      },
-      {
-        "component": "richtext",
-        "label": "Navigation Hierarchy",
-        "name": "hierarchy-tree",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
-    "id": "header-sub-menu-item",
-    "fields": [
-      {
-        "component": "text",
-        "label": "Sub Menu Label",
-        "name": "subMenuLabel",
-        "valueType": "string"
-      },
-      {
-        "component": "aem-content",
-        "label": "Sub Menu Link",
-        "name": "subMenuLink",
-        "valueType": "string"
-      },
-      {
-        "component": "container",
-        "item": "header-sub-sub-menu-item",
-        "label": "Sub Sub Menu Items",
-        "name": "subSubMenuItems"
-      }
-    ]
-  },
-  {
-    "id": "header-sub-sub-menu-item",
-    "fields": [
-      {
-        "component": "text",
-        "label": "Sub Sub Menu Label",
-        "name": "subSubMenuLabel",
-        "valueType": "string"
-      },
-      {
-        "component": "aem-content",
-        "label": "Sub Sub Menu Link",
-        "name": "subSubMenuLink",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
-    "id": "header-search-icon",
-    "fields": [
       {
         "component": "reference",
         "label": "Search Icon",
-        "name": "searchIcon",
-        "valueType": "string"
+        "name": "searchIcon"
       },
       {
         "component": "text",
         "label": "Search Label",
-        "name": "searchLabel",
-        "valueType": "string"
+        "name": "searchLabel"
+      },
+      {
+        "component": "container",
+        "item": "header-navigation-item",
+        "label": "Navigation Menu",
+        "name": "navigationMenu"
+      }
+    ]
+  },
+  {
+    "id": "header-navigation-item",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Menu Icon",
+        "name": "icon"
+      },
+      {
+        "component": "text",
+        "label": "Menu Label",
+        "name": "label"
+      },
+      {
+        "component": "aem-content",
+        "label": "Menu Link",
+        "name": "link"
+      },
+      {
+        "component": "reference",
+        "label": "Dropdown Arrow Icon",
+        "name": "dropdownArrowIcon"
+      },
+      {
+        "component": "richtext",
+        "label": "Submenu Hierarchy",
+        "name": "hierarchy-tree"
+      }
+    ]
+  },
+  {
+    "id": "header-sub-navigation-item",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Submenu Label",
+        "name": "label"
+      },
+      {
+        "component": "aem-content",
+        "label": "Submenu Link",
+        "name": "link"
+      },
+      {
+        "component": "reference",
+        "label": "Submenu Arrow Icon",
+        "name": "arrowIcon"
       }
     ]
   },
@@ -689,31 +637,31 @@
       },
       {
         "component": "container",
-        "item": "product-icon-item",
-        "label": "Product Icons (Left Panel)",
-        "name": "productIcons"
+        "item": "product-option",
+        "label": "Product Options",
+        "name": "productOptions"
       },
       {
         "component": "container",
-        "item": "product-variant-ghee",
-        "label": "Product Variant - Ghee (Right Panel)",
-        "name": "productVariantGhee"
+        "item": "ghee-panel",
+        "label": "Ghee Panels",
+        "name": "gheePanels"
       },
       {
         "component": "container",
-        "item": "product-variant-milk",
-        "label": "Product Variant - Milk (Right Panel)",
-        "name": "productVariantMilk"
+        "item": "milk-panel",
+        "label": "Milk Panels",
+        "name": "milkPanels"
       }
     ]
   },
   {
-    "id": "product-icon-item",
+    "id": "product-option",
     "fields": [
       {
         "component": "reference",
-        "label": "Product Icon Image",
-        "name": "iconImage"
+        "label": "Product Image",
+        "name": "productImage"
       },
       {
         "component": "text",
@@ -723,87 +671,98 @@
     ]
   },
   {
-    "id": "product-variant-ghee",
+    "id": "ghee-panel",
     "fields": [
       {
         "component": "reference",
-        "label": "Ghee Background Image (Desktop)",
+        "label": "Desktop Background Image",
         "name": "backgroundDesktop"
       },
       {
         "component": "reference",
-        "label": "Ghee Background Image (Mobile)",
+        "label": "Mobile Background Image",
         "name": "backgroundMobile"
       },
       {
         "component": "richtext",
         "label": "Headline (Before Download)",
-        "name": "headlineBefore"
+        "name": "headlineBeforeDownload"
       },
       {
         "component": "reference",
-        "label": "Download Button Icon",
+        "label": "CTA Icon",
         "name": "ctaIcon"
       },
       {
         "component": "aem-content",
-        "label": "Download Report Link",
+        "label": "CTA Link",
         "name": "ctaLink"
       },
       {
         "component": "text",
-        "label": "Download Report Button Label",
+        "label": "CTA Label",
         "name": "ctaLabel"
       },
       {
         "component": "richtext",
         "label": "Headline (After Download)",
-        "name": "headlineAfter"
-      },
-      {
-        "component": "reference",
-        "label": "Confirmation Icon (After Download)",
-        "name": "confirmationIcon"
-      },
-      {
-        "component": "text",
-        "label": "Download Button Label (After Download)",
-        "name": "ctaLabelAfter"
-      }
-    ]
-  },
-  {
-    "id": "product-variant-milk",
-    "fields": [
-      {
-        "component": "reference",
-        "label": "Milk Background Image (Desktop)",
-        "name": "backgroundDesktop"
-      },
-      {
-        "component": "reference",
-        "label": "Milk Background Image (Mobile)",
-        "name": "backgroundMobile"
-      },
-      {
-        "component": "richtext",
-        "label": "Headline",
-        "name": "headline"
+        "name": "headlineAfterDownload"
       },
       {
         "component": "reference",
         "label": "Confirmation Icon",
-        "name": "ctaIcon"
+        "name": "confirmationIcon"
+      },
+      {
+        "component": "text",
+        "label": "CTA Label (After Download)",
+        "name": "ctaLabelAfterDownload"
+      }
+    ]
+  },
+  {
+    "id": "milk-panel",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Desktop Background Image",
+        "name": "backgroundDesktop"
+      },
+      {
+        "component": "reference",
+        "label": "Mobile Background Image",
+        "name": "backgroundMobile"
+      },
+      {
+        "component": "richtext",
+        "label": "Headlines",
+        "name": "headlines"
+      },
+      {
+        "component": "reference",
+        "label": "Confirmation Icon",
+        "name": "confirmationIcon"
+      },
+      {
+        "component": "richtext",
+        "label": "Whatsapp Text",
+        "name": "whatsappText"
       },
       {
         "component": "aem-content",
         "label": "Whatsapp Link",
         "name": "whatsappLink"
-      },
+      }
+    ]
+  },
+  {
+    "id": "scroll-to-top",
+    "fields": [
       {
-        "component": "text",
-        "label": "Whatsapp Link Label",
-        "name": "whatsappLabel"
+        "component": "reference",
+        "label": "Scroll To Top Icon",
+        "name": "icon",
+        "valueType": "string"
       }
     ]
   },
@@ -812,13 +771,13 @@
     "fields": [
       {
         "component": "text",
-        "label": "Section Title",
+        "label": "Title",
         "name": "title",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Section Subtext",
+        "label": "Subtext",
         "name": "subtext",
         "valueType": "string"
       },
@@ -829,15 +788,15 @@
         "name": "cards"
       },
       {
-        "component": "text",
-        "label": "CTA Label",
-        "name": "ctaLabel",
-        "valueType": "string"
-      },
-      {
         "component": "aem-content",
         "label": "CTA Link",
         "name": "ctaLink",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "CTA Label",
+        "name": "ctaLabel",
         "valueType": "string"
       }
     ]
@@ -893,5 +852,8 @@
         "valueType": "string"
       }
     ]
+  },
+  {
+    "id": "w-100-pt-3-pt-sm-3"
   }
 ]

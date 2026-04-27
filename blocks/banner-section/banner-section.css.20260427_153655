@@ -1,0 +1,13 @@
+.container { --bs-gutter-x:1.5rem;--bs-gutter-y:0;margin-left:auto;margin-right:auto;padding-left:calc(var(--bs-gutter-x)*.5);padding-right:calc(var(--bs-gutter-x)*.5);width:100% }
+
+@media(min-width:1200px) { .container { max-width:855pt } }
+
+@media(min-width:1400px) { .container { max-width:990pt } }
+
+@media(min-width:992px) { .gx-lg-0 { --bs-gutter-x:0 } }
+
+@media(min-width:576px) { .asp-ratio-sm-16x9 { aspect-ratio:1.7777777778!important } }
+
+@media(min-width:768px) { .mt-md-3 { margin-top:.75rem!important } }
+
+@media(min-width:992px) { .mt-lg-9 { margin-top:2.25rem!important } }
