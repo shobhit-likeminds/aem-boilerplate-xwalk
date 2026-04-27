@@ -68,8 +68,8 @@
       "fields": [
         {
           "component": "richtext",
-          "label": "Main Headline",
-          "name": "headline",
+          "label": "Main Heading",
+          "name": "heading",
           "valueType": "string"
         },
         {
@@ -97,8 +97,8 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Product Image",
-          "name": "productImage",
+          "label": "Product Icon (thumbnail)",
+          "name": "productIcon",
           "valueType": "string"
         },
         {
@@ -127,7 +127,7 @@
         {
           "component": "richtext",
           "label": "Headline (Before Download)",
-          "name": "headlineBefore",
+          "name": "headlineBeforeDownload",
           "valueType": "string"
         },
         {
@@ -138,20 +138,20 @@
         },
         {
           "component": "aem-content",
-          "label": "CTA Link (Download PDF)",
+          "label": "CTA Link (PDF)",
           "name": "ctaLink",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "CTA Label (Download Button)",
+          "label": "CTA Label (Button Text)",
           "name": "ctaLabel",
           "valueType": "string"
         },
         {
           "component": "richtext",
           "label": "Headline (After Download)",
-          "name": "headlineAfter",
+          "name": "headlineAfterDownload",
           "valueType": "string"
         },
         {
@@ -163,7 +163,7 @@
         {
           "component": "text",
           "label": "CTA Label (After Download Button)",
-          "name": "ctaLabelAfter",
+          "name": "ctaLabelAfterDownload",
           "valueType": "string"
         }
       ]
@@ -185,14 +185,14 @@
         },
         {
           "component": "richtext",
-          "label": "Headline",
+          "label": "Milk Headline",
           "name": "headline",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Milk Icon",
-          "name": "milkIcon",
+          "label": "CTA Icon",
+          "name": "ctaIcon",
           "valueType": "string"
         },
         {

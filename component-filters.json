@@ -30,7 +30,8 @@
       "footer",
       "banner-section",
       "w-100-pt-3-pt-sm-3",
-      "footer-brand"
+      "footer-brand",
+      "corp-header"
     ]
   },
   {
@@ -43,7 +44,8 @@
     "id": "card-carousel",
     "components": [
       "recipe-card",
-      "social-media-share-item"
+      "social-media-share",
+      "social-media-icon"
     ]
   },
   {
@@ -65,6 +67,13 @@
       "image",
       "button",
       "title"
+    ]
+  },
+  {
+    "id": "corp-header",
+    "components": [
+      "navigation-item",
+      "sub-navigation-item"
     ]
   },
   {

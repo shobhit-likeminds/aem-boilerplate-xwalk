@@ -4,404 +4,383 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
 export default function decorate(block) {
   const children = [...block.children];
 
-  const headingRow = children[0];
-  const productItemRows = children.filter(
-    (row) => row.children.length === 2 && row.querySelector('picture')
-  );
-  const gheeContentRows = children.filter(
-    (row) => row.children.length === 9
-  );
-  const milkContentRows = children.filter(
-    (row) => row.children.length === 6
-  );
+  const headlineRow = children[0];
+  const productItemRows = children.filter((row) => row.children.length === 2);
+  const gheeContentRows = children.filter((row) => row.children.length === 9);
+  const milkContentRows = children.filter((row) => row.children.length === 6);
 
-  const mainBox = document.createElement('div');
-  mainBox.classList.add('account-mainBox', 'mx-md-16');
+  const root = document.createElement('div');
+  root.classList.add('container-xl', 'annualReport_mainBox', 'product-selection-component');
 
-  const rowDiv = document.createElement('div');
-  rowDiv.classList.add('row', 'gx-5');
+  const accountMainBox = document.createElement('div');
+  accountMainBox.classList.add('account-mainBox', 'mx-md-16');
+  root.append(accountMainBox);
+
+  const row = document.createElement('div');
+  row.classList.add('row', 'gx-5');
+  accountMainBox.append(row);
 
   const leftSection = document.createElement('div');
   leftSection.classList.add('mt-8', 'mt-md-10', 'col-lg-4');
+  row.append(leftSection);
 
-  const heading = document.createElement('p');
-  heading.classList.add(
-    'font-24',
-    'font-md-40',
-    'fw-bold',
-    'product-container_heading',
-    'font-baskerville'
-  );
-  moveInstrumentation(headingRow, heading);
-  heading.innerHTML = headingRow.innerHTML;
-  leftSection.append(heading);
+  const headlineP = document.createElement('p');
+  headlineP.classList.add('font-24', 'font-md-40', 'fw-bold', 'product-container_heading', 'font-baskerville');
+  moveInstrumentation(headlineRow, headlineP);
+  // Correctly move children for richtext
+  while (headlineRow.firstChild) {
+    headlineP.append(headlineRow.firstChild);
+  }
+  leftSection.append(headlineP);
 
   const productMainBox = document.createElement('div');
   productMainBox.classList.add('product-mainbox', 'mt-10', 'mt-md-12');
+  leftSection.append(productMainBox);
 
-  productItemRows.forEach((row) => {
-    const [productIconCell, productLabelCell] = [...row.children];
+  const gheeProductDiv = document.createElement('div');
+  const milkProductDiv = document.createElement('div');
 
-    const productDiv = document.createElement('div');
-    const productHoverDiv = document.createElement('div');
-    productHoverDiv.classList.add('milk_ghee_smallImag', 'ghee-packet', 'product-hover');
+  productItemRows.forEach((productRow, index) => {
+    const [productImageCell, productLabelCell] = [...productRow.children];
+    const productItemDiv = document.createElement('div');
+    productItemDiv.classList.add('milk_ghee_smallImag', 'product-hover');
 
-    const productIconPicture = productIconCell.querySelector('picture');
-    if (productIconPicture) {
-      const img = productIconPicture.querySelector('img');
+    const picture = productImageCell.querySelector('picture');
+    if (picture) {
+      const img = picture.querySelector('img');
       const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-      moveInstrumentation(img, optimizedPic.querySelector('img'));
+      moveInstrumentation(productImageCell, optimizedPic.querySelector('img'));
+      productItemDiv.append(optimizedPic);
       optimizedPic.querySelector('img').classList.add('left-section-gheeBox', 'object-fit-contain');
-      productHoverDiv.append(optimizedPic);
     }
 
-    const productLabel = document.createElement('p');
-    productLabel.classList.add('product-subnames');
-    productLabel.textContent = productLabelCell.textContent.trim();
-    productHoverDiv.append(productLabel);
+    const labelP = document.createElement('p');
+    labelP.classList.add('product-subnames');
+    moveInstrumentation(productLabelCell, labelP);
+    labelP.textContent = productLabelCell.textContent.trim();
+    productItemDiv.append(labelP);
 
-    moveInstrumentation(row, productHoverDiv);
-    productDiv.append(productHoverDiv);
-    productMainBox.append(productDiv);
+    if (index === 0) {
+      productItemDiv.classList.add('ghee-packet');
+      gheeProductDiv.append(productItemDiv);
+    } else {
+      productItemDiv.classList.add('milk-packet');
+      milkProductDiv.append(productItemDiv);
+    }
   });
-  leftSection.append(productMainBox);
+
+  productMainBox.append(gheeProductDiv, milkProductDiv);
 
   const rightSection = document.createElement('div');
   rightSection.classList.add('right-section', 'mt-10', 'py-0', 'position-relative', 'col-lg-8');
+  row.append(rightSection);
 
-  gheeContentRows.forEach((row) => {
+  const gheeBox = document.createElement('div');
+  gheeBox.classList.add('ghee_box');
+  rightSection.append(gheeBox);
+
+  gheeContentRows.forEach((gheeRow) => {
     const [
       backgroundDesktopCell,
       backgroundMobileCell,
-      headlineBeforeDownloadCell,
+      headlineBeforeCell,
       ctaIconCell,
       ctaLinkCell,
       ctaLabelCell,
-      headlineAfterDownloadCell,
+      headlineAfterCell,
       confirmationIconCell,
-      ctaLabelAfterDownloadCell,
-    ] = [...row.children];
-
-    const gheeBox = document.createElement('div');
-    gheeBox.classList.add('ghee_box');
+      ctaLabelAfterCell,
+    ] = [...gheeRow.children];
 
     const accountMainBgBox = document.createElement('div');
     accountMainBgBox.classList.add('account-mainBg-box', 'w-100');
+    gheeBox.append(accountMainBgBox);
 
-    const annualBgDesktop = document.createElement('div');
-    annualBgDesktop.classList.add(
-      'annual-background_image--overlay',
-      'd-flex',
-      'annual-bg-desktop'
-    );
-    const desktopPicture = backgroundDesktopCell.querySelector('picture');
-    if (desktopPicture) {
-      const img = desktopPicture.querySelector('img');
-      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-      moveInstrumentation(img, optimizedPic.querySelector('img'));
-      optimizedPic.querySelector('img').classList.add('account-bgImg', 'with-overlay');
-      annualBgDesktop.append(optimizedPic);
+    const desktopBgOverlay = document.createElement('div');
+    desktopBgOverlay.classList.add('annual-background_image--overlay', 'd-flex', 'annual-bg-desktop');
+    if (backgroundDesktopCell) {
+      const picture = backgroundDesktopCell.querySelector('picture');
+      if (picture) {
+        const img = picture.querySelector('img');
+        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+        moveInstrumentation(backgroundDesktopCell, optimizedPic.querySelector('img'));
+        desktopBgOverlay.append(optimizedPic);
+        optimizedPic.querySelector('img').classList.add('account-bgImg', 'with-overlay');
+      }
     }
-    const desktopOverlay = document.createElement('div');
-    desktopOverlay.classList.add('overlay');
-    annualBgDesktop.append(desktopOverlay);
-    accountMainBgBox.append(annualBgDesktop);
+    const desktopOverlayDiv = document.createElement('div');
+    desktopOverlayDiv.classList.add('overlay');
+    desktopBgOverlay.append(desktopOverlayDiv);
+    accountMainBgBox.append(desktopBgOverlay);
 
-    const annualBgMobile = document.createElement('div');
-    annualBgMobile.classList.add(
-      'annual-background_image--overlay',
-      'd-flex',
-      'annual-bg-mobile'
-    );
-    const mobilePicture = backgroundMobileCell.querySelector('picture');
-    if (mobilePicture) {
-      const img = mobilePicture.querySelector('img');
-      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-      moveInstrumentation(img, optimizedPic.querySelector('img'));
-      optimizedPic.querySelector('img').classList.add('account-bgImg', 'with-overlay');
-      annualBgMobile.append(optimizedPic);
+    const mobileBgOverlay = document.createElement('div');
+    mobileBgOverlay.classList.add('annual-background_image--overlay', 'd-flex', 'annual-bg-mobile');
+    if (backgroundMobileCell) {
+      const picture = backgroundMobileCell.querySelector('picture');
+      if (picture) {
+        const img = picture.querySelector('img');
+        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+        moveInstrumentation(backgroundMobileCell, optimizedPic.querySelector('img'));
+        mobileBgOverlay.append(optimizedPic);
+        optimizedPic.querySelector('img').classList.add('account-bgImg', 'with-overlay');
+      }
     }
-    const mobileOverlay = document.createElement('div');
-    mobileOverlay.classList.add('overlay');
-    annualBgMobile.append(mobileOverlay);
-    accountMainBgBox.append(annualBgMobile);
+    const mobileOverlayDiv = document.createElement('div');
+    mobileOverlayDiv.classList.add('overlay');
+    mobileBgOverlay.append(mobileOverlayDiv);
+    accountMainBgBox.append(mobileBgOverlay);
 
-    const rightSubtextBeforeDownload = document.createElement('div');
-    rightSubtextBeforeDownload.classList.add(
-      'right-subtext',
-      'position-absolute',
-      'start-0',
-      'end-0',
-      'bottom-0',
-      'right-subtext__BeforeDownload'
-    );
-    const flexContainerBefore = document.createElement('div');
-    flexContainerBefore.classList.add('d-flex', 'flex-column', 'align-items-center');
+    const rightSubtextBefore = document.createElement('div');
+    rightSubtextBefore.classList.add('right-subtext', 'position-absolute', 'start-0', 'end-0', 'bottom-0', 'right-subtext__BeforeDownload');
+    accountMainBgBox.append(rightSubtextBefore);
+
+    const beforeContent = document.createElement('div');
+    beforeContent.classList.add('d-flex', 'flex-column', 'align-items-center');
+    rightSubtextBefore.append(beforeContent);
 
     const gheeMobileHeadingBefore = document.createElement('div');
-    gheeMobileHeadingBefore.classList.add(
-      'ghee-mobile-heading',
-      'text-center',
-      'font-md-18',
-      'font-baskerville',
-      'leading-32'
-    );
-    gheeMobileHeadingBefore.innerHTML = headlineBeforeDownloadCell.innerHTML;
-    flexContainerBefore.append(gheeMobileHeadingBefore);
+    gheeMobileHeadingBefore.classList.add('ghee-mobile-heading', 'text-center', 'font-md-18', 'font-baskerville', 'leading-32');
+    moveInstrumentation(headlineBeforeCell, gheeMobileHeadingBefore);
+    while (headlineBeforeCell.firstChild) {
+      gheeMobileHeadingBefore.append(headlineBeforeCell.firstChild);
+    }
+    beforeContent.append(gheeMobileHeadingBefore);
 
     const downloadButton = document.createElement('button');
     downloadButton.classList.add('annual-report_DownloadBtn', 'my-9');
+    beforeContent.append(downloadButton);
+
     const downloadIconDiv = document.createElement('div');
     downloadIconDiv.classList.add('download_icon');
-    const ctaIconPicture = ctaIconCell.querySelector('picture');
-    if (ctaIconPicture) {
-      const img = ctaIconPicture.querySelector('img');
-      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-      moveInstrumentation(img, optimizedPic.querySelector('img'));
-      downloadIconDiv.append(optimizedPic);
-    }
-    downloadButton.append(downloadIconDiv);
-    flexContainerBefore.append(downloadButton);
-
-    const downloadLinkWrapper = document.createElement('div');
-    downloadLinkWrapper.classList.add('d-flex', 'mb-6');
-    const linkDiv = document.createElement('div');
-    const ctaAnchor = document.createElement('a');
-    const foundCtaLink = ctaLinkCell.querySelector('a');
-    if (foundCtaLink) {
-      ctaAnchor.href = foundCtaLink.href;
-      if (/\.(pdf)$/i.test(foundCtaLink.href)) {
-        ctaAnchor.setAttribute('download', 'report.pdf');
+    if (ctaIconCell) {
+      const picture = ctaIconCell.querySelector('picture');
+      if (picture) {
+        const img = picture.querySelector('img');
+        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+        moveInstrumentation(ctaIconCell, optimizedPic.querySelector('img'));
+        downloadIconDiv.append(optimizedPic);
       }
     }
-    ctaAnchor.classList.add(
-      'text-decoration-none',
-      'download-report_btn',
-      'cta-analytics',
-      'download_report_btnBefore',
-      'text-cream-100',
-      'border',
-      'border-2',
-      'border-red-100',
-      'border-maroon-100-hover',
-      'border-red-300-active',
-      'bg-red-100',
-      'bg-maroon-100-hover',
-      'bg-red-300-active'
-    );
-    ctaAnchor.textContent = ctaLabelCell.textContent.trim();
-    moveInstrumentation(ctaLinkCell, ctaAnchor);
-    linkDiv.append(ctaAnchor);
-    downloadLinkWrapper.append(linkDiv);
-    flexContainerBefore.append(downloadLinkWrapper);
+    downloadButton.append(downloadIconDiv); // Corrected append
 
-    const whatsappLinkBefore = document.createElement('div');
-    whatsappLinkBefore.classList.add('Whatsapp-link', 'mb-8', 'text-center');
-    flexContainerBefore.append(whatsappLinkBefore);
+    const downloadLinkDiv = document.createElement('div');
+    downloadLinkDiv.classList.add('d-flex', 'mb-6');
+    beforeContent.append(downloadLinkDiv);
 
-    rightSubtextBeforeDownload.append(flexContainerBefore);
-    accountMainBgBox.append(rightSubtextBeforeDownload);
+    const downloadAnchor = document.createElement('a');
+    const foundCtaLink = ctaLinkCell.querySelector('a');
+    if (foundCtaLink) {
+      downloadAnchor.href = foundCtaLink.href;
+      downloadAnchor.setAttribute('download', 'report.pdf'); // Assuming PDF download
+    }
+    downloadAnchor.textContent = ctaLabelCell.textContent.trim();
+    downloadAnchor.classList.add('text-decoration-none', 'download-report_btn', 'cta-analytics', 'download_report_btnBefore', 'text-cream-100', 'border', 'border-2', 'border-red-100', 'border-maroon-100-hover', 'border-red-300-active', 'bg-red-100', 'bg-maroon-100-hover', 'bg-red-300-active');
+    moveInstrumentation(ctaLinkCell, downloadAnchor);
+    moveInstrumentation(ctaLabelCell, downloadAnchor);
+    downloadLinkDiv.append(downloadAnchor);
 
-    const rightSubtextAfterDownload = document.createElement('div');
-    rightSubtextAfterDownload.classList.add(
-      'right-subtext',
-      'position-absolute',
-      'start-0',
-      'end-0',
-      'bottom-0',
-      'right-section_subtextafter',
-      'right-subtext__AfterDownload'
-    );
-    const flexContainerAfter = document.createElement('div');
-    flexContainerAfter.classList.add(
-      'd-flex',
-      'flex-column',
-      'align-items-center',
-      'justify-content-around'
-    );
+    const rightSubtextAfter = document.createElement('div');
+    rightSubtextAfter.classList.add('right-subtext', 'position-absolute', 'start-0', 'end-0', 'bottom-0', 'right-section_subtextafter', 'right-subtext__AfterDownload');
+    accountMainBgBox.append(rightSubtextAfter);
+    rightSubtextAfter.style.display = 'none'; // Initially hidden
+
+    const afterContent = document.createElement('div');
+    afterContent.classList.add('d-flex', 'flex-column', 'align-items-center', 'justify-content-around');
+    rightSubtextAfter.append(afterContent);
 
     const gheeMobileHeadingAfter = document.createElement('div');
-    gheeMobileHeadingAfter.classList.add(
-      'ghee-mobile-heading',
-      'text-center',
-      'font-md-18',
-      'font-baskerville',
-      'leading-32'
-    );
-    gheeMobileHeadingAfter.innerHTML = headlineAfterDownloadCell.innerHTML;
-    flexContainerAfter.append(gheeMobileHeadingAfter);
+    gheeMobileHeadingAfter.classList.add('ghee-mobile-heading', 'text-center', 'font-md-18', 'font-baskerville', 'leading-32');
+    moveInstrumentation(headlineAfterCell, gheeMobileHeadingAfter);
+    while (headlineAfterCell.firstChild) {
+      gheeMobileHeadingAfter.append(headlineAfterCell.firstChild);
+    }
+    afterContent.append(gheeMobileHeadingAfter);
 
     const confirmationButton = document.createElement('button');
     confirmationButton.classList.add('annual-report_DownloadBtn', 'my-9');
+    afterContent.append(confirmationButton);
+
     const tickDownloadDiv = document.createElement('div');
     tickDownloadDiv.classList.add('tick_download');
-    const confirmationIconPicture = confirmationIconCell.querySelector('picture');
-    if (confirmationIconPicture) {
-      const img = confirmationIconPicture.querySelector('img');
-      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-      moveInstrumentation(img, optimizedPic.querySelector('img'));
-      tickDownloadDiv.append(optimizedPic);
+    if (confirmationIconCell) {
+      const picture = confirmationIconCell.querySelector('picture');
+      if (picture) {
+        const img = picture.querySelector('img');
+        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+        moveInstrumentation(confirmationIconCell, optimizedPic.querySelector('img'));
+        tickDownloadDiv.append(optimizedPic);
+      }
     }
-    confirmationButton.append(tickDownloadDiv);
-    flexContainerAfter.append(confirmationButton);
+    confirmationButton.append(tickDownloadDiv); // Corrected append
 
-    const downloadButtonAfterWrapper = document.createElement('div');
-    downloadButtonAfterWrapper.classList.add('d-flex', 'mb-6');
-    const buttonDivAfter = document.createElement('div');
+    const downloadButtonAfterDiv = document.createElement('div');
+    downloadButtonAfterDiv.classList.add('d-flex', 'mb-6');
+    afterContent.append(downloadButtonAfterDiv);
+
     const downloadButtonAfter = document.createElement('button');
-    downloadButtonAfter.classList.add(
-      'download-report_btn',
-      'download_report_btnAfter',
-      'disabled',
-      'bg-light-pink',
-      'border-light-pink',
-      'text-cream-100'
-    );
-    downloadButtonAfter.textContent = ctaLabelAfterDownloadCell.textContent.trim();
-    buttonDivAfter.append(downloadButtonAfter);
-    downloadButtonAfterWrapper.append(buttonDivAfter);
-    flexContainerAfter.append(downloadButtonAfterWrapper);
+    downloadButtonAfter.classList.add('download-report_btn', 'download_report_btnAfter', 'disabled', 'bg-light-pink', 'border-light-pink', 'text-cream-100');
+    downloadButtonAfter.textContent = ctaLabelAfterCell.textContent.trim();
+    moveInstrumentation(ctaLabelAfterCell, downloadButtonAfter);
+    downloadButtonAfterDiv.append(downloadButtonAfter);
 
-    const whatsappLinkAfter = document.createElement('div');
-    whatsappLinkAfter.classList.add('Whatsapp-link', 'mb-8', 'text-center');
-    flexContainerAfter.append(whatsappLinkAfter);
+    // Event listener for download
+    downloadAnchor.addEventListener('click', (e) => {
+      e.preventDefault();
+      const link = document.createElement('a');
+      link.href = downloadAnchor.href;
+      link.download = 'report.pdf';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
 
-    rightSubtextAfterDownload.append(flexContainerAfter);
-    accountMainBgBox.append(rightSubtextAfterDownload);
-
-    gheeBox.append(accountMainBgBox);
-    rightSection.append(gheeBox);
-
-    // Add event listeners for download functionality
-    downloadButton.addEventListener('click', () => {
-      ctaAnchor.click();
-      rightSubtextBeforeDownload.style.display = 'none';
-      rightSubtextAfterDownload.style.display = 'flex';
+      rightSubtextBefore.style.display = 'none';
+      rightSubtextAfter.style.display = 'flex';
     });
   });
 
-  milkContentRows.forEach((row) => {
+  const milkSectionImage = document.createElement('div');
+  milkSectionImage.classList.add('position-relative', 'milk-section_image');
+  milkSectionImage.style.display = 'none'; // Initially hidden
+  rightSection.append(milkSectionImage);
+
+  milkContentRows.forEach((milkRow) => {
     const [
       backgroundDesktopCell,
       backgroundMobileCell,
       headlineCell,
-      ctaIconCell,
+      milkIconCell,
       whatsappLinkCell,
       whatsappLabelCell,
-    ] = [...row.children];
+    ] = [...milkRow.children];
 
-    const milkSectionImage = document.createElement('div');
-    milkSectionImage.classList.add('position-relative', 'milk-section_image');
+    const accountMainBgBoxMilk = document.createElement('div');
+    accountMainBgBoxMilk.classList.add('w-100', 'account-mainBg-box', 'd-flex');
+    milkSectionImage.append(accountMainBgBoxMilk);
 
-    const milkAccountMainBgBox = document.createElement('div');
-    milkAccountMainBgBox.classList.add('w-100', 'account-mainBg-box', 'd-flex');
-
-    const milkAnnualBgDesktop = document.createElement('div');
-    milkAnnualBgDesktop.classList.add(
-      'annual-background_image--overlay',
-      'd-flex',
-      'annual-bg-desktop'
-    );
-    const milkDesktopPicture = backgroundDesktopCell.querySelector('picture');
-    if (milkDesktopPicture) {
-      const img = milkDesktopPicture.querySelector('img');
-      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-      moveInstrumentation(img, optimizedPic.querySelector('img'));
-      optimizedPic.querySelector('img').classList.add('account-bgImg', 'with-overlay');
-      milkAnnualBgDesktop.append(optimizedPic);
+    const desktopBgOverlayMilk = document.createElement('div');
+    desktopBgOverlayMilk.classList.add('annual-background_image--overlay', 'd-flex', 'annual-bg-desktop');
+    if (backgroundDesktopCell) {
+      const picture = backgroundDesktopCell.querySelector('picture');
+      if (picture) {
+        const img = picture.querySelector('img');
+        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+        moveInstrumentation(backgroundDesktopCell, optimizedPic.querySelector('img'));
+        desktopBgOverlayMilk.append(optimizedPic);
+        optimizedPic.querySelector('img').classList.add('account-bgImg', 'with-overlay');
+      }
     }
-    const milkDesktopOverlay = document.createElement('div');
-    milkDesktopOverlay.classList.add('overlay');
-    milkAnnualBgDesktop.append(milkDesktopOverlay);
-    milkAccountMainBgBox.append(milkAnnualBgDesktop);
+    const desktopOverlayMilkDiv = document.createElement('div');
+    desktopOverlayMilkDiv.classList.add('overlay');
+    desktopBgOverlayMilk.append(desktopOverlayMilkDiv);
+    accountMainBgBoxMilk.append(desktopBgOverlayMilk);
 
-    const milkAnnualBgMobile = document.createElement('div');
-    milkAnnualBgMobile.classList.add(
-      'annual-background_image--overlay',
-      'd-flex',
-      'annual-bg-mobile'
-    );
-    const milkMobilePicture = backgroundMobileCell.querySelector('picture');
-    if (milkMobilePicture) {
-      const img = milkMobilePicture.querySelector('img');
-      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-      moveInstrumentation(img, optimizedPic.querySelector('img'));
-      optimizedPic.querySelector('img').classList.add('account-bgImg', 'with-overlay');
-      milkAnnualBgMobile.append(optimizedPic);
+    const mobileBgOverlayMilk = document.createElement('div');
+    mobileBgOverlayMilk.classList.add('annual-background_image--overlay', 'd-flex', 'annual-bg-mobile');
+    if (backgroundMobileCell) {
+      const picture = backgroundMobileCell.querySelector('picture');
+      if (picture) {
+        const img = picture.querySelector('img');
+        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+        moveInstrumentation(backgroundMobileCell, optimizedPic.querySelector('img'));
+        mobileBgOverlayMilk.append(optimizedPic);
+        optimizedPic.querySelector('img').classList.add('account-bgImg', 'with-overlay');
+      }
     }
-    const milkMobileOverlay = document.createElement('div');
-    milkMobileOverlay.classList.add('overlay');
-    milkAnnualBgMobile.append(milkMobileOverlay);
-    milkAccountMainBgBox.append(milkAnnualBgMobile);
+    const mobileOverlayMilkDiv = document.createElement('div');
+    mobileOverlayMilkDiv.classList.add('overlay');
+    mobileBgOverlayMilk.append(mobileOverlayMilkDiv);
+    accountMainBgBoxMilk.append(mobileBgOverlayMilk);
 
-    const milkRightSubtext = document.createElement('div');
-    milkRightSubtext.classList.add(
-      'right-subtext',
-      'position-absolute',
-      'start-0',
-      'end-0',
-      'bottom-0',
-      'right-subtext-milk'
-    );
-    const milkFlexContainer = document.createElement('div');
-    milkFlexContainer.classList.add('d-flex', 'flex-column', 'align-items-center');
+    const rightSubtextMilk = document.createElement('div');
+    rightSubtextMilk.classList.add('right-subtext', 'position-absolute', 'start-0', 'end-0', 'bottom-0', 'right-subtext-milk');
+    milkSectionImage.append(rightSubtextMilk);
 
-    const milkGheeMobileHeading = document.createElement('div');
-    milkGheeMobileHeading.classList.add(
-      'ghee-mobile-heading',
-      'text-center',
-      'font-md-18',
-      'font-baskerville',
-      'leading-32'
-    );
-    milkGheeMobileHeading.innerHTML = headlineCell.innerHTML;
-    milkFlexContainer.append(milkGheeMobileHeading);
+    const milkContent = document.createElement('div');
+    milkContent.classList.add('d-flex', 'flex-column', 'align-items-center');
+    rightSubtextMilk.append(milkContent);
 
-    const emptyDiv = document.createElement('div');
-    emptyDiv.classList.add('font-md-18', 'mt-6', 'text-center');
-    milkFlexContainer.append(emptyDiv);
-
-    const ctaIconDiv = document.createElement('div');
-    ctaIconDiv.classList.add('my-9');
-    const milkCtaIconPicture = ctaIconCell.querySelector('picture');
-    if (milkCtaIconPicture) {
-      const img = milkCtaIconPicture.querySelector('img');
-      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-      moveInstrumentation(img, optimizedPic.querySelector('img'));
-      ctaIconDiv.append(optimizedPic);
+    const gheeMobileHeadingMilk = document.createElement('div');
+    gheeMobileHeadingMilk.classList.add('ghee-mobile-heading', 'text-center', 'font-md-18', 'font-baskerville', 'leading-32');
+    moveInstrumentation(headlineCell, gheeMobileHeadingMilk);
+    while (headlineCell.firstChild) {
+      gheeMobileHeadingMilk.append(headlineCell.firstChild);
     }
-    milkFlexContainer.append(ctaIconDiv);
+    milkContent.append(gheeMobileHeadingMilk);
+
+    const milkIconDiv = document.createElement('div');
+    milkIconDiv.classList.add('my-9');
+    if (milkIconCell) {
+      const picture = milkIconCell.querySelector('picture');
+      if (picture) {
+        const img = picture.querySelector('img');
+        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+        moveInstrumentation(milkIconCell, optimizedPic.querySelector('img'));
+        milkIconDiv.append(optimizedPic);
+      }
+    }
+    milkContent.append(milkIconDiv);
 
     const whatsappLinkDiv = document.createElement('div');
     whatsappLinkDiv.classList.add('Whatsapp-link', 'mb-8', 'text-center');
+    const whatsappAnchor = document.createElement('a');
     const foundWhatsappLink = whatsappLinkCell.querySelector('a');
     if (foundWhatsappLink) {
-      // Move the original anchor element and its instrumentation
-      moveInstrumentation(whatsappLinkCell, foundWhatsappLink);
-      whatsappLinkDiv.append(foundWhatsappLink);
-      foundWhatsappLink.classList.add('cmp-link__screen-reader-only'); // Add class if needed
-      foundWhatsappLink.setAttribute('target', '_blank');
-      foundWhatsappLink.setAttribute('rel', 'noopener noreferrer');
-    } else {
-      // Fallback if no anchor found, though it should be present for type=aem-content
-      const whatsappAnchor = document.createElement('a');
-      whatsappAnchor.textContent = whatsappLabelCell.textContent.trim();
-      whatsappAnchor.classList.add('cmp-link__screen-reader-only');
-      // No href available if no anchor found, consider logging or adding a placeholder
-      whatsappLinkDiv.append(whatsappAnchor);
+      whatsappAnchor.href = foundWhatsappLink.href;
+      whatsappAnchor.target = '_blank';
+      whatsappAnchor.rel = 'noopener noreferrer';
     }
-    moveInstrumentation(whatsappLinkCell, whatsappLinkDiv); // Move instrumentation for the div as well
-    milkFlexContainer.append(whatsappLinkDiv);
+    whatsappAnchor.textContent = whatsappLabelCell.textContent.trim();
+    whatsappAnchor.classList.add('cmp-link__screen-reader-only');
+    moveInstrumentation(whatsappLinkCell, whatsappAnchor);
+    moveInstrumentation(whatsappLabelCell, whatsappAnchor);
+    whatsappLinkDiv.append(whatsappAnchor);
+    milkContent.append(whatsappLinkDiv);
 
-    milkRightSubtext.append(milkFlexContainer);
-    milkSectionImage.append(milkAccountMainBgBox, milkRightSubtext);
-    rightSection.append(milkSectionImage);
+    const whatsappP = document.createElement('p');
+    whatsappP.innerHTML = `Check Your Milk Report Card on <a href="${whatsappAnchor.href}" target="_blank" rel="noopener noreferrer">Whatsapp​<span class="cmp-link__screen-reader-only">opens in a new tab</span></a>`;
+    // moveInstrumentation for the dynamically created paragraph
+    // This assumes the original HTML had a <p> element for this text, which it does.
+    // We need to ensure the instrumentation from the original <p> is moved to this new <p>
+    // However, the original <p> is nested inside whatsappLinkDiv, so we need to move its children.
+    const originalWhatsappP = whatsappLinkCell.parentElement.querySelector('.Whatsapp-link p');
+    if (originalWhatsappP) {
+      moveInstrumentation(originalWhatsappP, whatsappP);
+    }
+    whatsappLinkDiv.append(whatsappP);
   });
 
-  rowDiv.append(leftSection, rightSection);
-  mainBox.append(rowDiv);
+  // Toggle functionality for Ghee/Milk sections
+  gheeProductDiv.addEventListener('click', () => {
+    gheeProductDiv.classList.add('ghee-packet', 'product-hover');
+    milkProductDiv.classList.remove('milk-packet', 'product-hover'); // Ensure milk-packet is removed
+    gheeBox.style.display = 'block';
+    milkSectionImage.style.display = 'none';
+  });
 
-  block.replaceChildren(mainBox);
+  milkProductDiv.addEventListener('click', () => {
+    milkProductDiv.classList.add('milk-packet', 'product-hover'); // Add product-hover here
+    gheeProductDiv.classList.remove('ghee-packet', 'product-hover'); // Ensure ghee-packet is removed
+    gheeBox.style.display = 'none';
+    milkSectionImage.style.display = 'block';
+  });
 
-  block.classList.add('container-xl', 'annualReport_mainBox');
+  block.replaceChildren(root);
+
+  // Initial state setup
+  // These classes are already added during the initial loop for productItemRows.
+  // The original HTML shows 'ghee-packet product-hover' on the first item and 'milk-packet' on the second.
+  // The JS correctly adds 'ghee-packet' to gheeProductDiv and 'milk-packet' to milkProductDiv.
+  // The 'product-hover' class is added to the ghee-packet by default in the loop.
+  // The initial state should reflect the first item being active.
+  const firstGheeProductItem = gheeProductDiv.querySelector('.ghee-packet');
+  if (firstGheeProductItem) {
+    firstGheeProductItem.classList.add('product-hover');
+  }
+  const firstMilkProductItem = milkProductDiv.querySelector('.milk-packet');
+  if (firstMilkProductItem) {
+    firstMilkProductItem.classList.remove('product-hover');
+  }
+
+  gheeBox.style.display = 'block';
+  milkSectionImage.style.display = 'none';
 }
