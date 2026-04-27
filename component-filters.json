@@ -42,7 +42,8 @@
   {
     "id": "card-carousel",
     "components": [
-      "product-card"
+      "recipe-card",
+      "social-share-item"
     ]
   },
   {
@@ -87,14 +88,16 @@
   {
     "id": "header-comp",
     "components": [
-      "menu-item",
-      "search-icon"
+      "header-menu-item",
+      "header-sub-menu-item",
+      "header-sub-child-menu-item",
+      "header-search-item"
     ]
   },
   {
     "id": "product-selection-component",
     "components": [
-      "product-selector-item",
+      "product-item",
       "ghee-panel",
       "milk-panel"
     ]

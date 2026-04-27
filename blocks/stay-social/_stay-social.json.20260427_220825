@@ -1,7 +1,7 @@
 {
   "definitions": [
     {
-      "title": "Stay-Social",
+      "title": "Stay Social",
       "id": "stay-social",
       "plugins": {
         "xwalk": {
@@ -10,14 +10,14 @@
             "template": {
               "filter": "stay-social",
               "model": "stay-social",
-              "name": "Stay-Social"
+              "name": "Stay Social"
             }
           }
         }
       }
     },
     {
-      "title": "Stay-Social-Card",
+      "title": "Stay Social Card",
       "id": "stay-social-card",
       "plugins": {
         "xwalk": {
@@ -25,7 +25,7 @@
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
               "model": "stay-social-card",
-              "name": "Stay-Social-Card"
+              "name": "Stay Social Card"
             }
           }
         }
@@ -38,13 +38,13 @@
       "fields": [
         {
           "component": "text",
-          "label": "Section Title",
+          "label": "Title",
           "name": "title",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Section Subtext",
+          "label": "Subtext",
           "name": "subtext",
           "valueType": "string"
         },
@@ -55,15 +55,15 @@
           "name": "cards"
         },
         {
-          "component": "text",
-          "label": "CTA Label",
-          "name": "ctaLabel",
-          "valueType": "string"
-        },
-        {
           "component": "aem-content",
           "label": "CTA Link",
           "name": "ctaLink",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "CTA Label",
+          "name": "ctaLabel",
           "valueType": "string"
         }
       ]
@@ -72,21 +72,21 @@
       "id": "stay-social-card",
       "fields": [
         {
-          "component": "reference",
-          "label": "Desktop Image",
-          "name": "desktopImage",
-          "valueType": "string"
-        },
-        {
-          "component": "reference",
-          "label": "Mobile Image",
-          "name": "mobileImage",
-          "valueType": "string"
-        },
-        {
           "component": "aem-content",
           "label": "Card Link",
-          "name": "link",
+          "name": "cardLink",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Card Image (Mobile)",
+          "name": "cardImageMobile",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Card Image (Desktop)",
+          "name": "cardImageDesktop",
           "valueType": "string"
         }
       ]

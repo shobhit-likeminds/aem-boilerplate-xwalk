@@ -1,7 +1,7 @@
 {
   "definitions": [
     {
-      "title": "Banner Section",
+      "title": "Banner-Section",
       "id": "banner-section",
       "plugins": {
         "xwalk": {
@@ -10,7 +10,7 @@
             "template": {
               "filter": "banner-section",
               "model": "banner-section",
-              "name": "Banner Section"
+              "name": "Banner-Section"
             }
           }
         }

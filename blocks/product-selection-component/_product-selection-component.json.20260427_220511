@@ -17,15 +17,15 @@
       }
     },
     {
-      "title": "Product Item",
-      "id": "product-item",
+      "title": "Product Selector Item",
+      "id": "product-selector-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "product-item",
-              "name": "Product Item"
+              "model": "product-selector-item",
+              "name": "Product Selector Item"
             }
           }
         }
@@ -68,32 +68,32 @@
       "fields": [
         {
           "component": "richtext",
-          "label": "Main Heading",
-          "name": "heading",
+          "label": "Headline",
+          "name": "headline",
           "valueType": "string"
         },
         {
           "component": "container",
-          "item": "product-item",
-          "label": "Product Items",
+          "item": "product-selector-item",
+          "label": "Product Selector Items",
           "name": "products"
         },
         {
           "component": "container",
           "item": "ghee-panel",
-          "label": "Ghee Panel",
-          "name": "gheePanel"
+          "label": "Ghee Panels",
+          "name": "gheePanels"
         },
         {
           "component": "container",
           "item": "milk-panel",
-          "label": "Milk Panel",
-          "name": "milkPanel"
+          "label": "Milk Panels",
+          "name": "milkPanels"
         }
       ]
     },
     {
-      "id": "product-item",
+      "id": "product-selector-item",
       "fields": [
         {
           "component": "reference",
@@ -114,55 +114,55 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Desktop Background Image",
+          "label": "Ghee Desktop Background Image",
           "name": "backgroundDesktop",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Mobile Background Image",
+          "label": "Ghee Mobile Background Image",
           "name": "backgroundMobile",
           "valueType": "string"
         },
         {
           "component": "richtext",
-          "label": "Headline (before download)",
+          "label": "Headline (Before Download)",
           "name": "headlineBefore",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "CTA Icon (before download)",
+          "label": "CTA Icon (Before Download)",
           "name": "ctaIcon",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "label": "CTA Link (Download PDF)",
+          "label": "Download Report Link (Before Download)",
           "name": "ctaLink",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "CTA Label (Download Button)",
+          "label": "Download Report Label (Before Download)",
           "name": "ctaLabel",
           "valueType": "string"
         },
         {
           "component": "richtext",
-          "label": "Headline (after download)",
+          "label": "Headline (After Download)",
           "name": "headlineAfter",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Confirmation Icon (after download)",
+          "label": "Confirmation Icon (After Download)",
           "name": "confirmationIcon",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "CTA Label (after download, disabled button)",
+          "label": "Download Report Label (After Download)",
           "name": "ctaLabelAfter",
           "valueType": "string"
         }
@@ -173,13 +173,13 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Desktop Background Image",
+          "label": "Milk Desktop Background Image",
           "name": "backgroundDesktop",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Mobile Background Image",
+          "label": "Milk Mobile Background Image",
           "name": "backgroundMobile",
           "valueType": "string"
         },
@@ -191,8 +191,8 @@
         },
         {
           "component": "reference",
-          "label": "CTA Icon",
-          "name": "ctaIcon",
+          "label": "Milk Confirmation Icon",
+          "name": "confirmationIcon",
           "valueType": "string"
         },
         {
@@ -203,7 +203,7 @@
         },
         {
           "component": "text",
-          "label": "Whatsapp Link Label",
+          "label": "Whatsapp Label",
           "name": "whatsappLabel",
           "valueType": "string"
         }
@@ -214,7 +214,7 @@
     {
       "id": "product-selection-component",
       "components": [
-        "product-item",
+        "product-selector-item",
         "ghee-panel",
         "milk-panel"
       ]

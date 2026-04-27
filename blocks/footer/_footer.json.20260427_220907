@@ -54,13 +54,13 @@
         {
           "component": "reference",
           "label": "Primary Logo",
-          "name": "logo",
+          "name": "primaryLogo",
           "valueType": "string"
         },
         {
           "component": "aem-content",
           "label": "Primary Logo Link",
-          "name": "logoLink",
+          "name": "primaryLogoLink",
           "valueType": "string"
         },
         {
@@ -72,20 +72,14 @@
         {
           "component": "container",
           "item": "footer-navigation-item",
-          "label": "Navigation Menu Left",
-          "name": "navigationMenuLeft"
+          "label": "Navigation Items",
+          "name": "navigationItems"
         },
         {
           "component": "container",
-          "item": "footer-navigation-item",
-          "label": "Navigation Menu Right",
-          "name": "navigationMenuRight"
-        },
-        {
-          "component": "reference",
-          "label": "ITC Portal Link Icon (optional)",
-          "name": "itcPortalIcon",
-          "valueType": "string"
+          "item": "footer-social-link-item",
+          "label": "Social Links",
+          "name": "socialLinks"
         },
         {
           "component": "aem-content",
@@ -95,15 +89,15 @@
         },
         {
           "component": "text",
-          "label": "Copyright Text",
-          "name": "copyrightText",
+          "label": "ITC Portal Label",
+          "name": "itcPortalLabel",
           "valueType": "string"
         },
         {
-          "component": "container",
-          "item": "footer-social-link-item",
-          "label": "Social Media Links",
-          "name": "socialLinks"
+          "component": "text",
+          "label": "Copyright Text",
+          "name": "copyright",
+          "valueType": "string"
         }
       ]
     },
@@ -112,13 +106,13 @@
       "fields": [
         {
           "component": "text",
-          "label": "Menu Item Label",
+          "label": "Navigation Label",
           "name": "label",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "label": "Menu Item Link",
+          "label": "Navigation Link",
           "name": "link",
           "valueType": "string"
         },
@@ -141,7 +135,7 @@
         },
         {
           "component": "aem-content",
-          "label": "Social Link URL",
+          "label": "Social Link",
           "name": "link",
           "valueType": "string"
         }

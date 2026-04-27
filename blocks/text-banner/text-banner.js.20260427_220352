@@ -4,28 +4,29 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
 export default function decorate(block) {
   const [titleRow, descriptionRow, ctaLinkRow, ctaLabelRow] = [...block.children];
 
-  const sectionWrapper = document.createElement('section');
-  sectionWrapper.classList.add('text-banner--wrapper', 'position-relative', 'bg-maroon-700');
+  const section = document.createElement('section');
+  section.classList.add('text-banner--wrapper', 'position-relative', 'bg-maroon-700');
 
+  // Background elements
   const bgCircleLeft = document.createElement('div');
   bgCircleLeft.classList.add('position-absolute', 'opacity-60', 'bg-circle-left');
-  sectionWrapper.append(bgCircleLeft);
+  section.append(bgCircleLeft);
 
   const bgCircleRight = document.createElement('div');
   bgCircleRight.classList.add('position-absolute', 'opacity-20', 'bg-circle-right');
-  sectionWrapper.append(bgCircleRight);
+  section.append(bgCircleRight);
 
   const bgCurveTop = document.createElement('div');
   bgCurveTop.classList.add('position-absolute', 'start-0', 'end-0', 'bg-curve-top');
-  sectionWrapper.append(bgCurveTop);
+  section.append(bgCurveTop);
 
   const bgCurveBottom = document.createElement('div');
   bgCurveBottom.classList.add('position-absolute', 'start-0', 'end-0', 'bg-curve-bottom');
-  sectionWrapper.append(bgCurveBottom);
+  section.append(bgCurveBottom);
 
   const container = document.createElement('div');
   container.classList.add('container', 'gx-8', 'gx-sm-0');
-  sectionWrapper.append(container);
+  section.append(container);
 
   const row = document.createElement('div');
   row.classList.add('row', 'gx-8', 'gx-sm-0', 'text-cream-100');
@@ -44,8 +45,11 @@ export default function decorate(block) {
   const title = document.createElement('h2');
   title.classList.add('font-baskerville', 'font-md-40', 'font-24', 'text-banner--title');
   if (titleRow) {
-    moveInstrumentation(titleRow, title);
-    title.textContent = titleRow.textContent.trim();
+    const titleCell = [...titleRow.children].find((c) => c.textContent.trim());
+    if (titleCell) {
+      moveInstrumentation(titleRow, title);
+      title.textContent = titleCell.textContent.trim();
+    }
   }
   titleDiv.append(title);
   contentWrapper.append(titleDiv);
@@ -53,18 +57,22 @@ export default function decorate(block) {
   // Description
   const descriptionDiv = document.createElement('div');
   descriptionDiv.classList.add('mt-sm-8', 'mt-5', 'text-banner--description');
-  const descriptionText = document.createElement('div');
-  descriptionText.classList.add('font-md-18', 'font-default', 'leading-24', 'text-center', 'promise-text-padding');
+  const descriptionTextDiv = document.createElement('div');
+  descriptionTextDiv.classList.add('font-md-18', 'font-default', 'leading-24', 'text-center', 'promise-text-padding');
   if (descriptionRow) {
-    moveInstrumentation(descriptionRow, descriptionText);
-    descriptionText.innerHTML = descriptionRow.innerHTML;
+    const descriptionCell = [...descriptionRow.children].find((c) => c.innerHTML.trim());
+    if (descriptionCell) {
+      moveInstrumentation(descriptionRow, descriptionTextDiv);
+      descriptionTextDiv.innerHTML = descriptionCell.innerHTML;
+    }
   }
-  descriptionDiv.append(descriptionText);
+  descriptionDiv.append(descriptionTextDiv);
   contentWrapper.append(descriptionDiv);
 
   // CTA
   const ctaDiv = document.createElement('div');
   ctaDiv.classList.add('text-banner--cta', 'mt-12', 'mt-lg-16');
+
   const ctaLink = document.createElement('a');
   ctaLink.classList.add(
     'svasti-cta',
@@ -88,22 +96,28 @@ export default function decorate(block) {
   );
 
   if (ctaLinkRow) {
-    const foundLink = ctaLinkRow.querySelector('a');
-    if (foundLink) {
-      ctaLink.href = foundLink.href;
+    const ctaLinkCell = [...ctaLinkRow.children].find((c) => c.querySelector('a'));
+    if (ctaLinkCell) {
+      const foundLink = ctaLinkCell.querySelector('a');
+      if (foundLink) {
+        ctaLink.href = foundLink.href;
+      }
+      moveInstrumentation(ctaLinkRow, ctaLink);
     }
-    moveInstrumentation(ctaLinkRow, ctaLink);
   }
 
-  const ctaLabelSpan = document.createElement('span');
-  ctaLabelSpan.classList.add('svasti-cta__label', 'fw-semibold', 'fs-default', 'leading-26');
+  const ctaSpan = document.createElement('span');
+  ctaSpan.classList.add('svasti-cta__label', 'fw-semibold', 'fs-default', 'leading-26');
   if (ctaLabelRow) {
-    moveInstrumentation(ctaLabelRow, ctaLabelSpan);
-    ctaLabelSpan.textContent = ctaLabelRow.textContent.trim();
+    const ctaLabelCell = [...ctaLabelRow.children].find((c) => c.textContent.trim());
+    if (ctaLabelCell) {
+      moveInstrumentation(ctaLabelRow, ctaSpan);
+      ctaSpan.textContent = ctaLabelCell.textContent.trim();
+    }
   }
-  ctaLink.append(ctaLabelSpan);
+  ctaLink.append(ctaSpan);
   ctaDiv.append(ctaLink);
   textBannerContainer.append(ctaDiv);
 
-  block.replaceChildren(sectionWrapper);
+  block.replaceChildren(section);
 }
