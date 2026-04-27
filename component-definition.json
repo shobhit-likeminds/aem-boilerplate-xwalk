@@ -83,6 +83,22 @@
       "id": "blocks",
       "components": [
         {
+          "title": "Banner-Section",
+          "id": "banner-section",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "banner-section",
+                  "model": "banner-section",
+                  "name": "Banner-Section"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Buy-Now-Card",
           "id": "buy-now-card",
           "plugins": {
@@ -115,30 +131,15 @@
           }
         },
         {
-          "title": "Recipe-Card",
-          "id": "recipe-card",
+          "title": "Product-Card",
+          "id": "product-card",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "recipe-card",
-                  "name": "Recipe-Card"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Social-Media-Share-Item",
-          "id": "social-media-share-item",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block/item",
-                "template": {
-                  "model": "social-media-share-item",
-                  "name": "Social-Media-Share-Item"
+                  "model": "product-card",
+                  "name": "Product-Card"
                 }
               }
             }
@@ -206,6 +207,67 @@
           }
         },
         {
+          "title": "Footer-Brand",
+          "id": "footer-brand",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "footer-brand",
+                  "model": "footer-brand",
+                  "name": "Footer-Brand"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Footer-Navigation-Item",
+          "id": "footer-navigation-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "footer-navigation-item",
+                  "name": "Footer-Navigation-Item"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Footer-External-Link-Item",
+          "id": "footer-external-link-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "footer-external-link-item",
+                  "name": "Footer-External-Link-Item"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Footer-Social-Link-Item",
+          "id": "footer-social-link-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "footer-social-link-item",
+                  "name": "Footer-Social-Link-Item"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Footer",
           "id": "footer",
           "plugins": {
@@ -267,7 +329,7 @@
           }
         },
         {
-          "title": "Header-Comp",
+          "title": "Header Comp",
           "id": "header-comp",
           "plugins": {
             "xwalk": {
@@ -276,29 +338,29 @@
                 "template": {
                   "filter": "header-comp",
                   "model": "header-comp",
-                  "name": "Header-Comp"
+                  "name": "Header Comp"
                 }
               }
             }
           }
         },
         {
-          "title": "Navigation-Menu-Item",
-          "id": "navigation-menu-item",
+          "title": "Menu Item",
+          "id": "menu-item",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "navigation-menu-item",
-                  "name": "Navigation-Menu-Item"
+                  "model": "menu-item",
+                  "name": "Menu Item"
                 }
               }
             }
           }
         },
         {
-          "title": "Sub-Menu-Item",
+          "title": "Sub Menu Item",
           "id": "sub-menu-item",
           "plugins": {
             "xwalk": {
@@ -306,14 +368,14 @@
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
                   "model": "sub-menu-item",
-                  "name": "Sub-Menu-Item"
+                  "name": "Sub Menu Item"
                 }
               }
             }
           }
         },
         {
-          "title": "Sub-Sub-Menu-Item",
+          "title": "Sub Sub Menu Item",
           "id": "sub-sub-menu-item",
           "plugins": {
             "xwalk": {
@@ -321,14 +383,14 @@
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
                   "model": "sub-sub-menu-item",
-                  "name": "Sub-Sub-Menu-Item"
+                  "name": "Sub Sub Menu Item"
                 }
               }
             }
           }
         },
         {
-          "title": "Search-Icon",
+          "title": "Search Icon",
           "id": "search-icon",
           "plugins": {
             "xwalk": {
@@ -336,7 +398,7 @@
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
                   "model": "search-icon",
-                  "name": "Search-Icon"
+                  "name": "Search Icon"
                 }
               }
             }
@@ -374,15 +436,15 @@
           }
         },
         {
-          "title": "Product Item",
-          "id": "product-item",
+          "title": "Product Selector Item",
+          "id": "product-selector-item",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "product-item",
-                  "name": "Product Item"
+                  "model": "product-selector-item",
+                  "name": "Product Selector Item"
                 }
               }
             }
@@ -467,7 +529,7 @@
           }
         },
         {
-          "title": "Stay-Social",
+          "title": "Stay Social",
           "id": "stay-social",
           "plugins": {
             "xwalk": {
@@ -476,14 +538,14 @@
                 "template": {
                   "filter": "stay-social",
                   "model": "stay-social",
-                  "name": "Stay-Social"
+                  "name": "Stay Social"
                 }
               }
             }
           }
         },
         {
-          "title": "Stay-Social-Card",
+          "title": "Stay Social Card",
           "id": "stay-social-card",
           "plugins": {
             "xwalk": {
@@ -491,7 +553,7 @@
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
                   "model": "stay-social-card",
-                  "name": "Stay-Social-Card"
+                  "name": "Stay Social Card"
                 }
               }
             }
@@ -508,6 +570,22 @@
                   "filter": "text-banner",
                   "model": "text-banner",
                   "name": "Text-Banner"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "W-100-Pt-3-Pt-Sm-3",
+          "id": "w-100-pt-3-pt-sm-3",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "w-100-pt-3-pt-sm-3",
+                  "model": "w-100-pt-3-pt-sm-3",
+                  "name": "W-100-Pt-3-Pt-Sm-3"
                 }
               }
             }

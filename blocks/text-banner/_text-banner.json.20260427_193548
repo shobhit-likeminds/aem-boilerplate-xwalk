@@ -23,8 +23,8 @@
       "fields": [
         {
           "component": "text",
-          "label": "Banner Title",
-          "name": "title",
+          "label": "Banner Headline",
+          "name": "headline",
           "valueType": "string"
         },
         {
