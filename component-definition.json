@@ -357,15 +357,15 @@
           }
         },
         {
-          "title": "Press Release Slide",
-          "id": "press-release-slide",
+          "title": "Press Release Item",
+          "id": "press-release-item",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "press-release-slide",
-                  "name": "Press Release Slide"
+                  "model": "press-release-item",
+                  "name": "Press Release Item"
                 }
               }
             }
@@ -387,15 +387,15 @@
           }
         },
         {
-          "title": "Search Suggestion",
-          "id": "search-suggestion",
+          "title": "Search Suggestion Item",
+          "id": "search-suggestion-item",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "search-suggestion",
-                  "name": "Search Suggestion"
+                  "model": "search-suggestion-item",
+                  "name": "Search Suggestion Item"
                 }
               }
             }

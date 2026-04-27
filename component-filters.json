@@ -74,9 +74,9 @@
     "id": "main-header",
     "components": [
       "navigation-item",
+      "press-release-item",
       "icon-nav-item",
-      "press-release-slide",
-      "search-suggestion"
+      "search-suggestion-item"
     ]
   },
   {
