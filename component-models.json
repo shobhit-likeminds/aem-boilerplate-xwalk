@@ -179,38 +179,32 @@
       {
         "component": "text",
         "label": "Carousel Title",
-        "name": "title",
-        "valueType": "string"
+        "name": "title"
       },
       {
         "component": "text",
         "label": "Carousel Subtitle",
-        "name": "subtitle",
-        "valueType": "string"
+        "name": "subtitle"
       },
       {
         "component": "reference",
-        "label": "Previous Button Icon",
-        "name": "prevButtonIcon",
-        "valueType": "string"
+        "label": "Previous Navigation Icon",
+        "name": "prevNavIcon"
       },
       {
         "component": "reference",
-        "label": "Next Button Icon",
-        "name": "nextButtonIcon",
-        "valueType": "string"
+        "label": "Next Navigation Icon",
+        "name": "nextNavIcon"
       },
       {
         "component": "aem-content",
-        "label": "View All Link",
-        "name": "viewAllLink",
-        "valueType": "string"
+        "label": "CTA Link",
+        "name": "ctaLink"
       },
       {
         "component": "text",
-        "label": "View All Label",
-        "name": "viewAllLabel",
-        "valueType": "string"
+        "label": "CTA Label",
+        "name": "ctaLabel"
       },
       {
         "component": "container",
@@ -222,7 +216,7 @@
         "component": "container",
         "item": "social-media-share-item",
         "label": "Social Media Share Items",
-        "name": "socialMediaShareItems"
+        "name": "socialMediaShare"
       }
     ]
   },
@@ -232,74 +226,57 @@
       {
         "component": "aem-content",
         "label": "Recipe Link",
-        "name": "recipeLink",
-        "valueType": "string"
+        "name": "recipeLink"
       },
       {
         "component": "reference",
-        "label": "Recipe Main Image",
-        "name": "mainImage",
-        "valueType": "string"
+        "label": "Recipe Image",
+        "name": "image"
       },
       {
         "component": "text",
-        "label": "Recipe Main Image Alt Text",
-        "name": "mainImageAlt",
-        "valueType": "string"
+        "label": "Recipe Image Alt Text",
+        "name": "imageAlt"
       },
       {
         "component": "text",
         "label": "Recipe Tag",
-        "name": "tag",
-        "valueType": "string"
+        "name": "tag"
       },
       {
         "component": "reference",
-        "label": "Recipe Info Icon (top right SVG)",
-        "name": "infoIcon",
-        "valueType": "string"
+        "label": "Info Icon",
+        "name": "infoIcon"
       },
       {
         "component": "text",
         "label": "Recipe Title",
-        "name": "title",
-        "valueType": "string"
+        "name": "title"
       },
       {
         "component": "text",
         "label": "Recipe Description",
-        "name": "description",
-        "valueType": "string"
+        "name": "description"
       },
       {
         "component": "reference",
-        "label": "Recipe Wave SVG",
-        "name": "waveImage",
-        "valueType": "string"
-      },
-      {
-        "component": "reference",
-        "label": "Time Icon (left property SVG)",
-        "name": "timeIcon",
-        "valueType": "string"
+        "label": "Time Icon",
+        "name": "timeIcon"
       },
       {
         "component": "text",
-        "label": "Time Text",
-        "name": "timeText",
-        "valueType": "string"
+        "label": "Cooking Time",
+        "name": "time"
       },
       {
         "component": "reference",
-        "label": "Serves Icon (right property SVG)",
-        "name": "servesIcon",
-        "valueType": "string"
+        "label": "Serves Icon",
+        "name": "servesIcon"
       },
       {
         "component": "text",
-        "label": "Serves Text",
-        "name": "servesText",
-        "valueType": "string"
+        "label": "Serves (Text)",
+        "name": "serves"
       },
       {
         "component": "richtext",
@@ -313,22 +290,19 @@
     "id": "social-media-share-item",
     "fields": [
       {
-        "component": "aem-content",
-        "label": "Social Media Link",
-        "name": "socialLink",
-        "valueType": "string"
-      },
-      {
         "component": "reference",
         "label": "Social Media Icon",
-        "name": "icon",
-        "valueType": "string"
+        "name": "icon"
+      },
+      {
+        "component": "aem-content",
+        "label": "Social Media Share Link",
+        "name": "link"
       },
       {
         "component": "text",
-        "label": "Social Media Label",
-        "name": "label",
-        "valueType": "string"
+        "label": "Social Media Name",
+        "name": "label"
       }
     ]
   },
@@ -603,25 +577,25 @@
       },
       {
         "component": "container",
-        "item": "header-nav-item",
+        "item": "header-navigation-item",
         "label": "Navigation Items",
-        "name": "navItems"
+        "name": "navigationItems"
       },
       {
         "component": "container",
         "item": "header-search",
-        "label": "Search",
-        "name": "search"
+        "label": "Search Items",
+        "name": "searchItems"
       }
     ]
   },
   {
-    "id": "header-nav-item",
+    "id": "header-navigation-item",
     "fields": [
       {
         "component": "reference",
-        "label": "Menu Icon (Mobile)",
-        "name": "menuIcon",
+        "label": "Menu Item Image",
+        "name": "menuImage",
         "valueType": "string"
       },
       {
@@ -638,72 +612,84 @@
       },
       {
         "component": "reference",
-        "label": "Dropdown Arrow Icon",
-        "name": "arrowIcon",
+        "label": "Arrow Icon (Desktop)",
+        "name": "arrowIconDesktop",
         "valueType": "string"
       },
       {
-        "component": "container",
-        "item": "header-submenu-item",
-        "label": "Submenu Items",
-        "name": "submenuItems"
+        "component": "reference",
+        "label": "Arrow Icon (Mobile)",
+        "name": "arrowIconMobile",
+        "valueType": "string"
       },
       {
         "component": "richtext",
         "label": "Navigation Hierarchy",
         "name": "hierarchy-tree",
         "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "header-sub-navigation-item",
+        "label": "Sub Navigation Items",
+        "name": "subNavigationItems"
       }
     ]
   },
   {
-    "id": "header-submenu-item",
+    "id": "header-sub-navigation-item",
     "fields": [
       {
         "component": "text",
-        "label": "Submenu Label",
-        "name": "submenuLabel",
+        "label": "Sub Menu Label",
+        "name": "subMenuLabel",
         "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "Submenu Link",
-        "name": "submenuLink",
+        "label": "Sub Menu Link",
+        "name": "subMenuLink",
         "valueType": "string"
       },
       {
         "component": "reference",
-        "label": "Submenu Arrow Icon (Desktop)",
-        "name": "submenuArrowIcon",
+        "label": "Arrow Icon (Desktop)",
+        "name": "arrowIconDesktop",
         "valueType": "string"
       },
       {
         "component": "reference",
-        "label": "Submenu Arrow Icon (Mobile)",
-        "name": "submenuArrowIconMobile",
+        "label": "Arrow Icon (Mobile)",
+        "name": "arrowIconMobile",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Sub Navigation Hierarchy",
+        "name": "hierarchy-tree",
         "valueType": "string"
       },
       {
         "component": "container",
-        "item": "header-submenu-leaf-item",
-        "label": "Submenu Leaf Items",
-        "name": "submenuLeafItems"
+        "item": "header-sub-sub-navigation-item",
+        "label": "Sub Sub Navigation Items",
+        "name": "subSubNavigationItems"
       }
     ]
   },
   {
-    "id": "header-submenu-leaf-item",
+    "id": "header-sub-sub-navigation-item",
     "fields": [
       {
         "component": "text",
-        "label": "Leaf Item Label",
-        "name": "leafLabel",
+        "label": "Sub Sub Menu Label",
+        "name": "subSubMenuLabel",
         "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "Leaf Item Link",
-        "name": "leafLink",
+        "label": "Sub Sub Menu Link",
+        "name": "subSubMenuLink",
         "valueType": "string"
       }
     ]

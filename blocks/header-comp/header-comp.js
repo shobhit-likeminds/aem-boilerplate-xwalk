@@ -3,12 +3,10 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
 
 function transformNestedLists(rootUl) {
   rootUl.querySelectorAll('li').forEach((li) => {
-    // Apply classes from original HTML to li elements
-    li.classList.add('header-comp__wrapper--sub-menu-item'); // Example class, adjust as needed from original HTML
-
     const nested = li.querySelector(':scope > ul');
     const anchor = li.querySelector(':scope > a');
 
+    // Normalize label-only nodes
     if (!anchor) {
       const textNode = [...li.childNodes].find(
         (n) => n.nodeType === Node.TEXT_NODE && n.textContent.trim(),
@@ -24,16 +22,17 @@ function transformNestedLists(rootUl) {
     if (nested) {
       nested.remove();
       const subWrap = document.createElement('div');
-      subWrap.classList.add('has-sub-child'); // This class is not in the allowlist. If it's for JS behavior, it's fine. If for styling, it should be from original HTML.
+      subWrap.classList.add('has-sub-child'); // Use original HTML class
       subWrap.append(nested);
       li.append(subWrap);
+
       const trigger = li.querySelector(':scope > a, :scope > span');
       if (trigger) {
         trigger.addEventListener('click', (e) => {
           e.preventDefault();
           e.stopPropagation();
-          li.classList.toggle('active'); // This class is not in the allowlist. If it's for JS behavior, it's fine. If for styling, it should be from original HTML.
-          subWrap.classList.toggle('active'); // This class is not in the allowlist. If it's for JS behavior, it's fine. If for styling, it should be from original HTML.
+          li.classList.toggle('active');
+          subWrap.classList.toggle('active');
         });
       }
       transformNestedLists(nested); // Recursively transform nested lists
@@ -45,373 +44,208 @@ export default function decorate(block) {
   const [logoImageRow, logoLinkRow, ...itemRows] = [...block.children];
 
   const headerComp = document.createElement('section');
-  headerComp.classList.add(
-    'header-comp',
-    'bg-red-100',
-    'position-fixed',
-    'top-0',
-    'start-0',
-    'z-2',
-    'w-100',
-  );
+  headerComp.classList.add('header-comp', 'bg-red-100', 'position-fixed', 'top-0', 'start-0', 'z-2', 'w-100');
   moveInstrumentation(block, headerComp);
 
   const containerDiv = document.createElement('div');
-  containerDiv.classList.add(
-    'container',
-    'gx-8',
-    'gx-sm-0',
-    'd-flex',
-    'justify-content-between',
-    'align-items-start',
-    'align-items-md-center',
-  );
+  containerDiv.classList.add('container', 'gx-8', 'gx-sm-0', 'd-flex', 'justify-content-between', 'align-items-start', 'align-items-md-center');
+  headerComp.append(containerDiv);
 
   const nav = document.createElement('nav');
   nav.classList.add('header-nav', 'navbar', 'position-static', 'navbar-expand-lg');
+  containerDiv.append(nav);
 
   const headerWrapper = document.createElement('div');
-  headerWrapper.classList.add(
-    'header-comp__wrapper',
-    'container-fluid',
-    'justify-content-start',
-    'gx-4',
-    'gx-md-0',
-  );
+  headerWrapper.classList.add('header-comp__wrapper', 'container-fluid', 'justify-content-start', 'gx-4', 'gx-md-0');
+  nav.append(headerWrapper);
 
-  const hamburgerButton = document.createElement('button');
-  hamburgerButton.classList.add(
-    'border-0',
-    'shadow-none',
-    'navbar-toggler',
-    'header-comp__wrapper--hamburger',
-    'collapsed',
-    'p-0',
-  );
-  hamburgerButton.type = 'button';
-  hamburgerButton.setAttribute('aria-controls', 'navbarSupportedContent');
-  hamburgerButton.setAttribute('aria-expanded', 'false');
-  hamburgerButton.setAttribute('aria-label', 'Toggle navigation');
+  const hamburgerBtn = document.createElement('button');
+  hamburgerBtn.classList.add('border-0', 'shadow-none', 'navbar-toggler', 'header-comp__wrapper--hamburger', 'collapsed', 'p-0');
+  hamburgerBtn.type = 'button';
+  hamburgerBtn.setAttribute('aria-controls', 'navbarSupportedContent');
+  hamburgerBtn.setAttribute('aria-expanded', 'false');
+  hamburgerBtn.setAttribute('aria-label', 'Toggle navigation');
+  headerWrapper.append(hamburgerBtn);
 
-  const hamburgerIcon = document.createElement('span');
-  hamburgerIcon.classList.add(
-    'navbar-toggler-icon',
-    'd-flex',
-    'flex-column',
-    'justify-content-center',
-    'align-items-center',
-  );
+  const togglerIcon = document.createElement('span');
+  togglerIcon.classList.add('navbar-toggler-icon', 'd-flex', 'flex-column', 'justify-content-center', 'align-items-center');
+  hamburgerBtn.append(togglerIcon);
+
   for (let i = 0; i < 3; i += 1) {
     const span = document.createElement('span');
     span.classList.add('d-block', 'bg-white');
-    hamburgerIcon.append(span);
+    togglerIcon.append(span);
   }
-  hamburgerButton.append(hamburgerIcon);
 
-  const logoWrapper = document.createElement('div');
-  logoWrapper.classList.add('header-comp__wrapper--logo');
+  const logoDiv = document.createElement('div');
+  logoDiv.classList.add('header-comp__wrapper--logo');
+  headerWrapper.append(logoDiv);
 
   const logoLink = document.createElement('a');
-  logoLink.classList.add(
-    'header-comp__wrapper--link',
-    'cta-analytics',
-    'navbar-brand',
-    'm-0',
-  );
+  logoLink.classList.add('header-comp__wrapper--link', 'cta-analytics', 'navbar-brand', 'm-0');
   logoLink.setAttribute('data-link-region', 'Header');
   logoLink.href = logoLinkRow.querySelector('a')?.href || '#';
   moveInstrumentation(logoLinkRow, logoLink);
+  logoDiv.append(logoLink);
 
   const logoPicture = logoImageRow.querySelector('picture');
   if (logoPicture) {
     const img = logoPicture.querySelector('img');
-    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '100' }]);
+    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+    moveInstrumentation(img, optimizedPic.querySelector('img'));
     optimizedPic.querySelector('img').classList.add('header-comp__wrapper--image', 'h-100');
-    optimizedPic.querySelector('img').setAttribute('loading', 'eager');
-    moveInstrumentation(logoImageRow, optimizedPic.querySelector('img'));
     logoLink.append(optimizedPic);
   }
-  logoWrapper.append(logoLink);
 
   const navbarCollapse = document.createElement('div');
-  navbarCollapse.classList.add(
-    'header-comp__wrapper--menus',
-    'collapse',
-    'navbar-collapse',
-    'z-3',
-  );
+  navbarCollapse.classList.add('header-comp__wrapper--menus', 'collapse', 'navbar-collapse', 'z-3');
   navbarCollapse.id = 'navbarSupportedContent';
+  headerWrapper.append(navbarCollapse);
 
-  const navList = document.createElement('ul');
-  navList.classList.add(
-    'header-comp__wrapper--menus-groups',
-    'navbar-nav',
-    'me-auto',
-    'mb-2',
-    'mb-lg-0',
-    'w-100',
-  );
+  hamburgerBtn.addEventListener('click', () => {
+    navbarCollapse.classList.toggle('show');
+    hamburgerBtn.classList.toggle('collapsed');
+  });
 
-  const searchAccess = document.createElement('div');
-  searchAccess.classList.add(
-    'header-comp__wrapper--search-access',
-    'd-flex',
-    'py-4',
-    'py-lg-0',
-  );
-  const searchWrapper = document.createElement('div');
-  searchWrapper.classList.add('header-comp__wrapper--search');
+  const menuGroups = document.createElement('ul');
+  menuGroups.classList.add('header-comp__wrapper--menus-groups', 'navbar-nav', 'me-auto', 'mb-2', 'mb-lg-0', 'w-100');
+  navbarCollapse.append(menuGroups);
+
+  const searchAccessDiv = document.createElement('div');
+  searchAccessDiv.classList.add('header-comp__wrapper--search-access', 'd-flex', 'py-4', 'py-lg-0');
+  containerDiv.append(searchAccessDiv);
+
+  const searchDiv = document.createElement('div');
+  searchDiv.classList.add('header-comp__wrapper--search');
+  searchAccessDiv.append(searchDiv);
+
   const searchIconDiv = document.createElement('div');
-  searchIconDiv.classList.add(
-    'header-comp__wrapper--search-icon',
-    'd-flex',
-    'flex-column',
-    'align-items-center',
-    'font-12',
-    'leading-20',
-    'text-white',
-  );
+  searchIconDiv.classList.add('header-comp__wrapper--search-icon', 'd-flex', 'flex-column', 'align-items-center', 'font-12', 'leading-20', 'text-white');
+  searchDiv.append(searchIconDiv);
 
-  // Filter item rows based on their structure to match models
-  const navItems = itemRows.filter((row) => row.children.length === 6);
-  const searchItems = itemRows.filter((row) => row.children.length === 2);
-  // Note: header-submenu-item and header-submenu-leaf-item are handled within the hierarchy-tree richtext.
+  const outerBox = document.createElement('div');
+  outerBox.classList.add('header__outer-box', 'position-absolute', 'w-100', 'z-2', 'start-0', 'd-lg-none');
+  headerComp.append(outerBox);
 
-  navItems.forEach((row, i) => {
+  // Process item rows
+  itemRows.forEach((row) => {
     const cells = [...row.children];
-    // Use content detection for cells, as per CHECK 0
-    const menuIconCell = cells.find((cell) => cell.querySelector('picture')); // Assuming first picture is menuIcon
-    const menuLabelCell = cells.find((cell) => !cell.querySelector('picture') && !cell.querySelector('a')); // Assuming text content without picture or link
-    const menuLinkCell = cells.find((cell) => cell.querySelector('a')); // Assuming first link is menuLink
-    const arrowIconCell = cells.find((cell) => cell.children.length > 0 && cell !== menuIconCell && cell !== menuLinkCell && cell.querySelector('picture')); // Assuming second picture is arrowIcon
-    // cell[4] is a container, its content is not directly used here
-    const hierarchyTreeCell = cells.find((cell) => cell.querySelector('ul')); // Assuming richtext with ul is hierarchy-tree
+    if (cells.length === 7) { // header-navigation-item
+      const menuImageCell = cells[0];
+      const menuLabelCell = cells[1];
+      const menuLinkCell = cells[2];
+      const arrowIconDesktopCell = cells[3];
+      // const arrowIconMobileCell = cells[4]; // Not used in current rendering logic
+      const hierarchyTreeCell = cells[5];
+      // const subNavigationItemsCell = cells[6]; // Container field, not directly rendered here
 
-    const li = document.createElement('li');
-    li.classList.add(
-      'header-comp__wrapper--menu-item',
-      'h-100',
-      'd-flex',
-      'align-items-center',
-      'nav-item',
-      'p-4',
-      'p-lg-0',
-      'border-bottom-lg-0',
-      'dropdown',
-      'flex-column',
-      'border-lg-0',
-      'position-relative',
-    );
-    if (i % 2 === 0) {
-      li.classList.add('left-division');
-    } else {
-      li.classList.add('right-division');
-    }
-    li.setAttribute('data-header-item-id', `leftHeaderItem${i}`);
-    moveInstrumentation(row, li);
+      const li = document.createElement('li');
+      li.classList.add('header-comp__wrapper--menu-item', 'h-100', 'd-flex', 'align-items-center', 'nav-item', 'p-4', 'p-lg-0', 'border-bottom-lg-0', 'dropdown', 'flex-column', 'border-lg-0', 'position-relative');
+      moveInstrumentation(row, li);
 
-    const menuLinkDiv = document.createElement('div');
-    menuLinkDiv.classList.add(
-      'header-comp__wrapper--menu-link',
-      'gap-6',
-      'gap-lg-1',
-      'position-relative',
-      'w-100',
-      'd-flex',
-      'align-items-center',
-      'nav-link',
-      'px-0',
-      'font-default',
-      'leading-28',
-      'leading-lg-26',
-      'text-header-list',
-      'text-lg-cream-100',
-    );
-    menuLinkDiv.setAttribute('aria-current', 'page');
+      const menuLinkWrapper = document.createElement('div');
+      menuLinkWrapper.classList.add('header-comp__wrapper--menu-link', 'gap-6', 'gap-lg-1', 'position-relative', 'w-100', 'd-flex', 'align-items-center', 'nav-link', 'px-0', 'font-default', 'leading-28', 'leading-lg-26', 'text-header-list', 'text-lg-cream-100');
+      li.append(menuLinkWrapper);
 
-    if (menuIconCell) {
-      const menuIconPicture = menuIconCell.querySelector('picture');
-      if (menuIconPicture) {
-        const img = menuIconPicture.querySelector('img');
-        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '30' }]);
+      const menuImagePicture = menuImageCell.querySelector('picture');
+      if (menuImagePicture) {
+        const img = menuImagePicture.querySelector('img');
+        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+        moveInstrumentation(img, optimizedPic.querySelector('img'));
         optimizedPic.querySelector('img').classList.add('header-comp__wrapper--menu-image', 'd-lg-none');
-        optimizedPic.querySelector('img').setAttribute('loading', 'eager');
-        menuLinkDiv.append(optimizedPic);
+        menuLinkWrapper.append(optimizedPic);
       }
-    }
 
-    const menuAnchor = document.createElement('a');
-    menuAnchor.classList.add(
-      'text-decoration-none',
-      'cta-analytics',
-      'header-comp__wrapper--link',
-    );
-    menuAnchor.setAttribute('data-link-region', 'Header');
-    menuAnchor.href = menuLinkCell?.querySelector('a')?.href || '#';
+      const anchor = document.createElement('a');
+      anchor.classList.add('text-decoration-none', 'cta-analytics', 'header-comp__wrapper--link');
+      anchor.setAttribute('data-link-region', 'Header');
+      anchor.href = menuLinkCell.querySelector('a')?.href || '#';
+      moveInstrumentation(menuLinkCell, anchor);
 
-    const linkSpan = document.createElement('span');
-    linkSpan.classList.add('link-span');
-    linkSpan.textContent = menuLabelCell?.textContent.trim() || '';
-    menuAnchor.append(linkSpan);
-    menuLinkDiv.append(menuAnchor);
+      const spanLink = document.createElement('span');
+      spanLink.classList.add('link-span');
+      spanLink.textContent = menuLabelCell.textContent.trim();
+      moveInstrumentation(menuLabelCell, spanLink);
+      anchor.append(spanLink);
+      menuLinkWrapper.append(anchor);
 
-    if (hierarchyTreeCell) {
-      const tempDiv = document.createElement('div');
-      moveInstrumentation(hierarchyTreeCell, tempDiv); // Move instrumentation from original cell to tempDiv
-      tempDiv.innerHTML = hierarchyTreeCell.innerHTML; // Use innerHTML for richtext
-
-      const hierarchyRoot = tempDiv.querySelector('ul');
+      const hierarchyRoot = hierarchyTreeCell.querySelector('ul');
       if (hierarchyRoot) {
-        menuLinkDiv.classList.add('dropdown-toggle');
-        menuLinkDiv.setAttribute('aria-expanded', 'false');
+        menuLinkWrapper.classList.add('dropdown-toggle');
+        menuLinkWrapper.setAttribute('aria-expanded', 'false');
+        li.classList.add('show-nav'); // For desktop dropdown
+        const toggleSpan = document.createElement('span');
+        toggleSpan.classList.add('toggle-drop-down', 'arrow-icon', 'd-flex', 'end-0', 'top-parent');
+        menuLinkWrapper.append(toggleSpan);
 
-        const arrowIconSpan = document.createElement('span');
-        arrowIconSpan.classList.add(
-          'toggle-drop-down',
-          'arrow-icon',
-          'd-flex',
-          'end-0',
-          'top-parent',
-        );
-        if (arrowIconCell) {
-          const arrowIconPicture = arrowIconCell.querySelector('picture');
-          if (arrowIconPicture) {
-            const img = arrowIconPicture.querySelector('img');
-            const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '24' }]);
-            optimizedPic.querySelector('img').alt = 'svg file';
-            arrowIconSpan.append(optimizedPic);
-          }
+        const arrowIcon = arrowIconDesktopCell.querySelector('picture > img');
+        if (arrowIcon) {
+          const optimizedArrowPic = createOptimizedPicture(arrowIcon.src, arrowIcon.alt, false, [{ width: '750' }]);
+          moveInstrumentation(arrowIcon, optimizedArrowPic.querySelector('img'));
+          toggleSpan.append(optimizedArrowPic);
         }
-        menuLinkDiv.append(arrowIconSpan);
 
         const subMenusDiv = document.createElement('div');
         subMenusDiv.classList.add('header-comp__sub-menus');
-        subMenusDiv.id = `leftHeaderItem${i}`;
+        li.append(subMenusDiv);
 
         const xfpageDiv = document.createElement('div');
         xfpageDiv.classList.add('xfpage', 'page', 'basicpage');
+        subMenusDiv.append(xfpageDiv);
 
-        const aemGridDiv = document.createElement('div');
-        aemGridDiv.classList.add('aem-Grid', 'aem-Grid--12', 'aem-Grid--default--12');
+        const aemGrid = document.createElement('div');
+        aemGrid.classList.add('aem-Grid', 'aem-Grid--12', 'aem-Grid--default--12');
+        xfpageDiv.append(aemGrid);
 
-        const headerSubMenuGridColumn = document.createElement('div');
-        headerSubMenuGridColumn.classList.add(
-          'headerSubMenu',
-          'aem-GridColumn',
-          'aem-GridColumn--default--12',
-        );
+        const headerSubMenuCol = document.createElement('div');
+        headerSubMenuCol.classList.add('headerSubMenu', 'aem-GridColumn', 'aem-GridColumn--default--12');
+        aemGrid.append(headerSubMenuCol);
 
         const subMenuGroup = document.createElement('ul');
-        subMenuGroup.classList.add(
-          'header-comp__wrapper--sub-menu-group',
-          'w-auto',
-          'border-0',
-          'pb-lg-0',
-          'dropdown-menu',
-          'p-0',
-        );
+        subMenuGroup.classList.add('header-comp__wrapper--sub-menu-group', 'w-auto', 'border-0', 'pb-lg-0', 'dropdown-menu', 'p-0');
+        headerSubMenuCol.append(subMenuGroup);
 
-        const subMenuTriParent = document.createElement('div');
-        subMenuTriParent.classList.add('header-comp__sub-menu', 'tri-parent');
-        
-        // Apply classes to nested elements from ORIGINAL HTML
-        hierarchyRoot.querySelectorAll('li').forEach(itemLi => {
-          itemLi.classList.add('header-comp__wrapper--sub-menu-item');
-          if (itemLi.querySelector('ul')) {
-            itemLi.classList.add('child-below');
-          } else {
-            itemLi.classList.add('no-child');
-          }
-        });
-        hierarchyRoot.querySelectorAll('a').forEach(itemA => {
-          itemA.classList.add('text-decoration-none', 'text-dark-gray-100');
-          const span = document.createElement('span');
-          span.classList.add('sub-link-span');
-          span.textContent = itemA.textContent;
-          itemA.textContent = '';
-          itemA.prepend(span);
-        });
-        hierarchyRoot.querySelectorAll('div').forEach(itemDiv => {
-          itemDiv.classList.add('header-comp__wrapper--sub-menu-link', 'dropdown-item', 'p-lg-3', 'mb-lg-3', 'mb-xl-3', 'leading-lg-24', 'leading-xl-24', 'font-default', 'font-lg-18', 'leading-lg-26', 'leading-28', 'ps-0', 'p-0', 'p-lg-3', 'd-inline-block', 'd-lg-flex', 'justify-content-between', 'align-items-center');
-        });
+        const headerSubMenu = document.createElement('div');
+        headerSubMenu.classList.add('header-comp__sub-menu', 'tri-parent');
+        subMenuGroup.append(headerSubMenu);
 
-        subMenuTriParent.append(hierarchyRoot);
-        transformNestedLists(hierarchyRoot); // Recursively transform nested lists
-        
-        subMenuGroup.append(subMenuTriParent);
-        headerSubMenuGridColumn.append(subMenuGroup);
-        aemGridDiv.append(headerSubMenuGridColumn);
-        xfpageDiv.append(aemGridDiv);
-        subMenusDiv.append(xfpageDiv);
-        li.append(subMenusDiv);
+        // Move hierarchyRoot content into headerSubMenu
+        moveInstrumentation(hierarchyTreeCell, headerSubMenu); // Instrument the cell itself
+        while (hierarchyRoot.firstChild) {
+          headerSubMenu.append(hierarchyRoot.firstChild);
+        }
+        transformNestedLists(headerSubMenu); // Transform the nested list structure
 
-        arrowIconSpan.addEventListener('click', (e) => {
+        // Add event listener for dropdown toggle
+        menuLinkWrapper.addEventListener('click', (e) => {
           e.preventDefault();
           e.stopPropagation();
-          menuLinkDiv.classList.toggle('collapsed');
-          menuLinkDiv.setAttribute(
-            'aria-expanded',
-            menuLinkDiv.classList.contains('collapsed') ? 'true' : 'false',
-          );
-          subMenusDiv.classList.toggle('show'); // This class is not in the allowlist. If it's for JS behavior, it's fine. If for styling, it should be from original HTML.
+          li.classList.toggle('show-nav');
+          subMenusDiv.classList.toggle('show');
+          menuLinkWrapper.classList.toggle('collapsed');
         });
       }
-    }
 
-    li.prepend(menuLinkDiv);
-    navList.append(li);
-  });
-
-  searchItems.forEach((row) => {
-    const cells = [...row.children];
-    const searchIconCell = cells.find((cell) => cell.querySelector('picture'));
-    const searchLabelCell = cells.find((cell) => !cell.querySelector('picture'));
-
-    if (searchIconCell) {
+      menuGroups.append(li);
+    } else if (cells.length === 2 && cells[0].querySelector('picture')) { // header-search
+      const searchIconCell = cells[0];
+      const searchLabelCell = cells[1];
       const searchIconPicture = searchIconCell.querySelector('picture');
       if (searchIconPicture) {
         const img = searchIconPicture.querySelector('img');
-        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '24' }]);
-        optimizedPic.querySelector('img').alt = 'svg file';
+        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+        moveInstrumentation(img, optimizedPic.querySelector('img'));
         searchIconDiv.append(optimizedPic);
       }
+      const searchLabelSpan = document.createElement('span');
+      searchLabelSpan.classList.add('d-none', 'd-lg-block');
+      searchLabelSpan.textContent = searchLabelCell.textContent.trim();
+      moveInstrumentation(searchLabelCell, searchLabelSpan);
+      searchIconDiv.append(searchLabelSpan);
     }
-
-    const searchLabelSpan = document.createElement('span');
-    searchLabelSpan.classList.add('d-none', 'd-lg-block');
-    searchLabelSpan.textContent = searchLabelCell?.textContent.trim() || '';
-    searchIconDiv.append(searchLabelSpan);
-    moveInstrumentation(row, searchIconDiv);
+    // Note: header-sub-navigation-item and header-sub-sub-navigation-item are handled by the richtext transformNestedLists
+    // and are not expected as direct top-level itemRows.
   });
-
-  searchWrapper.append(searchIconDiv);
-  searchAccess.append(searchWrapper);
-
-  navbarCollapse.append(navList);
-  headerWrapper.append(hamburgerButton, logoWrapper, navbarCollapse);
-  nav.append(headerWrapper);
-  containerDiv.append(nav, searchAccess);
-
-  const outerBox = document.createElement('div');
-  outerBox.classList.add(
-    'header__outer-box',
-    'position-absolute',
-    'w-100',
-    'z-2',
-    'start-0',
-    'd-lg-none',
-  );
-
-  headerComp.append(containerDiv, outerBox);
 
   block.replaceChildren(headerComp);
-
-  hamburgerButton.addEventListener('click', () => {
-    navbarCollapse.classList.toggle('show'); // This class is not in the allowlist. If it's for JS behavior, it's fine. If for styling, it should be from original HTML.
-    hamburgerButton.classList.toggle('collapsed');
-    hamburgerButton.setAttribute(
-      'aria-expanded',
-      navbarCollapse.classList.contains('show') ? 'true' : 'false',
-    );
-  });
 }
