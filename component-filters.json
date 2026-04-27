@@ -69,9 +69,9 @@
   {
     "id": "footer",
     "components": [
-      "footer-navigation-item",
-      "footer-secondary-link-item",
-      "footer-social-link-item"
+      "footer-nav-item",
+      "footer-link-item",
+      "footer-social-item"
     ]
   },
   {

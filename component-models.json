@@ -201,32 +201,26 @@
     "fields": [
       {
         "component": "reference",
-        "label": "Main Product Image",
+        "label": "Main Product Image (large top image)",
         "name": "mainImage",
         "valueType": "string"
       },
       {
         "component": "richtext",
-        "label": "Card Headline/Title Richtext",
-        "name": "headline",
+        "label": "Card Title (heading and subheading, HTML allowed)",
+        "name": "cardTitle",
         "valueType": "string"
       },
       {
         "component": "reference",
-        "label": "Secondary Image (Bottom Circle Image)",
-        "name": "secondaryImage",
+        "label": "Product Image (round image with link)",
+        "name": "productImage",
         "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "Secondary Image Link",
-        "name": "secondaryImageLink",
-        "valueType": "string"
-      },
-      {
-        "component": "aem-content",
-        "label": "CTA Link",
-        "name": "ctaLink",
+        "label": "Product Link (round image and CTA button)",
+        "name": "productLink",
         "valueType": "string"
       },
       {
@@ -283,14 +277,14 @@
     "fields": [
       {
         "component": "reference",
-        "label": "Main Logo",
-        "name": "mainLogo",
+        "label": "Primary Logo",
+        "name": "logo",
         "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "Main Logo Link",
-        "name": "mainLogoLink",
+        "label": "Primary Logo Link",
+        "name": "logoLink",
         "valueType": "string"
       },
       {
@@ -301,32 +295,32 @@
       },
       {
         "component": "container",
-        "item": "footer-navigation-item",
-        "label": "Footer Navigation Items",
-        "name": "navigationItems"
+        "item": "footer-nav-item",
+        "label": "Footer Navigation Groups",
+        "name": "navGroups"
       },
       {
         "component": "container",
-        "item": "footer-secondary-link-item",
+        "item": "footer-link-item",
         "label": "Footer Secondary Links",
-        "name": "secondaryLinks"
+        "name": "footerLinks"
       },
       {
         "component": "text",
-        "label": "Copyright Text",
+        "label": "Copyright Notice",
         "name": "copyright",
         "valueType": "string"
       },
       {
         "component": "container",
-        "item": "footer-social-link-item",
-        "label": "Footer Social Links",
+        "item": "footer-social-item",
+        "label": "Social Links",
         "name": "socialLinks"
       }
     ]
   },
   {
-    "id": "footer-navigation-item",
+    "id": "footer-nav-item",
     "fields": [
       {
         "component": "text",
@@ -349,24 +343,24 @@
     ]
   },
   {
-    "id": "footer-secondary-link-item",
+    "id": "footer-link-item",
     "fields": [
       {
         "component": "text",
-        "label": "Secondary Link Label",
+        "label": "Footer Link Label",
         "name": "label",
         "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "Secondary Link URL",
+        "label": "Footer Link",
         "name": "link",
         "valueType": "string"
       }
     ]
   },
   {
-    "id": "footer-social-link-item",
+    "id": "footer-social-item",
     "fields": [
       {
         "component": "reference",
@@ -376,7 +370,7 @@
       },
       {
         "component": "aem-content",
-        "label": "Social Link URL",
+        "label": "Social Link",
         "name": "link",
         "valueType": "string"
       }

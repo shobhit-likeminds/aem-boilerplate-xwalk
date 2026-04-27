@@ -1,0 +1,19 @@
+.container { --bs-gutter-x:1.5rem;--bs-gutter-y:0;margin-left:auto;margin-right:auto;padding-left:calc(var(--bs-gutter-x)*.5);padding-right:calc(var(--bs-gutter-x)*.5);width:100% }
+
+@media(min-width:1200px) { .container { max-width:855pt } }
+
+@media(min-width:1400px) { .container { max-width:990pt } }
+
+@media(min-width:576px) { .gx-sm-0 { --bs-gutter-x:0 } }
+
+.ratio>* { height:100%;left:0;position:absolute;top:0;width:100% }
+
+@media(min-width:576px) { .d-sm-flex { display:-webkit-box!important;display:-ms-flexbox!important;display:flex!important }
+
+.mx-sm-0 { margin-left:0!important;margin-right:0!important }
+
+.mt-sm-10 { margin-top:2.5rem!important }
+
+.pt-sm-6 { padding-top:1.5rem!important } }
+
+@media(min-width:992px) { .pt-lg-8 { padding-top:2rem!important } }
