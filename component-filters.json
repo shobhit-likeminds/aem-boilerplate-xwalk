@@ -15,7 +15,29 @@
       "hero",
       "cards",
       "columns",
-      "fragment"
+      "fragment",
+      "header-comp",
+      "card-carousel",
+      "text-banner",
+      "w-100",
+      "product-selection-component",
+      "space-adder",
+      "decorative-section",
+      "simple-background-block",
+      "stay-social",
+      "buy-now-card",
+      "scroll-to-top",
+      "footer"
+    ]
+  },
+  {
+    "id": "buy-now-card"
+  },
+  {
+    "id": "card-carousel",
+    "components": [
+      "recipe-card",
+      "social-media-share-item"
     ]
   },
   {
@@ -38,5 +60,53 @@
       "button",
       "title"
     ]
+  },
+  {
+    "id": "decorative-section"
+  },
+  {
+    "id": "footer",
+    "components": [
+      "footer-navigation-item",
+      "footer-social-link-item"
+    ]
+  },
+  {
+    "id": "header-comp",
+    "components": [
+      "navigation-menu-item",
+      "sub-menu-item",
+      "sub-sub-menu-item",
+      "search-icon"
+    ]
+  },
+  {
+    "id": "product-selection-component",
+    "components": [
+      "product-item",
+      "ghee-panel",
+      "milk-panel"
+    ]
+  },
+  {
+    "id": "scroll-to-top"
+  },
+  {
+    "id": "simple-background-block"
+  },
+  {
+    "id": "space-adder"
+  },
+  {
+    "id": "stay-social",
+    "components": [
+      "stay-social-card"
+    ]
+  },
+  {
+    "id": "text-banner"
+  },
+  {
+    "id": "w-100"
   }
 ]

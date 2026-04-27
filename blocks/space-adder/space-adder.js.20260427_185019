@@ -1,0 +1,11 @@
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  const spaceAdderDiv = document.createElement('div');
+  spaceAdderDiv.classList.add('w-100', 'pt-14', 'pt-sm-16');
+  spaceAdderDiv.style.background = '#FFF6E3';
+
+  // The block has no authored content, so we just replace its children.
+  // No moveInstrumentation is needed as there are no authored rows to preserve.
+  block.replaceChildren(spaceAdderDiv);
+}

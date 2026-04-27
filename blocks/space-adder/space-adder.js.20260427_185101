@@ -1,0 +1,14 @@
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  const spaceDiv = document.createElement('div');
+  spaceDiv.classList.add('w-100', 'pt-16', 'pt-sm-16');
+  spaceDiv.style.background = '#F4DBC3'; // This is a hardcoded style from the original HTML, not content.
+
+  // Since the block has no authored content, we don't need to moveInstrumentation
+  // from any child rows. We simply replace the block's children with our new div.
+  block.replaceChildren(spaceDiv);
+
+  // Add the block-level classes from the original HTML
+  block.classList.add('spaceAdder', 'aem-GridColumn', 'aem-GridColumn--default--12');
+}
