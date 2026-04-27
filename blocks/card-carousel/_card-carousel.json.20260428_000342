@@ -54,38 +54,32 @@
         {
           "component": "text",
           "label": "Carousel Title",
-          "name": "title",
-          "valueType": "string"
+          "name": "title"
         },
         {
           "component": "text",
           "label": "Carousel Subtitle",
-          "name": "subtitle",
-          "valueType": "string"
+          "name": "subtitle"
         },
         {
           "component": "reference",
-          "label": "Previous Button Icon",
-          "name": "prevButtonIcon",
-          "valueType": "string"
+          "label": "Previous Navigation Icon",
+          "name": "prevNavIcon"
         },
         {
           "component": "reference",
-          "label": "Next Button Icon",
-          "name": "nextButtonIcon",
-          "valueType": "string"
+          "label": "Next Navigation Icon",
+          "name": "nextNavIcon"
         },
         {
           "component": "aem-content",
           "label": "CTA Link",
-          "name": "ctaLink",
-          "valueType": "string"
+          "name": "ctaLink"
         },
         {
           "component": "text",
           "label": "CTA Label",
-          "name": "ctaLabel",
-          "valueType": "string"
+          "name": "ctaLabel"
         },
         {
           "component": "container",
@@ -106,75 +100,58 @@
       "fields": [
         {
           "component": "aem-content",
-          "label": "Recipe Card Link",
-          "name": "link",
-          "valueType": "string"
+          "label": "Recipe Link",
+          "name": "recipeLink"
         },
         {
           "component": "reference",
           "label": "Recipe Image",
-          "name": "image",
-          "valueType": "string"
+          "name": "image"
         },
         {
           "component": "text",
           "label": "Recipe Image Alt Text",
-          "name": "imageAlt",
-          "valueType": "string"
+          "name": "imageAlt"
         },
         {
           "component": "text",
-          "label": "Recipe Card Tag",
-          "name": "tag",
-          "valueType": "string"
+          "label": "Recipe Tag",
+          "name": "tag"
         },
         {
           "component": "reference",
-          "label": "Recipe Card Info Icon",
-          "name": "infoIcon",
-          "valueType": "string"
+          "label": "Info Icon",
+          "name": "infoIcon"
         },
         {
           "component": "text",
           "label": "Recipe Title",
-          "name": "title",
-          "valueType": "string"
+          "name": "title"
         },
         {
           "component": "text",
           "label": "Recipe Description",
-          "name": "description",
-          "valueType": "string"
-        },
-        {
-          "component": "reference",
-          "label": "Wave SVG Image",
-          "name": "waveImage",
-          "valueType": "string"
+          "name": "description"
         },
         {
           "component": "reference",
           "label": "Time Icon",
-          "name": "timeIcon",
-          "valueType": "string"
+          "name": "timeIcon"
         },
         {
           "component": "text",
-          "label": "Time",
-          "name": "time",
-          "valueType": "string"
+          "label": "Cooking Time",
+          "name": "time"
         },
         {
           "component": "reference",
           "label": "Serves Icon",
-          "name": "servesIcon",
-          "valueType": "string"
+          "name": "servesIcon"
         },
         {
           "component": "text",
-          "label": "Serves",
-          "name": "serves",
-          "valueType": "string"
+          "label": "Serves (Text)",
+          "name": "serves"
         },
         {
           "component": "richtext",
@@ -188,22 +165,19 @@
       "id": "social-media-share-item",
       "fields": [
         {
-          "component": "aem-content",
-          "label": "Social Media Link",
-          "name": "link",
-          "valueType": "string"
-        },
-        {
           "component": "reference",
           "label": "Social Media Icon",
-          "name": "icon",
-          "valueType": "string"
+          "name": "icon"
+        },
+        {
+          "component": "aem-content",
+          "label": "Social Media Share Link",
+          "name": "link"
         },
         {
           "component": "text",
-          "label": "Social Media Label",
-          "name": "label",
-          "valueType": "string"
+          "label": "Social Media Name",
+          "name": "label"
         }
       ]
     }

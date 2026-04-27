@@ -73,8 +73,8 @@
   {
     "id": "footer-brand",
     "components": [
-      "footer-navigation-item",
-      "footer-external-link-item",
+      "footer-nav-link-item",
+      "footer-secondary-link-item",
       "footer-social-link-item"
     ]
   },
@@ -88,18 +88,17 @@
   {
     "id": "header-comp",
     "components": [
-      "header-navigation-item",
-      "header-sub-navigation-item",
-      "header-sub-sub-navigation-item",
-      "header-search"
+      "navigation-item",
+      "search-icon-item",
+      "global-search-asset"
     ]
   },
   {
     "id": "product-selection-component",
     "components": [
       "product-item",
-      "ghee-panel",
-      "milk-panel"
+      "ghee-content",
+      "milk-content"
     ]
   },
   {

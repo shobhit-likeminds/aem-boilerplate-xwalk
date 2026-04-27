@@ -12,9 +12,7 @@
 
 .mt-sm-10 { margin-top:2.5rem!important } }
 
-@media(min-width:768px) { .d-md-block { display:block!important }
-
-.flex-md-row { -webkit-box-orient:horizontal!important;-ms-flex-direction:row!important;flex-direction:row!important }
+@media(min-width:768px) { .flex-md-row { -webkit-box-orient:horizontal!important;-ms-flex-direction:row!important;flex-direction:row!important }
 
 .flex-md-column, .flex-md-row { -webkit-box-direction:normal!important }
 

@@ -1,7 +1,7 @@
 {
   "definitions": [
     {
-      "title": "Header Comp",
+      "title": "Header-Comp",
       "id": "header-comp",
       "plugins": {
         "xwalk": {
@@ -10,67 +10,67 @@
             "template": {
               "filter": "header-comp",
               "model": "header-comp",
-              "name": "Header Comp"
+              "name": "Header-Comp"
             }
           }
         }
       }
     },
     {
-      "title": "Navigation Item",
-      "id": "navigation-item",
+      "title": "Header-Navigation-Item",
+      "id": "header-navigation-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "navigation-item",
-              "name": "Navigation Item"
+              "model": "header-navigation-item",
+              "name": "Header-Navigation-Item"
             }
           }
         }
       }
     },
     {
-      "title": "Sub Navigation Item",
-      "id": "sub-navigation-item",
+      "title": "Header-Sub-Navigation-Item",
+      "id": "header-sub-navigation-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "sub-navigation-item",
-              "name": "Sub Navigation Item"
+              "model": "header-sub-navigation-item",
+              "name": "Header-Sub-Navigation-Item"
             }
           }
         }
       }
     },
     {
-      "title": "Search Icon",
-      "id": "search-icon-item",
+      "title": "Header-Sub-Sub-Navigation-Item",
+      "id": "header-sub-sub-navigation-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "search-icon-item",
-              "name": "Search Icon"
+              "model": "header-sub-sub-navigation-item",
+              "name": "Header-Sub-Sub-Navigation-Item"
             }
           }
         }
       }
     },
     {
-      "title": "Global Search Asset",
-      "id": "global-search-asset",
+      "title": "Header-Search",
+      "id": "header-search",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "global-search-asset",
-              "name": "Global Search Asset"
+              "model": "header-search",
+              "name": "Header-Search"
             }
           }
         }
@@ -84,7 +84,7 @@
         {
           "component": "reference",
           "label": "Logo Image",
-          "name": "logo",
+          "name": "logoImage",
           "valueType": "string"
         },
         {
@@ -95,136 +95,136 @@
         },
         {
           "component": "container",
-          "item": "navigation-item",
-          "label": "Navigation Menu",
-          "name": "navigationMenu"
+          "item": "header-navigation-item",
+          "label": "Navigation Items",
+          "name": "navigationItems"
         },
         {
           "component": "container",
-          "item": "search-icon-item",
-          "label": "Search Icon",
-          "name": "searchIcon"
-        },
-        {
-          "component": "container",
-          "item": "global-search-asset",
-          "label": "Global Search Assets",
-          "name": "globalSearchAssets"
+          "item": "header-search",
+          "label": "Search Items",
+          "name": "searchItems"
         }
       ]
     },
     {
-      "id": "navigation-item",
+      "id": "header-navigation-item",
       "fields": [
         {
           "component": "reference",
-          "label": "Menu Icon (optional, mobile)",
-          "name": "menuIcon",
+          "label": "Menu Item Image",
+          "name": "menuImage",
           "valueType": "string"
         },
         {
           "component": "text",
           "label": "Menu Label",
-          "name": "label",
+          "name": "menuLabel",
           "valueType": "string"
         },
         {
           "component": "aem-content",
           "label": "Menu Link",
-          "name": "link",
+          "name": "menuLink",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Arrow Icon (optional)",
-          "name": "arrowIcon",
+          "label": "Arrow Icon (Desktop)",
+          "name": "arrowIconDesktop",
           "valueType": "string"
         },
         {
-          "component": "container",
-          "item": "sub-navigation-item",
-          "label": "Sub Navigation Items",
-          "name": "subNavigation"
+          "component": "reference",
+          "label": "Arrow Icon (Mobile)",
+          "name": "arrowIconMobile",
+          "valueType": "string"
         },
         {
           "component": "richtext",
           "label": "Navigation Hierarchy",
           "name": "hierarchy-tree",
           "valueType": "string"
+        },
+        {
+          "component": "container",
+          "item": "header-sub-navigation-item",
+          "label": "Sub Navigation Items",
+          "name": "subNavigationItems"
         }
       ]
     },
     {
-      "id": "sub-navigation-item",
+      "id": "header-sub-navigation-item",
       "fields": [
         {
           "component": "text",
-          "label": "Sub Navigation Label",
-          "name": "label",
+          "label": "Sub Menu Label",
+          "name": "subMenuLabel",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "label": "Sub Navigation Link",
-          "name": "link",
+          "label": "Sub Menu Link",
+          "name": "subMenuLink",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Arrow Icon (optional)",
-          "name": "arrowIcon",
-          "valueType": "string"
-        },
-        {
-          "component": "container",
-          "item": "sub-navigation-item",
-          "label": "Nested Sub Navigation Items",
-          "name": "subNavigation"
-        }
-      ]
-    },
-    {
-      "id": "search-icon-item",
-      "fields": [
-        {
-          "component": "reference",
-          "label": "Search Icon Image",
-          "name": "searchIcon",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Search Label (text below search icon)",
-          "name": "searchLabel",
-          "valueType": "string"
-        }
-      ]
-    },
-    {
-      "id": "global-search-asset",
-      "fields": [
-        {
-          "component": "reference",
-          "label": "Close Icon (SVG)",
-          "name": "closeIcon",
+          "label": "Arrow Icon (Desktop)",
+          "name": "arrowIconDesktop",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Search Icon (SVG)",
-          "name": "searchIcon",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Search Input Placeholder Text",
-          "name": "placeholderText",
+          "label": "Arrow Icon (Mobile)",
+          "name": "arrowIconMobile",
           "valueType": "string"
         },
         {
           "component": "richtext",
-          "label": "Search Error Message",
-          "name": "searchErrorText",
+          "label": "Sub Navigation Hierarchy",
+          "name": "hierarchy-tree",
+          "valueType": "string"
+        },
+        {
+          "component": "container",
+          "item": "header-sub-sub-navigation-item",
+          "label": "Sub Sub Navigation Items",
+          "name": "subSubNavigationItems"
+        }
+      ]
+    },
+    {
+      "id": "header-sub-sub-navigation-item",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Sub Sub Menu Label",
+          "name": "subSubMenuLabel",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Sub Sub Menu Link",
+          "name": "subSubMenuLink",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "header-search",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Search Icon",
+          "name": "searchIcon",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Search Label",
+          "name": "searchLabel",
           "valueType": "string"
         }
       ]
@@ -234,9 +234,10 @@
     {
       "id": "header-comp",
       "components": [
-        "navigation-item",
-        "search-icon-item",
-        "global-search-asset"
+        "header-navigation-item",
+        "header-sub-navigation-item",
+        "header-sub-sub-navigation-item",
+        "header-search"
       ]
     }
   ]

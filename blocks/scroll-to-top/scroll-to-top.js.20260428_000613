@@ -21,28 +21,14 @@ export default function decorate(block) {
     'bg-red-100',
   );
 
-  // FIX: Replaced direct bracket access with array destructuring for fixed schema
-  const [iconCell] = [...iconRow.children];
+  const iconCell = iconRow.firstElementChild;
   const picture = iconCell.querySelector('picture');
   if (picture) {
     const img = picture.querySelector('img');
-    if (img) {
-      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-      moveInstrumentation(img, optimizedPic.querySelector('img'));
-      button.append(optimizedPic);
-    }
+    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+    moveInstrumentation(img, optimizedPic.querySelector('img'));
+    button.append(optimizedPic);
   }
-
-  moveInstrumentation(iconRow, button);
-  block.replaceChildren(button);
-
-  const handleScroll = () => {
-    if (window.scrollY > 200) {
-      button.style.display = 'flex';
-    } else {
-      button.style.display = 'none';
-    }
-  };
 
   button.addEventListener('click', () => {
     window.scrollTo({
@@ -51,7 +37,17 @@ export default function decorate(block) {
     });
   });
 
+  const handleScroll = () => {
+    if (window.scrollY > 100) {
+      button.style.display = 'flex';
+    } else {
+      button.style.display = 'none';
+    }
+  };
+
   window.addEventListener('scroll', handleScroll);
-  // Initial check on load
-  handleScroll();
+  handleScroll(); // Call on load to set initial state
+
+  moveInstrumentation(iconRow, button);
+  block.replaceChildren(button);
 }

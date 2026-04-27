@@ -8,13 +8,7 @@
 
 @media(min-width:768px) { .gx-md-0 { --bs-gutter-x:0 } }
 
-@media(min-width:768px) { .align-items-md-center { -webkit-box-align:center!important;-ms-flex-align:center!important;align-items:center!important }
-
-.pt-md-0 { padding-top:0!important }
-
-.pb-md-1 { padding-bottom:.25rem!important }
-
-.pb-md-5 { padding-bottom:1.25rem!important } }
+@media(min-width:768px) { .align-items-md-center { -webkit-box-align:center!important;-ms-flex-align:center!important;align-items:center!important } }
 
 @media(min-width:992px) { .d-lg-inline { display:inline!important }
 
@@ -32,17 +26,9 @@
 
 .p-lg-3 { padding:.75rem!important }
 
-.px-lg-4 { padding-left:1rem!important;padding-right:1rem!important }
-
 .py-lg-0 { padding-bottom:0!important;padding-top:0!important }
 
-.pt-lg-0 { padding-top:0!important }
-
 .pb-lg-0 { padding-bottom:0!important }
-
-.pb-lg-3 { padding-bottom:.75rem!important }
-
-.pb-lg-6 { padding-bottom:1.5rem!important }
 
 .gap-lg-1 { gap:.25rem!important } }
 

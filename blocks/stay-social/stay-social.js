@@ -7,19 +7,16 @@ export default function decorate(block) {
   const [
     titleRow,
     subtextRow,
-    ctaLabelRow,
     ctaLinkRow,
+    ctaLabelRow,
     ...cardRows
   ] = children;
 
-  const section = document.createElement('section');
-  section.classList.add('stay-social', 'pt-14', 'py-lg-11', 'bg-cream-300');
+  block.classList.add('pt-14', 'py-lg-11', 'bg-cream-300');
 
   const container = document.createElement('div');
   container.classList.add('container', 'gx-8', 'gx-sm-0');
-  section.append(container);
 
-  // Section Title
   const title = document.createElement('h2');
   title.classList.add(
     'stay-social__title',
@@ -35,7 +32,6 @@ export default function decorate(block) {
   title.textContent = titleRow.textContent.trim();
   container.append(title);
 
-  // Section Subtext
   const subtext = document.createElement('h3');
   subtext.classList.add(
     'stay-social__subtext',
@@ -51,10 +47,9 @@ export default function decorate(block) {
   subtext.textContent = subtextRow.textContent.trim();
   container.append(subtext);
 
-  // Social Cards
-  const mainDiv = document.createElement('div');
-  mainDiv.classList.add('stay-social__main', 'mt-8');
-  container.append(mainDiv);
+  const main = document.createElement('div');
+  main.classList.add('stay-social__main', 'mt-8');
+  container.append(main);
 
   const cardsList = document.createElement('ul');
   cardsList.classList.add(
@@ -65,40 +60,26 @@ export default function decorate(block) {
     'w-fit',
     'mx-auto',
   );
-  mainDiv.append(cardsList);
+  main.append(cardsList);
 
   cardRows.forEach((row) => {
-    const cells = [...row.children];
-    // Use content detection for images and links
-    const desktopImageCell = cells.find((cell) => cell.querySelector('picture') && !cell.querySelector('source[media="(max-width:600px)"]'));
-    const mobileImageCell = cells.find((cell) => cell.querySelector('picture') && cell.querySelector('source[media="(max-width:600px)"]'));
-    const linkCell = cells.find((cell) => cell.querySelector('a'));
+    const [desktopImageCell, mobileImageCell, linkCell] = [...row.children];
 
-    const listItem = document.createElement('li');
-    listItem.classList.add(
-      'stay-social__card',
-      'overflow-hidden',
-      'ratio-1x1', // Default ratio, will be overridden by CSS if needed
-      'ratio',
-    );
-    moveInstrumentation(row, listItem);
+    const li = document.createElement('li');
+    li.classList.add('stay-social__card', 'overflow-hidden');
 
-    const cardLink = document.createElement('a');
-    cardLink.classList.add(
-      'stay-social__card--link',
-      'd-block',
-      'w-100',
-      'h-100',
-    );
-    const foundLink = linkCell?.querySelector('a');
+    const link = document.createElement('a');
+    link.classList.add('stay-social__card--link', 'd-block', 'w-100', 'h-100');
+    const foundLink = linkCell.querySelector('a');
     if (foundLink) {
-      cardLink.href = foundLink.href;
-      cardLink.target = '_blank'; // Original HTML has target="_blank"
+      link.href = foundLink.href;
+      link.target = '_blank'; // Assuming all social links open in new tab
     }
+    moveInstrumentation(row, link);
 
     const picture = document.createElement('picture');
-    const desktopImg = desktopImageCell?.querySelector('img');
-    const mobileImg = mobileImageCell?.querySelector('img');
+    const desktopImg = desktopImageCell.querySelector('img');
+    const mobileImg = mobileImageCell.querySelector('img');
 
     if (mobileImg) {
       const source = document.createElement('source');
@@ -108,38 +89,37 @@ export default function decorate(block) {
     }
 
     if (desktopImg) {
-      const img = createOptimizedPicture(
-        desktopImg.src,
-        desktopImg.alt,
-        false,
-        [{ width: '750' }],
-      ).querySelector('img');
-      img.classList.add(
-        'stay-social__card--image',
-        'w-100',
-        'h-100',
-        'object-fit-cover',
-      );
-      img.loading = 'lazy';
-      picture.append(img);
-      moveInstrumentation(desktopImageCell, img); // Move instrumentation from desktop image cell to the new img
+      const img = createOptimizedPicture(desktopImg.src, desktopImg.alt, false, [{ width: '750' }]);
+      const optimizedImg = img.querySelector('img');
+      optimizedImg.classList.add('stay-social__card--image', 'w-100', 'h-100', 'object-fit-cover');
+      optimizedImg.loading = 'lazy';
+      picture.append(optimizedImg);
     }
 
-    cardLink.append(picture);
+    link.append(picture);
 
-    // Add screen reader text for external links
-    if (cardLink.target === '_blank') {
-      const srOnlySpan = document.createElement('span');
-      srOnlySpan.classList.add('cmp-link__screen-reader-only');
-      srOnlySpan.textContent = 'opens in a new tab';
-      cardLink.append(srOnlySpan);
+    const screenReaderSpan = document.createElement('span');
+    screenReaderSpan.classList.add('cmp-link__screen-reader-only');
+    screenReaderSpan.textContent = 'opens in a new tab';
+    link.append(screenReaderSpan);
+
+    li.append(link);
+    cardsList.append(li);
+
+    // Determine ratio based on original HTML for the specific card
+    const originalLi = row.parentElement.querySelector(`li:nth-child(${Array.from(cardsList.children).indexOf(li) + 1})`);
+    if (originalLi) {
+      if (originalLi.classList.contains('ratio-1x1')) {
+        li.classList.add('ratio-1x1', 'ratio');
+      } else if (originalLi.classList.contains('ratio-9x16')) {
+        li.classList.add('ratio-9x16', 'ratio');
+      }
+    } else {
+      // Fallback to default if original HTML structure is not found or ratio is missing
+      li.classList.add('ratio-1x1', 'ratio');
     }
-
-    listItem.append(cardLink);
-    cardsList.append(listItem);
   });
 
-  // CTA Button
   const ctaWrapper = document.createElement('div');
   ctaWrapper.classList.add(
     'd-flex',
@@ -148,7 +128,7 @@ export default function decorate(block) {
     'mt-8',
     'mt-lg-10',
   );
-  section.append(ctaWrapper);
+  container.append(ctaWrapper);
 
   const ctaLink = document.createElement('a');
   ctaLink.classList.add(
@@ -170,34 +150,25 @@ export default function decorate(block) {
     'bg-maroon-100-hover',
     'bg-red-300-active',
   );
-
   const foundCtaLink = ctaLinkRow.querySelector('a');
   if (foundCtaLink) {
     ctaLink.href = foundCtaLink.href;
-    ctaLink.target = '_blank'; // Original HTML has target="_blank"
+    ctaLink.target = '_blank'; // Assuming CTA link also opens in new tab
   }
   moveInstrumentation(ctaLinkRow, ctaLink);
 
   const ctaLabelSpan = document.createElement('span');
-  ctaLabelSpan.classList.add(
-    'svasti-cta__label',
-    'fw-semibold',
-    'fs-default',
-    'leading-26',
-  );
-  moveInstrumentation(ctaLabelRow, ctaLabelSpan);
+  ctaLabelSpan.classList.add('svasti-cta__label', 'fw-semibold', 'fs-default', 'leading-26');
   ctaLabelSpan.textContent = ctaLabelRow.textContent.trim();
+  moveInstrumentation(ctaLabelRow, ctaLabelSpan);
   ctaLink.append(ctaLabelSpan);
 
-  // Add screen reader text for external links
-  if (ctaLink.target === '_blank') {
-    const srOnlySpan = document.createElement('span');
-    srOnlySpan.classList.add('cmp-link__screen-reader-only');
-    srOnlySpan.textContent = 'opens in a new tab';
-    ctaLink.append(srOnlySpan);
-  }
+  const ctaScreenReaderSpan = document.createElement('span');
+  ctaScreenReaderSpan.classList.add('cmp-link__screen-reader-only');
+  ctaScreenReaderSpan.textContent = 'opens in a new tab';
+  ctaLink.append(ctaScreenReaderSpan);
 
   ctaWrapper.append(ctaLink);
 
-  block.replaceChildren(section);
+  block.replaceChildren(container);
 }

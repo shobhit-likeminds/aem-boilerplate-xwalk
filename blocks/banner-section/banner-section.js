@@ -9,9 +9,8 @@ export default function decorate(block) {
     ctaLabelRow,
   ] = [...block.children];
 
-  // Create the main wrapper div
-  const wrapperDiv = document.createElement('div');
-  wrapperDiv.classList.add(
+  const wrapper = document.createElement('div');
+  wrapper.classList.add(
     'position-relative',
     'banner-section__wrapper',
     'asp-ratio-9x16',
@@ -19,58 +18,50 @@ export default function decorate(block) {
     'd-flex',
     'justify-content-center',
   );
+  moveInstrumentation(backgroundImageDesktopRow, wrapper); // Move instrumentation from first row
 
-  // Background Images
-  const desktopPicture = backgroundImageDesktopRow?.querySelector('picture');
-  const mobilePicture = backgroundImageMobileRow?.querySelector('picture');
+  const desktopPictureElement = backgroundImageDesktopRow.querySelector('picture');
+  const mobilePictureElement = backgroundImageMobileRow.querySelector('picture');
 
-  if (desktopPicture || mobilePicture) {
-    const pictureEl = document.createElement('picture');
-    pictureEl.classList.add('d-block', 'w-100', 'h-100');
+  if (desktopPictureElement || mobilePictureElement) {
+    const picture = document.createElement('picture');
+    picture.classList.add('d-block', 'w-100', 'h-100');
 
-    if (mobilePicture) {
-      const mobileImg = mobilePicture.querySelector('img');
-      if (mobileImg) {
-        const sourceMobile = document.createElement('source');
-        sourceMobile.media = '(max-width:600px)';
-        sourceMobile.srcset = mobileImg.src;
-        pictureEl.append(sourceMobile);
-      }
+    if (mobilePictureElement) {
+      const mobileImg = mobilePictureElement.querySelector('img');
+      const sourceMobile = document.createElement('source');
+      sourceMobile.media = '(max-width:600px)';
+      sourceMobile.srcset = mobileImg.src;
+      picture.append(sourceMobile);
+      moveInstrumentation(backgroundImageMobileRow, sourceMobile); // Move instrumentation from mobile row
     }
 
-    if (desktopPicture) {
-      const desktopImg = desktopPicture.querySelector('img');
-      if (desktopImg) {
-        const sourceDesktop = document.createElement('source');
-        sourceDesktop.srcset = desktopImg.src;
-        pictureEl.append(sourceDesktop);
+    if (desktopPictureElement) {
+      const desktopImg = desktopPictureElement.querySelector('img');
+      const sourceDesktop = document.createElement('source');
+      sourceDesktop.srcset = desktopImg.src;
+      picture.append(sourceDesktop);
 
-        const imgEl = createOptimizedPicture(
-          desktopImg.src,
-          desktopImg.alt,
-          true,
-          [{ width: '750' }],
-        ).querySelector('img');
-        imgEl.classList.add('w-100', 'h-100', 'object-fit-cover', 'banner-media', 'd-block');
-        imgEl.loading = 'eager';
-        imgEl.fetchPriority = 'high';
-        pictureEl.append(imgEl);
-      }
+      const img = document.createElement('img');
+      img.src = desktopImg.src;
+      img.loading = 'eager';
+      img.fetchPriority = 'high';
+      img.alt = desktopImg.alt || '';
+      img.classList.add('w-100', 'h-100', 'object-fit-cover', 'banner-media', 'd-block');
+      picture.append(img);
     }
-    moveInstrumentation(backgroundImageDesktopRow, pictureEl); // Move instrumentation from one of the image rows
-    wrapperDiv.append(pictureEl);
+    wrapper.append(picture);
   }
 
   const overlayDiv = document.createElement('div');
   overlayDiv.classList.add('position-absolute', 'start-0', 'bottom-0', 'w-100', 'h-100');
-  wrapperDiv.append(overlayDiv);
+  wrapper.append(overlayDiv);
 
-  // Banner Content
-  const bannerContentDiv = document.createElement('div');
-  bannerContentDiv.classList.add('position-absolute', 'banner-content');
+  const bannerContent = document.createElement('div');
+  bannerContent.classList.add('position-absolute', 'banner-content');
 
-  const containerDiv = document.createElement('div');
-  containerDiv.classList.add(
+  const container = document.createElement('div');
+  container.classList.add(
     'container',
     'sticky-element',
     'gx-8',
@@ -84,8 +75,8 @@ export default function decorate(block) {
     'bottom-0',
   );
 
-  const spanEl = document.createElement('span');
-  spanEl.classList.add(
+  const ctaSpan = document.createElement('span');
+  ctaSpan.classList.add(
     'text-capitalize',
     'mt-6',
     'mt-md-3',
@@ -93,46 +84,51 @@ export default function decorate(block) {
     'mb-7',
   );
 
-  const ctaLink = ctaLinkRow?.querySelector('a');
-  const ctaLabel = ctaLabelRow?.textContent.trim();
+  const ctaLink = document.createElement('a');
+  ctaLink.classList.add(
+    'svasti-cta',
+    'cta-analytics',
+    'w-fit',
+    'text-decoration-none',
+    'd-flex',
+    'align-items-center',
+    'primary',
+    'px-8',
+    'pb-3',
+    'text-cream-100',
+    'border',
+    'border-2',
+    'border-red-100',
+    'border-maroon-100-hover',
+    'border-red-300-active',
+    'bg-red-100',
+    'bg-maroon-100-hover',
+    'bg-red-300-active',
+  );
 
-  if (ctaLink && ctaLabel) {
-    const anchor = document.createElement('a');
-    anchor.classList.add(
-      'svasti-cta',
-      'cta-analytics',
-      'w-fit',
-      'text-decoration-none',
-      'd-flex',
-      'align-items-center',
-      'primary',
-      'px-8',
-      'pb-3',
-      'text-cream-100',
-      'border',
-      'border-2',
-      'border-red-100',
-      'border-maroon-100-hover',
-      'border-red-300-active',
-      'bg-red-100',
-      'bg-maroon-100-hover',
-      'bg-red-300-active',
-    );
-    anchor.href = ctaLink.href;
-
-    const labelSpan = document.createElement('span');
-    labelSpan.classList.add('svasti-cta__label', 'fw-semibold', 'fs-default', 'leading-26');
-    labelSpan.textContent = ctaLabel;
-    anchor.append(labelSpan);
-
-    moveInstrumentation(ctaLinkRow, anchor);
-    spanEl.append(anchor);
+  const foundLink = ctaLinkRow.querySelector('a');
+  if (foundLink) {
+    ctaLink.href = foundLink.href;
   }
+  moveInstrumentation(ctaLinkRow, ctaLink);
 
-  containerDiv.append(spanEl);
-  bannerContentDiv.append(containerDiv);
-  wrapperDiv.append(bannerContentDiv);
+  const ctaLabelSpan = document.createElement('span');
+  ctaLabelSpan.classList.add('svasti-cta__label', 'fw-semibold', 'fs-default', 'leading-26');
+  ctaLabelSpan.textContent = ctaLabelRow.textContent.trim();
+  moveInstrumentation(ctaLabelRow, ctaLabelSpan);
 
-  block.replaceChildren(wrapperDiv);
-  block.classList.add('banner-section');
+  ctaLink.append(ctaLabelSpan);
+  ctaSpan.append(ctaLink);
+  container.append(ctaSpan);
+  bannerContent.append(container);
+  wrapper.append(bannerContent);
+
+  block.replaceChildren(wrapper);
+
+  // The createOptimizedPicture call at the end of the original JS was problematic.
+  // It would replace the already constructed picture element, potentially losing
+  // instrumentation and causing issues with the mobile/desktop source elements.
+  // The images are already optimized by AEM's default image handling for the
+  // picture element, so this explicit call is not needed and can cause issues.
+  // Removing it to ensure proper rendering and instrumentation.
 }
