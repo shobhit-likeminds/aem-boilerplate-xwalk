@@ -1,0 +1,300 @@
+{
+  "definitions": [
+    {
+      "title": "Latest-Stories",
+      "id": "latest-stories",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "latest-stories",
+              "model": "latest-stories",
+              "name": "Latest-Stories"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Twitter-Feed",
+      "id": "twitter-feed",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "twitter-feed",
+              "name": "Twitter-Feed"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Story-Item",
+      "id": "story-item",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "story-item",
+              "name": "Story-Item"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "latest-stories",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Section Heading",
+          "name": "heading"
+        },
+        {
+          "component": "container",
+          "item": "twitter-feed",
+          "label": "Twitter Feeds",
+          "name": "twitterFeeds"
+        },
+        {
+          "component": "container",
+          "item": "story-item",
+          "label": "Stories",
+          "name": "stories"
+        }
+      ]
+    },
+    {
+      "id": "twitter-feed",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Profile Banner Image",
+          "name": "bannerImage"
+        },
+        {
+          "component": "reference",
+          "label": "Profile Image",
+          "name": "profileImage"
+        },
+        {
+          "component": "text",
+          "label": "Profile Name",
+          "name": "profileName"
+        },
+        {
+          "component": "text",
+          "label": "Profile Screen Name",
+          "name": "profileScreenName"
+        },
+        {
+          "component": "aem-content",
+          "label": "Profile Link",
+          "name": "profileLink"
+        },
+        {
+          "component": "reference",
+          "label": "Verified Icon",
+          "name": "verifiedIcon"
+        },
+        {
+          "component": "aem-content",
+          "label": "Follow Link",
+          "name": "followLink"
+        },
+        {
+          "component": "text",
+          "label": "Follow Label",
+          "name": "followLabel"
+        },
+        {
+          "component": "number",
+          "label": "Posts Count",
+          "name": "postsCount"
+        },
+        {
+          "component": "number",
+          "label": "Following Count",
+          "name": "followingCount"
+        },
+        {
+          "component": "number",
+          "label": "Followers Count",
+          "name": "followersCount"
+        },
+        {
+          "component": "container",
+          "item": "twitter-feed-post",
+          "label": "Posts",
+          "name": "posts"
+        }
+      ]
+    },
+    {
+      "id": "twitter-feed-post",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "User Image",
+          "name": "userImage"
+        },
+        {
+          "component": "text",
+          "label": "User Name",
+          "name": "userName"
+        },
+        {
+          "component": "reference",
+          "label": "User Verified Icon",
+          "name": "userVerifiedIcon"
+        },
+        {
+          "component": "text",
+          "label": "User Screen Name",
+          "name": "userScreenName"
+        },
+        {
+          "component": "aem-content",
+          "label": "User Profile Link",
+          "name": "userProfileLink"
+        },
+        {
+          "component": "aem-content",
+          "label": "Post Link",
+          "name": "postLink"
+        },
+        {
+          "component": "reference",
+          "label": "Post Icon",
+          "name": "postIcon"
+        },
+        {
+          "component": "richtext",
+          "label": "Post Text",
+          "name": "postText"
+        },
+        {
+          "component": "container",
+          "item": "twitter-feed-media-item",
+          "label": "Media Items",
+          "name": "mediaItems"
+        },
+        {
+          "component": "text",
+          "label": "Post Date",
+          "name": "postDate"
+        },
+        {
+          "component": "reference",
+          "label": "Reply Icon",
+          "name": "replyIcon"
+        },
+        {
+          "component": "number",
+          "label": "Reply Count",
+          "name": "replyCount"
+        },
+        {
+          "component": "reference",
+          "label": "Repost Icon",
+          "name": "repostIcon"
+        },
+        {
+          "component": "number",
+          "label": "Repost Count",
+          "name": "repostCount"
+        },
+        {
+          "component": "reference",
+          "label": "Like Icon",
+          "name": "likeIcon"
+        },
+        {
+          "component": "number",
+          "label": "Like Count",
+          "name": "likeCount"
+        },
+        {
+          "component": "reference",
+          "label": "Share Icon",
+          "name": "shareIcon"
+        },
+        {
+          "component": "text",
+          "label": "Share Label",
+          "name": "shareLabel"
+        }
+      ]
+    },
+    {
+      "id": "twitter-feed-media-item",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Media Image",
+          "name": "mediaImage"
+        }
+      ]
+    },
+    {
+      "id": "story-item",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Thumbnail Image",
+          "name": "thumbnailImage"
+        },
+        {
+          "component": "reference",
+          "label": "Horizontal Image",
+          "name": "horizontalImage"
+        },
+        {
+          "component": "reference",
+          "label": "Vertical Image",
+          "name": "verticalImage"
+        },
+        {
+          "component": "text",
+          "label": "Category",
+          "name": "category"
+        },
+        {
+          "component": "richtext",
+          "label": "Story Text",
+          "name": "text"
+        },
+        {
+          "component": "aem-content",
+          "label": "Read More Link",
+          "name": "readMoreLink"
+        },
+        {
+          "component": "text",
+          "label": "Read More Label",
+          "name": "readMoreLabel"
+        },
+        {
+          "component": "date-time",
+          "label": "Date",
+          "name": "date"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "latest-stories",
+      "components": [
+        "twitter-feed",
+        "story-item"
+      ]
+    }
+  ]
+}

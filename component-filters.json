@@ -15,7 +15,14 @@
       "hero",
       "cards",
       "columns",
-      "fragment"
+      "fragment",
+      "main-header",
+      "what-we-do",
+      "spirit-of-rise",
+      "latest-stories",
+      "work-with-us",
+      "faqs-section",
+      "footer-main"
     ]
   },
   {
@@ -37,6 +44,54 @@
       "image",
       "button",
       "title"
+    ]
+  },
+  {
+    "id": "faqs-section",
+    "components": [
+      "faq-item"
+    ]
+  },
+  {
+    "id": "footer-main",
+    "components": [
+      "footer-social-item",
+      "footer-link-block",
+      "footer-link-item",
+      "footer-secondary-nav-item"
+    ]
+  },
+  {
+    "id": "latest-stories",
+    "components": [
+      "twitter-feed",
+      "story-item"
+    ]
+  },
+  {
+    "id": "main-header",
+    "components": [
+      "navigation-item",
+      "contact-link-item",
+      "search-item"
+    ]
+  },
+  {
+    "id": "spirit-of-rise",
+    "components": [
+      "spirit-of-rise-card"
+    ]
+  },
+  {
+    "id": "what-we-do",
+    "components": [
+      "business-vertical-item"
+    ]
+  },
+  {
+    "id": "work-with-us",
+    "components": [
+      "work-with-us-slide"
     ]
   }
 ]

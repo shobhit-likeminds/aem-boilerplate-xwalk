@@ -1,0 +1,101 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  const [headingRow, descriptionRow, ...cardRows] = [...block.children];
+
+  const section = document.createElement('section');
+  section.classList.add('section', 'grey-bg', 'spirit-of-rise');
+  moveInstrumentation(block, section);
+
+  const sectionHeader = document.createElement('div');
+  sectionHeader.classList.add('section-header', 'text-center', 'pb-3');
+  section.append(sectionHeader);
+
+  // Section Heading
+  if (headingRow) {
+    const heading = document.createElement('h2');
+    heading.classList.add('heading', 'font-regular', 'aos-init', 'aos-animate');
+    moveInstrumentation(headingRow, heading);
+    heading.textContent = headingRow.textContent.trim();
+    sectionHeader.append(heading);
+  }
+
+  // Section Description
+  if (descriptionRow) {
+    const description = document.createElement('p');
+    description.classList.add('aos-init', 'aos-animate');
+    moveInstrumentation(descriptionRow, description);
+    description.textContent = descriptionRow.textContent.trim();
+    sectionHeader.append(description);
+  }
+
+  const performanceDriven = document.createElement('div');
+  performanceDriven.classList.add('performance-driven', 'performace-driven-home');
+  section.append(performanceDriven);
+
+  const container = document.createElement('div');
+  container.classList.add('container');
+  performanceDriven.append(container);
+
+  const performaceDrivenCards = document.createElement('div');
+  performaceDrivenCards.classList.add('performace-driven-cards');
+  container.append(performaceDrivenCards);
+
+  cardRows.forEach((row) => {
+    const [imageMobileCell, imageDesktopCell, cardDescriptionCell, cardLinkCell] = [...row.children];
+
+    const cardLink = document.createElement('a');
+    cardLink.classList.add('performace-driven-cards-link');
+    const foundCardLink = cardLinkCell.querySelector('a');
+    if (foundCardLink) {
+      cardLink.href = foundCardLink.href;
+      cardLink.target = '_blank'; // Added target="_blank"
+    }
+    moveInstrumentation(row, cardLink); // Move instrumentation from row to the link
+
+    const performaceDrivenCardWrapper = document.createElement('div');
+    performaceDrivenCardWrapper.classList.add('performace-driven-card-wrapper');
+    cardLink.append(performaceDrivenCardWrapper);
+
+    const cardImage = document.createElement('div');
+    cardImage.classList.add('card-image');
+    performaceDrivenCardWrapper.append(cardImage);
+
+    // Mobile Image
+    const mobilePicture = imageMobileCell.querySelector('picture');
+    if (mobilePicture) {
+      const mobileSource = mobilePicture.querySelector('source');
+      const mobileImg = mobilePicture.querySelector('img');
+      const optimizedMobilePic = createOptimizedPicture(mobileImg.src, mobileImg.alt, false, [{ media: '(max-width: 576px)', width: '576' }]);
+      // moveInstrumentation should be from the original source element to the new one
+      if (mobileSource) {
+        moveInstrumentation(mobileSource, optimizedMobilePic.querySelector('source'));
+      }
+      moveInstrumentation(mobileImg, optimizedMobilePic.querySelector('img'));
+      cardImage.append(optimizedMobilePic);
+    }
+
+    // Desktop Image
+    const desktopPicture = imageDesktopCell.querySelector('picture');
+    if (desktopPicture) {
+      const desktopImg = desktopPicture.querySelector('img');
+      const optimizedDesktopPic = createOptimizedPicture(desktopImg.src, desktopImg.alt, false, [{ width: '750' }]);
+      moveInstrumentation(desktopImg, optimizedDesktopPic.querySelector('img'));
+      cardImage.append(optimizedDesktopPic);
+    }
+
+    const performaceDrivenHomeBoxCard = document.createElement('div');
+    performaceDrivenHomeBoxCard.classList.add('performace-driven-home-box-card');
+    performaceDrivenCardWrapper.append(performaceDrivenHomeBoxCard);
+
+    const desc = document.createElement('p');
+    desc.classList.add('desc');
+    desc.textContent = cardDescriptionCell.textContent.trim();
+    performaceDrivenHomeBoxCard.append(desc);
+
+    performaceDrivenCards.append(cardLink);
+  });
+
+  block.replaceChildren(section);
+}
