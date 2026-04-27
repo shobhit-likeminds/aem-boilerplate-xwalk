@@ -62,7 +62,9 @@
         "footer",
         "product-selection",
         "w-100-pt-3-pt-sm-3",
-        "scroll-to-top"
+        "scroll-to-top",
+        "corp-header",
+        "corp-footer"
       ]
     }
   ]

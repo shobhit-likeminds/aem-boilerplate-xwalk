@@ -2,7 +2,7 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const [iconCell] = [...block.children];
+  const [buttonIconRow] = [...block.children];
 
   const button = document.createElement('button');
   button.classList.add(
@@ -21,27 +21,19 @@ export default function decorate(block) {
     'bg-red-100',
   );
 
-  const img = iconCell?.querySelector('img');
-  if (img) {
-    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-    moveInstrumentation(img, optimizedPic.querySelector('img'));
-    button.append(optimizedPic);
+  const iconCell = buttonIconRow.firstElementChild;
+  if (iconCell) {
+    const picture = iconCell.querySelector('picture');
+    if (picture) {
+      const img = picture.querySelector('img');
+      if (img) {
+        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+        moveInstrumentation(img, optimizedPic.querySelector('img'));
+        button.append(optimizedPic);
+      }
+    }
   }
 
-  // Add scroll event listener to show/hide the button
-  const toggleVisibility = () => {
-    if (window.scrollY > 200) { // Show button after scrolling down 200px
-      button.style.display = 'flex';
-    } else {
-      button.style.display = 'none';
-    }
-  };
-
-  // Initial check and add event listener
-  toggleVisibility();
-  window.addEventListener('scroll', toggleVisibility);
-
-  // Add click event listener for scrolling to top
   button.addEventListener('click', () => {
     window.scrollTo({
       top: 0,
@@ -49,6 +41,17 @@ export default function decorate(block) {
     });
   });
 
-  moveInstrumentation(iconCell, button);
+  const handleScroll = () => {
+    if (window.scrollY > 200) { // Show button after scrolling 200px
+      button.style.display = 'flex';
+    } else {
+      button.style.display = 'none';
+    }
+  };
+
+  window.addEventListener('scroll', handleScroll);
+  handleScroll(); // Initial check on page load
+
+  moveInstrumentation(buttonIconRow, button);
   block.replaceChildren(button);
 }
