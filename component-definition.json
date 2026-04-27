@@ -115,7 +115,7 @@
           }
         },
         {
-          "title": "Card-Carousel",
+          "title": "Card Carousel",
           "id": "card-carousel",
           "plugins": {
             "xwalk": {
@@ -124,14 +124,14 @@
                 "template": {
                   "filter": "card-carousel",
                   "model": "card-carousel",
-                  "name": "Card-Carousel"
+                  "name": "Card Carousel"
                 }
               }
             }
           }
         },
         {
-          "title": "Recipe-Card",
+          "title": "Recipe Card",
           "id": "recipe-card",
           "plugins": {
             "xwalk": {
@@ -139,22 +139,22 @@
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
                   "model": "recipe-card",
-                  "name": "Recipe-Card"
+                  "name": "Recipe Card"
                 }
               }
             }
           }
         },
         {
-          "title": "Social-Share-Item",
-          "id": "social-share-item",
+          "title": "Social Media Share Item",
+          "id": "social-media-share-item",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "social-share-item",
-                  "name": "Social-Share-Item"
+                  "model": "social-media-share-item",
+                  "name": "Social Media Share Item"
                 }
               }
             }
@@ -344,7 +344,7 @@
           }
         },
         {
-          "title": "Header-Comp",
+          "title": "Header Comp",
           "id": "header-comp",
           "plugins": {
             "xwalk": {
@@ -353,67 +353,67 @@
                 "template": {
                   "filter": "header-comp",
                   "model": "header-comp",
-                  "name": "Header-Comp"
+                  "name": "Header Comp"
                 }
               }
             }
           }
         },
         {
-          "title": "Header-Menu-Item",
-          "id": "header-menu-item",
+          "title": "Header Nav Item",
+          "id": "header-nav-item",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "header-menu-item",
-                  "name": "Header-Menu-Item"
+                  "model": "header-nav-item",
+                  "name": "Header Nav Item"
                 }
               }
             }
           }
         },
         {
-          "title": "Header-Sub-Menu-Item",
-          "id": "header-sub-menu-item",
+          "title": "Header Submenu Item",
+          "id": "header-submenu-item",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "header-sub-menu-item",
-                  "name": "Header-Sub-Menu-Item"
+                  "model": "header-submenu-item",
+                  "name": "Header Submenu Item"
                 }
               }
             }
           }
         },
         {
-          "title": "Header-Sub-Child-Menu-Item",
-          "id": "header-sub-child-menu-item",
+          "title": "Header Submenu Leaf Item",
+          "id": "header-submenu-leaf-item",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "header-sub-child-menu-item",
-                  "name": "Header-Sub-Child-Menu-Item"
+                  "model": "header-submenu-leaf-item",
+                  "name": "Header Submenu Leaf Item"
                 }
               }
             }
           }
         },
         {
-          "title": "Header-Search-Item",
-          "id": "header-search-item",
+          "title": "Header Search",
+          "id": "header-search",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "header-search-item",
-                  "name": "Header-Search-Item"
+                  "model": "header-search",
+                  "name": "Header Search"
                 }
               }
             }

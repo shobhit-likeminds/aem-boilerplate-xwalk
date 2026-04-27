@@ -43,7 +43,7 @@
     "id": "card-carousel",
     "components": [
       "recipe-card",
-      "social-share-item"
+      "social-media-share-item"
     ]
   },
   {
@@ -88,10 +88,10 @@
   {
     "id": "header-comp",
     "components": [
-      "header-menu-item",
-      "header-sub-menu-item",
-      "header-sub-child-menu-item",
-      "header-search-item"
+      "header-nav-item",
+      "header-search",
+      "header-submenu-item",
+      "header-submenu-leaf-item"
     ]
   },
   {

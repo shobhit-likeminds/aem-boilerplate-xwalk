@@ -68,26 +68,27 @@
       "fields": [
         {
           "component": "richtext",
-          "label": "Heading",
-          "name": "heading"
+          "label": "Main Heading",
+          "name": "heading",
+          "valueType": "string"
         },
         {
           "component": "container",
           "item": "product-item",
-          "label": "Product List",
+          "label": "Product Items",
           "name": "products"
         },
         {
           "component": "container",
           "item": "ghee-panel",
-          "label": "Ghee Panels",
-          "name": "gheePanels"
+          "label": "Ghee Panel",
+          "name": "gheePanel"
         },
         {
           "component": "container",
           "item": "milk-panel",
-          "label": "Milk Panels",
-          "name": "milkPanels"
+          "label": "Milk Panel",
+          "name": "milkPanel"
         }
       ]
     },
@@ -96,13 +97,15 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Product Icon",
-          "name": "icon"
+          "label": "Product Image",
+          "name": "productImage",
+          "valueType": "string"
         },
         {
           "component": "text",
           "label": "Product Label",
-          "name": "label"
+          "name": "productLabel",
+          "valueType": "string"
         }
       ]
     },
@@ -111,48 +114,57 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Background Image (Desktop)",
-          "name": "backgroundDesktop"
+          "label": "Desktop Background Image",
+          "name": "backgroundDesktop",
+          "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Background Image (Mobile)",
-          "name": "backgroundMobile"
+          "label": "Mobile Background Image",
+          "name": "backgroundMobile",
+          "valueType": "string"
         },
         {
           "component": "richtext",
-          "label": "Headline (Before Download)",
-          "name": "headlineBefore"
+          "label": "Headline (before download)",
+          "name": "headlineBefore",
+          "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "CTA Icon (Before Download)",
-          "name": "ctaIconBefore"
+          "label": "CTA Icon (before download)",
+          "name": "ctaIcon",
+          "valueType": "string"
         },
         {
           "component": "aem-content",
-          "label": "Download Report Link (Before Download)",
-          "name": "ctaLinkBefore"
+          "label": "CTA Link (Download PDF)",
+          "name": "ctaLink",
+          "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Download Button Label (Before Download)",
-          "name": "ctaLabelBefore"
+          "label": "CTA Label (Download Button)",
+          "name": "ctaLabel",
+          "valueType": "string"
         },
         {
           "component": "richtext",
-          "label": "Headline (After Download)",
-          "name": "headlineAfter"
+          "label": "Headline (after download)",
+          "name": "headlineAfter",
+          "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "CTA Icon (After Download)",
-          "name": "ctaIconAfter"
+          "label": "Confirmation Icon (after download)",
+          "name": "confirmationIcon",
+          "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Download Button Label (After Download)",
-          "name": "ctaLabelAfter"
+          "label": "CTA Label (after download, disabled button)",
+          "name": "ctaLabelAfter",
+          "valueType": "string"
         }
       ]
     },
@@ -161,33 +173,39 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Background Image (Desktop)",
-          "name": "backgroundDesktop"
+          "label": "Desktop Background Image",
+          "name": "backgroundDesktop",
+          "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Background Image (Mobile)",
-          "name": "backgroundMobile"
+          "label": "Mobile Background Image",
+          "name": "backgroundMobile",
+          "valueType": "string"
         },
         {
           "component": "richtext",
           "label": "Headline",
-          "name": "headline"
+          "name": "headline",
+          "valueType": "string"
         },
         {
           "component": "reference",
           "label": "CTA Icon",
-          "name": "ctaIcon"
+          "name": "ctaIcon",
+          "valueType": "string"
         },
         {
           "component": "aem-content",
           "label": "Whatsapp Link",
-          "name": "whatsappLink"
+          "name": "whatsappLink",
+          "valueType": "string"
         },
         {
           "component": "text",
           "label": "Whatsapp Link Label",
-          "name": "whatsappLabel"
+          "name": "whatsappLabel",
+          "valueType": "string"
         }
       ]
     }
