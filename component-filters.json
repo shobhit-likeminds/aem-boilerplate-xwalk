@@ -56,18 +56,17 @@
   {
     "id": "footer-main",
     "components": [
-      "social-link-item",
-      "footer-menu-block",
-      "footer-menu-item",
-      "footer-menu-sub-item",
-      "secondary-nav-item"
+      "footer-social-item",
+      "footer-link-block",
+      "footer-link-item",
+      "footer-secondary-nav-item"
     ]
   },
   {
     "id": "latest-stories",
     "components": [
-      "twitter-feed",
-      "story-item"
+      "tweet-item",
+      "news-story-item"
     ]
   },
   {
@@ -94,7 +93,7 @@
   {
     "id": "what-we-do",
     "components": [
-      "business-vertical-item"
+      "business-vertical"
     ]
   },
   {
