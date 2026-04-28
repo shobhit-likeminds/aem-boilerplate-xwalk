@@ -511,15 +511,15 @@
           }
         },
         {
-          "title": "Quick Link",
-          "id": "quick-link",
+          "title": "Spotlight Quick Link",
+          "id": "spotlight-quick-link",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "quick-link",
-                  "name": "Quick Link"
+                  "model": "spotlight-quick-link",
+                  "name": "Spotlight Quick Link"
                 }
               }
             }

@@ -826,7 +826,7 @@
       },
       {
         "component": "container",
-        "item": "quick-link",
+        "item": "spotlight-quick-link",
         "label": "Quick Links",
         "name": "quickLinks"
       }
@@ -837,66 +837,66 @@
     "fields": [
       {
         "component": "reference",
-        "label": "Desktop Image",
+        "label": "Background Image (Desktop)",
         "name": "imageDesktop",
         "valueType": "string"
       },
       {
         "component": "reference",
-        "label": "Tablet Image",
+        "label": "Background Image (Tablet)",
         "name": "imageTablet",
         "valueType": "string"
       },
       {
         "component": "reference",
-        "label": "Mobile Image",
+        "label": "Background Image (Mobile)",
         "name": "imageMobile",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Small Text",
-        "name": "smallText",
+        "label": "Above Title (Optional)",
+        "name": "aboveTitle",
         "valueType": "string"
       },
       {
         "component": "richtext",
-        "label": "Headline",
-        "name": "headline",
+        "label": "Heading",
+        "name": "heading",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Body Text",
-        "name": "bodyText",
+        "label": "Description (Optional)",
+        "name": "description",
         "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "CTA Link",
+        "label": "CTA Link (Optional)",
         "name": "ctaLink",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "CTA Label",
+        "label": "CTA Label (Optional)",
         "name": "ctaLabel",
         "valueType": "string"
       }
     ]
   },
   {
-    "id": "quick-link",
+    "id": "spotlight-quick-link",
     "fields": [
       {
         "component": "aem-content",
-        "label": "Link",
+        "label": "Quick Link",
         "name": "link",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Label",
+        "label": "Quick Link Label",
         "name": "label",
         "valueType": "string"
       }
@@ -921,7 +921,7 @@
         "component": "container",
         "item": "business-vertical-item",
         "label": "Business Verticals",
-        "name": "businessVerticals"
+        "name": "verticals"
       }
     ]
   },
@@ -936,19 +936,19 @@
       },
       {
         "component": "reference",
-        "label": "Tablet/Mobile Image",
+        "label": "Tablet Image",
         "name": "imageTablet",
         "valueType": "string"
       },
       {
         "component": "reference",
-        "label": "Main <img> Image",
-        "name": "mainImage",
+        "label": "Mobile Image",
+        "name": "imageMobile",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Title",
+        "label": "Business Title",
         "name": "title",
         "valueType": "string"
       },
@@ -960,7 +960,7 @@
       },
       {
         "component": "aem-content",
-        "label": "Card Link",
+        "label": "Learn More Link",
         "name": "link",
         "valueType": "string"
       }

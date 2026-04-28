@@ -9,10 +9,13 @@ export default async function decorate(block) {
 
   const section = document.createElement('section');
   section.classList.add('section', 'spotlight-home-wrap', 'm-0', 'p-0');
-  moveInstrumentation(block, section);
 
   const beamSlider = document.createElement('div');
   beamSlider.classList.add('beam-slider', 'main-slider', 'loading1', 'beam-slider-multi');
+  beamSlider.setAttribute('data-aos', 'fade-up');
+  beamSlider.setAttribute('data-aos-offset', '-100');
+  beamSlider.setAttribute('data-aos-duration', '650');
+  beamSlider.setAttribute('data-aos-easing', 'ease-in-out');
 
   const swiperWrapper = document.createElement('div');
   swiperWrapper.classList.add('swiper-wrapper');
@@ -22,9 +25,9 @@ export default async function decorate(block) {
       imageDesktopCell,
       imageTabletCell,
       imageMobileCell,
-      aboveTitleCell,
-      headingCell,
-      descriptionCell,
+      smallTextCell,
+      headlineCell,
+      bodyTextCell,
       ctaLinkCell,
       ctaLabelCell,
     ] = [...row.children];
@@ -38,85 +41,81 @@ export default async function decorate(block) {
 
     const picture = document.createElement('picture');
 
+    const sourceMobile = document.createElement('source');
+    sourceMobile.media = '(max-width: 576px)';
     const mobileImg = imageMobileCell.querySelector('img');
     if (mobileImg) {
-      const sourceMobile = document.createElement('source');
-      sourceMobile.media = '(max-width: 576px)';
       sourceMobile.srcset = mobileImg.src;
-      picture.append(sourceMobile);
     }
+    picture.append(sourceMobile);
 
+    const sourceTablet = document.createElement('source');
+    sourceTablet.media = '(max-width: 799px)';
     const tabletImg = imageTabletCell.querySelector('img');
     if (tabletImg) {
-      const sourceTablet = document.createElement('source');
-      sourceTablet.media = '(max-width: 799px)';
       sourceTablet.srcset = tabletImg.src;
-      picture.append(sourceTablet);
     }
+    picture.append(sourceTablet);
 
-    const desktopImg = imageDesktopCell.querySelector('img');
-    if (desktopImg) {
-      const optimizedPic = createOptimizedPicture(
-        desktopImg.src,
-        desktopImg.alt,
-        false,
-        [{ width: '1903' }],
-      );
-      const img = optimizedPic.querySelector('img');
-      if (img) {
-        img.loading = 'eager';
-        img.fetchPriority = 'high';
-        img.width = '1903';
-        img.height = '841';
-      }
-      picture.append(optimizedPic.querySelector('img'));
+    const img = imageDesktopCell.querySelector('img');
+    if (img) {
+      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [
+        { media: '(max-width: 576px)', width: '576' },
+        { media: '(max-width: 799px)', width: '800' },
+        { width: '1903' },
+      ]);
+      const optimizedImg = optimizedPic.querySelector('img');
+      optimizedImg.loading = 'eager';
+      optimizedImg.fetchPriority = 'high';
+      moveInstrumentation(img, optimizedImg);
+      picture.append(optimizedImg);
     }
     slideBgImg.append(picture);
     swiperSlide.append(slideBgImg);
 
-    const mobContent = document.createElement('div');
-    mobContent.classList.add('mob-content-home-spotlight');
+    const mobContentHomeSpotlight = document.createElement('div');
+    mobContentHomeSpotlight.classList.add('mob-content-home-spotlight');
 
-    const content = document.createElement('div');
-    content.classList.add('content', 'text-center', 'text-lg-start');
+    const contentDiv = document.createElement('div');
+    contentDiv.classList.add('content', 'text-center', 'text-lg-start');
 
-    const aboveTitleText = aboveTitleCell.textContent.trim();
-    if (aboveTitleText) {
-      const small = document.createElement('small');
-      small.style.fontWeight = 'bold';
-      small.textContent = aboveTitleText;
-      content.append(small);
+    const smallText = smallTextCell.textContent.trim();
+    if (smallText) {
+      const smallEl = document.createElement('small');
+      smallEl.style.fontWeight = 'bold';
+      smallEl.textContent = smallText;
+      contentDiv.append(smallEl);
     }
 
-    const headingContent = headingCell.innerHTML.trim();
-    if (headingContent) {
-      const heading = document.createElement('h2');
-      heading.classList.add('heading', 'font-medium', 'font-size-tb');
-      heading.innerHTML = headingContent;
-      content.append(heading);
+    const headline = headlineCell.innerHTML;
+    if (headline) {
+      const hTag = headline.includes('<h2') ? 'h2' : 'h1'; // Use h1 as default if no h2 is present
+      const headingEl = document.createElement(hTag);
+      headingEl.classList.add('heading', 'font-medium', 'font-size-tb');
+      headingEl.innerHTML = headline;
+      contentDiv.append(headingEl);
     }
 
-    const descriptionText = descriptionCell.textContent.trim();
-    if (descriptionText) {
-      const p = document.createElement('p');
-      const strong = document.createElement('strong');
-      strong.textContent = descriptionText;
-      p.append(strong);
-      content.append(p);
+    const bodyText = bodyTextCell.textContent.trim();
+    if (bodyText) {
+      const pEl = document.createElement('p');
+      pEl.innerHTML = `<strong>${bodyText}</strong>`;
+      contentDiv.append(pEl);
     }
 
     const ctaLink = ctaLinkCell.querySelector('a');
     const ctaLabel = ctaLabelCell.textContent.trim();
     if (ctaLink && ctaLabel) {
-      const anchor = document.createElement('a');
-      anchor.href = ctaLink.href;
-      anchor.textContent = ctaLabel;
-      anchor.classList.add('btn', 'btn-primary');
-      content.append(anchor);
+      const aEl = document.createElement('a');
+      aEl.href = ctaLink.href;
+      aEl.textContent = ctaLabel;
+      aEl.classList.add('btn', 'btn-primary');
+      if (ctaLink.target) aEl.target = ctaLink.target; // Preserve target attribute
+      contentDiv.append(aEl);
     }
 
-    mobContent.append(content);
-    swiperSlide.append(mobContent);
+    mobContentHomeSpotlight.append(contentDiv);
+    swiperSlide.append(mobContentHomeSpotlight);
     swiperWrapper.append(swiperSlide);
   });
 
@@ -132,9 +131,15 @@ export default async function decorate(block) {
   nextBtn.innerHTML = '<svg class="swiper-navigation-icon" width="11" height="20" viewBox="0 0 11 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.38296 20.0762C0.111788 19.805 0.111788 19.3654 0.38296 19.0942L9.19758 10.2796L0.38296 1.46497C0.111788 1.19379 0.111788 0.754138 0.38296 0.482966C0.654131 0.211794 1.09379 0.211794 1.36496 0.482966L10.4341 9.55214C10.8359 9.9539 10.8359 10.6053 10.4341 11.007L1.36496 20.0762C1.09379 20.3474 0.654131 20.3474 0.38296 20.0762Z" fill="currentColor"></path></svg>';
   beamSlider.append(nextBtn);
 
-  const paginationEl = document.createElement('div');
-  paginationEl.classList.add('swiper-pagination', 'bullet-bottom');
-  beamSlider.append(paginationEl);
+  const pagination = document.createElement('div');
+  pagination.classList.add('swiper-pagination', 'bullet-bottom');
+  beamSlider.append(pagination);
+
+  const swiperNotification = document.createElement('span');
+  swiperNotification.classList.add('swiper-notification');
+  swiperNotification.setAttribute('aria-live', 'assertive');
+  swiperNotification.setAttribute('aria-atomic', 'true');
+  beamSlider.append(swiperNotification);
 
   section.append(beamSlider);
 
@@ -150,9 +155,12 @@ export default async function decorate(block) {
     'position-relative',
   );
 
-  const container = document.createElement('div');
-  container.classList.add('container');
-  quickLinksParentDiv.append(container);
+  const containerDiv = document.createElement('div');
+  containerDiv.classList.add('container', 'aos-init', 'aos-animate');
+  containerDiv.setAttribute('data-aos', 'fade-up');
+  containerDiv.setAttribute('data-aos-offset', '-100');
+  containerDiv.setAttribute('data-aos-duration', '650');
+  containerDiv.setAttribute('data-aos-easing', 'ease-in-out');
 
   const quickLinksUl = document.createElement('ul');
   quickLinksUl.classList.add('quick-links-div');
@@ -163,50 +171,42 @@ export default async function decorate(block) {
     const li = document.createElement('li');
     moveInstrumentation(row, li);
 
-    const anchor = document.createElement('a');
+    const a = document.createElement('a');
     const foundLink = linkCell.querySelector('a');
     if (foundLink) {
-      anchor.href = foundLink.href;
-      anchor.target = '_blank'; // Based on original HTML
+      a.href = foundLink.href;
+      if (foundLink.target) a.target = foundLink.target;
     }
-    anchor.classList.add('with-full-underline');
-    anchor.textContent = labelCell.textContent.trim();
-    li.append(anchor);
+    a.classList.add('with-full-underline');
+    a.textContent = labelCell.textContent.trim();
+
+    li.append(a);
     quickLinksUl.append(li);
   });
 
-  container.append(quickLinksUl);
+  containerDiv.append(quickLinksUl);
+  quickLinksParentDiv.append(containerDiv);
   section.append(quickLinksParentDiv);
 
   block.replaceChildren(section);
 
   await loadCSS('https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css');
   await loadScript('https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js');
-
   // eslint-disable-next-line no-undef
   new Swiper(beamSlider, {
-    slidesPerView: 'auto', // Changed from 1 to 'auto' for responsive behavior
-    spaceBetween: 0,
-    loop: true, // Original HTML implies looping behavior
+    slidesPerView: 1,
+    loop: true,
+    autoplay: {
+      delay: 5000,
+      disableOnInteraction: false,
+    },
     navigation: {
       prevEl: prevBtn,
       nextEl: nextBtn,
     },
     pagination: {
-      el: paginationEl,
+      el: pagination,
       clickable: true,
-    },
-    breakpoints: {
-      // Swiper default breakpoints, adjust if needed based on original site's responsive behavior
-      576: {
-        slidesPerView: 1,
-      },
-      768: {
-        slidesPerView: 1,
-      },
-      992: {
-        slidesPerView: 1,
-      },
     },
   });
 }

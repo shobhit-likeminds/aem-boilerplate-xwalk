@@ -103,7 +103,7 @@
     "id": "spotlight-home",
     "components": [
       "spotlight-slide",
-      "quick-link"
+      "spotlight-quick-link"
     ]
   },
   {
