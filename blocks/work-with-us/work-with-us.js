@@ -2,8 +2,7 @@ import { createOptimizedPicture, loadScript, loadCSS } from '../../scripts/aem.j
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default async function decorate(block) {
-  const children = [...block.children];
-  const [sectionHeadingRow, ...slideRows] = children;
+  const [headingRow, ...slideRows] = [...block.children];
 
   const section = document.createElement('section');
   section.classList.add('section', 'work-with-us', 'pb-0');
@@ -14,27 +13,22 @@ export default async function decorate(block) {
 
   const heading = document.createElement('h2');
   heading.classList.add('heading', 'font-regular', 'aos-init', 'aos-animate');
-  heading.setAttribute('data-aos', 'fade-up');
-  heading.setAttribute('data-aos-offset', '100');
-  heading.setAttribute('data-aos-duration', '650');
-  heading.setAttribute('data-aos-easing', 'ease-in-out');
-  moveInstrumentation(sectionHeadingRow, heading);
-  heading.textContent = sectionHeadingRow.textContent.trim();
+  moveInstrumentation(headingRow, heading);
+  heading.textContent = headingRow.textContent.trim();
   sectionHeader.append(heading);
   section.append(sectionHeader);
 
   const positionRelativeDiv = document.createElement('div');
   positionRelativeDiv.classList.add('position-relative', 'aos-init', 'aos-animate');
-  positionRelativeDiv.setAttribute('data-aos', 'fade-up');
-  positionRelativeDiv.setAttribute('data-aos-offset', '100');
-  positionRelativeDiv.setAttribute('data-aos-duration', '650');
-  positionRelativeDiv.setAttribute('data-aos-easing', 'ease-in-out');
 
-  const containerDiv = document.createElement('div');
-  containerDiv.classList.add('container');
+  const container = document.createElement('div');
+  container.classList.add('container');
 
-  const gridLayoutDiv = document.createElement('div');
-  gridLayoutDiv.classList.add('grid-layout', 'swiper'); // Add swiper class for initialization
+  const gridLayout = document.createElement('div');
+  gridLayout.classList.add('grid-layout'); // This will be the swiper-wrapper
+
+  const swiperContainer = document.createElement('div');
+  swiperContainer.classList.add('swiper', 'flickity-slider-mobile-wrap'); // Add swiper class for Swiper.js
 
   const swiperWrapper = document.createElement('div');
   swiperWrapper.classList.add('swiper-wrapper');
@@ -43,9 +37,9 @@ export default async function decorate(block) {
     const [
       imageMobile576Cell,
       imageMobile799Cell,
-      imageDesktopCell,
+      imageDefaultCell,
       slideHeadingCell,
-      slideBodyCell,
+      slideDescriptionCell,
       ctaLinkCell,
       ctaLabelCell,
     ] = [...row.children];
@@ -57,11 +51,10 @@ export default async function decorate(block) {
     const wrapDiv = document.createElement('div');
     wrapDiv.classList.add('wrap');
 
-    const imageWrapDiv = document.createElement('div');
-    imageWrapDiv.classList.add('image-wrap');
+    const imageWrap = document.createElement('div');
+    imageWrap.classList.add('image-wrap');
 
     const picture = document.createElement('picture');
-    let hasImage = false;
 
     const imgMobile576 = imageMobile576Cell.querySelector('img');
     if (imgMobile576) {
@@ -69,7 +62,6 @@ export default async function decorate(block) {
       source576.media = '(max-width: 576px)';
       source576.srcset = imgMobile576.src;
       picture.append(source576);
-      hasImage = true;
     }
 
     const imgMobile799 = imageMobile799Cell.querySelector('img');
@@ -78,27 +70,22 @@ export default async function decorate(block) {
       source799.media = '(max-width: 799px)';
       source799.srcset = imgMobile799.src;
       picture.append(source799);
-      hasImage = true;
     }
 
-    const imgDesktop = imageDesktopCell.querySelector('img');
-    if (imgDesktop) {
-      const img = document.createElement('img');
-      img.src = imgDesktop.src;
-      img.alt = imgDesktop.alt;
-      img.loading = 'lazy';
-      img.classList.add('img-fluid');
-      picture.append(img);
-      hasImage = true;
+    const imgDefault = imageDefaultCell.querySelector('img');
+    if (imgDefault) {
+      const defaultImg = createOptimizedPicture(imgDefault.src, imgDefault.alt, false, [{ width: '750' }]);
+      defaultImg.querySelector('img').classList.add('img-fluid');
+      picture.append(defaultImg.querySelector('img'));
     }
 
-    if (hasImage) {
-      imageWrapDiv.append(picture);
-      slideDiv.classList.add('has-image');
+    if (picture.children.length > 0) {
+      imageWrap.append(picture);
+      wrapDiv.append(imageWrap);
     }
 
-    const contentWrapDiv = document.createElement('div');
-    contentWrapDiv.classList.add('content-wrap');
+    const contentWrap = document.createElement('div');
+    contentWrap.classList.add('content-wrap');
 
     const contentSectionHeader = document.createElement('div');
     contentSectionHeader.classList.add('section-header');
@@ -108,73 +95,53 @@ export default async function decorate(block) {
     slideHeading.textContent = slideHeadingCell.textContent.trim();
     contentSectionHeader.append(slideHeading);
 
-    const slideBody = document.createElement('p');
-    slideBody.classList.add('text-size-body');
-    slideBody.innerHTML = slideBodyCell.innerHTML;
-    contentSectionHeader.append(slideBody);
+    const slideDescription = document.createElement('p');
+    slideDescription.classList.add('text-size-body');
+    slideDescription.innerHTML = slideDescriptionCell.innerHTML;
+    contentSectionHeader.append(slideDescription);
 
-    const ctaLink = document.createElement('a');
-    const originalCtaLink = ctaLinkCell.querySelector('a');
-    if (originalCtaLink) {
-      ctaLink.href = originalCtaLink.href;
+    const ctaLink = ctaLinkCell.querySelector('a');
+    const ctaLabel = ctaLabelCell.textContent.trim();
+
+    if (ctaLink && ctaLabel) {
+      const anchor = document.createElement('a');
+      anchor.href = ctaLink.href;
+      anchor.textContent = ctaLabel;
+      anchor.classList.add('btn', 'btn-primary', 'stretched-link');
+      contentSectionHeader.append(anchor);
     }
-    ctaLink.classList.add('btn', 'btn-primary', 'stretched-link');
-    ctaLink.textContent = ctaLabelCell.textContent.trim();
-    contentSectionHeader.append(ctaLink);
 
-    contentWrapDiv.append(contentSectionHeader);
-
-    if (imageWrapDiv.children.length > 0) {
-      wrapDiv.append(imageWrapDiv);
-    }
-    wrapDiv.append(contentWrapDiv);
+    contentWrap.append(contentSectionHeader);
+    wrapDiv.append(contentWrap);
     slideDiv.append(wrapDiv);
     swiperWrapper.append(slideDiv); // Append to swiperWrapper
   });
 
-  gridLayoutDiv.append(swiperWrapper); // Append swiperWrapper to gridLayoutDiv
-
-  // Add Swiper pagination and navigation if needed (based on original HTML comments)
-  const paginationDiv = document.createElement('div');
-  paginationDiv.classList.add('swiper-pagination');
-  gridLayoutDiv.append(paginationDiv);
-
-  containerDiv.append(gridLayoutDiv);
-  positionRelativeDiv.append(containerDiv);
+  swiperContainer.append(swiperWrapper); // Append swiperWrapper to swiperContainer
+  container.append(swiperContainer); // Append swiperContainer to container
+  positionRelativeDiv.append(container);
   section.append(positionRelativeDiv);
 
   block.replaceChildren(section);
 
-  // Load Swiper CSS and JS
+  // Swiper initialization
   await loadCSS('https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css');
   await loadScript('https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js');
 
-  // Initialize Swiper
+  // Create pagination dots
+  const paginationEl = document.createElement('div');
+  paginationEl.classList.add('swiper-pagination');
+  swiperContainer.append(paginationEl);
+
   // eslint-disable-next-line no-undef
-  new Swiper(gridLayoutDiv, {
+  new Swiper(swiperContainer, {
     slidesPerView: 'auto',
-    loop: false, // Original HTML data-flickity had wrapAround: false
+    loop: false, // Original HTML data-flickity has wrapAround: false
     pagination: {
-      el: paginationDiv,
+      el: paginationEl,
       clickable: true,
     },
-    // prevNextButtons: false from original HTML Flickity config
-  });
-
-  // Optimize images after the DOM is built and Swiper is initialized
-  block.querySelectorAll('picture > img').forEach((img) => {
-    // createOptimizedPicture expects the original image src, not the already optimized one
-    // It also returns a new <picture> element, so we replace the whole picture.
-    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-    // moveInstrumentation needs to be called on the original img element's parent,
-    // and then the new img element inside the optimized picture.
-    // However, createOptimizedPicture replaces the entire picture, so we need to
-    // move instrumentation from the original picture to the new one.
-    // For simplicity, we'll move it from the original img to the new img.
-    const originalPicture = img.closest('picture');
-    if (originalPicture) {
-      moveInstrumentation(img, optimizedPic.querySelector('img'));
-      originalPicture.replaceWith(optimizedPic);
-    }
+    // prevNextButtons: false from original HTML, so no navigation needed
+    // watchCSS: true from original HTML, useful for responsive behavior
   });
 }

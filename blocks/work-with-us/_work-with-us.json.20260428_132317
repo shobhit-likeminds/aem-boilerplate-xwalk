@@ -39,7 +39,7 @@
         {
           "component": "text",
           "label": "Section Heading",
-          "name": "heading",
+          "name": "sectionHeading",
           "valueType": "string"
         },
         {
@@ -55,20 +55,20 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Image (≤576px)",
+          "label": "Image - Mobile (max-width: 576px)",
           "name": "imageMobile576",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Image (≤799px)",
+          "label": "Image - Mobile (max-width: 799px)",
           "name": "imageMobile799",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Default Image",
-          "name": "imageDefault",
+          "label": "Image - Desktop",
+          "name": "imageDesktop",
           "valueType": "string"
         },
         {
@@ -79,8 +79,8 @@
         },
         {
           "component": "richtext",
-          "label": "Slide Description",
-          "name": "slideDescription",
+          "label": "Slide Body",
+          "name": "slideBody",
           "valueType": "string"
         },
         {
