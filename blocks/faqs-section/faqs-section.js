@@ -3,34 +3,30 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
   const children = [...block.children];
-  const [headingRow, ...faqItemRows] = children;
 
-  const section = document.createElement('section');
-  section.classList.add('section', 'faqs-section');
+  const sectionHeadingRow = children[0];
+  const faqItemRows = children.slice(1);
 
-  const container = document.createElement('div');
-  container.classList.add('container');
-  section.append(container);
+  const containerDiv = document.createElement('div');
+  containerDiv.classList.add('container');
 
   // Section Header
-  const sectionHeader = document.createElement('div');
-  sectionHeader.classList.add('section-header', 'text-center');
-  container.append(sectionHeader);
+  const sectionHeaderDiv = document.createElement('div');
+  sectionHeaderDiv.classList.add('section-header', 'text-center');
+  moveInstrumentation(sectionHeadingRow, sectionHeaderDiv);
 
   const heading = document.createElement('h2');
   heading.classList.add('heading', 'font-regular', 'aos-init', 'aos-animate');
   heading.setAttribute('data-aos', 'fade-up');
-  moveInstrumentation(headingRow, heading);
-  heading.textContent = headingRow.textContent.trim();
-  sectionHeader.append(heading);
+  heading.textContent = sectionHeadingRow.textContent.trim();
+  sectionHeaderDiv.append(heading);
+  containerDiv.append(sectionHeaderDiv);
 
-  // FAQs Accordion
+  // Accordion Div
   const accoDiv = document.createElement('div');
   accoDiv.classList.add('acco-div');
-  container.append(accoDiv);
 
   const ul = document.createElement('ul');
-  accoDiv.append(ul);
 
   faqItemRows.forEach((row, index) => {
     const [questionCell, answerCell] = [...row.children];
@@ -42,12 +38,11 @@ export default function decorate(block) {
       li.classList.add('active'); // First item is active by default
     }
     moveInstrumentation(row, li);
-    ul.append(li);
 
-    const questionHeading = document.createElement('h2');
-    questionHeading.setAttribute('data-once', 'faqsAccordion');
-    questionHeading.textContent = questionCell.textContent.trim();
-    li.append(questionHeading);
+    const h2 = document.createElement('h2');
+    h2.setAttribute('data-once', 'faqsAccordion');
+    h2.textContent = questionCell.textContent.trim();
+    li.append(h2);
 
     const accoContentDiv = document.createElement('div');
     accoContentDiv.classList.add('acco-content-div');
@@ -57,28 +52,29 @@ export default function decorate(block) {
     accoContentDiv.innerHTML = answerCell.innerHTML;
     li.append(accoContentDiv);
 
-    // Add event listener for accordion toggle
-    questionHeading.addEventListener('click', () => {
-      const isActive = li.classList.contains('active');
+    h2.addEventListener('click', () => {
+      const currentlyActive = ul.querySelector('li.active');
+      const currentlyShown = ul.querySelector('.acco-content-div.show');
 
-      // Close all other open accordions
-      ul.querySelectorAll('li.active').forEach((activeLi) => {
-        if (activeLi !== li) {
-          activeLi.classList.remove('active');
-          activeLi.querySelector('.acco-content-div').classList.remove('show');
-        }
-      });
+      if (currentlyActive && currentlyActive !== li) {
+        currentlyActive.classList.remove('active');
+        currentlyShown.classList.remove('show');
+      }
 
-      // Toggle current accordion
-      li.classList.toggle('active', !isActive);
-      accoContentDiv.classList.toggle('show', !isActive);
+      li.classList.toggle('active');
+      accoContentDiv.classList.toggle('show');
     });
+
+    ul.append(li);
   });
 
-  block.replaceChildren(section);
+  accoDiv.append(ul);
+  containerDiv.append(accoDiv);
 
-  // Optimize images if any are present (though not expected in this block type)
-  section.querySelectorAll('picture > img').forEach((img) => {
+  block.replaceChildren(containerDiv);
+
+  // Image optimization (if any images were present in richtext)
+  block.querySelectorAll('picture > img').forEach((img) => {
     const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
     moveInstrumentation(img, optimizedPic.querySelector('img'));
     img.closest('picture').replaceWith(optimizedPic);

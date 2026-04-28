@@ -1,0 +1,10 @@
+and Opera */
+.eapps-twitter-feed-posts-container::-webkit-scrollbar { 
+  display: none;
+ }
+
+and Firefox */
+.eapps-twitter-feed-posts-container { 
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+ }

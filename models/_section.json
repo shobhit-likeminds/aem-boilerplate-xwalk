@@ -60,7 +60,8 @@
         "footer-main",
         "what-we-do-wrap",
         "spotlight-home",
-        "quick-links"
+        "quick-links",
+        "organization-ld-json"
       ]
     }
   ]

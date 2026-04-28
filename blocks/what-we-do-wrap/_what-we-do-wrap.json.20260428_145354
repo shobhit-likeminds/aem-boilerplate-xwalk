@@ -1,31 +1,31 @@
 {
   "definitions": [
     {
-      "title": "Work-With-Us",
-      "id": "work-with-us",
+      "title": "What-We-Do-Wrap",
+      "id": "what-we-do-wrap",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block",
             "template": {
-              "filter": "work-with-us",
-              "model": "work-with-us",
-              "name": "Work-With-Us"
+              "filter": "what-we-do-wrap",
+              "model": "what-we-do-wrap",
+              "name": "What-We-Do-Wrap"
             }
           }
         }
       }
     },
     {
-      "title": "Work-With-Us-Slide",
-      "id": "work-with-us-slide",
+      "title": "Business-Vertical-Item",
+      "id": "business-vertical-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "work-with-us-slide",
-              "name": "Work-With-Us-Slide"
+              "model": "business-vertical-item",
+              "name": "Business-Vertical-Item"
             }
           }
         }
@@ -34,7 +34,7 @@
   ],
   "models": [
     {
-      "id": "work-with-us",
+      "id": "what-we-do-wrap",
       "fields": [
         {
           "component": "text",
@@ -43,44 +43,44 @@
           "valueType": "string"
         },
         {
+          "component": "richtext",
+          "label": "Section Description",
+          "name": "sectionDescription",
+          "valueType": "string"
+        },
+        {
           "component": "container",
-          "item": "work-with-us-slide",
-          "label": "Slides",
-          "name": "slides"
+          "item": "business-vertical-item",
+          "label": "Business Verticals",
+          "name": "businessVerticals"
         }
       ]
     },
     {
-      "id": "work-with-us-slide",
+      "id": "business-vertical-item",
       "fields": [
         {
           "component": "reference",
-          "label": "Mobile Image (max-width: 576px)",
-          "name": "imageMobile576",
+          "label": "Main Image (Desktop)",
+          "name": "mainImageDesktop",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Mobile Image (max-width: 799px)",
-          "name": "imageMobile799",
-          "valueType": "string"
-        },
-        {
-          "component": "reference",
-          "label": "Desktop Image",
-          "name": "imageDesktop",
+          "label": "Main Image (Mobile)",
+          "name": "mainImageMobile",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Slide Heading",
-          "name": "slideHeading",
+          "label": "Title",
+          "name": "title",
           "valueType": "string"
         },
         {
-          "component": "richtext",
-          "label": "Slide Description",
-          "name": "slideDescription",
+          "component": "reference",
+          "label": "Icon (SVG)",
+          "name": "icon",
           "valueType": "string"
         },
         {
@@ -91,8 +91,8 @@
         },
         {
           "component": "text",
-          "label": "CTA Label",
-          "name": "ctaLabel",
+          "label": "CTA Aria Label",
+          "name": "ctaAriaLabel",
           "valueType": "string"
         }
       ]
@@ -100,9 +100,9 @@
   ],
   "filters": [
     {
-      "id": "work-with-us",
+      "id": "what-we-do-wrap",
       "components": [
-        "work-with-us-slide"
+        "business-vertical-item"
       ]
     }
   ]

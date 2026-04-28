@@ -1,7 +1,7 @@
 {
   "definitions": [
     {
-      "title": "Spirit of Rise",
+      "title": "Spirit-of-Rise",
       "id": "spirit-of-rise",
       "plugins": {
         "xwalk": {
@@ -10,14 +10,14 @@
             "template": {
               "filter": "spirit-of-rise",
               "model": "spirit-of-rise",
-              "name": "Spirit of Rise"
+              "name": "Spirit-of-Rise"
             }
           }
         }
       }
     },
     {
-      "title": "Spirit of Rise Card",
+      "title": "Spirit-of-Rise-Card",
       "id": "spirit-of-rise-card",
       "plugins": {
         "xwalk": {
@@ -25,7 +25,7 @@
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
               "model": "spirit-of-rise-card",
-              "name": "Spirit of Rise Card"
+              "name": "Spirit-of-Rise-Card"
             }
           }
         }
@@ -38,13 +38,13 @@
       "fields": [
         {
           "component": "text",
-          "label": "Heading",
+          "label": "Section Heading",
           "name": "heading",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Subheading",
+          "label": "Section Subheading",
           "name": "subheading",
           "valueType": "string"
         },
@@ -61,26 +61,26 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Card Image (Mobile)",
+          "label": "Image (Mobile)",
           "name": "imageMobile",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Card Image (Desktop)",
+          "label": "Image (Desktop)",
           "name": "imageDesktop",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Card Description",
+          "name": "description",
           "valueType": "string"
         },
         {
           "component": "aem-content",
           "label": "Card Link",
-          "name": "link",
-          "valueType": "string"
-        },
-        {
-          "component": "richtext",
-          "label": "Card Description",
-          "name": "description",
+          "name": "cardLink",
           "valueType": "string"
         }
       ]

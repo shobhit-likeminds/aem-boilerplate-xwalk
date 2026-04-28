@@ -71,25 +71,25 @@
         {
           "component": "reference",
           "label": "Desktop Image",
-          "name": "desktopImage",
+          "name": "imageDesktop",
           "valueType": "string"
         },
         {
           "component": "reference",
           "label": "Tablet Image",
-          "name": "tabletImage",
+          "name": "imageTablet",
           "valueType": "string"
         },
         {
           "component": "reference",
           "label": "Mobile Image",
-          "name": "mobileImage",
+          "name": "imageMobile",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Eyebrow (Small Text)",
-          "name": "eyebrow",
+          "label": "Small Text",
+          "name": "smallText",
           "valueType": "string"
         },
         {
@@ -123,13 +123,13 @@
       "fields": [
         {
           "component": "aem-content",
-          "label": "Quick Link URL",
+          "label": "Link",
           "name": "link",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Quick Link Label",
+          "label": "Label",
           "name": "label",
           "valueType": "string"
         }

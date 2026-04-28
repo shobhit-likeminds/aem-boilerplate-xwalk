@@ -1,7 +1,7 @@
 {
   "definitions": [
     {
-      "title": "Quick Links",
+      "title": "Quick-Links",
       "id": "quick-links",
       "plugins": {
         "xwalk": {
@@ -10,14 +10,14 @@
             "template": {
               "filter": "quick-links",
               "model": "quick-links",
-              "name": "Quick Links"
+              "name": "Quick-Links"
             }
           }
         }
       }
     },
     {
-      "title": "Quick Link Item",
+      "title": "Quick-Link-Item",
       "id": "quick-link-item",
       "plugins": {
         "xwalk": {
@@ -25,7 +25,7 @@
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
               "model": "quick-link-item",
-              "name": "Quick Link Item"
+              "name": "Quick-Link-Item"
             }
           }
         }
@@ -48,15 +48,15 @@
       "id": "quick-link-item",
       "fields": [
         {
-          "component": "text",
-          "label": "Link Label",
-          "name": "label",
+          "component": "aem-content",
+          "label": "Link",
+          "name": "link",
           "valueType": "string"
         },
         {
-          "component": "aem-content",
-          "label": "Link URL",
-          "name": "link",
+          "component": "text",
+          "label": "Link Label",
+          "name": "label",
           "valueType": "string"
         }
       ]
