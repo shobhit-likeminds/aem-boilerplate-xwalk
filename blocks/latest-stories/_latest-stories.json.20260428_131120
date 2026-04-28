@@ -1,0 +1,349 @@
+{
+  "definitions": [
+    {
+      "title": "Latest-Stories",
+      "id": "latest-stories",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "latest-stories",
+              "model": "latest-stories",
+              "name": "Latest-Stories"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Tweet-Item",
+      "id": "tweet-item",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "tweet-item",
+              "name": "Tweet-Item"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "News-Story-Item",
+      "id": "news-story-item",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "news-story-item",
+              "name": "News-Story-Item"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "latest-stories",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Section Heading",
+          "name": "sectionHeading",
+          "valueType": "string"
+        },
+        {
+          "component": "container",
+          "item": "tweet-item",
+          "label": "Tweets",
+          "name": "tweets"
+        },
+        {
+          "component": "container",
+          "item": "news-story-item",
+          "label": "News Stories",
+          "name": "newsStories"
+        }
+      ]
+    },
+    {
+      "id": "tweet-item",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Profile Banner Image",
+          "name": "profileBanner",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Profile Image",
+          "name": "profileImage",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Profile Name",
+          "name": "profileName",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Profile Screen Name",
+          "name": "profileScreenName",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Profile Link",
+          "name": "profileLink",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Verified Icon",
+          "name": "verifiedIcon",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Follow Icon",
+          "name": "followIcon",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Follow Label",
+          "name": "followLabel",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Follow Link",
+          "name": "followLink",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Posts Label",
+          "name": "postsLabel",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Posts Count",
+          "name": "postsCount",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Following Label",
+          "name": "followingLabel",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Following Count",
+          "name": "followingCount",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Followers Label",
+          "name": "followersLabel",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Followers Count",
+          "name": "followersCount",
+          "valueType": "string"
+        },
+        {
+          "component": "container",
+          "item": "tweet-post-item",
+          "label": "Tweet Posts",
+          "name": "tweetPosts"
+        }
+      ]
+    },
+    {
+      "id": "tweet-post-item",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Tweet User Image",
+          "name": "userImage",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Tweet User Name",
+          "name": "userName",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Verified Icon",
+          "name": "verifiedIcon",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Tweet User Screen Name",
+          "name": "userScreenName",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Tweet Date",
+          "name": "tweetDate",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Tweet Link",
+          "name": "tweetLink",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Tweet Link Icon",
+          "name": "tweetLinkIcon",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Tweet Text",
+          "name": "tweetText",
+          "valueType": "string"
+        },
+        {
+          "component": "container",
+          "item": "tweet-media-item",
+          "label": "Media",
+          "name": "media"
+        },
+        {
+          "component": "container",
+          "item": "tweet-action-item",
+          "label": "Actions",
+          "name": "actions"
+        }
+      ]
+    },
+    {
+      "id": "tweet-media-item",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Tweet Media Image",
+          "name": "mediaImage",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Tweet Media Link",
+          "name": "mediaLink",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "tweet-action-item",
+      "fields": [
+        {
+          "component": "aem-content",
+          "label": "Action Link",
+          "name": "actionLink",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Action Icon",
+          "name": "actionIcon",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Action Label",
+          "name": "actionLabel",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Action Count",
+          "name": "actionCount",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "news-story-item",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Story Thumbnail Image",
+          "name": "image",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Story Image Horizontal",
+          "name": "imageHorizontal",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Story Image Vertical",
+          "name": "imageVertical",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Story Category",
+          "name": "category",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Story Text",
+          "name": "storyText",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Story Link",
+          "name": "storyLink",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Story Link Label",
+          "name": "storyLinkLabel",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Story Date",
+          "name": "storyDate",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "latest-stories",
+      "components": [
+        "tweet-item",
+        "news-story-item"
+      ]
+    }
+  ]
+}

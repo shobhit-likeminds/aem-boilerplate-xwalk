@@ -6,7 +6,6 @@ export default async function decorate(block) {
 
   const section = document.createElement('section');
   section.classList.add('section', 'what-we-do-wrap');
-  moveInstrumentation(block, section);
 
   const container = document.createElement('div');
   container.classList.add('container');
@@ -16,19 +15,20 @@ export default async function decorate(block) {
   const sectionHeader = document.createElement('div');
   sectionHeader.classList.add('section-header', 'text-center');
   moveInstrumentation(headingRow, sectionHeader);
-  moveInstrumentation(descriptionRow, sectionHeader);
   container.append(sectionHeader);
 
   const heading = document.createElement('h2');
-  heading.classList.add('heading', 'font-regular');
+  heading.classList.add('heading', 'font-regular', 'aos-init', 'aos-animate');
   heading.textContent = headingRow.textContent.trim();
   sectionHeader.append(heading);
 
   const description = document.createElement('p');
+  description.classList.add('aos-init', 'aos-animate');
+  moveInstrumentation(descriptionRow, description);
   description.innerHTML = descriptionRow.innerHTML;
   sectionHeader.append(description);
 
-  // Business Verticals
+  // Our Business Verticals
   const ourBusinessVerticals = document.createElement('div');
   ourBusinessVerticals.classList.add('our-business-verticals');
   section.append(ourBusinessVerticals);
@@ -42,80 +42,97 @@ export default async function decorate(block) {
   desktopRow.classList.add('row', 'row-cols-lg-3', 'row-cols-1', 'g-3');
   desktopContainer.append(desktopRow);
 
-  // Mobile view (slider)
+  // Mobile view (Swiper structure)
   const mobileContainer = document.createElement('div');
-  mobileContainer.classList.add('container', 'd-lg-none', 'd-block');
+  mobileContainer.classList.add('container', 'd-lg-none', 'd-block', 'aos-init', 'aos-animate');
   ourBusinessVerticals.append(mobileContainer);
 
-  const mobileSlider = document.createElement('div');
-  mobileSlider.classList.add('mobile-slider');
-  mobileContainer.append(mobileSlider);
+  const swiperEl = document.createElement('div');
+  swiperEl.classList.add('swiper', 'mobile-slider'); // 'mobile-slider' from original HTML
+  mobileContainer.append(swiperEl);
+
+  const swiperWrapper = document.createElement('div');
+  swiperWrapper.classList.add('swiper-wrapper');
+  swiperEl.append(swiperWrapper);
 
   const mobileSlides = [];
-  const itemsPerSlide = 3; // Based on original HTML structure
+  let currentMobileSlideWrapper = document.createElement('div');
+  currentMobileSlideWrapper.classList.add('swiper-slide');
+  swiperWrapper.append(currentMobileSlideWrapper);
+  mobileSlides.push(currentMobileSlideWrapper);
+
+  let mobileSlideRowCount = 0;
+  const mobileSlideMaxRows = 3; // Max 3 items per mobile slide
 
   itemRows.forEach((row, index) => {
-    const [imageDesktopCell, imageMobileCell, titleCell, iconCell, linkCell] = [...row.children];
+    const [imageDesktopCell, imageTabletCell, imageMobileCell, titleCell, arrowIconCell, linkCell] = [...row.children];
 
-    // Desktop item
+    // Desktop Item
     const desktopCol = document.createElement('div');
-    desktopCol.classList.add('col');
-    moveInstrumentation(row, desktopCol); // Move instrumentation for desktop item
-
-    const desktopWrap = document.createElement('div');
-    desktopWrap.classList.add('wrap');
-    desktopCol.append(desktopWrap);
-
-    const desktopImageDiv = document.createElement('div');
-    desktopImageDiv.classList.add('image');
-    const desktopPicture = imageDesktopCell.querySelector('picture');
-    if (desktopPicture) {
-      const img = desktopPicture.querySelector('img');
-      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ media: '(min-width: 992px)', width: '376' }, { media: '(min-width: 450px)', width: '376' }]);
-      moveInstrumentation(img, optimizedPic.querySelector('img'));
-      desktopImageDiv.append(optimizedPic);
-    }
-    desktopWrap.append(desktopImageDiv);
-
-    const desktopTitleDiv = document.createElement('div');
-    desktopTitleDiv.classList.add('title');
-    desktopTitleDiv.textContent = titleCell.textContent.trim();
-    const desktopIcon = iconCell.querySelector('picture');
-    if (desktopIcon) {
-      desktopTitleDiv.append(desktopIcon);
-    }
-    desktopWrap.append(desktopTitleDiv);
-
-    const desktopLink = document.createElement('a');
-    desktopLink.classList.add('stretched-link');
-    const foundLink = linkCell.querySelector('a');
-    if (foundLink) {
-      desktopLink.href = foundLink.href;
-      desktopLink.setAttribute('aria-label', `Learn more about ${titleCell.textContent.trim()}`);
-    }
-    desktopWrap.append(desktopLink);
+    desktopCol.classList.add('col', 'aos-init', 'aos-animate');
+    desktopCol.setAttribute('data-aos', 'fade-up');
+    desktopCol.setAttribute('data-aos-delay', `${(index % 3) * 300 + 100}`); // Stagger delay
     desktopRow.append(desktopCol);
 
-    // Mobile item
-    let currentSlide;
-    if (index % itemsPerSlide === 0) {
-      currentSlide = document.createElement('div');
-      currentSlide.classList.add('slides');
-      mobileSlides.push(currentSlide);
-    } else {
-      currentSlide = mobileSlides[mobileSlides.length - 1];
+    const wrap = document.createElement('div');
+    wrap.classList.add('wrap');
+    moveInstrumentation(row, wrap); // Move instrumentation from original row to the new wrap
+    desktopCol.append(wrap);
+
+    const imageDiv = document.createElement('div');
+    imageDiv.classList.add('image');
+    wrap.append(imageDiv);
+
+    const desktopPicture = imageDesktopCell.querySelector('picture');
+    if (desktopPicture) {
+      const optimizedPic = createOptimizedPicture(
+        desktopPicture.querySelector('img').src,
+        desktopPicture.querySelector('img').alt,
+        false,
+        [{ media: '(min-width: 992px)', width: '376' }],
+      );
+      imageDiv.append(optimizedPic);
     }
 
-    let mobileRowContainer = currentSlide.querySelector('.row.row-cols-1.gy-3');
-    if (!mobileRowContainer) {
-      mobileRowContainer = document.createElement('div');
-      mobileRowContainer.classList.add('row', 'row-cols-1', 'gy-3');
-      currentSlide.append(mobileRowContainer);
+    const titleDiv = document.createElement('div');
+    titleDiv.classList.add('title');
+    titleDiv.textContent = titleCell.textContent.trim();
+    wrap.append(titleDiv);
+
+    const arrowIcon = arrowIconCell.querySelector('picture');
+    if (arrowIcon) {
+      const arrowImg = arrowIcon.querySelector('img');
+      const optimizedArrow = createOptimizedPicture(arrowImg.src, arrowImg.alt, false, [{ width: '10' }]);
+      titleDiv.append(optimizedArrow);
+    }
+
+    const link = document.createElement('a');
+    link.classList.add('stretched-link');
+    const foundLink = linkCell.querySelector('a');
+    if (foundLink) {
+      link.href = foundLink.href;
+      link.setAttribute('aria-label', `Learn more about ${titleCell.textContent.trim()}`);
+    }
+    wrap.append(link);
+
+    // Mobile Item
+    if (mobileSlideRowCount >= mobileSlideMaxRows) {
+      currentMobileSlideWrapper = document.createElement('div');
+      currentMobileSlideWrapper.classList.add('swiper-slide');
+      swiperWrapper.append(currentMobileSlideWrapper);
+      mobileSlides.push(currentMobileSlideWrapper);
+      mobileSlideRowCount = 0;
+    }
+
+    if (mobileSlideRowCount === 0) {
+      const mobileSlideRow = document.createElement('div');
+      mobileSlideRow.classList.add('row', 'row-cols-1', 'gy-3');
+      currentMobileSlideWrapper.append(mobileSlideRow);
     }
 
     const mobileCol = document.createElement('div');
     mobileCol.classList.add('col');
-    moveInstrumentation(row, mobileCol); // Move instrumentation for mobile item
+    currentMobileSlideWrapper.querySelector('.row.row-cols-1.gy-3').append(mobileCol);
 
     const mobileWrap = document.createElement('div');
     mobileWrap.classList.add('wrap');
@@ -123,23 +140,30 @@ export default async function decorate(block) {
 
     const mobileImageDiv = document.createElement('div');
     mobileImageDiv.classList.add('image');
+    mobileWrap.append(mobileImageDiv);
+
+    // Use mobile image for mobile view
     const mobilePicture = imageMobileCell.querySelector('picture');
     if (mobilePicture) {
-      const img = mobilePicture.querySelector('img');
-      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ media: '(min-width: 992px)', width: '376' }, { media: '(min-width: 450px)', width: '376' }]);
-      moveInstrumentation(img, optimizedPic.querySelector('img'));
+      const optimizedPic = createOptimizedPicture(
+        mobilePicture.querySelector('img').src,
+        mobilePicture.querySelector('img').alt,
+        false,
+        [{ media: '(min-width: 450px)', width: '376' }],
+      );
       mobileImageDiv.append(optimizedPic);
     }
-    mobileWrap.append(mobileImageDiv);
 
     const mobileTitleDiv = document.createElement('div');
     mobileTitleDiv.classList.add('title');
     mobileTitleDiv.textContent = titleCell.textContent.trim();
-    const mobileIcon = iconCell.querySelector('picture');
-    if (mobileIcon) {
-      mobileTitleDiv.append(mobileIcon);
-    }
     mobileWrap.append(mobileTitleDiv);
+
+    if (arrowIcon) {
+      const arrowImg = arrowIcon.querySelector('img');
+      const optimizedArrow = createOptimizedPicture(arrowImg.src, arrowImg.alt, false, [{ width: '10' }]);
+      mobileTitleDiv.append(optimizedArrow);
+    }
 
     const mobileLink = document.createElement('a');
     mobileLink.classList.add('stretched-link');
@@ -148,36 +172,30 @@ export default async function decorate(block) {
       mobileLink.setAttribute('aria-label', `Learn more about ${titleCell.textContent.trim()}`);
     }
     mobileWrap.append(mobileLink);
-    mobileRowContainer.append(mobileCol);
+
+    mobileSlideRowCount += 1;
   });
 
-  const flickityViewport = document.createElement('div');
-  flickityViewport.classList.add('flickity-viewport');
-  const flickitySlider = document.createElement('div');
-  flickitySlider.classList.add('flickity-slider');
-  flickityViewport.append(flickitySlider);
+  // Swiper pagination
+  const swiperPagination = document.createElement('div');
+  swiperPagination.classList.add('swiper-pagination');
+  swiperEl.append(swiperPagination);
 
-  mobileSlides.forEach((slide) => {
-    flickitySlider.append(slide);
-  });
-  mobileSlider.append(flickityViewport);
-
+  // Replace block content with the new structure
   block.replaceChildren(section);
 
-  // Initialize Flickity for mobile slider
-  if (mobileSlides.length > 0) {
-    // Dynamically load Flickity CSS and JS
-    await loadCSS('/scripts/flickity.css'); // Assuming flickity.js handles CSS loading internally
-    await loadScript('/scripts/flickity.js');
-    // eslint-disable-next-line no-undef
-    new Flickity(mobileSlider, {
-      wrapAround: false,
-      lazyLoad: true,
-      pageDots: true,
-      prevNextButtons: false,
-      imagesLoaded: true,
-      cellAlign: 'left',
-      adaptiveHeight: true,
-    });
-  }
+  // Load Swiper and initialize
+  await loadCSS('https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css');
+  await loadScript('https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js');
+
+  // eslint-disable-next-line no-undef
+  new Swiper(swiperEl, {
+    slidesPerView: 'auto',
+    loop: false, // Original HTML data-flickity="{ &quot;wrapAround&quot;: false ... }"
+    pagination: {
+      el: swiperPagination,
+      clickable: true,
+    },
+    // No navigation buttons in original Flickity config, so not adding them for Swiper
+  });
 }

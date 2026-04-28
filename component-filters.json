@@ -23,7 +23,9 @@
       "work-with-us",
       "faqs-section",
       "footer-main",
-      "what-we-do-wrap"
+      "what-we-do-wrap",
+      "spotlight-home",
+      "quick-links"
     ]
   },
   {
@@ -56,32 +58,46 @@
   {
     "id": "footer-main",
     "components": [
-      "footer-social-item",
-      "footer-link-block",
+      "social-link-item",
+      "footer-menu-block",
       "footer-link-item",
-      "footer-secondary-nav-item"
+      "footer-sub-link-item",
+      "footer-inner-sub-link-item",
+      "secondary-nav-link-item"
     ]
   },
   {
     "id": "latest-stories",
     "components": [
-      "tweet-item",
-      "news-story-item"
+      "story-item",
+      "social-feed-item"
     ]
   },
   {
     "id": "main-header",
     "components": [
       "navigation-item",
-      "press-release-item",
-      "icon-nav-item",
-      "search-suggestion-item"
+      "contact-link-item",
+      "press-release-item"
+    ]
+  },
+  {
+    "id": "quick-links",
+    "components": [
+      "quick-link-item"
     ]
   },
   {
     "id": "spirit-of-rise",
     "components": [
       "spirit-of-rise-card"
+    ]
+  },
+  {
+    "id": "spotlight-home",
+    "components": [
+      "spotlight-slide",
+      "quick-link"
     ]
   },
   {
@@ -93,7 +109,7 @@
   {
     "id": "what-we-do",
     "components": [
-      "business-vertical"
+      "business-vertical-item"
     ]
   },
   {

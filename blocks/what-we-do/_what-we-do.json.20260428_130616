@@ -17,15 +17,15 @@
       }
     },
     {
-      "title": "Business-Vertical-Item",
-      "id": "business-vertical-item",
+      "title": "Business-Vertical",
+      "id": "business-vertical",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "business-vertical-item",
-              "name": "Business-Vertical-Item"
+              "model": "business-vertical",
+              "name": "Business-Vertical"
             }
           }
         }
@@ -38,60 +38,54 @@
       "fields": [
         {
           "component": "text",
-          "label": "Block Heading",
+          "label": "Section Heading",
           "name": "heading",
           "valueType": "string"
         },
         {
           "component": "richtext",
-          "label": "Block Description",
+          "label": "Section Description",
           "name": "description",
           "valueType": "string"
         },
         {
           "component": "container",
-          "item": "business-vertical-item",
+          "item": "business-vertical",
           "label": "Business Verticals",
           "name": "businessVerticals"
         }
       ]
     },
     {
-      "id": "business-vertical-item",
+      "id": "business-vertical",
       "fields": [
         {
           "component": "reference",
-          "label": "Desktop Image",
+          "label": "Image (Desktop)",
           "name": "imageDesktop",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Tablet Image",
-          "name": "imageTablet",
-          "valueType": "string"
-        },
-        {
-          "component": "reference",
-          "label": "Mobile Image",
+          "label": "Image (Mobile)",
           "name": "imageMobile",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Title",
+          "label": "Business Vertical Title",
           "name": "title",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Arrow Icon",
-          "name": "arrowIcon",
+          "label": "Icon (Arrow/Decoration)",
+          "name": "icon",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "label": "CTA Link",
+          "label": "Business Vertical Link",
           "name": "link",
           "valueType": "string"
         }
@@ -102,7 +96,7 @@
     {
       "id": "what-we-do",
       "components": [
-        "business-vertical-item"
+        "business-vertical"
       ]
     }
   ]
