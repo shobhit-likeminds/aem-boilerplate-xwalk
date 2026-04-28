@@ -58,11 +58,11 @@
   {
     "id": "footer-main",
     "components": [
-      "footer-social-item",
-      "footer-link-block",
-      "footer-link-item",
-      "footer-sub-link-item",
-      "footer-secondary-nav-item"
+      "footer-social-link-item",
+      "footer-menu-group",
+      "footer-menu-link-item",
+      "footer-menu-sub-link-item",
+      "secondary-nav-item"
     ]
   },
   {
@@ -106,7 +106,7 @@
     ]
   },
   {
-    "id": "what-we-do-wrap",
+    "id": "what-we-do",
     "components": [
       "business-vertical-item"
     ]
@@ -114,7 +114,7 @@
   {
     "id": "work-with-us",
     "components": [
-      "work-with-us-slide"
+      "work-with-us-item"
     ]
   }
 ]

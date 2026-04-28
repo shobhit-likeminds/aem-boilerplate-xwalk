@@ -1,0 +1,9 @@
+.row>* { flex-shrink:0;width:100%;max-width:100%;padding-right:calc(var(--bs-gutter-x) * .5);padding-left:calc(var(--bs-gutter-x) * .5);margin-top:var(--bs-gutter-y) }
+
+.row-cols-1>* { flex:0 0 auto;width:100% }
+
+@media (min-width:992px) { .row-cols-lg-3>* { flex:0 0 auto;width:33.33333333% } }
+
+@media (min-width:992px) { .d-lg-block { display:block!important }
+
+.d-lg-none { display:none!important } }
