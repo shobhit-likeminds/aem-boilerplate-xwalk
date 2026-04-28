@@ -1,7 +1,7 @@
 {
   "definitions": [
     {
-      "title": "What We Do",
+      "title": "What-We-Do",
       "id": "what-we-do",
       "plugins": {
         "xwalk": {
@@ -10,14 +10,14 @@
             "template": {
               "filter": "what-we-do",
               "model": "what-we-do",
-              "name": "What We Do"
+              "name": "What-We-Do"
             }
           }
         }
       }
     },
     {
-      "title": "Business Vertical Item",
+      "title": "Business-Vertical-Item",
       "id": "business-vertical-item",
       "plugins": {
         "xwalk": {
@@ -25,7 +25,7 @@
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
               "model": "business-vertical-item",
-              "name": "Business Vertical Item"
+              "name": "Business-Vertical-Item"
             }
           }
         }
@@ -44,8 +44,8 @@
         },
         {
           "component": "richtext",
-          "label": "Section Description",
-          "name": "description",
+          "label": "Section Intro Text",
+          "name": "intro",
           "valueType": "string"
         },
         {
@@ -61,31 +61,37 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Image (Desktop)",
+          "label": "Desktop Image",
           "name": "imageDesktop",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Image (Mobile)",
-          "name": "imageMobile",
+          "label": "Tablet/Mobile Image",
+          "name": "imageTablet",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Title Arrow Icon (SVG/Img)",
-          "name": "titleIcon",
+          "label": "Main Image Fallback (img src)",
+          "name": "mainImage",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Title",
+          "label": "Business Title",
           "name": "title",
           "valueType": "string"
         },
         {
+          "component": "reference",
+          "label": "Arrow Icon",
+          "name": "arrowIcon",
+          "valueType": "string"
+        },
+        {
           "component": "aem-content",
-          "label": "Learn More Link",
+          "label": "Business Link",
           "name": "link",
           "valueType": "string"
         }

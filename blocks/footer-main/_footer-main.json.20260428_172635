@@ -1,0 +1,246 @@
+{
+  "definitions": [
+    {
+      "title": "Footer-Main",
+      "id": "footer-main",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "footer-main",
+              "model": "footer-main",
+              "name": "Footer-Main"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Social-Link-Item",
+      "id": "social-link-item",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "social-link-item",
+              "name": "Social-Link-Item"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Footer-Link-Block",
+      "id": "footer-link-block",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "footer-link-block",
+              "name": "Footer-Link-Block"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Footer-Link-Item",
+      "id": "footer-link-item",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "footer-link-item",
+              "name": "Footer-Link-Item"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Footer-Link-Sub-Item",
+      "id": "footer-link-sub-item",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "footer-link-sub-item",
+              "name": "Footer-Link-Sub-Item"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Secondary-Nav-Item",
+      "id": "secondary-nav-item",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "secondary-nav-item",
+              "name": "Secondary-Nav-Item"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "footer-main",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Logo",
+          "name": "logo"
+        },
+        {
+          "component": "aem-content",
+          "label": "Logo Link",
+          "name": "logoLink"
+        },
+        {
+          "component": "container",
+          "item": "social-link-item",
+          "label": "Social Links",
+          "name": "socialLinks"
+        },
+        {
+          "component": "container",
+          "item": "footer-link-block",
+          "label": "Footer Link Blocks",
+          "name": "footerLinkBlocks"
+        },
+        {
+          "component": "container",
+          "item": "secondary-nav-item",
+          "label": "Secondary Navigation",
+          "name": "secondaryNav"
+        },
+        {
+          "component": "text",
+          "label": "Copyright Text",
+          "name": "copyrightText"
+        }
+      ]
+    },
+    {
+      "id": "social-link-item",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Platform Name",
+          "name": "platform"
+        },
+        {
+          "component": "aem-content",
+          "label": "Social Link",
+          "name": "link"
+        },
+        {
+          "component": "richtext",
+          "label": "Navigation Hierarchy",
+          "name": "hierarchy-tree",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "footer-link-block",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Block Title",
+          "name": "blockTitle"
+        },
+        {
+          "component": "aem-content",
+          "label": "Block Title Link",
+          "name": "blockTitleLink"
+        },
+        {
+          "component": "container",
+          "item": "footer-link-item",
+          "label": "Footer Links",
+          "name": "footerLinks"
+        }
+      ]
+    },
+    {
+      "id": "footer-link-item",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Label",
+          "name": "label"
+        },
+        {
+          "component": "aem-content",
+          "label": "Link",
+          "name": "link"
+        },
+        {
+          "component": "richtext",
+          "label": "Nested Links",
+          "name": "hierarchy-tree",
+          "valueType": "string"
+        },
+        {
+          "component": "container",
+          "item": "footer-link-sub-item",
+          "label": "Footer Sub Links",
+          "name": "footerSubLinks"
+        }
+      ]
+    },
+    {
+      "id": "footer-link-sub-item",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Sub Link Label",
+          "name": "label"
+        },
+        {
+          "component": "aem-content",
+          "label": "Sub Link",
+          "name": "link"
+        }
+      ]
+    },
+    {
+      "id": "secondary-nav-item",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Secondary Nav Label",
+          "name": "label"
+        },
+        {
+          "component": "aem-content",
+          "label": "Secondary Nav Link",
+          "name": "link"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "footer-main",
+      "components": [
+        "social-link-item",
+        "footer-link-block",
+        "footer-link-item",
+        "footer-link-sub-item",
+        "secondary-nav-item"
+      ]
+    }
+  ]
+}

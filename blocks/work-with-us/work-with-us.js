@@ -1,32 +1,40 @@
-import { createOptimizedPicture } from '../../scripts/aem.js';
+import { createOptimizedPicture, loadScript, loadCSS } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
-export default function decorate(block) {
+export default async function decorate(block) {
   const [sectionHeadingRow, ...slideRows] = [...block.children];
 
-  const root = document.createElement('section');
-  root.classList.add('section', 'work-with-us', 'pb-0');
+  const section = document.createElement('section');
+  section.classList.add('section', 'work-with-us', 'pb-0');
 
   // Section Header
   const sectionHeader = document.createElement('div');
   sectionHeader.classList.add('section-header', 'text-center');
-  moveInstrumentation(sectionHeadingRow, sectionHeader);
+  section.append(sectionHeader);
 
   const heading = document.createElement('h2');
   heading.classList.add('heading', 'font-regular', 'aos-init', 'aos-animate');
+  moveInstrumentation(sectionHeadingRow, heading);
   heading.textContent = sectionHeadingRow.textContent.trim();
   sectionHeader.append(heading);
-  root.append(sectionHeader);
 
   // Slides Container
   const positionRelativeDiv = document.createElement('div');
   positionRelativeDiv.classList.add('position-relative', 'aos-init', 'aos-animate');
+  section.append(positionRelativeDiv);
 
   const containerDiv = document.createElement('div');
   containerDiv.classList.add('container');
+  positionRelativeDiv.append(containerDiv);
 
-  const gridLayoutDiv = document.createElement('div');
-  gridLayoutDiv.classList.add('grid-layout');
+  // Swiper setup
+  const swiperContainer = document.createElement('div');
+  swiperContainer.classList.add('swiper-container'); // This class is added by Swiper, but we need a container for it
+  containerDiv.append(swiperContainer);
+
+  const swiperWrapper = document.createElement('div');
+  swiperWrapper.classList.add('swiper-wrapper');
+  swiperContainer.append(swiperWrapper);
 
   slideRows.forEach((row) => {
     const [
@@ -39,54 +47,56 @@ export default function decorate(block) {
       ctaLabelCell,
     ] = [...row.children];
 
-    const slideDiv = document.createElement('div');
-    slideDiv.classList.add('slides');
-    moveInstrumentation(row, slideDiv);
+    const slidesDiv = document.createElement('div');
+    slidesDiv.classList.add('slides', 'swiper-slide'); // Add swiper-slide class
+    swiperWrapper.append(slidesDiv);
 
     const wrapDiv = document.createElement('div');
     wrapDiv.classList.add('wrap');
+    slidesDiv.append(wrapDiv);
 
-    // Image Wrap (if any image exists)
-    const pictureMobile576 = imageMobile576Cell.querySelector('picture');
-    const pictureMobile799 = imageMobile799Cell.querySelector('picture');
-    const pictureDesktop = imageDesktopCell.querySelector('picture');
+    // Image Wrap
+    const imageWrapDiv = document.createElement('div');
+    imageWrapDiv.classList.add('image-wrap');
 
-    if (pictureMobile576 || pictureMobile799 || pictureDesktop) {
-      const imageWrap = document.createElement('div');
-      imageWrap.classList.add('image-wrap');
+    const picture = document.createElement('picture');
 
-      const picture = document.createElement('picture');
+    const mobile576Img = imageMobile576Cell.querySelector('img');
+    if (mobile576Img) {
+      const source576 = document.createElement('source');
+      source576.media = '(max-width: 576px)';
+      source576.srcset = mobile576Img.src;
+      picture.append(source576);
+    }
 
-      if (pictureMobile576) {
-        const source = document.createElement('source');
-        source.media = '(max-width: 576px)';
-        source.srcset = pictureMobile576.querySelector('img').src;
-        picture.append(source);
-      }
-      if (pictureMobile799) {
-        const source = document.createElement('source');
-        source.media = '(max-width: 799px)';
-        source.srcset = pictureMobile799.querySelector('img').src;
-        picture.append(source);
-      }
-      if (pictureDesktop) {
-        const img = pictureDesktop.querySelector('img');
-        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-        moveInstrumentation(img, optimizedPic.querySelector('img'));
-        picture.append(...optimizedPic.children);
-        picture.querySelector('img').classList.add('img-fluid');
-      }
+    const mobile799Img = imageMobile799Cell.querySelector('img');
+    if (mobile799Img) {
+      const source799 = document.createElement('source');
+      source799.media = '(max-width: 799px)';
+      source779.srcset = mobile799Img.src; // Typo fix: source779 -> source799
+      picture.append(source799);
+    }
 
-      imageWrap.append(picture);
-      wrapDiv.append(imageWrap);
+    const desktopImg = imageDesktopCell.querySelector('img');
+    if (desktopImg) {
+      const img = createOptimizedPicture(desktopImg.src, desktopImg.alt, false, [{ width: '750' }]);
+      img.querySelector('img').classList.add('img-fluid');
+      picture.append(img.querySelector('img'));
+    }
+
+    if (picture.children.length > 0) {
+      imageWrapDiv.append(picture);
+      wrapDiv.append(imageWrapDiv);
     }
 
     // Content Wrap
-    const contentWrap = document.createElement('div');
-    contentWrap.classList.add('content-wrap');
+    const contentWrapDiv = document.createElement('div');
+    contentWrapDiv.classList.add('content-wrap');
+    wrapDiv.append(contentWrapDiv);
 
     const contentSectionHeader = document.createElement('div');
     contentSectionHeader.classList.add('section-header');
+    contentWrapDiv.append(contentSectionHeader);
 
     const slideHeading = document.createElement('h3');
     slideHeading.classList.add('heading', 'font-regular');
@@ -98,24 +108,53 @@ export default function decorate(block) {
     slideDescription.innerHTML = slideDescriptionCell.innerHTML;
     contentSectionHeader.append(slideDescription);
 
-    const ctaLink = ctaLinkCell.querySelector('a');
-    if (ctaLink) {
-      const ctaAnchor = document.createElement('a');
-      ctaAnchor.classList.add('btn', 'btn-primary', 'stretched-link');
-      ctaAnchor.href = ctaLink.href;
-      ctaAnchor.textContent = ctaLabelCell.textContent.trim();
-      contentSectionHeader.append(ctaAnchor);
+    const ctaLink = document.createElement('a');
+    ctaLink.classList.add('btn', 'btn-primary', 'stretched-link');
+    const foundCtaLink = ctaLinkCell.querySelector('a');
+    if (foundCtaLink) {
+      ctaLink.href = foundCtaLink.href;
     }
+    ctaLink.textContent = ctaLabelCell.textContent.trim();
+    contentSectionHeader.append(ctaLink);
 
-    contentWrap.append(contentSectionHeader);
-    wrapDiv.append(contentWrap);
-    slideDiv.append(wrapDiv);
-    gridLayoutDiv.append(slideDiv);
+    moveInstrumentation(row, slidesDiv);
   });
 
-  containerDiv.append(gridLayoutDiv);
-  positionRelativeDiv.append(containerDiv);
-  root.append(positionRelativeDiv);
+  // Add navigation and pagination elements for Swiper
+  const paginationDiv = document.createElement('div');
+  paginationDiv.classList.add('swiper-pagination');
+  swiperContainer.append(paginationDiv);
 
-  block.replaceChildren(root);
+  const prevButton = document.createElement('div');
+  prevButton.classList.add('swiper-button-prev');
+  swiperContainer.append(prevButton);
+
+  const nextButton = document.createElement('div');
+  nextButton.classList.add('swiper-button-next');
+  swiperContainer.append(nextButton);
+
+  block.replaceChildren(section);
+
+  // Load Swiper library and initialize
+  await loadCSS('https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css');
+  await loadScript('https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js');
+
+  // eslint-disable-next-line no-undef
+  new Swiper(swiperContainer, {
+    slidesPerView: 'auto',
+    loop: false, // Based on ORIGINAL HTML data-flickity='{ "wrapAround": false, ... }'
+    navigation: {
+      prevEl: prevButton,
+      nextEl: nextButton,
+    },
+    pagination: {
+      el: paginationDiv,
+      clickable: true,
+    },
+    // Add other Swiper options as needed, e.g., from Flickity data-attributes
+    // imagesLoaded: true, // Equivalent to Flickity's imagesLoaded
+    // cellAlign: 'left', // Equivalent to Flickity's cellAlign
+    // watchCSS: true, // Equivalent to Flickity's watchCSS
+    // adaptiveHeight: true, // Equivalent to Flickity's adaptiveHeight
+  });
 }

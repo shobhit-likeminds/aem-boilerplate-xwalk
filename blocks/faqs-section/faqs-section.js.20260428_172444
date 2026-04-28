@@ -4,37 +4,31 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
 export default function decorate(block) {
   const children = [...block.children];
 
-  const section = document.createElement('section');
-  section.classList.add('section', 'faqs-section');
+  const sectionHeadingRow = children[0];
+  const faqItemRows = children.slice(1);
 
-  const container = document.createElement('div');
-  container.classList.add('container');
-  section.append(container);
+  const containerDiv = document.createElement('div');
+  containerDiv.classList.add('container');
 
-  // Section Heading
-  const headingRow = children.shift(); // First row is always the heading
-  if (headingRow) {
-    const sectionHeader = document.createElement('div');
-    sectionHeader.classList.add('section-header', 'text-center');
+  // Section Header
+  const sectionHeaderDiv = document.createElement('div');
+  sectionHeaderDiv.classList.add('section-header', 'text-center');
+  moveInstrumentation(sectionHeadingRow, sectionHeaderDiv);
 
-    const heading = document.createElement('h2');
-    heading.classList.add('heading', 'font-regular', 'aos-init', 'aos-animate');
-    heading.setAttribute('data-aos', 'fade-up');
-    moveInstrumentation(headingRow, heading);
-    // The headingRow itself contains the text, not a nested div.
-    // Based on EDS BLOCK STRUCTURE: "heading" label="Section Heading" type=text — read: cell.textContent.trim()
-    heading.textContent = headingRow.textContent.trim();
-    sectionHeader.append(heading);
-    container.append(sectionHeader);
-  }
+  const heading = document.createElement('h2');
+  heading.classList.add('heading', 'font-regular', 'aos-init', 'aos-animate');
+  heading.setAttribute('data-aos', 'fade-up');
+  heading.textContent = sectionHeadingRow.textContent.trim();
+  sectionHeaderDiv.append(heading);
+  containerDiv.append(sectionHeaderDiv);
 
-  // FAQs
+  // Accordion Div
   const accoDiv = document.createElement('div');
   accoDiv.classList.add('acco-div');
-  const ul = document.createElement('ul');
-  accoDiv.append(ul);
 
-  children.forEach((row, index) => {
+  const ul = document.createElement('ul');
+
+  faqItemRows.forEach((row, index) => {
     const [questionCell, answerCell] = [...row.children];
 
     const li = document.createElement('li');
@@ -43,38 +37,43 @@ export default function decorate(block) {
     if (index === 0) {
       li.classList.add('active'); // First item is active by default
     }
+    moveInstrumentation(row, li);
 
     const h2 = document.createElement('h2');
     h2.setAttribute('data-once', 'faqsAccordion');
-    moveInstrumentation(questionCell, h2);
     h2.textContent = questionCell.textContent.trim();
+    li.append(h2);
 
     const accoContentDiv = document.createElement('div');
     accoContentDiv.classList.add('acco-content-div');
     if (index === 0) {
-      accoContentDiv.classList.add('show');
+      accoContentDiv.classList.add('show'); // First item content is shown by default
     }
-    moveInstrumentation(answerCell, accoContentDiv);
     accoContentDiv.innerHTML = answerCell.innerHTML;
+    li.append(accoContentDiv);
 
     h2.addEventListener('click', () => {
       const currentlyActive = ul.querySelector('li.active');
+      const currentlyShown = ul.querySelector('.acco-content-div.show');
+
       if (currentlyActive && currentlyActive !== li) {
         currentlyActive.classList.remove('active');
-        currentlyActive.querySelector('.acco-content-div').classList.remove('show');
+        currentlyShown.classList.remove('show');
       }
+
       li.classList.toggle('active');
       accoContentDiv.classList.toggle('show');
     });
 
-    li.append(h2, accoContentDiv);
     ul.append(li);
   });
 
-  container.append(accoDiv);
-  block.replaceChildren(section);
+  accoDiv.append(ul);
+  containerDiv.append(accoDiv);
 
-  // Image optimization (if any images were present)
+  block.replaceChildren(containerDiv);
+
+  // Image optimization (if any images were present in richtext)
   block.querySelectorAll('picture > img').forEach((img) => {
     const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
     moveInstrumentation(img, optimizedPic.querySelector('img'));

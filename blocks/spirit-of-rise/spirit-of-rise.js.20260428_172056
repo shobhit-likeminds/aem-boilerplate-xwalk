@@ -1,0 +1,104 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  const [headingRow, subheadingRow, ...cardRows] = [...block.children];
+
+  const section = document.createElement('section');
+  section.classList.add('section', 'grey-bg', 'spirit-of-rise');
+  moveInstrumentation(block, section);
+
+  const container = document.createElement('div');
+  container.classList.add('container');
+
+  // Section Header
+  const sectionHeader = document.createElement('div');
+  sectionHeader.classList.add('section-header', 'text-center', 'pb-3');
+
+  const heading = document.createElement('h2');
+  heading.classList.add('heading', 'font-regular', 'aos-init', 'aos-animate');
+  moveInstrumentation(headingRow, heading);
+  // heading is richtext, should use innerHTML to preserve potential HTML structure
+  heading.innerHTML = headingRow.children[0].innerHTML; // Access the actual cell content
+  sectionHeader.append(heading);
+
+  const subheading = document.createElement('p');
+  subheading.classList.add('aos-init', 'aos-animate');
+  moveInstrumentation(subheadingRow, subheading);
+  subheading.textContent = subheadingRow.children[0].textContent.trim(); // Access the actual cell content
+  sectionHeader.append(subheading);
+
+  container.append(sectionHeader);
+
+  // Cards Grid
+  const rowGrid = document.createElement('div');
+  rowGrid.classList.add('row', 'g-4', 'purpose-led-grid', 'pt-3');
+
+  cardRows.forEach((cardRow) => {
+    // Fixed schema for card rows, destructuring is correct.
+    const [cardLinkCell, imageMobileCell, imageDesktopCell, imageAltCell, descriptionCell] = [...cardRow.children];
+
+    const col = document.createElement('div');
+    col.classList.add('col-md-6', 'aos-init', 'aos-animate');
+
+    const cardLink = document.createElement('a');
+    const foundLink = cardLinkCell.querySelector('a');
+    if (foundLink) {
+      cardLink.href = foundLink.href;
+      cardLink.target = '_blank'; // Assuming target blank from original HTML
+    }
+    cardLink.classList.add('card-wrap');
+    moveInstrumentation(cardLinkCell, cardLink);
+
+    const cardImageDiv = document.createElement('div');
+    cardImageDiv.classList.add('card-image');
+
+    const pictureMobile = imageMobileCell.querySelector('picture');
+    const pictureDesktop = imageDesktopCell.querySelector('picture');
+    const imgAlt = imageAltCell.textContent.trim();
+
+    if (pictureMobile && pictureDesktop) {
+      const sourceMobile = document.createElement('source');
+      sourceMobile.media = '(max-width: 576px)';
+      // Ensure srcset is read from the source element within the picture
+      sourceMobile.srcset = pictureMobile.querySelector('source')?.srcset || pictureMobile.querySelector('img')?.src;
+
+      const imgDesktop = pictureDesktop.querySelector('img');
+      const optimizedPic = createOptimizedPicture(imgDesktop.src, imgAlt, false, [{ width: '750' }]);
+      optimizedPic.prepend(sourceMobile);
+      optimizedPic.querySelector('img').classList.add('img-fluid');
+      cardImageDiv.append(optimizedPic);
+    } else if (pictureDesktop) {
+      const imgDesktop = pictureDesktop.querySelector('img');
+      const optimizedPic = createOptimizedPicture(imgDesktop.src, imgAlt, false, [{ width: '750' }]);
+      optimizedPic.querySelector('img').classList.add('img-fluid');
+      cardImageDiv.append(optimizedPic);
+    } else if (pictureMobile) {
+      const imgMobile = pictureMobile.querySelector('img');
+      const optimizedPic = createOptimizedPicture(imgMobile.src, imgAlt, false, [{ width: '750' }]);
+      optimizedPic.querySelector('img').classList.add('img-fluid');
+      cardImageDiv.append(optimizedPic);
+    }
+
+    cardLink.append(cardImageDiv);
+
+    const cardTextDiv = document.createElement('div');
+    cardTextDiv.classList.add('card-text');
+
+    const descriptionP = document.createElement('p');
+    descriptionP.classList.add('desc');
+    moveInstrumentation(descriptionCell, descriptionP);
+    // description is richtext, should use innerHTML to preserve potential HTML structure
+    descriptionP.innerHTML = descriptionCell.innerHTML;
+    cardTextDiv.append(descriptionP);
+
+    cardLink.append(cardTextDiv);
+    col.append(cardLink);
+    rowGrid.append(col);
+  });
+
+  container.append(rowGrid);
+  section.append(container);
+
+  block.replaceChildren(section);
+}

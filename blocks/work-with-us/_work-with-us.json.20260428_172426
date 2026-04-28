@@ -17,15 +17,15 @@
       }
     },
     {
-      "title": "Work-With-Us-Item",
-      "id": "work-with-us-item",
+      "title": "Work-With-Us-Slide",
+      "id": "work-with-us-slide",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "work-with-us-item",
-              "name": "Work-With-Us-Item"
+              "model": "work-with-us-slide",
+              "name": "Work-With-Us-Slide"
             }
           }
         }
@@ -44,30 +44,30 @@
         },
         {
           "component": "container",
-          "item": "work-with-us-item",
+          "item": "work-with-us-slide",
           "label": "Slides",
           "name": "slides"
         }
       ]
     },
     {
-      "id": "work-with-us-item",
+      "id": "work-with-us-slide",
       "fields": [
         {
           "component": "reference",
-          "label": "Mobile Image (≤576px)",
+          "label": "Mobile Image (max-width: 576px)",
           "name": "imageMobile576",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Mobile Image (≤799px)",
+          "label": "Mobile Image (max-width: 799px)",
           "name": "imageMobile799",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Desktop Image (default \u003cimg\u003e src)",
+          "label": "Desktop Image",
           "name": "imageDesktop",
           "valueType": "string"
         },
@@ -102,7 +102,7 @@
     {
       "id": "work-with-us",
       "components": [
-        "work-with-us-item"
+        "work-with-us-slide"
       ]
     }
   ]

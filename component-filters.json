@@ -60,15 +60,17 @@
     "id": "footer-main",
     "components": [
       "social-link-item",
-      "footer-link-block",
-      "footer-link-item",
-      "footer-link-sub-item",
-      "secondary-nav-item"
+      "footer-menu-block",
+      "footer-menu-link",
+      "footer-menu-sublink",
+      "footer-menu-inner-sublink",
+      "footer-secondary-nav-link"
     ]
   },
   {
     "id": "latest-stories",
     "components": [
+      "twitter-feed-item",
       "story-item"
     ]
   },
@@ -76,14 +78,6 @@
     "id": "main-header",
     "components": [
       "navigation-item",
-      "contact-link-item",
-      "search-suggestions-keyword",
-      "search-suggestions-recommendation",
-      "mega-menu-about",
-      "mega-menu-what-we-do",
-      "mega-menu-investor-relations",
-      "mega-menu-newsroom",
-      "mega-menu-careers",
       "press-release-slide"
     ]
   },
@@ -127,7 +121,7 @@
   {
     "id": "work-with-us",
     "components": [
-      "work-with-us-slide"
+      "work-with-us-item"
     ]
   }
 ]
