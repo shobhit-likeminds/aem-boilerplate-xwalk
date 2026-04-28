@@ -58,11 +58,11 @@
   {
     "id": "footer-main",
     "components": [
-      "footer-social-link-item",
-      "footer-menu-group",
-      "footer-menu-link-item",
-      "footer-menu-sub-link-item",
-      "secondary-nav-item"
+      "footer-social-link",
+      "footer-column",
+      "footer-column-link",
+      "footer-sub-link",
+      "footer-secondary-link"
     ]
   },
   {
@@ -76,8 +76,8 @@
     "id": "main-header",
     "components": [
       "navigation-item",
-      "contact-link-item",
-      "press-release-item"
+      "press-release-item",
+      "icon-link-item"
     ]
   },
   {

@@ -159,7 +159,7 @@
           }
         },
         {
-          "title": "Footer Main",
+          "title": "Footer-Main",
           "id": "footer-main",
           "plugins": {
             "xwalk": {
@@ -168,82 +168,82 @@
                 "template": {
                   "filter": "footer-main",
                   "model": "footer-main",
-                  "name": "Footer Main"
+                  "name": "Footer-Main"
                 }
               }
             }
           }
         },
         {
-          "title": "Footer Social Link Item",
-          "id": "footer-social-link-item",
+          "title": "Footer-Social-Link",
+          "id": "footer-social-link",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "footer-social-link-item",
-                  "name": "Footer Social Link Item"
+                  "model": "footer-social-link",
+                  "name": "Footer-Social-Link"
                 }
               }
             }
           }
         },
         {
-          "title": "Footer Menu Group",
-          "id": "footer-menu-group",
+          "title": "Footer-Column",
+          "id": "footer-column",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "footer-menu-group",
-                  "name": "Footer Menu Group"
+                  "model": "footer-column",
+                  "name": "Footer-Column"
                 }
               }
             }
           }
         },
         {
-          "title": "Footer Menu Link Item",
-          "id": "footer-menu-link-item",
+          "title": "Footer-Column-Link",
+          "id": "footer-column-link",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "footer-menu-link-item",
-                  "name": "Footer Menu Link Item"
+                  "model": "footer-column-link",
+                  "name": "Footer-Column-Link"
                 }
               }
             }
           }
         },
         {
-          "title": "Footer Menu Sub Link Item",
-          "id": "footer-menu-sub-link-item",
+          "title": "Footer-Sub-Link",
+          "id": "footer-sub-link",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "footer-menu-sub-link-item",
-                  "name": "Footer Menu Sub Link Item"
+                  "model": "footer-sub-link",
+                  "name": "Footer-Sub-Link"
                 }
               }
             }
           }
         },
         {
-          "title": "Secondary Nav Item",
-          "id": "secondary-nav-item",
+          "title": "Footer-Secondary-Link",
+          "id": "footer-secondary-link",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "secondary-nav-item",
-                  "name": "Secondary Nav Item"
+                  "model": "footer-secondary-link",
+                  "name": "Footer-Secondary-Link"
                 }
               }
             }
@@ -357,21 +357,6 @@
           }
         },
         {
-          "title": "Contact Link Item",
-          "id": "contact-link-item",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block/item",
-                "template": {
-                  "model": "contact-link-item",
-                  "name": "Contact Link Item"
-                }
-              }
-            }
-          }
-        },
-        {
           "title": "Press Release Item",
           "id": "press-release-item",
           "plugins": {
@@ -381,6 +366,21 @@
                 "template": {
                   "model": "press-release-item",
                   "name": "Press Release Item"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Icon Link Item",
+          "id": "icon-link-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "icon-link-item",
+                  "name": "Icon Link Item"
                 }
               }
             }
@@ -526,7 +526,7 @@
           }
         },
         {
-          "title": "What We Do",
+          "title": "What-We-Do",
           "id": "what-we-do",
           "plugins": {
             "xwalk": {
@@ -535,14 +535,14 @@
                 "template": {
                   "filter": "what-we-do",
                   "model": "what-we-do",
-                  "name": "What We Do"
+                  "name": "What-We-Do"
                 }
               }
             }
           }
         },
         {
-          "title": "Business Vertical",
+          "title": "Business-Vertical-Item",
           "id": "business-vertical-item",
           "plugins": {
             "xwalk": {
@@ -550,7 +550,7 @@
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
                   "model": "business-vertical-item",
-                  "name": "Business Vertical"
+                  "name": "Business-Vertical-Item"
                 }
               }
             }
