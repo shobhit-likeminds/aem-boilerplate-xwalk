@@ -159,7 +159,7 @@
           }
         },
         {
-          "title": "Footer-Main",
+          "title": "Footer Main",
           "id": "footer-main",
           "plugins": {
             "xwalk": {
@@ -168,82 +168,67 @@
                 "template": {
                   "filter": "footer-main",
                   "model": "footer-main",
-                  "name": "Footer-Main"
+                  "name": "Footer Main"
                 }
               }
             }
           }
         },
         {
-          "title": "Social-Link-Item",
-          "id": "social-link-item",
+          "title": "Footer Social Link",
+          "id": "footer-social-link",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "social-link-item",
-                  "name": "Social-Link-Item"
+                  "model": "footer-social-link",
+                  "name": "Footer Social Link"
                 }
               }
             }
           }
         },
         {
-          "title": "Footer-Link-Block",
-          "id": "footer-link-block",
+          "title": "Footer Menu Block",
+          "id": "footer-menu-block",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "footer-link-block",
-                  "name": "Footer-Link-Block"
+                  "model": "footer-menu-block",
+                  "name": "Footer Menu Block"
                 }
               }
             }
           }
         },
         {
-          "title": "Footer-Link-Subitem",
-          "id": "footer-link-subitem",
+          "title": "Footer Menu Item",
+          "id": "footer-menu-item",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "footer-link-subitem",
-                  "name": "Footer-Link-Subitem"
+                  "model": "footer-menu-item",
+                  "name": "Footer Menu Item"
                 }
               }
             }
           }
         },
         {
-          "title": "Footer-Link-Subsubitem",
-          "id": "footer-link-subsubitem",
+          "title": "Footer Secondary Nav Item",
+          "id": "footer-secondary-nav-item",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "footer-link-subsubitem",
-                  "name": "Footer-Link-Subsubitem"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Secondary-Nav-Item",
-          "id": "secondary-nav-item",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block/item",
-                "template": {
-                  "model": "secondary-nav-item",
-                  "name": "Secondary-Nav-Item"
+                  "model": "footer-secondary-nav-item",
+                  "name": "Footer Secondary Nav Item"
                 }
               }
             }
@@ -342,6 +327,21 @@
           }
         },
         {
+          "title": "Press Release Slide",
+          "id": "press-release-slide",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "press-release-slide",
+                  "name": "Press Release Slide"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Icon Link Item",
           "id": "icon-link-item",
           "plugins": {
@@ -351,21 +351,6 @@
                 "template": {
                   "model": "icon-link-item",
                   "name": "Icon Link Item"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Press Release Item",
-          "id": "press-release-item",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block/item",
-                "template": {
-                  "model": "press-release-item",
-                  "name": "Press Release Item"
                 }
               }
             }

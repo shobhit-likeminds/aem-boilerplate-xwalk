@@ -1,7 +1,7 @@
 import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
-function transformNestedLists(rootUl) {
+function transformNestedLists(rootUl, hasInnerSubChildClass) {
   rootUl.querySelectorAll('li').forEach((li) => {
     const nested = li.querySelector(':scope > ul');
     const anchor = li.querySelector(':scope > a');
@@ -21,7 +21,7 @@ function transformNestedLists(rootUl) {
     if (nested) {
       nested.remove();
       const subWrap = document.createElement('div');
-      subWrap.classList.add('has-footer-sub-child'); // Use original HTML class
+      subWrap.classList.add(hasInnerSubChildClass);
       subWrap.append(nested);
       li.append(subWrap);
 
@@ -34,9 +34,7 @@ function transformNestedLists(rootUl) {
           subWrap.classList.toggle('active');
         });
       }
-
-      // Recursively transform inner nested lists
-      transformNestedLists(nested);
+      transformNestedLists(nested, hasInnerSubChildClass);
     }
   });
 }
@@ -44,227 +42,253 @@ function transformNestedLists(rootUl) {
 export default function decorate(block) {
   const children = [...block.children];
 
-  const logoRow = children[0];
-  const logoLinkRow = children[1];
-  const copyrightTextRow = children[2];
+  // Root fields based on BlockJson model
+  const [logoImageRow, logoLinkRow, copyrightTextRow, ...itemRows] = children;
 
-  const itemRows = children.slice(3);
+  const socialLinkRows = itemRows.filter(
+    (row) => row.children.length === 2 && row.querySelector('div:first-child a') && row.querySelector('div:last-child ul'),
+  );
+  const menuBlockRows = itemRows.filter(
+    (row) => row.children.length === 3 && row.querySelector('div:first-child p') && row.querySelector('div:nth-child(2) a') && row.querySelector('div:last-child p'),
+  );
+  const menuItemRows = itemRows.filter(
+    (row) => row.children.length === 3 && row.querySelector('div:first-child p') && row.querySelector('div:nth-child(2) a') && row.querySelector('div:last-child ul'),
+  );
+  const secondaryNavRows = itemRows.filter(
+    (row) => row.children.length === 2 && row.querySelector('div:first-child p') && row.querySelector('div:last-child a'),
+  );
 
-  // Filter item rows based on their structure and content, matching BlockJson models
-  const socialLinkItems = itemRows.filter((row) => row.children.length === 3 && row.querySelector('div:first-child')?.textContent.trim() && row.querySelector('div:nth-child(2) a') && row.querySelector('div:nth-child(3) ul'));
-  const footerLinkBlocks = itemRows.filter((row) => row.children.length === 3 && row.querySelector('div:first-child')?.textContent.trim() && row.querySelector('div:nth-child(2) a') && row.querySelector('div:last-child')?.textContent.trim() === 'Links value');
-  const footerLinkSubitems = itemRows.filter((row) => row.children.length === 3 && row.querySelector('div:first-child')?.textContent.trim() && row.querySelector('div:nth-child(2) a') && row.querySelector('div:last-child ul'));
-  const secondaryNavItems = itemRows.filter((row) => row.children.length === 2 && row.querySelector('div:first-child')?.textContent.trim() && row.querySelector('div:nth-child(2) a'));
+  const root = document.createElement('div');
+  root.classList.add('container');
 
-  const container = document.createElement('div');
-  container.classList.add('container');
+  // Footer Header Section
+  const footerHeaderRow = document.createElement('div');
+  footerHeaderRow.classList.add('row', 'footer-header');
 
-  // Footer Header
-  const footerHeader = document.createElement('div');
-  footerHeader.classList.add('row', 'footer-header');
+  const logoWrapper = document.createElement('div');
+  logoWrapper.classList.add('col-md-6', 'col-12', 'justify-content-between', 'd-flex');
 
-  const logoCol = document.createElement('div');
-  logoCol.classList.add('col-md-6', 'col-12', 'justify-content-between', 'd-flex');
   const logoDiv = document.createElement('div');
   logoDiv.classList.add('logo');
-  const logoLink = document.createElement('a');
-  const logoAnchor = logoLinkRow.querySelector('a');
-  if (logoAnchor) {
-    logoLink.href = logoAnchor.href;
-    moveInstrumentation(logoLinkRow, logoLink);
-  }
 
-  const logoPicture = logoRow.querySelector('picture');
-  if (logoPicture) {
-    const img = logoPicture.querySelector('img');
+  const logoAnchor = document.createElement('a');
+  const foundLogoLink = logoLinkRow.querySelector('a');
+  if (foundLogoLink) {
+    logoAnchor.href = foundLogoLink.href;
+  }
+  moveInstrumentation(logoLinkRow, logoAnchor);
+
+  const picture = logoImageRow.querySelector('picture');
+  if (picture) {
+    const img = picture.querySelector('img');
     if (img) {
       const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '200' }]);
       moveInstrumentation(img, optimizedPic.querySelector('img'));
-      logoLink.append(optimizedPic);
+      logoAnchor.append(optimizedPic);
     }
   }
-  logoDiv.append(logoLink);
-  logoCol.append(logoDiv);
-  footerHeader.append(logoCol);
+  moveInstrumentation(logoImageRow, logoAnchor);
 
-  const socialCol = document.createElement('div');
-  socialCol.classList.add('col-md-6', 'col-12', 'footer-social-wrap-center');
-  const socialWrap = document.createElement('ul');
-  socialWrap.classList.add('social-wrap');
+  logoDiv.append(logoAnchor);
+  logoWrapper.append(logoDiv);
+  footerHeaderRow.append(logoWrapper);
 
-  socialLinkItems.forEach((row) => {
-    const [platformCell, linkCell, hierarchyCell] = [...row.children]; // FIXED: Destructuring for fixed schema
+  const socialWrapCenter = document.createElement('div');
+  socialWrapCenter.classList.add('col-md-6', 'col-12', 'footer-social-wrap-center');
+
+  const socialUl = document.createElement('ul');
+  socialUl.classList.add('social-wrap');
+
+  socialLinkRows.forEach((row) => {
+    const [socialLinkCell, hierarchyTreeCell] = [...row.children]; // Fixed schema for social links
+
     const li = document.createElement('li');
-    const socialAnchor = document.createElement('a');
-    const foundLink = linkCell?.querySelector('a');
+    const anchor = document.createElement('a');
+    const foundLink = socialLinkCell.querySelector('a');
     if (foundLink) {
-      socialAnchor.href = foundLink.href;
-      socialAnchor.target = '_blank';
-      moveInstrumentation(row, socialAnchor);
+      anchor.href = foundLink.href;
+      anchor.target = '_blank'; // Assuming social links open in new tab
     }
+    moveInstrumentation(socialLinkCell, anchor);
 
-    // SVG icon from ORIGINAL HTML
-    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    svg.setAttribute('width', '30');
-    svg.setAttribute('height', '30');
-    svg.setAttribute('viewBox', '0 0 40 41');
-    const image = document.createElementNS('http://www.w3.org/2000/svg', 'image');
-    // The original HTML has data:stripped, which implies the actual SVG data is not in the HTML.
-    // For EDS, we should either embed the full SVG or use a CSS background-image.
-    // For now, keeping data:stripped as a placeholder, but this would need to be replaced
-    // with actual SVG content or a proper image path if available.
-    image.setAttribute('xlink:href', 'data:stripped');
-    image.setAttribute('x', '0');
-    image.setAttribute('y', '0');
-    image.setAttribute('width', '30');
-    image.setAttribute('height', '30');
-    svg.append(image);
-    socialAnchor.append(svg);
-
-    const platformName = platformCell?.textContent.trim().toLowerCase();
-    if (platformName) {
-      li.classList.add(platformName.replace(/\s/g, ''));
+    // Read the hierarchy-tree richtext content for the SVG icon
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = hierarchyTreeCell.innerHTML;
+    const svgImage = tempDiv.querySelector('image');
+    if (svgImage) {
+      anchor.innerHTML = `<svg width="30" height="30" viewBox="0 0 40 41" xmlns:xlink="http://www.w3.org/1999/xlink">${svgImage.outerHTML}</svg>`;
+    } else {
+      // Fallback if no SVG found in richtext, or if it's just text
+      anchor.textContent = socialLinkCell?.textContent.trim() || '';
     }
-    li.append(socialAnchor);
-    socialWrap.append(li);
+    moveInstrumentation(hierarchyTreeCell, anchor); // Move instrumentation from richtext cell to anchor
+
+    // Apply social icon classes from ORIGINAL HTML based on link content or a specific class
+    // This part assumes the original HTML has classes like 'fb', 'tw', etc. on the <li>
+    // For now, we'll try to infer from the link or add a generic class.
+    // A more robust solution might involve a dedicated field for icon class.
+    const linkText = foundLink?.href || '';
+    if (linkText.includes('facebook')) li.classList.add('fb');
+    else if (linkText.includes('twitter')) li.classList.add('tw');
+    else if (linkText.includes('instagram')) li.classList.add('inst');
+    else if (linkText.includes('youtube')) li.classList.add('yt');
+    else if (linkText.includes('linkedin')) li.classList.add('in');
+    // Add a generic class if no specific social media is detected
+    if (!li.classList.length) li.classList.add('social-item');
+
+    li.append(anchor);
+    moveInstrumentation(row, li);
+    socialUl.append(li);
   });
+  socialWrapCenter.append(socialUl);
+  footerHeaderRow.append(socialWrapCenter);
+  root.append(footerHeaderRow);
 
-  socialCol.append(socialWrap);
-  footerHeader.append(socialCol);
-  container.append(footerHeader);
+  // Footer Menu Box Section
+  const footerMenuBoxRow = document.createElement('div');
+  footerMenuBoxRow.classList.add('row', 'footer-menu-box');
 
-  // Footer Menu Box
-  const footerMenuBox = document.createElement('div');
-  footerMenuBox.classList.add('row', 'footer-menu-box');
   const footerMenuCol = document.createElement('div');
   footerMenuCol.classList.add('col');
-  const footerMenu = document.createElement('div');
-  footerMenu.classList.add('footer-menu');
 
-  const footerLinkBlockMap = new Map();
-  footerLinkBlocks.forEach((row) => {
-    const [blockLabelCell, blockLinkCell, linksCell] = [...row.children]; // FIXED: Destructuring for fixed schema
+  const footerMenuDiv = document.createElement('div');
+  footerMenuDiv.classList.add('footer-menu');
 
-    const blockLabel = blockLabelCell?.textContent.trim();
-    const blockLinkHref = blockLinkCell?.querySelector('a')?.href;
+  menuBlockRows.forEach((row) => {
+    const [blockTitleCell, blockTitleLinkCell, menuItemsContainerCell] = [...row.children]; // Fixed schema for menu blocks
 
     const linkBlocksDiv = document.createElement('div');
     linkBlocksDiv.classList.add('link-blocks');
+
     const headDiv = document.createElement('div');
     headDiv.classList.add('head');
+
     const span = document.createElement('span');
-    const anchor = document.createElement('a');
-    if (blockLinkHref) {
-      anchor.href = blockLinkHref;
+    const titleAnchor = document.createElement('a');
+    const foundTitleLink = blockTitleLinkCell.querySelector('a');
+    if (foundTitleLink) {
+      titleAnchor.href = foundTitleLink.href;
     }
-    anchor.textContent = blockLabel;
-    moveInstrumentation(row, anchor);
-    span.append(anchor);
-    const small = document.createElement('small');
-    small.setAttribute('data-once', 'footerMobileInner');
-    span.append(small);
+    titleAnchor.textContent = blockTitleCell?.textContent.trim() || '';
+    moveInstrumentation(blockTitleCell, titleAnchor);
+    moveInstrumentation(blockTitleLinkCell, titleAnchor);
+    span.append(titleAnchor);
     headDiv.append(span);
+
+    const footerInnerList = document.createElement('ul');
+    footerInnerList.classList.add('footer-inner-list');
+
+    // Filter menu item rows that logically belong to this menu block
+    // This is a heuristic, assuming menu items directly follow their menu block in the block.children
+    // A more robust solution would be to use a data attribute or a specific structure.
+    const currentMenuBlockItems = menuItemRows.filter(
+      (itemRow) => itemRows.indexOf(itemRow) > itemRows.indexOf(row)
+        && itemRows.indexOf(itemRow) < itemRows.findIndex((r, i) => i > itemRows.indexOf(row) && (menuBlockRows.includes(r) || secondaryNavRows.includes(r) || socialLinkRows.includes(r))),
+    );
+
+    currentMenuBlockItems.forEach((itemRow) => {
+      const [labelCell, linkCell, hierarchyTreeCell] = [...itemRow.children]; // Fixed schema for menu items
+
+      const li = document.createElement('li');
+      const foundLink = linkCell.querySelector('a');
+      let rootEl;
+      if (foundLink) {
+        rootEl = document.createElement('a');
+        rootEl.href = foundLink.href;
+      } else {
+        rootEl = document.createElement('span');
+      }
+      rootEl.textContent = labelCell?.textContent.trim() || '';
+      moveInstrumentation(labelCell, rootEl);
+      moveInstrumentation(linkCell, rootEl);
+      li.appendChild(rootEl);
+
+      const hierarchyRootTempDiv = document.createElement('div');
+      hierarchyRootTempDiv.innerHTML = hierarchyTreeCell.innerHTML;
+      const hierarchyRoot = hierarchyRootTempDiv.querySelector('ul');
+
+      if (hierarchyRoot) {
+        // Apply classes from ORIGINAL HTML to nested elements
+        hierarchyRoot.querySelectorAll('a').forEach(a => {
+          // No specific classes in original HTML for nested anchors, but good to keep in mind
+        });
+        hierarchyRoot.querySelectorAll('ul').forEach(ul => ul.classList.add('has-footer-inner-sub-child'));
+        hierarchyRoot.querySelectorAll('li').forEach(liItem => {
+          // No specific classes in original HTML for nested li, but good to keep in mind
+        });
+
+        const wrapper = document.createElement('div');
+        wrapper.classList.add('has-footer-sub-child');
+        moveInstrumentation(hierarchyTreeCell, wrapper); // Move instrumentation from richtext cell to wrapper
+        while (hierarchyRootTempDiv.firstChild) {
+          wrapper.append(hierarchyRootTempDiv.firstChild);
+        }
+
+        rootEl.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          wrapper.classList.toggle('active');
+          li.classList.toggle('active');
+        });
+        li.appendChild(wrapper);
+        transformNestedLists(hierarchyRoot, 'has-footer-inner-sub-child');
+      }
+      footerInnerList.append(li);
+      moveInstrumentation(itemRow, li);
+    });
+
+    headDiv.append(footerInnerList);
     linkBlocksDiv.append(headDiv);
-
-    const ul = document.createElement('ul');
-    ul.classList.add('footer-inner-list');
-    headDiv.append(ul);
-    footerLinkBlockMap.set(blockLabel, ul);
-    footerMenu.append(linkBlocksDiv);
+    footerMenuDiv.append(linkBlocksDiv);
+    moveInstrumentation(row, linkBlocksDiv);
   });
 
-  footerLinkSubitems.forEach((row) => {
-    const [labelCell, linkCell, hierarchyCell] = [...row.children]; // FIXED: Destructuring for fixed schema
+  footerMenuCol.append(footerMenuDiv);
+  footerMenuBoxRow.append(footerMenuCol);
+  root.append(footerMenuBoxRow);
 
-    const label = labelCell?.textContent.trim();
-    const linkHref = linkCell?.querySelector('a')?.href;
-
-    const li = document.createElement('li');
-    const anchor = document.createElement('a');
-    if (linkHref) {
-      anchor.href = linkHref;
-    }
-    anchor.textContent = label;
-    moveInstrumentation(row, anchor);
-    li.append(anchor);
-
-    const hierarchyRootTempDiv = document.createElement('div');
-    moveInstrumentation(hierarchyCell, hierarchyRootTempDiv); // Move instrumentation for the richtext cell
-    hierarchyRootTempDiv.innerHTML = hierarchyCell?.innerHTML; // FIXED: Use innerHTML for richtext
-
-    const hierarchyRootUl = hierarchyRootTempDiv.querySelector('ul');
-    if (hierarchyRootUl) {
-      const span = document.createElement('span');
-      span.setAttribute('data-once', 'footerClickEvent');
-      // FIXED: Inline SVG from original HTML
-      span.innerHTML = '<svg viewBox="-23.5 -23.5 122.80 122.80" fill="#000000" stroke="#000000" stroke-width="4.851456000000001"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="0.30321600000000004"></g><g id="SVGRepo_iconCarrier"> <g id="Group_65" data-name="Group 65" transform="translate(-831.568 -384.448)"> <path id="Path_57" data-name="Path 57" d="M833.068,460.252a1.5,1.5,0,0,1-1.061-2.561l33.557-33.56a2.53,2.53,0,0,0,0-3.564l-33.557-33.558a1.5,1.5,0,0,1,2.122-2.121l33.556,33.558a5.53,5.53,0,0,1,0,7.807l-33.557,33.56A1.5,1.5,0,0,1,833.068,460.252Z" fill="#030408"></path> </g> </g></svg>';
-      li.append(span);
-
-      const subWrap = document.createElement('div');
-      subWrap.classList.add('has-footer-sub-child');
-      subWrap.setAttribute('data-once', 'hideFooterSubChild');
-      subWrap.append(hierarchyRootUl); // Append the actual UL, not the temp div
-      li.append(subWrap);
-      transformNestedLists(hierarchyRootUl); // Transform the nested UL
-
-      span.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        li.classList.toggle('active');
-        subWrap.classList.toggle('active');
-      });
-    }
-
-    // Find the correct parent ul for this subitem
-    // This logic needs to be robust. Assuming `footerLinkSubitems` are children of `footerLinkBlocks`.
-    // The current map only stores the first block's UL. This needs to be improved if subitems
-    // can belong to specific blocks. For now, appending to the first available UL.
-    let parentUl = null;
-    if (footerLinkBlockMap.size > 0) {
-      parentUl = footerLinkBlockMap.values().next().value;
-    }
-    if (parentUl) {
-      parentUl.append(li);
-    }
-  });
-
-  footerMenuCol.append(footerMenu);
-  footerMenuBox.append(footerMenuCol);
-  container.append(footerMenuBox);
-
-  // Copyright Wrap
-  const copyrightWrap = document.createElement('div');
-  copyrightWrap.classList.add('row', 'align-items-lg-end', 'copyright-wrap');
+  // Copyright Section
+  const copyrightWrapRow = document.createElement('div');
+  copyrightWrapRow.classList.add('row', 'align-items-lg-end', 'copyright-wrap');
 
   const secondaryNavCol = document.createElement('div');
   secondaryNavCol.classList.add('col-12', 'col-lg-6');
+
   const secondaryNavUl = document.createElement('ul');
   secondaryNavUl.classList.add('secondary-nav');
 
-  secondaryNavItems.forEach((row) => {
-    const [labelCell, linkCell] = [...row.children]; // FIXED: Destructuring for fixed schema
+  secondaryNavRows.forEach((row) => {
+    const [labelCell, linkCell] = [...row.children]; // Fixed schema for secondary nav items
 
     const li = document.createElement('li');
     const anchor = document.createElement('a');
-    const foundLink = linkCell?.querySelector('a');
+    const foundLink = linkCell.querySelector('a');
     if (foundLink) {
       anchor.href = foundLink.href;
     }
-    anchor.textContent = labelCell?.textContent.trim();
-    moveInstrumentation(row, anchor);
+    anchor.textContent = labelCell?.textContent.trim() || '';
+    moveInstrumentation(labelCell, anchor);
+    moveInstrumentation(linkCell, anchor);
     li.append(anchor);
     secondaryNavUl.append(li);
+    moveInstrumentation(row, li);
   });
-
   secondaryNavCol.append(secondaryNavUl);
-  copyrightWrap.append(secondaryNavCol);
+  copyrightWrapRow.append(secondaryNavCol);
 
   const copyrightTextCol = document.createElement('div');
   copyrightTextCol.classList.add('col-12', 'col-lg-6', 'copyright-text');
+  copyrightTextCol.textContent = copyrightTextRow?.textContent.trim() || '';
   moveInstrumentation(copyrightTextRow, copyrightTextCol);
-  copyrightTextCol.innerHTML = copyrightTextRow.innerHTML; // FIXED: Use innerHTML for richtext
-  copyrightWrap.append(copyrightTextCol);
-  container.append(copyrightWrap);
+  copyrightWrapRow.append(copyrightTextCol);
 
-  block.replaceChildren(container);
+  root.append(copyrightWrapRow);
+  block.replaceChildren(root); // Use replaceChildren to atomically update the block content
+
+  // Optimize images
+  block.querySelectorAll('picture > img').forEach((img) => {
+    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '200' }]);
+    moveInstrumentation(img, optimizedPic.querySelector('img'));
+    img.closest('picture').replaceWith(optimizedPic);
+  });
 }
