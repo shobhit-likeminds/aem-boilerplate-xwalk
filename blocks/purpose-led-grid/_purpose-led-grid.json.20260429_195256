@@ -1,7 +1,7 @@
 {
   "definitions": [
     {
-      "title": "Purpose-Led Grid",
+      "title": "Purpose-Led-Grid",
       "id": "purpose-led-grid",
       "plugins": {
         "xwalk": {
@@ -10,22 +10,22 @@
             "template": {
               "filter": "purpose-led-grid",
               "model": "purpose-led-grid",
-              "name": "Purpose-Led Grid"
+              "name": "Purpose-Led-Grid"
             }
           }
         }
       }
     },
     {
-      "title": "Purpose-Led Grid Card",
-      "id": "purpose-led-grid-card",
+      "title": "Purpose-Card",
+      "id": "purpose-card",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "purpose-led-grid-card",
-              "name": "Purpose-Led Grid Card"
+              "model": "purpose-card",
+              "name": "Purpose-Card"
             }
           }
         }
@@ -38,44 +38,39 @@
       "fields": [
         {
           "component": "container",
-          "item": "purpose-led-grid-card",
-          "label": "Cards",
+          "item": "purpose-card",
+          "label": "Purpose Cards",
           "name": "cards"
         }
       ]
     },
     {
-      "id": "purpose-led-grid-card",
+      "id": "purpose-card",
       "fields": [
         {
           "component": "aem-content",
           "label": "Card Link",
-          "name": "cardLink",
-          "valueType": "string"
-        },
-        {
-          "component": "reference",
-          "label": "Card Image (Mobile)",
-          "name": "imageMobile",
-          "valueType": "string"
+          "name": "cardLink"
         },
         {
           "component": "reference",
           "label": "Card Image (Desktop)",
-          "name": "imageDesktop",
-          "valueType": "string"
+          "name": "imageDesktop"
+        },
+        {
+          "component": "reference",
+          "label": "Card Image (Mobile)",
+          "name": "imageMobile"
         },
         {
           "component": "text",
-          "label": "Image Alt Text",
-          "name": "imageAlt",
-          "valueType": "string"
+          "label": "Card Image Alt Text",
+          "name": "imageAlt"
         },
         {
           "component": "richtext",
           "label": "Card Description",
-          "name": "description",
-          "valueType": "string"
+          "name": "description"
         }
       ]
     }
@@ -84,7 +79,7 @@
     {
       "id": "purpose-led-grid",
       "components": [
-        "purpose-led-grid-card"
+        "purpose-card"
       ]
     }
   ]

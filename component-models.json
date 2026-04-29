@@ -219,12 +219,14 @@
       {
         "component": "reference",
         "label": "Logo Image",
-        "name": "logo"
+        "name": "logo",
+        "valueType": "string"
       },
       {
         "component": "aem-content",
         "label": "Logo Link",
-        "name": "logoLink"
+        "name": "logoLink",
+        "valueType": "string"
       },
       {
         "component": "container",
@@ -240,14 +242,15 @@
       },
       {
         "component": "container",
-        "item": "secondary-nav-item",
+        "item": "footer-secondary-nav-item",
         "label": "Secondary Nav Links",
         "name": "secondaryNavLinks"
       },
       {
-        "component": "text",
+        "component": "richtext",
         "label": "Copyright Text",
-        "name": "copyrightText"
+        "name": "copyrightText",
+        "valueType": "string"
       }
     ]
   },
@@ -256,13 +259,15 @@
     "fields": [
       {
         "component": "text",
-        "label": "Platform (e.g. Facebook, Twitter, etc.)",
-        "name": "platform"
+        "label": "Platform",
+        "name": "platform",
+        "valueType": "string"
       },
       {
         "component": "aem-content",
         "label": "Social Link URL",
-        "name": "link"
+        "name": "link",
+        "valueType": "string"
       },
       {
         "component": "richtext",
@@ -278,12 +283,14 @@
       {
         "component": "text",
         "label": "Menu Block Title",
-        "name": "blockTitle"
+        "name": "blockTitle",
+        "valueType": "string"
       },
       {
         "component": "aem-content",
         "label": "Menu Block Title Link",
-        "name": "blockTitleLink"
+        "name": "blockTitleLink",
+        "valueType": "string"
       },
       {
         "component": "container",
@@ -299,53 +306,54 @@
       {
         "component": "text",
         "label": "Menu Item Label",
-        "name": "label"
+        "name": "label",
+        "valueType": "string"
       },
       {
         "component": "aem-content",
         "label": "Menu Item Link",
-        "name": "link"
+        "name": "link",
+        "valueType": "string"
       },
       {
         "component": "richtext",
-        "label": "Submenu Hierarchy",
-        "name": "hierarchy-tree"
-      },
-      {
-        "component": "container",
-        "item": "footer-sub-menu-item",
-        "label": "Sub Menu Items",
-        "name": "subMenuItems"
+        "label": "Menu Hierarchy (Submenus)",
+        "name": "hierarchy-tree",
+        "valueType": "string"
       }
     ]
   },
   {
-    "id": "footer-sub-menu-item",
+    "id": "footer-submenu-item",
     "fields": [
       {
         "component": "text",
-        "label": "Sub Menu Item Label",
-        "name": "label"
+        "label": "Submenu Item Label",
+        "name": "label",
+        "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "Sub Menu Item Link",
-        "name": "link"
+        "label": "Submenu Item Link",
+        "name": "link",
+        "valueType": "string"
       }
     ]
   },
   {
-    "id": "secondary-nav-item",
+    "id": "footer-secondary-nav-item",
     "fields": [
       {
         "component": "text",
         "label": "Secondary Nav Label",
-        "name": "label"
+        "name": "label",
+        "valueType": "string"
       },
       {
         "component": "aem-content",
         "label": "Secondary Nav Link",
-        "name": "link"
+        "name": "link",
+        "valueType": "string"
       }
     ]
   },
@@ -677,19 +685,19 @@
       },
       {
         "component": "reference",
-        "label": "Image Desktop",
+        "label": "Card Image (Desktop)",
         "name": "imageDesktop",
         "valueType": "string"
       },
       {
         "component": "reference",
-        "label": "Image Mobile",
+        "label": "Card Image (Mobile)",
         "name": "imageMobile",
         "valueType": "string"
       },
       {
         "component": "richtext",
-        "label": "Description",
+        "label": "Card Description",
         "name": "description",
         "valueType": "string"
       }
@@ -700,39 +708,44 @@
     "fields": [
       {
         "component": "container",
-        "item": "purpose-card",
-        "label": "Purpose Cards",
+        "item": "purpose-led-grid-card",
+        "label": "Cards",
         "name": "cards"
       }
     ]
   },
   {
-    "id": "purpose-card",
+    "id": "purpose-led-grid-card",
     "fields": [
       {
         "component": "aem-content",
         "label": "Card Link",
-        "name": "cardLink"
-      },
-      {
-        "component": "reference",
-        "label": "Card Image (Desktop)",
-        "name": "imageDesktop"
+        "name": "cardLink",
+        "valueType": "string"
       },
       {
         "component": "reference",
         "label": "Card Image (Mobile)",
-        "name": "imageMobile"
+        "name": "imageMobile",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Card Image (Desktop)",
+        "name": "imageDesktop",
+        "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Card Image Alt Text",
-        "name": "imageAlt"
+        "label": "Image Alt Text",
+        "name": "imageAlt",
+        "valueType": "string"
       },
       {
         "component": "richtext",
         "label": "Card Description",
-        "name": "description"
+        "name": "description",
+        "valueType": "string"
       }
     ]
   },
@@ -782,7 +795,7 @@
       {
         "component": "container",
         "item": "spirit-of-rise-card",
-        "label": "Spirit of Rise Cards",
+        "label": "Cards",
         "name": "cards"
       }
     ]
@@ -803,15 +816,15 @@
         "valueType": "string"
       },
       {
-        "component": "aem-content",
-        "label": "Card Link",
-        "name": "link",
+        "component": "richtext",
+        "label": "Card Text",
+        "name": "cardText",
         "valueType": "string"
       },
       {
-        "component": "richtext",
-        "label": "Card Description",
-        "name": "description",
+        "component": "aem-content",
+        "label": "Card Link",
+        "name": "cardLink",
         "valueType": "string"
       }
     ]

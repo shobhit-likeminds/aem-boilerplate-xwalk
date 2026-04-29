@@ -3,20 +3,19 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
   const cardItems = [...block.children];
-  const wrapper = document.createElement('div');
-  wrapper.classList.add('performace-driven-cards');
+  const cardsContainer = document.createElement('div');
+  cardsContainer.classList.add('performace-driven-cards');
 
   cardItems.forEach((row) => {
     const [cardLinkCell, imageDesktopCell, imageMobileCell, descriptionCell] = [...row.children];
 
-    const linkEl = document.createElement('a');
-    linkEl.classList.add('performace-driven-cards-link');
+    const cardLink = document.createElement('a');
+    cardLink.classList.add('performace-driven-cards-link');
     const foundLink = cardLinkCell.querySelector('a');
     if (foundLink) {
-      linkEl.href = foundLink.href;
-      linkEl.target = '_blank'; // From original HTML
+      cardLink.href = foundLink.href;
+      cardLink.target = '_blank'; // Assuming target="_blank" from original HTML
     }
-    moveInstrumentation(cardLinkCell, linkEl);
 
     const cardWrapper = document.createElement('div');
     cardWrapper.classList.add('performace-driven-card-wrapper');
@@ -25,40 +24,40 @@ export default function decorate(block) {
     cardImage.classList.add('card-image');
 
     const picture = document.createElement('picture');
-    const source = document.createElement('source');
-    source.media = '(max-width: 576px)';
 
+    // Mobile image source
     const mobileImg = imageMobileCell.querySelector('img');
     if (mobileImg) {
-      source.srcset = mobileImg.src;
+      const sourceMobile = document.createElement('source');
+      sourceMobile.media = '(max-width: 576px)';
+      sourceMobile.srcset = mobileImg.src;
+      picture.append(sourceMobile);
     }
-    picture.appendChild(source);
 
+    // Desktop image
     const desktopImg = imageDesktopCell.querySelector('img');
     if (desktopImg) {
-      const img = createOptimizedPicture(desktopImg.src, desktopImg.alt, false, [{ width: '750' }]);
-      moveInstrumentation(desktopImg, img.querySelector('img'));
-      picture.appendChild(img.querySelector('img'));
+      const optimizedPic = createOptimizedPicture(desktopImg.src, desktopImg.alt, false, [{ width: '750' }]);
+      const imgElement = optimizedPic.querySelector('img');
+      moveInstrumentation(desktopImg, imgElement); // Move instrumentation from original img to new img
+      picture.append(imgElement);
     }
 
-    cardImage.appendChild(picture);
+    cardImage.append(picture);
 
     const homeBoxCard = document.createElement('div');
     homeBoxCard.classList.add('performace-driven-home-box-card');
 
-    const descP = document.createElement('p');
-    descP.classList.add('desc');
-    if (descriptionCell) {
-      descP.innerHTML = descriptionCell.innerHTML;
-    }
-    moveInstrumentation(descriptionCell, descP);
+    const description = document.createElement('p');
+    description.classList.add('desc');
+    description.innerHTML = descriptionCell.innerHTML;
 
-    homeBoxCard.appendChild(descP);
-    cardWrapper.appendChild(cardImage);
-    cardWrapper.appendChild(homeBoxCard);
-    linkEl.appendChild(cardWrapper);
-    wrapper.appendChild(linkEl);
+    homeBoxCard.append(description);
+    cardWrapper.append(cardImage, homeBoxCard);
+    moveInstrumentation(row, cardLink); // Move instrumentation from original row to the new link element
+    cardLink.append(cardWrapper);
+    cardsContainer.append(cardLink);
   });
 
-  block.replaceChildren(wrapper);
+  block.replaceChildren(cardsContainer);
 }

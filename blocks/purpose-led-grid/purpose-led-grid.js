@@ -8,13 +8,14 @@ export default function decorate(block) {
   gridContainer.classList.add('row', 'g-4', 'purpose-led-grid', 'pt-3');
 
   cards.forEach((cardRow) => {
-    const [cardLinkCell, imageDesktopCell, imageMobileCell, imageAltCell, descriptionCell] = [...cardRow.children];
+    const [cardLinkCell, imageMobileCell, imageDesktopCell, imageAltCell, descriptionCell] = [...cardRow.children];
 
     const colDiv = document.createElement('div');
     colDiv.classList.add('col-md-6', 'aos-init', 'aos-animate');
     colDiv.setAttribute('data-aos-easing', 'ease-in-out');
     colDiv.setAttribute('data-aos', 'fade-up');
     colDiv.setAttribute('data-aos-delay', '700');
+    moveInstrumentation(cardRow, colDiv); // Move instrumentation for the entire row to the colDiv
 
     const cardLink = cardLinkCell.querySelector('a');
     const anchor = document.createElement('a');
@@ -23,51 +24,46 @@ export default function decorate(block) {
       anchor.target = '_blank'; // From original HTML
     }
     anchor.classList.add('card-wrap');
-    moveInstrumentation(cardLinkCell, anchor);
+    moveInstrumentation(cardLinkCell, anchor); // Move instrumentation for the link cell to the anchor
 
     const cardImageDiv = document.createElement('div');
     cardImageDiv.classList.add('card-image');
 
-    const picture = document.createElement('picture');
-    const desktopImg = imageDesktopCell.querySelector('img');
-    const mobileImg = imageMobileCell.querySelector('img');
-    const altText = imageAltCell.textContent.trim();
+    const pictureMobile = imageMobileCell.querySelector('picture');
+    const pictureDesktop = imageDesktopCell.querySelector('picture');
+    const imageAltText = imageAltCell.textContent.trim();
 
-    if (mobileImg) {
+    if (pictureMobile && pictureDesktop) {
       const sourceMobile = document.createElement('source');
       sourceMobile.media = '(max-width: 576px)';
-      sourceMobile.srcset = mobileImg.src;
-      picture.append(sourceMobile);
-    }
+      sourceMobile.srcset = pictureMobile.querySelector('img').src;
 
-    if (desktopImg) {
-      const img = createOptimizedPicture(desktopImg.src, altText, false, [{ width: '750' }]);
-      img.querySelector('img').classList.add('img-fluid');
-      picture.append(img.querySelector('img'));
-      moveInstrumentation(imageDesktopCell, img.querySelector('img'));
-    } else if (mobileImg) {
-      // If only mobile image is provided, use it as fallback for desktop
-      const img = createOptimizedPicture(mobileImg.src, altText, false, [{ width: '750' }]);
-      img.querySelector('img').classList.add('img-fluid');
-      picture.append(img.querySelector('img'));
-      moveInstrumentation(imageMobileCell, img.querySelector('img'));
-    }
+      const imgDesktop = pictureDesktop.querySelector('img');
+      const optimizedPic = createOptimizedPicture(imgDesktop.src, imageAltText, false, [{ width: '750' }]);
+      const img = optimizedPic.querySelector('img');
+      img.classList.add('img-fluid'); // From original HTML
 
-    cardImageDiv.append(picture);
-    anchor.append(cardImageDiv);
+      const pictureElement = document.createElement('picture');
+      pictureElement.append(sourceMobile, img); // Append mobile source and desktop img directly
+      // If optimizedPic has a source for desktop, it will be handled by createOptimizedPicture
+      // No need to append optimizedPic.querySelector('source') explicitly if img is already from optimizedPic
+
+      cardImageDiv.append(pictureElement);
+      // moveInstrumentation(imageMobileCell, pictureElement); // Redundant, instrumentation for row is on colDiv
+      // moveInstrumentation(imageDesktopCell, pictureElement); // Redundant, instrumentation for row is on colDiv
+    }
 
     const cardTextDiv = document.createElement('div');
     cardTextDiv.classList.add('card-text');
 
-    const descriptionP = document.createElement('p');
-    descriptionP.classList.add('desc');
-    descriptionP.innerHTML = descriptionCell.innerHTML;
-    moveInstrumentation(descriptionCell, descriptionP);
-    cardTextDiv.append(descriptionP);
-    anchor.append(cardTextDiv);
+    const descP = document.createElement('p');
+    descP.classList.add('desc');
+    descP.innerHTML = descriptionCell.innerHTML;
+    moveInstrumentation(descriptionCell, descP); // Move instrumentation for the description cell to the paragraph
+    cardTextDiv.append(descP);
 
+    anchor.append(cardImageDiv, cardTextDiv);
     colDiv.append(anchor);
-    moveInstrumentation(cardRow, colDiv);
     gridContainer.append(colDiv);
   });
 

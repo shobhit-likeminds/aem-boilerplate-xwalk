@@ -64,8 +64,8 @@
       "social-link-item",
       "footer-menu-block",
       "footer-menu-item",
-      "footer-sub-menu-item",
-      "secondary-nav-item"
+      "footer-submenu-item",
+      "footer-secondary-nav-item"
     ]
   },
   {
@@ -97,7 +97,7 @@
   {
     "id": "purpose-led-grid",
     "components": [
-      "purpose-card"
+      "purpose-led-grid-card"
     ]
   },
   {
