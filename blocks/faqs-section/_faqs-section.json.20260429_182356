@@ -39,7 +39,7 @@
         {
           "component": "text",
           "label": "Section Heading",
-          "name": "sectionHeading",
+          "name": "heading",
           "valueType": "string"
         },
         {
@@ -55,13 +55,13 @@
       "fields": [
         {
           "component": "text",
-          "label": "Question",
+          "label": "FAQ Question",
           "name": "question",
           "valueType": "string"
         },
         {
           "component": "richtext",
-          "label": "Answer",
+          "label": "FAQ Answer",
           "name": "answer",
           "valueType": "string"
         }

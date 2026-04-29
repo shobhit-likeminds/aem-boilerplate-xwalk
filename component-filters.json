@@ -26,7 +26,9 @@
       "what-we-do-wrap",
       "spotlight-home",
       "quick-links",
-      "organization-ld-json"
+      "organization-ld-json",
+      "purpose-led-grid",
+      "performace-driven-cards"
     ]
   },
   {
@@ -59,34 +61,44 @@
   {
     "id": "footer-main",
     "components": [
-      "footer-social-link",
-      "footer-link-block",
-      "footer-link-item",
+      "social-link-item",
+      "footer-menu-block",
+      "footer-menu-link-item",
       "footer-sub-link-item",
-      "footer-secondary-link"
+      "footer-secondary-link-item"
     ]
   },
   {
     "id": "latest-stories",
     "components": [
-      "twitter-feed-item",
       "story-item"
     ]
   },
   {
     "id": "main-header",
     "components": [
+      "header-logo",
       "navigation-item",
-      "mega-menu-left-content",
-      "mega-menu-list-group",
-      "press-release-item",
-      "icon-nav-item"
+      "icon-nav-item",
+      "header-press-release"
     ]
   },
   {
     "id": "organization-ld-json",
     "components": [
       "sameas-link-item"
+    ]
+  },
+  {
+    "id": "performace-driven-cards",
+    "components": [
+      "performace-driven-card-item"
+    ]
+  },
+  {
+    "id": "purpose-led-grid",
+    "components": [
+      "purpose-card"
     ]
   },
   {
@@ -105,7 +117,7 @@
     "id": "spotlight-home",
     "components": [
       "spotlight-slide",
-      "quick-link"
+      "quick-link-item"
     ]
   },
   {

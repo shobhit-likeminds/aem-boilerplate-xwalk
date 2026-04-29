@@ -13,75 +13,95 @@ export default async function decorate(block) {
 
   const heading = document.createElement('h2');
   heading.classList.add('heading', 'font-regular', 'aos-init', 'aos-animate');
+  heading.setAttribute('data-aos', 'fade-up');
+  heading.setAttribute('data-aos-offset', '100');
+  heading.setAttribute('data-aos-duration', '650');
+  heading.setAttribute('data-aos-easing', 'ease-in-out');
   moveInstrumentation(sectionHeadingRow, heading);
   heading.textContent = sectionHeadingRow.textContent.trim();
   sectionHeader.append(heading);
   section.append(sectionHeader);
 
-  const positionRelative = document.createElement('div');
-  positionRelative.classList.add('position-relative', 'aos-init', 'aos-animate');
+  const positionRelativeDiv = document.createElement('div');
+  positionRelativeDiv.classList.add('position-relative', 'aos-init', 'aos-animate');
+  positionRelativeDiv.setAttribute('data-aos', 'fade-up');
+  positionRelativeDiv.setAttribute('data-aos-offset', '100');
+  positionRelativeDiv.setAttribute('data-aos-duration', '650');
+  positionRelativeDiv.setAttribute('data-aos-easing', 'ease-in-out');
 
-  const container = document.createElement('div');
-  container.classList.add('container');
+  const containerDiv = document.createElement('div');
+  containerDiv.classList.add('container');
 
-  const gridLayout = document.createElement('div');
-  gridLayout.classList.add('grid-layout');
+  // Add Flickity wrapper and data attributes
+  const flickitySliderMobileWrap = document.createElement('div');
+  flickitySliderMobileWrap.classList.add('flickity-slider-mobile-wrap');
+  flickitySliderMobileWrap.setAttribute('data-flickity', '{ "wrapAround": false, "lazyLoad": true, "pageDots": true, "prevNextButtons": false, "imagesLoaded": true, "cellAlign": "left", "watchCSS": true, "adaptiveHeight": true }');
+
+  const gridLayoutDiv = document.createElement('div');
+  gridLayoutDiv.classList.add('grid-layout');
 
   slideRows.forEach((row) => {
     const [
       imageMobile576Cell,
       imageMobile799Cell,
       imageDesktopCell,
+      imageAltCell,
+      imageTitleCell,
       slideHeadingCell,
       slideBodyCell,
       ctaLinkCell,
       ctaLabelCell,
     ] = [...row.children];
 
-    const slideDiv = document.createElement('div');
-    slideDiv.classList.add('slides');
+    const slidesDiv = document.createElement('div');
+    slidesDiv.classList.add('slides');
 
     const wrapDiv = document.createElement('div');
     wrapDiv.classList.add('wrap');
+    moveInstrumentation(row, wrapDiv);
 
-    const imageWrap = document.createElement('div');
-    imageWrap.classList.add('image-wrap');
+    const imageWrapDiv = document.createElement('div');
+    imageWrapDiv.classList.add('image-wrap');
 
     const picture = document.createElement('picture');
 
-    const source576 = document.createElement('source');
-    source576.media = '(max-width: 576px)';
-    const img576 = imageMobile576Cell.querySelector('img');
-    if (img576) source576.srcset = img576.src;
-    picture.append(source576);
-
-    const source799 = document.createElement('source');
-    source799.media = '(max-width: 799px)';
-    const img799 = imageMobile799Cell.querySelector('img');
-    if (img799) source799.srcset = img799.src;
-    picture.append(source799);
-
-    const desktopImg = imageDesktopCell.querySelector('img');
-    if (desktopImg) {
-      const optimizedPic = createOptimizedPicture(
-        desktopImg.src,
-        desktopImg.alt,
-        false,
-        [{ width: '750' }],
-      );
-      const img = optimizedPic.querySelector('img');
-      img.classList.add('img-fluid');
-      img.title = desktopImg.title;
-      img.alt = desktopImg.alt;
-      picture.append(img);
-      moveInstrumentation(imageDesktopCell, optimizedPic.querySelector('img'));
+    // Mobile Image (max-width: 576px)
+    const mobile576Img = imageMobile576Cell.querySelector('img');
+    if (mobile576Img) {
+      const source576 = document.createElement('source');
+      source576.media = '(max-width: 576px)';
+      source576.srcset = mobile576Img.src;
+      picture.append(source576);
     }
 
-    imageWrap.append(picture);
-    wrapDiv.append(imageWrap);
+    // Mobile Image (max-width: 799px)
+    const mobile799Img = imageMobile799Cell.querySelector('img');
+    if (mobile799Img) {
+      const source799 = document.createElement('source');
+      source799.media = '(max-width: 799px)';
+      source799.srcset = mobile799Img.src;
+      picture.append(source799);
+    }
 
-    const contentWrap = document.createElement('div');
-    contentWrap.classList.add('content-wrap');
+    // Desktop/Main Image
+    const desktopImg = imageDesktopCell.querySelector('img');
+    if (desktopImg) {
+      const img = createOptimizedPicture(
+        desktopImg.src,
+        imageAltCell.textContent.trim(),
+        false,
+        [{ width: '750' }],
+      ).querySelector('img');
+      img.classList.add('img-fluid');
+      img.alt = imageAltCell.textContent.trim();
+      img.title = imageTitleCell.textContent.trim();
+      picture.append(img);
+    }
+    imageWrapDiv.append(picture);
+    wrapDiv.append(imageWrapDiv);
+
+    const contentWrapDiv = document.createElement('div');
+    contentWrapDiv.classList.add('content-wrap');
 
     const contentSectionHeader = document.createElement('div');
     contentSectionHeader.classList.add('section-header');
@@ -94,79 +114,47 @@ export default async function decorate(block) {
     const slideBody = document.createElement('p');
     slideBody.classList.add('text-size-body');
     slideBody.innerHTML = slideBodyCell.innerHTML;
-    moveInstrumentation(slideBodyCell, slideBody); // Move instrumentation for richtext
     contentSectionHeader.append(slideBody);
 
     const ctaLink = document.createElement('a');
     ctaLink.classList.add('btn', 'btn-primary', 'stretched-link');
     const foundCtaLink = ctaLinkCell.querySelector('a');
     if (foundCtaLink) {
-      ctaLink.href = foundCtaLink.href;
-      moveInstrumentation(ctaLinkCell, ctaLink); // Move instrumentation for aem-content
+      ctaLink.href = foundCtaLink.href; // Correctly get href from the <a> tag
     }
     ctaLink.textContent = ctaLabelCell.textContent.trim();
     contentSectionHeader.append(ctaLink);
 
-    contentWrap.append(contentSectionHeader);
-    wrapDiv.append(contentWrap);
-    slideDiv.append(wrapDiv);
-    gridLayout.append(slideDiv);
-
-    moveInstrumentation(row, slideDiv); // Move instrumentation from row to slideDiv
+    contentWrapDiv.append(contentSectionHeader);
+    wrapDiv.append(contentWrapDiv);
+    slidesDiv.append(wrapDiv);
+    gridLayoutDiv.append(slidesDiv);
   });
 
-  container.append(gridLayout);
-  positionRelative.append(container);
-  section.append(positionRelative);
+  flickitySliderMobileWrap.append(gridLayoutDiv); // Append gridLayoutDiv to flickity wrapper
+  containerDiv.append(flickitySliderMobileWrap); // Append flickity wrapper to containerDiv
+  positionRelativeDiv.append(containerDiv);
+  section.append(positionRelativeDiv);
 
   block.replaceChildren(section);
 
-  // Swiper initialization (from ORIGINAL HTML's flickity-slider-mobile-wrap data-flickity)
-  // The original HTML uses Flickity, but EDS uses Swiper.
-  // We need to load Swiper and initialize it if the original block implies a slider.
-  // The presence of 'grid-layout' and 'slides' suggests a slider structure.
-  await loadCSS('https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css');
-  await loadScript('https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js');
+  // Load Flickity CSS and JS
+  await loadCSS('/libs/flickity/flickity.min.css');
+  await loadScript('/libs/flickity/flickity.pkgd.min.js');
 
-  const swiperContainer = block.querySelector('.grid-layout'); // The container for slides
-  if (swiperContainer) {
-    // Create necessary Swiper elements if they don't exist
-    const swiperWrapper = document.createElement('div');
-    swiperWrapper.classList.add('swiper-wrapper');
-    while (swiperContainer.firstChild) {
-      const slide = swiperContainer.firstChild;
-      slide.classList.add('swiper-slide'); // Add swiper-slide class to each slide
-      swiperWrapper.append(slide);
-    }
-    swiperContainer.append(swiperWrapper);
-
-    const paginationEl = document.createElement('div');
-    paginationEl.classList.add('swiper-pagination');
-    swiperContainer.append(paginationEl);
-
-    const prevBtn = document.createElement('div');
-    prevBtn.classList.add('swiper-button-prev');
-    swiperContainer.append(prevBtn);
-
-    const nextBtn = document.createElement('div');
-    nextBtn.classList.add('swiper-button-next');
-    swiperContainer.append(nextBtn);
-
-    // eslint-disable-next-line no-undef
-    new Swiper(swiperContainer, {
-      slidesPerView: 'auto',
-      loop: false, // Based on original Flickity data-flickity='{ "wrapAround": false ... }'
-      navigation: {
-        prevEl: prevBtn,
-        nextEl: nextBtn,
-      },
-      pagination: {
-        el: paginationEl,
-        clickable: true,
-      },
-      // The original HTML had 'cellAlign': 'left', 'watchCSS': true, 'adaptiveHeight': true
-      // These are Swiper equivalents or handled by CSS
-      // 'imagesLoaded': true is not a Swiper option, handled by browser
+  // Initialize Flickity
+  // eslint-disable-next-line no-undef
+  if (typeof Flickity !== 'undefined') {
+    // eslint-disable-next-line no-new, no-undef
+    new Flickity(flickitySliderMobileWrap, {
+      wrapAround: flickitySliderMobileWrap.dataset.flickity.includes('"wrapAround": true'),
+      lazyLoad: flickitySliderMobileWrap.dataset.flickity.includes('"lazyLoad": true'),
+      pageDots: flickitySliderMobileWrap.dataset.flickity.includes('"pageDots": true'),
+      prevNextButtons: flickitySliderMobileWrap.dataset.flickity.includes('"prevNextButtons": true'),
+      imagesLoaded: flickitySliderMobileWrap.dataset.flickity.includes('"imagesLoaded": true'),
+      cellAlign: flickitySliderMobileWrap.dataset.flickity.includes('"cellAlign": "left"') ? 'left' : 'center', // Default to center if not specified
+      watchCSS: flickitySliderMobileWrap.dataset.flickity.includes('"watchCSS": true'),
+      adaptiveHeight: flickitySliderMobileWrap.dataset.flickity.includes('"adaptiveHeight": true'),
     });
   }
 }

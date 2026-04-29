@@ -55,20 +55,32 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Image (max-width: 576px)",
+          "label": "Mobile Image (max-width:576px)",
           "name": "imageMobile576",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Image (max-width: 799px)",
+          "label": "Mobile Image (max-width:799px)",
           "name": "imageMobile799",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Image (default src / desktop)",
+          "label": "Desktop/Main Image",
           "name": "imageDesktop",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Image Alt Text",
+          "name": "imageAlt",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Image Title",
+          "name": "imageTitle",
           "valueType": "string"
         },
         {

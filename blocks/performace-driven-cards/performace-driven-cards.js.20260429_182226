@@ -1,0 +1,69 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  const cardItems = [...block.children];
+  const cardsWrapper = document.createElement('div');
+  cardsWrapper.classList.add('performace-driven-cards');
+
+  cardItems.forEach((row) => {
+    const [linkCell, imageDesktopCell, imageMobileCell, descriptionCell] = [...row.children];
+
+    const linkEl = document.createElement('a');
+    linkEl.classList.add('performace-driven-cards-link');
+    const foundLink = linkCell.querySelector('a');
+    if (foundLink) {
+      linkEl.href = foundLink.href;
+      linkEl.target = '_blank'; // From original HTML
+    }
+    moveInstrumentation(linkCell, linkEl);
+
+    const cardWrapper = document.createElement('div');
+    cardWrapper.classList.add('performace-driven-card-wrapper');
+    moveInstrumentation(row, cardWrapper);
+
+    const cardImage = document.createElement('div');
+    cardImage.classList.add('card-image');
+
+    const pictureDesktop = imageDesktopCell.querySelector('picture');
+    const pictureMobile = imageMobileCell.querySelector('picture');
+
+    // Create a container for the picture elements
+    const pictureContainer = document.createElement('picture');
+
+    if (pictureMobile) {
+      const sourceMobile = document.createElement('source');
+      sourceMobile.media = '(max-width: 576px)';
+      sourceMobile.srcset = pictureMobile.querySelector('img')?.src;
+      pictureContainer.append(sourceMobile);
+    }
+
+    if (pictureDesktop) {
+      const imgDesktop = pictureDesktop.querySelector('img');
+      const optimizedPic = createOptimizedPicture(imgDesktop.src, imgDesktop.alt, false, [{ width: '750' }]);
+      // moveInstrumentation should be called on the original img element, not the new one
+      // The optimizedPic itself is the <picture> element, so append its img child
+      const newImg = optimizedPic.querySelector('img');
+      if (newImg) {
+        moveInstrumentation(imgDesktop, newImg); // Move instrumentation from original img to new img
+        pictureContainer.append(newImg);
+      }
+    }
+    cardImage.append(pictureContainer); // Append the constructed picture element to cardImage
+
+    const homeBoxCard = document.createElement('div');
+    homeBoxCard.classList.add('performace-driven-home-box-card');
+
+    const description = document.createElement('p');
+    description.classList.add('desc');
+    description.innerHTML = descriptionCell.innerHTML;
+    moveInstrumentation(descriptionCell, description);
+
+    homeBoxCard.append(description);
+    cardWrapper.append(cardImage, homeBoxCard);
+    linkEl.append(cardWrapper);
+    cardsWrapper.append(linkEl);
+  });
+
+  block.replaceChildren(cardsWrapper);
+}
