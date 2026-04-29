@@ -1,9 +1,54 @@
-.row>* { flex-shrink:0;width:100%;max-width:100%;padding-right:calc(var(--bs-gutter-x) * .5);padding-left:calc(var(--bs-gutter-x) * .5);margin-top:var(--bs-gutter-y) }
+/* Row base: flex container with gutter variable defaults */
+.what-we-do-wrap .row {
+  --bs-gutter-x: 0;
+  --bs-gutter-y: 0;
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: calc(var(--bs-gutter-y) * -1);
+  margin-right: calc(var(--bs-gutter-x) * -.5);
+  margin-left: calc(var(--bs-gutter-x) * -.5);
+}
 
-.row-cols-1>* { flex:0 0 auto;width:100% }
+/* Row children: use gutter variables for spacing */
+.what-we-do-wrap .row > * {
+  flex-shrink: 0;
+  width: 100%;
+  max-width: 100%;
+  padding-right: calc(var(--bs-gutter-x) * .5);
+  padding-left: calc(var(--bs-gutter-x) * .5);
+  margin-top: var(--bs-gutter-y);
+}
 
-@media (min-width:992px) { .row-cols-lg-3>* { flex:0 0 auto;width:33.33333333% } }
+/* g-3: sets both horizontal and vertical gutters (~1rem) */
+.what-we-do-wrap .g-3 {
+  --bs-gutter-x: 1rem;
+  --bs-gutter-y: 1rem;
+}
 
-@media (min-width:992px) { .d-lg-block { display:block!important }
+/* gy-3: vertical gutter only (used inside mobile swiper slides) */
+.what-we-do-wrap .gy-3 {
+  --bs-gutter-y: 1rem;
+}
 
-.d-lg-none { display:none!important } }
+/* Default column width: 100% (mobile-first) */
+.what-we-do-wrap .row-cols-1 > * {
+  flex: 0 0 auto;
+  width: 100%;
+}
+
+/* Desktop: 3-column layout */
+@media (min-width: 992px) {
+  .what-we-do-wrap .row-cols-lg-3 > * {
+    flex: 0 0 auto;
+    width: 33.33333333%;
+  }
+}
+
+/* Display utilities — base rules required so d-none actually hides on mobile */
+.what-we-do-wrap .d-none { display: none !important; }
+.what-we-do-wrap .d-block { display: block !important; }
+
+@media (min-width: 992px) {
+  .what-we-do-wrap .d-lg-block { display: block !important; }
+  .what-we-do-wrap .d-lg-none { display: none !important; }
+}
