@@ -61,11 +61,10 @@
   {
     "id": "footer-main",
     "components": [
-      "social-link-item",
+      "footer-social-link",
       "footer-menu-block",
       "footer-menu-item",
-      "footer-submenu-item",
-      "footer-secondary-link-item"
+      "footer-secondary-nav-item"
     ]
   },
   {
@@ -79,7 +78,7 @@
     "components": [
       "navigation-item",
       "icon-link-item",
-      "press-release-item"
+      "newsroom-press-release-slide"
     ]
   },
   {
