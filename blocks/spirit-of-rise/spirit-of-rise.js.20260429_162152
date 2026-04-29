@@ -1,0 +1,105 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  const [headingRow, subheadingRow, ...cardRows] = [...block.children];
+
+  const section = document.createElement('section');
+  section.classList.add('section', 'grey-bg', 'spirit-of-rise');
+
+  const sectionHeader = document.createElement('div');
+  sectionHeader.classList.add('section-header', 'text-center', 'pb-3');
+
+  const heading = document.createElement('h2');
+  heading.classList.add('heading', 'font-regular', 'aos-init', 'aos-animate');
+  // Add data-aos attributes from original HTML
+  heading.dataset.aosEasing = 'ease-in-out';
+  heading.dataset.aos = 'fade-up';
+  heading.dataset.aosDelay = '200';
+  moveInstrumentation(headingRow, heading);
+  heading.textContent = headingRow.textContent.trim();
+  sectionHeader.append(heading);
+
+  const subheading = document.createElement('p');
+  subheading.classList.add('aos-init', 'aos-animate');
+  // Add data-aos attributes from original HTML
+  subheading.dataset.aos = 'fade-up';
+  subheading.dataset.aosOffset = '100';
+  subheading.dataset.aosDuration = '650';
+  subheading.dataset.aosEasing = 'ease-in-out';
+  moveInstrumentation(subheadingRow, subheading);
+  subheading.textContent = subheadingRow.textContent.trim();
+  sectionHeader.append(subheading);
+
+  section.append(sectionHeader);
+
+  const performanceDriven = document.createElement('div');
+  performanceDriven.classList.add('performance-driven', 'performace-driven-home');
+
+  const container = document.createElement('div');
+  container.classList.add('container');
+
+  const cardsWrapper = document.createElement('div');
+  cardsWrapper.classList.add('performace-driven-cards');
+
+  cardRows.forEach((row) => {
+    const [imageMobileCell, imageDesktopCell, linkCell, cardDescriptionCell] = [...row.children];
+
+    const linkEl = document.createElement('a');
+    linkEl.classList.add('performace-driven-cards-link');
+    const foundLink = linkCell.querySelector('a');
+    if (foundLink) {
+      linkEl.href = foundLink.href;
+      linkEl.target = '_blank'; // Explicitly set target="_blank" as per original HTML
+    }
+    moveInstrumentation(row, linkEl);
+
+    const cardWrapper = document.createElement('div');
+    cardWrapper.classList.add('performace-driven-card-wrapper');
+
+    const cardImage = document.createElement('div');
+    cardImage.classList.add('card-image');
+
+    // Create a single picture element with both mobile and desktop sources
+    const pictureMobile = imageMobileCell.querySelector('picture');
+    const imgMobile = pictureMobile ? pictureMobile.querySelector('img') : null;
+
+    const pictureDesktop = imageDesktopCell.querySelector('picture');
+    const imgDesktop = pictureDesktop ? pictureDesktop.querySelector('img') : null;
+
+    if (imgMobile || imgDesktop) {
+      const sources = [];
+      if (imgMobile) {
+        sources.push({ media: '(max-width: 576px)', width: '576' });
+      }
+      if (imgDesktop) {
+        sources.push({ media: '(min-width: 577px)', width: '780' }); // Use a common desktop width, adjust if specific width is known
+      }
+
+      // Use the desktop image as the default if available, otherwise mobile
+      const defaultImg = imgDesktop || imgMobile;
+      if (defaultImg) {
+        const optimizedPicture = createOptimizedPicture(defaultImg.src, defaultImg.alt, false, sources);
+        cardImage.append(optimizedPicture);
+      }
+    }
+
+    const homeBoxCard = document.createElement('div');
+    homeBoxCard.classList.add('performace-driven-home-box-card');
+
+    const desc = document.createElement('p');
+    desc.classList.add('desc');
+    desc.innerHTML = cardDescriptionCell.innerHTML;
+    homeBoxCard.append(desc);
+
+    cardWrapper.append(cardImage, homeBoxCard);
+    linkEl.append(cardWrapper);
+    cardsWrapper.append(linkEl);
+  });
+
+  container.append(cardsWrapper);
+  performanceDriven.append(container);
+  section.append(performanceDriven);
+
+  block.replaceChildren(section);
+}

@@ -1,0 +1,103 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  const [headingRow, subheadingRow, ...cardRows] = [...block.children];
+
+  const sectionHeader = document.createElement('div');
+  sectionHeader.classList.add('section-header', 'text-center', 'pb-3');
+
+  const heading = document.createElement('h2');
+  heading.classList.add('heading', 'font-regular', 'aos-init', 'aos-animate');
+  moveInstrumentation(headingRow, heading);
+  heading.textContent = headingRow.textContent.trim();
+  // Add data-aos attributes from ORIGINAL HTML
+  heading.dataset.aosEasing = 'ease-in-out';
+  heading.dataset.aos = 'fade-up';
+  heading.dataset.aosDelay = '200';
+  sectionHeader.append(heading);
+
+  const subheading = document.createElement('p');
+  subheading.classList.add('aos-init', 'aos-animate');
+  moveInstrumentation(subheadingRow, subheading);
+  subheading.textContent = subheadingRow.textContent.trim();
+  // Add data-aos attributes from ORIGINAL HTML
+  subheading.dataset.aos = 'fade-up';
+  subheading.dataset.aosOffset = '100';
+  subheading.dataset.aosDuration = '650';
+  subheading.dataset.aosEasing = 'ease-in-out';
+  sectionHeader.append(subheading);
+
+  const performanceDriven = document.createElement('div');
+  performanceDriven.classList.add('performance-driven', 'performace-driven-home');
+
+  const container = document.createElement('div');
+  container.classList.add('container');
+  performanceDriven.append(container);
+
+  const cardsWrapper = document.createElement('div');
+  cardsWrapper.classList.add('performace-driven-cards');
+  container.append(cardsWrapper);
+
+  cardRows.forEach((row) => {
+    const [imageDesktopCell, imageMobileCell, descriptionCell, cardLinkCell] = [...row.children];
+
+    const cardLink = document.createElement('a');
+    cardLink.classList.add('performace-driven-cards-link');
+    const foundLink = cardLinkCell.querySelector('a');
+    if (foundLink) {
+      cardLink.href = foundLink.href;
+      cardLink.target = '_blank'; // Assuming target="_blank" from original HTML
+    }
+    moveInstrumentation(row, cardLink);
+
+    const cardWrapper = document.createElement('div');
+    cardWrapper.classList.add('performace-driven-card-wrapper');
+    cardLink.append(cardWrapper);
+
+    const cardImage = document.createElement('div');
+    cardImage.classList.add('card-image');
+    cardWrapper.append(cardImage);
+
+    const desktopPicture = imageDesktopCell.querySelector('picture');
+    const mobilePicture = imageMobileCell.querySelector('picture');
+
+    if (desktopPicture && mobilePicture) {
+      // Create a new picture element to combine sources
+      const combinedPicture = document.createElement('picture');
+
+      const sourceMobile = document.createElement('source');
+      sourceMobile.media = '(max-width: 576px)';
+      sourceMobile.srcset = mobilePicture.querySelector('img').src;
+      combinedPicture.append(sourceMobile);
+
+      const img = desktopPicture.querySelector('img');
+      const desktopImg = document.createElement('img');
+      desktopImg.src = img.src;
+      desktopImg.alt = img.alt;
+      desktopImg.loading = 'lazy';
+      combinedPicture.append(desktopImg);
+
+      cardImage.append(combinedPicture);
+    } else if (desktopPicture) {
+      const img = desktopPicture.querySelector('img');
+      // createOptimizedPicture already handles creating the picture element
+      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+      cardImage.append(optimizedPic);
+    }
+    // No explicit handling for mobilePicture alone, assuming desktop is primary
+
+    const homeBoxCard = document.createElement('div');
+    homeBoxCard.classList.add('performace-driven-home-box-card');
+    cardWrapper.append(homeBoxCard);
+
+    const description = document.createElement('p');
+    description.classList.add('desc');
+    description.innerHTML = descriptionCell.innerHTML;
+    homeBoxCard.append(description);
+
+    cardsWrapper.append(cardLink);
+  });
+
+  block.replaceChildren(sectionHeader, performanceDriven);
+}

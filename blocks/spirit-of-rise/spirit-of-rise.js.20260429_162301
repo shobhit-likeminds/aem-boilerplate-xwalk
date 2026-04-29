@@ -1,0 +1,102 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  const [headlineRow, subheadlineRow, ...cardRows] = [...block.children];
+
+  const sectionHeader = document.createElement('div');
+  sectionHeader.classList.add('section-header', 'text-center', 'pb-3');
+
+  const headline = document.createElement('h2');
+  headline.classList.add('heading', 'font-regular', 'aos-init', 'aos-animate');
+  headline.setAttribute('data-aos-easing', 'ease-in-out');
+  headline.setAttribute('data-aos', 'fade-up');
+  headline.setAttribute('data-aos-delay', '200');
+  moveInstrumentation(headlineRow, headline);
+  headline.textContent = headlineRow.textContent.trim();
+  sectionHeader.append(headline);
+
+  const subheadline = document.createElement('p');
+  subheadline.classList.add('aos-init', 'aos-animate');
+  subheadline.setAttribute('data-aos', 'fade-up');
+  subheadline.setAttribute('data-aos-offset', '100');
+  subheadline.setAttribute('data-aos-duration', '650');
+  subheadline.setAttribute('data-aos-easing', 'ease-in-out');
+  moveInstrumentation(subheadlineRow, subheadline);
+  subheadline.textContent = subheadlineRow.textContent.trim();
+  sectionHeader.append(subheadline);
+
+  const performanceDriven = document.createElement('div');
+  performanceDriven.classList.add('performance-driven', 'performace-driven-home');
+
+  const container = document.createElement('div');
+  container.classList.add('container');
+  performanceDriven.append(container);
+
+  const cardsWrapper = document.createElement('div');
+  cardsWrapper.classList.add('performace-driven-cards');
+  container.append(cardsWrapper);
+
+  cardRows.forEach((row) => {
+    const [linkCell, imageMobileCell, imageDesktopCell, descriptionCell] = [...row.children];
+
+    const cardLink = document.createElement('a');
+    cardLink.classList.add('performace-driven-cards-link');
+    const foundLink = linkCell.querySelector('a');
+    if (foundLink) {
+      cardLink.href = foundLink.href;
+      cardLink.target = '_blank';
+    }
+    moveInstrumentation(linkCell, cardLink);
+
+    const cardWrapper = document.createElement('div');
+    cardWrapper.classList.add('performace-driven-card-wrapper');
+    cardLink.append(cardWrapper);
+
+    const cardImageDiv = document.createElement('div');
+    cardImageDiv.classList.add('card-image');
+    cardWrapper.append(cardImageDiv);
+
+    const imgMobile = imageMobileCell.querySelector('img');
+    const imgDesktop = imageDesktopCell.querySelector('img');
+
+    if (imgMobile && imgDesktop) {
+      const optimizedPicture = createOptimizedPicture(
+        imgDesktop.src,
+        imgDesktop.alt,
+        false,
+        [
+          { media: '(max-width: 576px)', width: '576', url: imgMobile.src }, // Use imgMobile.src for mobile source
+          { width: '750' },
+        ],
+      );
+
+      // moveInstrumentation for the original cells to the new picture and its children
+      // This assumes createOptimizedPicture creates a picture with at least one source and one img
+      const sourceElement = optimizedPicture.querySelector('source');
+      const imgElement = optimizedPicture.querySelector('img');
+
+      if (sourceElement) {
+        moveInstrumentation(imageMobileCell, sourceElement);
+      }
+      if (imgElement) {
+        moveInstrumentation(imageDesktopCell, imgElement);
+      }
+      cardImageDiv.append(optimizedPicture);
+    }
+
+    const homeBoxCard = document.createElement('div');
+    homeBoxCard.classList.add('performace-driven-home-box-card');
+    cardWrapper.append(homeBoxCard);
+
+    const description = document.createElement('p');
+    description.classList.add('desc');
+    moveInstrumentation(descriptionCell, description);
+    description.innerHTML = descriptionCell.innerHTML;
+    homeBoxCard.append(description);
+
+    cardsWrapper.append(cardLink);
+  });
+
+  block.replaceChildren(sectionHeader, performanceDriven);
+}

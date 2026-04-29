@@ -59,12 +59,11 @@
   {
     "id": "footer-main",
     "components": [
-      "social-link-item",
-      "footer-menu-block",
-      "footer-menu-link",
-      "footer-menu-sublink",
-      "footer-menu-inner-sublink",
-      "footer-secondary-nav-link"
+      "footer-social-link",
+      "footer-menu-group",
+      "footer-menu-item",
+      "footer-menu-sub-item",
+      "footer-secondary-nav-item"
     ]
   },
   {
@@ -78,7 +77,8 @@
     "id": "main-header",
     "components": [
       "navigation-item",
-      "press-release-slide"
+      "press-release-item",
+      "text-token-item"
     ]
   },
   {
@@ -96,14 +96,14 @@
   {
     "id": "spirit-of-rise",
     "components": [
-      "spirit-of-rise-card"
+      "performace-driven-card"
     ]
   },
   {
     "id": "spotlight-home",
     "components": [
       "spotlight-slide",
-      "spotlight-quick-link"
+      "quick-link"
     ]
   },
   {
@@ -121,7 +121,7 @@
   {
     "id": "work-with-us",
     "components": [
-      "work-with-us-item"
+      "work-with-us-slide"
     ]
   }
 ]

@@ -61,31 +61,37 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Image (Desktop)",
+          "label": "Desktop Image",
           "name": "imageDesktop",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Image (Mobile)",
-          "name": "imageMobile",
+          "label": "Tablet Image",
+          "name": "imageTablet",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Title Arrow Icon (SVG/Img)",
-          "name": "titleIcon",
+          "label": "Mobile Image",
+          "name": "imageMobile",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Title",
+          "label": "Business Title",
           "name": "title",
           "valueType": "string"
         },
         {
+          "component": "reference",
+          "label": "Arrow Icon",
+          "name": "arrowIcon",
+          "valueType": "string"
+        },
+        {
           "component": "aem-content",
-          "label": "Learn More Link",
+          "label": "Business Link",
           "name": "link",
           "valueType": "string"
         }
