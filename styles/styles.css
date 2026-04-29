@@ -2087,3 +2087,6 @@ body .rotate-div{display:flex;} }
 .footer-main::before { 
   z-index: 1;
  }
+/* aemigrate: vertical gap between consecutive blocks in the same section */
+.section > div + div { margin-top: 3rem; }
+@media (max-width: 834px) { .section > div + div { margin-top: 1.5rem; } }

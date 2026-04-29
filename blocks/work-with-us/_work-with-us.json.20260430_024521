@@ -1,31 +1,31 @@
 {
   "definitions": [
     {
-      "title": "Latest-Stories",
-      "id": "latest-stories",
+      "title": "Work-With-Us",
+      "id": "work-with-us",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block",
             "template": {
-              "filter": "latest-stories",
-              "model": "latest-stories",
-              "name": "Latest-Stories"
+              "filter": "work-with-us",
+              "model": "work-with-us",
+              "name": "Work-With-Us"
             }
           }
         }
       }
     },
     {
-      "title": "Story-Item",
-      "id": "story-item",
+      "title": "Work-With-Us-Slide",
+      "id": "work-with-us-slide",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "story-item",
-              "name": "Story-Item"
+              "model": "work-with-us-slide",
+              "name": "Work-With-Us-Slide"
             }
           }
         }
@@ -34,59 +34,71 @@
   ],
   "models": [
     {
-      "id": "latest-stories",
+      "id": "work-with-us",
       "fields": [
         {
           "component": "text",
           "label": "Section Heading",
-          "name": "heading",
+          "name": "sectionHeading",
           "valueType": "string"
         },
         {
           "component": "container",
-          "item": "story-item",
-          "label": "Stories",
-          "name": "stories"
+          "item": "work-with-us-slide",
+          "label": "Slides",
+          "name": "slides"
         }
       ]
     },
     {
-      "id": "story-item",
+      "id": "work-with-us-slide",
       "fields": [
         {
           "component": "reference",
-          "label": "Story Image (Default)",
-          "name": "imageDefault",
+          "label": "Mobile Image (max-width:576px)",
+          "name": "imageMobile576",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Story Image (Horizontal)",
-          "name": "imageHorizontal",
+          "label": "Mobile Image (max-width:799px)",
+          "name": "imageMobile799",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Story Image (Vertical)",
-          "name": "imageVertical",
+          "label": "Desktop/Main Image",
+          "name": "imageDesktop",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Category",
-          "name": "category",
+          "label": "Image Alt Text",
+          "name": "imageAlt",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Story Description",
-          "name": "description",
+          "label": "Image Title",
+          "name": "imageTitle",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Slide Heading",
+          "name": "slideHeading",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Slide Body",
+          "name": "slideBody",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "label": "Story Link",
-          "name": "storyLink",
+          "label": "CTA Link",
+          "name": "ctaLink",
           "valueType": "string"
         },
         {
@@ -94,21 +106,15 @@
           "label": "CTA Label",
           "name": "ctaLabel",
           "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Date",
-          "name": "date",
-          "valueType": "string"
         }
       ]
     }
   ],
   "filters": [
     {
-      "id": "latest-stories",
+      "id": "work-with-us",
       "components": [
-        "story-item"
+        "work-with-us-slide"
       ]
     }
   ]

@@ -38,9 +38,8 @@
       "fields": [
         {
           "component": "text",
-          "label": "Section Heading",
-          "name": "sectionHeading",
-          "valueType": "string"
+          "label": "Section Headline",
+          "name": "headline"
         },
         {
           "component": "container",
@@ -55,57 +54,38 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Mobile Image (max-width:576px)",
-          "name": "imageMobile576",
-          "valueType": "string"
+          "label": "Mobile Image (max-width: 576px)",
+          "name": "imageMobile576"
         },
         {
           "component": "reference",
-          "label": "Mobile Image (max-width:799px)",
-          "name": "imageMobile799",
-          "valueType": "string"
+          "label": "Mobile Image (max-width: 799px)",
+          "name": "imageMobile799"
         },
         {
           "component": "reference",
-          "label": "Desktop/Main Image",
-          "name": "imageDesktop",
-          "valueType": "string"
+          "label": "Default Image",
+          "name": "imageDefault"
         },
         {
           "component": "text",
-          "label": "Image Alt Text",
-          "name": "imageAlt",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Image Title",
-          "name": "imageTitle",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Slide Heading",
-          "name": "slideHeading",
-          "valueType": "string"
+          "label": "Slide Headline",
+          "name": "slideHeadline"
         },
         {
           "component": "richtext",
-          "label": "Slide Body",
-          "name": "slideBody",
-          "valueType": "string"
+          "label": "Slide Description",
+          "name": "slideDescription"
         },
         {
           "component": "aem-content",
           "label": "CTA Link",
-          "name": "ctaLink",
-          "valueType": "string"
+          "name": "ctaLink"
         },
         {
           "component": "text",
           "label": "CTA Label",
-          "name": "ctaLabel",
-          "valueType": "string"
+          "name": "ctaLabel"
         }
       ]
     }

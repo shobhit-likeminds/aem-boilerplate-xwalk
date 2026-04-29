@@ -55,19 +55,19 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Story Image (Default)",
-          "name": "imageDefault",
+          "label": "Main Image",
+          "name": "imageMain",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Story Image (Horizontal)",
+          "label": "Horizontal Image",
           "name": "imageHorizontal",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Story Image (Vertical)",
+          "label": "Vertical Image",
           "name": "imageVertical",
           "valueType": "string"
         },
@@ -91,14 +91,20 @@
         },
         {
           "component": "text",
-          "label": "CTA Label",
-          "name": "ctaLabel",
+          "label": "Story Link Label",
+          "name": "storyLinkLabel",
           "valueType": "string"
         },
         {
           "component": "text",
           "label": "Date",
           "name": "date",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Date (ISO)",
+          "name": "dateTime",
           "valueType": "string"
         }
       ]

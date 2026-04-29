@@ -44,8 +44,8 @@
         },
         {
           "component": "text",
-          "label": "Section Description",
-          "name": "description",
+          "label": "Section Subheading",
+          "name": "subheading",
           "valueType": "string"
         },
         {
@@ -72,15 +72,15 @@
           "valueType": "string"
         },
         {
-          "component": "text",
+          "component": "richtext",
           "label": "Card Description",
-          "name": "cardDescription",
+          "name": "description",
           "valueType": "string"
         },
         {
           "component": "aem-content",
           "label": "Card Link",
-          "name": "cardLink",
+          "name": "link",
           "valueType": "string"
         }
       ]

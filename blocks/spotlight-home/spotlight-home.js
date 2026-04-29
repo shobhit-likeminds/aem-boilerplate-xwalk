@@ -4,26 +4,25 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
 export default async function decorate(block) {
   const allRows = [...block.children];
 
-  const spotlightSlides = allRows.filter((row) => row.children.length === 9);
-  const quickLinkItems = allRows.filter((row) => row.children.length === 2);
+  const spotlightSlides = allRows.filter((row) => row.children.length === 8);
+  const quickLinks = allRows.filter((row) => row.children.length === 2);
 
   const section = document.createElement('section');
   section.classList.add('section', 'spotlight-home-wrap', 'm-0', 'p-0');
 
-  const beamSlider = document.createElement('div');
-  // Swiper.js adds swiper-initialized, swiper-horizontal, swiper-watch-progress, swiper-backface-hidden
-  beamSlider.classList.add('beam-slider', 'main-slider', 'loading1', 'beam-slider-multi');
+  const swiperEl = document.createElement('div');
+  swiperEl.classList.add('beam-slider', 'main-slider', 'loading1', 'beam-slider-multi');
+  // Swiper.js will add swiper-initialized, swiper-horizontal, swiper-watch-progress, swiper-backface-hidden
 
   const swiperWrapper = document.createElement('div');
   swiperWrapper.classList.add('swiper-wrapper');
 
   spotlightSlides.forEach((row) => {
     const [
-      backgroundMobile576Cell,
-      backgroundMobile799Cell,
       backgroundDesktopCell,
-      backgroundAltCell,
-      smallTextCell,
+      backgroundTabletCell,
+      backgroundMobileCell,
+      eyebrowCell,
       headlineCell,
       descriptionCell,
       ctaLinkCell,
@@ -31,115 +30,91 @@ export default async function decorate(block) {
     ] = [...row.children];
 
     const swiperSlide = document.createElement('div');
-    swiperSlide.classList.add('swiper-slide', 'nogradient');
-
-    // Check if the slide should have 'dark-content' class based on original HTML patterns
-    // This is a heuristic based on the example, a specific model field would be better
-    const originalSlideHtml = row.outerHTML; // Capture original HTML for class detection
-    if (originalSlideHtml.includes('dark-content')) {
-      swiperSlide.classList.add('dark-content');
-    }
+    swiperSlide.classList.add('swiper-slide', 'nogradient'); // dark-content class handled by authoring
 
     const slideBgImg = document.createElement('div');
     slideBgImg.classList.add('slide-bgimg');
 
     const picture = document.createElement('picture');
+    const sourceMobile = document.createElement('source');
+    sourceMobile.media = '(max-width: 576px)';
+    sourceMobile.srcset = backgroundMobileCell?.querySelector('img')?.src || '';
+    picture.appendChild(sourceMobile);
 
-    const mobile576Source = document.createElement('source');
-    mobile576Source.media = '(max-width: 576px)';
-    mobile576Source.srcset = backgroundMobile576Cell.querySelector('img')?.src || '';
-    picture.append(mobile576Source);
+    const sourceTablet = document.createElement('source');
+    sourceTablet.media = '(max-width: 799px)';
+    sourceTablet.srcset = backgroundTabletCell?.querySelector('img')?.src || '';
+    picture.appendChild(sourceTablet);
 
-    const mobile799Source = document.createElement('source');
-    mobile799Source.media = '(max-width: 799px)';
-    mobile799Source.srcset = backgroundMobile799Cell.querySelector('img')?.src || '';
-    picture.append(mobile799Source);
-
-    const desktopImg = backgroundDesktopCell.querySelector('img');
-    if (desktopImg) {
-      const optimizedPic = createOptimizedPicture(
-        desktopImg.src,
-        backgroundAltCell.textContent.trim(),
-        false,
-        [{ width: '1903' }],
-      );
-      moveInstrumentation(desktopImg, optimizedPic.querySelector('img'));
-      picture.append(optimizedPic.querySelector('img'));
+    const img = backgroundDesktopCell?.querySelector('img');
+    if (img) {
+      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '1903' }]);
+      moveInstrumentation(img, optimizedPic.querySelector('img'));
+      picture.appendChild(optimizedPic.querySelector('img'));
     }
-
-    slideBgImg.append(picture);
-    swiperSlide.append(slideBgImg);
+    slideBgImg.appendChild(picture);
+    swiperSlide.appendChild(slideBgImg);
 
     const mobContentHomeSpotlight = document.createElement('div');
     mobContentHomeSpotlight.classList.add('mob-content-home-spotlight');
 
     const contentDiv = document.createElement('div');
     contentDiv.classList.add('content', 'text-center', 'text-lg-start');
+    // active class is added by JS, not static
 
-    const smallText = smallTextCell.textContent.trim();
-    if (smallText) {
-      const smallEl = document.createElement('small');
-      smallEl.style.fontWeight = 'bold'; // This style is from original HTML
-      smallEl.textContent = smallText;
-      contentDiv.append(smallEl);
+    if (eyebrowCell?.textContent.trim()) {
+      const small = document.createElement('small');
+      small.style.fontWeight = 'bold';
+      small.textContent = eyebrowCell.textContent.trim();
+      contentDiv.appendChild(small);
     }
 
-    const headline = document.createElement('h1');
-    headline.classList.add('heading', 'font-medium', 'font-size-tb');
-    // Check if the headline should have 'banner-text-dark' class based on original HTML patterns
-    if (originalSlideHtml.includes('banner-text-dark')) {
-      headline.classList.add('banner-text-dark');
+    if (headlineCell?.innerHTML.trim()) {
+      const h1 = document.createElement('h1');
+      h1.classList.add('heading', 'font-medium', 'font-size-tb');
+      h1.innerHTML = headlineCell.innerHTML.trim();
+      contentDiv.appendChild(h1);
     }
-    headline.innerHTML = headlineCell.innerHTML;
-    contentDiv.append(headline);
 
-    const description = descriptionCell.innerHTML.trim();
-    if (description) {
+    if (descriptionCell?.innerHTML.trim()) {
       const p = document.createElement('p');
-      p.innerHTML = description;
-      contentDiv.append(p);
+      p.innerHTML = descriptionCell.innerHTML.trim();
+      contentDiv.appendChild(p);
     }
 
-    const ctaLink = ctaLinkCell.querySelector('a');
-    const ctaLabel = ctaLabelCell.textContent.trim();
-    if (ctaLink && ctaLabel) {
+    const ctaLink = ctaLinkCell?.querySelector('a');
+    if (ctaLink && ctaLabelCell?.textContent.trim()) {
       const anchor = document.createElement('a');
       anchor.href = ctaLink.href;
-      anchor.textContent = ctaLabel;
-      anchor.classList.add('btn', 'btn-primary');
+      anchor.textContent = ctaLabelCell.textContent.trim();
+      anchor.classList.add('btn', 'btn-primary'); // Add other button classes as needed
       moveInstrumentation(ctaLinkCell, anchor);
-      contentDiv.append(anchor);
+      contentDiv.appendChild(anchor);
     }
 
-    mobContentHomeSpotlight.append(contentDiv);
-    swiperSlide.append(mobContentHomeSpotlight);
+    mobContentHomeSpotlight.appendChild(contentDiv);
+    swiperSlide.appendChild(mobContentHomeSpotlight);
+    swiperWrapper.appendChild(swiperSlide);
     moveInstrumentation(row, swiperSlide);
-    swiperWrapper.append(swiperSlide);
   });
 
-  beamSlider.append(swiperWrapper);
+  swiperEl.appendChild(swiperWrapper);
 
   const prevBtn = document.createElement('div');
   prevBtn.classList.add('swiper-button-prev', 'slide-home-btn', 'swiper-button-white');
-  prevBtn.innerHTML = '<svg class="swiper-navigation-icon" width="11" height="20" viewBox="0 0 11 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.38296 20.0762C0.111788 19.805 0.111788 19.3654 0.38296 19.0942L9.19758 10.2796L0.38296 1.46497C0.111788 1.19379 0.111788 0.754138 0.38296 0.482966C0.654131 0.211794 1.09379 0.211794 1.36496 0.482966L10.4341 9.55214C10.8359 9.9539 10.8359 10.6053 10.4341 11.007L1.36496 20.0762C1.09379 20.3474 0.654131 20.3474 0.38296 20.0762Z" fill="currentColor"></path></svg>';
-  beamSlider.append(prevBtn);
+  prevBtn.innerHTML = `<svg class="swiper-navigation-icon" width="11" height="20" viewBox="0 0 11 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.38296 20.0762C0.111788 19.805 0.111788 19.3654 0.38296 19.0942L9.19758 10.2796L0.38296 1.46497C0.111788 1.19379 0.111788 0.754138 0.38296 0.482966C0.654131 0.211794 1.09379 0.211794 1.36496 0.482966L10.4341 9.55214C10.8359 9.9539 10.8359 10.6053 10.4341 11.007L1.36496 20.0762C1.09379 20.3474 0.654131 20.3474 0.38296 20.0762Z" fill="currentColor"></path></svg>`;
+  swiperEl.appendChild(prevBtn);
 
   const nextBtn = document.createElement('div');
   nextBtn.classList.add('swiper-button-next', 'slide-home-btn', 'swiper-button-white');
-  nextBtn.innerHTML = '<svg class="swiper-navigation-icon" width="11" height="20" viewBox="0 0 11 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.38296 20.0762C0.111788 19.805 0.111788 19.3654 0.38296 19.0942L9.19758 10.2796L0.38296 1.46497C0.111788 1.19379 0.111788 0.754138 0.38296 0.482966C0.654131 0.211794 1.09379 0.211794 1.36496 0.482966L10.4341 9.55214C10.8359 9.9539 10.8359 10.6053 10.4341 11.007L1.36496 20.0762C1.09379 20.3474 0.654131 20.3474 0.38296 20.0762Z" fill="currentColor"></path></svg>';
-  beamSlider.append(nextBtn);
+  nextBtn.innerHTML = `<svg class="swiper-navigation-icon" width="11" height="20" viewBox="0 0 11 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.38296 20.0762C0.111788 19.805 0.111788 19.3654 0.38296 19.0942L9.19758 10.2796L0.38296 1.46497C0.111788 1.19379 0.111788 0.754138 0.38296 0.482966C0.654131 0.211794 1.09379 0.211794 1.36496 0.482966L10.4341 9.55214C10.8359 9.9539 10.8359 10.6053 10.4341 11.007L1.36496 20.0762C1.09379 20.3474 0.654131 20.3474 0.38296 20.0762Z" fill="currentColor"></path></svg>`;
+  swiperEl.appendChild(nextBtn);
 
   const paginationEl = document.createElement('div');
   paginationEl.classList.add('swiper-pagination', 'bullet-bottom');
-  beamSlider.append(paginationEl);
+  swiperEl.appendChild(paginationEl);
 
-  const swiperNotification = document.createElement('span');
-  swiperNotification.classList.add('swiper-notification');
-  swiperNotification.setAttribute('aria-live', 'assertive');
-  swiperNotification.setAttribute('aria-atomic', 'true');
-  beamSlider.append(swiperNotification);
-
-  section.append(beamSlider);
+  section.appendChild(swiperEl);
 
   const quickLinksParentDiv = document.createElement('div');
   quickLinksParentDiv.classList.add(
@@ -163,41 +138,36 @@ export default async function decorate(block) {
   const quickLinksUl = document.createElement('ul');
   quickLinksUl.classList.add('quick-links-div');
 
-  quickLinkItems.forEach((row) => {
+  quickLinks.forEach((row) => {
     const [linkCell, labelCell] = [...row.children];
-
     const li = document.createElement('li');
-    const anchor = document.createElement('a');
-    const foundLink = linkCell.querySelector('a');
-    if (foundLink) {
-      anchor.href = foundLink.href;
+    const link = linkCell.querySelector('a');
+    if (link && labelCell?.textContent.trim()) {
+      const anchor = document.createElement('a');
+      anchor.href = link.href;
       anchor.textContent = labelCell.textContent.trim();
+      anchor.classList.add('with-full-underline');
+      moveInstrumentation(linkCell, anchor);
+      li.appendChild(anchor);
     }
-    anchor.classList.add('with-full-underline');
-    moveInstrumentation(row, anchor);
-    li.append(anchor);
-    quickLinksUl.append(li);
+    quickLinksUl.appendChild(li);
+    moveInstrumentation(row, li);
   });
 
-  containerDiv.append(quickLinksUl);
-  quickLinksParentDiv.append(containerDiv);
-  section.append(quickLinksParentDiv);
+  containerDiv.appendChild(quickLinksUl);
+  quickLinksParentDiv.appendChild(containerDiv);
+  section.appendChild(quickLinksParentDiv);
 
   block.replaceChildren(section);
 
+  // Initialize Swiper
   await loadCSS('https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css');
   await loadScript('https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js');
   // eslint-disable-next-line no-undef
-  new Swiper(beamSlider, {
+  new Swiper(swiperEl, {
     slidesPerView: 1,
     spaceBetween: 0,
-    // The original HTML does not explicitly set data-loop="true", but the JS had loop: true.
-    // Assuming the default behavior is loop: true unless explicitly set to false.
-    loop: true,
-    autoplay: {
-      delay: 5000,
-      disableOnInteraction: false,
-    },
+    loop: true, // Assuming loop from original HTML behavior
     navigation: {
       prevEl: prevBtn,
       nextEl: nextBtn,
@@ -205,6 +175,17 @@ export default async function decorate(block) {
     pagination: {
       el: paginationEl,
       clickable: true,
+    },
+    breakpoints: {
+      576: {
+        slidesPerView: 1,
+      },
+      768: {
+        slidesPerView: 1,
+      },
+      992: {
+        slidesPerView: 1,
+      },
     },
   });
 }

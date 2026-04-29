@@ -32,15 +32,15 @@
       }
     },
     {
-      "title": "Quick Link",
-      "id": "quick-link",
+      "title": "Quick Link Item",
+      "id": "quick-link-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "quick-link",
-              "name": "Quick Link"
+              "model": "quick-link-item",
+              "name": "Quick Link Item"
             }
           }
         }
@@ -54,12 +54,12 @@
         {
           "component": "container",
           "item": "spotlight-slide",
-          "label": "Spotlight Slides",
+          "label": "Slides",
           "name": "slides"
         },
         {
           "component": "container",
-          "item": "quick-link",
+          "item": "quick-link-item",
           "label": "Quick Links",
           "name": "quickLinks"
         }
@@ -70,26 +70,32 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Background Image (Desktop)",
+          "label": "Mobile Background Image (max-width: 576px)",
+          "name": "backgroundMobile576",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Mobile Background Image (max-width: 799px)",
+          "name": "backgroundMobile799",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Desktop Background Image",
           "name": "backgroundDesktop",
           "valueType": "string"
         },
         {
-          "component": "reference",
-          "label": "Background Image (Tablet/Medium)",
-          "name": "backgroundTablet",
-          "valueType": "string"
-        },
-        {
-          "component": "reference",
-          "label": "Background Image (Mobile)",
-          "name": "backgroundMobile",
+          "component": "text",
+          "label": "Background Image Alt Text",
+          "name": "backgroundAlt",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Eyebrow/Small Heading",
-          "name": "eyebrow",
+          "label": "Small/Highlight Text",
+          "name": "smallText",
           "valueType": "string"
         },
         {
@@ -119,11 +125,11 @@
       ]
     },
     {
-      "id": "quick-link",
+      "id": "quick-link-item",
       "fields": [
         {
           "component": "aem-content",
-          "label": "Quick Link URL",
+          "label": "Quick Link",
           "name": "link",
           "valueType": "string"
         },
@@ -141,7 +147,7 @@
       "id": "spotlight-home",
       "components": [
         "spotlight-slide",
-        "quick-link"
+        "quick-link-item"
       ]
     }
   ]
