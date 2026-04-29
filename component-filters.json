@@ -61,10 +61,10 @@
   {
     "id": "footer-main",
     "components": [
-      "social-link-item",
+      "footer-social-link",
       "footer-menu-block",
-      "footer-menu-link-item",
-      "secondary-nav-link-item"
+      "footer-menu-item",
+      "footer-secondary-nav-link"
     ]
   },
   {

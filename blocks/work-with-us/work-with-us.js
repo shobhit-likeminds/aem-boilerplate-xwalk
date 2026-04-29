@@ -1,169 +1,127 @@
-import { createOptimizedPicture, loadScript, loadCSS } from '../../scripts/aem.js';
+import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
-export default async function decorate(block) {
-  const [headlineRow, ...slideRows] = [...block.children];
+export default function decorate(block) {
+  const [sectionHeadingRow, ...slideRows] = [...block.children];
 
   const section = document.createElement('section');
   section.classList.add('section', 'work-with-us', 'pb-0');
 
   const sectionHeader = document.createElement('div');
   sectionHeader.classList.add('section-header', 'text-center');
+  const heading = document.createElement('h2');
+  heading.classList.add('heading', 'font-regular', 'aos-init', 'aos-animate');
+  heading.setAttribute('data-aos', 'fade-up');
+  heading.setAttribute('data-aos-offset', '100');
+  heading.setAttribute('data-aos-duration', '650');
+  heading.setAttribute('data-aos-easing', 'ease-in-out');
+  moveInstrumentation(sectionHeadingRow, heading);
+  heading.textContent = sectionHeadingRow.textContent.trim();
+  sectionHeader.append(heading);
   section.append(sectionHeader);
-
-  const headline = document.createElement('h2');
-  headline.classList.add('heading', 'font-regular', 'aos-init', 'aos-animate');
-  moveInstrumentation(headlineRow, headline);
-  headline.textContent = headlineRow.textContent.trim();
-  sectionHeader.append(headline);
 
   const positionRelativeDiv = document.createElement('div');
   positionRelativeDiv.classList.add('position-relative', 'aos-init', 'aos-animate');
-  section.append(positionRelativeDiv);
+  positionRelativeDiv.setAttribute('data-aos', 'fade-up');
+  positionRelativeDiv.setAttribute('data-aos-offset', '100');
+  positionRelativeDiv.setAttribute('data-aos-duration', '650');
+  positionRelativeDiv.setAttribute('data-aos-easing', 'ease-in-out');
 
-  const container = document.createElement('div');
-  container.classList.add('container');
-  positionRelativeDiv.append(container);
+  const containerDiv = document.createElement('div');
+  containerDiv.classList.add('container');
 
-  const gridLayout = document.createElement('div');
-  gridLayout.classList.add('grid-layout');
-  container.append(gridLayout);
+  const gridLayoutDiv = document.createElement('div');
+  gridLayoutDiv.classList.add('grid-layout');
 
   slideRows.forEach((row) => {
     const [
-      imageMobile576Cell,
-      imageMobile799Cell,
-      imageDefaultCell,
-      slideHeadlineCell,
+      pictureMobile576Cell,
+      pictureMobile799Cell,
+      desktopImageCell,
+      slideHeadingCell,
       slideDescriptionCell,
       ctaLinkCell,
       ctaLabelCell,
     ] = [...row.children];
 
-    const slideDiv = document.createElement('div');
-    slideDiv.classList.add('slides');
-    moveInstrumentation(row, slideDiv);
+    const slidesDiv = document.createElement('div');
+    slidesDiv.classList.add('slides');
 
     const wrapDiv = document.createElement('div');
     wrapDiv.classList.add('wrap');
-    slideDiv.append(wrapDiv);
 
-    const imageWrap = document.createElement('div');
-    imageWrap.classList.add('image-wrap');
+    // Image Wrap
+    const imageWrapDiv = document.createElement('div');
+    imageWrapDiv.classList.add('image-wrap');
 
-    const pictureMobile576 = imageMobile576Cell.querySelector('picture');
-    const pictureMobile799 = imageMobile799Cell.querySelector('picture');
-    const pictureDefault = imageDefaultCell.querySelector('picture');
+    const picture = document.createElement('picture');
 
-    if (pictureMobile576 || pictureMobile799 || pictureDefault) {
-      const picture = document.createElement('picture');
-
-      if (pictureMobile576) {
-        const img = pictureMobile576.querySelector('img');
-        const source = document.createElement('source');
-        source.media = '(max-width: 576px)';
-        source.srcset = img.src;
-        picture.append(source);
-      }
-      if (pictureMobile799) {
-        const img = pictureMobile799.querySelector('img');
-        const source = document.createElement('source');
-        source.media = '(max-width: 799px)';
-        source.srcset = img.src;
-        picture.append(source);
-      }
-      if (pictureDefault) {
-        const img = pictureDefault.querySelector('img');
-        const defaultImg = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-        defaultImg.querySelector('img').classList.add('img-fluid');
-        picture.append(...defaultImg.children);
-      }
-      imageWrap.append(picture);
+    const source576 = document.createElement('source');
+    source576.media = '(max-width: 576px)';
+    const img576 = pictureMobile576Cell.querySelector('img');
+    if (img576) {
+      source576.srcset = img576.src;
     }
-    if (imageWrap.hasChildNodes()) {
-      wrapDiv.append(imageWrap);
+    picture.append(source576);
+
+    const source799 = document.createElement('source');
+    source799.media = '(max-width: 799px)';
+    const img799 = pictureMobile799Cell.querySelector('img');
+    if (img799) {
+      source799.srcset = img799.src;
+    }
+    picture.append(source799);
+
+    const imgDesktop = desktopImageCell.querySelector('img');
+    if (imgDesktop) {
+      const optimizedPic = createOptimizedPicture(imgDesktop.src, imgDesktop.alt, false, [{ width: '750' }]);
+      const newImg = optimizedPic.querySelector('img');
+      newImg.classList.add('img-fluid');
+      // moveInstrumentation(imgDesktop, newImg); // moveInstrumentation is for block rows, not individual elements within a cell
+      picture.append(newImg);
     }
 
-    const contentWrap = document.createElement('div');
-    contentWrap.classList.add('content-wrap');
-    wrapDiv.append(contentWrap);
+    imageWrapDiv.append(picture);
+    wrapDiv.append(imageWrapDiv);
+
+    // Content Wrap
+    const contentWrapDiv = document.createElement('div');
+    contentWrapDiv.classList.add('content-wrap');
 
     const contentSectionHeader = document.createElement('div');
     contentSectionHeader.classList.add('section-header');
-    contentWrap.append(contentSectionHeader);
 
-    const slideHeadline = document.createElement('h3');
-    slideHeadline.classList.add('heading', 'font-regular');
-    slideHeadline.textContent = slideHeadlineCell.textContent.trim();
-    contentSectionHeader.append(slideHeadline);
+    const slideHeading = document.createElement('h3');
+    slideHeading.classList.add('heading', 'font-regular');
+    moveInstrumentation(slideHeadingCell, slideHeading);
+    slideHeading.textContent = slideHeadingCell.textContent.trim();
+    contentSectionHeader.append(slideHeading);
 
     const slideDescription = document.createElement('p');
     slideDescription.classList.add('text-size-body');
+    moveInstrumentation(slideDescriptionCell, slideDescription);
     slideDescription.innerHTML = slideDescriptionCell.innerHTML;
     contentSectionHeader.append(slideDescription);
 
     const ctaLink = document.createElement('a');
     ctaLink.classList.add('btn', 'btn-primary', 'stretched-link');
-    const foundLink = ctaLinkCell.querySelector('a');
-    if (foundLink) {
-      ctaLink.href = foundLink.href; // Correctly use the href from the authored link
+    const foundCtaLink = ctaLinkCell.querySelector('a');
+    if (foundCtaLink) {
+      ctaLink.href = foundCtaLink.href;
     }
+    moveInstrumentation(ctaLinkCell, ctaLink);
     ctaLink.textContent = ctaLabelCell.textContent.trim();
     contentSectionHeader.append(ctaLink);
 
-    gridLayout.append(slideDiv);
+    contentWrapDiv.append(contentSectionHeader);
+    wrapDiv.append(contentWrapDiv);
+    slidesDiv.append(wrapDiv);
+    gridLayoutDiv.append(slidesDiv);
   });
+
+  containerDiv.append(gridLayoutDiv);
+  positionRelativeDiv.append(containerDiv);
+  section.append(positionRelativeDiv);
 
   block.replaceChildren(section);
-
-  // Swiper Carousel Initialization (from original HTML's flickity-slider-mobile-wrap)
-  // Although the original HTML comments out flickity, the structure implies a carousel.
-  // Assuming Swiper for EDS.
-  await loadCSS('https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css');
-  await loadScript('https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js');
-
-  const swiperContainer = container; // The .container element will be the Swiper container
-  const swiperWrapper = gridLayout; // The .grid-layout element will be the Swiper wrapper
-
-  // Add Swiper specific classes to the elements
-  swiperContainer.classList.add('swiper');
-  swiperWrapper.classList.add('swiper-wrapper');
-
-  // Add swiper-slide to each slideDiv
-  swiperWrapper.querySelectorAll('.slides').forEach((slide) => {
-    slide.classList.add('swiper-slide');
-  });
-
-  // Create navigation buttons and pagination if needed (based on common Swiper usage)
-  const prevButton = document.createElement('div');
-  prevButton.classList.add('swiper-button-prev');
-  swiperContainer.append(prevButton);
-
-  const nextButton = document.createElement('div');
-  nextButton.classList.add('swiper-button-next');
-  swiperContainer.append(nextButton);
-
-  const pagination = document.createElement('div');
-  pagination.classList.add('swiper-pagination');
-  swiperContainer.append(pagination);
-
-  // eslint-disable-next-line no-undef
-  new Swiper(swiperContainer, {
-    slidesPerView: 'auto',
-    loop: false, // Based on original HTML data-flickity='{ "wrapAround": false ... }'
-    navigation: {
-      prevEl: prevButton,
-      nextEl: nextButton,
-    },
-    pagination: {
-      el: pagination,
-      clickable: true,
-    },
-    // Additional Swiper options can be added here if needed, e.g., breakpoints
-    // breakpoints: {
-    //   768: {
-    //     slidesPerView: 2,
-    //   },
-    // },
-  });
 }

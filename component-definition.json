@@ -159,7 +159,7 @@
           }
         },
         {
-          "title": "Footer-Main",
+          "title": "Footer Main",
           "id": "footer-main",
           "plugins": {
             "xwalk": {
@@ -168,29 +168,29 @@
                 "template": {
                   "filter": "footer-main",
                   "model": "footer-main",
-                  "name": "Footer-Main"
+                  "name": "Footer Main"
                 }
               }
             }
           }
         },
         {
-          "title": "Social-Link-Item",
-          "id": "social-link-item",
+          "title": "Footer Social Link",
+          "id": "footer-social-link",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "social-link-item",
-                  "name": "Social-Link-Item"
+                  "model": "footer-social-link",
+                  "name": "Footer Social Link"
                 }
               }
             }
           }
         },
         {
-          "title": "Footer-Menu-Block",
+          "title": "Footer Menu Block",
           "id": "footer-menu-block",
           "plugins": {
             "xwalk": {
@@ -198,37 +198,37 @@
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
                   "model": "footer-menu-block",
-                  "name": "Footer-Menu-Block"
+                  "name": "Footer Menu Block"
                 }
               }
             }
           }
         },
         {
-          "title": "Footer-Menu-Link-Item",
-          "id": "footer-menu-link-item",
+          "title": "Footer Menu Item",
+          "id": "footer-menu-item",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "footer-menu-link-item",
-                  "name": "Footer-Menu-Link-Item"
+                  "model": "footer-menu-item",
+                  "name": "Footer Menu Item"
                 }
               }
             }
           }
         },
         {
-          "title": "Secondary-Nav-Link-Item",
-          "id": "secondary-nav-link-item",
+          "title": "Footer Secondary Nav Link",
+          "id": "footer-secondary-nav-link",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "secondary-nav-link-item",
-                  "name": "Secondary-Nav-Link-Item"
+                  "model": "footer-secondary-nav-link",
+                  "name": "Footer Secondary Nav Link"
                 }
               }
             }

@@ -38,8 +38,8 @@
       "fields": [
         {
           "component": "text",
-          "label": "Section Heading",
-          "name": "sectionHeading"
+          "label": "Section Headline",
+          "name": "headline"
         },
         {
           "component": "container",
@@ -55,22 +55,22 @@
         {
           "component": "reference",
           "label": "Mobile Image (max-width: 576px)",
-          "name": "pictureMobile576"
+          "name": "imageMobile576"
         },
         {
           "component": "reference",
           "label": "Mobile Image (max-width: 799px)",
-          "name": "pictureMobile799"
+          "name": "imageMobile799"
         },
         {
           "component": "reference",
-          "label": "Desktop Image",
-          "name": "desktopImage"
+          "label": "Default Image",
+          "name": "imageDefault"
         },
         {
           "component": "text",
-          "label": "Slide Heading",
-          "name": "slideHeading"
+          "label": "Slide Headline",
+          "name": "slideHeadline"
         },
         {
           "component": "richtext",

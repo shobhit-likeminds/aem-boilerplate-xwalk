@@ -61,20 +61,20 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Image (Desktop)",
+          "label": "Desktop Image",
           "name": "imageDesktop",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Image (Tablet/Mobile)",
+          "label": "Tablet/Mobile Image",
           "name": "imageTablet",
           "valueType": "string"
         },
         {
-          "component": "reference",
-          "label": "Image (Fallback - \u003cimg src\u003e)",
-          "name": "imageFallback",
+          "component": "text",
+          "label": "Image Alt Text",
+          "name": "altText",
           "valueType": "string"
         },
         {

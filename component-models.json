@@ -218,46 +218,50 @@
     "fields": [
       {
         "component": "reference",
-        "label": "Logo",
-        "name": "logo"
+        "label": "Footer Logo",
+        "name": "logo",
+        "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "Logo Link",
-        "name": "logoLink"
+        "label": "Footer Logo Link",
+        "name": "logoLink",
+        "valueType": "string"
       },
       {
         "component": "container",
-        "item": "social-link-item",
-        "label": "Social Links",
+        "item": "footer-social-link",
+        "label": "Footer Social Links",
         "name": "socialLinks"
       },
       {
         "component": "container",
         "item": "footer-menu-block",
         "label": "Footer Menu Blocks",
-        "name": "footerMenus"
+        "name": "footerMenuBlocks"
       },
       {
         "component": "container",
-        "item": "secondary-nav-link-item",
-        "label": "Secondary Navigation Links",
+        "item": "footer-secondary-nav-link",
+        "label": "Footer Secondary Nav Links",
         "name": "secondaryNavLinks"
       },
       {
-        "component": "text",
-        "label": "Copyright Text",
-        "name": "copyrightText"
+        "component": "richtext",
+        "label": "Footer Copyright Text",
+        "name": "copyrightText",
+        "valueType": "string"
       }
     ]
   },
   {
-    "id": "social-link-item",
+    "id": "footer-social-link",
     "fields": [
       {
         "component": "aem-content",
         "label": "Social Link URL",
-        "name": "link"
+        "name": "link",
+        "valueType": "string"
       },
       {
         "component": "richtext",
@@ -272,55 +276,61 @@
     "fields": [
       {
         "component": "text",
-        "label": "Block Heading",
-        "name": "heading"
+        "label": "Menu Block Label",
+        "name": "blockLabel",
+        "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "Block Heading Link",
-        "name": "headingLink"
+        "label": "Menu Block Link",
+        "name": "blockLink",
+        "valueType": "string"
       },
       {
         "component": "container",
-        "item": "footer-menu-link-item",
-        "label": "Menu Links",
-        "name": "links"
+        "item": "footer-menu-item",
+        "label": "Footer Menu Block Items",
+        "name": "menuItems"
       }
     ]
   },
   {
-    "id": "footer-menu-link-item",
+    "id": "footer-menu-item",
     "fields": [
       {
         "component": "text",
-        "label": "Link Label",
-        "name": "label"
+        "label": "Menu Item Label",
+        "name": "itemLabel",
+        "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "Link URL",
-        "name": "link"
+        "label": "Menu Item Link",
+        "name": "itemLink",
+        "valueType": "string"
       },
       {
         "component": "richtext",
-        "label": "Navigation Hierarchy",
+        "label": "Menu Item Hierarchy (Submenu)",
         "name": "hierarchy-tree",
         "valueType": "string"
       }
     ]
   },
   {
-    "id": "secondary-nav-link-item",
+    "id": "footer-secondary-nav-link",
     "fields": [
       {
         "component": "text",
         "label": "Secondary Nav Label",
-        "name": "label"
+        "name": "label",
+        "valueType": "string"
       },
       {
         "component": "aem-content",
         "label": "Secondary Nav Link",
-        "name": "link"
+        "name": "link",
+        "valueType": "string"
       }
     ]
   },
@@ -933,20 +943,20 @@
     "fields": [
       {
         "component": "reference",
-        "label": "Desktop Image",
+        "label": "Image (Desktop)",
         "name": "imageDesktop",
         "valueType": "string"
       },
       {
         "component": "reference",
-        "label": "Tablet/Mobile Image",
+        "label": "Image (Tablet/Mobile)",
         "name": "imageTablet",
         "valueType": "string"
       },
       {
-        "component": "text",
-        "label": "Image Alt Text",
-        "name": "altText",
+        "component": "reference",
+        "label": "Image (Fallback - <img src>)",
+        "name": "imageFallback",
         "valueType": "string"
       },
       {
@@ -1038,8 +1048,8 @@
     "fields": [
       {
         "component": "text",
-        "label": "Section Headline",
-        "name": "headline"
+        "label": "Section Heading",
+        "name": "sectionHeading"
       },
       {
         "component": "container",
@@ -1055,22 +1065,22 @@
       {
         "component": "reference",
         "label": "Mobile Image (max-width: 576px)",
-        "name": "imageMobile576"
+        "name": "pictureMobile576"
       },
       {
         "component": "reference",
         "label": "Mobile Image (max-width: 799px)",
-        "name": "imageMobile799"
+        "name": "pictureMobile799"
       },
       {
         "component": "reference",
-        "label": "Default Image",
-        "name": "imageDefault"
+        "label": "Desktop Image",
+        "name": "desktopImage"
       },
       {
         "component": "text",
-        "label": "Slide Headline",
-        "name": "slideHeadline"
+        "label": "Slide Heading",
+        "name": "slideHeading"
       },
       {
         "component": "richtext",
