@@ -52,7 +52,7 @@
           "component": "container",
           "item": "business-vertical-item",
           "label": "Business Verticals",
-          "name": "verticals"
+          "name": "businessVerticals"
         }
       ]
     },
@@ -61,25 +61,25 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Desktop Image",
+          "label": "Image (Desktop)",
           "name": "imageDesktop",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Tablet Image",
+          "label": "Image (Tablet/Mobile)",
           "name": "imageTablet",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Mobile Image",
-          "name": "imageMobile",
+          "label": "Image (Fallback - \u003cimg src\u003e)",
+          "name": "imageFallback",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Vertical Title",
+          "label": "Business Title",
           "name": "title",
           "valueType": "string"
         },
@@ -91,7 +91,7 @@
         },
         {
           "component": "aem-content",
-          "label": "Vertical Link",
+          "label": "Business Link",
           "name": "link",
           "valueType": "string"
         }

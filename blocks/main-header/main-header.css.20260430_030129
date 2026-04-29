@@ -1,0 +1,1 @@
+.swiper:not(.swiper-watch-progress) { .swiper-lazy-preloader{animation:swiper-preloader-spin 1s linear infinite} }

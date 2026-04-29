@@ -218,45 +218,51 @@
     "fields": [
       {
         "component": "reference",
-        "label": "Footer Logo",
+        "label": "Logo Image",
         "name": "logo",
         "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "Footer Logo Link",
+        "label": "Logo Link",
         "name": "logoLink",
         "valueType": "string"
       },
       {
         "component": "container",
-        "item": "footer-social-link",
-        "label": "Footer Social Links",
+        "item": "social-link-item",
+        "label": "Social Links",
         "name": "socialLinks"
       },
       {
         "component": "container",
-        "item": "footer-menu-block",
-        "label": "Footer Menu Blocks",
-        "name": "footerMenuBlocks"
+        "item": "footer-link-block",
+        "label": "Footer Link Blocks",
+        "name": "footerLinkBlocks"
       },
       {
         "component": "container",
-        "item": "footer-secondary-nav-link",
-        "label": "Footer Secondary Nav Links",
-        "name": "secondaryNavLinks"
+        "item": "secondary-nav-item",
+        "label": "Secondary Nav Links",
+        "name": "secondaryNav"
       },
       {
         "component": "richtext",
-        "label": "Footer Copyright Text",
+        "label": "Copyright Text",
         "name": "copyrightText",
         "valueType": "string"
       }
     ]
   },
   {
-    "id": "footer-social-link",
+    "id": "social-link-item",
     "fields": [
+      {
+        "component": "text",
+        "label": "Platform Name",
+        "name": "platform",
+        "valueType": "string"
+      },
       {
         "component": "aem-content",
         "label": "Social Link URL",
@@ -272,53 +278,70 @@
     ]
   },
   {
-    "id": "footer-menu-block",
+    "id": "footer-link-block",
     "fields": [
       {
         "component": "text",
-        "label": "Menu Block Label",
+        "label": "Block Label",
         "name": "blockLabel",
         "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "Menu Block Link",
+        "label": "Block Link",
         "name": "blockLink",
         "valueType": "string"
       },
       {
         "component": "container",
-        "item": "footer-menu-item",
-        "label": "Footer Menu Block Items",
-        "name": "menuItems"
+        "item": "footer-link-subitem",
+        "label": "Links",
+        "name": "links"
       }
     ]
   },
   {
-    "id": "footer-menu-item",
+    "id": "footer-link-subitem",
     "fields": [
       {
         "component": "text",
-        "label": "Menu Item Label",
-        "name": "itemLabel",
+        "label": "Link Label",
+        "name": "label",
         "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "Menu Item Link",
-        "name": "itemLink",
+        "label": "Link URL",
+        "name": "link",
         "valueType": "string"
       },
       {
         "component": "richtext",
-        "label": "Menu Item Hierarchy (Submenu)",
+        "label": "Submenu Hierarchy",
         "name": "hierarchy-tree",
         "valueType": "string"
       }
     ]
   },
   {
-    "id": "footer-secondary-nav-link",
+    "id": "footer-link-subsubitem",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Submenu Link Label",
+        "name": "label",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Submenu Link URL",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "secondary-nav-item",
     "fields": [
       {
         "component": "text",
@@ -446,26 +469,22 @@
       {
         "component": "reference",
         "label": "Main Logo",
-        "name": "mainLogo",
-        "valueType": "string"
+        "name": "mainLogo"
       },
       {
         "component": "aem-content",
         "label": "Main Logo Link",
-        "name": "mainLogoLink",
-        "valueType": "string"
+        "name": "mainLogoLink"
       },
       {
         "component": "reference",
-        "label": "Anniversary Logo (80th Year)",
-        "name": "anniversaryLogo",
-        "valueType": "string"
+        "label": "80th Year Logo",
+        "name": "year80Logo"
       },
       {
         "component": "aem-content",
-        "label": "Anniversary Logo Link",
-        "name": "anniversaryLogoLink",
-        "valueType": "string"
+        "label": "80th Year Logo Link",
+        "name": "year80LogoLink"
       },
       {
         "component": "container",
@@ -475,9 +494,9 @@
       },
       {
         "component": "container",
-        "item": "contact-link-item",
-        "label": "Contact Links",
-        "name": "contactLinks"
+        "item": "icon-link-item",
+        "label": "Icon Links",
+        "name": "iconLinks"
       },
       {
         "component": "container",
@@ -493,67 +512,62 @@
       {
         "component": "text",
         "label": "Menu Label",
-        "name": "label",
-        "valueType": "string"
+        "name": "label"
       },
       {
         "component": "aem-content",
         "label": "Menu Link",
-        "name": "link",
-        "valueType": "string"
+        "name": "link"
       },
       {
         "component": "richtext",
         "label": "Navigation Hierarchy",
-        "name": "hierarchy-tree",
-        "valueType": "string"
+        "name": "hierarchy-tree"
       },
       {
         "component": "text",
-        "label": "Mega Menu Left Panel Heading",
-        "name": "leftPanelHeading",
-        "valueType": "string"
+        "label": "Mega Menu Heading",
+        "name": "megaMenuHeading"
       },
       {
         "component": "richtext",
-        "label": "Mega Menu Left Panel Description",
-        "name": "leftPanelDesc",
-        "valueType": "string"
+        "label": "Mega Menu Description",
+        "name": "megaMenuDescription"
       },
       {
         "component": "text",
-        "label": "Mega Menu Left Panel Subdescription",
-        "name": "leftPanelSubdesc",
-        "valueType": "string"
+        "label": "Mega Menu Sub Description",
+        "name": "megaMenuSubdesc"
       },
       {
         "component": "richtext",
-        "label": "Mega Menu Left Panel List (Facts/Stats)",
-        "name": "leftPanelList",
-        "valueType": "string"
+        "label": "Mega Menu Facts (HTML allowed)",
+        "name": "megaMenuFacts"
       },
       {
         "component": "richtext",
-        "label": "Mega Menu Submenu Links HTML",
-        "name": "subMenuLinks",
-        "valueType": "string"
+        "label": "Mega Menu Highlight",
+        "name": "megaMenuHighlight"
+      },
+      {
+        "component": "richtext",
+        "label": "Mega Menu Links",
+        "name": "megaMenuLinks"
       }
     ]
   },
   {
-    "id": "contact-link-item",
+    "id": "icon-link-item",
     "fields": [
       {
-        "component": "aem-content",
-        "label": "Contact Link",
-        "name": "link",
-        "valueType": "string"
+        "component": "text",
+        "label": "Icon Link Label",
+        "name": "label"
       },
       {
-        "component": "text",
-        "label": "Contact Link Label",
-        "name": "label",
-        "valueType": "string"
+        "component": "aem-content",
+        "label": "Icon Link URL",
+        "name": "link"
       }
     ]
   },
@@ -561,28 +575,24 @@
     "id": "press-release-item",
     "fields": [
       {
-        "component": "aem-content",
-        "label": "Press Release Link",
-        "name": "pressReleaseLink",
-        "valueType": "string"
-      },
-      {
         "component": "text",
         "label": "Press Release Title",
-        "name": "pressReleaseTitle",
-        "valueType": "string"
+        "name": "pressReleaseTitle"
+      },
+      {
+        "component": "aem-content",
+        "label": "Press Release Link",
+        "name": "pressReleaseLink"
       },
       {
         "component": "text",
         "label": "Press Release Date",
-        "name": "pressReleaseDate",
-        "valueType": "string"
+        "name": "pressReleaseDate"
       },
       {
         "component": "text",
         "label": "Press Release Category",
-        "name": "pressReleaseCategory",
-        "valueType": "string"
+        "name": "pressReleaseCategory"
       }
     ]
   },
@@ -934,7 +944,7 @@
         "component": "container",
         "item": "business-vertical-item",
         "label": "Business Verticals",
-        "name": "businessVerticals"
+        "name": "verticals"
       }
     ]
   },
@@ -943,25 +953,25 @@
     "fields": [
       {
         "component": "reference",
-        "label": "Image (Desktop)",
+        "label": "Desktop Image",
         "name": "imageDesktop",
         "valueType": "string"
       },
       {
         "component": "reference",
-        "label": "Image (Tablet/Mobile)",
+        "label": "Tablet Image",
         "name": "imageTablet",
         "valueType": "string"
       },
       {
         "component": "reference",
-        "label": "Image (Fallback - <img src>)",
-        "name": "imageFallback",
+        "label": "Mobile Image",
+        "name": "imageMobile",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Business Title",
+        "label": "Vertical Title",
         "name": "title",
         "valueType": "string"
       },
@@ -973,7 +983,7 @@
       },
       {
         "component": "aem-content",
-        "label": "Business Link",
+        "label": "Vertical Link",
         "name": "link",
         "valueType": "string"
       }
