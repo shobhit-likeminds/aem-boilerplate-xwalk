@@ -11,11 +11,7 @@ export default async function decorate(block) {
   const sectionHeader = document.createElement('div');
   sectionHeader.classList.add('section-header', 'text-center');
   const heading = document.createElement('h2');
-  heading.classList.add('heading', 'font-regular', 'aos-init', 'aos-animate');
-  heading.setAttribute('data-aos', 'fade-up');
-  heading.setAttribute('data-aos-offset', '100');
-  heading.setAttribute('data-aos-duration', '650');
-  heading.setAttribute('data-aos-easing', 'ease-in-out');
+  heading.classList.add('heading', 'font-regular');
   moveInstrumentation(headingRow, heading);
   heading.textContent = headingRow.textContent.trim();
   sectionHeader.append(heading);
@@ -23,77 +19,47 @@ export default async function decorate(block) {
 
   // Container for stories
   const container = document.createElement('div');
-  container.classList.add('container', 'aos-init', 'aos-animate');
-  container.setAttribute('data-aos', 'fade-up');
-  container.setAttribute('data-aos-offset', '100');
-  container.setAttribute('data-aos-duration', '650');
-  container.setAttribute('data-aos-easing', 'ease-in-out');
+  container.classList.add('container');
 
-  const flickitySliderWrap = document.createElement('div');
-  flickitySliderWrap.classList.add('flickity-slider-mobile-wrap', 'grid-layout');
-  flickitySliderWrap.setAttribute('data-flickity', '{ "wrapAround": false, "lazyLoad": true, "pageDots": true, "prevNextButtons": false, "imagesLoaded": true, "cellAlign": "left", "watchCSS": true, "adaptiveHeight": true }');
+  // Swiper container setup
+  const swiperContainer = document.createElement('div');
+  swiperContainer.classList.add('flickity-slider-mobile-wrap', 'grid-layout', 'swiper'); // Added 'swiper' class
+  swiperContainer.dataset.flickity = '{ "wrapAround": false, "lazyLoad": true, "pageDots": true, "prevNextButtons": false, "imagesLoaded": true, "cellAlign": "left", "watchCSS": true, "adaptiveHeight": true }';
 
-  const slidesContainer = document.createElement('div');
-  slidesContainer.classList.add('slides');
+  const swiperWrapper = document.createElement('div');
+  swiperWrapper.classList.add('slides', 'swiper-wrapper'); // Added 'swiper-wrapper' class
 
   storyRows.forEach((row) => {
     const [
-      imageCell,
+      imageMainCell,
       imageHorizontalCell,
       imageVerticalCell,
       categoryCell,
       descriptionCell,
-      linkCell,
-      ctaLabelCell,
+      storyLinkCell,
+      storyLinkLabelCell,
       dateCell,
+      dateTimeCell,
     ] = [...row.children];
 
-    const slideWrap = document.createElement('div');
-    // The original HTML has <div class="slides"> followed by <div class="wrap">.
-    // The generated JS was creating <div class="slides"> (slideWrap) and then
-    // appending <div class="wrap"> to it. The outer `slidesContainer` already
-    // has the 'slides' class. The `slideWrap` here should correspond to the
-    // individual slide item, which in the original HTML is just a direct child
-    // of the `slides` container, and its immediate child is `wrap`.
-    // So, `slideWrap` should not have the 'slides' class itself.
-    // The original HTML structure is:
-    // <div class="slides">
-    //   <div class="wrap">...</div>
-    //   <div class="wrap">...</div>
-    // </div>
-    // The `slidesContainer` already has the 'slides' class.
-    // The `slideWrap` variable in the generated code is effectively the `wrap` element.
-    // Renaming `slideWrap` to `wrapElement` and removing the `slides` class from it.
-    // Re-evaluating based on the original HTML, each story item is wrapped in `<div class="slides">`
-    // within the main `<div class="slides">` container. This is a bit unusual but matches the HTML.
-    // So, `slideWrap` should indeed have the 'slides' class.
-    slideWrap.classList.add('slides');
+    const slide = document.createElement('div');
+    slide.classList.add('slides', 'swiper-slide'); // Added 'swiper-slide' class
 
     const wrap = document.createElement('div');
     wrap.classList.add('wrap');
 
     const imageWrap = document.createElement('div');
     imageWrap.classList.add('image-wrap');
-    const picture = imageCell.querySelector('picture');
-    if (picture) {
-      const img = picture.querySelector('img');
-      if (img) {
-        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-        const optimizedImg = optimizedPic.querySelector('img');
-        optimizedImg.classList.add('thumb-img', 'img-fluid');
-        optimizedImg.setAttribute('loading', 'lazy');
-
-        const horizontalImg = imageHorizontalCell.querySelector('img');
-        if (horizontalImg) {
-          optimizedImg.setAttribute('data-img-horizontal', horizontalImg.src);
-        }
-        const verticalImg = imageVerticalCell.querySelector('img');
-        if (verticalImg) {
-          optimizedImg.setAttribute('data-img-vertical', verticalImg.src);
-        }
-        moveInstrumentation(imageCell, optimizedPic);
-        imageWrap.append(optimizedPic);
-      }
+    const mainPicture = imageMainCell.querySelector('picture');
+    if (mainPicture) {
+      const img = mainPicture.querySelector('img');
+      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+      const optimizedImg = optimizedPic.querySelector('img');
+      optimizedImg.classList.add('thumb-img', 'img-fluid');
+      optimizedImg.dataset.imgHorizontal = imageHorizontalCell.querySelector('img')?.src || '';
+      optimizedImg.dataset.imgVertical = imageVerticalCell.querySelector('img')?.src || '';
+      moveInstrumentation(img, optimizedImg);
+      imageWrap.append(optimizedPic);
     }
     wrap.append(imageWrap);
 
@@ -107,59 +73,65 @@ export default async function decorate(block) {
 
     const description = document.createElement('div');
     description.classList.add('text');
-    description.innerHTML = descriptionCell.innerHTML;
+    description.textContent = descriptionCell.textContent.trim();
     contentWrap.append(description);
 
     const storyLink = document.createElement('a');
     storyLink.classList.add('btn', 'btn-link');
-    const foundLink = linkCell.querySelector('a');
+    const foundLink = storyLinkCell.querySelector('a');
     if (foundLink) {
-      storyLink.href = foundLink.href;
+      storyLink.href = foundLink.href; // Correctly read href from aem-content cell
     }
-    storyLink.textContent = ctaLabelCell.textContent.trim();
-    moveInstrumentation(linkCell, storyLink);
+    storyLink.textContent = storyLinkLabelCell.textContent.trim();
+    moveInstrumentation(storyLinkCell, storyLink); // Move instrumentation from link cell
     contentWrap.append(storyLink);
 
     const dateDiv = document.createElement('div');
     dateDiv.classList.add('date');
     const time = document.createElement('time');
-    // Original HTML has datetime attribute, but its value is dynamic.
-    // If the dateCell content can be parsed into a valid date, set datetime.
-    // Otherwise, it's safer to omit or leave empty as in original.
-    // For now, leaving empty as per original HTML's example.
-    time.setAttribute('datetime', '');
+    time.setAttribute('datetime', dateTimeCell.textContent.trim());
     time.textContent = dateCell.textContent.trim();
     dateDiv.append(time);
     contentWrap.append(dateDiv);
 
     wrap.append(contentWrap);
-    moveInstrumentation(row, wrap);
-    slideWrap.append(wrap);
-    slidesContainer.append(slideWrap);
+    moveInstrumentation(row, wrap); // Move instrumentation from the row to the wrap
+    slide.append(wrap);
+    swiperWrapper.append(slide);
   });
 
-  flickitySliderWrap.append(slidesContainer);
-  container.append(flickitySliderWrap);
+  swiperContainer.append(swiperWrapper);
+  container.append(swiperContainer);
   section.append(container);
 
   block.replaceChildren(section);
 
-  // Flickity Carousel Initialization (CHECK 2.5)
-  // The original HTML indicates Flickity is used via `data-flickity` attribute.
-  // We need to load Flickity and initialize it.
-  await loadCSS('https://unpkg.com/flickity@2/dist/flickity.min.css');
-  await loadScript('https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js');
+  // Load Swiper if not already loaded
+  await loadCSS('https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css');
+  await loadScript('https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js');
 
-  // Initialize Flickity after the block is in the DOM
+  // Initialize Swiper
   // eslint-disable-next-line no-undef
-  if (typeof Flickity !== 'undefined') {
-    // The data-flickity attribute already contains the configuration.
-    // Flickity automatically initializes elements with this attribute.
-    // However, if we are dynamically creating the element, we might need to
-    // explicitly initialize it or ensure the attribute is present before Flickity loads.
-    // Since Flickity.pkgd.min.js is loaded, it should auto-initialize.
-    // If it doesn't, we would need:
-    // new Flickity(flickitySliderWrap, JSON.parse(flickitySliderWrap.dataset.flickity));
-    // For now, assuming auto-initialization from the attribute.
+  if (typeof Swiper !== 'undefined') {
+    // The original Flickity config is not directly compatible with Swiper.
+    // We'll use a basic Swiper config and adapt from the Flickity dataset.
+    const flickityConfig = JSON.parse(swiperContainer.dataset.flickity);
+    // eslint-disable-next-line no-new
+    new Swiper(swiperContainer, {
+      slidesPerView: 'auto', // 'auto' for responsive slides
+      loop: flickityConfig.wrapAround, // Map wrapAround to loop
+      pagination: {
+        el: '.swiper-pagination', // Placeholder, create if needed
+        clickable: true,
+      },
+      navigation: {
+        nextEl: '.swiper-button-next', // Placeholder, create if needed
+        prevEl: '.swiper-button-prev', // Placeholder, create if needed
+      },
+      // Swiper has no direct equivalent for lazyLoad: true, imagesLoaded: true, adaptiveHeight: true
+      // These are handled by Swiper's internal lazy loading and auto height features
+      // cellAlign: 'left' is default for Swiper slidesPerView: 'auto'
+      // watchCSS is not directly applicable to Swiper init, it's a CSS media query concept
+    });
   }
 }
