@@ -59,11 +59,12 @@
   {
     "id": "footer-main",
     "components": [
-      "footer-social-link",
-      "footer-menu-group",
+      "social-link-item",
+      "footer-menu-block",
       "footer-menu-item",
-      "footer-menu-sub-item",
-      "footer-secondary-nav-item"
+      "footer-sub-menu-item",
+      "footer-inner-sub-menu-item",
+      "secondary-nav-item"
     ]
   },
   {
@@ -103,7 +104,7 @@
     "id": "spotlight-home",
     "components": [
       "spotlight-slide",
-      "quick-link"
+      "spotlight-quick-link"
     ]
   },
   {

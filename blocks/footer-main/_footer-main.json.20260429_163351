@@ -17,30 +17,30 @@
       }
     },
     {
-      "title": "Social Link Item",
-      "id": "social-link-item",
+      "title": "Footer Social Link",
+      "id": "footer-social-link",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "social-link-item",
-              "name": "Social Link Item"
+              "model": "footer-social-link",
+              "name": "Footer Social Link"
             }
           }
         }
       }
     },
     {
-      "title": "Footer Menu Block",
-      "id": "footer-menu-block",
+      "title": "Footer Menu Group",
+      "id": "footer-menu-group",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "footer-menu-block",
-              "name": "Footer Menu Block"
+              "model": "footer-menu-group",
+              "name": "Footer Menu Group"
             }
           }
         }
@@ -62,45 +62,30 @@
       }
     },
     {
-      "title": "Footer Sub Menu Item",
-      "id": "footer-sub-menu-item",
+      "title": "Footer Menu Sub Item",
+      "id": "footer-menu-sub-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "footer-sub-menu-item",
-              "name": "Footer Sub Menu Item"
+              "model": "footer-menu-sub-item",
+              "name": "Footer Menu Sub Item"
             }
           }
         }
       }
     },
     {
-      "title": "Footer Inner Sub Menu Item",
-      "id": "footer-inner-sub-menu-item",
+      "title": "Footer Secondary Nav Item",
+      "id": "footer-secondary-nav-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "footer-inner-sub-menu-item",
-              "name": "Footer Inner Sub Menu Item"
-            }
-          }
-        }
-      }
-    },
-    {
-      "title": "Secondary Nav Item",
-      "id": "secondary-nav-item",
-      "plugins": {
-        "xwalk": {
-          "page": {
-            "resourceType": "core/franklin/components/block/v1/block/item",
-            "template": {
-              "model": "secondary-nav-item",
-              "name": "Secondary Nav Item"
+              "model": "footer-secondary-nav-item",
+              "name": "Footer Secondary Nav Item"
             }
           }
         }
@@ -125,24 +110,24 @@
         },
         {
           "component": "container",
-          "item": "social-link-item",
-          "label": "Social Links",
+          "item": "footer-social-link",
+          "label": "Footer Social Links",
           "name": "socialLinks"
         },
         {
           "component": "container",
-          "item": "footer-menu-block",
-          "label": "Footer Menu Blocks",
-          "name": "footerMenuBlocks"
+          "item": "footer-menu-group",
+          "label": "Footer Menu Groups",
+          "name": "menuGroups"
         },
         {
           "component": "container",
-          "item": "secondary-nav-item",
-          "label": "Secondary Navigation",
+          "item": "footer-secondary-nav-item",
+          "label": "Footer Secondary Navigation",
           "name": "secondaryNav"
         },
         {
-          "component": "text",
+          "component": "richtext",
           "label": "Copyright Text",
           "name": "copyrightText",
           "valueType": "string"
@@ -150,7 +135,7 @@
       ]
     },
     {
-      "id": "social-link-item",
+      "id": "footer-social-link",
       "fields": [
         {
           "component": "aem-content",
@@ -167,24 +152,24 @@
       ]
     },
     {
-      "id": "footer-menu-block",
+      "id": "footer-menu-group",
       "fields": [
         {
           "component": "text",
-          "label": "Menu Block Heading",
-          "name": "blockHeading",
+          "label": "Menu Group Title",
+          "name": "groupTitle",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "label": "Menu Block Heading Link",
-          "name": "blockHeadingLink",
+          "label": "Menu Group Title Link",
+          "name": "groupTitleLink",
           "valueType": "string"
         },
         {
           "component": "container",
           "item": "footer-menu-item",
-          "label": "Menu Items",
+          "label": "Footer Menu Items",
           "name": "menuItems"
         }
       ]
@@ -205,65 +190,42 @@
           "valueType": "string"
         },
         {
-          "component": "container",
-          "item": "footer-sub-menu-item",
-          "label": "Sub Menu Items",
-          "name": "subMenuItems"
+          "component": "richtext",
+          "label": "Submenu HTML",
+          "name": "hierarchy-tree",
+          "valueType": "string"
         }
       ]
     },
     {
-      "id": "footer-sub-menu-item",
+      "id": "footer-menu-sub-item",
       "fields": [
         {
           "component": "text",
-          "label": "Sub Menu Item Label",
+          "label": "Submenu Item Label",
           "name": "label",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "label": "Sub Menu Item Link",
-          "name": "link",
-          "valueType": "string"
-        },
-        {
-          "component": "container",
-          "item": "footer-inner-sub-menu-item",
-          "label": "Inner Sub Menu Items",
-          "name": "innerSubMenuItems"
-        }
-      ]
-    },
-    {
-      "id": "footer-inner-sub-menu-item",
-      "fields": [
-        {
-          "component": "text",
-          "label": "Inner Sub Menu Item Label",
-          "name": "label",
-          "valueType": "string"
-        },
-        {
-          "component": "aem-content",
-          "label": "Inner Sub Menu Item Link",
+          "label": "Submenu Item Link",
           "name": "link",
           "valueType": "string"
         }
       ]
     },
     {
-      "id": "secondary-nav-item",
+      "id": "footer-secondary-nav-item",
       "fields": [
         {
           "component": "text",
-          "label": "Secondary Navigation Item Label",
+          "label": "Secondary Navigation Label",
           "name": "label",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "label": "Secondary Navigation Item Link",
+          "label": "Secondary Navigation Link",
           "name": "link",
           "valueType": "string"
         }
@@ -274,12 +236,11 @@
     {
       "id": "footer-main",
       "components": [
-        "social-link-item",
-        "footer-menu-block",
+        "footer-social-link",
+        "footer-menu-group",
         "footer-menu-item",
-        "footer-sub-menu-item",
-        "footer-inner-sub-menu-item",
-        "secondary-nav-item"
+        "footer-menu-sub-item",
+        "footer-secondary-nav-item"
       ]
     }
   ]

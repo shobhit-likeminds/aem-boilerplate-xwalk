@@ -175,30 +175,30 @@
           }
         },
         {
-          "title": "Footer Social Link",
-          "id": "footer-social-link",
+          "title": "Social Link Item",
+          "id": "social-link-item",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "footer-social-link",
-                  "name": "Footer Social Link"
+                  "model": "social-link-item",
+                  "name": "Social Link Item"
                 }
               }
             }
           }
         },
         {
-          "title": "Footer Menu Group",
-          "id": "footer-menu-group",
+          "title": "Footer Menu Block",
+          "id": "footer-menu-block",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "footer-menu-group",
-                  "name": "Footer Menu Group"
+                  "model": "footer-menu-block",
+                  "name": "Footer Menu Block"
                 }
               }
             }
@@ -220,30 +220,45 @@
           }
         },
         {
-          "title": "Footer Menu Sub Item",
-          "id": "footer-menu-sub-item",
+          "title": "Footer Sub Menu Item",
+          "id": "footer-sub-menu-item",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "footer-menu-sub-item",
-                  "name": "Footer Menu Sub Item"
+                  "model": "footer-sub-menu-item",
+                  "name": "Footer Sub Menu Item"
                 }
               }
             }
           }
         },
         {
-          "title": "Footer Secondary Nav Item",
-          "id": "footer-secondary-nav-item",
+          "title": "Footer Inner Sub Menu Item",
+          "id": "footer-inner-sub-menu-item",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "footer-secondary-nav-item",
-                  "name": "Footer Secondary Nav Item"
+                  "model": "footer-inner-sub-menu-item",
+                  "name": "Footer Inner Sub Menu Item"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Secondary Nav Item",
+          "id": "secondary-nav-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "secondary-nav-item",
+                  "name": "Secondary Nav Item"
                 }
               }
             }
@@ -496,15 +511,15 @@
           }
         },
         {
-          "title": "Quick Link",
-          "id": "quick-link",
+          "title": "Spotlight Quick Link",
+          "id": "spotlight-quick-link",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "quick-link",
-                  "name": "Quick Link"
+                  "model": "spotlight-quick-link",
+                  "name": "Spotlight Quick Link"
                 }
               }
             }
