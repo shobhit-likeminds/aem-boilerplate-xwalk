@@ -77,10 +77,9 @@
   {
     "id": "main-header",
     "components": [
-      "header-logo",
       "navigation-item",
-      "icon-nav-item",
-      "header-press-release"
+      "icon-link-item",
+      "press-release-slide"
     ]
   },
   {
