@@ -218,8 +218,8 @@
     "fields": [
       {
         "component": "reference",
-        "label": "Logo Image",
-        "name": "logoImage"
+        "label": "Brand Logo",
+        "name": "logo"
       },
       {
         "component": "aem-content",
@@ -228,7 +228,7 @@
       },
       {
         "component": "container",
-        "item": "footer-social-link",
+        "item": "social-link-item",
         "label": "Social Links",
         "name": "socialLinks"
       },
@@ -236,23 +236,23 @@
         "component": "container",
         "item": "footer-menu-block",
         "label": "Footer Menu Blocks",
-        "name": "footerMenuBlocks"
+        "name": "footerMenus"
       },
       {
         "component": "container",
-        "item": "footer-secondary-nav-item",
-        "label": "Secondary Navigation",
-        "name": "secondaryNav"
+        "item": "footer-secondary-link-item",
+        "label": "Secondary Navigation Links",
+        "name": "secondaryLinks"
       },
       {
-        "component": "text",
+        "component": "richtext",
         "label": "Copyright Text",
         "name": "copyrightText"
       }
     ]
   },
   {
-    "id": "footer-social-link",
+    "id": "social-link-item",
     "fields": [
       {
         "component": "aem-content",
@@ -277,8 +277,8 @@
       },
       {
         "component": "aem-content",
-        "label": "Menu Block Title Link",
-        "name": "blockTitleLink"
+        "label": "Menu Block Link",
+        "name": "blockLink"
       },
       {
         "component": "container",
@@ -294,31 +294,47 @@
       {
         "component": "text",
         "label": "Menu Item Label",
-        "name": "label"
+        "name": "itemLabel"
       },
       {
         "component": "aem-content",
         "label": "Menu Item Link",
-        "name": "link"
+        "name": "itemLink"
       },
       {
         "component": "richtext",
-        "label": "Menu Item Hierarchy",
-        "name": "hierarchy-tree"
+        "label": "Navigation Hierarchy",
+        "name": "hierarchy-tree",
+        "valueType": "string"
       }
     ]
   },
   {
-    "id": "footer-secondary-nav-item",
+    "id": "footer-submenu-item",
     "fields": [
       {
         "component": "text",
-        "label": "Secondary Nav Label",
+        "label": "Submenu Label",
         "name": "label"
       },
       {
         "component": "aem-content",
-        "label": "Secondary Nav Link",
+        "label": "Submenu Link",
+        "name": "link"
+      }
+    ]
+  },
+  {
+    "id": "footer-secondary-link-item",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Secondary Link Label",
+        "name": "label"
+      },
+      {
+        "component": "aem-content",
+        "label": "Secondary Link",
         "name": "link"
       }
     ]
@@ -434,41 +450,41 @@
     "fields": [
       {
         "component": "reference",
-        "label": "Main Logo",
-        "name": "mainLogo"
+        "label": "Logo",
+        "name": "logo"
       },
       {
         "component": "aem-content",
-        "label": "Main Logo Link",
-        "name": "mainLogoLink"
+        "label": "Logo Link",
+        "name": "logo-link"
       },
       {
         "component": "reference",
-        "label": "80th Year Logo",
-        "name": "year80Logo"
+        "label": "Year Logo",
+        "name": "year-logo"
       },
       {
         "component": "aem-content",
-        "label": "80th Year Logo Link",
-        "name": "year80LogoLink"
+        "label": "Year Logo Link",
+        "name": "year-logo-link"
       },
       {
         "component": "container",
         "item": "navigation-item",
         "label": "Navigation Menu",
-        "name": "navigationMenu"
-      },
-      {
-        "component": "container",
-        "item": "press-release-slide",
-        "label": "Latest Two Press Releases",
-        "name": "pressReleaseSlides"
+        "name": "navigation-menu"
       },
       {
         "component": "container",
         "item": "icon-link-item",
         "label": "Icon Links",
-        "name": "iconLinks"
+        "name": "icon-links"
+      },
+      {
+        "component": "container",
+        "item": "press-release-item",
+        "label": "Press Releases",
+        "name": "press-releases"
       }
     ]
   },
@@ -492,53 +508,48 @@
       },
       {
         "component": "text",
-        "label": "Mega Menu Left Heading",
-        "name": "leftHeading"
+        "label": "Mega Menu Heading",
+        "name": "mega-menu-heading"
       },
       {
         "component": "text",
-        "label": "Mega Menu Left Description",
-        "name": "leftDescription"
+        "label": "Mega Menu Description",
+        "name": "mega-menu-desc"
       },
       {
         "component": "text",
-        "label": "Mega Menu Left Sub-Description",
-        "name": "leftSubDescription"
+        "label": "Mega Menu Sub-Description",
+        "name": "mega-menu-subdesc"
       },
       {
         "component": "richtext",
-        "label": "Mega Menu Highlighted Stats List",
-        "name": "highlightedStats"
-      },
-      {
-        "component": "richtext",
-        "label": "Mega Menu Sub-Menu (HTML List)",
-        "name": "subMenu"
+        "label": "Mega Menu List",
+        "name": "mega-menu-list"
       }
     ]
   },
   {
-    "id": "press-release-slide",
+    "id": "press-release-item",
     "fields": [
       {
         "component": "aem-content",
         "label": "Press Release Link",
-        "name": "pressReleaseLink"
+        "name": "press-release-link"
       },
       {
         "component": "text",
         "label": "Press Release Title",
-        "name": "pressReleaseTitle"
+        "name": "press-release-title"
       },
       {
         "component": "text",
         "label": "Press Release Date",
-        "name": "pressReleaseDate"
+        "name": "press-release-date"
       },
       {
         "component": "text",
         "label": "Press Release Category",
-        "name": "pressReleaseCategory"
+        "name": "press-release-category"
       }
     ]
   },
@@ -547,13 +558,13 @@
     "fields": [
       {
         "component": "aem-content",
-        "label": "Link",
-        "name": "iconLink"
+        "label": "Icon Link",
+        "name": "icon-link"
       },
       {
         "component": "text",
-        "label": "Label",
-        "name": "iconLabel"
+        "label": "Icon Label",
+        "name": "icon-label"
       }
     ]
   },
