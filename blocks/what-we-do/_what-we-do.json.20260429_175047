@@ -1,7 +1,7 @@
 {
   "definitions": [
     {
-      "title": "What-We-Do",
+      "title": "What We Do",
       "id": "what-we-do",
       "plugins": {
         "xwalk": {
@@ -10,14 +10,14 @@
             "template": {
               "filter": "what-we-do",
               "model": "what-we-do",
-              "name": "What-We-Do"
+              "name": "What We Do"
             }
           }
         }
       }
     },
     {
-      "title": "Business-Vertical-Item",
+      "title": "Business Vertical Item",
       "id": "business-vertical-item",
       "plugins": {
         "xwalk": {
@@ -25,7 +25,7 @@
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
               "model": "business-vertical-item",
-              "name": "Business-Vertical-Item"
+              "name": "Business Vertical Item"
             }
           }
         }

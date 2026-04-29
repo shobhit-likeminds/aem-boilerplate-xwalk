@@ -70,32 +70,32 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Background Image (max-width: 576px)",
-          "name": "backgroundImageMobile576",
+          "label": "Desktop Image",
+          "name": "imageDesktop",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Background Image (max-width: 799px)",
-          "name": "backgroundImageMobile799",
+          "label": "Tablet Image (max-width: 799px)",
+          "name": "imageTablet",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Background Image (desktop)",
-          "name": "backgroundImageDesktop",
+          "label": "Mobile Image (max-width: 576px)",
+          "name": "imageMobile",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Small Text",
-          "name": "smallText",
+          "label": "Eyebrow/Small Text",
+          "name": "eyebrow",
           "valueType": "string"
         },
         {
           "component": "richtext",
-          "label": "Heading",
-          "name": "heading",
+          "label": "Headline",
+          "name": "headline",
           "valueType": "string"
         },
         {
@@ -123,13 +123,13 @@
       "fields": [
         {
           "component": "aem-content",
-          "label": "Quick Link URL",
+          "label": "Link",
           "name": "link",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Quick Link Label",
+          "label": "Label",
           "name": "label",
           "valueType": "string"
         }
