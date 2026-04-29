@@ -55,19 +55,19 @@
         },
         {
           "component": "reference",
-          "label": "Image Desktop",
+          "label": "Card Desktop Image",
           "name": "imageDesktop",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Image Mobile",
+          "label": "Card Mobile Image",
           "name": "imageMobile",
           "valueType": "string"
         },
         {
           "component": "richtext",
-          "label": "Description",
+          "label": "Card Description",
           "name": "description",
           "valueType": "string"
         }
