@@ -2,110 +2,106 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const children = [...block.children];
+  const [headingRow, subheadingRow, ...cardRows] = [...block.children];
 
   const section = document.createElement('section');
   section.classList.add('section', 'grey-bg', 'spirit-of-rise');
-  moveInstrumentation(block, section);
 
-  // Section Header
-  const sectionHeader = document.createElement('div');
-  sectionHeader.classList.add('section-header', 'text-center', 'pb-3');
-
-  // Root rows have fixed schema: heading, description, then cards container
-  const [headingRow, descriptionRow, ...cardRows] = children;
+  const headerDiv = document.createElement('div');
+  headerDiv.classList.add('section-header', 'text-center', 'pb-3');
+  moveInstrumentation(headingRow, headerDiv);
 
   const heading = document.createElement('h2');
   heading.classList.add('heading', 'font-regular', 'aos-init', 'aos-animate');
-  heading.setAttribute('data-aos-easing', 'ease-in-out');
-  heading.setAttribute('data-aos', 'fade-up');
-  heading.setAttribute('data-aos-delay', '200');
-  moveInstrumentation(headingRow, heading);
   heading.textContent = headingRow.textContent.trim();
-  sectionHeader.append(heading);
+  // Add data-aos attributes from original HTML
+  heading.dataset.aosEasing = 'ease-in-out';
+  heading.dataset.aos = 'fade-up';
+  heading.dataset.aosDelay = '200';
+  headerDiv.append(heading);
 
-  const description = document.createElement('p');
-  description.classList.add('aos-init', 'aos-animate');
-  description.setAttribute('data-aos', 'fade-up');
-  description.setAttribute('data-aos-offset', '100');
-  description.setAttribute('data-aos-duration', '650');
-  description.setAttribute('data-aos-easing', 'ease-in-out');
-  moveInstrumentation(descriptionRow, description);
-  description.textContent = descriptionRow.textContent.trim();
-  sectionHeader.append(description);
+  const subheading = document.createElement('p');
+  subheading.classList.add('aos-init', 'aos-animate');
+  subheading.textContent = subheadingRow.textContent.trim();
+  // Add data-aos attributes from original HTML
+  subheading.dataset.aos = 'fade-up';
+  subheading.dataset.aosOffset = '100';
+  subheading.dataset.aosDuration = '650';
+  subheading.dataset.aosEasing = 'ease-in-out';
+  headerDiv.append(subheading);
 
-  section.append(sectionHeader);
+  section.append(headerDiv);
 
-  // Performance Driven Cards
   const performanceDriven = document.createElement('div');
   performanceDriven.classList.add('performance-driven', 'performace-driven-home');
 
   const container = document.createElement('div');
   container.classList.add('container');
-  performanceDriven.append(container);
 
   const cardsWrapper = document.createElement('div');
   cardsWrapper.classList.add('performace-driven-cards');
-  container.append(cardsWrapper);
 
   cardRows.forEach((row) => {
-    const [imageDesktopCell, imageMobileCell, cardDescriptionCell, cardLinkCell] = [...row.children];
+    const [imageMobileCell, imageDesktopCell, descriptionCell, cardLinkCell] = [...row.children];
 
-    const link = document.createElement('a');
-    link.classList.add('performace-driven-cards-link');
-    // For type=aem-content, read the href from the anchor inside the cell
-    const tempDiv = document.createElement('div');
-    tempDiv.innerHTML = cardLinkCell.innerHTML; // Use innerHTML to preserve potential button-container wrapper
-    const foundLink = tempDiv.querySelector('a');
+    const cardLink = document.createElement('a');
+    cardLink.classList.add('performace-driven-cards-link');
+    const foundLink = cardLinkCell.querySelector('a');
     if (foundLink) {
-      link.href = foundLink.href;
-      link.target = '_blank'; // From original HTML
+      cardLink.href = foundLink.href;
+      // Only set target="_blank" if it was present in the original HTML link
+      if (foundLink.target === '_blank') {
+        cardLink.target = '_blank';
+      }
     }
-    moveInstrumentation(row, link); // Move instrumentation from the item row to the top-level link
+    moveInstrumentation(row, cardLink);
 
     const cardWrapper = document.createElement('div');
     cardWrapper.classList.add('performace-driven-card-wrapper');
-    link.append(cardWrapper);
 
     const cardImage = document.createElement('div');
     cardImage.classList.add('card-image');
-    cardWrapper.append(cardImage);
-
-    const pictureDesktop = imageDesktopCell.querySelector('picture');
-    const imgDesktop = pictureDesktop ? pictureDesktop.querySelector('img') : null;
 
     const pictureMobile = imageMobileCell.querySelector('picture');
-    const imgMobile = pictureMobile ? pictureMobile.querySelector('img') : null;
+    const pictureDesktop = imageDesktopCell.querySelector('picture');
 
-    if (imgDesktop || imgMobile) {
-      const optimizedPicture = document.createElement('picture');
+    if (pictureMobile && pictureDesktop) {
+      const sourceMobile = document.createElement('source');
+      sourceMobile.media = '(max-width: 576px)';
+      sourceMobile.srcset = pictureMobile.querySelector('img').src;
 
-      if (imgMobile) {
-        const sourceMobile = document.createElement('source');
-        sourceMobile.media = '(max-width: 576px)';
-        sourceMobile.srcset = imgMobile.src;
-        optimizedPicture.append(sourceMobile);
-      }
+      const img = document.createElement('img');
+      img.src = pictureDesktop.querySelector('img').src;
+      img.alt = pictureDesktop.querySelector('img').alt;
 
-      if (imgDesktop) {
-        const img = createOptimizedPicture(imgDesktop.src, imgDesktop.alt, false, [{ width: '750' }]);
-        optimizedPicture.append(img.querySelector('img'));
-      }
-      cardImage.append(optimizedPicture);
+      const newPicture = document.createElement('picture');
+      newPicture.append(sourceMobile, img);
+      cardImage.append(newPicture);
+
+      // Optimize images
+      cardImage.querySelectorAll('picture > img').forEach((imgEl) => {
+        const optimizedPic = createOptimizedPicture(imgEl.src, imgEl.alt, false, [{ width: '750' }]);
+        moveInstrumentation(imgEl, optimizedPic.querySelector('img'));
+        imgEl.closest('picture').replaceWith(optimizedPic);
+      });
     }
 
     const homeBoxCard = document.createElement('div');
     homeBoxCard.classList.add('performace-driven-home-box-card');
-    cardWrapper.append(homeBoxCard);
 
-    const descriptionP = document.createElement('p');
-    descriptionP.classList.add('desc');
-    descriptionP.innerHTML = cardDescriptionCell.textContent.trim();
-    homeBoxCard.append(descriptionP);
+    const description = document.createElement('p');
+    description.classList.add('desc');
+    description.innerHTML = descriptionCell.innerHTML; // richtext content
 
-    cardsWrapper.append(link);
+    homeBoxCard.append(description);
+    cardWrapper.append(cardImage, homeBoxCard);
+    cardLink.append(cardWrapper);
+    cardsWrapper.append(cardLink);
   });
 
-  section.append(performanceDriven); // Append performanceDriven to section
+  container.append(cardsWrapper);
+  performanceDriven.append(container);
+  section.append(performanceDriven);
+
   block.replaceChildren(section);
 }

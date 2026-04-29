@@ -128,7 +128,7 @@
           }
         },
         {
-          "title": "Faqs Section",
+          "title": "Faqs-Section",
           "id": "faqs-section",
           "plugins": {
             "xwalk": {
@@ -137,14 +137,14 @@
                 "template": {
                   "filter": "faqs-section",
                   "model": "faqs-section",
-                  "name": "Faqs Section"
+                  "name": "Faqs-Section"
                 }
               }
             }
           }
         },
         {
-          "title": "Faq Item",
+          "title": "Faq-Item",
           "id": "faq-item",
           "plugins": {
             "xwalk": {
@@ -152,7 +152,7 @@
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
                   "model": "faq-item",
-                  "name": "Faq Item"
+                  "name": "Faq-Item"
                 }
               }
             }
@@ -205,60 +205,45 @@
           }
         },
         {
-          "title": "Footer Menu Item",
-          "id": "footer-menu-item",
+          "title": "Footer Menu Link",
+          "id": "footer-menu-link",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "footer-menu-item",
-                  "name": "Footer Menu Item"
+                  "model": "footer-menu-link",
+                  "name": "Footer Menu Link"
                 }
               }
             }
           }
         },
         {
-          "title": "Footer Sub Menu Item",
-          "id": "footer-sub-menu-item",
+          "title": "Footer Sub Link",
+          "id": "footer-sub-link",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "footer-sub-menu-item",
-                  "name": "Footer Sub Menu Item"
+                  "model": "footer-sub-link",
+                  "name": "Footer Sub Link"
                 }
               }
             }
           }
         },
         {
-          "title": "Footer Inner Sub Menu Item",
-          "id": "footer-inner-sub-menu-item",
+          "title": "Footer Secondary Nav Link",
+          "id": "footer-secondary-nav-link",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "footer-inner-sub-menu-item",
-                  "name": "Footer Inner Sub Menu Item"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Secondary Nav Item",
-          "id": "secondary-nav-item",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block/item",
-                "template": {
-                  "model": "secondary-nav-item",
-                  "name": "Secondary Nav Item"
+                  "model": "footer-secondary-nav-link",
+                  "name": "Footer Secondary Nav Link"
                 }
               }
             }
@@ -341,7 +326,7 @@
           }
         },
         {
-          "title": "Main Header",
+          "title": "Main-Header",
           "id": "main-header",
           "plugins": {
             "xwalk": {
@@ -350,14 +335,14 @@
                 "template": {
                   "filter": "main-header",
                   "model": "main-header",
-                  "name": "Main Header"
+                  "name": "Main-Header"
                 }
               }
             }
           }
         },
         {
-          "title": "Navigation Item",
+          "title": "Navigation-Item",
           "id": "navigation-item",
           "plugins": {
             "xwalk": {
@@ -365,14 +350,14 @@
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
                   "model": "navigation-item",
-                  "name": "Navigation Item"
+                  "name": "Navigation-Item"
                 }
               }
             }
           }
         },
         {
-          "title": "Press Release Item",
+          "title": "Press-Release-Item",
           "id": "press-release-item",
           "plugins": {
             "xwalk": {
@@ -380,7 +365,22 @@
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
                   "model": "press-release-item",
-                  "name": "Press Release Item"
+                  "name": "Press-Release-Item"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Icon-Link-Item",
+          "id": "icon-link-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "icon-link-item",
+                  "name": "Icon-Link-Item"
                 }
               }
             }
@@ -449,7 +449,7 @@
           }
         },
         {
-          "title": "Spirit of Rise",
+          "title": "Spirit-Of-Rise",
           "id": "spirit-of-rise",
           "plugins": {
             "xwalk": {
@@ -458,22 +458,22 @@
                 "template": {
                   "filter": "spirit-of-rise",
                   "model": "spirit-of-rise",
-                  "name": "Spirit of Rise"
+                  "name": "Spirit-Of-Rise"
                 }
               }
             }
           }
         },
         {
-          "title": "Performace Driven Card",
-          "id": "performace-driven-card",
+          "title": "Spirit-Of-Rise-Card",
+          "id": "spirit-of-rise-card",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "performace-driven-card",
-                  "name": "Performace Driven Card"
+                  "model": "spirit-of-rise-card",
+                  "name": "Spirit-Of-Rise-Card"
                 }
               }
             }
@@ -511,15 +511,15 @@
           }
         },
         {
-          "title": "Spotlight Quick Link",
-          "id": "spotlight-quick-link",
+          "title": "Quick Link",
+          "id": "quick-link",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "spotlight-quick-link",
-                  "name": "Spotlight Quick Link"
+                  "model": "quick-link",
+                  "name": "Quick Link"
                 }
               }
             }

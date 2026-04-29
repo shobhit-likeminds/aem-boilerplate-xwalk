@@ -61,10 +61,9 @@
     "components": [
       "social-link-item",
       "footer-menu-block",
-      "footer-menu-item",
-      "footer-sub-menu-item",
-      "footer-inner-sub-menu-item",
-      "secondary-nav-item"
+      "footer-menu-link",
+      "footer-sub-link",
+      "footer-secondary-nav-link"
     ]
   },
   {
@@ -79,7 +78,7 @@
     "components": [
       "navigation-item",
       "press-release-item",
-      "text-token-item"
+      "icon-link-item"
     ]
   },
   {
@@ -97,14 +96,14 @@
   {
     "id": "spirit-of-rise",
     "components": [
-      "performace-driven-card"
+      "spirit-of-rise-card"
     ]
   },
   {
     "id": "spotlight-home",
     "components": [
       "spotlight-slide",
-      "spotlight-quick-link"
+      "quick-link"
     ]
   },
   {

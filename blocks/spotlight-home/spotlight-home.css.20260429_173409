@@ -1,0 +1,3 @@
+@media (min-width:992px) { .text-lg-start { text-align:left!important } }
+
+.swiper-watch-progress .swiper-slide-visible { .swiper-lazy-preloader{animation:swiper-preloader-spin 1s linear infinite} }

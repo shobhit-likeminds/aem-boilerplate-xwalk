@@ -67,20 +67,20 @@
         },
         {
           "component": "reference",
-          "label": "Image (default src / desktop)",
+          "label": "Desktop Image",
           "name": "imageDesktop",
           "valueType": "string"
         },
         {
           "component": "text",
           "label": "Slide Heading",
-          "name": "slideHeading",
+          "name": "heading",
           "valueType": "string"
         },
         {
           "component": "richtext",
-          "label": "Slide Body",
-          "name": "slideBody",
+          "label": "Slide Description",
+          "name": "description",
           "valueType": "string"
         },
         {

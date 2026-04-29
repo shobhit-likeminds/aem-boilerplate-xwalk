@@ -32,15 +32,15 @@
       }
     },
     {
-      "title": "Quick Link",
-      "id": "quick-link",
+      "title": "Spotlight Quick Link",
+      "id": "spotlight-quick-link",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "quick-link",
-              "name": "Quick Link"
+              "model": "spotlight-quick-link",
+              "name": "Spotlight Quick Link"
             }
           }
         }
@@ -59,7 +59,7 @@
         },
         {
           "component": "container",
-          "item": "quick-link",
+          "item": "spotlight-quick-link",
           "label": "Quick Links",
           "name": "quickLinks"
         }
@@ -70,26 +70,26 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Desktop Image",
-          "name": "imageDesktop",
+          "label": "Background Image (Desktop)",
+          "name": "backgroundDesktop",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Tablet Image (max-width: 799px)",
-          "name": "imageTablet",
+          "label": "Background Image (Tablet)",
+          "name": "backgroundTablet",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Mobile Image (max-width: 576px)",
-          "name": "imageMobile",
+          "label": "Background Image (Mobile)",
+          "name": "backgroundMobile",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Eyebrow/Small Text",
-          "name": "eyebrow",
+          "label": "Small Text (above headline)",
+          "name": "smallText",
           "valueType": "string"
         },
         {
@@ -119,7 +119,7 @@
       ]
     },
     {
-      "id": "quick-link",
+      "id": "spotlight-quick-link",
       "fields": [
         {
           "component": "aem-content",
@@ -141,7 +141,7 @@
       "id": "spotlight-home",
       "components": [
         "spotlight-slide",
-        "quick-link"
+        "spotlight-quick-link"
       ]
     }
   ]

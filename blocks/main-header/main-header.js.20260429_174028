@@ -1,0 +1,513 @@
+import { createOptimizedPicture, loadScript, loadCSS } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+function createSvgIcon(pathD) {
+  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  svg.setAttribute('viewBox', '-23.5 -23.5 122.80 122.80');
+  svg.setAttribute('fill', '#000000');
+  svg.setAttribute('stroke', '#000000');
+  svg.setAttribute('stroke-width', '4.851456000000001');
+
+  const gBgCarrier = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+  gBgCarrier.setAttribute('id', 'SVGRepo_bgCarrier');
+  gBgCarrier.setAttribute('stroke-width', '0');
+  svg.appendChild(gBgCarrier);
+
+  const gTracerCarrier = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+  gTracerCarrier.setAttribute('id', 'SVGRepo_tracerCarrier');
+  gTracerCarrier.setAttribute('stroke-linecap', 'round');
+  gTracerCarrier.setAttribute('stroke-linejoin', 'round');
+  gTracerCarrier.setAttribute('stroke', '#CCCCCC');
+  gTracerCarrier.setAttribute('stroke-width', '0.30321600000000004');
+  svg.appendChild(gTracerCarrier);
+
+  const gIconCarrier = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+  gIconCarrier.setAttribute('id', 'SVGRepo_iconCarrier');
+  const gGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+  gGroup.setAttribute('id', 'Group_65');
+  gGroup.setAttribute('data-name', 'Group 65');
+  gGroup.setAttribute('transform', 'translate(-831.568 -384.448)');
+  const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+  path.setAttribute('id', 'Path_57');
+  path.setAttribute('data-name', 'Path 57');
+  path.setAttribute('d', pathD);
+  path.setAttribute('fill', '#030408');
+  gGroup.appendChild(path);
+  gIconCarrier.appendChild(gGroup);
+  svg.appendChild(gIconCarrier);
+
+  return svg;
+}
+
+function transformNestedLists(rootUl) {
+  rootUl.querySelectorAll('li').forEach((li) => {
+    const nested = li.querySelector(':scope > ul');
+    const anchor = li.querySelector(':scope > a');
+
+    // Add classes from ORIGINAL HTML to <li> and <a> elements
+    li.classList.add('top-level-li'); // Assuming this is a common class for all top-level li in original HTML
+    if (anchor) {
+      anchor.classList.add('top-level-li'); // Assuming this is a common class for all top-level li a in original HTML
+    }
+
+    if (!anchor) {
+      const textNode = [...li.childNodes].find(
+        (n) => n.nodeType === Node.TEXT_NODE && n.textContent.trim(),
+      );
+      if (textNode) {
+        const span = document.createElement('span');
+        span.textContent = textNode.textContent.trim();
+        textNode.remove();
+        li.prepend(span);
+      }
+    }
+
+    if (nested) {
+      nested.remove();
+      const subWrap = document.createElement('div');
+      subWrap.classList.add('has-sub-child'); // From ORIGINAL HTML
+      subWrap.append(nested);
+      li.append(subWrap);
+
+      // Add classes to nested <ul> and <li> elements
+      nested.querySelectorAll('li').forEach(nestedLi => {
+        nestedLi.classList.add('first-level-li'); // From ORIGINAL HTML
+        const nestedAnchor = nestedLi.querySelector(':scope > a');
+        if (nestedAnchor) {
+          nestedAnchor.classList.add('first-level-li'); // From ORIGINAL HTML
+        }
+        const innerNested = nestedLi.querySelector(':scope > ul');
+        if (innerNested) {
+          const innerSubWrap = document.createElement('div');
+          innerSubWrap.classList.add('has-inner-sub-child'); // From ORIGINAL HTML
+          innerNested.remove();
+          innerSubWrap.append(innerNested);
+          nestedLi.append(innerSubWrap);
+
+          const innerTrigger = nestedLi.querySelector(':scope > a, :scope > span');
+          if (innerTrigger) {
+            innerTrigger.addEventListener('click', (e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              nestedLi.classList.toggle('active');
+              innerSubWrap.classList.toggle('active-child'); // From ORIGINAL HTML
+            });
+          }
+        }
+      });
+
+      const trigger = li.querySelector(':scope > a, :scope > span');
+      if (trigger) {
+        trigger.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          li.classList.toggle('active');
+          subWrap.classList.toggle('active');
+        });
+      }
+    }
+  });
+}
+
+export default async function decorate(block) {
+  const children = [...block.children];
+
+  const [
+    primaryLogoRow,
+    primaryLogoLinkRow,
+    anniversaryLogoRow,
+    anniversaryLogoLinkRow,
+    ...itemRows
+  ] = children;
+
+  const header = document.createElement('header');
+  header.classList.add('main-header');
+  moveInstrumentation(block, header);
+
+  const container = document.createElement('div');
+  container.classList.add('container');
+  header.append(container);
+
+  const wrap = document.createElement('div');
+  wrap.classList.add('wrap');
+  container.append(wrap);
+
+  // Primary Logo
+  const logoDiv = document.createElement('div');
+  logoDiv.classList.add('logo');
+  const primaryLogoLink = document.createElement('a');
+  const primaryLogoAnchor = primaryLogoLinkRow.querySelector('a');
+  if (primaryLogoAnchor) {
+    primaryLogoLink.href = primaryLogoAnchor.href;
+  }
+  const primaryLogoPicture = primaryLogoRow.querySelector('picture');
+  if (primaryLogoPicture) {
+    const img = primaryLogoPicture.querySelector('img');
+    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '200' }]);
+    moveInstrumentation(primaryLogoRow, optimizedPic.querySelector('img'));
+    primaryLogoLink.append(optimizedPic);
+  }
+  logoDiv.append(primaryLogoLink);
+  wrap.append(logoDiv);
+
+  // Hamburger
+  const hamburger = document.createElement('div');
+  hamburger.classList.add('hamburger');
+  const ulHamburger = document.createElement('ul');
+  for (let i = 0; i < 3; i += 1) {
+    ulHamburger.append(document.createElement('li'));
+  }
+  hamburger.append(ulHamburger);
+  wrap.append(hamburger);
+
+  // Main Navigation
+  const nav = document.createElement('nav');
+  nav.classList.add('main-nav');
+  const navUl = document.createElement('ul');
+  navUl.setAttribute('itemscope', '');
+  navUl.setAttribute('itemtype', 'http://www.schema.org/SiteNavigationElement');
+  nav.append(navUl);
+  wrap.append(nav);
+
+  const navigationItems = itemRows.filter((row) => row.children.length === 3 && row.querySelector('div:first-child').textContent.trim() !== '' && row.querySelector('div:nth-child(2)').querySelector('a'));
+  const iconNavItems = itemRows.filter((row) => row.children.length === 3 && row.querySelector('div:first-child').querySelector('picture'));
+  const pressReleaseSlides = itemRows.filter((row) => row.children.length === 4);
+
+  navigationItems.forEach((row) => {
+    const [labelCell, linkCell, hierarchyCell] = [...row.children];
+    const li = document.createElement('li');
+    li.classList.add('has-child', 'hover-red');
+    li.setAttribute('itemprop', 'name');
+
+    const anchor = document.createElement('a');
+    const foundLink = linkCell.querySelector('a');
+    if (foundLink) {
+      anchor.href = foundLink.href;
+    }
+    anchor.textContent = labelCell.textContent.trim();
+    anchor.setAttribute('itemprop', 'url');
+    moveInstrumentation(row, anchor);
+    li.append(anchor);
+
+    const hierarchyRoot = hierarchyCell.querySelector('ul');
+    if (hierarchyRoot) {
+      const arrowSvg = createSvgIcon('M833.068,460.252a1.5,1.5,0,0,1-1.061-2.561l33.557-33.56a2.53,2.53,0,0,0,0-3.564l-33.557-33.558a1.5,1.5,0,0,1,2.122-2.121l33.556,33.558a5.53,5.53,0,0,1,0,7.807l-33.557,33.56A1.5,1.5,0,0,1,833.068,460.252Z');
+      const span = document.createElement('span');
+      span.append(arrowSvg);
+      li.append(span);
+
+      const megaMenu = document.createElement('div');
+      megaMenu.classList.add('mega-menu');
+      const megaMenuWrap = document.createElement('div');
+      megaMenuWrap.classList.add('wrap', 'container');
+      const centerDiv = document.createElement('div');
+      centerDiv.classList.add('center-div');
+      const subNavWrap = document.createElement('div');
+      subNavWrap.classList.add('sub-nav-wrap');
+      // Move instrumentation for the hierarchy content
+      moveInstrumentation(hierarchyCell, hierarchyRoot);
+      subNavWrap.append(hierarchyRoot);
+      centerDiv.append(subNavWrap);
+      megaMenuWrap.append(centerDiv);
+      megaMenu.append(megaMenuWrap);
+      li.append(megaMenu);
+
+      transformNestedLists(hierarchyRoot);
+
+      anchor.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        li.classList.toggle('active');
+        megaMenu.classList.toggle('active');
+      });
+      span.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        li.classList.toggle('active');
+        megaMenu.classList.toggle('active');
+      });
+    }
+    navUl.append(li);
+  });
+
+  // Icon Navigation (Mobile)
+  const mobileIconNav = document.createElement('div');
+  mobileIconNav.classList.add('icon-nav', 'mobile-menus-icon');
+  const mobileIconNavUl = document.createElement('ul');
+  mobileIconNav.append(mobileIconNavUl);
+
+  iconNavItems.forEach((row) => {
+    const [iconCell, linkCell, labelCell] = [...row.children];
+    const li = document.createElement('li');
+    li.classList.add(labelCell.textContent.trim().toLowerCase().replace(' ', '-')); // e.g., 'mail' or 'search'
+
+    const anchor = document.createElement('a');
+    const foundLink = linkCell.querySelector('a');
+    if (foundLink) {
+      anchor.href = foundLink.href;
+    }
+    const iconPicture = iconCell.querySelector('picture');
+    if (iconPicture) {
+      const img = iconPicture.querySelector('img');
+      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '21' }]);
+      moveInstrumentation(iconCell, optimizedPic.querySelector('img'));
+      anchor.append(optimizedPic);
+    }
+    anchor.append(document.createTextNode(labelCell.textContent.trim()));
+    moveInstrumentation(row, anchor);
+    li.append(anchor);
+    mobileIconNavUl.append(li);
+  });
+  navUl.append(mobileIconNav);
+
+  // Icon Navigation (Desktop)
+  const desktopIconNav = document.createElement('div');
+  desktopIconNav.classList.add('icon-nav', 'desktop-menus-icon');
+  const desktopIconNavUl = document.createElement('ul');
+  desktopIconNav.append(desktopIconNavUl);
+
+  iconNavItems.forEach((row) => {
+    const [iconCell, linkCell, labelCell] = [...row.children];
+    const li = document.createElement('li');
+    li.classList.add(labelCell.textContent.trim().toLowerCase().replace(' ', '-'));
+
+    const anchor = document.createElement('a');
+    const foundLink = linkCell.querySelector('a');
+    if (foundLink) {
+      anchor.href = foundLink.href;
+    }
+    const iconPicture = iconCell.querySelector('picture');
+    if (iconPicture) {
+      const img = iconPicture.querySelector('img');
+      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '21' }]);
+      moveInstrumentation(iconCell, optimizedPic.querySelector('img'));
+      anchor.append(optimizedPic);
+    }
+    moveInstrumentation(row, anchor);
+    li.append(anchor);
+    desktopIconNavUl.append(li);
+  });
+  nav.append(desktopIconNav);
+
+  // Anniversary Logo
+  const year80LogoDiv = document.createElement('div');
+  year80LogoDiv.classList.add('logo', 'year-80-logo');
+  const anniversaryLogoLink = document.createElement('a');
+  const anniversaryLogoAnchor = anniversaryLogoLinkRow.querySelector('a');
+  if (anniversaryLogoAnchor) {
+    anniversaryLogoLink.href = anniversaryLogoAnchor.href;
+  }
+  const anniversaryLogoPicture = anniversaryLogoRow.querySelector('picture');
+  if (anniversaryLogoPicture) {
+    const img = anniversaryLogoPicture.querySelector('img');
+    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '74' }]);
+    moveInstrumentation(anniversaryLogoRow, optimizedPic.querySelector('img'));
+    anniversaryLogoLink.append(optimizedPic);
+  }
+  year80LogoDiv.append(anniversaryLogoLink);
+  wrap.append(year80LogoDiv);
+
+  block.replaceChildren(header);
+
+  // Hamburger menu toggle
+  hamburger.addEventListener('click', () => {
+    nav.classList.toggle('active');
+    hamburger.classList.toggle('close');
+    document.body.classList.toggle('disable-scroll');
+  });
+
+  // Search functionality (simplified)
+  const searchLiMobile = mobileIconNavUl.querySelector('.search');
+  const searchLiDesktop = desktopIconNavUl.querySelector('.search');
+
+  const createSearchScreen = () => {
+    const searchScreenWrap = document.createElement('div');
+    searchScreenWrap.classList.add('search-screen-wrap');
+    searchScreenWrap.setAttribute('data-once', 'search-stop-propagation');
+    moveInstrumentation(searchLiMobile || searchLiDesktop, searchScreenWrap); // Move instrumentation from the search li
+
+    const searchWrapInner = document.createElement('div');
+    searchWrapInner.classList.add('wrap');
+    searchWrapInner.setAttribute('data-once', 'search-stop-propagation');
+    searchScreenWrap.append(searchWrapInner);
+
+    const form = document.createElement('form');
+    // TODO: The search form action URL should be read from a model field, not hardcoded.
+    // For now, keeping the hardcoded value, but it's a potential issue.
+    form.setAttribute('action', 'https://www.mahindra.com/search');
+    form.setAttribute('method', 'get');
+    form.setAttribute('id', 'search-block-form');
+    form.setAttribute('accept-charset', 'UTF-8');
+    form.setAttribute('data-drupal-form-fields', 'edit-keys');
+    form.setAttribute('data-once', 'search-stop-propagation');
+    searchWrapInner.append(form);
+
+    const searchInputWrap = document.createElement('div');
+    searchInputWrap.classList.add('search-wrap');
+    searchInputWrap.setAttribute('data-once', 'search-stop-propagation');
+    form.append(searchInputWrap);
+
+    const searchIconDiv = document.createElement('div');
+    searchIconDiv.classList.add('search-icon');
+    searchIconDiv.setAttribute('data-once', 'search-stop-propagation');
+    searchIconDiv.innerHTML = `<svg viewBox="0 0 21 21" fill="none" data-once="search-stop-propagation">
+      <path d="M15.0934 2.73157L15.0934 2.73156C11.6883 -0.67354 6.14543 -0.67354 2.74033 2.73156C-0.666039 6.13793 -0.666063 11.6795 2.74035 15.0847C4.38993 16.7342 6.58308 17.6433 8.91623 17.6433C10.9916 17.6433 12.9533 16.9181 14.5221 15.5975L19.5217 20.5972C19.6721 20.7476 19.8687 20.8212 20.0632 20.8212C20.2588 20.8212 20.4554 20.7476 20.6059 20.5972C20.905 20.2981 20.905 19.8121 20.6059 19.513L15.6062 14.5132C18.4815 11.0845 18.3159 5.95535 15.0934 2.73157ZM14.0092 14.0004C12.6491 15.3606 10.8404 16.1098 8.91623 16.1098C6.99211 16.1098 5.18468 15.3606 3.82452 14.0004C1.01633 11.1923 1.01633 6.62394 3.82452 3.81575C5.22857 2.41171 7.07147 1.71024 8.91623 1.71024C10.7609 1.71024 12.6052 2.41296 14.0092 3.81575C16.8174 6.62394 16.8174 11.1923 14.0092 14.0004Z" stroke-width="0.25" data-once="search-stop-propagation"></path>
+    </svg>`;
+    searchInputWrap.append(searchIconDiv);
+
+    const searchInput = document.createElement('input');
+    searchInput.setAttribute('type', 'text');
+    searchInput.classList.add('input-text', 'searchtext');
+    searchInput.setAttribute('required', '');
+    searchInput.setAttribute('name', 'key');
+    searchInput.setAttribute('id', 'searchInput');
+    searchInput.setAttribute('autocomplete', 'off');
+    searchInput.setAttribute('data-once', 'search-stop-propagation');
+    searchInputWrap.append(searchInput);
+
+    const submitButton = document.createElement('button');
+    submitButton.classList.add('submit-button');
+    submitButton.setAttribute('data-once', 'search-stop-propagation');
+    submitButton.innerHTML = `<div class="label" data-once="search-stop-propagation"> Submit </div>
+    <svg width="12" height="8" viewBox="0 0 12 8" fill="none" data-once="search-stop-propagation">
+      <path d="M11.3536 4.35355C11.5488 4.15829 11.5488 3.84171 11.3536 3.64645L8.17157 0.464465C7.97631 0.269203 7.65973 0.269203 7.46447 0.464465C7.2692 0.659728 7.2692 0.97631 7.46447 1.17157L10.2929 4L7.46447 6.82843C7.2692 7.02369 7.2692 7.34027 7.46447 7.53553C7.65973 7.7308 7.97631 7.7308 8.17157 7.53553L11.3536 4.35355ZM4.37114e-08 4.5L11 4.5L11 3.5L-4.37114e-08 3.5L4.37114e-08 4.5Z" fill="black" data-once="search-stop-propagation"></path>
+    </svg>`;
+    searchInputWrap.append(submitButton);
+
+    const searchResultBox = document.createElement('div');
+    searchResultBox.classList.add('searchResultBox');
+    searchResultBox.style.display = 'none';
+    searchResultBox.setAttribute('data-once', 'search-stop-propagation');
+    form.append(searchResultBox);
+
+    const searchSuggestionsWrap1 = document.createElement('div');
+    searchSuggestionsWrap1.classList.add('search-suggestions-wrap');
+    searchSuggestionsWrap1.setAttribute('data-once', 'search-stop-propagation');
+    searchSuggestionsWrap1.innerHTML = `<div class="label" data-once="search-stop-propagation">Popular Keywords:</div>
+    <div class="tokens-wrap" data-once="search-stop-propagation">
+      <ul data-once="search-stop-propagation">
+        <li data-once="search-stop-propagation">Business</li>
+        <li data-once="search-stop-propagation">FY 21</li>
+        <li data-once="search-stop-propagation">Brands</li>
+        <li data-once="search-stop-propagation">XUV700</li>
+        <li data-once="search-stop-propagation">Global</li>
+        <li data-once="search-stop-propagation">Nanhi Kali</li>
+      </ul>
+    </div>`;
+    searchWrapInner.append(searchSuggestionsWrap1);
+
+    const searchSuggestionsWrap2 = document.createElement('div');
+    searchSuggestionsWrap2.classList.add('search-suggestions-wrap');
+    searchSuggestionsWrap2.setAttribute('data-once', 'search-stop-propagation');
+    searchSuggestionsWrap2.innerHTML = `<div class="label" data-once="search-stop-propagation">Recommended for you:</div>
+    <div class="tokens-wrap" data-once="search-stop-propagation">
+      <ul data-once="search-stop-propagation">
+        <li data-once="search-stop-propagation">Annual Report 2021 - 2022</li>
+        <li data-once="search-stop-propagation">Leadership Announcement</li>
+        <li data-once="search-stop-propagation">Latest Press Release</li>
+        <li data-once="search-stop-propagation">Brand Guidelines</li>
+      </ul>
+    </div>`;
+    searchWrapInner.append(searchSuggestionsWrap2);
+
+    return searchScreenWrap;
+  };
+
+  const searchScreenMobile = createSearchScreen();
+  const searchScreenDesktop = createSearchScreen();
+
+  if (searchLiMobile) {
+    searchLiMobile.append(searchScreenMobile);
+    searchLiMobile.querySelector('a').addEventListener('click', (e) => {
+      e.preventDefault();
+      searchLiMobile.classList.toggle('active');
+      searchScreenMobile.classList.toggle('active');
+      document.body.classList.toggle('disable-scroll');
+    });
+  }
+
+  if (searchLiDesktop) {
+    searchLiDesktop.append(searchScreenDesktop);
+    searchLiDesktop.querySelector('a').addEventListener('click', (e) => {
+      e.preventDefault();
+      searchLiDesktop.classList.toggle('active');
+      searchScreenDesktop.classList.toggle('active');
+      document.body.classList.toggle('disable-scroll');
+    });
+  }
+
+  // Press Release Slides (Swiper)
+  if (pressReleaseSlides.length > 0) {
+    await loadCSS('https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css');
+    await loadScript('https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js');
+
+    const newsroomLi = navUl.querySelector('.newsroom'); // Assuming 'newsroom' is a class applied to the newsroom nav item
+    if (newsroomLi) {
+      const newsroomMegaMenu = newsroomLi.querySelector('.mega-menu');
+      if (newsroomMegaMenu) {
+        const leftDiv = document.createElement('div'); // Recreate left-div as it's not directly from block.children
+        leftDiv.classList.add('left-div', 'newsroom-left-div'); // From ORIGINAL HTML
+        const centerDiv = newsroomMegaMenu.querySelector('.center-div');
+        if (centerDiv) {
+          centerDiv.prepend(leftDiv); // Add the leftDiv to the centerDiv
+
+          const latestPressReleaseDiv = document.createElement('div');
+          latestPressReleaseDiv.classList.add('latest-two-press-release');
+          leftDiv.append(latestPressReleaseDiv);
+
+          const swiperContainer = document.createElement('div');
+          swiperContainer.classList.add('swiper', 'scrollSwiper', 'slides');
+          latestPressReleaseDiv.append(swiperContainer);
+
+          const swiperWrapper = document.createElement('div');
+          swiperWrapper.classList.add('swiper-wrapper', 'wrap');
+          swiperContainer.append(swiperWrapper);
+
+          pressReleaseSlides.forEach((row) => {
+            const [pressReleaseLinkCell, pressReleaseTitleCell, pressReleaseDateCell, pressReleaseCategoryCell] = [...row.children];
+
+            const swiperSlide = document.createElement('div');
+            swiperSlide.classList.add('swiper-slide', 'content');
+            swiperWrapper.append(swiperSlide);
+
+            const descDiv = document.createElement('div');
+            descDiv.classList.add('desc');
+            swiperSlide.append(descDiv);
+
+            const link = document.createElement('a');
+            const foundLink = pressReleaseLinkCell.querySelector('a');
+            if (foundLink) {
+              link.href = foundLink.href;
+            }
+            link.textContent = pressReleaseTitleCell.textContent.trim();
+            const p = document.createElement('p');
+            p.append(link);
+            descDiv.append(p);
+
+            const dateDiv = document.createElement('div');
+            dateDiv.classList.add('date');
+            const dateEm = document.createElement('em');
+            dateEm.textContent = pressReleaseDateCell.textContent.trim();
+            dateDiv.append(dateEm);
+            const categoryEm = document.createElement('em');
+            categoryEm.textContent = pressReleaseCategoryCell.textContent.trim();
+            dateDiv.append(categoryEm);
+            descDiv.append(dateDiv);
+            moveInstrumentation(row, swiperSlide);
+          });
+
+          // eslint-disable-next-line no-undef
+          new Swiper(swiperContainer, {
+            slidesPerView: 1,
+            spaceBetween: 16,
+            loop: false, // Swiper adds swiper-initialized, swiper-horizontal, swiper-backface-hidden automatically
+            autoplay: {
+              delay: 3000,
+              disableOnInteraction: false,
+            },
+          });
+        }
+      }
+    }
+  }
+}

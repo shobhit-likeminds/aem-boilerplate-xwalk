@@ -1,10 +1,9 @@
 import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
-export default function decorate(block) {
+export default async function decorate(block) {
   const children = [...block.children];
-  const headingRow = children[0];
-  const faqItemRows = children.slice(1);
+  const [headingRow, ...faqItemRows] = children;
 
   const section = document.createElement('section');
   section.classList.add('section', 'faqs-section');
@@ -16,12 +15,12 @@ export default function decorate(block) {
   // Section Header
   const sectionHeader = document.createElement('div');
   sectionHeader.classList.add('section-header', 'text-center');
-  moveInstrumentation(headingRow, sectionHeader);
   container.append(sectionHeader);
 
   const heading = document.createElement('h2');
   heading.classList.add('heading', 'font-regular', 'aos-init', 'aos-animate');
-  heading.setAttribute('data-aos', 'fade-up');
+  moveInstrumentation(headingRow, heading);
+  // The headingRow itself contains the text, not a child div.
   heading.textContent = headingRow.textContent.trim();
   sectionHeader.append(heading);
 
@@ -38,17 +37,16 @@ export default function decorate(block) {
 
     const li = document.createElement('li');
     li.classList.add('aos-init', 'aos-animate');
-    li.setAttribute('data-aos', 'fade-up');
     if (index === 0) {
-      li.classList.add('active'); // First item is active by default
+      li.classList.add('active');
     }
     moveInstrumentation(row, li);
     ul.append(li);
 
-    const h2 = document.createElement('h2');
-    h2.setAttribute('data-once', 'faqsAccordion');
-    h2.textContent = questionCell.textContent.trim();
-    li.append(h2);
+    const question = document.createElement('h2');
+    question.textContent = questionCell.textContent.trim();
+    question.setAttribute('data-once', 'faqsAccordion');
+    li.append(question);
 
     const accoContentDiv = document.createElement('div');
     accoContentDiv.classList.add('acco-content-div');
@@ -58,21 +56,27 @@ export default function decorate(block) {
     accoContentDiv.innerHTML = answerCell.innerHTML;
     li.append(accoContentDiv);
 
-    h2.addEventListener('click', () => {
-      const currentlyActive = ul.querySelector('li.active');
-      if (currentlyActive && currentlyActive !== li) {
-        currentlyActive.classList.remove('active');
-        currentlyActive.querySelector('.acco-content-div').classList.remove('show');
+    question.addEventListener('click', () => {
+      const isActive = li.classList.contains('active');
+
+      // Close all other active items
+      ul.querySelectorAll('li.active').forEach((activeLi) => {
+        activeLi.classList.remove('active');
+        activeLi.querySelector('.acco-content-div').classList.remove('show');
+      });
+
+      // Toggle current item
+      if (!isActive) {
+        li.classList.add('active');
+        accoContentDiv.classList.add('show');
       }
-      li.classList.toggle('active');
-      accoContentDiv.classList.toggle('show');
     });
   });
 
   block.replaceChildren(section);
 
-  // Image optimization (if any images were present)
-  section.querySelectorAll('picture > img').forEach((img) => {
+  // Optimize images within the block
+  block.querySelectorAll('picture > img').forEach((img) => {
     const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
     moveInstrumentation(img, optimizedPic.querySelector('img'));
     img.closest('picture').replaceWith(optimizedPic);

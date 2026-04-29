@@ -1,0 +1,134 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  const [headingRow, subheadingRow, ...cardRows] = [...block.children];
+
+  const sectionHeader = document.createElement('div');
+  sectionHeader.classList.add('section-header', 'text-center', 'pb-3');
+
+  const heading = document.createElement('h2');
+  heading.classList.add('heading', 'font-regular', 'aos-init', 'aos-animate');
+  // Add data-aos attributes from original HTML
+  heading.setAttribute('data-aos-easing', 'ease-in-out');
+  heading.setAttribute('data-aos', 'fade-up');
+  heading.setAttribute('data-aos-delay', '200');
+  moveInstrumentation(headingRow, heading);
+  heading.textContent = headingRow.textContent.trim();
+  sectionHeader.append(heading);
+
+  const subheading = document.createElement('p');
+  subheading.classList.add('aos-init', 'aos-animate');
+  // Add data-aos attributes from original HTML
+  subheading.setAttribute('data-aos', 'fade-up');
+  subheading.setAttribute('data-aos-offset', '100');
+  subheading.setAttribute('data-aos-duration', '650');
+  subheading.setAttribute('data-aos-easing', 'ease-in-out');
+  moveInstrumentation(subheadingRow, subheading);
+  subheading.textContent = subheadingRow.textContent.trim();
+  sectionHeader.append(subheading);
+
+  const performanceDriven = document.createElement('div');
+  performanceDriven.classList.add('performance-driven', 'performace-driven-home');
+
+  const container = document.createElement('div');
+  container.classList.add('container');
+  performanceDriven.append(container);
+
+  const performaceDrivenCards = document.createElement('div');
+  performaceDrivenCards.classList.add('performace-driven-cards');
+  container.append(performaceDrivenCards);
+
+  cardRows.forEach((row) => {
+    const [imageMobileCell, imageDesktopCell, descriptionCell, cardLinkCell] = [...row.children];
+
+    const cardLink = document.createElement('a');
+    cardLink.classList.add('performace-driven-cards-link');
+    const foundLink = cardLinkCell.querySelector('a');
+    if (foundLink) {
+      cardLink.href = foundLink.href;
+      // Ensure target="_blank" is only added if present in original HTML, which it is.
+      if (foundLink.target) {
+        cardLink.target = foundLink.target;
+      }
+    }
+    moveInstrumentation(row, cardLink);
+
+    const cardWrapper = document.createElement('div');
+    cardWrapper.classList.add('performace-driven-card-wrapper');
+    cardLink.append(cardWrapper);
+
+    const cardImage = document.createElement('div');
+    cardImage.classList.add('card-image');
+    cardWrapper.append(cardImage);
+
+    const pictureMobile = imageMobileCell.querySelector('picture');
+    const pictureDesktop = imageDesktopCell.querySelector('picture');
+
+    // The createOptimizedPicture function expects an <img> element or a path.
+    // To preserve <source> elements, we need to manually construct the picture.
+    // The original code was trying to pass a <picture> element to createOptimizedPicture,
+    // or reconstructing it partially.
+    // The correct approach is to take the existing picture element and append it,
+    // or if optimizing, ensure all sources are handled.
+    // Given the original HTML has separate mobile and desktop pictures,
+    // we should prioritize the desktop picture and conditionally add the mobile source.
+
+    if (pictureDesktop) {
+      const imgDesktop = pictureDesktop.querySelector('img');
+      if (imgDesktop) {
+        // createOptimizedPicture can take the original img src and alt,
+        // but to preserve multiple sources, we need to build the <picture> element manually
+        // and then optimize the img within it.
+        const newPicture = document.createElement('picture');
+
+        // Add mobile source if available
+        if (pictureMobile) {
+          const sourceMobile = pictureMobile.querySelector('source');
+          if (sourceMobile) {
+            const newSource = document.createElement('source');
+            newSource.media = sourceMobile.media;
+            newSource.srcset = sourceMobile.srcset;
+            newPicture.append(newSource);
+          }
+        }
+
+        // Add desktop sources (if any) and the optimized img
+        const desktopSources = pictureDesktop.querySelectorAll('source');
+        desktopSources.forEach((source) => {
+          const newSource = document.createElement('source');
+          newSource.media = source.media;
+          newSource.srcset = source.srcset;
+          newPicture.append(newSource);
+        });
+
+        // Create optimized img and append
+        const optimizedImg = createOptimizedPicture(imgDesktop.src, imgDesktop.alt, false, [{ width: '750' }]);
+        newPicture.append(optimizedImg.querySelector('img')); // Append the optimized img element
+        moveInstrumentation(imgDesktop, optimizedImg.querySelector('img')); // Move instrumentation from original img to optimized img
+        cardImage.append(newPicture);
+      }
+    } else if (pictureMobile) { // Fallback if only mobile picture is present
+      const imgMobile = pictureMobile.querySelector('img');
+      if (imgMobile) {
+        const optimizedPicture = createOptimizedPicture(imgMobile.src, imgMobile.alt, false, [{ width: '750' }]);
+        cardImage.append(optimizedPicture);
+        moveInstrumentation(imgMobile, optimizedPicture.querySelector('img'));
+      }
+    }
+
+
+    const homeBoxCard = document.createElement('div');
+    homeBoxCard.classList.add('performace-driven-home-box-card');
+    cardWrapper.append(homeBoxCard);
+
+    const description = document.createElement('p');
+    description.classList.add('desc');
+    description.textContent = descriptionCell.textContent.trim();
+    homeBoxCard.append(description);
+
+    performaceDrivenCards.append(cardLink);
+  });
+
+  block.replaceChildren(sectionHeader, performanceDriven);
+}

@@ -2,7 +2,7 @@ import { createOptimizedPicture, loadScript, loadCSS } from '../../scripts/aem.j
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default async function decorate(block) {
-  const children = [...block.children];
+  const [headingRow, descriptionRow, ...businessVerticalRows] = [...block.children];
 
   const section = document.createElement('section');
   section.classList.add('section', 'what-we-do-wrap');
@@ -16,18 +16,16 @@ export default async function decorate(block) {
   sectionHeader.classList.add('section-header', 'text-center');
   container.append(sectionHeader);
 
-  // Use array destructuring for root rows as per model
-  const [headingRow, descriptionRow, ...itemRows] = children;
-
   const heading = document.createElement('h2');
-  heading.classList.add('heading', 'font-regular');
+  heading.classList.add('heading', 'font-regular', 'aos-init', 'aos-animate');
   moveInstrumentation(headingRow, heading);
   heading.textContent = headingRow.textContent.trim();
   sectionHeader.append(heading);
 
   const description = document.createElement('p');
+  description.classList.add('aos-init', 'aos-animate');
   moveInstrumentation(descriptionRow, description);
-  description.innerHTML = descriptionRow.innerHTML; // Use innerHTML for richtext
+  description.innerHTML = descriptionRow.innerHTML;
   sectionHeader.append(description);
 
   const ourBusinessVerticals = document.createElement('div');
@@ -43,171 +41,148 @@ export default async function decorate(block) {
   desktopRow.classList.add('row', 'row-cols-lg-3', 'row-cols-1', 'g-3');
   desktopContainer.append(desktopRow);
 
-  // Mobile view
+  // Mobile view (slider)
   const mobileContainer = document.createElement('div');
-  mobileContainer.classList.add('container', 'd-lg-none', 'd-block');
+  mobileContainer.classList.add('container', 'd-lg-none', 'd-block', 'aos-init', 'aos-animate');
   ourBusinessVerticals.append(mobileContainer);
 
   const mobileSlider = document.createElement('div');
-  mobileSlider.classList.add('mobile-slider');
+  mobileSlider.classList.add('mobile-slider'); // Flickity adds flickity-enabled and is-draggable
   mobileContainer.append(mobileSlider);
 
-  const mobileSlidesWrapper = document.createElement('div');
-  mobileSlidesWrapper.classList.add('flickity-viewport');
-  mobileSlider.append(mobileSlidesWrapper);
+  const flickityViewport = document.createElement('div');
+  flickityViewport.classList.add('flickity-viewport');
+  mobileSlider.append(flickityViewport);
 
-  const mobileSliderContent = document.createElement('div');
-  mobileSliderContent.classList.add('flickity-slider');
-  mobileSlidesWrapper.append(mobileSliderContent);
+  const flickitySlider = document.createElement('div');
+  flickitySlider.classList.add('flickity-slider');
+  flickityViewport.append(flickitySlider);
 
   const mobileSlides = [];
-  let currentMobileSlide = document.createElement('div');
-  currentMobileSlide.classList.add('slides');
-  let currentMobileSlideRow = document.createElement('div');
-  currentMobileSlideRow.classList.add('row', 'row-cols-1', 'gy-3');
-  currentMobileSlide.append(currentMobileSlideRow);
-  mobileSlides.push(currentMobileSlide);
+  let currentMobileSlideRowContainer; // Declare outside loop to manage scope
+  let currentSlideIndex = 0;
 
-  itemRows.forEach((row) => {
-    // Use array destructuring for item rows as per fixed model schema
-    const [imageDesktopCell, imageTabletCell, imageMobileCell, titleCell, arrowIconCell, linkCell] = [...row.children];
+  businessVerticalRows.forEach((row, index) => {
+    const [desktopImageCell, mobileImageCell, titleCell, arrowIconCell, linkCell] = [...row.children];
 
     // Desktop item
-    const desktopCol = document.createElement('div');
-    desktopCol.classList.add('col');
-    moveInstrumentation(row, desktopCol);
+    const colDesktop = document.createElement('div');
+    colDesktop.classList.add('col', 'aos-init', 'aos-animate');
+    desktopRow.append(colDesktop);
 
-    const desktopWrap = document.createElement('div');
-    desktopWrap.classList.add('wrap');
-    desktopCol.append(desktopWrap);
+    const wrapDesktop = document.createElement('div');
+    wrapDesktop.classList.add('wrap');
+    colDesktop.append(wrapDesktop);
 
-    const desktopImageDiv = document.createElement('div');
-    desktopImageDiv.classList.add('image');
-    desktopWrap.append(desktopImageDiv);
+    const imageDesktop = document.createElement('div');
+    imageDesktop.classList.add('image');
+    wrapDesktop.append(imageDesktop);
 
-    const desktopPicture = imageDesktopCell.querySelector('picture');
+    const desktopPicture = desktopImageCell.querySelector('picture');
     if (desktopPicture) {
-      const img = desktopPicture.querySelector('img');
-      // Use createOptimizedPicture for desktop images
-      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ media: '(min-width: 992px)', width: '376' }]);
+      const optimizedPic = createOptimizedPicture(
+        desktopPicture.querySelector('img').src,
+        desktopPicture.querySelector('img').alt,
+        false,
+        [{ media: '(min-width: 992px)', width: '376' }, { media: '(min-width: 450px)', width: '376' }, { width: '376' }],
+      );
       moveInstrumentation(desktopPicture, optimizedPic.querySelector('img'));
-      desktopImageDiv.append(optimizedPic);
+      imageDesktop.append(optimizedPic);
     }
 
-    const desktopTitleDiv = document.createElement('div');
-    desktopTitleDiv.classList.add('title');
-    desktopTitleDiv.textContent = titleCell.textContent.trim();
-    desktopWrap.append(desktopTitleDiv);
+    const titleDesktop = document.createElement('div');
+    titleDesktop.classList.add('title');
+    titleDesktop.textContent = titleCell.textContent.trim();
+    wrapDesktop.append(titleDesktop);
 
-    const arrowIcon = arrowIconCell.querySelector('picture');
-    if (arrowIcon) {
-      const arrowImg = arrowIcon.querySelector('img');
-      const newArrowImg = document.createElement('img');
-      newArrowImg.src = arrowImg.src;
-      newArrowImg.alt = arrowImg.alt;
-      newArrowImg.width = arrowImg.width;
-      newArrowImg.height = arrowImg.height;
-      newArrowImg.loading = 'lazy';
-      desktopTitleDiv.append(' ', newArrowImg); // Add space before icon
+    const arrowIconDesktop = arrowIconCell.querySelector('picture');
+    if (arrowIconDesktop) {
+      const optimizedArrow = createOptimizedPicture(
+        arrowIconDesktop.querySelector('img').src,
+        arrowIconDesktop.querySelector('img').alt,
+        false,
+        [{ width: '10' }],
+      );
+      moveInstrumentation(arrowIconDesktop, optimizedArrow.querySelector('img'));
+      titleDesktop.append(optimizedArrow);
     }
 
-    const desktopLink = document.createElement('a');
-    desktopLink.classList.add('stretched-link');
-    const foundLink = linkCell.querySelector('a');
-    if (foundLink) {
-      desktopLink.href = foundLink.href;
-      desktopLink.setAttribute('aria-label', `Learn more about ${titleCell.textContent.trim()}`);
-    }
-    desktopWrap.append(desktopLink);
-    desktopRow.append(desktopCol);
+    const linkDesktop = document.createElement('a');
+    linkDesktop.classList.add('stretched-link');
+    moveInstrumentation(linkCell, linkDesktop);
+    linkDesktop.href = linkCell.querySelector('a')?.href || '#';
+    linkDesktop.setAttribute('aria-label', `Learn more about ${titleCell.textContent.trim()}`);
+    wrapDesktop.append(linkDesktop);
 
-    // Mobile item
-    if (currentMobileSlideRow.children.length === 3) {
-      currentMobileSlide = document.createElement('div');
-      currentMobileSlide.classList.add('slides');
-      currentMobileSlideRow = document.createElement('div');
-      currentMobileSlideRow.classList.add('row', 'row-cols-1', 'gy-3');
-      currentMobileSlide.append(currentMobileSlideRow);
-      mobileSlides.push(currentMobileSlide);
+    // Mobile item (for slider)
+    if (index % 3 === 0) {
+      const newSlide = document.createElement('div');
+      newSlide.classList.add('slides');
+      currentMobileSlideRowContainer = document.createElement('div');
+      currentMobileSlideRowContainer.classList.add('row', 'row-cols-1', 'gy-3');
+      newSlide.append(currentMobileSlideRowContainer);
+      mobileSlides.push(newSlide);
     }
 
-    const mobileCol = document.createElement('div');
-    mobileCol.classList.add('col');
-    // Instrumentation for mobile items is already moved with desktopCol,
-    // so we don't move it again to avoid double instrumentation.
+    const colMobile = document.createElement('div');
+    colMobile.classList.add('col');
+    currentMobileSlideRowContainer.append(colMobile);
 
-    const mobileWrap = document.createElement('div');
-    mobileWrap.classList.add('wrap');
-    mobileCol.append(mobileWrap);
+    const wrapMobile = document.createElement('div');
+    wrapMobile.classList.add('wrap');
+    colMobile.append(wrapMobile);
 
-    const mobileImageDiv = document.createElement('div');
-    mobileImageDiv.classList.add('image');
-    mobileWrap.append(mobileImageDiv);
+    const imageMobile = document.createElement('div');
+    imageMobile.classList.add('image');
+    wrapMobile.append(imageMobile);
 
-    // Use createOptimizedPicture for mobile images as well
-    const mobilePictureElement = document.createElement('picture');
-    const desktopImgSrc = imageDesktopCell.querySelector('img')?.src;
-    const tabletImgSrc = imageTabletCell.querySelector('img')?.src;
-    const mobileImg = imageMobileCell.querySelector('img');
-
-    if (desktopImgSrc) {
-      const desktopSource = document.createElement('source');
-      desktopSource.media = '(min-width: 992px)';
-      desktopSource.srcset = desktopImgSrc;
-      mobilePictureElement.append(desktopSource);
+    const mobilePicture = mobileImageCell.querySelector('picture');
+    if (mobilePicture) {
+      const optimizedPic = createOptimizedPicture(
+        mobilePicture.querySelector('img').src,
+        mobilePicture.querySelector('img').alt,
+        false,
+        [{ media: '(min-width: 992px)', width: '376' }, { media: '(min-width: 450px)', width: '376' }, { width: '376' }],
+      );
+      moveInstrumentation(mobilePicture, optimizedPic.querySelector('img'));
+      imageMobile.append(optimizedPic);
     }
 
-    if (tabletImgSrc) {
-      const tabletSource = document.createElement('source');
-      tabletSource.media = '(min-width: 450px)';
-      tabletSource.srcset = tabletImgSrc;
-      mobilePictureElement.append(tabletSource);
+    const titleMobile = document.createElement('div');
+    titleMobile.classList.add('title');
+    titleMobile.textContent = titleCell.textContent.trim();
+    wrapMobile.append(titleMobile);
+
+    const arrowIconMobile = arrowIconCell.querySelector('picture');
+    if (arrowIconMobile) {
+      const optimizedArrow = createOptimizedPicture(
+        arrowIconMobile.querySelector('img').src,
+        arrowIconMobile.querySelector('img').alt,
+        false,
+        [{ width: '10' }],
+      );
+      moveInstrumentation(arrowIconMobile, optimizedArrow.querySelector('img'));
+      titleMobile.append(optimizedArrow);
     }
 
-    if (mobileImg) {
-      const optimizedMobilePic = createOptimizedPicture(mobileImg.src, mobileImg.alt, false, [{ width: '376' }]);
-      // moveInstrumentation is handled by createOptimizedPicture internally for the img element
-      mobilePictureElement.append(optimizedMobilePic.querySelector('img'));
-    }
-    mobileImageDiv.append(mobilePictureElement);
-
-    const mobileTitleDiv = document.createElement('div');
-    mobileTitleDiv.classList.add('title');
-    mobileTitleDiv.textContent = titleCell.textContent.trim();
-    mobileWrap.append(mobileTitleDiv);
-
-    if (arrowIcon) {
-      const arrowImg = arrowIcon.querySelector('img');
-      const newArrowImg = document.createElement('img');
-      newArrowImg.src = arrowImg.src;
-      newArrowImg.alt = arrowImg.alt;
-      newArrowImg.width = arrowImg.width;
-      newArrowImg.height = arrowImg.height;
-      newArrowImg.loading = 'lazy';
-      mobileTitleDiv.append(' ', newArrowImg); // Add space before icon
-    }
-
-    const mobileLink = document.createElement('a');
-    mobileLink.classList.add('stretched-link');
-    if (foundLink) {
-      mobileLink.href = foundLink.href;
-      mobileLink.setAttribute('aria-label', `Learn more about ${titleCell.textContent.trim()}`);
-    }
-    mobileWrap.append(mobileLink);
-    currentMobileSlideRow.append(mobileCol);
+    const linkMobile = document.createElement('a');
+    linkMobile.classList.add('stretched-link');
+    // Instrumentation already moved for desktop link, so just copy href
+    linkMobile.href = linkCell.querySelector('a')?.href || '#';
+    linkMobile.setAttribute('aria-label', `Learn more about ${titleCell.textContent.trim()}`);
+    wrapMobile.append(linkMobile);
   });
 
-  mobileSlides.forEach((slide) => mobileSliderContent.append(slide));
+  mobileSlides.forEach((slide) => flickitySlider.append(slide));
 
-  // Flickity initialization
-  await loadCSS('/libs/flickity/flickity.min.css'); // Assuming Flickity CSS is available
-  await loadScript('/libs/flickity/flickity.pkgd.min.js'); // Assuming Flickity JS is available
+  // Load Flickity and initialize
+  await loadCSS('https://unpkg.com/flickity@2/dist/flickity.min.css');
+  await loadScript('https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js');
 
   // eslint-disable-next-line no-undef
   if (typeof Flickity !== 'undefined') {
-    // The original HTML has data-flickity attributes, we should replicate that config
-    // or provide a default. Using a default config here.
-    const flkty = new Flickity(mobileSlider, {
+    // eslint-disable-next-line no-new, no-undef
+    new Flickity(mobileSlider, {
       wrapAround: false,
       lazyLoad: true,
       pageDots: true,
@@ -216,18 +191,7 @@ export default async function decorate(block) {
       cellAlign: 'left',
       adaptiveHeight: true,
     });
-
-    // Flickity creates its own page dots, so we don't need to manually create them.
-    // However, if the original HTML had specific styling or structure for dots,
-    // we might need to adjust Flickity's options or post-process.
-    // For now, removing the manual dot creation as Flickity handles it.
-    // The generated JS was manually creating dots, which Flickity would overwrite.
-    // The `flickity-page-dots` class is added by Flickity itself.
-    // We can remove the manual creation of `flickityPageDots` and `dot` elements.
   }
 
   block.replaceChildren(section);
-
-  // The image optimization loops at the end are redundant because createOptimizedPicture
-  // is already used during element creation. Removing them.
 }
