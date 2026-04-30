@@ -23,14 +23,14 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Background Image",
-          "name": "backgroundImage",
+          "label": "Banner Image",
+          "name": "bannerImage",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Section Label",
-          "name": "sectionLabel",
+          "label": "Section Title",
+          "name": "sectionTitle",
           "valueType": "string"
         },
         {

@@ -56,7 +56,13 @@
         },
         {
           "component": "reference",
-          "label": "Secondary Logo (SVG)",
+          "label": "Close Navigation Icon",
+          "name": "closeNavIcon",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Secondary Logo (SVG or Image)",
           "name": "secondaryLogo",
           "valueType": "string"
         },
@@ -67,34 +73,10 @@
           "valueType": "string"
         },
         {
-          "component": "reference",
-          "label": "Close Menu Icon",
-          "name": "closeMenuIcon",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Mode Button Label",
-          "name": "modeButtonLabel",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Mode Light Label",
-          "name": "modeLightLabel",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Mode Dark Label",
-          "name": "modeDarkLabel",
-          "valueType": "string"
-        },
-        {
           "component": "container",
           "item": "navigation-item",
-          "label": "Navigation Menu",
-          "name": "navigationMenu"
+          "label": "Navigation Items",
+          "name": "navigationItems"
         }
       ]
     },

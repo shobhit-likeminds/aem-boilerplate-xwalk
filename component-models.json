@@ -165,14 +165,14 @@
     "fields": [
       {
         "component": "reference",
-        "label": "Banner Image",
-        "name": "bannerImage",
+        "label": "Background Image",
+        "name": "backgroundImage",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Section Title",
-        "name": "sectionTitle",
+        "label": "Section Label",
+        "name": "sectionLabel",
         "valueType": "string"
       },
       {
@@ -610,13 +610,7 @@
       },
       {
         "component": "reference",
-        "label": "Close Navigation Icon",
-        "name": "closeNavIcon",
-        "valueType": "string"
-      },
-      {
-        "component": "reference",
-        "label": "Secondary Logo (SVG or Image)",
+        "label": "Secondary Logo (SVG)",
         "name": "secondaryLogo",
         "valueType": "string"
       },
@@ -627,10 +621,34 @@
         "valueType": "string"
       },
       {
+        "component": "reference",
+        "label": "Close Menu Icon",
+        "name": "closeMenuIcon",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Mode Button Label",
+        "name": "modeButtonLabel",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Mode Light Label",
+        "name": "modeLightLabel",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Mode Dark Label",
+        "name": "modeDarkLabel",
+        "valueType": "string"
+      },
+      {
         "component": "container",
         "item": "navigation-item",
-        "label": "Navigation Items",
-        "name": "navigationItems"
+        "label": "Navigation Menu",
+        "name": "navigationMenu"
       }
     ]
   },
