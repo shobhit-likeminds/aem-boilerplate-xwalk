@@ -68,11 +68,9 @@
   {
     "id": "footer-wrp",
     "components": [
-      "footer-link-item",
-      "footer-dropdown-item",
-      "footer-dropdown-link-item",
+      "footer-section-item",
       "footer-social-item",
-      "footer-legal-link-item"
+      "footer-link-item"
     ]
   },
   {

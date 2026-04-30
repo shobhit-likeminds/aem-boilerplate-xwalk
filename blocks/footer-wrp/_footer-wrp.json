@@ -17,45 +17,15 @@
       }
     },
     {
-      "title": "Footer-Link-Item",
-      "id": "footer-link-item",
+      "title": "Footer-Section-Item",
+      "id": "footer-section-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "footer-link-item",
-              "name": "Footer-Link-Item"
-            }
-          }
-        }
-      }
-    },
-    {
-      "title": "Footer-Dropdown-Item",
-      "id": "footer-dropdown-item",
-      "plugins": {
-        "xwalk": {
-          "page": {
-            "resourceType": "core/franklin/components/block/v1/block/item",
-            "template": {
-              "model": "footer-dropdown-item",
-              "name": "Footer-Dropdown-Item"
-            }
-          }
-        }
-      }
-    },
-    {
-      "title": "Footer-Dropdown-Link-Item",
-      "id": "footer-dropdown-link-item",
-      "plugins": {
-        "xwalk": {
-          "page": {
-            "resourceType": "core/franklin/components/block/v1/block/item",
-            "template": {
-              "model": "footer-dropdown-link-item",
-              "name": "Footer-Dropdown-Link-Item"
+              "model": "footer-section-item",
+              "name": "Footer-Section-Item"
             }
           }
         }
@@ -77,15 +47,15 @@
       }
     },
     {
-      "title": "Footer-Legal-Link-Item",
-      "id": "footer-legal-link-item",
+      "title": "Footer-Link-Item",
+      "id": "footer-link-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "footer-legal-link-item",
-              "name": "Footer-Legal-Link-Item"
+              "model": "footer-link-item",
+              "name": "Footer-Link-Item"
             }
           }
         }
@@ -104,15 +74,9 @@
         },
         {
           "component": "container",
-          "item": "footer-link-item",
-          "label": "Top Links",
-          "name": "topLinks"
-        },
-        {
-          "component": "container",
-          "item": "footer-dropdown-item",
-          "label": "Dropdown Menus",
-          "name": "dropdowns"
+          "item": "footer-section-item",
+          "label": "Navigation Sections",
+          "name": "navSections"
         },
         {
           "component": "container",
@@ -122,7 +86,7 @@
         },
         {
           "component": "container",
-          "item": "footer-legal-link-item",
+          "item": "footer-link-item",
           "label": "Legal Links",
           "name": "legalLinks"
         },
@@ -135,47 +99,24 @@
       ]
     },
     {
-      "id": "footer-link-item",
+      "id": "footer-section-item",
       "fields": [
         {
           "component": "text",
-          "label": "Link Label",
-          "name": "label",
-          "valueType": "string"
-        },
-        {
-          "component": "aem-content",
-          "label": "Link URL",
-          "name": "link",
-          "valueType": "string"
-        }
-      ]
-    },
-    {
-      "id": "footer-dropdown-item",
-      "fields": [
-        {
-          "component": "text",
-          "label": "Dropdown Title",
+          "label": "Section Title",
           "name": "title",
           "valueType": "string"
-        }
-      ]
-    },
-    {
-      "id": "footer-dropdown-link-item",
-      "fields": [
-        {
-          "component": "text",
-          "label": "Dropdown Link Label",
-          "name": "label",
-          "valueType": "string"
         },
         {
           "component": "aem-content",
-          "label": "Dropdown Link URL",
+          "label": "Direct Link URL",
           "name": "link",
           "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Section Links",
+          "name": "sectionLinks"
         }
       ]
     },
@@ -191,7 +132,7 @@
       ]
     },
     {
-      "id": "footer-legal-link-item",
+      "id": "footer-link-item",
       "fields": [
         {
           "component": "text",
@@ -212,11 +153,9 @@
     {
       "id": "footer-wrp",
       "components": [
-        "footer-link-item",
-        "footer-dropdown-item",
-        "footer-dropdown-link-item",
+        "footer-section-item",
         "footer-social-item",
-        "footer-legal-link-item"
+        "footer-link-item"
       ]
     }
   ]

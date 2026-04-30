@@ -207,45 +207,15 @@
           }
         },
         {
-          "title": "Footer-Link-Item",
-          "id": "footer-link-item",
+          "title": "Footer-Section-Item",
+          "id": "footer-section-item",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "footer-link-item",
-                  "name": "Footer-Link-Item"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Footer-Dropdown-Item",
-          "id": "footer-dropdown-item",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block/item",
-                "template": {
-                  "model": "footer-dropdown-item",
-                  "name": "Footer-Dropdown-Item"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Footer-Dropdown-Link-Item",
-          "id": "footer-dropdown-link-item",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block/item",
-                "template": {
-                  "model": "footer-dropdown-link-item",
-                  "name": "Footer-Dropdown-Link-Item"
+                  "model": "footer-section-item",
+                  "name": "Footer-Section-Item"
                 }
               }
             }
@@ -267,15 +237,15 @@
           }
         },
         {
-          "title": "Footer-Legal-Link-Item",
-          "id": "footer-legal-link-item",
+          "title": "Footer-Link-Item",
+          "id": "footer-link-item",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "footer-legal-link-item",
-                  "name": "Footer-Legal-Link-Item"
+                  "model": "footer-link-item",
+                  "name": "Footer-Link-Item"
                 }
               }
             }

@@ -306,15 +306,9 @@
       },
       {
         "component": "container",
-        "item": "footer-link-item",
-        "label": "Top Links",
-        "name": "topLinks"
-      },
-      {
-        "component": "container",
-        "item": "footer-dropdown-item",
-        "label": "Dropdown Menus",
-        "name": "dropdowns"
+        "item": "footer-section-item",
+        "label": "Navigation Sections",
+        "name": "navSections"
       },
       {
         "component": "container",
@@ -324,7 +318,7 @@
       },
       {
         "component": "container",
-        "item": "footer-legal-link-item",
+        "item": "footer-link-item",
         "label": "Legal Links",
         "name": "legalLinks"
       },
@@ -337,47 +331,24 @@
     ]
   },
   {
-    "id": "footer-link-item",
+    "id": "footer-section-item",
     "fields": [
       {
         "component": "text",
-        "label": "Link Label",
-        "name": "label",
-        "valueType": "string"
-      },
-      {
-        "component": "aem-content",
-        "label": "Link URL",
-        "name": "link",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
-    "id": "footer-dropdown-item",
-    "fields": [
-      {
-        "component": "text",
-        "label": "Dropdown Title",
+        "label": "Section Title",
         "name": "title",
         "valueType": "string"
-      }
-    ]
-  },
-  {
-    "id": "footer-dropdown-link-item",
-    "fields": [
-      {
-        "component": "text",
-        "label": "Dropdown Link Label",
-        "name": "label",
-        "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "Dropdown Link URL",
+        "label": "Direct Link URL",
         "name": "link",
         "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Section Links",
+        "name": "sectionLinks"
       }
     ]
   },
@@ -393,7 +364,7 @@
     ]
   },
   {
-    "id": "footer-legal-link-item",
+    "id": "footer-link-item",
     "fields": [
       {
         "component": "text",
