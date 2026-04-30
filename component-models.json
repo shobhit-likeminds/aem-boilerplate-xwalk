@@ -218,51 +218,56 @@
     "fields": [
       {
         "component": "reference",
-        "label": "Logo Image",
-        "name": "logoImage"
+        "label": "Footer Logo",
+        "name": "logo",
+        "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "Logo Link",
-        "name": "logoLink"
+        "label": "Footer Logo Link",
+        "name": "logoLink",
+        "valueType": "string"
       },
       {
         "component": "container",
-        "item": "footer-social-item",
+        "item": "social-link-item",
         "label": "Social Links",
         "name": "socialLinks"
       },
       {
         "component": "container",
-        "item": "footer-link-block",
+        "item": "footer-menu-block",
         "label": "Footer Menu Blocks",
         "name": "footerMenuBlocks"
       },
       {
         "component": "container",
-        "item": "footer-secondary-nav-item",
-        "label": "Secondary Navigation",
-        "name": "secondaryNav"
+        "item": "secondary-nav-link",
+        "label": "Secondary Navigation Links",
+        "name": "secondaryNavLinks"
       },
       {
-        "component": "richtext",
+        "component": "text",
         "label": "Copyright Text",
-        "name": "copyrightText"
+        "name": "copyright",
+        "valueType": "string"
       }
     ]
   },
   {
-    "id": "footer-social-item",
+    "id": "social-link-item",
     "fields": [
       {
         "component": "text",
-        "label": "Platform Name",
-        "name": "platform"
+        "label": "Social Channel (e.g. Facebook, Twitter, Instagram)",
+        "name": "socialType",
+        "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "Profile Link",
-        "name": "profileLink"
+        "label": "Social Link",
+        "name": "link",
+        "valueType": "string"
       },
       {
         "component": "richtext",
@@ -273,74 +278,82 @@
     ]
   },
   {
-    "id": "footer-link-block",
+    "id": "footer-menu-block",
     "fields": [
       {
         "component": "text",
-        "label": "Block Label",
-        "name": "blockLabel"
+        "label": "Block Title",
+        "name": "blockTitle",
+        "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "Block Link",
-        "name": "blockLink"
+        "label": "Block Title Link",
+        "name": "blockTitleLink",
+        "valueType": "string"
       },
       {
         "component": "container",
-        "item": "footer-link-item",
-        "label": "Links",
-        "name": "links"
+        "item": "footer-menu-link",
+        "label": "Footer Menu Links",
+        "name": "footerMenuLinks"
       }
     ]
   },
   {
-    "id": "footer-link-item",
+    "id": "footer-menu-link",
     "fields": [
       {
         "component": "text",
-        "label": "Link Label",
-        "name": "label"
+        "label": "Menu Link Label",
+        "name": "label",
+        "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "Link",
-        "name": "link"
+        "label": "Menu Link URL",
+        "name": "link",
+        "valueType": "string"
       },
       {
-        "component": "container",
-        "item": "footer-sub-link-item",
-        "label": "Sub Links",
-        "name": "subLinks"
+        "component": "richtext",
+        "label": "Sub Links Hierarchy",
+        "name": "hierarchy-tree",
+        "valueType": "string"
       }
     ]
   },
   {
-    "id": "footer-sub-link-item",
+    "id": "footer-sub-link",
     "fields": [
       {
         "component": "text",
         "label": "Sub Link Label",
-        "name": "label"
+        "name": "label",
+        "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "Sub Link",
-        "name": "link"
+        "label": "Sub Link URL",
+        "name": "link",
+        "valueType": "string"
       }
     ]
   },
   {
-    "id": "footer-secondary-nav-item",
+    "id": "secondary-nav-link",
     "fields": [
       {
         "component": "text",
-        "label": "Secondary Nav Link Label",
-        "name": "label"
+        "label": "Secondary Nav Label",
+        "name": "label",
+        "valueType": "string"
       },
       {
         "component": "aem-content",
         "label": "Secondary Nav Link",
-        "name": "link"
+        "name": "link",
+        "valueType": "string"
       }
     ]
   },
@@ -926,7 +939,7 @@
         "component": "container",
         "item": "business-vertical-item",
         "label": "Business Verticals",
-        "name": "businessVerticals"
+        "name": "verticals"
       }
     ]
   },
@@ -941,13 +954,19 @@
       },
       {
         "component": "reference",
-        "label": "Tablet/Mobile Image",
+        "label": "Tablet Image",
         "name": "imageTablet",
         "valueType": "string"
       },
       {
+        "component": "reference",
+        "label": "Mobile Image",
+        "name": "imageMobile",
+        "valueType": "string"
+      },
+      {
         "component": "text",
-        "label": "Business Vertical Title",
+        "label": "Vertical Title",
         "name": "title",
         "valueType": "string"
       },
@@ -959,7 +978,7 @@
       },
       {
         "component": "aem-content",
-        "label": "Business Vertical Link",
+        "label": "Vertical Link",
         "name": "link",
         "valueType": "string"
       }

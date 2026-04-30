@@ -2,10 +2,11 @@ import { createOptimizedPicture, loadScript, loadCSS } from '../../scripts/aem.j
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default async function decorate(block) {
-  const [headingRow, descriptionRow, ...itemRows] = [...block.children];
+  const [headingRow, descriptionRow, ...verticalRows] = [...block.children];
 
   const section = document.createElement('section');
   section.classList.add('section', 'what-we-do-wrap');
+  moveInstrumentation(block, section);
 
   const container = document.createElement('div');
   container.classList.add('container');
@@ -15,16 +16,14 @@ export default async function decorate(block) {
   sectionHeader.classList.add('section-header', 'text-center');
   container.append(sectionHeader);
 
-  // Section Heading
   const heading = document.createElement('h2');
   heading.classList.add('heading', 'font-regular', 'aos-init', 'aos-animate');
   moveInstrumentation(headingRow, heading);
   heading.textContent = headingRow.textContent.trim();
   sectionHeader.append(heading);
 
-  // Section Description
-  const description = document.createElement('p'); // Removed 'aos-init', 'aos-animate' from createElement
-  description.classList.add('aos-init', 'aos-animate'); // Added classes via classList.add
+  const description = document.createElement('p');
+  description.classList.add('aos-init', 'aos-animate');
   moveInstrumentation(descriptionRow, description);
   description.innerHTML = descriptionRow.innerHTML;
   sectionHeader.append(description);
@@ -42,105 +41,96 @@ export default async function decorate(block) {
   desktopRow.classList.add('row', 'row-cols-lg-3', 'row-cols-1', 'g-3');
   desktopContainer.append(desktopRow);
 
-  // Mobile view
+  // Mobile view - Swiper setup
   const mobileContainer = document.createElement('div');
   mobileContainer.classList.add('container', 'd-lg-none', 'd-block', 'aos-init', 'aos-animate');
   ourBusinessVerticals.append(mobileContainer);
 
   const mobileSlider = document.createElement('div');
-  mobileSlider.classList.add('mobile-slider', 'flickity-enabled', 'is-draggable');
-  mobileSlider.setAttribute('data-flickity', '{ "wrapAround": false, "lazyLoad": true, "pageDots": true, "prevNextButtons": false, "imagesLoaded": true, "cellAlign": "left", "adaptiveHeight": true }');
+  mobileSlider.classList.add('mobile-slider'); // Swiper container
   mobileContainer.append(mobileSlider);
 
-  const flickityViewport = document.createElement('div');
-  flickityViewport.classList.add('flickity-viewport');
-  mobileSlider.append(flickityViewport);
+  const swiperWrapper = document.createElement('div');
+  swiperWrapper.classList.add('swiper-wrapper'); // Swiper wrapper
+  mobileSlider.append(swiperWrapper);
 
-  const flickitySlider = document.createElement('div');
-  flickitySlider.classList.add('flickity-slider');
-  flickityViewport.append(flickitySlider);
+  const paginationEl = document.createElement('div');
+  paginationEl.classList.add('flickity-page-dots'); // Used as Swiper pagination container
+  mobileSlider.append(paginationEl);
 
-  const mobileSlides = [];
-  let currentSlide = document.createElement('div');
-  currentSlide.classList.add('slides');
-  let currentSlideRow = document.createElement('div'); // Declare with let
-  currentSlideRow.classList.add('row', 'row-cols-1', 'gy-3');
-  currentSlide.append(currentSlideRow);
-  mobileSlides.push(currentSlide);
-  flickitySlider.append(currentSlide);
+  verticalRows.forEach((row, index) => {
+    const [
+      imageDesktopCell,
+      imageTabletCell,
+      imageMobileCell,
+      titleCell,
+      arrowIconCell,
+      linkCell,
+    ] = [...row.children];
 
-  itemRows.forEach((row, index) => {
-    const [imageDesktopCell, imageTabletCell, titleCell, arrowIconCell, linkCell] = [...row.children];
-
-    // Desktop Item
+    // Desktop item
     const desktopCol = document.createElement('div');
     desktopCol.classList.add('col', 'aos-init', 'aos-animate');
     desktopCol.setAttribute('data-aos', 'fade-up');
-    desktopCol.setAttribute('data-aos-delay', `${100 + (index % 3) * 300}`); // Example delay logic
+    desktopCol.setAttribute('data-aos-delay', `${100 + (index % 3) * 300}`); // Example delay
     desktopRow.append(desktopCol);
 
-    const wrap = document.createElement('div');
-    wrap.classList.add('wrap');
-    desktopCol.append(wrap);
+    const desktopWrap = document.createElement('div');
+    desktopWrap.classList.add('wrap');
+    desktopCol.append(desktopWrap);
 
-    const imageDiv = document.createElement('div');
-    imageDiv.classList.add('image');
-    wrap.append(imageDiv);
+    const desktopImageDiv = document.createElement('div');
+    desktopImageDiv.classList.add('image');
+    desktopWrap.append(desktopImageDiv);
 
     const desktopPicture = imageDesktopCell.querySelector('picture');
     if (desktopPicture) {
-      const optimizedDesktopPic = createOptimizedPicture(
+      const optimizedPic = createOptimizedPicture(
         desktopPicture.querySelector('img').src,
         desktopPicture.querySelector('img').alt,
         false,
-        [{ media: '(min-width: 992px)', width: '376' }, { media: '(min-width: 450px)', width: '376' }, { width: '376' }],
+        [{ media: '(min-width: 992px)', width: '376' }],
       );
-      moveInstrumentation(desktopPicture, optimizedDesktopPic.querySelector('img'));
-      imageDiv.append(optimizedDesktopPic);
+      optimizedPic.querySelector('img').classList.add('img-fluid'); // Add img-fluid class
+      moveInstrumentation(desktopPicture.querySelector('img'), optimizedPic.querySelector('img'));
+      desktopImageDiv.append(optimizedPic);
     }
 
-    const titleDiv = document.createElement('div');
-    titleDiv.classList.add('title');
-    titleDiv.textContent = titleCell.textContent.trim();
-    wrap.append(titleDiv);
+    const desktopTitleDiv = document.createElement('div');
+    desktopTitleDiv.classList.add('title');
+    desktopTitleDiv.textContent = titleCell.textContent.trim();
+    desktopWrap.append(desktopTitleDiv);
 
-    const arrowIcon = arrowIconCell.querySelector('picture');
-    if (arrowIcon) {
-      const optimizedArrowIcon = createOptimizedPicture(
-        arrowIcon.querySelector('img').src,
-        arrowIcon.querySelector('img').alt,
-        false,
-        [{ width: '10' }],
-      );
-      moveInstrumentation(arrowIcon, optimizedArrowIcon.querySelector('img'));
-      titleDiv.append(optimizedArrowIcon);
+    const desktopArrowIcon = arrowIconCell.querySelector('picture');
+    if (desktopArrowIcon) {
+      const img = desktopArrowIcon.querySelector('img');
+      const arrowImg = document.createElement('img');
+      arrowImg.loading = 'lazy';
+      arrowImg.src = img.src;
+      arrowImg.alt = img.alt;
+      arrowImg.width = 10;
+      arrowImg.height = 29;
+      desktopTitleDiv.append(arrowImg);
     }
 
-    const linkEl = document.createElement('a');
-    linkEl.classList.add('stretched-link');
+    const desktopLink = document.createElement('a');
+    desktopLink.classList.add('stretched-link');
     const foundLink = linkCell.querySelector('a');
     if (foundLink) {
-      linkEl.href = foundLink.href;
-      linkEl.setAttribute('aria-label', `Learn more about ${titleCell.textContent.trim()}`);
+      desktopLink.href = foundLink.href;
+      desktopLink.setAttribute('aria-label', `Learn more about ${titleCell.textContent.trim()}`);
     }
-    moveInstrumentation(linkCell, linkEl);
-    wrap.append(linkEl);
+    moveInstrumentation(linkCell, desktopLink);
+    desktopWrap.append(desktopLink);
 
-    // Mobile Item
-    if (index > 0 && index % 3 === 0) {
-      currentSlide = document.createElement('div');
-      currentSlide.classList.add('slides');
-      const newSlideRow = document.createElement('div');
-      newSlideRow.classList.add('row', 'row-cols-1', 'gy-3');
-      currentSlide.append(newSlideRow);
-      mobileSlides.push(currentSlide);
-      flickitySlider.append(currentSlide);
-      currentSlideRow = newSlideRow; // Reassign currentSlideRow to the new row
-    }
+    // Mobile item (Swiper slide)
+    const swiperSlide = document.createElement('div');
+    swiperSlide.classList.add('swiper-slide');
+    swiperWrapper.append(swiperSlide);
 
     const mobileCol = document.createElement('div');
     mobileCol.classList.add('col');
-    currentSlideRow.append(mobileCol);
+    swiperSlide.append(mobileCol);
 
     const mobileWrap = document.createElement('div');
     mobileWrap.classList.add('wrap');
@@ -150,16 +140,17 @@ export default async function decorate(block) {
     mobileImageDiv.classList.add('image');
     mobileWrap.append(mobileImageDiv);
 
-    const tabletPicture = imageTabletCell.querySelector('picture');
-    if (tabletPicture) {
-      const optimizedTabletPic = createOptimizedPicture(
-        tabletPicture.querySelector('img').src,
-        tabletPicture.querySelector('img').alt,
+    const mobilePicture = imageMobileCell.querySelector('picture');
+    if (mobilePicture) {
+      const optimizedPic = createOptimizedPicture(
+        mobilePicture.querySelector('img').src,
+        mobilePicture.querySelector('img').alt,
         false,
-        [{ media: '(min-width: 992px)', width: '376' }, { media: '(min-width: 450px)', width: '376' }, { width: '376' }],
+        [{ media: '(min-width: 450px)', width: '376' }],
       );
-      moveInstrumentation(tabletPicture, optimizedTabletPic.querySelector('img'));
-      mobileImageDiv.append(optimizedTabletPic);
+      optimizedPic.querySelector('img').classList.add('img-fluid'); // Add img-fluid class
+      moveInstrumentation(mobilePicture.querySelector('img'), optimizedPic.querySelector('img'));
+      mobileImageDiv.append(optimizedPic);
     }
 
     const mobileTitleDiv = document.createElement('div');
@@ -169,56 +160,43 @@ export default async function decorate(block) {
 
     const mobileArrowIcon = arrowIconCell.querySelector('picture');
     if (mobileArrowIcon) {
-      const optimizedMobileArrowIcon = createOptimizedPicture(
-        mobileArrowIcon.querySelector('img').src,
-        mobileArrowIcon.querySelector('img').alt,
-        false,
-        [{ width: '10' }],
-      );
-      moveInstrumentation(mobileArrowIcon, optimizedMobileArrowIcon.querySelector('img'));
-      mobileTitleDiv.append(optimizedMobileArrowIcon);
+      const img = mobileArrowIcon.querySelector('img');
+      const arrowImg = document.createElement('img');
+      arrowImg.loading = 'lazy';
+      arrowImg.src = img.src;
+      arrowImg.alt = img.alt;
+      arrowImg.width = 10;
+      arrowImg.height = 29;
+      mobileTitleDiv.append(arrowImg);
     }
 
-    const mobileLinkEl = document.createElement('a');
-    mobileLinkEl.classList.add('stretched-link');
+    const mobileLink = document.createElement('a');
+    mobileLink.classList.add('stretched-link');
     if (foundLink) {
-      mobileLinkEl.href = foundLink.href;
-      mobileLinkEl.setAttribute('aria-label', `Learn more about ${titleCell.textContent.trim()}`);
+      mobileLink.href = foundLink.href;
+      mobileLink.setAttribute('aria-label', `Learn more about ${titleCell.textContent.trim()}`);
     }
-    moveInstrumentation(row, mobileLinkEl); // Move instrumentation from the original row to one of the created elements
-    mobileWrap.append(mobileLinkEl);
-  });
-
-  const flickityPageDots = document.createElement('ol');
-  flickityPageDots.classList.add('flickity-page-dots');
-  mobileSlider.append(flickityPageDots);
-
-  mobileSlides.forEach((_, i) => {
-    const dot = document.createElement('li');
-    dot.classList.add('dot');
-    dot.setAttribute('aria-label', `Page dot ${i + 1}`);
-    if (i === 0) {
-      dot.classList.add('is-selected');
-      dot.setAttribute('aria-current', 'step');
-    }
-    flickityPageDots.append(dot);
+    // Move instrumentation from the original row to the link, as the row itself is not directly appended
+    moveInstrumentation(row, mobileLink);
+    mobileWrap.append(mobileLink);
   });
 
   block.replaceChildren(section);
 
-  // Load Flickity CSS and JS
-  await loadCSS('https://unpkg.com/flickity@2/dist/flickity.min.css');
-  await loadScript('https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js');
+  // Load Swiper for mobile slider
+  await loadCSS('https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css');
+  await loadScript('https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js');
 
-  // Initialize Flickity
   // eslint-disable-next-line no-undef
-  new Flickity(mobileSlider, {
-    wrapAround: mobileSlider.dataset.flickity.includes('"wrapAround": true'),
-    lazyLoad: mobileSlider.dataset.flickity.includes('"lazyLoad": true'),
-    pageDots: mobileSlider.dataset.flickity.includes('"pageDots": true'),
-    prevNextButtons: mobileSlider.dataset.flickity.includes('"prevNextButtons": true'),
-    imagesLoaded: mobileSlider.dataset.flickity.includes('"imagesLoaded": true'),
-    cellAlign: 'left', // Default from original HTML
-    adaptiveHeight: mobileSlider.dataset.flickity.includes('"adaptiveHeight": true'),
+  new Swiper(mobileSlider, {
+    slidesPerView: 1,
+    spaceBetween: 16,
+    loop: false,
+    pagination: {
+      el: paginationEl,
+      clickable: true,
+      bulletClass: 'dot', // Corrected to match ORIGINAL HTML
+      bulletActiveClass: 'is-selected', // Corrected to match ORIGINAL HTML
+    },
   });
 }
