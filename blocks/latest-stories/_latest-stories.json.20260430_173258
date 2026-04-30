@@ -38,7 +38,7 @@
       "fields": [
         {
           "component": "text",
-          "label": "Block Heading",
+          "label": "Section Heading",
           "name": "heading",
           "valueType": "string"
         },
@@ -55,38 +55,38 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Story Image (Square)",
+          "label": "Main Image",
           "name": "image",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Story Image (Horizontal)",
+          "label": "Horizontal Image",
           "name": "imageHorizontal",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Story Image (Vertical)",
+          "label": "Vertical Image",
           "name": "imageVertical",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Story Category",
+          "label": "Category",
           "name": "category",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Story Summary",
+          "label": "Summary Text",
           "name": "summary",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "label": "Story Link",
-          "name": "storyLink",
+          "label": "CTA Link",
+          "name": "ctaLink",
           "valueType": "string"
         },
         {
@@ -97,7 +97,7 @@
         },
         {
           "component": "text",
-          "label": "Story Date",
+          "label": "Date",
           "name": "date",
           "valueType": "string"
         }

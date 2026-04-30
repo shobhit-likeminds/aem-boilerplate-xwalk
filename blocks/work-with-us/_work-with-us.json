@@ -38,8 +38,8 @@
       "fields": [
         {
           "component": "text",
-          "label": "Section Heading",
-          "name": "sectionHeading",
+          "label": "Section Title",
+          "name": "title",
           "valueType": "string"
         },
         {
@@ -73,14 +73,14 @@
         },
         {
           "component": "text",
-          "label": "Slide Heading",
-          "name": "slideHeading",
+          "label": "Slide Headline",
+          "name": "headline",
           "valueType": "string"
         },
         {
           "component": "richtext",
           "label": "Slide Description",
-          "name": "slideDescription",
+          "name": "description",
           "valueType": "string"
         },
         {
