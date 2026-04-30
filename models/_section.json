@@ -50,7 +50,18 @@
         "hero",
         "cards",
         "columns",
-        "fragment"
+        "fragment",
+        "header-full",
+        "home-banner",
+        "welcome-section",
+        "demerged-info",
+        "engineered-for-evolution",
+        "systems-in-motion",
+        "movement-that-matters",
+        "our-legacy",
+        "sustainability",
+        "careers",
+        "footer-wrp"
       ]
     }
   ]

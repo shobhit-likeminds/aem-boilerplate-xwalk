@@ -15,7 +15,18 @@
       "hero",
       "cards",
       "columns",
-      "fragment"
+      "fragment",
+      "header-full",
+      "home-banner",
+      "welcome-section",
+      "demerged-info",
+      "engineered-for-evolution",
+      "systems-in-motion",
+      "movement-that-matters",
+      "our-legacy",
+      "sustainability",
+      "careers",
+      "footer-wrp"
     ]
   },
   {
@@ -23,6 +34,9 @@
     "components": [
       "card"
     ]
+  },
+  {
+    "id": "careers"
   },
   {
     "id": "columns",
@@ -38,5 +52,57 @@
       "button",
       "title"
     ]
+  },
+  {
+    "id": "demerged-info"
+  },
+  {
+    "id": "engineered-for-evolution",
+    "components": [
+      "evolution-blurb-item"
+    ]
+  },
+  {
+    "id": "footer-wrp",
+    "components": [
+      "footer-link-item",
+      "footer-dropdown-item",
+      "footer-dropdown-link-item",
+      "footer-social-item",
+      "footer-legal-link-item"
+    ]
+  },
+  {
+    "id": "header-full",
+    "components": [
+      "navigation-item"
+    ]
+  },
+  {
+    "id": "home-banner"
+  },
+  {
+    "id": "movement-that-matters",
+    "components": [
+      "blurb-card"
+    ]
+  },
+  {
+    "id": "our-legacy",
+    "components": [
+      "legacy-slide-item"
+    ]
+  },
+  {
+    "id": "sustainability"
+  },
+  {
+    "id": "systems-in-motion",
+    "components": [
+      "motion-card"
+    ]
+  },
+  {
+    "id": "welcome-section"
   }
 ]
