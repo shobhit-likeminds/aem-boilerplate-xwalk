@@ -26,7 +26,10 @@
       "our-legacy",
       "sustainability",
       "careers",
-      "footer-wrp"
+      "footer-wrp",
+      "header-nav",
+      "welcome-to-tata-motors",
+      "footer"
     ]
   },
   {
@@ -73,7 +76,21 @@
     ]
   },
   {
+    "id": "footer",
+    "components": [
+      "footer-section-item",
+      "footer-social-link-item",
+      "footer-link-item"
+    ]
+  },
+  {
     "id": "header-full",
+    "components": [
+      "navigation-item"
+    ]
+  },
+  {
+    "id": "header-nav",
     "components": [
       "navigation-item"
     ]
@@ -84,7 +101,7 @@
   {
     "id": "movement-that-matters",
     "components": [
-      "blurb-card"
+      "card-blurb-item"
     ]
   },
   {
@@ -99,10 +116,13 @@
   {
     "id": "systems-in-motion",
     "components": [
-      "motion-card"
+      "motion-card-item"
     ]
   },
   {
     "id": "welcome-section"
+  },
+  {
+    "id": "welcome-to-tata-motors"
   }
 ]

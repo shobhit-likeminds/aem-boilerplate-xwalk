@@ -1,0 +1,103 @@
+{
+  "definitions": [
+    {
+      "title": "Engineered for Evolution",
+      "id": "engineered-for-evolution",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "engineered-for-evolution",
+              "model": "engineered-for-evolution",
+              "name": "Engineered for Evolution"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Evolution Blurb Item",
+      "id": "evolution-blurb-item",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "evolution-blurb-item",
+              "name": "Evolution Blurb Item"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "engineered-for-evolution",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Headline",
+          "name": "headline",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Intro Text",
+          "name": "intro",
+          "valueType": "string"
+        },
+        {
+          "component": "container",
+          "item": "evolution-blurb-item",
+          "label": "Evolution Blurbs",
+          "name": "blurbs"
+        }
+      ]
+    },
+    {
+      "id": "evolution-blurb-item",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Image",
+          "name": "image",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Blurb Title",
+          "name": "title",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Blurb Description",
+          "name": "description",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "CTA Link",
+          "name": "ctaLink",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "CTA Label",
+          "name": "ctaLabel",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "engineered-for-evolution",
+      "components": [
+        "evolution-blurb-item"
+      ]
+    }
+  ]
+}

@@ -2,96 +2,84 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const [dotImageRow, mainDescriptionRow, scrollingDescriptionRow] = [...block.children];
+  const [dotImageRow, mainDescriptionRow, scrollingMessageRow] = [...block.children];
 
-  const root = document.createElement('section');
-  root.classList.add('demerged-info'); // Add block's own class to the root element
+  const section = document.createElement('section');
+  // section.classList.add('demerged-info'); // Removed: block already has this class from AEM
 
   // Dot Image
-  const dotLeft = document.createElement('div');
-  dotLeft.classList.add('dot-left');
-  const dotImagePicture = dotImageRow?.querySelector('picture');
+  const dotLeftDiv = document.createElement('div');
+  dotLeftDiv.classList.add('dot-left');
+  const dotImagePicture = dotImageRow.querySelector('picture');
   if (dotImagePicture) {
     const img = dotImagePicture.querySelector('img');
-    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '267' }]);
-    moveInstrumentation(dotImagePicture, optimizedPic.querySelector('img'));
-    dotLeft.append(optimizedPic);
-  }
-  moveInstrumentation(dotImageRow, dotLeft);
-  root.append(dotLeft);
-
-  // Container for descriptions
-  const containerWrapper = document.createElement('div');
-  containerWrapper.classList.add('container-1600-wrp');
-
-  // Main Description
-  const demergedConMain = document.createElement('div');
-  demergedConMain.classList.add('demerged-con', 'sp-para');
-  if (mainDescriptionRow) {
-    moveInstrumentation(mainDescriptionRow, demergedConMain);
-    // Create a temporary div to hold the innerHTML and process it
-    const tempDiv = document.createElement('div');
-    tempDiv.innerHTML = mainDescriptionRow.querySelector('div')?.innerHTML || '';
-
-    // The original HTML has nested lineParent/lineChild divs for animation.
-    // We need to recreate this structure and move the content.
-    const paragraphs = tempDiv.querySelectorAll('p');
-    if (paragraphs.length > 0) {
-      paragraphs.forEach((p) => {
-        const textContent = p.textContent.trim();
-        textContent.split('\n').forEach((line) => {
-          if (line.trim()) {
-            const lineParent = document.createElement('div');
-            lineParent.classList.add('lineParent');
-            lineParent.setAttribute('aria-hidden', 'true');
-            lineParent.style.cssText = 'position: relative; display: block; text-align: center;';
-
-            const lineChild = document.createElement('div');
-            lineChild.classList.add('lineChild');
-            lineChild.setAttribute('aria-hidden', 'true');
-            lineChild.style.cssText = 'position: relative; display: block; text-align: center; translate: none; rotate: none; scale: none; transform: translate(0px, 0px); opacity: 1;';
-            lineChild.textContent = line.trim();
-
-            lineParent.append(lineChild);
-            demergedConMain.append(lineParent);
-          }
-        });
-      });
-    } else {
-      // If no paragraphs, just move the raw content
-      while (tempDiv.firstChild) {
-        demergedConMain.append(tempDiv.firstChild);
-      }
+    if (img) {
+      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '267' }]);
+      moveInstrumentation(img, optimizedPic.querySelector('img'));
+      dotImagePicture.replaceWith(optimizedPic);
+      dotLeftDiv.append(optimizedPic);
     }
   }
-  containerWrapper.append(demergedConMain);
+  moveInstrumentation(dotImageRow, dotLeftDiv);
+  section.append(dotLeftDiv);
 
-  // Scrolling Description
+  const containerWrp = document.createElement('div');
+  containerWrp.classList.add('container-1600-wrp');
+
+  // Main Description
+  const demergedConDiv = document.createElement('div');
+  demergedConDiv.classList.add('demerged-con', 'sp-para');
+  if (mainDescriptionRow) {
+    // mainDescription is a richtext field, so its content is directly inside the cell div.
+    // querySelector('div') would return null if the content is just <p>text</p>
+    // We need to read the innerHTML of the cell itself.
+    const mainDescriptionCell = mainDescriptionRow.children[0]; // Access the cell directly
+    if (mainDescriptionCell) {
+      demergedConDiv.innerHTML = mainDescriptionCell.innerHTML; // Use innerHTML for richtext
+      moveInstrumentation(mainDescriptionRow, demergedConDiv);
+
+      // The original HTML shows lineParent/lineChild divs wrapping the text,
+      // but the generated JS was trying to re-split paragraphs into lines.
+      // Instead, we should preserve the original paragraph structure and apply classes.
+      // The lineParent/lineChild structure is likely for animation, which should be
+      // handled by CSS/JS frameworks, not by re-parsing text content.
+      // For now, we'll just ensure the paragraphs are moved correctly.
+      // If the original HTML had lineParent/lineChild, they would be part of mainDescriptionCell.innerHTML.
+      // The current generated JS was removing original paragraphs and creating new lineParent/lineChild.
+      // We should append the actual content from the cell.
+      // If the original HTML had specific lineParent/lineChild structure, it should be preserved.
+      // Since the BlockJson says 'richtext', we should just move the content as is.
+      // The original HTML example shows the lineParent/lineChild structure already present.
+      // So, the innerHTML assignment above should bring it over.
+      // The subsequent paragraph processing and removal is incorrect if the structure is already there.
+      // Removing the manual line splitting logic.
+    }
+  }
+  containerWrp.append(demergedConDiv);
+
+  // Scrolling Message
   const wowDiv = document.createElement('div');
   wowDiv.classList.add('wow', 'animate__', 'animate__fadeInUp', 'animated');
-  // Do not set visibility or animationName here; these are handled by the animation library
-  // wowDiv.style.visibility = 'visible';
-  // wowDiv.style.animationName = 'fadeInUp';
+  wowDiv.style.visibility = 'visible';
+  wowDiv.style.animationName = 'fadeInUp';
 
   const scrollingPara = document.createElement('div');
   scrollingPara.classList.add('demerged-con', 'scrolling-para', 'wow', 'animate__animated', 'animate__fade', 'animated');
-  // Do not set visibility or animationName here; these are handled by the animation library
-  // scrollingPara.style.visibility = 'visible';
-  // scrollingPara.style.animationName = 'float';
-  if (scrollingDescriptionRow) {
-    moveInstrumentation(scrollingDescriptionRow, scrollingPara);
-    // Move all children from the cell to the scrollingPara div
-    const cellContent = scrollingDescriptionRow.querySelector('div');
-    if (cellContent) {
-      while (cellContent.firstChild) {
-        scrollingPara.append(cellContent.firstChild);
-      }
+  scrollingPara.style.visibility = 'visible';
+  scrollingPara.style.animationName = 'float';
+  if (scrollingMessageRow) {
+    // scrollingMessage is a text field, its content is directly inside the cell div.
+    // querySelector('div') would return null if the content is just plain text.
+    // We need to read the textContent of the cell itself.
+    const scrollingMessageCell = scrollingMessageRow.children[0]; // Access the cell directly
+    if (scrollingMessageCell) {
+      scrollingPara.textContent = scrollingMessageCell.textContent.trim(); // Use textContent for plain text
+      moveInstrumentation(scrollingMessageRow, scrollingPara);
     }
   }
   wowDiv.append(scrollingPara);
-  containerWrapper.append(wowDiv);
+  containerWrp.append(wowDiv);
 
-  root.append(containerWrapper);
-
-  block.replaceChildren(root);
+  section.append(containerWrp);
+  block.replaceChildren(section);
 }

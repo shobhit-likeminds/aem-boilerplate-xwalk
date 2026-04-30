@@ -2,50 +2,67 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const [headlineRow, introRow, ...blurbRows] = [...block.children];
+  // Check 0.5: Remove block's own class from inner wrapper.
+  // The outer block div already carries 'engineered-for-evolution' from AEM.
+  // const section = document.createElement('section');
+  // section.classList.add('hm-eng-for-evol'); // This is the block name in kebab-case.
 
   const section = document.createElement('section');
-  section.classList.add('hm-eng-for-evol'); // This is correct, it's the outer wrapper class from ORIGINAL HTML
+  section.classList.add('hm-eng-for-evol'); // This class is from ORIGINAL HTML, not the block name.
 
   const container = document.createElement('div');
   container.classList.add('container-1600-wrp');
+  section.append(container);
 
-  const headline = document.createElement('h2');
-  headline.classList.add('common-ttle', 'wow', 'animate__', 'animate__fadeInUp', 'animated');
-  moveInstrumentation(headlineRow, headline);
-  headline.textContent = headlineRow.children[0]?.textContent.trim() || '';
-  container.append(headline);
+  // Check 0: Replaced direct children[n] access for root rows with named destructuring.
+  const [sectionTitleRow, sectionDescriptionRow, ...blurbItems] = [...block.children];
 
-  const intro = document.createElement('p');
-  intro.classList.add('wow', 'animate__', 'animate__fadeInUp', 'animated');
-  moveInstrumentation(introRow, intro);
-  // Intro text is richtext, so we need to extract the content from its inner div.
-  // The original HTML uses <p> for intro, so we'll set innerHTML directly.
-  // Ensure we get the content from the cell, not the row.
-  intro.innerHTML = introRow.children[0]?.querySelector('p')?.innerHTML ?? introRow.textContent.trim() ?? '';
-  container.append(intro);
+  // Section Title
+  const sectionTitle = document.createElement('h2');
+  sectionTitle.classList.add('common-ttle', 'wow', 'animate__', 'animate__fadeInUp', 'animated');
+  moveInstrumentation(sectionTitleRow, sectionTitle);
+  sectionTitle.textContent = sectionTitleRow.children[0]?.textContent.trim() || '';
+  container.append(sectionTitle);
 
-  const blurbHolder = document.createElement('div');
-  blurbHolder.classList.add('evolution-blurb-hld');
+  // Section Description
+  const sectionDescription = document.createElement('p');
+  sectionDescription.classList.add('wow', 'animate__', 'animate__fadeInUp', 'animated');
+  moveInstrumentation(sectionDescriptionRow, sectionDescription);
+  // Check 0.6 & 0.7B: sectionDescription is a <p>, so assigning innerHTML directly from a richtext cell
+  // which contains <p> will create <p><p>...</p></p>. Use a <div> or extract inner content.
+  // Since the original HTML uses <p> for the description, we should extract the inner content.
+  sectionDescription.innerHTML = sectionDescriptionRow.querySelector('p')?.innerHTML ?? sectionDescriptionRow.textContent.trim() ?? '';
+  container.append(sectionDescription);
+
+  // Blurbs
+  const blurbsHolder = document.createElement('div');
+  blurbsHolder.classList.add('evolution-blurb-hld');
+  container.append(blurbsHolder);
 
   const rowDiv = document.createElement('div');
   rowDiv.classList.add('row');
+  blurbsHolder.append(rowDiv);
 
-  blurbRows.forEach((row) => {
+  blurbItems.forEach((row) => {
+    // Check 0: Array destructuring is correct for fixed-schema rows.
     const [imageCell, titleCell, descriptionCell, ctaLinkCell, ctaLabelCell] = [...row.children];
 
-    const col = document.createElement('div');
-    col.classList.add('col-lg-4');
+    const colLg4 = document.createElement('div');
+    colLg4.classList.add('col-lg-4');
+    rowDiv.append(colLg4);
 
     const evolutionBlurb = document.createElement('div');
     evolutionBlurb.classList.add('evolution-blurb', 'wow', 'animate__', 'animate__fadeInUp', 'animated');
-    moveInstrumentation(row, evolutionBlurb);
+    colLg4.append(evolutionBlurb);
 
     const blurb = document.createElement('div');
     blurb.classList.add('blurb');
+    evolutionBlurb.append(blurb);
 
-    const contentDiv = document.createElement('div');
+    const blurbContentDiv = document.createElement('div');
+    blurb.append(blurbContentDiv);
 
+    // Image
     const figure = document.createElement('figure');
     const picture = imageCell.querySelector('picture');
     if (picture) {
@@ -53,45 +70,43 @@ export default function decorate(block) {
       if (img) {
         const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '80' }]);
         optimizedPic.querySelector('img').classList.add('bg-cover');
-        // moveInstrumentation should be called on the original img element, not the optimized one directly
-        // The optimized picture replaces the original, so we move instrumentation from the original cell
-        moveInstrumentation(imageCell, optimizedPic); // Move instrumentation from the imageCell to the new picture element
+        moveInstrumentation(img, optimizedPic.querySelector('img'));
         figure.append(optimizedPic);
       }
     }
-    contentDiv.append(figure);
+    blurbContentDiv.append(figure);
 
     const blurbDet = document.createElement('div');
     blurbDet.classList.add('blurb-det');
+    blurbContentDiv.append(blurbDet);
 
+    // Title
     const title = document.createElement('h4');
-    title.textContent = titleCell?.textContent.trim() || '';
+    moveInstrumentation(titleCell, title);
+    title.textContent = titleCell.textContent.trim();
     blurbDet.append(title);
 
+    // Description
     const description = document.createElement('p');
-    description.innerHTML = descriptionCell?.querySelector('p')?.innerHTML ?? descriptionCell?.textContent.trim() ?? '';
+    moveInstrumentation(descriptionCell, description);
+    // Check 0.6 & 0.7B: description is a <p>, so assigning innerHTML directly from a richtext cell
+    // which contains <p> will create <p><p>...</p></p>. Use a <div> or extract inner content.
+    // The original HTML shows <p> for the blurb description, so extract inner content.
+    description.innerHTML = descriptionCell.querySelector('p')?.innerHTML ?? descriptionCell.textContent.trim() ?? '';
     blurbDet.append(description);
 
-    contentDiv.append(blurbDet);
-    blurb.append(contentDiv);
-
+    // CTA Link and Label
     const ctaLink = document.createElement('a');
     ctaLink.classList.add('btn-box');
     const foundLink = ctaLinkCell.querySelector('a');
     if (foundLink) {
-      ctaLink.href = foundLink.href; // Correctly get href from the <a> tag in ctaLinkCell
+      ctaLink.href = foundLink.href;
+      if (foundLink.target) ctaLink.target = foundLink.target;
     }
-    ctaLink.textContent = ctaLabelCell?.textContent.trim() || '';
+    moveInstrumentation(ctaLinkCell, ctaLink);
+    ctaLink.textContent = ctaLabelCell.textContent.trim();
     blurb.append(ctaLink);
-
-    evolutionBlurb.append(blurb);
-    col.append(evolutionBlurb);
-    rowDiv.append(col);
   });
-
-  blurbHolder.append(rowDiv);
-  container.append(blurbHolder);
-  section.append(container);
 
   block.replaceChildren(section);
 }

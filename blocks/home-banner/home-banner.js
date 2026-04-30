@@ -2,6 +2,7 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
+  // Destructure all rows based on the BlockJson model
   const [
     backgroundImageRow,
     headlineRow,
@@ -18,92 +19,133 @@ export default function decorate(block) {
 
   const bannerHld = document.createElement('div');
   bannerHld.classList.add('banner-hld');
+  pentionBnr.append(bannerHld);
 
-  // Anim BG
-  const animBg = document.createElement('div');
-  animBg.classList.add('anim-bg');
-  const animBgFigure = document.createElement('figure');
-  const backgroundImage = backgroundImageRow.children[0]?.querySelector('picture');
-  if (backgroundImage) {
-    const img = backgroundImage.querySelector('img');
-    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '1920' }]);
-    optimizedPic.querySelector('img').classList.add('bg-cover');
-    moveInstrumentation(img.closest('picture'), optimizedPic.querySelector('img'));
-    animBgFigure.append(optimizedPic);
+  // Background Image
+  const backgroundImageCell = backgroundImageRow.children[0];
+  if (backgroundImageCell) {
+    const animBg = document.createElement('div');
+    animBg.classList.add('anim-bg');
+    const figure = document.createElement('figure');
+    const picture = backgroundImageCell.querySelector('picture');
+    if (picture) {
+      const img = picture.querySelector('img');
+      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '1920' }]);
+      moveInstrumentation(img, optimizedPic.querySelector('img'));
+      figure.append(optimizedPic);
+      optimizedPic.querySelector('img').classList.add('bg-cover');
+    }
+    moveInstrumentation(backgroundImageRow, animBg);
+    animBg.append(figure);
+    bannerHld.append(animBg);
   }
-  moveInstrumentation(backgroundImageRow, animBgFigure);
-  animBg.append(animBgFigure);
-  bannerHld.append(animBg);
 
   const container1600Wrp = document.createElement('div');
   container1600Wrp.classList.add('container-1600-wrp');
+  bannerHld.append(container1600Wrp);
 
-  // Caption Wrapper
-  const captionWrp = document.createElement('div');
-  captionWrp.classList.add('caption-wrp');
-  const headline = document.createElement('h2');
-  moveInstrumentation(headlineRow, headline);
-  // Use innerHTML from the cell to preserve <br/> or other rich text in headline
-  headline.innerHTML = headlineRow.children[0]?.innerHTML || '';
-  captionWrp.append(headline);
-  container1600Wrp.append(captionWrp);
+  // Headline
+  const headlineCell = headlineRow.children[0];
+  if (headlineCell) {
+    const captionWrp = document.createElement('div');
+    captionWrp.classList.add('caption-wrp');
+    const h2 = document.createElement('h2');
+    moveInstrumentation(headlineRow, h2);
+    // Headline is type=text, so use textContent.trim()
+    h2.textContent = headlineCell.textContent.trim();
+    captionWrp.append(h2);
+    container1600Wrp.append(captionWrp);
+  }
 
-  // Banner Text
+  // Banner Texts
+  const bannerText1Cell = bannerText1Row.children[0];
+  const bannerText2Cell = bannerText2Row.children[0];
+  const bannerText3Cell = bannerText3Row.children[0];
+
   const bannerText = document.createElement('div');
   bannerText.classList.add('banner-text');
 
-  const bannerText1Span = document.createElement('span');
-  moveInstrumentation(bannerText1Row, bannerText1Span);
-  bannerText1Span.textContent = bannerText1Row.children[0]?.textContent.trim() || '';
-  bannerText1Span.style.display = 'block';
-  bannerText1Span.style.opacity = '0';
-  bannerText.append(bannerText1Span);
+  if (bannerText1Cell) {
+    const span1 = document.createElement('span');
+    span1.style.display = 'block';
+    span1.style.opacity = '0';
+    moveInstrumentation(bannerText1Row, span1);
+    span1.textContent = bannerText1Cell.textContent.trim();
+    bannerText.append(span1);
+  }
 
-  const bannerText2Span = document.createElement('span');
-  moveInstrumentation(bannerText2Row, bannerText2Span);
-  bannerText2Span.textContent = bannerText2Row.children[0]?.textContent.trim() || '';
-  bannerText2Span.style.display = 'block';
-  bannerText2Span.style.opacity = '1';
-  bannerText.append(bannerText2Span);
+  if (bannerText2Cell) {
+    const span2 = document.createElement('span');
+    span2.style.display = 'block';
+    span2.style.opacity = '1';
+    moveInstrumentation(bannerText2Row, span2);
+    span2.textContent = bannerText2Cell.textContent.trim();
+    bannerText.append(span2);
+  }
 
-  const bannerText3Span = document.createElement('span');
-  moveInstrumentation(bannerText3Row, bannerText3Span);
-  bannerText3Span.textContent = bannerText3Row.children[0]?.textContent.trim() || '';
-  bannerText3Span.style.display = 'block';
-  bannerText3Span.style.opacity = '0';
-  bannerText.append(bannerText3Span);
-
+  if (bannerText3Cell) {
+    const span3 = document.createElement('span');
+    span3.style.display = 'block';
+    span3.style.opacity = '0';
+    moveInstrumentation(bannerText3Row, span3);
+    span3.textContent = bannerText3Cell.textContent.trim();
+    bannerText.append(span3);
+  }
   container1600Wrp.append(bannerText);
-  bannerHld.append(container1600Wrp);
 
-  // Rotator
+  // Rotator Images
+  const rotatorImage1Cell = rotatorImage1Row.children[0];
+  const rotatorImage2Cell = rotatorImage2Row.children[0];
+  const rotatorImage3Cell = rotatorImage3Row.children[0];
+
   const rotator = document.createElement('div');
   rotator.classList.add('rotator');
   const rotatorFigure = document.createElement('figure');
 
-  const rotatorImages = [rotatorImage1Row, rotatorImage2Row, rotatorImage3Row];
-  rotatorImages.forEach((row, index) => {
-    const picture = row.children[0]?.querySelector('picture');
-    if (picture) {
-      const img = picture.querySelector('img');
+  if (rotatorImage1Cell) {
+    const picture1 = rotatorImage1Cell.querySelector('picture');
+    if (picture1) {
+      const img = picture1.querySelector('img');
       const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '1920' }]);
-      const rotatorImg = optimizedPic.querySelector('img');
-      rotatorImg.classList.add('bg-cover');
-      rotatorImg.style.display = 'block';
-      rotatorImg.style.opacity = index === 1 ? '1' : '0.7'; // Set opacity for rotator images
-      moveInstrumentation(img.closest('picture'), rotatorImg);
+      moveInstrumentation(img, optimizedPic.querySelector('img'));
       rotatorFigure.append(optimizedPic);
+      optimizedPic.querySelector('img').classList.add('bg-cover');
+      optimizedPic.querySelector('img').style.display = 'block';
+      optimizedPic.querySelector('img').style.opacity = '0.7';
     }
-  });
+  }
+
+  if (rotatorImage2Cell) {
+    const picture2 = rotatorImage2Cell.querySelector('picture');
+    if (picture2) {
+      const img = picture2.querySelector('img');
+      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '1920' }]);
+      moveInstrumentation(img, optimizedPic.querySelector('img'));
+      rotatorFigure.append(optimizedPic);
+      optimizedPic.querySelector('img').classList.add('bg-cover');
+      optimizedPic.querySelector('img').style.display = 'block';
+      optimizedPic.querySelector('img').style.opacity = '1';
+    }
+  }
+
+  if (rotatorImage3Cell) {
+    const picture3 = rotatorImage3Cell.querySelector('picture');
+    if (picture3) {
+      const img = picture3.querySelector('img');
+      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '1920' }]);
+      moveInstrumentation(img, optimizedPic.querySelector('img'));
+      rotatorFigure.append(optimizedPic);
+      optimizedPic.querySelector('img').classList.add('bg-cover');
+      optimizedPic.querySelector('img').style.display = 'block';
+      optimizedPic.querySelector('img').style.opacity = '0.7';
+    }
+  }
   rotator.append(rotatorFigure);
   bannerHld.append(rotator);
 
-  // Banner Overlay
   const bannerOverlay = document.createElement('div');
   bannerOverlay.classList.add('banner-overlay');
   bannerHld.append(bannerOverlay);
-
-  pentionBnr.append(bannerHld);
 
   block.replaceChildren(pentionBnr);
 }

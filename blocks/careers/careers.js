@@ -2,65 +2,68 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const [
-    backgroundImageRow,
-    sectionSubtitleRow,
-    sectionTitleRow,
-    ctaLinkRow,
-    ctaLabelRow,
-  ] = [...block.children];
+  const [bannerImageRow, sectionTitleRow, headlineRow, ctaLinkRow, ctaLabelRow] = [...block.children];
 
   const section = document.createElement('section');
-  section.classList.add('hm-careers'); // This is the outer block div, already has the class from AEM.
+  // section.classList.add('hm-careers'); // Removed: block already has this class
+  moveInstrumentation(block, section); // Move instrumentation from block to section
 
-  const container = document.createElement('div');
-  container.classList.add('hm-careers-con');
-  section.append(container);
+  const careersContainer = document.createElement('div');
+  careersContainer.classList.add('hm-careers-con');
+  section.append(careersContainer);
 
-  // Background Image
+  // Banner Image
   const figure = document.createElement('figure');
-  const picture = backgroundImageRow.querySelector('picture');
-  if (picture) {
-    const img = picture.querySelector('img');
-    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '1920' }]);
-    moveInstrumentation(img, optimizedPic.querySelector('img'));
-    figure.append(optimizedPic);
-    figure.querySelector('img').classList.add('bg-cover');
+  if (bannerImageRow) {
+    const picture = bannerImageRow.querySelector('picture');
+    if (picture) {
+      const img = picture.querySelector('img');
+      if (img) {
+        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '1920' }]);
+        optimizedPic.querySelector('img').classList.add('bg-cover');
+        moveInstrumentation(bannerImageRow, optimizedPic.querySelector('img'));
+        figure.append(optimizedPic);
+      }
+    }
   }
-  moveInstrumentation(backgroundImageRow, figure);
-  container.append(figure);
+  careersContainer.append(figure);
 
-  const sectDet = document.createElement('div');
-  sectDet.classList.add('sect-det');
-  container.append(sectDet);
-
-  // Section Subtitle
-  const subTitle = document.createElement('div');
-  subTitle.classList.add('sub-ttle', 'wow', 'animate__', 'animate__fadeInUp', 'animated');
-  subTitle.textContent = sectionSubtitleRow.children[0]?.textContent.trim() || ''; // Read from cell, not row
-  moveInstrumentation(sectionSubtitleRow, subTitle);
-  sectDet.append(subTitle);
+  const sectionDetails = document.createElement('div');
+  sectionDetails.classList.add('sect-det');
+  careersContainer.append(sectionDetails);
 
   // Section Title
-  const commonTitle = document.createElement('h2');
-  commonTitle.classList.add('common-ttle', 'wow', 'animate__', 'animate__fadeInUp', 'animated');
-  commonTitle.innerHTML = sectionTitleRow.children[0]?.innerHTML || ''; // Richtext content from cell, not row
-  moveInstrumentation(sectionTitleRow, commonTitle);
-  sectDet.append(commonTitle);
+  if (sectionTitleRow) {
+    const subTitle = document.createElement('div');
+    subTitle.classList.add('sub-ttle', 'wow', 'animate__', 'animate__fadeInUp', 'animated');
+    moveInstrumentation(sectionTitleRow, subTitle);
+    subTitle.textContent = sectionTitleRow.textContent.trim();
+    sectionDetails.append(subTitle);
+  }
+
+  // Headline
+  if (headlineRow) {
+    const headline = document.createElement('h2');
+    headline.classList.add('common-ttle', 'wow', 'animate__', 'animate__fadeInUp', 'animated');
+    moveInstrumentation(headlineRow, headline);
+    // Fix: headlineRow.innerHTML contains <p> which would create <h2><p>...</p></h2>
+    // Read from the cell's first child (the <p> element) or fallback to textContent
+    headline.innerHTML = headlineRow.children[0]?.innerHTML ?? headlineRow.textContent.trim();
+    sectionDetails.append(headline);
+  }
 
   // CTA Link and Label
-  const ctaLink = document.createElement('a');
-  ctaLink.classList.add('btn-box', 'wow', 'animate__', 'animate__fadeInUp', 'animated');
-
-  const foundLink = ctaLinkRow.children[0]?.querySelector('a'); // Read from cell
-  if (foundLink) {
-    ctaLink.href = foundLink.href;
+  if (ctaLinkRow && ctaLabelRow) {
+    const ctaLink = document.createElement('a');
+    ctaLink.classList.add('btn-box', 'wow', 'animate__', 'animate__fadeInUp', 'animated');
+    const foundLink = ctaLinkRow.querySelector('a');
+    if (foundLink) {
+      ctaLink.href = foundLink.href;
+    }
+    moveInstrumentation(ctaLinkRow, ctaLink);
+    ctaLink.textContent = ctaLabelRow.textContent.trim();
+    sectionDetails.append(ctaLink);
   }
-  ctaLink.textContent = ctaLabelRow.children[0]?.textContent.trim() || ''; // Read from cell
-
-  moveInstrumentation(ctaLinkRow, ctaLink);
-  moveInstrumentation(ctaLabelRow, ctaLink); // Added instrumentation for CTA label row
-  sectDet.append(ctaLink);
 
   block.replaceChildren(section);
 }

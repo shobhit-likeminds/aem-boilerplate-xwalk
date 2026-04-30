@@ -165,20 +165,20 @@
     "fields": [
       {
         "component": "reference",
-        "label": "Background Image",
-        "name": "backgroundImage",
+        "label": "Banner Image",
+        "name": "bannerImage",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Section Subtitle",
-        "name": "sectionSubtitle",
+        "label": "Section Title",
+        "name": "sectionTitle",
         "valueType": "string"
       },
       {
         "component": "richtext",
-        "label": "Section Title",
-        "name": "sectionTitle",
+        "label": "Headline",
+        "name": "headline",
         "valueType": "string"
       },
       {
@@ -219,7 +219,7 @@
     "fields": [
       {
         "component": "reference",
-        "label": "Dots Image",
+        "label": "Dot Image",
         "name": "dotImage",
         "valueType": "string"
       },
@@ -230,9 +230,9 @@
         "valueType": "string"
       },
       {
-        "component": "richtext",
-        "label": "Scrolling Description",
-        "name": "scrollingDescription",
+        "component": "text",
+        "label": "Scrolling Message",
+        "name": "scrollingMessage",
         "valueType": "string"
       }
     ]
@@ -242,20 +242,20 @@
     "fields": [
       {
         "component": "text",
-        "label": "Headline",
-        "name": "headline",
+        "label": "Section Title",
+        "name": "sectionTitle",
         "valueType": "string"
       },
       {
         "component": "richtext",
-        "label": "Intro Text",
-        "name": "intro",
+        "label": "Section Description",
+        "name": "sectionDescription",
         "valueType": "string"
       },
       {
         "component": "container",
         "item": "evolution-blurb-item",
-        "label": "Evolution Blurbs",
+        "label": "Blurb Items",
         "name": "blurbs"
       }
     ]
@@ -265,7 +265,7 @@
     "fields": [
       {
         "component": "reference",
-        "label": "Image",
+        "label": "Blurb Image",
         "name": "image",
         "valueType": "string"
       },
@@ -410,6 +410,86 @@
     ]
   },
   {
+    "id": "footer",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Logo",
+        "name": "logo",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "footer-section-item",
+        "label": "Footer Sections",
+        "name": "footerSections"
+      },
+      {
+        "component": "container",
+        "item": "footer-social-link-item",
+        "label": "Footer Social Links",
+        "name": "footerSocialLinks"
+      },
+      {
+        "component": "container",
+        "item": "footer-link-item",
+        "label": "Footer Legal Links",
+        "name": "footerLegalLinks"
+      },
+      {
+        "component": "text",
+        "label": "Copyright Text",
+        "name": "copyright",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "footer-link-item",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Link Label",
+        "name": "label",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link URL",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "footer-section-item",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Section Title",
+        "name": "sectionTitle",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Section Links",
+        "name": "sectionLinks",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "footer-social-link-item",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Social Link URL",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "fragment",
     "fields": [
       {
@@ -481,6 +561,76 @@
         "item": "navigation-item",
         "label": "Navigation Menu",
         "name": "navigationMenu"
+      }
+    ]
+  },
+  {
+    "id": "navigation-item",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Menu Label",
+        "name": "label",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Menu Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Navigation Hierarchy",
+        "name": "hierarchy-tree",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "header-nav",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Logo Desktop",
+        "name": "logoDesktop",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Logo Desktop Link",
+        "name": "logoDesktopLink",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Logo Mobile",
+        "name": "logoMobile",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Close Navigation Icon",
+        "name": "closeNavIcon",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Secondary Logo (SVG or Image)",
+        "name": "secondaryLogo",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Secondary Logo Link",
+        "name": "secondaryLogoLink",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "navigation-item",
+        "label": "Navigation Items",
+        "name": "navigationItems"
       }
     ]
   },
@@ -591,55 +741,49 @@
     "fields": [
       {
         "component": "text",
-        "label": "Headline",
-        "name": "headline",
+        "label": "Section Title",
+        "name": "title",
         "valueType": "string"
       },
       {
         "component": "richtext",
-        "label": "Paragraph 1",
-        "name": "description1",
-        "valueType": "string"
-      },
-      {
-        "component": "richtext",
-        "label": "Paragraph 2",
-        "name": "description2",
+        "label": "Section Description",
+        "name": "description",
         "valueType": "string"
       },
       {
         "component": "container",
-        "item": "blurb-card",
-        "label": "Blurb Cards",
-        "name": "blurbs"
+        "item": "card-blurb-item",
+        "label": "Card Blurbs",
+        "name": "cardBlurbs"
       }
     ]
   },
   {
-    "id": "blurb-card",
+    "id": "card-blurb-item",
     "fields": [
       {
         "component": "text",
-        "label": "Blurb Headline",
-        "name": "blurbHeadline",
+        "label": "Card Title",
+        "name": "cardTitle",
         "valueType": "string"
       },
       {
         "component": "richtext",
-        "label": "Blurb Description",
-        "name": "blurbDescription",
+        "label": "Card Description",
+        "name": "cardDescription",
         "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "CTA Link",
-        "name": "ctaLink",
+        "label": "Card Link",
+        "name": "cardLink",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "CTA Label",
-        "name": "ctaLabel",
+        "label": "Card Link Label",
+        "name": "cardLinkLabel",
         "valueType": "string"
       }
     ]
@@ -684,8 +828,8 @@
       },
       {
         "component": "richtext",
-        "label": "Description",
-        "name": "description",
+        "label": "Designation",
+        "name": "designation",
         "valueType": "string"
       },
       {
@@ -748,20 +892,20 @@
     "fields": [
       {
         "component": "reference",
-        "label": "Dot Right Image",
-        "name": "dotRightImage",
+        "label": "Dot Image Right",
+        "name": "dotImageRight",
         "valueType": "string"
       },
       {
         "component": "reference",
-        "label": "Dot Left Image",
-        "name": "dotLeftImage",
+        "label": "Dot Image Left",
+        "name": "dotImageLeft",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Title",
-        "name": "title",
+        "label": "Headline",
+        "name": "headline",
         "valueType": "string"
       },
       {
@@ -772,14 +916,14 @@
       },
       {
         "component": "container",
-        "item": "motion-card",
+        "item": "motion-card-item",
         "label": "Motion Cards",
         "name": "motionCards"
       }
     ]
   },
   {
-    "id": "motion-card",
+    "id": "motion-card-item",
     "fields": [
       {
         "component": "reference",
@@ -790,13 +934,13 @@
       {
         "component": "text",
         "label": "Card Headline",
-        "name": "headline",
+        "name": "cardHeadline",
         "valueType": "string"
       },
       {
         "component": "richtext",
         "label": "Card Description",
-        "name": "description",
+        "name": "cardDescription",
         "valueType": "string"
       },
       {
@@ -826,6 +970,35 @@
         "component": "reference",
         "label": "Dot Left Image",
         "name": "dotLeftImage",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Headline",
+        "name": "headline",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Description",
+        "name": "description",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "welcome-to-tata-motors",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Right Dot Image",
+        "name": "rightDotImage",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Left Dot Image",
+        "name": "leftDotImage",
         "valueType": "string"
       },
       {

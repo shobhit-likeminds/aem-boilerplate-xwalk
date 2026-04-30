@@ -584,7 +584,7 @@ progress { vertical-align:baseline }
 
 .fa-youtube-square:before { content:"\f431" }
 
-@font-face{font-family:"Font Awesome 5 Brands";font-style:normal;font-weight:normal;font-display:auto;src:url("https://www.tatamotors.com/wp-content/themes/TataMotors/webfonts/fa-brands-400.eot");src:url("https://www.tatamotors.com/wp-content/themes/TataMotors/webfonts/fa-brands-400.eot?#iefix") format("embedded-opentype"),url("/content/dam/aemigrate/uploaded-folder/www-tatamotors-com/font/fa-brands-400-e37b31.woff2") format("woff2"),url("/content/dam/aemigrate/uploaded-folder/www-tatamotors-com/font/fa-brands-400-e5f8fe.font-woff") format("woff"),url("/content/dam/aemigrate/uploaded-folder/www-tatamotors-com/font/fa-brands-400-7111a0.font-sfnt") format("truetype"),url("https://www.tatamotors.com/wp-content/themes/TataMotors/webfonts/fa-brands-400.svg#fontawesome") format("svg")}
+@font-face{font-family:"Font Awesome 5 Brands";font-style:normal;font-weight:normal;font-display:auto;src:url("https://www.tatamotors.com/wp-content/themes/TataMotors/webfonts/fa-brands-400.eot");src:url("https://www.tatamotors.com/wp-content/themes/TataMotors/webfonts/fa-brands-400.eot?#iefix") format("embedded-opentype"),url("/content/dam/aemigrate/uploaded-folder/www-tatamotors-com/font/fa-brands-400-e5f8fe.font-woff") format("woff2"),url("/content/dam/aemigrate/uploaded-folder/www-tatamotors-com/font/fa-brands-400-e5f8fe.font-woff") format("woff"),url("/content/dam/aemigrate/uploaded-folder/www-tatamotors-com/font/fa-brands-400-7111a0.font-sfnt") format("truetype"),url("https://www.tatamotors.com/wp-content/themes/TataMotors/webfonts/fa-brands-400.svg#fontawesome") format("svg")}
 
 .fab { font-family:"Font Awesome 5 Brands" }
 

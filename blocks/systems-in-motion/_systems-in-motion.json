@@ -17,15 +17,15 @@
       }
     },
     {
-      "title": "Motion Card",
-      "id": "motion-card",
+      "title": "Motion Card Item",
+      "id": "motion-card-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "motion-card",
-              "name": "Motion Card"
+              "model": "motion-card-item",
+              "name": "Motion Card Item"
             }
           }
         }
@@ -38,20 +38,20 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Dot Right Image",
-          "name": "dotRightImage",
+          "label": "Dot Image Right",
+          "name": "dotImageRight",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Dot Left Image",
-          "name": "dotLeftImage",
+          "label": "Dot Image Left",
+          "name": "dotImageLeft",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Title",
-          "name": "title",
+          "label": "Headline",
+          "name": "headline",
           "valueType": "string"
         },
         {
@@ -62,14 +62,14 @@
         },
         {
           "component": "container",
-          "item": "motion-card",
+          "item": "motion-card-item",
           "label": "Motion Cards",
           "name": "motionCards"
         }
       ]
     },
     {
-      "id": "motion-card",
+      "id": "motion-card-item",
       "fields": [
         {
           "component": "reference",
@@ -80,13 +80,13 @@
         {
           "component": "text",
           "label": "Card Headline",
-          "name": "headline",
+          "name": "cardHeadline",
           "valueType": "string"
         },
         {
           "component": "richtext",
           "label": "Card Description",
-          "name": "description",
+          "name": "cardDescription",
           "valueType": "string"
         },
         {
@@ -108,7 +108,7 @@
     {
       "id": "systems-in-motion",
       "components": [
-        "motion-card"
+        "motion-card-item"
       ]
     }
   ]

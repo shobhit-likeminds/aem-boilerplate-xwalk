@@ -23,7 +23,7 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Dots Image",
+          "label": "Dot Image",
           "name": "dotImage",
           "valueType": "string"
         },
@@ -34,9 +34,9 @@
           "valueType": "string"
         },
         {
-          "component": "richtext",
-          "label": "Scrolling Description",
-          "name": "scrollingDescription",
+          "component": "text",
+          "label": "Scrolling Message",
+          "name": "scrollingMessage",
           "valueType": "string"
         }
       ]

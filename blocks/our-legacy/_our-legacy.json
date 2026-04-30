@@ -73,8 +73,8 @@
         },
         {
           "component": "richtext",
-          "label": "Description",
-          "name": "description",
+          "label": "Designation",
+          "name": "designation",
           "valueType": "string"
         },
         {

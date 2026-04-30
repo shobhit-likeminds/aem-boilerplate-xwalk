@@ -1,7 +1,7 @@
 {
   "definitions": [
     {
-      "title": "Movement That Matters",
+      "title": "Movement-That-Matters",
       "id": "movement-that-matters",
       "plugins": {
         "xwalk": {
@@ -10,22 +10,22 @@
             "template": {
               "filter": "movement-that-matters",
               "model": "movement-that-matters",
-              "name": "Movement That Matters"
+              "name": "Movement-That-Matters"
             }
           }
         }
       }
     },
     {
-      "title": "Blurb Card",
-      "id": "blurb-card",
+      "title": "Card-Blurb-Item",
+      "id": "card-blurb-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "blurb-card",
-              "name": "Blurb Card"
+              "model": "card-blurb-item",
+              "name": "Card-Blurb-Item"
             }
           }
         }
@@ -38,55 +38,49 @@
       "fields": [
         {
           "component": "text",
-          "label": "Headline",
-          "name": "headline",
+          "label": "Section Title",
+          "name": "title",
           "valueType": "string"
         },
         {
           "component": "richtext",
-          "label": "Paragraph 1",
-          "name": "description1",
-          "valueType": "string"
-        },
-        {
-          "component": "richtext",
-          "label": "Paragraph 2",
-          "name": "description2",
+          "label": "Section Description",
+          "name": "description",
           "valueType": "string"
         },
         {
           "component": "container",
-          "item": "blurb-card",
-          "label": "Blurb Cards",
-          "name": "blurbs"
+          "item": "card-blurb-item",
+          "label": "Card Blurbs",
+          "name": "cardBlurbs"
         }
       ]
     },
     {
-      "id": "blurb-card",
+      "id": "card-blurb-item",
       "fields": [
         {
           "component": "text",
-          "label": "Blurb Headline",
-          "name": "blurbHeadline",
+          "label": "Card Title",
+          "name": "cardTitle",
           "valueType": "string"
         },
         {
           "component": "richtext",
-          "label": "Blurb Description",
-          "name": "blurbDescription",
+          "label": "Card Description",
+          "name": "cardDescription",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "label": "CTA Link",
-          "name": "ctaLink",
+          "label": "Card Link",
+          "name": "cardLink",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "CTA Label",
-          "name": "ctaLabel",
+          "label": "Card Link Label",
+          "name": "cardLinkLabel",
           "valueType": "string"
         }
       ]
@@ -96,7 +90,7 @@
     {
       "id": "movement-that-matters",
       "components": [
-        "blurb-card"
+        "card-blurb-item"
       ]
     }
   ]

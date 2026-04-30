@@ -1,7 +1,7 @@
 {
   "definitions": [
     {
-      "title": "Engineered for Evolution",
+      "title": "Engineered For Evolution",
       "id": "engineered-for-evolution",
       "plugins": {
         "xwalk": {
@@ -10,7 +10,7 @@
             "template": {
               "filter": "engineered-for-evolution",
               "model": "engineered-for-evolution",
-              "name": "Engineered for Evolution"
+              "name": "Engineered For Evolution"
             }
           }
         }
@@ -38,20 +38,20 @@
       "fields": [
         {
           "component": "text",
-          "label": "Headline",
-          "name": "headline",
+          "label": "Section Title",
+          "name": "sectionTitle",
           "valueType": "string"
         },
         {
           "component": "richtext",
-          "label": "Intro Text",
-          "name": "intro",
+          "label": "Section Description",
+          "name": "sectionDescription",
           "valueType": "string"
         },
         {
           "component": "container",
           "item": "evolution-blurb-item",
-          "label": "Evolution Blurbs",
+          "label": "Blurb Items",
           "name": "blurbs"
         }
       ]
@@ -61,7 +61,7 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Image",
+          "label": "Blurb Image",
           "name": "image",
           "valueType": "string"
         },

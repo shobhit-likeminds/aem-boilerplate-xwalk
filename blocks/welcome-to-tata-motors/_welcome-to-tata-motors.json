@@ -1,0 +1,56 @@
+{
+  "definitions": [
+    {
+      "title": "Welcome-to-Tata-Motors",
+      "id": "welcome-to-tata-motors",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "welcome-to-tata-motors",
+              "model": "welcome-to-tata-motors",
+              "name": "Welcome-to-Tata-Motors"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "welcome-to-tata-motors",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Right Dot Image",
+          "name": "rightDotImage",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Left Dot Image",
+          "name": "leftDotImage",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Headline",
+          "name": "headline",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Description",
+          "name": "description",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "welcome-to-tata-motors"
+    }
+  ]
+}
