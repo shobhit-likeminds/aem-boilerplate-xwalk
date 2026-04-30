@@ -1,158 +1,135 @@
-import { createOptimizedPicture, loadScript, loadCSS } from '../../scripts/aem.js';
+import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
-export default async function decorate(block) {
-  const children = [...block.children];
-
-  const sectionHeaderRow = children[0];
-  const slideRows = children.slice(1);
+export default function decorate(block) {
+  const [sectionHeadingRow, ...slideRows] = [...block.children];
 
   const section = document.createElement('section');
-  section.classList.add('section', 'work-with-us', 'pb-0');
+  section.classList.add('section', 'work-with-us', 'pb-0'); // Apply classes from ORIGINAL HTML
 
-  // Section Header
   const sectionHeader = document.createElement('div');
   sectionHeader.classList.add('section-header', 'text-center');
-  moveInstrumentation(sectionHeaderRow, sectionHeader);
+  moveInstrumentation(sectionHeadingRow, sectionHeader);
 
   const heading = document.createElement('h2');
   heading.classList.add('heading', 'font-regular', 'aos-init', 'aos-animate');
-  heading.textContent = sectionHeaderRow.textContent.trim();
+  // FIX: Replaced direct children[0] access with named destructuring for sectionHeadingRow
+  const [sectionHeadingCell] = [...sectionHeadingRow.children];
+  heading.textContent = sectionHeadingCell.textContent.trim();
   sectionHeader.append(heading);
   section.append(sectionHeader);
 
-  // Slides container
   const positionRelativeDiv = document.createElement('div');
   positionRelativeDiv.classList.add('position-relative', 'aos-init', 'aos-animate');
 
-  const container = document.createElement('div');
-  container.classList.add('container');
+  const containerDiv = document.createElement('div');
+  containerDiv.classList.add('container');
 
-  const gridLayout = document.createElement('div');
-  gridLayout.classList.add('grid-layout');
+  const gridLayoutDiv = document.createElement('div');
+  gridLayoutDiv.classList.add('grid-layout');
 
   const slidesContainer = document.createElement('div');
-  slidesContainer.classList.add('slides', 'swiper'); // Add swiper class for initialization
-
-  const swiperWrapper = document.createElement('div');
-  swiperWrapper.classList.add('swiper-wrapper'); // Swiper wrapper
+  slidesContainer.classList.add('slides'); // This div contains all the individual slide wraps
 
   slideRows.forEach((row) => {
     const [
+      imageDesktopCell,
       imageMobile576Cell,
       imageMobile799Cell,
-      imageDefaultCell,
-      imageAltCell,
-      imageTitleCell,
-      headingCell,
-      descriptionCell,
+      slideHeadingCell,
+      slideDescriptionCell,
       ctaLinkCell,
       ctaLabelCell,
     ] = [...row.children];
 
-    const wrap = document.createElement('div');
-    wrap.classList.add('wrap', 'swiper-slide'); // Add swiper-slide class
-    moveInstrumentation(row, wrap);
+    const wrapDiv = document.createElement('div');
+    wrapDiv.classList.add('wrap');
+    moveInstrumentation(row, wrapDiv);
 
     // Image Wrap
-    const imageWrap = document.createElement('div');
-    imageWrap.classList.add('image-wrap');
+    const imageWrapDiv = document.createElement('div');
+    imageWrapDiv.classList.add('image-wrap');
 
     const picture = document.createElement('picture');
+    let hasImage = false;
 
-    const source576 = document.createElement('source');
-    source576.media = '(max-width: 576px)';
-    source576.srcset = imageMobile576Cell.querySelector('img')?.src || '';
-    picture.append(source576);
-
-    const source799 = document.createElement('source');
-    source799.media = '(max-width: 799px)';
-    source799.srcset = imageMobile799Cell.querySelector('img')?.src || '';
-    picture.append(source799);
-
-    const defaultImg = imageDefaultCell.querySelector('img');
-    if (defaultImg) {
-      const img = createOptimizedPicture(
-        defaultImg.src,
-        imageAltCell.textContent.trim() || '',
-        false,
-        [{ width: '750' }],
-      ).querySelector('img');
-      img.classList.add('img-fluid');
-      img.alt = imageAltCell.textContent.trim() || '';
-      img.title = imageTitleCell.textContent.trim() || '';
-      picture.append(img);
+    // Mobile Image (max-width: 576px)
+    const mobile576Img = imageMobile576Cell.querySelector('img');
+    if (mobile576Img) {
+      const source576 = document.createElement('source');
+      source576.media = '(max-width: 576px)';
+      source576.srcset = mobile576Img.src;
+      picture.append(source576);
+      hasImage = true;
     }
-    imageWrap.append(picture);
-    wrap.append(imageWrap);
+
+    // Mobile Image (max-width: 799px)
+    const mobile799Img = imageMobile799Cell.querySelector('img');
+    if (mobile799Img) {
+      const source799 = document.createElement('source');
+      source799.media = '(max-width: 799px)';
+      source799.srcset = mobile799Img.src;
+      picture.append(source799);
+      hasImage = true;
+    }
+
+    // Desktop Image
+    const desktopImg = imageDesktopCell.querySelector('img');
+    if (desktopImg) {
+      const img = createOptimizedPicture(desktopImg.src, desktopImg.alt, false, [{ width: '750' }]);
+      img.querySelector('img').classList.add('img-fluid');
+      picture.append(img.querySelector('img'));
+      hasImage = true;
+    }
+
+    if (hasImage) {
+      imageWrapDiv.append(picture);
+      wrapDiv.append(imageWrapDiv);
+    }
 
     // Content Wrap
-    const contentWrap = document.createElement('div');
-    contentWrap.classList.add('content-wrap');
+    const contentWrapDiv = document.createElement('div');
+    contentWrapDiv.classList.add('content-wrap');
 
-    const contentHeader = document.createElement('div');
-    contentHeader.classList.add('section-header');
+    const contentSectionHeader = document.createElement('div');
+    contentSectionHeader.classList.add('section-header');
 
     const slideHeading = document.createElement('h3');
     slideHeading.classList.add('heading', 'font-regular');
-    slideHeading.textContent = headingCell.textContent.trim();
-    contentHeader.append(slideHeading);
+    slideHeading.textContent = slideHeadingCell.textContent.trim();
+    contentSectionHeader.append(slideHeading);
 
-    const description = document.createElement('p');
-    description.classList.add('text-size-body');
-    description.innerHTML = descriptionCell.innerHTML;
-    contentHeader.append(description);
+    const slideDescription = document.createElement('p');
+    slideDescription.classList.add('text-size-body');
+    slideDescription.innerHTML = slideDescriptionCell.innerHTML;
+    contentSectionHeader.append(slideDescription);
 
-    const ctaLink = ctaLinkCell.querySelector('a');
-    if (ctaLink) {
-      const ctaAnchor = document.createElement('a');
-      ctaAnchor.classList.add('btn', 'btn-primary', 'stretched-link');
-      ctaAnchor.href = ctaLink.href; // Correctly read href from the <a> tag
-      ctaAnchor.textContent = ctaLabelCell.textContent.trim();
-      contentHeader.append(ctaAnchor);
+    const ctaLink = document.createElement('a');
+    ctaLink.classList.add('btn', 'btn-primary', 'stretched-link');
+    const foundLink = ctaLinkCell.querySelector('a');
+    if (foundLink) {
+      ctaLink.href = foundLink.href;
     }
-    contentWrap.append(contentHeader);
-    wrap.append(contentWrap);
-    swiperWrapper.append(wrap); // Append to swiperWrapper
+    ctaLink.textContent = ctaLabelCell.textContent.trim();
+    contentSectionHeader.append(ctaLink);
+
+    contentWrapDiv.append(contentSectionHeader);
+    wrapDiv.append(contentWrapDiv);
+
+    slidesContainer.append(wrapDiv);
   });
 
-  slidesContainer.append(swiperWrapper); // Append swiperWrapper to slidesContainer
-
-  // Add Swiper navigation and pagination elements
-  const swiperPagination = document.createElement('div');
-  swiperPagination.classList.add('swiper-pagination');
-  slidesContainer.append(swiperPagination);
-
-  const swiperButtonPrev = document.createElement('div');
-  swiperButtonPrev.classList.add('swiper-button-prev');
-  slidesContainer.append(swiperButtonPrev);
-
-  const swiperButtonNext = document.createElement('div');
-  swiperButtonNext.classList.add('swiper-button-next');
-  slidesContainer.append(swiperButtonNext);
-
-  gridLayout.append(slidesContainer);
-  container.append(gridLayout);
-  positionRelativeDiv.append(container);
+  gridLayoutDiv.append(slidesContainer);
+  containerDiv.append(gridLayoutDiv);
+  positionRelativeDiv.append(containerDiv);
   section.append(positionRelativeDiv);
 
   block.replaceChildren(section);
 
-  // Load Swiper library and initialize
-  await loadCSS('https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css');
-  await loadScript('https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js');
-
-  // eslint-disable-next-line no-undef
-  new Swiper(slidesContainer, {
-    slidesPerView: 'auto',
-    loop: false, // Set to true if data-loop="true" is present in original HTML
-    navigation: {
-      prevEl: swiperButtonPrev,
-      nextEl: swiperButtonNext,
-    },
-    pagination: {
-      el: swiperPagination,
-      clickable: true,
-    },
+  // Optimize images after all elements are in the DOM
+  block.querySelectorAll('picture > img').forEach((img) => {
+    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+    moveInstrumentation(img, optimizedPic.querySelector('img'));
+    img.closest('picture').replaceWith(optimizedPic);
   });
 }

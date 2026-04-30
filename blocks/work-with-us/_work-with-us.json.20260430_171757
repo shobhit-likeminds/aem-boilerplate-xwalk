@@ -55,32 +55,44 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Desktop Image",
-          "name": "imageDesktop",
-          "valueType": "string"
-        },
-        {
-          "component": "reference",
-          "label": "Mobile Image (max-width: 576px)",
+          "label": "Image (max-width: 576px) srcset",
           "name": "imageMobile576",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Mobile Image (max-width: 799px)",
+          "label": "Image (max-width: 799px) srcset",
           "name": "imageMobile799",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Default Image src",
+          "name": "imageDefault",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Image Alt Text",
+          "name": "imageAlt",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Image Title",
+          "name": "imageTitle",
           "valueType": "string"
         },
         {
           "component": "text",
           "label": "Slide Heading",
-          "name": "slideHeading",
+          "name": "heading",
           "valueType": "string"
         },
         {
           "component": "richtext",
           "label": "Slide Description",
-          "name": "slideDescription",
+          "name": "description",
           "valueType": "string"
         },
         {

@@ -38,7 +38,7 @@
       "fields": [
         {
           "component": "text",
-          "label": "Block Heading",
+          "label": "Section Heading",
           "name": "heading",
           "valueType": "string"
         },
@@ -56,7 +56,7 @@
         {
           "component": "reference",
           "label": "Main Image",
-          "name": "imageMain",
+          "name": "image",
           "valueType": "string"
         },
         {
@@ -85,14 +85,14 @@
         },
         {
           "component": "aem-content",
-          "label": "Read More Link",
-          "name": "link",
+          "label": "CTA Link",
+          "name": "ctaLink",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Read More Label",
-          "name": "linkLabel",
+          "label": "CTA Label",
+          "name": "ctaLabel",
           "valueType": "string"
         },
         {

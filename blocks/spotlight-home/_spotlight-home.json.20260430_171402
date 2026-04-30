@@ -1,7 +1,7 @@
 {
   "definitions": [
     {
-      "title": "Spotlight Home",
+      "title": "Spotlight-Home",
       "id": "spotlight-home",
       "plugins": {
         "xwalk": {
@@ -10,14 +10,14 @@
             "template": {
               "filter": "spotlight-home",
               "model": "spotlight-home",
-              "name": "Spotlight Home"
+              "name": "Spotlight-Home"
             }
           }
         }
       }
     },
     {
-      "title": "Spotlight Slide",
+      "title": "Spotlight-Slide",
       "id": "spotlight-slide",
       "plugins": {
         "xwalk": {
@@ -25,14 +25,14 @@
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
               "model": "spotlight-slide",
-              "name": "Spotlight Slide"
+              "name": "Spotlight-Slide"
             }
           }
         }
       }
     },
     {
-      "title": "Quick Link Item",
+      "title": "Quick-Link-Item",
       "id": "quick-link-item",
       "plugins": {
         "xwalk": {
@@ -40,7 +40,7 @@
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
               "model": "quick-link-item",
-              "name": "Quick Link Item"
+              "name": "Quick-Link-Item"
             }
           }
         }
@@ -71,36 +71,42 @@
         {
           "component": "reference",
           "label": "Desktop Image",
-          "name": "desktopImage",
+          "name": "imageDesktop",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Tablet Image (max-width:799px)",
-          "name": "tabletImage",
+          "label": "Tablet Image (max-width: 799px)",
+          "name": "imageTablet",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Mobile Image (max-width:576px)",
-          "name": "mobileImage",
+          "label": "Mobile Image (max-width: 576px)",
+          "name": "imageMobile",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Image Alt Text",
+          "name": "imageAlt",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Preheadline",
+          "name": "preheadline",
           "valueType": "string"
         },
         {
           "component": "richtext",
-          "label": "Small Text (optional, e.g. \u003csmall\u003e)",
-          "name": "smallText",
-          "valueType": "string"
-        },
-        {
-          "component": "richtext",
-          "label": "Headline (h1/h2)",
+          "label": "Headline",
           "name": "headline",
           "valueType": "string"
         },
         {
           "component": "richtext",
-          "label": "Description (p)",
+          "label": "Description",
           "name": "description",
           "valueType": "string"
         },

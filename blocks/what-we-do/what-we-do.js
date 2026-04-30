@@ -2,33 +2,35 @@ import { createOptimizedPicture, loadScript, loadCSS } from '../../scripts/aem.j
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default async function decorate(block) {
-  const children = [...block.children];
+  const [headingRow, descriptionRow, ...businessItemRows] = [...block.children];
 
+  // CHECK 0.5: Removed 'what-we-do-wrap' from section.classList.add()
   const section = document.createElement('section');
-  section.classList.add('section', 'what-we-do-wrap');
+  section.classList.add('section'); // Removed 'what-we-do-wrap' as outer block already has it
 
-  const container = document.createElement('div');
-  container.classList.add('container');
-  section.append(container);
+  const containerDiv = document.createElement('div');
+  containerDiv.classList.add('container');
+  section.append(containerDiv);
 
   const sectionHeader = document.createElement('div');
   sectionHeader.classList.add('section-header', 'text-center');
-  container.append(sectionHeader);
+  containerDiv.append(sectionHeader);
 
-  // Heading and Description are the first two rows
-  const [headingRow, descriptionRow, ...itemRows] = children;
-
-  // Heading
   const heading = document.createElement('h2');
-  heading.classList.add('heading', 'font-regular');
+  heading.classList.add('heading', 'font-regular', 'aos-init', 'aos-animate');
   moveInstrumentation(headingRow, heading);
-  heading.textContent = headingRow.textContent.trim();
+  // CHECK 0: Replaced direct .children[0] access with named destructuring
+  const [headingCell] = [...headingRow.children];
+  heading.textContent = headingCell?.textContent.trim();
   sectionHeader.append(heading);
 
-  // Description
   const description = document.createElement('p');
+  description.classList.add('aos-init', 'aos-animate');
   moveInstrumentation(descriptionRow, description);
-  description.innerHTML = descriptionRow.innerHTML;
+  // CHECK 0.6: descriptionRow is a ROW, not a cell. Read from cell.
+  // CHECK 0: Replaced direct .children[0] access with named destructuring
+  const [descriptionCell] = [...descriptionRow.children];
+  description.innerHTML = descriptionCell?.innerHTML;
   sectionHeader.append(description);
 
   const ourBusinessVerticals = document.createElement('div');
@@ -44,98 +46,97 @@ export default async function decorate(block) {
   desktopRow.classList.add('row', 'row-cols-lg-3', 'row-cols-1', 'g-3');
   desktopContainer.append(desktopRow);
 
-  // Mobile view
+  // Mobile view (Swiper based)
   const mobileContainer = document.createElement('div');
-  mobileContainer.classList.add('container', 'd-lg-none', 'd-block');
+  mobileContainer.classList.add('container', 'd-lg-none', 'd-block', 'aos-init', 'aos-animate');
+  mobileContainer.setAttribute('data-aos', 'fade-up');
+  mobileContainer.setAttribute('data-aos-offset', '100');
+  mobileContainer.setAttribute('data-aos-duration', '650');
+  mobileContainer.setAttribute('data-aos-easing', 'ease-in-out');
   ourBusinessVerticals.append(mobileContainer);
 
   const mobileSlider = document.createElement('div');
-  mobileSlider.classList.add('mobile-slider');
-  mobileSlider.setAttribute('data-flickity', '{ "wrapAround": false, "lazyLoad": true, "pageDots": true, "prevNextButtons": false, "imagesLoaded": true, "cellAlign": "left", "adaptiveHeight": true }');
+  // CHECK 2.5 E: Removed swiper-initialized, swiper-horizontal, swiper-backface-hidden
+  mobileSlider.classList.add('mobile-slider', 'swiper');
   mobileContainer.append(mobileSlider);
 
-  // Flickity structure requires direct children to be slides
-  // The viewport and slider divs are added by Flickity itself, not manually.
-  // We will append 'slides' divs directly to mobileSlider.
+  const swiperWrapper = document.createElement('div');
+  swiperWrapper.classList.add('swiper-wrapper');
+  mobileSlider.append(swiperWrapper);
 
-  const mobileSlides = [];
-  let currentMobileSlide = document.createElement('div');
-  currentMobileSlide.classList.add('slides');
-  mobileSlides.push(currentMobileSlide);
-  let mobileSlideRowCount = 0;
+  const slides = []; // To group items into slides for mobile
+  let currentSlide = document.createElement('div');
+  currentSlide.classList.add('slides', 'swiper-slide');
+  let currentRow = document.createElement('div');
+  currentRow.classList.add('row', 'row-cols-1', 'gy-3');
+  currentSlide.append(currentRow);
+  slides.push(currentSlide);
 
-  let mobileRowContainer = document.createElement('div');
-  mobileRowContainer.classList.add('row', 'row-cols-1', 'gy-3');
-  currentMobileSlide.append(mobileRowContainer);
+  businessItemRows.forEach((row, index) => {
+    // CHECK 0: Array destructuring is correct for fixed-schema rows.
+    const [imageDesktopCell, imageTabletCell, businessTitleCell, arrowIconCell, businessLinkCell] = [...row.children];
 
-  itemRows.forEach((row, index) => {
-    const [imageDesktopCell, imageTabletCell, imageMobileCell, titleCell, arrowIconCell, ctaLinkCell] = [...row.children];
-
-    // Desktop item
+    // Desktop Item
     const desktopCol = document.createElement('div');
-    desktopCol.classList.add('col');
+    desktopCol.classList.add('col', 'aos-init', 'aos-animate');
+    desktopCol.setAttribute('data-aos', 'fade-up');
+    desktopCol.setAttribute('data-aos-delay', `${(index % 3) * 300 + 100}`); // Stagger delays
     desktopRow.append(desktopCol);
 
-    const wrap = document.createElement('div');
-    wrap.classList.add('wrap');
-    desktopCol.append(wrap);
+    const desktopWrap = document.createElement('div');
+    desktopWrap.classList.add('wrap');
+    desktopCol.append(desktopWrap);
 
-    const imageDiv = document.createElement('div');
-    imageDiv.classList.add('image');
-    wrap.append(imageDiv);
-
+    const desktopImageDiv = document.createElement('div');
+    desktopImageDiv.classList.add('image');
     const desktopPicture = imageDesktopCell.querySelector('picture');
     if (desktopPicture) {
-      const optimizedPic = createOptimizedPicture(
-        desktopPicture.querySelector('img').src,
-        desktopPicture.querySelector('img').alt,
-        false,
-        [{ media: '(min-width: 992px)', width: '376' }, { width: '376' }],
-      );
+      const img = desktopPicture.querySelector('img');
+      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ media: '(min-width: 992px)', width: '376' }, { width: '376' }]);
       moveInstrumentation(desktopPicture, optimizedPic.querySelector('img'));
-      imageDiv.append(optimizedPic);
+      desktopImageDiv.append(optimizedPic);
     }
+    desktopWrap.append(desktopImageDiv);
 
-    const titleDiv = document.createElement('div');
-    titleDiv.classList.add('title');
-    titleDiv.textContent = titleCell.textContent.trim();
-    wrap.append(titleDiv);
-
-    const arrowIcon = arrowIconCell.querySelector('picture');
-    if (arrowIcon) {
-      const img = arrowIcon.querySelector('img');
-      const optimizedArrow = createOptimizedPicture(img.src, img.alt, false, [{ width: '10' }]);
-      moveInstrumentation(img, optimizedArrow.querySelector('img'));
-      titleDiv.append(optimizedArrow);
+    const desktopTitleDiv = document.createElement('div');
+    desktopTitleDiv.classList.add('title');
+    desktopTitleDiv.textContent = businessTitleCell.textContent.trim();
+    const desktopArrowIcon = arrowIconCell.querySelector('picture');
+    if (desktopArrowIcon) {
+      const img = desktopArrowIcon.querySelector('img');
+      const arrowImg = document.createElement('img');
+      arrowImg.loading = 'lazy';
+      arrowImg.src = img.src;
+      arrowImg.alt = img.alt;
+      arrowImg.width = '10';
+      arrowImg.height = '29';
+      desktopTitleDiv.append(' ', arrowImg); // Add a space before the icon
     }
+    desktopWrap.append(desktopTitleDiv);
 
-    const ctaLink = ctaLinkCell.querySelector('a');
-    if (ctaLink) {
-      const anchor = document.createElement('a');
-      anchor.classList.add('stretched-link');
-      anchor.href = ctaLink.href;
-      anchor.setAttribute('aria-label', `Learn more about ${titleCell.textContent.trim()}`);
-      moveInstrumentation(ctaLink, anchor);
-      wrap.append(anchor);
+    const desktopLink = document.createElement('a');
+    desktopLink.classList.add('stretched-link');
+    const foundLink = businessLinkCell.querySelector('a');
+    if (foundLink) {
+      desktopLink.href = foundLink.href;
+      desktopLink.setAttribute('aria-label', `Learn more about ${businessTitleCell.textContent.trim()}`);
     }
-    moveInstrumentation(row, desktopCol);
+    moveInstrumentation(row, desktopLink); // Move instrumentation from the original row to the link
+    desktopWrap.append(desktopLink);
 
-    // Mobile item
-    if (mobileSlideRowCount >= 3) {
-      currentMobileSlide = document.createElement('div');
-      currentMobileSlide.classList.add('slides');
-      mobileSlides.push(currentMobileSlide);
-      
-      mobileRowContainer = document.createElement('div'); // Create a new row container for the new slide
-      mobileRowContainer.classList.add('row', 'row-cols-1', 'gy-3');
-      currentMobileSlide.append(mobileRowContainer);
-      
-      mobileSlideRowCount = 0;
+    // Mobile Item - Group into slides of 3
+    if (index > 0 && index % 3 === 0) {
+      currentSlide = document.createElement('div');
+      currentSlide.classList.add('slides', 'swiper-slide');
+      currentRow = document.createElement('div');
+      currentRow.classList.add('row', 'row-cols-1', 'gy-3');
+      currentSlide.append(currentRow);
+      slides.push(currentSlide);
     }
 
     const mobileCol = document.createElement('div');
     mobileCol.classList.add('col');
-    mobileRowContainer.append(mobileCol); // Append to the current slide's row container
+    currentRow.append(mobileCol);
 
     const mobileWrap = document.createElement('div');
     mobileWrap.classList.add('wrap');
@@ -143,63 +144,70 @@ export default async function decorate(block) {
 
     const mobileImageDiv = document.createElement('div');
     mobileImageDiv.classList.add('image');
-    mobileWrap.append(mobileImageDiv);
-
-    const mobilePicture = imageMobileCell.querySelector('picture');
+    const mobilePicture = imageTabletCell.querySelector('picture');
     if (mobilePicture) {
-      const optimizedPic = createOptimizedPicture(
-        mobilePicture.querySelector('img').src,
-        mobilePicture.querySelector('img').alt,
-        false,
-        [{ media: '(min-width: 450px)', width: '376' }, { width: '376' }],
-      );
-      moveInstrumentation(mobilePicture, optimizedPic.querySelector('img'));
+      const img = mobilePicture.querySelector('img');
+      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ media: '(min-width: 992px)', width: '376' }, { width: '376' }]);
       mobileImageDiv.append(optimizedPic);
     }
+    mobileWrap.append(mobileImageDiv);
 
     const mobileTitleDiv = document.createElement('div');
     mobileTitleDiv.classList.add('title');
-    mobileTitleDiv.textContent = titleCell.textContent.trim();
+    mobileTitleDiv.textContent = businessTitleCell.textContent.trim();
+    const mobileArrowIcon = arrowIconCell.querySelector('picture');
+    if (mobileArrowIcon) {
+      const img = mobileArrowIcon.querySelector('img');
+      const arrowImg = document.createElement('img');
+      arrowImg.loading = 'lazy';
+      arrowImg.src = img.src;
+      arrowImg.alt = img.alt;
+      arrowImg.width = '10';
+      arrowImg.height = '29';
+      mobileTitleDiv.append(' ', arrowImg); // Add a space before the icon
+    }
     mobileWrap.append(mobileTitleDiv);
 
-    if (arrowIcon) {
-      const img = arrowIcon.querySelector('img');
-      const optimizedArrow = createOptimizedPicture(img.src, img.alt, false, [{ width: '10' }]);
-      // No moveInstrumentation for arrowIcon here as it's a duplicate of desktop,
-      // and the original arrowIconCell is already instrumented with desktopCol.
-      mobileTitleDiv.append(optimizedArrow);
+    const mobileLink = document.createElement('a');
+    mobileLink.classList.add('stretched-link');
+    if (foundLink) {
+      mobileLink.href = foundLink.href;
+      mobileLink.setAttribute('aria-label', `Learn more about ${businessTitleCell.textContent.trim()}`);
     }
-
-    if (ctaLink) {
-      const anchor = document.createElement('a');
-      anchor.classList.add('stretched-link');
-      anchor.href = ctaLink.href;
-      anchor.setAttribute('aria-label', `Learn more about ${titleCell.textContent.trim()}`);
-      // No moveInstrumentation for ctaLink here as it's a duplicate of desktop.
-      mobileWrap.append(anchor);
-    }
-    mobileSlideRowCount += 1;
+    mobileWrap.append(mobileLink);
   });
 
-  mobileSlides.forEach((slide) => mobileSlider.append(slide)); // Append slides directly to mobileSlider
+  slides.forEach((slide) => swiperWrapper.append(slide));
+
+  const paginationEl = document.createElement('div');
+  // CHECK 2.5 D: Pagination class should be swiper-pagination, not flickity-page-dots
+  paginationEl.classList.add('swiper-pagination');
+  mobileSlider.append(paginationEl);
 
   block.replaceChildren(section);
 
-  // Load Flickity for mobile slider
-  await loadCSS('/libs/flickity/flickity.min.css');
-  await loadScript('/libs/flickity/flickity.pkgd.min.js');
+  // Initialize Swiper for mobile
+  // CHECK 2.5 A, B, C: loadScript and loadCSS are imported and awaited, decorate is async.
+  await loadCSS('https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css');
+  await loadScript('https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js');
 
   // eslint-disable-next-line no-undef
-  if (typeof Flickity !== 'undefined' && mobileSlider) { // Check if Flickity is loaded and mobileSlider exists
-    // eslint-disable-next-line no-new, no-undef
-    new Flickity(mobileSlider, {
-      wrapAround: false,
-      lazyLoad: true,
-      pageDots: true,
-      prevNextButtons: false,
-      imagesLoaded: true,
-      cellAlign: 'left',
-      adaptiveHeight: true,
-    });
-  }
+  new Swiper(mobileSlider, {
+    slidesPerView: 1,
+    spaceBetween: 16,
+    loop: false,
+    pagination: {
+      el: paginationEl,
+      clickable: true,
+      // CHECK 2.5 D: Swiper pagination renderBullet should create a button or span, not li, and use swiper-pagination-bullet class
+      renderBullet: (index, className) => `<span class="${className}" aria-label="Page dot ${index + 1}"></span>`,
+    },
+  });
+
+  // Optimize images
+  section.querySelectorAll('picture > img').forEach((img) => {
+    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+    moveInstrumentation(img, optimizedPic.querySelector('img'));
+    img.closest('picture').replaceWith(optimizedPic);
+  });
 }
