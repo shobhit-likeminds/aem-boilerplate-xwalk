@@ -430,56 +430,56 @@
     "fields": [
       {
         "component": "reference",
-        "label": "Desktop Logo Image",
-        "name": "desktopLogo",
+        "label": "Logo Desktop",
+        "name": "logoDesktop",
         "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "Desktop Logo Link",
-        "name": "desktopLogoLink",
+        "label": "Logo Desktop Link",
+        "name": "logoDesktopLink",
         "valueType": "string"
       },
       {
         "component": "reference",
-        "label": "Mobile Logo Image",
-        "name": "mobileLogo",
+        "label": "Logo Mobile",
+        "name": "logoMobile",
         "valueType": "string"
       },
       {
         "component": "reference",
-        "label": "Close Icon Image",
+        "label": "Close Icon",
         "name": "closeIcon",
         "valueType": "string"
       },
       {
         "component": "reference",
-        "label": "Secondary Logo SVG (Footer Logo)",
-        "name": "logo2",
+        "label": "Secondary Logo (SVG or Image)",
+        "name": "logoSecondary",
         "valueType": "string"
       },
       {
         "component": "aem-content",
         "label": "Secondary Logo Link",
-        "name": "logo2Link",
+        "name": "logoSecondaryLink",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Mode Button Label (e.g. 'Mode')",
-        "name": "modeButtonLabel",
+        "label": "Mode Button Label",
+        "name": "modeLabel",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Mode Light Label",
-        "name": "modeLightLabel",
+        "label": "Light Mode Label",
+        "name": "lightLabel",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Mode Dark Label",
-        "name": "modeDarkLabel",
+        "label": "Dark Mode Label",
+        "name": "darkLabel",
         "valueType": "string"
       },
       {
@@ -495,13 +495,13 @@
     "fields": [
       {
         "component": "text",
-        "label": "Menu Item Label",
+        "label": "Menu Label",
         "name": "label",
         "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "Menu Item Link",
+        "label": "Menu Link",
         "name": "link",
         "valueType": "string"
       },

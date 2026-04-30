@@ -297,7 +297,7 @@
           }
         },
         {
-          "title": "Header Full",
+          "title": "Header-Full",
           "id": "header-full",
           "plugins": {
             "xwalk": {
@@ -306,14 +306,14 @@
                 "template": {
                   "filter": "header-full",
                   "model": "header-full",
-                  "name": "Header Full"
+                  "name": "Header-Full"
                 }
               }
             }
           }
         },
         {
-          "title": "Navigation Item",
+          "title": "Navigation-Item",
           "id": "navigation-item",
           "plugins": {
             "xwalk": {
@@ -321,7 +321,7 @@
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
                   "model": "navigation-item",
-                  "name": "Navigation Item"
+                  "name": "Navigation-Item"
                 }
               }
             }

@@ -1,7 +1,7 @@
 {
   "definitions": [
     {
-      "title": "Header-Full",
+      "title": "Header Full",
       "id": "header-full",
       "plugins": {
         "xwalk": {
@@ -10,14 +10,14 @@
             "template": {
               "filter": "header-full",
               "model": "header-full",
-              "name": "Header-Full"
+              "name": "Header Full"
             }
           }
         }
       }
     },
     {
-      "title": "Navigation-Item",
+      "title": "Navigation Item",
       "id": "navigation-item",
       "plugins": {
         "xwalk": {
@@ -25,7 +25,7 @@
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
               "model": "navigation-item",
-              "name": "Navigation-Item"
+              "name": "Navigation Item"
             }
           }
         }
@@ -38,56 +38,56 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Logo Desktop",
-          "name": "logoDesktop",
+          "label": "Desktop Logo Image",
+          "name": "desktopLogo",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "label": "Logo Desktop Link",
-          "name": "logoDesktopLink",
+          "label": "Desktop Logo Link",
+          "name": "desktopLogoLink",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Logo Mobile",
-          "name": "logoMobile",
+          "label": "Mobile Logo Image",
+          "name": "mobileLogo",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Close Icon",
+          "label": "Close Icon Image",
           "name": "closeIcon",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Secondary Logo (SVG or Image)",
-          "name": "logoSecondary",
+          "label": "Secondary Logo SVG (Footer Logo)",
+          "name": "logo2",
           "valueType": "string"
         },
         {
           "component": "aem-content",
           "label": "Secondary Logo Link",
-          "name": "logoSecondaryLink",
+          "name": "logo2Link",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Mode Button Label",
-          "name": "modeLabel",
+          "label": "Mode Button Label (e.g. 'Mode')",
+          "name": "modeButtonLabel",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Light Mode Label",
-          "name": "lightLabel",
+          "label": "Mode Light Label",
+          "name": "modeLightLabel",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Dark Mode Label",
-          "name": "darkLabel",
+          "label": "Mode Dark Label",
+          "name": "modeDarkLabel",
           "valueType": "string"
         },
         {
@@ -103,13 +103,13 @@
       "fields": [
         {
           "component": "text",
-          "label": "Menu Label",
+          "label": "Menu Item Label",
           "name": "label",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "label": "Menu Link",
+          "label": "Menu Item Link",
           "name": "link",
           "valueType": "string"
         },
