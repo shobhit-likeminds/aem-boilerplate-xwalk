@@ -60,7 +60,7 @@ export default function decorate(block) {
   // This means descriptionRow is the outer <div>, and descriptionRow.children[0] is the inner <div> containing the <p>.
   // So, descriptionRow.children[0].innerHTML correctly extracts "<p>Description text content</p>".
   // The previous fix was incorrect. Reverting to the original correct access.
-  description.innerHTML = descriptionRow.children[0]?.innerHTML || '';
+  description.innerHTML = descriptionRow.children[0]?.querySelector('p')?.innerHTML ?? descriptionRow.textContent.trim() ?? '';
   welcomeConDiv.append(description);
 
   containerDiv.append(welcomeConDiv);

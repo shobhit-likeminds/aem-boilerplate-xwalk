@@ -216,7 +216,10 @@ export default function decorate(block) {
       });
 
       li.appendChild(wrapper);
-      transformNestedLists(hierarchyRoot); // This will operate on the hierarchyRoot which is now inside wrapper
+      const wrapperUl = wrapper.querySelector('ul');
+      if (wrapperUl) {
+        transformNestedLists(wrapperUl);
+      }
     } else {
       li.classList.add('no-arrw-mob');
     }

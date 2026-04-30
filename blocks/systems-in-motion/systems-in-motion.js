@@ -4,11 +4,7 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
 export default function decorate(block) {
   const children = [...block.children];
 
-  const dotRightImageRow = children[0];
-  const dotLeftImageRow = children[1];
-  const titleRow = children[2];
-  const descriptionRow = children[3];
-  const motionCardRows = children.slice(4);
+  const [dotRightImageRow, dotLeftImageRow, titleRow, descriptionRow, ...motionCardRows] = children;
 
   const dotRight = document.createElement('div');
   dotRight.classList.add('dot-right');
@@ -43,8 +39,7 @@ export default function decorate(block) {
 
   const description = document.createElement('p');
   description.classList.add('wow', 'animate__', 'animate__fadeInUp', 'animated');
-  // FIX: description is richtext, use innerHTML from the cell's div
-  description.innerHTML = descriptionRow.querySelector('div')?.innerHTML || '';
+  description.innerHTML = descriptionRow.children[0]?.querySelector('p')?.innerHTML ?? descriptionRow.textContent.trim() ?? '';
   moveInstrumentation(descriptionRow, description);
   container1600Wrp.append(description);
 
@@ -83,8 +78,7 @@ export default function decorate(block) {
     innerDiv.append(headline);
 
     const cardDescription = document.createElement('p');
-    // FIX: cardDescription is richtext, use innerHTML from the cell's div
-    cardDescription.innerHTML = cardDescriptionCell.querySelector('div')?.innerHTML || '';
+    cardDescription.innerHTML = cardDescriptionCell?.querySelector('p')?.innerHTML ?? cardDescriptionCell?.textContent.trim() ?? '';
     innerDiv.append(cardDescription);
 
     mCardBlurb.append(innerDiv);
@@ -95,14 +89,10 @@ export default function decorate(block) {
     const foundCtaLink = ctaLinkCell.querySelector('a');
     if (foundCtaLink) {
       ctaLink.href = foundCtaLink.href;
-      ctaLink.target = '_blank'; // Assuming target blank from original HTML
-      moveInstrumentation(foundCtaLink, ctaLink); // Move instrumentation from the original link
+      ctaLink.target = '_blank';
     }
-    // FIX: ctaLabel is text, read from ctaLabelCell
     ctaLink.textContent = ctaLabelCell.textContent.trim();
-    // moveInstrumentation(cardRow, ctaLink); // This was moving instrumentation from the whole row, which is incorrect.
-                                          // Instrumentation should be moved from the specific element if possible.
-                                          // For the link, it's moved from foundCtaLink.
+    moveInstrumentation(cardRow, mCardBlurb);
     mCardBlurb.append(ctaLink);
 
     colLg6.append(mCardBlurb);

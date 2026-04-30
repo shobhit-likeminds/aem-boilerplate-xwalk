@@ -57,7 +57,7 @@ export default async function decorate(block) {
 
     const commonTtle = document.createElement('h2');
     commonTtle.classList.add('common-ttle');
-    commonTtle.innerHTML = headlineCell?.innerHTML || '';
+    commonTtle.textContent = headlineCell?.textContent.trim() || '';
     legacyDet.append(commonTtle);
 
     const desgCon = document.createElement('div');
@@ -71,7 +71,7 @@ export default async function decorate(block) {
 
     if (descriptionCell?.textContent.trim()) {
       const p = document.createElement('p');
-      p.innerHTML = descriptionCell.innerHTML;
+      p.innerHTML = descriptionCell.querySelector('p')?.innerHTML ?? descriptionCell.textContent.trim() ?? '';
       desgCon.append(p);
     }
 

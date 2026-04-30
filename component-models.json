@@ -361,12 +361,6 @@
         "label": "Dropdown Title",
         "name": "title",
         "valueType": "string"
-      },
-      {
-        "component": "container",
-        "item": "footer-dropdown-link-item",
-        "label": "Dropdown Links",
-        "name": "dropdownLinks"
       }
     ]
   },

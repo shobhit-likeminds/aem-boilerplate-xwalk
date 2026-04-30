@@ -22,7 +22,7 @@ export default function decorate(block) {
   // Intro text is richtext, so we need to extract the content from its inner div.
   // The original HTML uses <p> for intro, so we'll set innerHTML directly.
   // Ensure we get the content from the cell, not the row.
-  intro.innerHTML = introRow.children[0]?.innerHTML || '';
+  intro.innerHTML = introRow.children[0]?.querySelector('p')?.innerHTML ?? introRow.textContent.trim() ?? '';
   container.append(intro);
 
   const blurbHolder = document.createElement('div');
@@ -69,7 +69,7 @@ export default function decorate(block) {
     blurbDet.append(title);
 
     const description = document.createElement('p');
-    description.innerHTML = descriptionCell?.innerHTML || ''; // description is richtext
+    description.innerHTML = descriptionCell?.querySelector('p')?.innerHTML ?? descriptionCell?.textContent.trim() ?? '';
     blurbDet.append(description);
 
     contentDiv.append(blurbDet);

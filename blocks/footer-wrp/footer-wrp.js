@@ -4,49 +4,78 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
 export default function decorate(block) {
   const children = [...block.children];
 
-  // Root-level rows based on BlockJson model
-  // The order of these filters is crucial as the block structure is flat.
-  // We need to identify the single-instance rows first.
-  const logoRow = children.find((row) => row.querySelector('picture'));
-  const copyrightRow = children.find(
-    (row) => !row.querySelector('picture') && row.children.length === 1 && row.textContent.trim().startsWith('© Copyright'),
-  ); // Added textContent check for robustness
+  // Sequential single-pass categorization — processes rows in authored order so we can
+  // correctly distinguish top links (before first dropdown title), dropdown links (after
+  // a dropdown title, within its group), social links (1-cell with anchor), and legal
+  // links (2-cell rows after all dropdown groups have closed).
+  let logoRow = null;
+  let copyrightRow = null;
+  const topLinkRows = [];
+  const dropdownGroups = []; // [{ titleRow, linkRows[] }]
+  const socialLinkRows = [];
+  const legalLinkRows = [];
 
-  const itemRows = children.filter(
-    (row) => row !== logoRow && row !== copyrightRow,
-  );
+  let foundDropdown = false;
+  let foundSocial = false;
+  let currentGroupTitle = null;
+  let currentGroupLinks = [];
 
-  // Categorize item rows based on their structure and content
-  // footer-link-item: 2 cells, both have a link (label, link)
-  const topLinkRows = itemRows.filter(
-    (row) => row.children.length === 2 && row.children[1].querySelector('a'),
-  );
-
-  // footer-dropdown-item: 1 cell (title), no link in the cell itself
-  const dropdownItemRows = itemRows.filter(
-    (row) => row.children.length === 1 && !row.querySelector('a'),
-  );
-
-  // footer-dropdown-link-item: 2 cells (label, link) - these are nested under dropdowns conceptually
-  // We need to distinguish these from topLinkRows.
-  // Assuming dropdownLinkRows appear immediately after their parent dropdownItemRow in the flat structure.
-  // This is a common pattern for flat structures representing hierarchy.
-  const dropdownLinkRows = itemRows.filter(
-    (row) => row.children.length === 2 && row.children[1].querySelector('a') && !topLinkRows.includes(row) && !legalLinkRows.includes(row),
-  );
-
-  // footer-social-item: 1 cell, contains a link
-  const socialLinkRows = itemRows.filter(
-    (row) => row.children.length === 1 && row.querySelector('a'),
-  );
-
-  // footer-legal-link-item: 2 cells, both have a link (label, link)
-  // Distinguish from topLinkRows by position or context if needed, but for now,
-  // assuming they are distinct based on the overall structure.
-  const legalLinkRows = itemRows.filter(
-    (row) => row.children.length === 2 && row.children[1].querySelector('a') && !topLinkRows.includes(row),
-  );
-
+  children.forEach((row) => {
+    // Logo: first row that has a picture
+    if (!logoRow && row.children.length === 1 && row.querySelector('picture')) {
+      logoRow = row;
+      return;
+    }
+    // Copyright: 1 cell, no link, no picture, text starts with ©
+    if (
+      row.children.length === 1
+      && !row.querySelector('a')
+      && !row.querySelector('picture')
+      && row.textContent.trim().startsWith('©')
+    ) {
+      if (currentGroupTitle) {
+        dropdownGroups.push({ titleRow: currentGroupTitle, linkRows: currentGroupLinks });
+        currentGroupTitle = null;
+        currentGroupLinks = [];
+      }
+      copyrightRow = row;
+      return;
+    }
+    // Social link: 1 cell with an anchor (no picture)
+    if (row.children.length === 1 && row.querySelector('a') && !row.querySelector('picture')) {
+      if (currentGroupTitle) {
+        dropdownGroups.push({ titleRow: currentGroupTitle, linkRows: currentGroupLinks });
+        currentGroupTitle = null;
+        currentGroupLinks = [];
+      }
+      foundSocial = true;
+      socialLinkRows.push(row);
+      return;
+    }
+    // Dropdown title: 1 cell, no anchor, no picture (not copyright — length check catches that)
+    if (row.children.length === 1 && !row.querySelector('a') && !row.querySelector('picture')) {
+      if (currentGroupTitle) {
+        dropdownGroups.push({ titleRow: currentGroupTitle, linkRows: currentGroupLinks });
+      }
+      foundDropdown = true;
+      currentGroupTitle = row;
+      currentGroupLinks = [];
+      return;
+    }
+    // 2-cell link row — top link, dropdown child, or legal link
+    if (row.children.length >= 2) {
+      if (!foundDropdown && !foundSocial) {
+        topLinkRows.push(row);
+      } else if (currentGroupTitle) {
+        currentGroupLinks.push(row);
+      } else {
+        legalLinkRows.push(row);
+      }
+    }
+  });
+  if (currentGroupTitle) {
+    dropdownGroups.push({ titleRow: currentGroupTitle, linkRows: currentGroupLinks });
+  }
 
   const container = document.createElement('div');
   container.classList.add('container-1600-wrp');
@@ -77,7 +106,7 @@ export default function decorate(block) {
   const topLinksCol = document.createElement('div');
   topLinksCol.classList.add('col', 'col-xl-3');
   topLinkRows.forEach((row) => {
-    const [labelCell, linkCell] = [...row.children]; // Fixed: Destructuring for fixed schema
+    const [labelCell, linkCell] = [...row.children];
     const link = document.createElement('a');
     const foundLink = linkCell.querySelector('a');
     if (foundLink) {
@@ -90,44 +119,11 @@ export default function decorate(block) {
   });
   row1.append(topLinksCol);
 
-  // Dropdown Menus
-  // This section needs careful handling due to the flat structure of dropdownItemRows and dropdownLinkRows.
-  // The original HTML shows dropdowns with nested links. The current block structure implies
-  // dropdownItemRows and dropdownLinkRows are siblings.
-  // To correctly associate, we need to iterate through dropdownItemRows and then find their associated links.
-  // A common pattern is that dropdown links immediately follow their parent dropdown item.
-  // Let's create a map to associate dropdown titles with their links.
-
-  const dropdownsData = [];
-  let currentDropdownTitle = null;
-  let currentDropdownLinks = [];
-
-  // Iterate through all itemRows to build the dropdownsData structure
-  itemRows.forEach((row) => {
-    if (row.children.length === 1 && !row.querySelector('a')) { // This is a dropdownItemRow
-      if (currentDropdownTitle) {
-        dropdownsData.push({
-          title: currentDropdownTitle,
-          links: currentDropdownLinks,
-        });
-      }
-      currentDropdownTitle = row; // Store the row for instrumentation
-      currentDropdownLinks = [];
-    } else if (row.children.length === 2 && row.children[1].querySelector('a') && !topLinkRows.includes(row) && !legalLinkRows.includes(row)) { // This is a dropdownLinkRow
-      if (currentDropdownTitle) {
-        currentDropdownLinks.push(row);
-      }
-    }
-  });
-  if (currentDropdownTitle) { // Add the last dropdown
-    dropdownsData.push({
-      title: currentDropdownTitle,
-      links: currentDropdownLinks,
-    });
-  }
+  // Dropdown Menus (built from sequential dropdownGroups array)
+  const dropdownsData = dropdownGroups;
 
   dropdownsData.forEach((dropdown) => {
-    const [titleCell] = [...dropdown.title.children]; // Fixed: Destructuring for fixed schema
+    const [titleCell] = [...dropdown.titleRow.children];
     const dropdownCol = document.createElement('div');
     dropdownCol.classList.add('col', 'col-xl-3');
 
@@ -143,16 +139,16 @@ export default function decorate(block) {
     const subLinksCvr = document.createElement('div');
     subLinksCvr.classList.add('ftr-sub-links-cvr', 'accordion_body2');
 
-    dropdown.links.forEach((linkRow) => {
-      const [labelCell, linkCell] = [...linkRow.children]; // Fixed: Destructuring for fixed schema
+    dropdown.linkRows.forEach((linkRow) => {
+      const [labelCell, linkCell] = [...linkRow.children];
       const link = document.createElement('a');
       const foundLink = linkCell.querySelector('a');
       if (foundLink) {
         link.href = foundLink.href;
       }
       link.textContent = labelCell.textContent.trim();
-      link.classList.add('ftr-link'); // Added class from ORIGINAL HTML
-      moveInstrumentation(linkRow, link); // Moved instrumentation for each link
+      link.classList.add('ftr-link');
+      moveInstrumentation(linkRow, link);
       subLinksCvr.append(link);
     });
 
@@ -166,7 +162,7 @@ export default function decorate(block) {
         ? '+'
         : '-';
     });
-    moveInstrumentation(dropdown.title, dropdownCol); // Instrumentation for the dropdown item itself
+    moveInstrumentation(dropdown.titleRow, dropdownCol);
   });
 
   container.append(row1);
