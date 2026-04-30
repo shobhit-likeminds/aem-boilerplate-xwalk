@@ -39,13 +39,14 @@
         {
           "component": "text",
           "label": "Section Heading",
-          "name": "heading"
+          "name": "heading",
+          "valueType": "string"
         },
         {
           "component": "container",
           "item": "faq-item",
           "label": "FAQ Items",
-          "name": "faqs"
+          "name": "faqItems"
         }
       ]
     },
@@ -55,12 +56,14 @@
         {
           "component": "text",
           "label": "Question",
-          "name": "question"
+          "name": "question",
+          "valueType": "string"
         },
         {
           "component": "richtext",
           "label": "Answer",
-          "name": "answer"
+          "name": "answer",
+          "valueType": "string"
         }
       ]
     }

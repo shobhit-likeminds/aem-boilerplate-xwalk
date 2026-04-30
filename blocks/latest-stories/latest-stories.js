@@ -7,18 +7,15 @@ export default async function decorate(block) {
   const section = document.createElement('section');
   section.classList.add('section', 'grey-bg', 'latest-stories', 'home-stories');
 
-  // Section Header
   const sectionHeader = document.createElement('div');
   sectionHeader.classList.add('section-header', 'text-center');
   const heading = document.createElement('h2');
   heading.classList.add('heading', 'font-regular', 'aos-init', 'aos-animate');
-  // moveInstrumentation for the heading row
   moveInstrumentation(headingRow, heading);
   heading.textContent = headingRow.textContent.trim();
   sectionHeader.append(heading);
   section.append(sectionHeader);
 
-  // Stories Container
   const container = document.createElement('div');
   container.classList.add('container', 'aos-init', 'aos-animate');
 
@@ -26,56 +23,50 @@ export default async function decorate(block) {
   flickitySliderWrap.classList.add('flickity-slider-mobile-wrap', 'grid-layout');
   flickitySliderWrap.setAttribute('data-flickity', '{ "wrapAround": false, "lazyLoad": true, "pageDots": true, "prevNextButtons": false, "imagesLoaded": true, "cellAlign": "left", "watchCSS": true, "adaptiveHeight": true }');
 
-  const slidesWrapper = document.createElement('div');
-  slidesWrapper.classList.add('slides');
+  const slidesContainer = document.createElement('div');
+  slidesContainer.classList.add('slides'); // This is the actual Flickity container for slides
 
   storyRows.forEach((row) => {
     const [
-      imageDefaultCell,
+      imageMainCell,
       imageHorizontalCell,
       imageVerticalCell,
       categoryCell,
-      headlineCell,
-      ctaLinkCell,
-      ctaLabelCell,
+      summaryCell,
+      linkCell,
+      linkLabelCell,
       dateCell,
     ] = [...row.children];
 
     const slide = document.createElement('div');
-    slide.classList.add('slide-item'); // Changed from 'slides' to 'slide-item' to match original HTML structure
+    slide.classList.add('slides'); // Each individual slide also gets the 'slides' class as per original HTML
 
     const wrap = document.createElement('div');
     wrap.classList.add('wrap');
 
     const imageWrap = document.createElement('div');
     imageWrap.classList.add('image-wrap');
+    const mainPicture = imageMainCell.querySelector('picture');
+    if (mainPicture) {
+      const img = mainPicture.querySelector('img');
+      if (img) {
+        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+        const optimizedImg = optimizedPic.querySelector('img');
+        optimizedImg.classList.add('thumb-img', 'img-fluid');
+        optimizedImg.setAttribute('loading', 'lazy');
 
-    const defaultPicture = imageDefaultCell.querySelector('picture');
-    const defaultImg = defaultPicture ? defaultPicture.querySelector('img') : null;
-
-    if (defaultImg) {
-      const optimizedPic = createOptimizedPicture(
-        defaultImg.src,
-        defaultImg.alt,
-        false,
-        [{ width: '750' }],
-      );
-      const optimizedImg = optimizedPic.querySelector('img');
-      optimizedImg.classList.add('thumb-img', 'img-fluid');
-      optimizedImg.setAttribute('loading', 'lazy');
-
-      const horizontalImg = imageHorizontalCell.querySelector('picture')?.querySelector('img');
-      const verticalImg = imageVerticalCell.querySelector('picture')?.querySelector('img');
-
-      if (horizontalImg) {
-        optimizedImg.setAttribute('data-img-horizontal', horizontalImg.src);
+        const horizontalImg = imageHorizontalCell.querySelector('img');
+        if (horizontalImg) {
+          optimizedImg.setAttribute('data-img-horizontal', horizontalImg.src);
+        }
+        const verticalImg = imageVerticalCell.querySelector('img');
+        if (verticalImg) {
+          optimizedImg.setAttribute('data-img-vertical', verticalImg.src);
+        }
+        // moveInstrumentation should be on the picture element, not just the img
+        moveInstrumentation(imageMainCell, optimizedPic);
+        imageWrap.append(optimizedPic);
       }
-      if (verticalImg) {
-        optimizedImg.setAttribute('data-img-vertical', verticalImg.src);
-      }
-
-      moveInstrumentation(imageDefaultCell, optimizedPic);
-      imageWrap.append(optimizedPic);
     }
     wrap.append(imageWrap);
 
@@ -88,59 +79,59 @@ export default async function decorate(block) {
     moveInstrumentation(categoryCell, category);
     contentWrap.append(category);
 
-    const text = document.createElement('div');
-    text.classList.add('text');
-    text.textContent = headlineCell.textContent.trim();
-    moveInstrumentation(headlineCell, text);
-    contentWrap.append(text);
+    const summary = document.createElement('div');
+    summary.classList.add('text');
+    summary.textContent = summaryCell.textContent.trim();
+    moveInstrumentation(summaryCell, summary);
+    contentWrap.append(summary);
 
-    const ctaLink = ctaLinkCell.querySelector('a');
-    if (ctaLink) {
-      const button = document.createElement('a');
-      button.classList.add('btn', 'btn-link');
-      button.href = ctaLink.href;
-      button.textContent = ctaLabelCell.textContent.trim();
-      moveInstrumentation(ctaLinkCell, button);
-      contentWrap.append(button);
+    const link = document.createElement('a');
+    link.classList.add('btn', 'btn-link');
+    const foundLink = linkCell.querySelector('a');
+    if (foundLink) {
+      link.href = foundLink.href;
     }
+    link.textContent = linkLabelCell.textContent.trim();
+    moveInstrumentation(linkCell, link);
+    contentWrap.append(link);
 
     const date = document.createElement('div');
     date.classList.add('date');
     const time = document.createElement('time');
     time.setAttribute('datetime', dateCell.textContent.trim()); // Assuming date cell contains a valid datetime string
     time.textContent = dateCell.textContent.trim();
-    moveInstrumentation(dateCell, date);
     date.append(time);
+    moveInstrumentation(dateCell, date);
     contentWrap.append(date);
 
     wrap.append(contentWrap);
+    moveInstrumentation(row, wrap);
     slide.append(wrap);
-    slidesWrapper.append(slide);
+    slidesContainer.append(slide);
   });
 
-  flickitySliderWrap.append(slidesWrapper);
+  flickitySliderWrap.append(slidesContainer);
   container.append(flickitySliderWrap);
   section.append(container);
 
   block.replaceChildren(section);
 
-  // Load Flickity CSS and JS
-  await loadCSS('/libs/flickity/flickity.min.css'); // Assuming Flickity CSS is available at this path or a CDN
-  await loadScript('/libs/flickity/flickity.pkgd.min.js'); // Assuming Flickity JS is available at this path or a CDN
+  // Load Flickity for mobile slider behavior
+  await loadCSS('https://unpkg.com/flickity@2/dist/flickity.min.css');
+  await loadScript('https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js');
 
-  // Initialize Flickity
+  // Parse the data-flickity attribute to get the configuration object
+  const flickityConfig = JSON.parse(flickitySliderWrap.dataset.flickity);
+
   // eslint-disable-next-line no-undef
-  if (typeof Flickity !== 'undefined') {
-    // eslint-disable-next-line no-new
-    new Flickity(flickitySliderWrap, {
-      wrapAround: flickitySliderWrap.dataset.flickity.includes('"wrapAround": true'),
-      lazyLoad: flickitySliderWrap.dataset.flickity.includes('"lazyLoad": true'),
-      pageDots: flickitySliderWrap.dataset.flickity.includes('"pageDots": true'),
-      prevNextButtons: flickitySliderWrap.dataset.flickity.includes('"prevNextButtons": true'),
-      imagesLoaded: flickitySliderWrap.dataset.flickity.includes('"imagesLoaded": true'),
-      cellAlign: 'left', // Default from original HTML
-      watchCSS: true,
-      adaptiveHeight: true,
-    });
-  }
+  new Flickity(slidesContainer, { // Initialize Flickity on slidesContainer, not flickitySliderWrap
+    wrapAround: flickityConfig.wrapAround,
+    lazyLoad: flickityConfig.lazyLoad,
+    pageDots: flickityConfig.pageDots,
+    prevNextButtons: flickityConfig.prevNextButtons,
+    imagesLoaded: flickityConfig.imagesLoaded,
+    cellAlign: flickityConfig.cellAlign,
+    watchCSS: flickityConfig.watchCSS,
+    adaptiveHeight: flickityConfig.adaptiveHeight,
+  });
 }

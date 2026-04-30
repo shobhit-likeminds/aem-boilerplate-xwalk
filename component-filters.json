@@ -63,9 +63,9 @@
     "components": [
       "social-link-item",
       "footer-menu-block",
-      "footer-menu-link",
-      "footer-sub-link",
-      "secondary-nav-link"
+      "footer-menu-item",
+      "footer-submenu-item",
+      "footer-secondary-nav-item"
     ]
   },
   {
@@ -78,8 +78,7 @@
     "id": "main-header",
     "components": [
       "navigation-item",
-      "icon-link-item",
-      "press-release-item"
+      "contact-link-item"
     ]
   },
   {
@@ -116,7 +115,7 @@
     "id": "spotlight-home",
     "components": [
       "spotlight-slide",
-      "spotlight-quick-link"
+      "quick-link-item"
     ]
   },
   {
@@ -134,7 +133,7 @@
   {
     "id": "work-with-us",
     "components": [
-      "work-with-us-item"
+      "work-with-us-slide"
     ]
   }
 ]

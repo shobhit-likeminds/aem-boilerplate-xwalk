@@ -38,7 +38,7 @@
       "fields": [
         {
           "component": "text",
-          "label": "Section Heading",
+          "label": "Block Heading",
           "name": "heading",
           "valueType": "string"
         },
@@ -55,49 +55,49 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Main Image (Default)",
-          "name": "imageDefault",
+          "label": "Main Image",
+          "name": "imageMain",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Image (Horizontal Variant)",
+          "label": "Horizontal Image",
           "name": "imageHorizontal",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Image (Vertical Variant)",
+          "label": "Vertical Image",
           "name": "imageVertical",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Story Category",
+          "label": "Category",
           "name": "category",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Story Headline",
-          "name": "headline",
+          "label": "Summary Text",
+          "name": "summary",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "label": "CTA Link",
-          "name": "ctaLink",
+          "label": "Read More Link",
+          "name": "link",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "CTA Label",
-          "name": "ctaLabel",
+          "label": "Read More Label",
+          "name": "linkLabel",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Story Date",
+          "label": "Date",
           "name": "date",
           "valueType": "string"
         }

@@ -2,7 +2,7 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const children = [...block.children];
+  const [headingRow, ...faqRows] = [...block.children];
 
   const section = document.createElement('section');
   section.classList.add('section', 'faqs-section');
@@ -11,66 +11,64 @@ export default function decorate(block) {
   container.classList.add('container');
   section.append(container);
 
-  // Section Heading
-  const headingRow = children.shift(); // First row is the heading
-  if (headingRow) {
+  // Heading
+  const headingText = headingRow.textContent.trim();
+  if (headingText) {
     const sectionHeader = document.createElement('div');
     sectionHeader.classList.add('section-header', 'text-center');
-    moveInstrumentation(headingRow, sectionHeader);
-
     const heading = document.createElement('h2');
     heading.classList.add('heading', 'font-regular', 'aos-init', 'aos-animate');
-    heading.setAttribute('data-aos', 'fade-up');
-    heading.textContent = headingRow.textContent.trim();
+    heading.textContent = headingText;
+    moveInstrumentation(headingRow, heading);
     sectionHeader.append(heading);
     container.append(sectionHeader);
   }
 
-  // FAQ Items
-  if (children.length > 0) {
-    const accoDiv = document.createElement('div');
-    accoDiv.classList.add('acco-div');
-    const ul = document.createElement('ul');
-    accoDiv.append(ul);
+  // FAQs
+  const accoDiv = document.createElement('div');
+  accoDiv.classList.add('acco-div');
+  const ul = document.createElement('ul');
+  accoDiv.append(ul);
+  container.append(accoDiv);
 
-    children.forEach((row, index) => {
-      const [questionCell, answerCell] = [...row.children];
+  faqRows.forEach((row, index) => {
+    const [questionCell, answerCell] = [...row.children];
 
-      const li = document.createElement('li');
-      li.classList.add('aos-init', 'aos-animate');
-      li.setAttribute('data-aos', 'fade-up');
-      if (index === 0) {
-        li.classList.add('active'); // First item is active by default
+    const li = document.createElement('li');
+    li.classList.add('aos-init', 'aos-animate');
+    if (index === 0) {
+      li.classList.add('active'); // First item is active by default
+    }
+
+    const h2 = document.createElement('h2');
+    h2.textContent = questionCell.textContent.trim();
+    moveInstrumentation(questionCell, h2);
+    li.append(h2);
+
+    const accoContentDiv = document.createElement('div');
+    accoContentDiv.classList.add('acco-content-div');
+    if (index === 0) {
+      accoContentDiv.classList.add('show');
+    }
+    accoContentDiv.innerHTML = answerCell.innerHTML;
+    moveInstrumentation(answerCell, accoContentDiv);
+    li.append(accoContentDiv);
+
+    h2.addEventListener('click', () => {
+      const currentlyActive = ul.querySelector('li.active');
+      const currentlyOpenContent = ul.querySelector('.acco-content-div.show');
+
+      if (currentlyActive && currentlyActive !== li) {
+        currentlyActive.classList.remove('active');
+        currentlyOpenContent.classList.remove('show');
       }
-      moveInstrumentation(row, li);
 
-      const h2 = document.createElement('h2');
-      h2.setAttribute('data-once', 'faqsAccordion');
-      h2.textContent = questionCell.textContent.trim();
-      li.append(h2);
-
-      const accoContentDiv = document.createElement('div');
-      accoContentDiv.classList.add('acco-content-div');
-      if (index === 0) {
-        accoContentDiv.classList.add('show');
-      }
-      accoContentDiv.innerHTML = answerCell.innerHTML;
-      li.append(accoContentDiv);
-
-      h2.addEventListener('click', () => {
-        const currentlyActive = ul.querySelector('li.active');
-        if (currentlyActive && currentlyActive !== li) {
-          currentlyActive.classList.remove('active');
-          currentlyActive.querySelector('.acco-content-div').classList.remove('show');
-        }
-        li.classList.toggle('active');
-        accoContentDiv.classList.toggle('show');
-      });
-
-      ul.append(li);
+      li.classList.toggle('active');
+      accoContentDiv.classList.toggle('show');
     });
-    container.append(accoDiv);
-  }
+
+    ul.append(li);
+  });
 
   block.replaceChildren(section);
 }
