@@ -4,154 +4,192 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
 export default function decorate(block) {
   const children = [...block.children];
 
-  // Root-level rows (order matters for logo and copyright, others are filtered)
-  const logoRow = children.find(row => row.querySelector('picture'));
-  const copyrightRow = children.find(row => row.children.length === 1 && !row.querySelector('picture') && !row.querySelector('a'));
+  // Destructure the first two rows (logo and copyright)
+  const [logoRow, copyrightRow, ...itemRows] = children;
 
-  // Item rows (distinguished by cell count and content)
-  const footerSectionItems = children.filter(row => row.children.length === 2 && !row.querySelector('a'));
-  const socialLinkItems = children.filter(row => row.children.length === 1 && row.querySelector('a'));
-  const footerLinkItems = children.filter(row => row.children.length === 2 && row.querySelector('a'));
+  const sectionRows = [];
+  const legalLinkRows = [];
+  const socialLinkRows = [];
 
-  const section = document.createElement('section');
-  section.classList.add('footer-wrp');
+  // Separate item rows based on cell count and content
+  itemRows.forEach((row) => {
+    if (row.children.length === 3) {
+      sectionRows.push(row);
+    } else if (row.children.length === 2) {
+      legalLinkRows.push(row);
+    } else if (row.children.length === 1 && row.querySelector('a')) {
+      socialLinkRows.push(row);
+    }
+  });
+
+  const footerWrp = document.createElement('section');
+  footerWrp.classList.add('footer-wrp');
 
   const container = document.createElement('div');
   container.classList.add('container-1600-wrp');
 
-  // Mobile Logo Wrapper
+  // Logo
   const mobLogoWr = document.createElement('div');
   mobLogoWr.classList.add('mob-logo-wr');
-  if (logoRow) {
-    const picture = logoRow.querySelector('picture');
-    if (picture) {
-      const img = picture.querySelector('img');
-      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-      moveInstrumentation(logoRow, optimizedPic.querySelector('img'));
-      mobLogoWr.append(optimizedPic);
-    }
+  const logoPicture = logoRow.querySelector('picture');
+  if (logoPicture) {
+    const img = logoPicture.querySelector('img');
+    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+    // moveInstrumentation for the img element inside the optimized picture
+    moveInstrumentation(img, optimizedPic.querySelector('img'));
+    mobLogoWr.append(optimizedPic);
   }
+  moveInstrumentation(logoRow, mobLogoWr);
   container.append(mobLogoWr);
 
-  // Footer Sections (f1)
+  // Section Links (f1 row)
   const f1Row = document.createElement('div');
   f1Row.classList.add('row', 'f1');
 
-  footerSectionItems.forEach((row) => {
-    const [sectionTitleCell, sectionLinksCell] = [...row.children]; // FIXED: Destructuring for fixed schema
+  sectionRows.forEach((row) => {
+    const [titleCell, linkCell, sectionLinksCell] = [...row.children];
+    const subList = sectionLinksCell?.querySelector('ul');
+    const directHref = linkCell?.querySelector('a')?.href;
+
     const col = document.createElement('div');
     col.classList.add('col', 'col-xl-3');
 
-    const titleLink = document.createElement('a');
-    titleLink.classList.add('ttle', 'accordion_head2');
-    titleLink.href = 'javascript:void(0)'; // As per original HTML
-    titleLink.textContent = sectionTitleCell?.textContent.trim() || '';
+    if (subList) {
+      const titleLink = document.createElement('a');
+      titleLink.href = 'javascript:void(0)';
+      titleLink.classList.add('ttle', 'accordion_head2');
+      titleLink.textContent = titleCell.textContent.trim();
 
-    const plusMinus = document.createElement('span');
-    plusMinus.classList.add('plusminus2');
-    plusMinus.textContent = '+';
-    titleLink.append(plusMinus);
+      const plusminusSpan = document.createElement('span');
+      plusminusSpan.classList.add('plusminus2');
+      plusminusSpan.textContent = '+';
+      titleLink.append(plusminusSpan);
 
-    const subLinksCvr = document.createElement('div');
-    subLinksCvr.classList.add('ftr-sub-links-cvr', 'accordion_body2');
-    subLinksCvr.innerHTML = sectionLinksCell?.innerHTML || ''; // richtext field, use innerHTML
+      const ftrSubLinksCvr = document.createElement('div');
+      ftrSubLinksCvr.classList.add('ftr-sub-links-cvr', 'accordion_body2');
 
-    titleLink.addEventListener('click', () => {
-      subLinksCvr.classList.toggle('active');
-      plusMinus.textContent = subLinksCvr.classList.contains('active') ? '-' : '+';
-    });
+      [...subList.querySelectorAll('li')].forEach((li) => {
+        const anchor = li.querySelector('a');
+        if (anchor) {
+          const link = document.createElement('a');
+          link.href = anchor.href;
+          link.textContent = anchor.textContent.trim();
+          link.classList.add('ftr-link');
+          ftrSubLinksCvr.append(link);
+        }
+      });
 
-    moveInstrumentation(row, col);
-    col.append(titleLink, subLinksCvr);
+      titleLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        col.classList.toggle('active');
+        ftrSubLinksCvr.classList.toggle('active');
+        plusminusSpan.textContent = ftrSubLinksCvr.classList.contains('active') ? '-' : '+';
+      });
+
+      moveInstrumentation(row, col);
+      col.append(titleLink, ftrSubLinksCvr);
+    } else {
+      const anchor = document.createElement('a');
+      if (directHref) anchor.href = directHref;
+      anchor.textContent = titleCell.textContent.trim();
+      anchor.classList.add('ttle');
+      moveInstrumentation(row, anchor);
+      col.append(anchor);
+    }
     f1Row.append(col);
   });
   container.append(f1Row);
 
-  // Social Media Links (f2)
-  if (socialLinkItems.length > 0) {
+  // Social Links (f2 row)
+  if (socialLinkRows.length > 0) {
     const f2Row = document.createElement('div');
     f2Row.classList.add('row', 'f2', 'justify-content-between');
 
     const socialCol = document.createElement('div');
     socialCol.classList.add('col', 'col-xl-2', 'ftr-drop-wrp');
 
+    // The "Social Media" title is not a separate row in the model, it's a hardcoded label.
+    // If it were dynamic, it would be a text cell in a dedicated row.
     const socialTitle = document.createElement('p');
     socialTitle.classList.add('ttle', 'accordion_head2');
     socialTitle.textContent = 'Social Media'; // Hardcoded as per original HTML structure
-    const socialPlusMinus = document.createElement('span');
-    socialPlusMinus.classList.add('plusminus2');
-    socialPlusMinus.textContent = '+';
-    socialTitle.append(socialPlusMinus);
+    const socialPlusminusSpan = document.createElement('span');
+    socialPlusminusSpan.classList.add('plusminus2');
+    socialPlusminusSpan.textContent = '+';
+    socialTitle.append(socialPlusminusSpan);
 
-    const socialIconsCvr = document.createElement('div');
-    socialIconsCvr.classList.add('ftr-sub-links-cvr', 'accordion_body2', 'socialIcons');
+    const socialLinksCvr = document.createElement('div');
+    socialLinksCvr.classList.add('ftr-sub-links-cvr', 'accordion_body2', 'socialIcons');
 
-    socialLinkItems.forEach((row) => {
-      const [linkCell] = [...row.children]; // FIXED: Destructuring for fixed schema
-      const foundLink = linkCell?.querySelector('a');
+    socialLinkRows.forEach((row) => {
+      const [socialLinkCell] = [...row.children]; // Destructuring for fixed schema
+      const foundLink = socialLinkCell?.querySelector('a');
       if (foundLink) {
-        const socialLink = document.createElement('a');
-        socialLink.href = foundLink.href;
-        socialLink.classList.add('ftr-link');
-        socialLink.target = '_blank'; // As per original HTML
-
-        // Add dummy icons as per rule 16. Original HTML uses font-awesome which is not available
-        let iconClasses = ['fa-link']; // Default icon
-        if (foundLink.href.includes('facebook')) iconClasses = ['fab', 'fa-facebook-square'];
-        else if (foundLink.href.includes('instagram')) iconClasses = ['fab', 'fa-instagram'];
-        else if (foundLink.href.includes('twitter')) iconClasses = ['fa-brands', 'fa-square-x-twitter'];
-        else if (foundLink.href.includes('linkedin')) iconClasses = ['fab', 'fa-linkedin'];
-        else if (foundLink.href.includes('youtube')) iconClasses = ['fab', 'fa-youtube-square'];
-
-        const icon = document.createElement('i');
-        icon.classList.add(...iconClasses); // FIXED: Corrected icon classes to match original HTML
-        socialLink.append(icon);
-        moveInstrumentation(row, socialLink);
-        socialIconsCvr.append(socialLink);
+        const link = document.createElement('a');
+        link.href = foundLink.href;
+        link.classList.add('ftr-link');
+        link.target = '_blank'; // Assuming social links open in new tab
+        // Add font awesome icons based on href or text content if available
+        if (foundLink.href.includes('facebook')) {
+          link.innerHTML = '<i class="fab fa-facebook-square"></i>';
+        } else if (foundLink.href.includes('instagram')) {
+          link.innerHTML = '<i class="fab fa-instagram"></i>';
+        } else if (foundLink.href.includes('twitter')) {
+          link.innerHTML = '<i class="fa-brands fa-square-x-twitter"></i>';
+        } else if (foundLink.href.includes('linkedin')) {
+          link.innerHTML = '<i class="fab fa-linkedin"></i>';
+        } else if (foundLink.href.includes('youtube')) {
+          link.innerHTML = '<i class="fab fa-youtube-square"></i>';
+        } else {
+          link.textContent = foundLink.href; // Fallback to URL if no icon match
+        }
+        moveInstrumentation(row, link);
+        socialLinksCvr.append(link);
       }
     });
 
-    socialTitle.addEventListener('click', () => {
-      socialIconsCvr.classList.toggle('active');
-      socialPlusMinus.textContent = socialIconsCvr.classList.contains('active') ? '-' : '+';
+    socialTitle.addEventListener('click', (e) => {
+      e.preventDefault();
+      socialCol.classList.toggle('active');
+      socialLinksCvr.classList.toggle('active');
+      socialPlusminusSpan.textContent = socialLinksCvr.classList.contains('active') ? '-' : '+';
     });
 
-    socialCol.append(socialTitle, socialIconsCvr);
+    socialCol.append(socialTitle, socialLinksCvr);
     f2Row.append(socialCol);
     container.append(f2Row);
   }
 
-  // Footer Bottom Links & Copyright (f3)
+  // Legal Links and Copyright (f3 row)
   const f3Row = document.createElement('div');
   f3Row.classList.add('row', 'mt25', 'f3');
 
-  const bottomLinksCol = document.createElement('div');
-  bottomLinksCol.classList.add('col-12', 'col-md-6');
-
-  footerLinkItems.forEach((row) => {
-    const [linkCell, labelCell] = [...row.children]; // FIXED: Destructuring for fixed schema
-    const link = document.createElement('a');
+  const legalCol = document.createElement('div');
+  legalCol.classList.add('col-12', 'col-md-6');
+  legalLinkRows.forEach((row) => {
+    const [labelCell, linkCell] = [...row.children]; // Destructuring for fixed schema
     const foundLink = linkCell?.querySelector('a');
-    if (foundLink) link.href = foundLink.href;
-    link.textContent = labelCell?.textContent.trim() || '';
-    moveInstrumentation(row, link);
-    bottomLinksCol.append(link);
+    if (foundLink) {
+      const link = document.createElement('a');
+      link.href = foundLink.href;
+      link.textContent = labelCell.textContent.trim();
+      moveInstrumentation(row, link);
+      legalCol.append(link);
+    }
   });
-  f3Row.append(bottomLinksCol);
 
   const copyrightCol = document.createElement('div');
   copyrightCol.classList.add('col-12', 'col-md-6');
-  const copyrightP = document.createElement('p');
-  copyrightP.classList.add('copy-txt', 'text-md-end');
-  if (copyrightRow) {
-    moveInstrumentation(copyrightRow, copyrightP);
-    const [copyrightCell] = [...copyrightRow.children]; // FIXED: Destructuring for fixed schema
-    copyrightP.innerHTML = copyrightCell?.innerHTML || ''; // richtext field, use innerHTML
-  }
-  copyrightCol.append(copyrightP);
-  f3Row.append(copyrightCol);
+  const copyrightText = document.createElement('p');
+  copyrightText.classList.add('copy-txt', 'text-md-end');
+  // Access the first child (cell) of the copyrightRow
+  copyrightText.innerHTML = copyrightRow.children[0]?.innerHTML || '';
+  moveInstrumentation(copyrightRow, copyrightText);
+  copyrightCol.append(copyrightText);
+
+  f3Row.append(legalCol, copyrightCol);
   container.append(f3Row);
 
-  section.append(container);
-  block.replaceChildren(section);
+  footerWrp.append(container);
+  block.replaceChildren(footerWrp);
 }

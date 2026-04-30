@@ -77,8 +77,8 @@
     "id": "footer",
     "components": [
       "footer-section-item",
-      "footer-social-link-item",
-      "footer-link-item"
+      "footer-link-item",
+      "footer-social-item"
     ]
   },
   {
