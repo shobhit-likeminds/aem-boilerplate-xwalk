@@ -159,7 +159,7 @@
           }
         },
         {
-          "title": "Footer Main",
+          "title": "Footer-Main",
           "id": "footer-main",
           "plugins": {
             "xwalk": {
@@ -168,29 +168,29 @@
                 "template": {
                   "filter": "footer-main",
                   "model": "footer-main",
-                  "name": "Footer Main"
+                  "name": "Footer-Main"
                 }
               }
             }
           }
         },
         {
-          "title": "Footer Social Link",
-          "id": "footer-social-link",
+          "title": "Social-Link-Item",
+          "id": "social-link-item",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "footer-social-link",
-                  "name": "Footer Social Link"
+                  "model": "social-link-item",
+                  "name": "Social-Link-Item"
                 }
               }
             }
           }
         },
         {
-          "title": "Footer Menu Block",
+          "title": "Footer-Menu-Block",
           "id": "footer-menu-block",
           "plugins": {
             "xwalk": {
@@ -198,14 +198,14 @@
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
                   "model": "footer-menu-block",
-                  "name": "Footer Menu Block"
+                  "name": "Footer-Menu-Block"
                 }
               }
             }
           }
         },
         {
-          "title": "Footer Menu Item",
+          "title": "Footer-Menu-Item",
           "id": "footer-menu-item",
           "plugins": {
             "xwalk": {
@@ -213,14 +213,29 @@
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
                   "model": "footer-menu-item",
-                  "name": "Footer Menu Item"
+                  "name": "Footer-Menu-Item"
                 }
               }
             }
           }
         },
         {
-          "title": "Footer Secondary Nav Item",
+          "title": "Footer-Menu-Sub-Item",
+          "id": "footer-menu-sub-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "footer-menu-sub-item",
+                  "name": "Footer-Menu-Sub-Item"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Footer-Secondary-Nav-Item",
           "id": "footer-secondary-nav-item",
           "plugins": {
             "xwalk": {
@@ -228,7 +243,7 @@
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
                   "model": "footer-secondary-nav-item",
-                  "name": "Footer Secondary Nav Item"
+                  "name": "Footer-Secondary-Nav-Item"
                 }
               }
             }
@@ -342,15 +357,15 @@
           }
         },
         {
-          "title": "Newsroom Press Release Slide",
-          "id": "newsroom-press-release-slide",
+          "title": "Latest Press Release Item",
+          "id": "press-release-item",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "newsroom-press-release-slide",
-                  "name": "Newsroom Press Release Slide"
+                  "model": "press-release-item",
+                  "name": "Press Release Item"
                 }
               }
             }
@@ -481,7 +496,7 @@
           }
         },
         {
-          "title": "Spirit of Rise",
+          "title": "Spirit Of Rise",
           "id": "spirit-of-rise",
           "plugins": {
             "xwalk": {
@@ -490,14 +505,14 @@
                 "template": {
                   "filter": "spirit-of-rise",
                   "model": "spirit-of-rise",
-                  "name": "Spirit of Rise"
+                  "name": "Spirit Of Rise"
                 }
               }
             }
           }
         },
         {
-          "title": "Spirit of Rise Card",
+          "title": "Spirit Of Rise Card",
           "id": "spirit-of-rise-card",
           "plugins": {
             "xwalk": {
@@ -505,7 +520,7 @@
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
                   "model": "spirit-of-rise-card",
-                  "name": "Spirit of Rise Card"
+                  "name": "Spirit Of Rise Card"
                 }
               }
             }
@@ -543,15 +558,15 @@
           }
         },
         {
-          "title": "Quick Link",
-          "id": "quick-link",
+          "title": "Spotlight Quick Link",
+          "id": "spotlight-quick-link",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "quick-link",
-                  "name": "Quick Link"
+                  "model": "spotlight-quick-link",
+                  "name": "Spotlight Quick Link"
                 }
               }
             }
@@ -636,15 +651,15 @@
           }
         },
         {
-          "title": "Work-With-Us-Slide",
-          "id": "work-with-us-slide",
+          "title": "Work-With-Us-Item",
+          "id": "work-with-us-item",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "work-with-us-slide",
-                  "name": "Work-With-Us-Slide"
+                  "model": "work-with-us-item",
+                  "name": "Work-With-Us-Item"
                 }
               }
             }

@@ -1,7 +1,7 @@
 {
   "definitions": [
     {
-      "title": "Footer-Main",
+      "title": "Footer Main",
       "id": "footer-main",
       "plugins": {
         "xwalk": {
@@ -10,29 +10,29 @@
             "template": {
               "filter": "footer-main",
               "model": "footer-main",
-              "name": "Footer-Main"
+              "name": "Footer Main"
             }
           }
         }
       }
     },
     {
-      "title": "Social-Link-Item",
-      "id": "social-link-item",
+      "title": "Footer Social Link",
+      "id": "footer-social-link",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "social-link-item",
-              "name": "Social-Link-Item"
+              "model": "footer-social-link",
+              "name": "Footer Social Link"
             }
           }
         }
       }
     },
     {
-      "title": "Footer-Menu-Block",
+      "title": "Footer Menu Block",
       "id": "footer-menu-block",
       "plugins": {
         "xwalk": {
@@ -40,14 +40,14 @@
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
               "model": "footer-menu-block",
-              "name": "Footer-Menu-Block"
+              "name": "Footer Menu Block"
             }
           }
         }
       }
     },
     {
-      "title": "Footer-Menu-Item",
+      "title": "Footer Menu Item",
       "id": "footer-menu-item",
       "plugins": {
         "xwalk": {
@@ -55,29 +55,14 @@
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
               "model": "footer-menu-item",
-              "name": "Footer-Menu-Item"
+              "name": "Footer Menu Item"
             }
           }
         }
       }
     },
     {
-      "title": "Footer-Menu-Sub-Item",
-      "id": "footer-menu-sub-item",
-      "plugins": {
-        "xwalk": {
-          "page": {
-            "resourceType": "core/franklin/components/block/v1/block/item",
-            "template": {
-              "model": "footer-menu-sub-item",
-              "name": "Footer-Menu-Sub-Item"
-            }
-          }
-        }
-      }
-    },
-    {
-      "title": "Footer-Secondary-Nav-Item",
+      "title": "Footer Secondary Nav Item",
       "id": "footer-secondary-nav-item",
       "plugins": {
         "xwalk": {
@@ -85,7 +70,7 @@
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
               "model": "footer-secondary-nav-item",
-              "name": "Footer-Secondary-Nav-Item"
+              "name": "Footer Secondary Nav Item"
             }
           }
         }
@@ -98,18 +83,18 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Footer Logo",
+          "label": "Logo",
           "name": "logo"
         },
         {
           "component": "aem-content",
-          "label": "Footer Logo Link",
+          "label": "Logo Link",
           "name": "logoLink"
         },
         {
           "component": "container",
-          "item": "social-link-item",
-          "label": "Social Links",
+          "item": "footer-social-link",
+          "label": "Footer Social Links",
           "name": "socialLinks"
         },
         {
@@ -121,7 +106,7 @@
         {
           "component": "container",
           "item": "footer-secondary-nav-item",
-          "label": "Footer Secondary Navigation",
+          "label": "Secondary Navigation",
           "name": "secondaryNav"
         },
         {
@@ -132,11 +117,11 @@
       ]
     },
     {
-      "id": "social-link-item",
+      "id": "footer-social-link",
       "fields": [
         {
           "component": "aem-content",
-          "label": "Social Link URL",
+          "label": "Social Link",
           "name": "link"
         },
         {
@@ -152,18 +137,18 @@
       "fields": [
         {
           "component": "text",
-          "label": "Menu Block Heading",
-          "name": "heading"
+          "label": "Footer Menu Block Title",
+          "name": "blockTitle"
         },
         {
           "component": "aem-content",
-          "label": "Menu Block Heading Link",
-          "name": "headingLink"
+          "label": "Footer Menu Block Title Link",
+          "name": "blockTitleLink"
         },
         {
           "component": "container",
           "item": "footer-menu-item",
-          "label": "Menu Items",
+          "label": "Footer Menu Items",
           "name": "menuItems"
         }
       ]
@@ -183,23 +168,8 @@
         },
         {
           "component": "richtext",
-          "label": "Submenu Hierarchy",
+          "label": "Menu Hierarchy",
           "name": "hierarchy-tree"
-        }
-      ]
-    },
-    {
-      "id": "footer-menu-sub-item",
-      "fields": [
-        {
-          "component": "text",
-          "label": "Submenu Item Label",
-          "name": "label"
-        },
-        {
-          "component": "aem-content",
-          "label": "Submenu Item Link",
-          "name": "link"
         }
       ]
     },
@@ -223,10 +193,9 @@
     {
       "id": "footer-main",
       "components": [
-        "social-link-item",
+        "footer-social-link",
         "footer-menu-block",
         "footer-menu-item",
-        "footer-menu-sub-item",
         "footer-secondary-nav-item"
       ]
     }

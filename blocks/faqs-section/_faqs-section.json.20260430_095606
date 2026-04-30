@@ -55,13 +55,13 @@
       "fields": [
         {
           "component": "text",
-          "label": "Question",
+          "label": "FAQ Question",
           "name": "question",
           "valueType": "string"
         },
         {
           "component": "richtext",
-          "label": "Answer",
+          "label": "FAQ Answer",
           "name": "answer",
           "valueType": "string"
         }

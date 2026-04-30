@@ -52,7 +52,7 @@
           "component": "container",
           "item": "business-vertical-item",
           "label": "Business Verticals",
-          "name": "businessVerticals"
+          "name": "verticals"
         }
       ]
     },
@@ -67,13 +67,19 @@
         },
         {
           "component": "reference",
-          "label": "Tablet/Mobile Image",
+          "label": "Tablet Image",
           "name": "imageTablet",
           "valueType": "string"
         },
         {
+          "component": "reference",
+          "label": "Mobile Image",
+          "name": "imageMobile",
+          "valueType": "string"
+        },
+        {
           "component": "text",
-          "label": "Business Vertical Title",
+          "label": "Vertical Title",
           "name": "title",
           "valueType": "string"
         },
@@ -85,7 +91,7 @@
         },
         {
           "component": "aem-content",
-          "label": "Business Vertical Link",
+          "label": "Vertical Link",
           "name": "link",
           "valueType": "string"
         }

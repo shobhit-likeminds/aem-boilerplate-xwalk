@@ -55,19 +55,19 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Story Image (Default)",
-          "name": "imageDefault",
+          "label": "Main Story Image",
+          "name": "image",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Story Image (Horizontal)",
+          "label": "Horizontal Image",
           "name": "imageHorizontal",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Story Image (Vertical)",
+          "label": "Vertical Image",
           "name": "imageVertical",
           "valueType": "string"
         },
@@ -79,26 +79,32 @@
         },
         {
           "component": "text",
-          "label": "Story Description",
-          "name": "description",
+          "label": "Story Summary",
+          "name": "summary",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "label": "Story Link",
-          "name": "storyLink",
+          "label": "Read More Link",
+          "name": "readMoreLink",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "CTA Label",
-          "name": "ctaLabel",
+          "label": "Read More Label",
+          "name": "readMoreLabel",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Date",
+          "label": "Date Display",
           "name": "date",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Date ISO",
+          "name": "dateIso",
           "valueType": "string"
         }
       ]

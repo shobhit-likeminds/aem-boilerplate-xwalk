@@ -61,9 +61,10 @@
   {
     "id": "footer-main",
     "components": [
-      "footer-social-link",
+      "social-link-item",
       "footer-menu-block",
       "footer-menu-item",
+      "footer-menu-sub-item",
       "footer-secondary-nav-item"
     ]
   },
@@ -78,7 +79,7 @@
     "components": [
       "navigation-item",
       "icon-link-item",
-      "newsroom-press-release-slide"
+      "press-release-item"
     ]
   },
   {
@@ -115,7 +116,7 @@
     "id": "spotlight-home",
     "components": [
       "spotlight-slide",
-      "quick-link"
+      "spotlight-quick-link"
     ]
   },
   {
@@ -133,7 +134,7 @@
   {
     "id": "work-with-us",
     "components": [
-      "work-with-us-slide"
+      "work-with-us-item"
     ]
   }
 ]

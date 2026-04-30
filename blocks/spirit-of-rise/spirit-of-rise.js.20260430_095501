@@ -1,11 +1,11 @@
-import { createOptimizedPicture } from '../../scripts/aem.js';
+import { createOptimizedPicture, loadScript, loadCSS } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
-export default function decorate(block) {
+export default async function decorate(block) {
   const [headingRow, subheadingRow, ...cardRows] = [...block.children];
 
   const section = document.createElement('section');
-  section.classList.add('section', 'grey-bg', 'spirit-of-rise');
+  section.classList.add('section', 'spirit-of-rise');
 
   const sectionHeader = document.createElement('div');
   sectionHeader.classList.add('section-header', 'text-center', 'pb-3');
@@ -13,18 +13,11 @@ export default function decorate(block) {
 
   const heading = document.createElement('h2');
   heading.classList.add('heading', 'font-regular', 'aos-init', 'aos-animate');
-  heading.setAttribute('data-aos-easing', 'ease-in-out');
-  heading.setAttribute('data-aos', 'fade-up');
-  heading.setAttribute('data-aos-delay', '200');
   heading.textContent = headingRow.textContent.trim();
   sectionHeader.append(heading);
 
   const subheading = document.createElement('p');
   subheading.classList.add('aos-init', 'aos-animate');
-  subheading.setAttribute('data-aos', 'fade-up');
-  subheading.setAttribute('data-aos-offset', '100');
-  subheading.setAttribute('data-aos-duration', '650');
-  subheading.setAttribute('data-aos-easing', 'ease-in-out');
   moveInstrumentation(subheadingRow, subheading);
   subheading.textContent = subheadingRow.textContent.trim();
   sectionHeader.append(subheading);
@@ -41,14 +34,14 @@ export default function decorate(block) {
   cardsWrapper.classList.add('performace-driven-cards');
 
   cardRows.forEach((row) => {
-    const [imageMobileCell, imageDesktopCell, descriptionCell, cardLinkCell] = [...row.children];
+    const [imageMobileCell, imageDesktopCell, linkCell, descriptionCell] = [...row.children];
 
     const cardLink = document.createElement('a');
     cardLink.classList.add('performace-driven-cards-link');
-    const foundLink = cardLinkCell.querySelector('a');
+    const foundLink = linkCell.querySelector('a');
     if (foundLink) {
       cardLink.href = foundLink.href;
-      cardLink.target = '_blank'; // From original HTML
+      cardLink.target = '_blank';
     }
     moveInstrumentation(row, cardLink);
 
@@ -65,21 +58,15 @@ export default function decorate(block) {
       const imgMobile = pictureMobile.querySelector('img');
       const imgDesktop = pictureDesktop.querySelector('img');
 
-      const optimizedPicture = document.createElement('picture');
-      const sourceMobile = document.createElement('source');
-      sourceMobile.media = '(max-width: 576px)';
-      sourceMobile.srcset = imgMobile.src;
-      optimizedPicture.append(sourceMobile);
-
-      const optimizedDesktopPicture = createOptimizedPicture(imgDesktop.src, imgDesktop.alt, false, [{ width: '750' }]);
-      // Append all children of the optimizedDesktopPicture (source, img)
-      while (optimizedDesktopPicture.firstChild) {
-        optimizedPicture.append(optimizedDesktopPicture.firstChild);
-      }
-      cardImage.append(optimizedPicture);
+      const optimizedPic = createOptimizedPicture(
+        imgDesktop.src,
+        imgDesktop.alt,
+        false,
+        [{ media: '(max-width: 576px)', width: '750', url: imgMobile.src }],
+        [{ width: '750' }],
+      );
+      cardImage.append(optimizedPic);
     }
-
-    cardWrapper.append(cardImage);
 
     const homeBoxCard = document.createElement('div');
     homeBoxCard.classList.add('performace-driven-home-box-card');
@@ -89,7 +76,7 @@ export default function decorate(block) {
     description.innerHTML = descriptionCell.innerHTML;
     homeBoxCard.append(description);
 
-    cardWrapper.append(homeBoxCard);
+    cardWrapper.append(cardImage, homeBoxCard);
     cardLink.append(cardWrapper);
     cardsWrapper.append(cardLink);
   });
@@ -99,4 +86,21 @@ export default function decorate(block) {
   section.append(performanceDriven);
 
   block.replaceChildren(section);
+
+  // Swiper initialization for carousel functionality
+  await loadCSS('https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css');
+  await loadScript('https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js');
+
+  // Assuming 'performace-driven-cards' is the swiper container
+  const swiperEl = block.querySelector('.performace-driven-cards');
+  if (swiperEl) {
+    // eslint-disable-next-line no-undef
+    new Swiper(swiperEl, {
+      slidesPerView: 'auto',
+      loop: false, // Based on ORIGINAL HTML, no explicit loop, default to false
+      // Add navigation/pagination if needed, based on ORIGINAL HTML
+      // navigation: { prevEl: '.swiper-button-prev', nextEl: '.swiper-button-next' },
+      // pagination: { el: '.swiper-pagination', clickable: true },
+    });
+  }
 }

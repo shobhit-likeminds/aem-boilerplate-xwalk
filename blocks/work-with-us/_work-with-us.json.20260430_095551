@@ -17,15 +17,15 @@
       }
     },
     {
-      "title": "Work-With-Us-Item",
-      "id": "work-with-us-item",
+      "title": "Work-With-Us-Slide",
+      "id": "work-with-us-slide",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "work-with-us-item",
-              "name": "Work-With-Us-Item"
+              "model": "work-with-us-slide",
+              "name": "Work-With-Us-Slide"
             }
           }
         }
@@ -39,61 +39,53 @@
         {
           "component": "text",
           "label": "Section Heading",
-          "name": "sectionHeading",
-          "valueType": "string"
+          "name": "sectionHeading"
         },
         {
           "component": "container",
-          "item": "work-with-us-item",
-          "label": "Work With Us Items",
-          "name": "items"
+          "item": "work-with-us-slide",
+          "label": "Slides",
+          "name": "slides"
         }
       ]
     },
     {
-      "id": "work-with-us-item",
+      "id": "work-with-us-slide",
       "fields": [
         {
           "component": "reference",
-          "label": "Image (max-width: 576px) srcset",
-          "name": "imageMobile576",
-          "valueType": "string"
+          "label": "Mobile Image (max-width: 576px)",
+          "name": "pictureMobile576"
         },
         {
           "component": "reference",
-          "label": "Image (max-width: 799px) srcset",
-          "name": "imageMobile799",
-          "valueType": "string"
+          "label": "Mobile Image (max-width: 799px)",
+          "name": "pictureMobile799"
         },
         {
           "component": "reference",
-          "label": "Desktop Image src",
-          "name": "imageDesktop",
-          "valueType": "string"
+          "label": "Desktop Image",
+          "name": "desktopImage"
         },
         {
           "component": "text",
-          "label": "Card Heading",
-          "name": "heading",
-          "valueType": "string"
+          "label": "Slide Heading",
+          "name": "slideHeading"
         },
         {
           "component": "richtext",
-          "label": "Description",
-          "name": "description",
-          "valueType": "string"
+          "label": "Slide Description",
+          "name": "slideDescription"
         },
         {
           "component": "aem-content",
           "label": "CTA Link",
-          "name": "ctaLink",
-          "valueType": "string"
+          "name": "ctaLink"
         },
         {
           "component": "text",
           "label": "CTA Label",
-          "name": "ctaLabel",
-          "valueType": "string"
+          "name": "ctaLabel"
         }
       ]
     }
@@ -102,7 +94,7 @@
     {
       "id": "work-with-us",
       "components": [
-        "work-with-us-item"
+        "work-with-us-slide"
       ]
     }
   ]

@@ -2,56 +2,48 @@ import { createOptimizedPicture, loadScript, loadCSS } from '../../scripts/aem.j
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default async function decorate(block) {
-  const children = [...block.children];
+  const [headingRow, ...storyRows] = [...block.children];
+
+  const section = document.createElement('section');
+  section.classList.add('section', 'grey-bg', 'latest-stories', 'home-stories');
 
   const sectionHeader = document.createElement('div');
   sectionHeader.classList.add('section-header', 'text-center');
-  sectionHeader.setAttribute('data-aos', 'fade-up');
-  sectionHeader.setAttribute('data-aos-offset', '100');
-  sectionHeader.setAttribute('data-aos-duration', '650');
-  sectionHeader.setAttribute('data-aos-easing', 'ease-in-out');
-
-  const [headingRow] = children; // Correct: array destructuring for fixed schema root row
   const heading = document.createElement('h2');
   heading.classList.add('heading', 'font-regular', 'aos-init', 'aos-animate');
-  heading.setAttribute('data-aos', 'fade-up');
-  heading.setAttribute('data-aos-offset', '100');
-  heading.setAttribute('data-aos-duration', '650');
-  heading.setAttribute('data-aos-easing', 'ease-in-out');
   moveInstrumentation(headingRow, heading);
   heading.textContent = headingRow.textContent.trim();
   sectionHeader.append(heading);
+  section.append(sectionHeader);
 
   const container = document.createElement('div');
   container.classList.add('container', 'aos-init', 'aos-animate');
-  container.setAttribute('data-aos', 'fade-up');
-  container.setAttribute('data-aos-offset', '100');
-  container.setAttribute('data-aos-duration', '650');
-  container.setAttribute('data-aos-easing', 'ease-in-out');
 
   const flickityWrap = document.createElement('div');
   flickityWrap.classList.add('flickity-slider-mobile-wrap', 'grid-layout');
-  // Copy data-flickity attribute from ORIGINAL HTML
   flickityWrap.setAttribute('data-flickity', '{ "wrapAround": false, "lazyLoad": true, "pageDots": true, "prevNextButtons": false, "imagesLoaded": true, "cellAlign": "left", "watchCSS": true, "adaptiveHeight": true }');
 
   const slidesContainer = document.createElement('div');
   slidesContainer.classList.add('slides');
 
-  children.slice(1).forEach((row) => {
+  storyRows.forEach((row) => {
     const [
-      imageDefaultCell,
+      imageCell,
       imageHorizontalCell,
       imageVerticalCell,
       categoryCell,
-      descriptionCell,
-      storyLinkCell,
-      ctaLabelCell,
+      summaryCell,
+      readMoreLinkCell,
+      readMoreLabelCell,
       dateCell,
+      dateIsoCell,
     ] = [...row.children];
 
     const slide = document.createElement('div');
-    slide.classList.add('slides'); // Renamed to 'slide-item' to avoid conflict with slidesContainer
-    moveInstrumentation(row, slide); // Move instrumentation for the whole row
+    // Renamed 'slides' to 'slide-item' to avoid conflict with parent 'slidesContainer'
+    // and to better reflect its role as an individual slide.
+    slide.classList.add('slide-item');
+    moveInstrumentation(row, slide);
 
     const wrap = document.createElement('div');
     wrap.classList.add('wrap');
@@ -59,29 +51,29 @@ export default async function decorate(block) {
     const imageWrap = document.createElement('div');
     imageWrap.classList.add('image-wrap');
 
-    const defaultPicture = imageDefaultCell.querySelector('picture');
-    const defaultImg = defaultPicture ? defaultPicture.querySelector('img') : null;
+    const mainImage = imageCell.querySelector('picture > img');
+    if (mainImage) {
+      const thumbImg = document.createElement('img');
+      thumbImg.classList.add('thumb-img', 'img-fluid');
+      thumbImg.src = mainImage.src;
+      thumbImg.alt = mainImage.alt;
+      thumbImg.loading = 'lazy';
 
-    if (defaultImg) {
-      const optimizedPic = createOptimizedPicture(defaultImg.src, defaultImg.alt, false, [{ width: '750' }]);
-      const img = optimizedPic.querySelector('img');
-      img.classList.add('thumb-img', 'img-fluid');
-      img.setAttribute('loading', 'lazy');
-
-      const horizontalImg = imageHorizontalCell.querySelector('img');
-      if (horizontalImg) {
-        img.setAttribute('data-img-horizontal', horizontalImg.src);
+      const horizontalImage = imageHorizontalCell.querySelector('picture > img');
+      if (horizontalImage) {
+        thumbImg.setAttribute('data-img-horizontal', horizontalImage.src);
+      }
+      const verticalImage = imageVerticalCell.querySelector('picture > img');
+      if (verticalImage) {
+        thumbImg.setAttribute('data-img-vertical', verticalImage.src);
       }
 
-      const verticalImg = imageVerticalCell.querySelector('img');
-      if (verticalImg) {
-        img.setAttribute('data-img-vertical', verticalImg.src);
-      }
-
-      // Instrumentation for image is moved to the optimized picture element
-      moveInstrumentation(imageDefaultCell, optimizedPic);
+      const optimizedPic = createOptimizedPicture(thumbImg.src, thumbImg.alt, false, [{ width: '750' }]);
+      // Instrumentation should be moved from the original imageCell to the new picture element
+      moveInstrumentation(imageCell, optimizedPic);
       imageWrap.append(optimizedPic);
     }
+    wrap.append(imageWrap);
 
     const contentWrap = document.createElement('div');
     contentWrap.classList.add('content-wrap');
@@ -89,51 +81,57 @@ export default async function decorate(block) {
     const category = document.createElement('div');
     category.classList.add('category');
     category.textContent = categoryCell.textContent.trim();
-    moveInstrumentation(categoryCell, category);
+    contentWrap.append(category);
 
-    const description = document.createElement('div');
-    description.classList.add('text');
-    description.textContent = descriptionCell.textContent.trim();
-    moveInstrumentation(descriptionCell, description);
+    const summary = document.createElement('div');
+    summary.classList.add('text');
+    summary.textContent = summaryCell.textContent.trim();
+    contentWrap.append(summary);
 
-    const storyLink = document.createElement('a');
-    storyLink.classList.add('btn', 'btn-link');
-    const foundLink = storyLinkCell.querySelector('a');
-    if (foundLink) {
-      storyLink.href = foundLink.href;
+    const readMoreLink = readMoreLinkCell.querySelector('a');
+    if (readMoreLink) {
+      const link = document.createElement('a');
+      link.classList.add('btn', 'btn-link');
+      link.href = readMoreLink.href;
+      link.textContent = readMoreLabelCell.textContent.trim();
+      contentWrap.append(link);
     }
-    storyLink.textContent = ctaLabelCell.textContent.trim(); // Correct: CTA label comes from ctaLabelCell
-    moveInstrumentation(storyLinkCell, storyLink); // Instrumentation for the link cell
 
     const date = document.createElement('div');
     date.classList.add('date');
     const time = document.createElement('time');
-    time.setAttribute('datetime', dateCell.textContent.trim()); // Assuming date cell text is a valid datetime string
+    time.setAttribute('datetime', dateIsoCell.textContent.trim());
     time.textContent = dateCell.textContent.trim();
     date.append(time);
-    moveInstrumentation(dateCell, date);
+    contentWrap.append(date);
 
-    contentWrap.append(category, description, storyLink, date);
-    wrap.append(imageWrap, contentWrap);
+    wrap.append(contentWrap);
     slide.append(wrap);
     slidesContainer.append(slide);
   });
 
   flickityWrap.append(slidesContainer);
   container.append(flickityWrap);
+  section.append(container);
 
-  const root = document.createElement('section');
-  root.classList.add('section', 'grey-bg', 'latest-stories', 'home-stories');
-  root.append(sectionHeader, container);
+  block.replaceChildren(section);
 
-  block.replaceChildren(root);
-
-  // Flickity (Swiper equivalent) initialization
-  await loadCSS('https://unpkg.com/flickity@2/dist/flickity.min.css');
-  await loadScript('https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js');
+  // Flickity initialization
+  await loadCSS('/blocks/latest-stories/flickity.min.css'); // Assuming Flickity CSS is local or CDN
+  await loadScript('/blocks/latest-stories/flickity.pkgd.min.js'); // Assuming Flickity JS is local or CDN
 
   // eslint-disable-next-line no-undef
-  // new Flickity(flickityWrap, JSON.parse(flickityWrap.dataset.flickity));
-  // The above line is commented out because Flickity auto-initializes on elements with data-flickity attribute.
-  // If it doesn't auto-init, uncomment and ensure Flickity is globally available.
+  if (typeof Flickity !== 'undefined') {
+    // eslint-disable-next-line no-new, no-undef
+    new Flickity(flickityWrap, {
+      wrapAround: flickityWrap.dataset.flickity.includes('"wrapAround": true'),
+      lazyLoad: flickityWrap.dataset.flickity.includes('"lazyLoad": true'),
+      pageDots: flickityWrap.dataset.flickity.includes('"pageDots": true'),
+      prevNextButtons: flickityWrap.dataset.flickity.includes('"prevNextButtons": true'),
+      imagesLoaded: flickityWrap.dataset.flickity.includes('"imagesLoaded": true'),
+      cellAlign: 'left', // Default from original HTML
+      watchCSS: true, // Default from original HTML
+      adaptiveHeight: flickityWrap.dataset.flickity.includes('"adaptiveHeight": true'),
+    });
+  }
 }
