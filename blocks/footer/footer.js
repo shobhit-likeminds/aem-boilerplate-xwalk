@@ -1,209 +1,245 @@
-import { createOptimizedPicture } from '../../scripts/aem.js';
+import { createOptimizedPicture, loadScript, loadCSS } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
-export default function decorate(block) {
+function transformNestedLists(rootUl) {
+  rootUl.querySelectorAll('li').forEach((li) => {
+    const nested = li.querySelector(':scope > ul');
+    const anchor = li.querySelector(':scope > a');
+
+    // Handle label-only nodes (no anchor)
+    if (!anchor) {
+      const textNode = [...li.childNodes].find(
+        (n) => n.nodeType === Node.TEXT_NODE && n.textContent.trim(),
+      );
+      if (textNode) {
+        const span = document.createElement('span');
+        span.textContent = textNode.textContent.trim();
+        textNode.remove();
+        li.prepend(span);
+      }
+    }
+
+    if (nested) {
+      nested.remove();
+      const subWrap = document.createElement('div');
+      subWrap.classList.add('ftr-sub-links-cvr'); // Use class from ORIGINAL HTML
+      subWrap.append(nested);
+      li.append(subWrap);
+
+      const trigger = li.querySelector(':scope > a, :scope > span');
+      if (trigger) {
+        trigger.classList.add('accordion_head2'); // Use class from ORIGINAL HTML
+        const plusMinus = document.createElement('span');
+        plusMinus.classList.add('plusminus2'); // Use class from ORIGINAL HTML
+        plusMinus.textContent = '+';
+        trigger.append(plusMinus);
+
+        trigger.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          li.classList.toggle('active');
+          subWrap.classList.toggle('active');
+          plusMinus.textContent = subWrap.classList.contains('active') ? '-' : '+';
+        });
+      }
+    }
+  });
+}
+
+export default async function decorate(block) {
   const children = [...block.children];
-
-  // The model has: logo, footerSections (container), footerSocialLinks (container), footerLegalLinks (container), copyright
-  // So the first row is logo, the last is copyright. The middle rows are item rows.
-  const logoRow = children[0];
-  const copyrightRow = children[children.length - 1];
-  const itemRows = children.slice(1, children.length - 1);
-
-  // Distinguish item row types based on cell count and content
-  const footerSections = itemRows.filter((row) => row.children.length === 2 && row.children[1].querySelector('ul'));
-  const footerSocialLinks = itemRows.filter((row) => row.children.length === 1 && row.children[0].querySelector('a'));
-  const footerLegalLinks = itemRows.filter((row) => row.children.length === 2 && !row.children[1].querySelector('ul'));
+  const [logoRow, copyrightRow, ...itemRows] = children;
 
   const footerWrp = document.createElement('section');
-  footerWrp.classList.add('footer-wrp'); // This is the block's outer wrapper, so it's fine.
+  // footerWrp.classList.add('footer-wrp'); // Block already has this class from AEM
 
   const container = document.createElement('div');
   container.classList.add('container-1600-wrp');
   footerWrp.append(container);
 
-  // Mobile Logo
+  // Logo
   const mobLogoWr = document.createElement('div');
   mobLogoWr.classList.add('mob-logo-wr');
-  const picture = logoRow.querySelector('picture');
-  if (picture) {
-    const img = picture.querySelector('img');
+  const logoPicture = logoRow.querySelector('picture');
+  if (logoPicture) {
+    const img = logoPicture.querySelector('img');
     const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-    moveInstrumentation(img, optimizedPic.querySelector('img'));
-    optimizedPic.querySelector('img').classList.add('img-fluid');
+    moveInstrumentation(logoPicture, optimizedPic);
     mobLogoWr.append(optimizedPic);
   }
   moveInstrumentation(logoRow, mobLogoWr);
   container.append(mobLogoWr);
 
-  // Footer Sections (f1)
-  const rowF1 = document.createElement('div');
-  rowF1.classList.add('row', 'f1');
-  container.append(rowF1);
+  const f1Row = document.createElement('div');
+  f1Row.classList.add('row', 'f1');
+  container.append(f1Row);
 
-  footerSections.forEach((row) => {
-    const [sectionTitleCell, sectionLinksCell] = [...row.children]; // Fixed schema, use destructuring
-    const col = document.createElement('div');
-    col.classList.add('col', 'col-xl-3');
+  const f2Row = document.createElement('div');
+  f2Row.classList.add('row', 'f2', 'justify-content-between');
+  container.append(f2Row);
 
-    const titleEl = document.createElement('a');
-    titleEl.classList.add('ttle', 'accordion_head2');
-    titleEl.textContent = sectionTitleCell.textContent.trim();
-    titleEl.href = 'javascript:void(0)'; // Placeholder for accordion trigger
-    const plusMinusSpan = document.createElement('span');
-    plusMinusSpan.classList.add('plusminus2');
-    plusMinusSpan.textContent = '+';
-    titleEl.append(plusMinusSpan);
-    col.append(titleEl);
+  const f3Row = document.createElement('div');
+  f3Row.classList.add('row', 'mt25', 'f3');
+  container.append(f3Row);
 
-    const ftrSubLinksCvr = document.createElement('div');
-    ftrSubLinksCvr.classList.add('ftr-sub-links-cvr', 'accordion_body2');
-
-    // Handle richtext content for sectionLinks
-    const tempDiv = document.createElement('div');
-    tempDiv.innerHTML = sectionLinksCell.innerHTML;
-    moveInstrumentation(sectionLinksCell, tempDiv); // Move instrumentation for the cell content
-
-    const ul = tempDiv.querySelector('ul');
-    if (ul) {
-      const linksContainer = document.createElement('div');
-      [...ul.children].forEach((li) => {
-        const link = li.querySelector('a');
-        if (link) {
-          link.classList.add('ftr-link');
-          linksContainer.append(link);
-        } else {
-          // Handle label-only nodes in rich text (e.g., plain text <li> without <a>)
-          const textNode = [...li.childNodes].find(
-            (n) => n.nodeType === Node.TEXT_NODE && n.textContent.trim(),
-          );
-          if (textNode) {
-            const span = document.createElement('span');
-            span.textContent = textNode.textContent.trim();
-            span.classList.add('ftr-link'); // Apply link styling to plain text
-            linksContainer.append(span);
-          }
-        }
-      });
-      ftrSubLinksCvr.append(linksContainer);
-    } else {
-      // If no UL, just append raw HTML (e.g., <p> tags)
-      while (tempDiv.firstChild) {
-        ftrSubLinksCvr.append(tempDiv.firstChild);
-      }
-    }
-
-    col.append(ftrSubLinksCvr);
-    rowF1.append(col);
-    moveInstrumentation(row, col); // Move instrumentation for the entire row
-
-    titleEl.addEventListener('click', (e) => {
-      e.preventDefault();
-      ftrSubLinksCvr.classList.toggle('active');
-      titleEl.classList.toggle('active');
-      plusMinusSpan.textContent = ftrSubLinksCvr.classList.contains('active') ? '-' : '+';
-    });
-  });
-
-  // Footer Social Links (f2)
-  if (footerSocialLinks.length > 0) {
-    const rowF2 = document.createElement('div');
-    rowF2.classList.add('row', 'f2', 'justify-content-between');
-    container.append(rowF2);
-
-    const colSocial = document.createElement('div');
-    colSocial.classList.add('col', 'col-xl-2', 'ftr-drop-wrp');
-
-    const socialTitle = document.createElement('p');
-    socialTitle.classList.add('ttle', 'accordion_head2');
-    socialTitle.textContent = 'Social Media'; // Hardcoded label, as per original HTML
-    const socialPlusMinus = document.createElement('span');
-    socialPlusMinus.classList.add('plusminus2');
-    socialPlusMinus.textContent = '+';
-    socialTitle.append(socialPlusMinus);
-    colSocial.append(socialTitle);
-
-    const socialLinksCvr = document.createElement('div');
-    socialLinksCvr.classList.add('ftr-sub-links-cvr', 'accordion_body2', 'socialIcons');
-
-    footerSocialLinks.forEach((row) => {
-      const [linkCell] = [...row.children]; // Fixed schema for social links, use destructuring
-      const link = linkCell.querySelector('a');
-      if (link) {
-        const socialAnchor = document.createElement('a');
-        socialAnchor.href = link.href;
-        socialAnchor.classList.add('ftr-link');
-        socialAnchor.target = '_blank';
-
-        // Add appropriate social media icons based on href
-        const url = link.href.toLowerCase();
-        let iconClass = '';
-        if (url.includes('facebook')) {
-          iconClass = 'fab fa-facebook-square';
-        } else if (url.includes('instagram')) {
-          iconClass = 'fab fa-instagram';
-        } else if (url.includes('twitter')) {
-          iconClass = 'fa-brands fa-square-x-twitter';
-        } else if (url.includes('linkedin')) {
-          iconClass = 'fab fa-linkedin';
-        } else if (url.includes('youtube')) {
-          iconClass = 'fab fa-youtube-square';
-        }
-
-        if (iconClass) {
-          const icon = document.createElement('i');
-          icon.classList.add(...iconClass.split(' '));
-          socialAnchor.append(icon);
-        } else {
-          socialAnchor.textContent = 'Link'; // Fallback text if no icon
-        }
-        socialLinksCvr.append(socialAnchor);
-        moveInstrumentation(row, socialAnchor); // Move instrumentation for the social link row
-      }
-    });
-
-    colSocial.append(socialLinksCvr);
-    rowF2.append(colSocial);
-
-    socialTitle.addEventListener('click', (e) => {
-      e.preventDefault();
-      socialLinksCvr.classList.toggle('active');
-      socialTitle.classList.toggle('active');
-      socialPlusMinus.textContent = socialLinksCvr.classList.contains('active') ? '-' : '+';
-    });
-  }
-
-  // Footer Legal Links and Copyright (f3)
-  const rowF3 = document.createElement('div');
-  rowF3.classList.add('row', 'mt25', 'f3');
-  container.append(rowF3);
-
-  const legalCol = document.createElement('div');
-  legalCol.classList.add('col-12', 'col-md-6');
-  rowF3.append(legalCol);
-
-  footerLegalLinks.forEach((row) => {
-    const [labelCell, linkCell] = [...row.children]; // Fixed schema for legal links, use destructuring
-    const link = linkCell.querySelector('a');
-    if (link) {
-      const legalAnchor = document.createElement('a');
-      legalAnchor.href = link.href;
-      legalAnchor.textContent = labelCell.textContent.trim();
-      legalCol.append(legalAnchor);
-      moveInstrumentation(row, legalAnchor); // Move instrumentation for the legal link row
-    }
-  });
+  const legalLinksCol = document.createElement('div');
+  legalLinksCol.classList.add('col-12', 'col-md-6');
+  f3Row.append(legalLinksCol);
 
   const copyrightCol = document.createElement('div');
   copyrightCol.classList.add('col-12', 'col-md-6');
-  rowF3.append(copyrightCol);
+  f3Row.append(copyrightCol);
 
-  const copyrightP = document.createElement('p');
-  copyrightP.classList.add('copy-txt', 'text-md-end');
-  // copyrightRow.children[0] is correct here as it's the single cell of the copyright row
-  copyrightP.textContent = copyrightRow.children[0].textContent.trim();
-  moveInstrumentation(copyrightRow, copyrightP); // Move instrumentation for the copyright row
-  copyrightCol.append(copyrightP);
+  // Filter item rows by cell count and content
+  // Note: The order of these filters matters if multiple types have same cell count.
+  // Based on BlockJson, all 2-cell items have an 'a' in the second cell for link-item,
+  // or richtext for section-item.
+  const footerLinkItems = itemRows.filter((row) => row.children.length === 2 && row.children[1]?.querySelector('a'));
+  const footerSectionItems = itemRows.filter((row) => row.children.length === 2 && !row.children[1]?.querySelector('a'));
+  const socialLinkItems = itemRows.filter((row) => row.children.length === 1 && row.querySelector('a'));
+  const legalLinkItems = itemRows.filter((row) => row.children.length === 2 && row.children[1]?.querySelector('a')); // This filter is redundant with footerLinkItems if not careful. Assuming legal links are distinct.
+
+  // Top Footer Links (footer-link-item)
+  footerLinkItems.forEach((row) => {
+    const [labelCell, linkCell] = [...row.children];
+    const col = document.createElement('div');
+    col.classList.add('col', 'col-xl-3');
+    const anchor = document.createElement('a');
+    const foundLink = linkCell.querySelector('a');
+    if (foundLink) anchor.href = foundLink.href;
+    anchor.textContent = labelCell.textContent.trim();
+    anchor.classList.add('ttle');
+    moveInstrumentation(row, anchor);
+    col.append(anchor);
+    f1Row.append(col);
+  });
+
+  // Footer Sections (footer-section-item)
+  footerSectionItems.forEach((row) => {
+    const [titleCell, linksCell] = [...row.children];
+    const col = document.createElement('div');
+    col.classList.add('col', 'col-xl-3');
+
+    const sectionLinkListWrapper = document.createElement('div');
+    sectionLinkListWrapper.innerHTML = linksCell?.innerHTML || ''; // Read richtext content
+    const sectionLinkList = sectionLinkListWrapper.querySelector('ul');
+
+    if (sectionLinkList) {
+      const titleTrigger = document.createElement('a');
+      titleTrigger.href = 'javascript:void(0)';
+      titleTrigger.classList.add('ttle', 'accordion_head2');
+      titleTrigger.textContent = titleCell.textContent.trim();
+
+      const plusMinus = document.createElement('span');
+      plusMinus.classList.add('plusminus2');
+      plusMinus.textContent = '+';
+      titleTrigger.append(plusMinus);
+
+      const subLinksCvr = document.createElement('div');
+      subLinksCvr.classList.add('ftr-sub-links-cvr', 'accordion_body2');
+      
+      // Apply transformNestedLists to the rich text content
+      transformNestedLists(sectionLinkList);
+      subLinksCvr.append(sectionLinkList);
+
+      titleTrigger.addEventListener('click', (e) => {
+        e.preventDefault();
+        col.classList.toggle('active');
+        subLinksCvr.classList.toggle('active');
+        plusMinus.textContent = subLinksCvr.classList.contains('active') ? '-' : '+';
+      });
+
+      moveInstrumentation(row, titleTrigger);
+      col.append(titleTrigger, subLinksCvr);
+    } else {
+      // If no ul found, render as a simple title with no dropdown
+      const titleEl = document.createElement('a');
+      titleEl.href = 'javascript:void(0)'; // Or a meaningful link if available
+      titleEl.classList.add('ttle');
+      titleEl.textContent = titleCell.textContent.trim();
+      moveInstrumentation(row, titleEl);
+      col.append(titleEl);
+    }
+    f1Row.append(col);
+  });
+
+  // Social Links (social-link-item)
+  if (socialLinkItems.length > 0) {
+    const socialCol = document.createElement('div');
+    socialCol.classList.add('col', 'col-xl-2', 'ftr-drop-wrp');
+
+    const socialTitle = document.createElement('p');
+    socialTitle.classList.add('ttle', 'accordion_head2');
+    // The original HTML has "Social Media" hardcoded. If this is meant to be authored,
+    // a new text field would be needed in the model. For now, keeping it hardcoded
+    // as per the original HTML's explicit text.
+    socialTitle.textContent = 'Social Media'; 
+
+    const plusMinus = document.createElement('span');
+    plusMinus.classList.add('plusminus2');
+    plusMinus.textContent = '+';
+    socialTitle.append(plusMinus);
+
+    const socialIconsCvr = document.createElement('div');
+    socialIconsCvr.classList.add('ftr-sub-links-cvr', 'accordion_body2', 'socialIcons');
+
+    socialLinkItems.forEach((row) => {
+      const [linkCell] = [...row.children];
+      const anchor = document.createElement('a');
+      const foundLink = linkCell.querySelector('a');
+      if (foundLink) anchor.href = foundLink.href;
+      anchor.classList.add('ftr-link');
+      anchor.target = '_blank'; // Add target blank as per original HTML
+
+      // Determine icon based on URL (if no specific icon field)
+      const url = anchor.href.toLowerCase();
+      let iconClass = '';
+      if (url.includes('facebook')) iconClass = 'fab fa-facebook-square';
+      else if (url.includes('instagram')) iconClass = 'fab fa-instagram';
+      else if (url.includes('twitter')) iconClass = 'fa-brands fa-square-x-twitter';
+      else if (url.includes('linkedin')) iconClass = 'fab fa-linkedin';
+      else if (url.includes('youtube')) iconClass = 'fab fa-youtube-square';
+
+      if (iconClass) {
+        const icon = document.createElement('i');
+        icon.classList.add(...iconClass.split(' '));
+        anchor.append(icon);
+      } else {
+        anchor.textContent = 'Link'; // Fallback text if no icon matched
+      }
+      moveInstrumentation(row, anchor);
+      socialIconsCvr.append(anchor);
+    });
+
+    socialTitle.addEventListener('click', (e) => {
+      e.preventDefault();
+      socialCol.classList.toggle('active');
+      socialIconsCvr.classList.toggle('active');
+      plusMinus.textContent = socialIconsCvr.classList.contains('active') ? '-' : '+';
+    });
+
+    socialCol.append(socialTitle, socialIconsCvr);
+    f2Row.append(socialCol);
+  }
+
+  // Legal Links (footer-legal-link-item)
+  legalLinkItems.forEach((row) => {
+    const [labelCell, linkCell] = [...row.children];
+    const anchor = document.createElement('a');
+    const foundLink = linkCell.querySelector('a');
+    if (foundLink) anchor.href = foundLink.href;
+    anchor.textContent = labelCell.textContent.trim();
+    moveInstrumentation(row, anchor);
+    legalLinksCol.append(anchor);
+  });
+
+  // Copyright Text
+  const copyrightText = document.createElement('p');
+  copyrightText.classList.add('copy-txt', 'text-md-end');
+  // Use firstElementChild to get the cell content, not the row itself
+  copyrightText.innerHTML = copyrightRow.firstElementChild?.innerHTML || '';
+  moveInstrumentation(copyrightRow, copyrightText);
+  copyrightCol.append(copyrightText);
 
   block.replaceChildren(footerWrp);
 }
