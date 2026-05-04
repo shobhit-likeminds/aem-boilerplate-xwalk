@@ -16,15 +16,9 @@
 
 .row>*{ flex-shrink:0;width:100%;max-width:100%;padding-right:calc(var(--bs-gutter-x) * .5);padding-left:calc(var(--bs-gutter-x) * .5);margin-top:var(--bs-gutter-y) }
 
-.row > .col-6{ flex:0 0 auto;width:50% }
-
 .row > .col-12{ flex:0 0 auto;width:100% }
 
-.gy-5{ --bs-gutter-y:3rem }
-
-@media (min-width:992px) { .row > .col-lg-3{ flex:0 0 auto;width:25% }
-
-.row > .col-lg-6{ flex:0 0 auto;width:50% } }
+@media (min-width:992px) { .row > .col-lg-6{ flex:0 0 auto;width:50% } }
 
 .btn{ --bs-btn-padding-x:0.75rem;--bs-btn-padding-y:0.375rem;--bs-btn-font-family: ;--bs-btn-font-size:1rem;--bs-btn-font-weight:400;--bs-btn-line-height:1.5;--bs-btn-color:#212529;--bs-btn-bg:transparent;--bs-btn-border-width:1px;--bs-btn-border-color:transparent;--bs-btn-border-radius:0.375rem;--bs-btn-box-shadow:inset 0 1px 0 rgba(255, 255, 255, 0.15),0 1px 1px rgba(0, 0, 0, 0.075);--bs-btn-disabled-opacity:0.65;--bs-btn-focus-box-shadow:0 0 0 0.25rem rgba(var(--bs-btn-focus-shadow-rgb), .5);display:inline-block;padding:var(--bs-btn-padding-y) var(--bs-btn-padding-x);font-family:var(--bs-btn-font-family);font-size:var(--bs-btn-font-size);font-weight:var(--bs-btn-font-weight);line-height:var(--bs-btn-line-height);color:var(--bs-btn-color);text-align:center;text-decoration:none;vertical-align:middle;cursor:pointer;-webkit-user-select:none;-moz-user-select:none;user-select:none;border:var(--bs-btn-border-width) solid var(--bs-btn-border-color);border-radius:var(--bs-btn-border-radius);background-color:var(--bs-btn-bg);transition:color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out }
 
@@ -54,45 +48,63 @@
 
 @keyframes placeholder-wave{100%{-webkit-mask-position:-200% 0%;mask-position:-200% 0%}}
 
-.d-flex{ display:flex!important }
+/* contact us ends */
 
-/* helper class */
-
-.mt-6{ 
-    margin-top: 5rem;
+.hero-section{ 
+    background-color: #F1F5FF;
+    padding: 2rem 0px;
  }
 
-.footer-logo:link, .footer-logo:visited, .footer-logo:hover, .footer-logo:active{ 
-    text-decoration: none;
-    color: white;
-    margin-bottom: 4rem;
+.hero-description{ 
+    position: relative;
  }
 
-.footer-logo h2{ 
-    margin: 0px 0px 0px 1rem;
-    font-size: 2.5rem;
-    font-weight: 900;
-    line-height: 1.4;
+.hero-description h1{ 
+    font-size: 4rem;
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 3rem;
  }
 
-footer .subscribe-btn{ 
-    font-size: 1.6rem;
-    margin-left: -3rem;
-    background: #1400FF;
-    border-radius: 3px;
+.hero-description h1 span{ 
+    background: linear-gradient(
+    to bottom,
+    #F1F5FF 0%,
+    #F1F5FF 70%,
+    rgba(68, 255, 120, 0.5) 70%,
+    rgba(68, 255, 120, 0.5) 100%
+  );
+  transition: 0.4s;
  }
 
-.useful-links-list{ 
-    margin: 0px;
-    padding: 0px;
-    list-style: none;
+.hero-description h1 span:hover{ 
+    background: rgba(68, 255, 120, 0.5);
  }
 
-.useful-links-list li a:link, .useful-links-list li a:visited, .useful-links-list li a:hover, .useful-links-list li a:active{ 
-    display: inline-block;
-    margin: 1rem 0px;
-    font-size: 1.5rem;
-    color: white;
-    text-decoration: none;
-    font-weight: 500;
+.hero-description p{ 
+    color: #000;
+    font-size: 2rem;
+    margin: 1.5rem 0px 3rem;
+ }
+
+.hero-description a{ 
+    font-size: 2rem;
+    border-radius: 6px;
+ }
+
+.star-1, .star-2{ 
+    position: absolute;
+    opacity: 0.4;
+ }
+
+.star-1{ 
+    top: -38px;
+    max-width: 3rem;
+    left: -12px;
+ }
+
+.star-2{ 
+    max-width: 2rem;
+    right: 0px;
+    top: -12px;
  }

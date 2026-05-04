@@ -50,7 +50,16 @@
         "hero",
         "cards",
         "columns",
-        "fragment"
+        "fragment",
+        "header-nav",
+        "hero-section",
+        "why-techatom",
+        "service-section",
+        "about-section",
+        "blog-section",
+        "faqs",
+        "contact-section",
+        "footer"
       ]
     }
   ]
