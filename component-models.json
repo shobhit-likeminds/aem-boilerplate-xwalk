@@ -282,6 +282,70 @@
     ]
   },
   {
+    "id": "business-verticals-grid",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Section Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Section Description",
+        "name": "description",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "business-vertical-item",
+        "label": "Business Verticals",
+        "name": "businessVerticals"
+      }
+    ]
+  },
+  {
+    "id": "business-vertical-item",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Desktop Image",
+        "name": "imageDesktop",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Tablet Image",
+        "name": "imageTablet",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Mobile Image",
+        "name": "imageMobile",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Title",
+        "name": "title",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Arrow Icon",
+        "name": "arrowIcon",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Business Link",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "card",
     "fields": [
       {
@@ -391,6 +455,40 @@
         "component": "aem-content",
         "label": "Social Link URL",
         "name": "socialLink",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "faq-accordion",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Section Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "faq-accordion-item",
+        "label": "FAQs",
+        "name": "faqs"
+      }
+    ]
+  },
+  {
+    "id": "faq-accordion-item",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Question",
+        "name": "question",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Answer",
+        "name": "answer",
         "valueType": "string"
       }
     ]
@@ -664,27 +762,45 @@
     "fields": [
       {
         "component": "reference",
-        "label": "Logo",
+        "label": "Main Logo",
         "name": "logo",
         "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "Logo Link",
+        "label": "Main Logo Link",
         "name": "logoLink",
         "valueType": "string"
       },
       {
-        "component": "text",
-        "label": "Logo Label",
-        "name": "logoLabel",
+        "component": "reference",
+        "label": "Anniversary Logo",
+        "name": "anniversaryLogo",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Anniversary Logo Link",
+        "name": "anniversaryLogoLink",
         "valueType": "string"
       },
       {
         "component": "container",
         "item": "navigation-item",
-        "label": "Navigation Items",
-        "name": "navigationItems"
+        "label": "Navigation Menu",
+        "name": "navigationMenu"
+      },
+      {
+        "component": "container",
+        "item": "icon-link-item",
+        "label": "Header Icon Links",
+        "name": "iconLinks"
+      },
+      {
+        "component": "container",
+        "item": "press-release-item",
+        "label": "Press Releases",
+        "name": "pressReleases"
       }
     ]
   },
@@ -693,14 +809,72 @@
     "fields": [
       {
         "component": "text",
-        "label": "Navigation Label",
+        "label": "Menu Label",
         "name": "label",
         "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "Navigation Link",
+        "label": "Menu Link",
         "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Mega Menu Content",
+        "name": "megaMenu",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Navigation Hierarchy",
+        "name": "hierarchy-tree",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "icon-link-item",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Icon Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Link Label",
+        "name": "label",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "press-release-item",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Press Release Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Press Release Title",
+        "name": "title",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Press Release Date",
+        "name": "date",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Press Release Topic",
+        "name": "topic",
         "valueType": "string"
       }
     ]
@@ -753,6 +927,93 @@
     ]
   },
   {
+    "id": "hero-slider",
+    "fields": [
+      {
+        "component": "container",
+        "item": "hero-slide-item",
+        "label": "Slides",
+        "name": "slides"
+      },
+      {
+        "component": "container",
+        "item": "quick-link-item",
+        "label": "Quick Links",
+        "name": "quickLinks"
+      }
+    ]
+  },
+  {
+    "id": "hero-slide-item",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Background Image (Desktop)",
+        "name": "backgroundDesktop",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Background Image (Tablet, ≤799px)",
+        "name": "backgroundTablet",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Background Image (Mobile, ≤576px)",
+        "name": "backgroundMobile",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Eyebrow (Small Text Above Heading)",
+        "name": "eyebrow",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Slide Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Slide Description",
+        "name": "description",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "CTA Link",
+        "name": "ctaLink",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "CTA Label",
+        "name": "ctaLabel",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "quick-link-item",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Quick Link Label",
+        "name": "label",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Quick Link URL",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "hero",
     "fields": [
       {
@@ -774,6 +1035,196 @@
         "name": "text",
         "value": "",
         "label": "Text",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "latest-news-slider",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Heading",
+        "name": "heading",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "news-slide-item",
+        "label": "Slides",
+        "name": "slides"
+      }
+    ]
+  },
+  {
+    "id": "news-slide-item",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Main Image",
+        "name": "image",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Horizontal Image",
+        "name": "imageHorizontal",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Vertical Image",
+        "name": "imageVertical",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Category",
+        "name": "category",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Headline",
+        "name": "headline",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "CTA Link",
+        "name": "ctaLink",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "CTA Label",
+        "name": "ctaLabel",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Date",
+        "name": "date",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "performance-driven-cards-2",
+    "fields": [
+      {
+        "component": "container",
+        "item": "performance-driven-card-item",
+        "label": "Cards",
+        "name": "cards"
+      }
+    ]
+  },
+  {
+    "id": "performance-driven-card-item",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Card Image Desktop",
+        "name": "imageDesktop",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Card Image Mobile",
+        "name": "imageMobile",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Card Description",
+        "name": "description",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Card Link",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "performance-driven-cards",
+    "fields": [
+      {
+        "component": "container",
+        "item": "performance-driven-card-item",
+        "label": "Cards",
+        "name": "cards"
+      }
+    ]
+  },
+  {
+    "id": "performance-driven-card-item",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Card Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Card Image (Desktop)",
+        "name": "imageDesktop",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Card Image (Mobile)",
+        "name": "imageMobile",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Card Description",
+        "name": "description",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "purpose-led-grid",
+    "fields": [
+      {
+        "component": "container",
+        "item": "purpose-led-grid-card",
+        "label": "Cards",
+        "name": "cards"
+      }
+    ]
+  },
+  {
+    "id": "purpose-led-grid-card",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Desktop Image",
+        "name": "desktopImage",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Mobile Image",
+        "name": "mobileImage",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Card Link",
+        "name": "cardLink",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Description",
+        "name": "description",
         "valueType": "string"
       }
     ]

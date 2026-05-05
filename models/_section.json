@@ -62,7 +62,14 @@
         "footer",
         "footer-section",
         "header",
-        "toast"
+        "toast",
+        "hero-slider",
+        "business-verticals-grid",
+        "purpose-led-grid",
+        "performance-driven-cards",
+        "performance-driven-cards-2",
+        "latest-news-slider",
+        "faq-accordion"
       ]
     }
   ]

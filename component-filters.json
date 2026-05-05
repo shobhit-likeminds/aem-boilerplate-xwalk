@@ -27,7 +27,14 @@
       "footer",
       "footer-section",
       "header",
-      "toast"
+      "toast",
+      "hero-slider",
+      "business-verticals-grid",
+      "purpose-led-grid",
+      "performance-driven-cards",
+      "performance-driven-cards-2",
+      "latest-news-slider",
+      "faq-accordion"
     ]
   },
   {
@@ -40,6 +47,12 @@
     "id": "blog-section",
     "components": [
       "blog-card-item"
+    ]
+  },
+  {
+    "id": "business-verticals-grid",
+    "components": [
+      "business-vertical-item"
     ]
   },
   {
@@ -70,6 +83,12 @@
     ]
   },
   {
+    "id": "faq-accordion",
+    "components": [
+      "faq-accordion-item"
+    ]
+  },
+  {
     "id": "faqs",
     "components": [
       "faq-item"
@@ -96,11 +115,44 @@
   {
     "id": "header",
     "components": [
-      "navigation-item"
+      "navigation-item",
+      "icon-link-item",
+      "press-release-item"
     ]
   },
   {
     "id": "hero-section"
+  },
+  {
+    "id": "hero-slider",
+    "components": [
+      "hero-slide-item",
+      "quick-link-item"
+    ]
+  },
+  {
+    "id": "latest-news-slider",
+    "components": [
+      "news-slide-item"
+    ]
+  },
+  {
+    "id": "performance-driven-cards-2",
+    "components": [
+      "performance-driven-card-item"
+    ]
+  },
+  {
+    "id": "performance-driven-cards",
+    "components": [
+      "performance-driven-card-item"
+    ]
+  },
+  {
+    "id": "purpose-led-grid",
+    "components": [
+      "purpose-led-grid-card"
+    ]
   },
   {
     "id": "service-section",
