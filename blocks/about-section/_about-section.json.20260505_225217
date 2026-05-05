@@ -17,15 +17,15 @@
       }
     },
     {
-      "title": "About-Feature-Item",
-      "id": "about-feature-item",
+      "title": "About-Section-Feature-Item",
+      "id": "about-section-feature-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "about-feature-item",
-              "name": "About-Feature-Item"
+              "model": "about-section-feature-item",
+              "name": "About-Section-Feature-Item"
             }
           }
         }
@@ -38,61 +38,61 @@
       "fields": [
         {
           "component": "text",
-          "label": "Section Headline",
-          "name": "headline",
+          "label": "Main Title",
+          "name": "mainTitle",
           "valueType": "string"
         },
         {
           "component": "richtext",
-          "label": "About Description",
+          "label": "About Description (Left Side)",
           "name": "description",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Inline Description Image",
-          "name": "descriptionImage",
+          "label": "Pointer Image (in paragraph)",
+          "name": "aboutPointerImage",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Main About Image",
-          "name": "mainImage",
+          "label": "Main Image (Right Side)",
+          "name": "aboutMainImage",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Features Headline",
-          "name": "featuresHeadline",
+          "label": "Features Section Title",
+          "name": "featuresTitle",
           "valueType": "string"
         },
         {
           "component": "container",
-          "item": "about-feature-item",
-          "label": "Features",
+          "item": "about-section-feature-item",
+          "label": "Feature Items",
           "name": "features"
         }
       ]
     },
     {
-      "id": "about-feature-item",
+      "id": "about-section-feature-item",
       "fields": [
         {
           "component": "reference",
           "label": "Feature Icon",
-          "name": "icon",
+          "name": "featureIcon",
           "valueType": "string"
         },
         {
           "component": "text",
           "label": "Feature Title",
-          "name": "title",
+          "name": "featureTitle",
           "valueType": "string"
         },
         {
           "component": "richtext",
           "label": "Feature Description",
-          "name": "description",
+          "name": "featureDescription",
           "valueType": "string"
         }
       ]
@@ -102,7 +102,7 @@
     {
       "id": "about-section",
       "components": [
-        "about-feature-item"
+        "about-section-feature-item"
       ]
     }
   ]

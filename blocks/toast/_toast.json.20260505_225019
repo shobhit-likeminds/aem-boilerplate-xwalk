@@ -23,8 +23,8 @@
       "fields": [
         {
           "component": "richtext",
-          "label": "Toast Body",
-          "name": "body",
+          "label": "Toast Message",
+          "name": "message",
           "valueType": "string"
         }
       ]

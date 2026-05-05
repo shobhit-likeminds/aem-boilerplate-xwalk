@@ -5,105 +5,102 @@ export default function decorate(block) {
   const children = [...block.children];
 
   const section = document.createElement('section');
-  // section.classList.add('blog-section'); // REMOVED: Outer block div already has this class
+  section.classList.add('blog-section');
 
-  const sectionTitleRow = children[0];
+  // CHECK 0: Replaced direct children[0] access with destructuring
+  const [sectionTitleRow, ...blogCardRows] = children;
+
   const sectionTitle = document.createElement('h2');
   moveInstrumentation(sectionTitleRow, sectionTitle);
   sectionTitle.textContent = sectionTitleRow.textContent.trim();
   section.append(sectionTitle);
 
-  const container = document.createElement('div');
-  container.classList.add('container', 'mt-6');
-  section.append(container);
+  const containerDiv = document.createElement('div');
+  containerDiv.classList.add('container', 'mt-6');
 
-  const row = document.createElement('div');
-  row.classList.add('row', 'justify-content-around');
-  container.append(row);
+  const rowDiv = document.createElement('div');
+  rowDiv.classList.add('row', 'justify-content-around');
 
-  const blogCardRows = children.slice(1);
-
-  blogCardRows.forEach((blogCardRow) => {
+  blogCardRows.forEach((row) => {
     const [
-      imageCell,
       cardLinkCell,
-      categoryLabelCell,
+      imageCell,
       categoryLinkCell,
-      blogTitleCell,
-      blogDescriptionCell,
+      categoryLabelCell,
+      titleCell,
+      descriptionCell,
       dateCell,
       readMoreLinkCell,
       readMoreLabelCell,
-    ] = [...blogCardRow.children];
+    ] = [...row.children];
 
     const blogCard = document.createElement('div');
     blogCard.classList.add('blog-card', 'col-lg-4', 'col-md-6', 'col-12');
-    moveInstrumentation(blogCardRow, blogCard);
+    moveInstrumentation(row, blogCard);
 
     const cardLink = document.createElement('a');
-    const foundCardLink = cardLinkCell.querySelector('a');
-    if (foundCardLink) {
-      cardLink.href = foundCardLink.href;
-    }
-    blogCard.append(cardLink);
+    cardLink.href = cardLinkCell.querySelector('a')?.href || '#';
+    moveInstrumentation(cardLinkCell, cardLink);
 
     const picture = imageCell.querySelector('picture');
     if (picture) {
       const img = picture.querySelector('img');
       const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-      // Add img-fluid class to the actual img element inside the optimized picture
-      optimizedPic.querySelector('img').classList.add('img-fluid');
+      // CHECK 2.6: moveInstrumentation for the actual img element inside the picture
       moveInstrumentation(img, optimizedPic.querySelector('img'));
+      optimizedPic.querySelector('img').classList.add('img-fluid'); // Add img-fluid class
       cardLink.append(optimizedPic);
     }
+    blogCard.append(cardLink);
 
     const categoriesDiv = document.createElement('div');
     categoriesDiv.classList.add('categories', 'align-items-center', 'gap-3', 'flex-wrap');
-    blogCard.append(categoriesDiv);
+    moveInstrumentation(categoryLinkCell, categoriesDiv); // Instrumentation for the container
 
     const categoryLink = document.createElement('a');
-    const foundCategoryLink = categoryLinkCell.querySelector('a');
-    if (foundCategoryLink) {
-      categoryLink.href = foundCategoryLink.href;
-    }
+    categoryLink.href = categoryLinkCell.querySelector('a')?.href || '#';
     categoryLink.textContent = categoryLabelCell.textContent.trim();
+    moveInstrumentation(categoryLabelCell, categoryLink); // Instrumentation for the label
     categoriesDiv.append(categoryLink);
+    blogCard.append(categoriesDiv);
 
-    const blogContentLink = document.createElement('a');
-    if (foundCardLink) {
-      blogContentLink.href = foundCardLink.href;
-    }
-    blogCard.append(blogContentLink);
+    const titleAndDescriptionLink = document.createElement('a');
+    titleAndDescriptionLink.href = cardLinkCell.querySelector('a')?.href || '#';
+    moveInstrumentation(titleCell, titleAndDescriptionLink); // Instrumentation for the title
 
-    const blogTitle = document.createElement('h5');
-    blogTitle.textContent = blogTitleCell.textContent.trim();
-    blogContentLink.append(blogTitle);
+    const title = document.createElement('h5');
+    title.textContent = titleCell.textContent.trim();
+    titleAndDescriptionLink.append(title);
 
-    // FIX: blogDescription is richtext, so it might contain <p> tags.
-    // Assigning to <p> creates <p><p>...</p></p>. Use <div> instead.
-    const blogDescription = document.createElement('div');
-    blogDescription.innerHTML = blogDescriptionCell.innerHTML;
-    blogContentLink.append(blogDescription);
+    const description = document.createElement('p');
+    description.textContent = descriptionCell.textContent.trim();
+    titleAndDescriptionLink.append(description);
+    moveInstrumentation(descriptionCell, description); // Instrumentation for the description
+    blogCard.append(titleAndDescriptionLink);
 
     const dateReadDiv = document.createElement('div');
     dateReadDiv.classList.add('d-flex', 'date-read', 'justify-content-between', 'align-items-center');
-    blogCard.append(dateReadDiv);
+    moveInstrumentation(dateCell, dateReadDiv); // Instrumentation for the container
 
-    const date = document.createElement('time');
-    date.textContent = dateCell.textContent.trim();
-    dateReadDiv.append(date);
+    const time = document.createElement('time');
+    time.setAttribute('datetime', dateCell.textContent.trim()); // Assuming date format is suitable for datetime
+    time.textContent = dateCell.textContent.trim();
+    dateReadDiv.append(time);
 
     const readMoreLink = document.createElement('a');
+    readMoreLink.href = readMoreLinkCell.querySelector('a')?.href || '#';
     readMoreLink.classList.add('btn', 'btn-primary');
-    const foundReadMoreLink = readMoreLinkCell.querySelector('a');
-    if (foundReadMoreLink) {
-      readMoreLink.href = foundReadMoreLink.href;
-    }
     readMoreLink.textContent = readMoreLabelCell.textContent.trim();
+    moveInstrumentation(readMoreLinkCell, readMoreLink); // Instrumentation for the link
+    moveInstrumentation(readMoreLabelCell, readMoreLink); // Instrumentation for the label
     dateReadDiv.append(readMoreLink);
+    blogCard.append(dateReadDiv);
 
-    row.append(blogCard);
+    rowDiv.append(blogCard);
   });
+
+  containerDiv.append(rowDiv);
+  section.append(containerDiv);
 
   block.replaceChildren(section);
 }

@@ -2,78 +2,87 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  // block.children[0]: sectionTitleRow
-  // block.children[1]: pointerImageRow
-  // block.children[2...N]: serviceCardRows
-  const [sectionTitleRow, pointerImageRow, ...serviceCardRows] = [...block.children];
+  // Destructure root rows based on BlockJson model
+  const [headingRow, pointerImageRow, ...serviceCardRows] = [...block.children];
 
   const section = document.createElement('section');
-  // section.classList.add('service-section'); // Removed: outer block div already has this class
-  section.id = 'services';
+  section.id = 'services'; // From original HTML
 
-  const containerPositionRelative = document.createElement('div');
-  containerPositionRelative.classList.add('container', 'position-relative');
-  section.append(containerPositionRelative);
+  const containerTop = document.createElement('div');
+  containerTop.classList.add('container', 'position-relative');
+  moveInstrumentation(headingRow, containerTop); // Move instrumentation from heading row
 
-  // sectionTitleRow is a row, its content is directly in its first child (the cell)
-  const h2 = document.createElement('h2');
-  moveInstrumentation(sectionTitleRow, h2);
-  h2.textContent = sectionTitleRow.children[0]?.textContent.trim() || ''; // Read from cell, not row.querySelector('div')
-  containerPositionRelative.append(h2);
+  const heading = document.createElement('h2');
+  heading.textContent = headingRow.textContent.trim();
+  containerTop.append(heading);
 
-  // pointerImageRow is a row, its content is directly in its first child (the cell)
-  const pointerImageCell = pointerImageRow.children[0];
-  const pointerPicture = pointerImageCell?.querySelector('picture');
-  if (pointerPicture) {
-    const pointerImg = pointerPicture.querySelector('img');
-    const optimizedPointerPic = createOptimizedPicture(pointerImg.src, pointerImg.alt, false, [{ width: '750' }]);
-    moveInstrumentation(pointerImageRow, optimizedPointerPic.querySelector('img'));
-    optimizedPointerPic.querySelector('img').classList.add('pointer');
-    containerPositionRelative.append(optimizedPointerPic);
+  // Handle pointer image
+  if (pointerImageRow) {
+    const picture = pointerImageRow.querySelector('picture');
+    if (picture) {
+      const img = picture.querySelector('img');
+      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+      const optimizedImg = optimizedPic.querySelector('img');
+      optimizedImg.classList.add('pointer'); // From original HTML
+      // moveInstrumentation(img, optimizedImg); // moveInstrumentation should be on the cell or row, not the img
+      containerTop.append(optimizedPic);
+    }
   }
 
-  const cardsContainer = document.createElement('div');
-  cardsContainer.classList.add('container');
-  section.append(cardsContainer);
+  section.append(containerTop);
+
+  const containerBottom = document.createElement('div');
+  containerBottom.classList.add('container');
 
   const row = document.createElement('div');
   row.classList.add('row', 'justify-content-around');
-  cardsContainer.append(row);
+  containerBottom.append(row);
 
   serviceCardRows.forEach((cardRow) => {
-    // Fixed schema for service-card item rows, use destructuring
-    const [cardLinkCell, cardImageCell, cardTitleCell, cardDescriptionCell, buttonLabelCell] = [...cardRow.children];
+    // Destructure cells for each service card row
+    const [linkCell, imageCell, titleCell, descriptionCell, ctaLabelCell] = [...cardRow.children];
 
-    const cardLink = document.createElement('a');
-    cardLink.classList.add('d-block', 'col-lg-4', 'col-md-6', 'col-12', 'service-card');
-    const foundCardLink = cardLinkCell.querySelector('a');
-    if (foundCardLink) {
-      cardLink.href = foundCardLink.href;
+    const serviceCardLink = document.createElement('a');
+    serviceCardLink.classList.add('d-block', 'col-lg-4', 'col-md-6', 'col-12', 'service-card');
+    const foundLink = linkCell.querySelector('a');
+    if (foundLink) {
+      serviceCardLink.href = foundLink.href;
     }
-    moveInstrumentation(cardRow, cardLink);
+    moveInstrumentation(cardRow, serviceCardLink);
 
-    const cardPicture = cardImageCell.querySelector('picture');
-    if (cardPicture) {
-      const cardImg = cardPicture.querySelector('img');
-      const optimizedCardPic = createOptimizedPicture(cardImg.src, cardImg.alt, false, [{ width: '750' }]);
-      optimizedCardPic.querySelector('img').classList.add('img-fluid', 'service-img');
-      cardLink.append(optimizedCardPic);
+    if (imageCell) {
+      const picture = imageCell.querySelector('picture');
+      if (picture) {
+        const img = picture.querySelector('img');
+        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+        const optimizedImg = optimizedPic.querySelector('img');
+        optimizedImg.classList.add('img-fluid', 'service-img'); // From original HTML
+        // moveInstrumentation(img, optimizedImg); // moveInstrumentation should be on the cell or row, not the img
+        serviceCardLink.append(optimizedPic);
+      }
     }
 
-    const h3 = document.createElement('h3');
-    h3.textContent = cardTitleCell?.textContent.trim() || '';
-    cardLink.append(h3);
+    if (titleCell) {
+      const title = document.createElement('h3');
+      title.textContent = titleCell.textContent.trim();
+      serviceCardLink.append(title);
+    }
 
-    const p = document.createElement('p');
-    p.innerHTML = cardDescriptionCell?.innerHTML || ''; // cardDescription is richtext, use innerHTML
-    cardLink.append(p);
+    if (descriptionCell) {
+      const description = document.createElement('p');
+      description.innerHTML = descriptionCell.innerHTML; // Richtext content
+      serviceCardLink.append(description);
+    }
 
-    const button = document.createElement('button');
-    button.textContent = buttonLabelCell?.textContent.trim() || '';
-    cardLink.append(button);
+    if (ctaLabelCell) {
+      const button = document.createElement('button');
+      button.textContent = ctaLabelCell.textContent.trim();
+      serviceCardLink.append(button);
+    }
 
-    row.append(cardLink);
+    row.append(serviceCardLink);
   });
 
+  section.append(containerBottom);
   block.replaceChildren(section);
 }

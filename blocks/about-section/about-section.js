@@ -2,139 +2,128 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
+  // The outer block div already has 'about-section' class. Do not add it to an inner wrapper.
+  const section = document.createElement('section');
+  // section.classList.add('about-section'); // Removed - outer block div already has this class
+
   const children = [...block.children];
 
-  const [
-    mainTitleRow,
-    descriptionRow,
-    aboutPointerImageRow,
-    aboutMainImageRow,
-    featuresTitleRow,
-    ...featureItemRows
-  ] = children;
+  // Row 0: headline
+  const headlineRow = children[0];
+  const headline = document.createElement('h2');
+  moveInstrumentation(headlineRow, headline);
+  // headline is type=text, content is directly in the first child div
+  headline.textContent = headlineRow.children[0]?.textContent.trim() || '';
+  section.append(headline);
 
-  const section = document.createElement('section');
-  section.classList.add('about-section');
-  moveInstrumentation(block, section);
-
-  // Main Title
-  const mainTitle = document.createElement('h2');
-  mainTitle.textContent = mainTitleRow.textContent.trim();
-  moveInstrumentation(mainTitleRow, mainTitle);
-  section.append(mainTitle);
-
-  // About Section - Top part
   const container1 = document.createElement('div');
   container1.classList.add('container');
-  moveInstrumentation(descriptionRow, container1); // Instrumentation for the container that holds description and main image
-
   const row1 = document.createElement('div');
   row1.classList.add('row', 'align-items-center');
-
-  const colLeft = document.createElement('div');
-  colLeft.classList.add('col-lg-6', 'col-md-6', 'col-12', 'order-lg-1', 'order-md-1', 'order-2');
-  moveInstrumentation(descriptionRow, colLeft);
-
-  const descriptionP = document.createElement('p');
-  // Richtext cell's innerHTML is "<p>content</p>", so extract content or use a div
-  // FIX: descriptionRow is a row, its innerHTML is <div><p>content</p></div>.
-  // We need the content of the cell, which is descriptionRow.children[0].
-  // The original HTML shows <p> directly inside the col-lg-6, so we want to extract the <p> content.
-  // However, the BlockJson says 'richtext' for 'description', meaning the cell itself contains the <p> tags.
-  // So, descriptionRow.children[0] is the cell, and its innerHTML is "<p>About Description...</p>".
-  // Assigning this to descriptionP.innerHTML creates <p><p>...</p></p>, which is invalid.
-  // The correct approach for richtext is to use a <div> as the container, or extract the innerHTML of the <p> if a <p> is strictly required.
-  // Given the original HTML has a <p> directly inside the col, and the cell contains <p>...</p>,
-  // we should extract the innerHTML of the paragraph within the cell.
-  descriptionP.innerHTML = descriptionRow.children[0]?.querySelector('p')?.innerHTML || '';
-
-  // Append pointer image inside the description paragraph
-  const pointerPicture = aboutPointerImageRow.querySelector('picture');
-  if (pointerPicture) {
-    const pointerImg = pointerPicture.querySelector('img');
-    if (pointerImg) {
-      const optimizedPointerPic = createOptimizedPicture(pointerImg.src, pointerImg.alt, false, [{ width: '750' }]);
-      const newPointerImg = optimizedPointerPic.querySelector('img');
-      newPointerImg.classList.add('img-fluid', 'about-pointer');
-      moveInstrumentation(aboutPointerImageRow, newPointerImg);
-      descriptionP.append(newPointerImg);
-    }
-  }
-  colLeft.append(descriptionP);
-  row1.append(colLeft);
-
-  const colRight = document.createElement('div');
-  colRight.classList.add('col-lg-6', 'col-md-6', 'col-12', 'order-lg-2', 'order-md-2', 'order-1');
-  moveInstrumentation(aboutMainImageRow, colRight);
-
-  const mainPicture = aboutMainImageRow.querySelector('picture');
-  if (mainPicture) {
-    const mainImg = mainPicture.querySelector('img');
-    if (mainImg) {
-      const optimizedMainPic = createOptimizedPicture(mainImg.src, mainImg.alt, false, [{ width: '750' }]);
-      const newMainImg = optimizedMainPic.querySelector('img');
-      newMainImg.alt = 'about us';
-      newMainImg.classList.add('img-fluid');
-      // The original code replaces the picture, but then appends the optimizedPicture.
-      // This is fine, but ensure instrumentation is moved to the new picture.
-      moveInstrumentation(aboutMainImageRow, optimizedMainPic); // Move instrumentation to the new picture element
-      colRight.append(optimizedMainPic);
-    }
-  }
-  row1.append(colRight);
   container1.append(row1);
+
+  // Row 1: description, Row 2: descriptionImage
+  const descriptionRow = children[1];
+  const descriptionImageRow = children[2];
+
+  const col1 = document.createElement('div');
+  col1.classList.add('col-lg-6', 'col-md-6', 'col-12', 'order-lg-1', 'order-md-1', 'order-2');
+  const p = document.createElement('p');
+  moveInstrumentation(descriptionRow, p);
+  // description is type=richtext, content is directly in the first child div, may contain <p>
+  // Assigning innerHTML of a cell containing <p> to another <p> creates invalid nesting <p><p>
+  // Use a div as a container for richtext, or extract innerHTML from the <p> if a <p> is strictly required by CSS.
+  // Given original HTML has <p> directly inside col, we will try to mimic that.
+  // The original HTML has the image *inside* the paragraph, so we'll append to the paragraph.
+  p.innerHTML = descriptionRow.children[0]?.innerHTML || '';
+
+  const descriptionPicture = descriptionImageRow.querySelector('picture');
+  if (descriptionPicture) {
+    const img = descriptionPicture.querySelector('img');
+    if (img) {
+      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+      // moveInstrumentation should be called on the original img element, not the optimized one's img
+      moveInstrumentation(img, optimizedPic.querySelector('img'));
+      optimizedPic.querySelector('img').classList.add('img-fluid', 'about-pointer');
+      p.append(optimizedPic); // Append the picture to the paragraph as per original HTML
+    }
+  }
+  moveInstrumentation(descriptionImageRow, col1); // Move instrumentation for the image row to the column
+  col1.append(p);
+  row1.append(col1);
+
+  // Row 3: mainImage
+  const mainImageRow = children[3];
+  const col2 = document.createElement('div');
+  col2.classList.add('col-lg-6', 'col-md-6', 'col-12', 'order-lg-2', 'order-md-2', 'order-1');
+  const mainPicture = mainImageRow.querySelector('picture');
+  if (mainPicture) {
+    const img = mainPicture.querySelector('img');
+    if (img) {
+      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+      moveInstrumentation(img, optimizedPic.querySelector('img'));
+      optimizedPic.querySelector('img').classList.add('img-fluid');
+      col2.append(optimizedPic);
+    }
+  }
+  moveInstrumentation(mainImageRow, col2); // Move instrumentation for the main image row to the column
+  row1.append(col2);
+
   section.append(container1);
 
-  // Features Section
+  // Row 4: featuresHeadline
+  const featuresHeadlineRow = children[4];
   const container2 = document.createElement('div');
   container2.classList.add('container');
-  moveInstrumentation(featuresTitleRow, container2); // Instrumentation for the container that holds features
-
   const aboutContainer = document.createElement('div');
   aboutContainer.classList.add('about-container', 'shadow-lg');
+  const h4 = document.createElement('h4');
+  moveInstrumentation(featuresHeadlineRow, h4);
+  // featuresHeadline is type=text, content is directly in the first child div
+  h4.textContent = featuresHeadlineRow.children[0]?.textContent.trim() || '';
+  aboutContainer.append(h4);
 
-  const featuresTitle = document.createElement('h4');
-  featuresTitle.textContent = featuresTitleRow.textContent.trim();
-  moveInstrumentation(featuresTitleRow, featuresTitle);
-  aboutContainer.append(featuresTitle);
+  const row2 = document.createElement('div');
+  row2.classList.add('row');
+  aboutContainer.append(row2);
 
-  const featuresRow = document.createElement('div');
-  featuresRow.classList.add('row');
+  // Remaining rows are feature items
+  const featureRows = children.slice(5);
+  featureRows.forEach((row) => {
+    // Fixed schema for 'about-feature-item', use destructuring
+    const [iconCell, titleCell, featureDescriptionCell] = [...row.children];
 
-  featureItemRows.forEach((row) => {
-    const [featureIconCell, featureTitleCell, featureDescriptionCell] = [...row.children];
+    const col3 = document.createElement('div');
+    col3.classList.add('col-lg-4', 'col-md-6', 'col-12');
 
-    const col = document.createElement('div');
-    col.classList.add('col-lg-4', 'col-md-6', 'col-12');
-    moveInstrumentation(row, col);
-
-    const featureIconPicture = featureIconCell.querySelector('picture');
-    if (featureIconPicture) {
-      const featureIconImg = featureIconPicture.querySelector('img');
-      if (featureIconImg) {
-        const optimizedFeaturePic = createOptimizedPicture(featureIconImg.src, featureIconImg.alt, false, [{ width: '750' }]);
-        const newFeatureImg = optimizedFeaturePic.querySelector('img');
-        newFeatureImg.classList.add('img-fluid');
-        moveInstrumentation(featureIconCell, optimizedFeaturePic); // Move instrumentation to the new picture element
-        col.append(optimizedFeaturePic);
+    const iconPicture = iconCell.querySelector('picture');
+    if (iconPicture) {
+      const img = iconPicture.querySelector('img');
+      if (img) {
+        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+        moveInstrumentation(img, optimizedPic.querySelector('img'));
+        optimizedPic.querySelector('img').classList.add('img-fluid');
+        col3.append(optimizedPic);
       }
     }
 
-    const featureTitle = document.createElement('h5');
-    featureTitle.textContent = featureTitleCell.textContent.trim();
-    col.append(featureTitle);
+    const h5 = document.createElement('h5');
+    // title is type=text, content is directly in the first child div
+    h5.textContent = titleCell.children[0]?.textContent.trim() || '';
+    col3.append(h5);
 
-    const featureDescription = document.createElement('p');
-    // FIX: featureDescriptionCell is a cell, its innerHTML is "<p>content</p>".
-    // Assigning this to featureDescription.innerHTML creates <p><p>...</p></p>, which is invalid.
-    // Extract the innerHTML of the paragraph within the cell.
-    featureDescription.innerHTML = featureDescriptionCell.querySelector('p')?.innerHTML || '';
-    col.append(featureDescription);
+    const featureDescriptionP = document.createElement('p');
+    // featureDescription is type=richtext, content is directly in the first child div
+    // Assigning innerHTML of a cell containing <p> to another <p> creates invalid nesting <p><p>
+    // Extract innerHTML from the <p> inside the cell, or use a div if <p> is not strictly required.
+    // Original HTML uses <p> for this, so we'll extract the inner content.
+    featureDescriptionP.innerHTML = featureDescriptionCell.querySelector('p')?.innerHTML ?? featureDescriptionCell.textContent.trim() ?? '';
+    col3.append(featureDescriptionP);
 
-    featuresRow.append(col);
+    moveInstrumentation(row, col3); // Move instrumentation for the feature item row to its column
+    row2.append(col3);
   });
 
-  aboutContainer.append(featuresRow);
   container2.append(aboutContainer);
   section.append(container2);
 

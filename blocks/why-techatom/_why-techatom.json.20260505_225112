@@ -1,31 +1,31 @@
 {
   "definitions": [
     {
-      "title": "Service Section",
-      "id": "service-section",
+      "title": "Why Techatom",
+      "id": "why-techatom",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block",
             "template": {
-              "filter": "service-section",
-              "model": "service-section",
-              "name": "Service Section"
+              "filter": "why-techatom",
+              "model": "why-techatom",
+              "name": "Why Techatom"
             }
           }
         }
       }
     },
     {
-      "title": "Service Card",
-      "id": "service-card",
+      "title": "Why Card Item",
+      "id": "why-card-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "service-card",
-              "name": "Service Card"
+              "model": "why-card-item",
+              "name": "Why Card Item"
             }
           }
         }
@@ -34,59 +34,47 @@
   ],
   "models": [
     {
-      "id": "service-section",
+      "id": "why-techatom",
       "fields": [
         {
-          "component": "text",
-          "label": "Section Heading",
-          "name": "heading",
-          "valueType": "string"
-        },
-        {
-          "component": "reference",
-          "label": "Pointer Image",
-          "name": "pointerImage",
+          "component": "richtext",
+          "label": "Headline",
+          "name": "headline",
           "valueType": "string"
         },
         {
           "component": "container",
-          "item": "service-card",
-          "label": "Service Cards",
-          "name": "serviceCards"
+          "item": "why-card-item",
+          "label": "Why Cards",
+          "name": "cards"
         }
       ]
     },
     {
-      "id": "service-card",
+      "id": "why-card-item",
       "fields": [
         {
           "component": "aem-content",
-          "label": "Service Link",
+          "label": "Card Link",
           "name": "link",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Service Image",
+          "label": "Card Image",
           "name": "image",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Service Title",
+          "label": "Card Title",
           "name": "title",
           "valueType": "string"
         },
         {
           "component": "richtext",
-          "label": "Service Description",
+          "label": "Card Description",
           "name": "description",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "CTA Label",
-          "name": "ctaLabel",
           "valueType": "string"
         }
       ]
@@ -94,9 +82,9 @@
   ],
   "filters": [
     {
-      "id": "service-section",
+      "id": "why-techatom",
       "components": [
-        "service-card"
+        "why-card-item"
       ]
     }
   ]

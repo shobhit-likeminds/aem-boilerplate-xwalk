@@ -2,7 +2,7 @@
 
 .row>*{ flex-shrink:0;width:100%;max-width:100%;padding-right:calc(var(--bs-gutter-x) * .5);padding-left:calc(var(--bs-gutter-x) * .5);margin-top:var(--bs-gutter-y) }
 
-.row.gy-5{ --bs-gutter-y:3rem }
+.gy-5{ --bs-gutter-y:3rem }
 
 @media (min-width:992px) { .row > .col-lg-4{ flex:0 0 auto;width:33.33333333% } }
 

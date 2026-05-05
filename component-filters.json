@@ -37,19 +37,20 @@
       "faq-accordion",
       "purpose-led-cards",
       "latest-news-listing",
-      "work-with-us-cards"
+      "work-with-us-cards",
+      "faq-section"
     ]
   },
   {
     "id": "about-section",
     "components": [
-      "about-section-feature-item"
+      "about-feature-item"
     ]
   },
   {
     "id": "blog-section",
     "components": [
-      "blog-card-item"
+      "blog-card"
     ]
   },
   {
@@ -92,6 +93,12 @@
     ]
   },
   {
+    "id": "faq-section",
+    "components": [
+      "faq-item"
+    ]
+  },
+  {
     "id": "faqs",
     "components": [
       "faq-item"
@@ -106,9 +113,7 @@
   {
     "id": "footer",
     "components": [
-      "footer-section-item",
-      "footer-social-item",
-      "footer-link-item"
+      "footer-section-item"
     ]
   },
   {
@@ -120,8 +125,7 @@
   {
     "id": "header",
     "components": [
-      "navigation-item",
-      "header-contact-link-item"
+      "navigation-item"
     ]
   },
   {
@@ -182,7 +186,7 @@
   {
     "id": "why-techatom",
     "components": [
-      "why-card-item"
+      "why-techatom-card"
     ]
   },
   {

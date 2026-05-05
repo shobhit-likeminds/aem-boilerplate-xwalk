@@ -23,38 +23,38 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Decorative Star Image 1",
-          "name": "starImage1",
+          "label": "Decor Star 1 (Top Left)",
+          "name": "decorStar1",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Decorative Star Image 2",
-          "name": "starImage2",
+          "label": "Decor Star 2 (Below Title)",
+          "name": "decorStar2",
           "valueType": "string"
         },
         {
           "component": "richtext",
-          "label": "Headline",
+          "label": "Main Headline",
           "name": "headline",
           "valueType": "string"
         },
         {
-          "component": "richtext",
-          "label": "Description",
+          "component": "text",
+          "label": "Description Text",
           "name": "description",
-          "valueType": "string"
-        },
-        {
-          "component": "aem-content",
-          "label": "CTA Link",
-          "name": "ctaLink",
           "valueType": "string"
         },
         {
           "component": "text",
           "label": "CTA Label",
           "name": "ctaLabel",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "CTA Link",
+          "name": "ctaLink",
           "valueType": "string"
         },
         {

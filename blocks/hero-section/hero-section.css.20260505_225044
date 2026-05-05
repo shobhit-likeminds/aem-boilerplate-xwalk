@@ -12,13 +12,7 @@
 
 .row>*{ flex-shrink:0;width:100%;max-width:100%;padding-right:calc(var(--bs-gutter-x) * .5);padding-left:calc(var(--bs-gutter-x) * .5);margin-top:var(--bs-gutter-y) }
 
-.row > .col-6{ flex:0 0 auto;width:50% }
-
-.row.gy-5{ --bs-gutter-y:3rem }
-
-@media (min-width:992px) { .row > .col-lg-3{ flex:0 0 auto;width:25% }
-
-.row > .col-lg-6{ flex:0 0 auto;width:50% } }
+@media (min-width:992px) { .row > .col-lg-6{ flex:0 0 auto;width:50% } }
 
 @media (prefers-reduced-motion:reduce) { .btn{ transition:none } }
 
@@ -32,39 +26,63 @@
 
 @keyframes placeholder-wave{100%{-webkit-mask-position:-200% 0%;mask-position:-200% 0%}}
 
-.text-center{ text-align:center!important }
+/* contact us ends */
 
-.footer-logo:link, .footer-logo:visited, .footer-logo:hover, .footer-logo:active{ 
-    text-decoration: none;
-    color: white;
-    margin-bottom: 4rem;
+.hero-section{ 
+    background-color: #F1F5FF;
+    padding: 2rem 0px;
  }
 
-.footer-logo h2{ 
-    margin: 0px 0px 0px 1rem;
-    font-size: 2.5rem;
-    font-weight: 900;
-    line-height: 1.4;
+.hero-description{ 
+    position: relative;
  }
 
-footer .subscribe-btn{ 
-    font-size: 1.6rem;
-    margin-left: -3rem;
-    background: #1400FF;
-    border-radius: 3px;
+.hero-description h1{ 
+    font-size: 4rem;
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 3rem;
  }
 
-.useful-links-list{ 
-    margin: 0px;
-    padding: 0px;
-    list-style: none;
+.hero-description h1 span{ 
+    background: linear-gradient(
+    to bottom,
+    #F1F5FF 0%,
+    #F1F5FF 70%,
+    rgba(68, 255, 120, 0.5) 70%,
+    rgba(68, 255, 120, 0.5) 100%
+  );
+  transition: 0.4s;
  }
 
-.useful-links-list li a:link, .useful-links-list li a:visited, .useful-links-list li a:hover, .useful-links-list li a:active{ 
-    display: inline-block;
-    margin: 1rem 0px;
-    font-size: 1.5rem;
-    color: white;
-    text-decoration: none;
-    font-weight: 500;
+.hero-description h1 span:hover{ 
+    background: rgba(68, 255, 120, 0.5);
+ }
+
+.hero-description p{ 
+    color: #000;
+    font-size: 2rem;
+    margin: 1.5rem 0px 3rem;
+ }
+
+.hero-description a{ 
+    font-size: 2rem;
+    border-radius: 6px;
+ }
+
+.star-1, .star-2{ 
+    position: absolute;
+    opacity: 0.4;
+ }
+
+.star-1{ 
+    top: -38px;
+    max-width: 3rem;
+    left: -12px;
+ }
+
+.star-2{ 
+    max-width: 2rem;
+    right: 0px;
+    top: -12px;
  }
