@@ -50,7 +50,20 @@
         "hero",
         "cards",
         "columns",
-        "fragment"
+        "fragment",
+        "search-autocomplete",
+        "header-navigation",
+        "header-burger-navigation",
+        "toaster",
+        "tooltip-signin-register",
+        "homepage-banner",
+        "homepage-description",
+        "sustainability-recycle-section",
+        "recipe-carousel",
+        "sustainability-article-carousel",
+        "campaign-carousel",
+        "coffee-profiler",
+        "footer"
       ]
     }
   ]

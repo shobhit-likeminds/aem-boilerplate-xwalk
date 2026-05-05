@@ -1,0 +1,178 @@
+{
+  "definitions": [
+    {
+      "title": "Footer",
+      "id": "footer",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "footer",
+              "model": "footer",
+              "name": "Footer"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Footer-Social-Item",
+      "id": "footer-social-item",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "footer-social-item",
+              "name": "Footer-Social-Item"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Footer-Link-Item",
+      "id": "footer-link-item",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "footer-link-item",
+              "name": "Footer-Link-Item"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "footer",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Back To Top CTA Label",
+          "name": "backToTopLabel",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Back To Top Link",
+          "name": "backToTopLink",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Privacy Policy Button Label",
+          "name": "privacyPolicyButtonLabel",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Footer Logo",
+          "name": "logo",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Footer Logo Link",
+          "name": "logoLink",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Country Selector Icon",
+          "name": "countrySelectorIcon",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Country Selector Label",
+          "name": "countrySelectorLabel",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Country Selector Link",
+          "name": "countrySelectorLink",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Footer Social Section Title",
+          "name": "footerSocialTitle",
+          "valueType": "string"
+        },
+        {
+          "component": "container",
+          "item": "footer-social-item",
+          "label": "Footer Social Links",
+          "name": "footerSocialLinks"
+        },
+        {
+          "component": "container",
+          "item": "footer-link-item",
+          "label": "Footer Site Links",
+          "name": "footerLinks"
+        },
+        {
+          "component": "aem-content",
+          "label": "Footer Legal Link",
+          "name": "footerLegalLink",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "footer-social-item",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Social Icon",
+          "name": "icon",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Social Link",
+          "name": "link",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Navigation Hierarchy",
+          "name": "hierarchy-tree",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "footer-link-item",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Link Label",
+          "name": "label",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Link URL",
+          "name": "link",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "footer",
+      "components": [
+        "footer-social-item",
+        "footer-link-item"
+      ]
+    }
+  ]
+}

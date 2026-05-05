@@ -1,0 +1,234 @@
+{
+  "definitions": [
+    {
+      "title": "Header-Burger-Navigation",
+      "id": "header-burger-navigation",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "header-burger-navigation",
+              "model": "header-burger-navigation",
+              "name": "Header-Burger-Navigation"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Burger-Level2-Menu-Item",
+      "id": "burger-level2-menu-item",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "burger-level2-menu-item",
+              "name": "Burger-Level2-Menu-Item"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Burger-Multiple-Link-Item",
+      "id": "burger-multiple-link-item",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "burger-multiple-link-item",
+              "name": "Burger-Multiple-Link-Item"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Burger-Level3-Link-Item",
+      "id": "burger-level3-link-item",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "burger-level3-link-item",
+              "name": "Burger-Level3-Link-Item"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "header-burger-navigation",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Level 2 Banner Image (Desktop)",
+          "name": "level2BannerImageDesktop",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Level 2 Banner Image (1024px)",
+          "name": "level2BannerImage1024",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Level 2 Banner Image (768px)",
+          "name": "level2BannerImage768",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Level 2 Banner Image (Mobile/0px)",
+          "name": "level2BannerImageMobile",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Level 2 Banner Headline",
+          "name": "level2BannerHeadline",
+          "valueType": "string"
+        },
+        {
+          "component": "container",
+          "item": "burger-level2-menu-item",
+          "label": "Menu Items",
+          "name": "menuItems"
+        }
+      ]
+    },
+    {
+      "id": "burger-level2-menu-item",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Menu Label (Button/Link Text)",
+          "name": "label",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Menu Link",
+          "name": "link",
+          "valueType": "string"
+        },
+        {
+          "component": "container",
+          "item": "burger-multiple-link-item",
+          "label": "Multiple Links",
+          "name": "multipleLinks"
+        },
+        {
+          "component": "reference",
+          "label": "Level 3 Banner Image (Desktop)",
+          "name": "level3BannerImageDesktop",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Level 3 Banner Image (1024px)",
+          "name": "level3BannerImage1024",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Level 3 Banner Image (768px)",
+          "name": "level3BannerImage768",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Level 3 Banner Image (Mobile/0px)",
+          "name": "level3BannerImageMobile",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Level 3 Banner Headline",
+          "name": "level3BannerHeadline",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Level 3 Banner Description",
+          "name": "level3BannerDescription"
+        },
+        {
+          "component": "aem-content",
+          "label": "Level 3 Banner CTA Link",
+          "name": "level3BannerCtaLink",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Level 3 Banner CTA Label",
+          "name": "level3BannerCtaLabel",
+          "valueType": "string"
+        },
+        {
+          "component": "container",
+          "item": "burger-level3-link-item",
+          "label": "Level 3 Links",
+          "name": "level3Links"
+        },
+        {
+          "component": "richtext",
+          "label": "Navigation Hierarchy",
+          "name": "hierarchy-tree",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "burger-multiple-link-item",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Multiple Link Label",
+          "name": "label",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Multiple Link URL",
+          "name": "link",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "burger-level3-link-item",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Level 3 Link Label",
+          "name": "label",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Level 3 Link URL",
+          "name": "link",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "header-burger-navigation",
+      "components": [
+        "burger-level2-menu-item",
+        "burger-multiple-link-item",
+        "burger-level3-link-item"
+      ]
+    }
+  ]
+}
