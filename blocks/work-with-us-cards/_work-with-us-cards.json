@@ -1,31 +1,31 @@
 {
   "definitions": [
     {
-      "title": "Business-Verticals-Grid",
-      "id": "business-verticals-grid",
+      "title": "Work-With-Us-Cards",
+      "id": "work-with-us-cards",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block",
             "template": {
-              "filter": "business-verticals-grid",
-              "model": "business-verticals-grid",
-              "name": "Business-Verticals-Grid"
+              "filter": "work-with-us-cards",
+              "model": "work-with-us-cards",
+              "name": "Work-With-Us-Cards"
             }
           }
         }
       }
     },
     {
-      "title": "Business-Vertical-Item",
-      "id": "business-vertical-item",
+      "title": "Work-With-Us-Card-Item",
+      "id": "work-with-us-card-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "business-vertical-item",
-              "name": "Business-Vertical-Item"
+              "model": "work-with-us-card-item",
+              "name": "Work-With-Us-Card-Item"
             }
           }
         }
@@ -34,30 +34,24 @@
   ],
   "models": [
     {
-      "id": "business-verticals-grid",
+      "id": "work-with-us-cards",
       "fields": [
         {
           "component": "text",
-          "label": "Section Heading",
-          "name": "heading",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "label": "Section Description",
-          "name": "description",
+          "label": "Section Title",
+          "name": "sectionTitle",
           "valueType": "string"
         },
         {
           "component": "container",
-          "item": "business-vertical-item",
-          "label": "Business Verticals",
-          "name": "verticals"
+          "item": "work-with-us-card-item",
+          "label": "Cards",
+          "name": "cards"
         }
       ]
     },
     {
-      "id": "business-vertical-item",
+      "id": "work-with-us-card-item",
       "fields": [
         {
           "component": "reference",
@@ -67,32 +61,38 @@
         },
         {
           "component": "reference",
-          "label": "Tablet Image",
-          "name": "imageTablet",
+          "label": "Mobile Image (max-width: 576px)",
+          "name": "imageMobile576",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Mobile Image",
-          "name": "imageMobile",
+          "label": "Mobile Image (max-width: 799px)",
+          "name": "imageMobile799",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Business Vertical Title",
-          "name": "title",
+          "label": "Card Title",
+          "name": "cardTitle",
           "valueType": "string"
         },
         {
-          "component": "reference",
-          "label": "Arrow Icon Image",
-          "name": "arrowIcon",
+          "component": "richtext",
+          "label": "Card Description",
+          "name": "cardDescription",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "label": "Business Vertical Link",
-          "name": "link",
+          "label": "CTA Link",
+          "name": "ctaLink",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "CTA Label",
+          "name": "ctaLabel",
           "valueType": "string"
         }
       ]
@@ -100,9 +100,9 @@
   ],
   "filters": [
     {
-      "id": "business-verticals-grid",
+      "id": "work-with-us-cards",
       "components": [
-        "business-vertical-item"
+        "work-with-us-card-item"
       ]
     }
   ]

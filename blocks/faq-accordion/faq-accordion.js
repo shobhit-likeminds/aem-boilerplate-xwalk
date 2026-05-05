@@ -3,73 +3,83 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
   const children = [...block.children];
-  const [headingRow, ...faqRows] = children;
 
   const section = document.createElement('section');
   section.classList.add('section', 'faqs-section');
 
   const container = document.createElement('div');
   container.classList.add('container');
+  section.append(container);
 
-  const sectionHeader = document.createElement('div');
-  sectionHeader.classList.add('section-header', 'text-center');
+  // Heading
+  const headingRow = children.shift(); // First row is always the heading
+  if (headingRow) {
+    const sectionHeader = document.createElement('div');
+    sectionHeader.classList.add('section-header', 'text-center');
+    moveInstrumentation(headingRow, sectionHeader);
 
-  const heading = document.createElement('h2');
-  heading.classList.add('heading', 'font-regular', 'aos-init', 'aos-animate');
-  heading.setAttribute('data-aos', 'fade-up');
-  moveInstrumentation(headingRow, heading);
-  heading.textContent = headingRow.children[0]?.textContent.trim() || '';
-  sectionHeader.append(heading);
-  container.append(sectionHeader);
+    const heading = document.createElement('h2');
+    heading.classList.add('heading', 'font-regular', 'aos-init', 'aos-animate');
+    heading.setAttribute('data-aos', 'fade-up');
+    heading.textContent = headingRow.children[0]?.textContent.trim() || '';
+    sectionHeader.append(heading);
+    container.append(sectionHeader);
+  }
 
+  // FAQs
   const accoDiv = document.createElement('div');
   accoDiv.classList.add('acco-div');
+  container.append(accoDiv);
 
   const ul = document.createElement('ul');
+  accoDiv.append(ul);
 
-  faqRows.forEach((row, index) => {
+  children.forEach((row, index) => {
     const [questionCell, answerCell] = [...row.children];
 
     const li = document.createElement('li');
     li.classList.add('aos-init', 'aos-animate');
     li.setAttribute('data-aos', 'fade-up');
-    if (index === 0) {
-      li.classList.add('active');
-    }
+    moveInstrumentation(row, li);
 
-    const h2 = document.createElement('h2');
-    h2.setAttribute('data-once', 'faqsAccordion');
-    moveInstrumentation(questionCell, h2);
-    h2.textContent = questionCell.textContent.trim();
+    const question = document.createElement('h2');
+    question.textContent = questionCell?.textContent.trim() || '';
+    question.setAttribute('data-once', 'faqsAccordion');
+    li.append(question);
 
-    const accoContentDiv = document.createElement('div');
-    accoContentDiv.classList.add('acco-content-div');
-    if (index === 0) {
-      accoContentDiv.classList.add('show');
-    }
-    moveInstrumentation(answerCell, accoContentDiv);
-    accoContentDiv.innerHTML = answerCell.innerHTML;
+    const answerDiv = document.createElement('div');
+    answerDiv.classList.add('acco-content-div');
+    answerDiv.innerHTML = answerCell?.innerHTML || '';
+    li.append(answerDiv);
 
-    h2.addEventListener('click', () => {
-      const currentlyActive = ul.querySelector('li.active');
-      if (currentlyActive && currentlyActive !== li) {
-        currentlyActive.classList.remove('active');
-        currentlyActive.querySelector('.acco-content-div').classList.remove('show');
+    question.addEventListener('click', () => {
+      const isActive = li.classList.contains('active');
+      // Close all other open accordions
+      ul.querySelectorAll('li.active').forEach((activeLi) => {
+        activeLi.classList.remove('active');
+        activeLi.querySelector('.acco-content-div').classList.remove('show');
+      });
+
+      // Toggle current accordion
+      if (!isActive) {
+        li.classList.add('active');
+        answerDiv.classList.add('show');
       }
-      li.classList.toggle('active');
-      accoContentDiv.classList.toggle('show');
     });
 
-    li.append(h2, accoContentDiv);
+    // Set first item as active by default if it's the first one
+    if (index === 0) {
+      li.classList.add('active');
+      answerDiv.classList.add('show');
+    }
+
     ul.append(li);
   });
 
-  accoDiv.append(ul);
-  container.append(accoDiv);
-  section.append(container);
   block.replaceChildren(section);
 
-  block.querySelectorAll('picture > img').forEach((img) => {
+  // Image optimization
+  section.querySelectorAll('picture > img').forEach((img) => {
     const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
     moveInstrumentation(img, optimizedPic.querySelector('img'));
     img.closest('picture').replaceWith(optimizedPic);

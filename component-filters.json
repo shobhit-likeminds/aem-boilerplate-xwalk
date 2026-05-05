@@ -34,7 +34,10 @@
       "performance-driven-cards",
       "performance-driven-cards-2",
       "latest-news-slider",
-      "faq-accordion"
+      "faq-accordion",
+      "purpose-led-cards",
+      "latest-news-listing",
+      "work-with-us-cards"
     ]
   },
   {
@@ -103,7 +106,9 @@
   {
     "id": "footer",
     "components": [
-      "footer-link-section-item"
+      "footer-section-item",
+      "footer-social-item",
+      "footer-link-item"
     ]
   },
   {
@@ -116,8 +121,7 @@
     "id": "header",
     "components": [
       "navigation-item",
-      "icon-link-item",
-      "press-release-item"
+      "header-contact-link-item"
     ]
   },
   {
@@ -128,6 +132,12 @@
     "components": [
       "hero-slide-item",
       "quick-link-item"
+    ]
+  },
+  {
+    "id": "latest-news-listing",
+    "components": [
+      "news-item"
     ]
   },
   {
@@ -149,6 +159,12 @@
     ]
   },
   {
+    "id": "purpose-led-cards",
+    "components": [
+      "purpose-led-card-item"
+    ]
+  },
+  {
     "id": "purpose-led-grid",
     "components": [
       "purpose-led-grid-card"
@@ -167,6 +183,12 @@
     "id": "why-techatom",
     "components": [
       "why-card-item"
+    ]
+  },
+  {
+    "id": "work-with-us-cards",
+    "components": [
+      "work-with-us-card-item"
     ]
   }
 ]

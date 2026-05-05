@@ -1,31 +1,31 @@
 {
   "definitions": [
     {
-      "title": "Business-Verticals-Grid",
-      "id": "business-verticals-grid",
+      "title": "Latest-News-Listing",
+      "id": "latest-news-listing",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block",
             "template": {
-              "filter": "business-verticals-grid",
-              "model": "business-verticals-grid",
-              "name": "Business-Verticals-Grid"
+              "filter": "latest-news-listing",
+              "model": "latest-news-listing",
+              "name": "Latest-News-Listing"
             }
           }
         }
       }
     },
     {
-      "title": "Business-Vertical-Item",
-      "id": "business-vertical-item",
+      "title": "News-Item",
+      "id": "news-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "business-vertical-item",
-              "name": "Business-Vertical-Item"
+              "model": "news-item",
+              "name": "News-Item"
             }
           }
         }
@@ -34,7 +34,7 @@
   ],
   "models": [
     {
-      "id": "business-verticals-grid",
+      "id": "latest-news-listing",
       "fields": [
         {
           "component": "text",
@@ -43,56 +43,62 @@
           "valueType": "string"
         },
         {
-          "component": "text",
-          "label": "Section Description",
-          "name": "description",
-          "valueType": "string"
-        },
-        {
           "component": "container",
-          "item": "business-vertical-item",
-          "label": "Business Verticals",
-          "name": "verticals"
+          "item": "news-item",
+          "label": "News Items",
+          "name": "newsItems"
         }
       ]
     },
     {
-      "id": "business-vertical-item",
+      "id": "news-item",
       "fields": [
         {
           "component": "reference",
-          "label": "Desktop Image",
-          "name": "imageDesktop",
+          "label": "Default News Image",
+          "name": "imageDefault",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Tablet Image",
-          "name": "imageTablet",
+          "label": "Horizontal News Image",
+          "name": "imageHorizontal",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Mobile Image",
-          "name": "imageMobile",
+          "label": "Vertical News Image",
+          "name": "imageVertical",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Business Vertical Title",
+          "label": "Category",
+          "name": "category",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "News Title",
           "name": "title",
           "valueType": "string"
         },
         {
-          "component": "reference",
-          "label": "Arrow Icon Image",
-          "name": "arrowIcon",
+          "component": "aem-content",
+          "label": "Read More Link",
+          "name": "readMoreLink",
           "valueType": "string"
         },
         {
-          "component": "aem-content",
-          "label": "Business Vertical Link",
-          "name": "link",
+          "component": "text",
+          "label": "Read More Label",
+          "name": "readMoreLabel",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Date",
+          "name": "date",
           "valueType": "string"
         }
       ]
@@ -100,9 +106,9 @@
   ],
   "filters": [
     {
-      "id": "business-verticals-grid",
+      "id": "latest-news-listing",
       "components": [
-        "business-vertical-item"
+        "news-item"
       ]
     }
   ]

@@ -2,58 +2,65 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const cards = [...block.children];
-  const root = document.createElement('div');
-  root.classList.add('performace-driven-cards');
+  const cardItems = [...block.children];
+  const wrapperDiv = document.createElement('div');
+  wrapperDiv.classList.add('performace-driven-cards'); // Use the block's own class as the root wrapper
 
-  cards.forEach((cardRow) => {
-    const [linkCell, imageDesktopCell, imageMobileCell, descriptionCell] = [...cardRow.children];
+  cardItems.forEach((row) => {
+    const [cardLinkCell, cardImageDesktopCell, cardImageMobileCell, cardDescriptionCell] = [...row.children];
 
-    const cardLink = document.createElement('a');
-    cardLink.classList.add('performace-driven-cards-link');
-    const foundLink = linkCell.querySelector('a');
-    if (foundLink) {
-      cardLink.href = foundLink.href;
-      cardLink.target = '_blank'; // From original HTML
+    const cardLink = cardLinkCell.querySelector('a');
+    const linkEl = document.createElement('a');
+    linkEl.classList.add('performace-driven-cards-link');
+    if (cardLink) {
+      linkEl.href = cardLink.href;
+      linkEl.target = '_blank'; // Assuming target="_blank" from original HTML
     }
-    moveInstrumentation(cardRow, cardLink);
+    moveInstrumentation(cardLinkCell, linkEl);
 
     const cardWrapper = document.createElement('div');
     cardWrapper.classList.add('performace-driven-card-wrapper');
 
-    const cardImage = document.createElement('div');
-    cardImage.classList.add('card-image');
+    const cardImageDiv = document.createElement('div');
+    cardImageDiv.classList.add('card-image');
 
-    const picture = document.createElement('picture');
-    const mobileImg = imageMobileCell.querySelector('img');
-    const desktopImg = imageDesktopCell.querySelector('img');
+    const pictureEl = document.createElement('picture');
+    const desktopImg = cardImageDesktopCell.querySelector('img');
+    const mobileImg = cardImageMobileCell.querySelector('img');
 
     if (mobileImg) {
       const sourceMobile = document.createElement('source');
       sourceMobile.media = '(max-width: 576px)';
       sourceMobile.srcset = mobileImg.src;
-      picture.append(sourceMobile);
+      pictureEl.append(sourceMobile);
     }
 
     if (desktopImg) {
-      const img = createOptimizedPicture(desktopImg.src, desktopImg.alt, false, [{ width: '750' }]);
-      picture.append(img.querySelector('img'));
+      const optimizedDesktopPic = createOptimizedPicture(desktopImg.src, desktopImg.alt, false, [{ width: '750' }]);
+      const imgEl = optimizedDesktopPic.querySelector('img');
+      moveInstrumentation(desktopImg, imgEl);
+      pictureEl.append(optimizedDesktopPic.querySelector('source'), imgEl);
     }
+    cardImageDiv.append(pictureEl);
 
-    cardImage.append(picture);
+    const homeBoxCard = document.createElement('div');
+    homeBoxCard.classList.add('performace-driven-home-box-card');
 
-    const cardContent = document.createElement('div');
-    cardContent.classList.add('performace-driven-home-box-card');
+    const descriptionParagraph = document.createElement('p');
+    descriptionParagraph.classList.add('desc');
+    descriptionParagraph.innerHTML = cardDescriptionCell?.innerHTML || ''; // Richtext content can have <br/>
+    moveInstrumentation(cardDescriptionCell, descriptionParagraph);
 
-    const description = document.createElement('p');
-    description.classList.add('desc');
-    description.innerHTML = descriptionCell.innerHTML;
+    homeBoxCard.append(descriptionParagraph);
+    cardWrapper.append(cardImageDiv, homeBoxCard);
+    linkEl.append(cardWrapper);
+    wrapperDiv.append(linkEl);
 
-    cardContent.append(description);
-    cardWrapper.append(cardImage, cardContent);
-    cardLink.append(cardWrapper);
-    root.append(cardLink);
+    // Ensure instrumentation is moved from the row itself if it's not explicitly moved from individual cells
+    // In this case, we've moved instrumentation from cardLinkCell and cardDescriptionCell.
+    // The row itself doesn't need instrumentation moved to a direct child of the block,
+    // as its content is distributed into the new structure.
   });
 
-  block.replaceChildren(root);
+  block.replaceChildren(wrapperDiv);
 }

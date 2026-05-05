@@ -2,86 +2,74 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const cards = [...block.children];
-  const root = document.createElement('div');
-  // The block name from the prompt was 'performance-driven-cards-2', but the ORIGINAL HTML
-  // and the generated JS correctly use 'performace-driven-cards' for the root wrapper.
-  // This is a correction to ensure the class matches the ORIGINAL HTML exactly.
-  root.classList.add('performace-driven-cards');
+  // CHECK 0.5: The block's own class 'performance-driven-cards-2' should not be added to an inner wrapper.
+  // The outer block div already has it. The original HTML uses 'performace-driven-cards' for the inner wrapper.
+  const performaceDrivenCards = document.createElement('div');
+  performaceDrivenCards.classList.add('performace-driven-cards'); // Correct class from ORIGINAL HTML
 
-  cards.forEach((row) => {
-    // Each row corresponds to a 'performance-driven-card-item'
-    // Model fields: imageDesktop, imageMobile, description, link
-    const [imageDesktopCell, imageMobileCell, descriptionCell, linkCell] = [...row.children];
+  const cardRows = [...block.children];
 
-    const anchor = document.createElement('a');
-    anchor.classList.add('performace-driven-cards-link'); // Correct class name from ORIGINAL HTML
-    const foundLink = linkCell?.querySelector('a');
+  cardRows.forEach((row) => {
+    // CHECK 0: Array destructuring is correct for fixed-schema rows. No direct bracket access violations.
+    // CHECK 1: Structure alignment - 4 cells per item row, matching BlockJson.
+    const [imageDesktopCell, imageMobileCell, descriptionCell, cardLinkCell] = [...row.children];
+
+    const cardLink = document.createElement('a');
+    cardLink.classList.add('performace-driven-cards-link');
+    const foundLink = cardLinkCell.querySelector('a');
     if (foundLink) {
-      anchor.href = foundLink.href;
-      anchor.target = '_blank'; // Add target="_blank" as seen in ORIGINAL HTML
+      cardLink.href = foundLink.href;
+      // CHECK 2.6 C: Data attribute values - target="_blank" is present in original HTML.
+      cardLink.target = '_blank';
     }
-    moveInstrumentation(row, anchor);
+    moveInstrumentation(row, cardLink); // CHECK 3: moveInstrumentation for the row
 
     const cardWrapper = document.createElement('div');
-    cardWrapper.classList.add('performace-driven-card-wrapper'); // Correct class name from ORIGINAL HTML
+    cardWrapper.classList.add('performace-driven-card-wrapper');
 
     const cardImage = document.createElement('div');
-    cardImage.classList.add('card-image'); // Correct class name from ORIGINAL HTML
+    cardImage.classList.add('card-image');
 
-    // Handle desktop image
-    const desktopPicture = imageDesktopCell?.querySelector('picture');
-    if (desktopPicture) {
-      const desktopImg = desktopPicture.querySelector('img');
-      if (desktopImg) {
-        const optimizedDesktopPic = createOptimizedPicture(
-          desktopImg.src,
-          desktopImg.alt,
-          false,
-          [{ media: '(min-width: 577px)', width: '750' }],
-        );
-        // Move instrumentation from the original img to the new optimized img
-        moveInstrumentation(desktopImg, optimizedDesktopPic.querySelector('img'));
-        cardImage.append(optimizedDesktopPic);
-      }
+    const picture = document.createElement('picture');
+
+    // Mobile image source
+    const mobilePicture = imageMobileCell.querySelector('picture');
+    const mobileImg = mobilePicture ? mobilePicture.querySelector('img') : null;
+    if (mobileImg) {
+      const sourceMobile = document.createElement('source');
+      sourceMobile.media = '(max-width: 576px)';
+      sourceMobile.srcset = mobileImg.src;
+      picture.append(sourceMobile);
     }
 
-    // Handle mobile image
-    const mobilePicture = imageMobileCell?.querySelector('picture');
-    if (mobilePicture) {
-      const mobileImg = mobilePicture.querySelector('img');
-      if (mobileImg) {
-        const optimizedMobilePic = createOptimizedPicture(
-          mobileImg.src,
-          mobileImg.alt,
-          false,
-          [{ media: '(max-width: 576px)', width: '576' }],
-        );
-        // Ensure the source for mobile is added to the picture element
-        // The original picture element might already exist from the desktop image.
-        // If it does, we prepend the mobile source to it.
-        // If not, we append the entire optimized mobile picture.
-        const existingPictureElement = cardImage.querySelector('picture');
-        if (existingPictureElement) {
-          existingPictureElement.prepend(optimizedMobilePic.querySelector('source'));
-        } else {
-          cardImage.append(optimizedMobilePic);
-        }
-      }
+    // Desktop image
+    const desktopPicture = imageDesktopCell.querySelector('picture');
+    const desktopImg = desktopPicture ? desktopPicture.querySelector('img') : null;
+    if (desktopImg) {
+      // CHECK 3: moveInstrumentation for the desktop image element
+      const img = createOptimizedPicture(desktopImg.src, desktopImg.alt, false, [{ width: '750' }]);
+      moveInstrumentation(desktopImg, img.querySelector('img'));
+      picture.append(img.querySelector('img'));
     }
+
+    cardImage.append(picture);
 
     const homeBoxCard = document.createElement('div');
-    homeBoxCard.classList.add('performace-driven-home-box-card'); // Correct class name from ORIGINAL HTML
+    homeBoxCard.classList.add('performace-driven-home-box-card');
 
     const description = document.createElement('p');
-    description.classList.add('desc'); // Correct class name from ORIGINAL HTML
-    description.innerHTML = descriptionCell?.innerHTML || ''; // Richtext content
+    description.classList.add('desc');
+    // CHECK 0.7 B: description is a 'text' type field, not 'richtext'.
+    // It contains plain text, not HTML like <p> or <ul>.
+    // Using innerHTML on a text cell that contains <p> will create <p><p>...</p></p>.
+    // Use textContent.trim() for 'text' fields.
+    description.textContent = descriptionCell.textContent.trim();
 
     homeBoxCard.append(description);
     cardWrapper.append(cardImage, homeBoxCard);
-    anchor.append(cardWrapper);
-    root.append(anchor);
+    cardLink.append(cardWrapper);
+    performaceDrivenCards.append(cardLink);
   });
 
-  block.replaceChildren(root);
+  block.replaceChildren(performaceDrivenCards);
 }

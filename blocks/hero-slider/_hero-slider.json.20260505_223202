@@ -70,37 +70,37 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Desktop Background Image",
+          "label": "Background Image (Desktop)",
           "name": "backgroundDesktop",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Tablet Background Image",
+          "label": "Background Image (Tablet, ≤799px)",
           "name": "backgroundTablet",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Mobile Background Image",
+          "label": "Background Image (Mobile, ≤576px)",
           "name": "backgroundMobile",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Eyebrow (Small Heading)",
+          "label": "Eyebrow (Small Text Above Heading)",
           "name": "eyebrow",
           "valueType": "string"
         },
         {
           "component": "richtext",
-          "label": "Headline",
-          "name": "headline",
+          "label": "Slide Heading",
+          "name": "heading",
           "valueType": "string"
         },
         {
           "component": "richtext",
-          "label": "Description",
+          "label": "Slide Description",
           "name": "description",
           "valueType": "string"
         },

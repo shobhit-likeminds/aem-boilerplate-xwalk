@@ -194,7 +194,7 @@ progress { vertical-align:baseline }
 
 .g-3 { --bs-gutter-x:1rem }
 
-.g-3, .gy-3 { --bs-gutter-y:1rem }
+.g-3 { --bs-gutter-y:1rem }
 
 .g-4 { --bs-gutter-x:1.5rem }
 
@@ -344,8 +344,6 @@ progress { vertical-align:baseline }
 
 .stretched-link::after { position:absolute;top:0;right:0;bottom:0;left:0;z-index:1;content:"" }
 
-.d-block { display:block!important }
-
 .d-flex { display:flex!important }
 
 .d-none { display:none!important }
@@ -372,11 +370,11 @@ progress { vertical-align:baseline }
 
 .pb-1 { padding-bottom:.25rem!important }
 
+.pb-3 { padding-bottom:1rem!important }
+
 .text-center { text-align:center!important }
 
 @media (min-width:992px) { .d-lg-block { display:block!important }
-
-.d-lg-none { display:none!important }
 
 .align-items-lg-end { align-items:flex-end!important }
 
@@ -399,6 +397,8 @@ progress { vertical-align:baseline }
 [data-aos][data-aos][data-aos-duration="200"], body[data-aos-duration="200"] [data-aos] { transition-duration:.2s }
 
 [data-aos][data-aos][data-aos-delay="200"], body[data-aos-delay="200"] [data-aos] { transition-delay:0 }
+
+[data-aos][data-aos][data-aos-delay="200"].aos-animate { transition-delay:.2s }
 
 [data-aos][data-aos][data-aos-duration="250"], body[data-aos-duration="250"] [data-aos] { transition-duration:.25s }
 
@@ -766,27 +766,9 @@ progress { vertical-align:baseline }
 
 .swiper-scrollbar { background:var(--swiper-scrollbar-bg-color,#0000001a);border-radius:var(--swiper-scrollbar-border-radius,10px);position:relative;touch-action:none;&.swiper-scrollbar-disabled,.swiper-scrollbar-disabled>&{display:none!important}&.swiper-scrollbar-horizontal,.swiper-horizontal>&{bottom:var(--swiper-scrollbar-bottom,4px);height:var(--swiper-scrollbar-size,4px);left:var(--swiper-scrollbar-sides-offset,1%);position:absolute;top:var(--swiper-scrollbar-top,auto);width:calc(100% - var(--swiper-scrollbar-sides-offset,1%)*2);z-index:50}&.swiper-scrollbar-vertical,.swiper-vertical>&{height:calc(100% - var(--swiper-scrollbar-sides-offset,1%)*2);left:var(--swiper-scrollbar-left,auto);position:absolute;right:var(--swiper-scrollbar-right,4px);top:var(--swiper-scrollbar-sides-offset,1%);width:var(--swiper-scrollbar-size,4px);z-index:50} }
 
-.flickity-enabled { position:relative }
-
-.flickity-enabled:focus { outline:0 }
-
-.flickity-viewport { overflow:hidden;position:relative;height:100% }
-
-.flickity-slider { position:absolute;width:100%;height:100% }
-
-.flickity-enabled.is-draggable { -webkit-tap-highlight-color:transparent;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none }
-
-.flickity-enabled.is-draggable .flickity-viewport { cursor:move;cursor:-webkit-grab;cursor:grab }
-
-.flickity-page-dots { position:absolute;width:100%;bottom:-25px;padding:0;margin:0;list-style:none;text-align:center;line-height:1 }
-
-.flickity-page-dots .dot { display:inline-block;width:10px;height:10px;margin:0 8px;background:#333;border-radius:50%;opacity:.25;cursor:pointer }
-
-.flickity-page-dots .dot.is-selected { opacity:1 }
-
 *{margin:0;padding:0;box-sizing:border-box;-webkit-box-sizing:border-box;}
 
-@font-face{font-family:'Georama';src:url("/content/dam/aemigrate/uploaded-folder/www-mahindra-com/font/georama-regular-d0c863.woff") format('woff2'),url("/content/dam/aemigrate/uploaded-folder/www-mahindra-com/font/georama-regular-d0c863.woff") format('woff');font-weight:400;font-style:normal;font-display:swap;}
+@font-face{font-family:'Georama';src:url("/content/dam/aemigrate/uploaded-folder/www-mahindra-com/font/georama-regular-80f922.woff2") format('woff2'),url("/content/dam/aemigrate/uploaded-folder/www-mahindra-com/font/georama-regular-d0c863.woff") format('woff');font-weight:400;font-style:normal;font-display:swap;}
 
 @font-face{font-family:'Georama-medium';src:url("/content/dam/aemigrate/uploaded-folder/www-mahindra-com/font/georama-medium-c9d8f2.woff2") format('woff2'),url("/content/dam/aemigrate/uploaded-folder/www-mahindra-com/font/georama-medium-f99b53.woff") format('woff');font-weight:500;font-style:normal;font-display:swap;}
 
@@ -842,27 +824,11 @@ body .rotate-div{display:flex;} }
 
 .heading.font-medium { font-family:"Quantum-Rise-Medium",sans-serif; }
 
-.flickity-viewport { transition:all 0.3s ease-in-out; }
-
-.flickity-page-dots { bottom:calc(10% + 35px);width:auto;left:5%;text-align:left; }
-
-@media (max-width:834px) { .flickity-page-dots { width:90%;text-align:center;bottom:-3rem; } }
-
-.flickity-page-dots .dot { width:6px;height:6px;opacity:1;background:#ffffff; }
-
-@media (max-width:834px) { .flickity-page-dots .dot { background:rgba(0,0,0,0.3); } }
-
-.flickity-page-dots .dot.is-selected { background:#DD052B; }
-
-.flickity-page-dots .dot:first-child:nth-last-child(1) { opacity:0; }
-
 .flickity-slider-mobile-wrap:after { content:"flickity";display:none; }
 
 @media (min-width:1025px) { .flickity-slider-mobile-wrap:after { content:""; } }
 
 .swiper-button-prev, .swiper-button-next { z-index:1; }
-
-.flickity-slider .slides { width:100%;overflow:hidden; }
 
 @media (max-width:834px) { .section-header { padding-right:var(--bs-gutter-x,0.75rem);padding-left:var(--bs-gutter-x,0.75rem);padding-bottom:1rem; } }
 
@@ -1421,8 +1387,6 @@ body .rotate-div{display:flex;} }
 .quick-links-parents-div .quick-links-div li .with-full-underline { margin:0; } }
 
 @media (max-width:834px) { .what-we-do-wrap { margin-bottom:2rem; } }
-
-.our-business-verticals .mobile-slider .slides { padding:0 5px; }
 
 .our-business-verticals .wrap { position:relative; }
 

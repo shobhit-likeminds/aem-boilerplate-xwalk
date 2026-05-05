@@ -50,25 +50,25 @@
         {
           "component": "aem-content",
           "label": "Card Link",
-          "name": "link",
+          "name": "cardLink",
           "valueType": "string"
         },
         {
           "component": "reference",
           "label": "Card Image (Desktop)",
-          "name": "imageDesktop",
+          "name": "cardImageDesktop",
           "valueType": "string"
         },
         {
           "component": "reference",
           "label": "Card Image (Mobile)",
-          "name": "imageMobile",
+          "name": "cardImageMobile",
           "valueType": "string"
         },
         {
-          "component": "richtext",
+          "component": "text",
           "label": "Card Description",
-          "name": "description",
+          "name": "cardDescription",
           "valueType": "string"
         }
       ]

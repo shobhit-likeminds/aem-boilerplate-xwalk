@@ -45,7 +45,7 @@
         {
           "component": "container",
           "item": "faq-accordion-item",
-          "label": "FAQ Items",
+          "label": "FAQs",
           "name": "faqs"
         }
       ]
