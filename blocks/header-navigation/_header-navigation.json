@@ -1,0 +1,298 @@
+{
+  "definitions": [
+    {
+      "title": "Header Navigation",
+      "id": "header-navigation",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "header-navigation",
+              "model": "header-navigation",
+              "name": "Header Navigation"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Navigation Group",
+      "id": "navigation-group",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "navigation-group",
+              "name": "Navigation Group"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Navigation Subgroup",
+      "id": "navigation-subgroup",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "navigation-subgroup",
+              "name": "Navigation Subgroup"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Navigation Link Item",
+      "id": "navigation-link-item",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "navigation-link-item",
+              "name": "Navigation Link Item"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Navigation Sub Banner",
+      "id": "navigation-sub-banner",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "navigation-sub-banner",
+              "name": "Navigation Sub Banner"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Navigation See All Item",
+      "id": "navigation-see-all-item",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "navigation-see-all-item",
+              "name": "Navigation See All Item"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Navigation Banner",
+      "id": "navigation-banner",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "navigation-banner",
+              "name": "Navigation Banner"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "header-navigation",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Logo",
+          "name": "logo",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Logo Link",
+          "name": "logoLink",
+          "valueType": "string"
+        },
+        {
+          "component": "container",
+          "item": "navigation-group",
+          "label": "Navigation Groups",
+          "name": "navigationGroups"
+        }
+      ]
+    },
+    {
+      "id": "navigation-group",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Group Title",
+          "name": "groupTitle",
+          "valueType": "string"
+        },
+        {
+          "component": "container",
+          "item": "navigation-subgroup",
+          "label": "Navigation Subgroups",
+          "name": "subGroups"
+        },
+        {
+          "component": "container",
+          "item": "navigation-banner",
+          "label": "Navigation Banner",
+          "name": "banner"
+        },
+        {
+          "component": "richtext",
+          "label": "Navigation Hierarchy",
+          "name": "hierarchy-tree",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "navigation-subgroup",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Subgroup Title",
+          "name": "subGroupTitle",
+          "valueType": "string"
+        },
+        {
+          "component": "container",
+          "item": "navigation-link-item",
+          "label": "Navigation Links",
+          "name": "links"
+        },
+        {
+          "component": "container",
+          "item": "navigation-sub-banner",
+          "label": "Sub Banner",
+          "name": "subBanner"
+        },
+        {
+          "component": "container",
+          "item": "navigation-see-all-item",
+          "label": "See All",
+          "name": "seeAll"
+        }
+      ]
+    },
+    {
+      "id": "navigation-link-item",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Icon",
+          "name": "icon",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Label",
+          "name": "label",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Link",
+          "name": "link",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "navigation-sub-banner",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Sub Banner Image",
+          "name": "bannerImage",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Sub Banner Description",
+          "name": "description",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "navigation-see-all-item",
+      "fields": [
+        {
+          "component": "aem-content",
+          "label": "See All Link",
+          "name": "seeAllLink",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "See All Label",
+          "name": "seeAllLabel",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "navigation-banner",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Banner Image Desktop",
+          "name": "bannerImageDesktop",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Banner Image Tablet",
+          "name": "bannerImageTablet",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Banner Image Mobile",
+          "name": "bannerImageMobile",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Banner Headline",
+          "name": "bannerHeadline",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Banner Description",
+          "name": "bannerDescription",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "header-navigation",
+      "components": [
+        "navigation-group",
+        "navigation-subgroup",
+        "navigation-link-item",
+        "navigation-sub-banner",
+        "navigation-see-all-item",
+        "navigation-banner"
+      ]
+    }
+  ]
+}

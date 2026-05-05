@@ -1,0 +1,150 @@
+{
+  "definitions": [
+    {
+      "title": "Recipe-Home-Carousel",
+      "id": "recipe-home-carousel",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "recipe-home-carousel",
+              "model": "recipe-home-carousel",
+              "name": "Recipe-Home-Carousel"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Recipe-Card-Item",
+      "id": "recipe-card-item",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "recipe-card-item",
+              "name": "Recipe-Card-Item"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "recipe-home-carousel",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Icon Image",
+          "name": "iconImage",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Title",
+          "name": "title",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Description",
+          "name": "description"
+        },
+        {
+          "component": "aem-content",
+          "label": "CTA Link",
+          "name": "ctaLink",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "CTA Label",
+          "name": "ctaLabel",
+          "valueType": "string"
+        },
+        {
+          "component": "container",
+          "item": "recipe-card-item",
+          "label": "Recipes",
+          "name": "recipes"
+        }
+      ]
+    },
+    {
+      "id": "recipe-card-item",
+      "fields": [
+        {
+          "component": "aem-content",
+          "label": "Recipe Link",
+          "name": "link",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Recipe Image (Desktop)",
+          "name": "imageDesktop",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "label": "Recipe Image (Mobile)",
+          "name": "imageMobile",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Tag Label",
+          "name": "tagLabel",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Recipe Name",
+          "name": "name",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Recipe Description",
+          "name": "description",
+          "valueType": "string"
+        },
+        {
+          "component": "number",
+          "label": "Steps Count",
+          "name": "stepsCount",
+          "valueType": "number"
+        },
+        {
+          "component": "text",
+          "label": "Steps Label",
+          "name": "stepsLabel",
+          "valueType": "string"
+        },
+        {
+          "component": "number",
+          "label": "Ingredients Count",
+          "name": "ingredientsCount",
+          "valueType": "number"
+        },
+        {
+          "component": "text",
+          "label": "Ingredients Label",
+          "name": "ingredientsLabel",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "recipe-home-carousel",
+      "components": [
+        "recipe-card-item"
+      ]
+    }
+  ]
+}

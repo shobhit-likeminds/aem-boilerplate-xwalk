@@ -38,7 +38,19 @@
       "purpose-led-cards",
       "latest-news-listing",
       "work-with-us-cards",
-      "faq-section"
+      "faq-section",
+      "header-search-autocomplete",
+      "header-navigation",
+      "header-burger-navigation",
+      "toaster-signin",
+      "tooltip-signin-register",
+      "homepage-banner",
+      "homepage-description",
+      "sustainability-hub-recycle-section",
+      "recipe-home-carousel",
+      "sustainability-article-carousel",
+      "campaign-carousel",
+      "coffee-profiler"
     ]
   },
   {
@@ -60,9 +72,24 @@
     ]
   },
   {
+    "id": "campaign-carousel",
+    "components": [
+      "quotation-slide-item",
+      "recipe-card-slide-item",
+      "fact-card-slide-item"
+    ]
+  },
+  {
     "id": "cards",
     "components": [
       "card"
+    ]
+  },
+  {
+    "id": "coffee-profiler",
+    "components": [
+      "question-slide",
+      "slide-option"
     ]
   },
   {
@@ -113,13 +140,41 @@
   {
     "id": "footer",
     "components": [
-      "footer-section-item"
+      "footer-social-item",
+      "footer-link-item"
+    ]
+  },
+  {
+    "id": "header-burger-navigation",
+    "components": [
+      "level2-list-item",
+      "level2-banner",
+      "multiple-links-item",
+      "level3-banner-item",
+      "level3-link-item"
     ]
   },
   {
     "id": "header-nav",
     "components": [
       "navigation-item"
+    ]
+  },
+  {
+    "id": "header-navigation",
+    "components": [
+      "navigation-group",
+      "navigation-subgroup",
+      "navigation-link-item",
+      "navigation-sub-banner",
+      "navigation-see-all-item",
+      "navigation-banner"
+    ]
+  },
+  {
+    "id": "header-search-autocomplete",
+    "components": [
+      "trending-suggestion-item"
     ]
   },
   {
@@ -137,6 +192,12 @@
       "hero-slide-item",
       "quick-link-item"
     ]
+  },
+  {
+    "id": "homepage-banner"
+  },
+  {
+    "id": "homepage-description"
   },
   {
     "id": "latest-news-listing",
@@ -175,13 +236,37 @@
     ]
   },
   {
+    "id": "recipe-home-carousel",
+    "components": [
+      "recipe-card-item"
+    ]
+  },
+  {
     "id": "service-section",
     "components": [
       "service-card"
     ]
   },
   {
+    "id": "sustainability-article-carousel",
+    "components": [
+      "sustainability-article-card"
+    ]
+  },
+  {
+    "id": "sustainability-hub-recycle-section"
+  },
+  {
     "id": "toast"
+  },
+  {
+    "id": "toaster-signin"
+  },
+  {
+    "id": "tooltip-signin-register",
+    "components": [
+      "tooltip-cta-item"
+    ]
   },
   {
     "id": "why-techatom",

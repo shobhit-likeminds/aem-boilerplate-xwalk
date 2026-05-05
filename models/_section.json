@@ -73,7 +73,19 @@
         "purpose-led-cards",
         "latest-news-listing",
         "work-with-us-cards",
-        "faq-section"
+        "faq-section",
+        "header-search-autocomplete",
+        "header-navigation",
+        "header-burger-navigation",
+        "toaster-signin",
+        "tooltip-signin-register",
+        "homepage-banner",
+        "homepage-description",
+        "sustainability-hub-recycle-section",
+        "recipe-home-carousel",
+        "sustainability-article-carousel",
+        "campaign-carousel",
+        "coffee-profiler"
       ]
     }
   ]
