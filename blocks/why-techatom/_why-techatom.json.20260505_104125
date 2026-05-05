@@ -39,13 +39,13 @@
         {
           "component": "richtext",
           "label": "Section Heading",
-          "name": "heading",
+          "name": "sectionHeading",
           "valueType": "string"
         },
         {
           "component": "container",
           "item": "why-card-item",
-          "label": "Why Card Items",
+          "label": "Why Cards",
           "name": "cards"
         }
       ]
@@ -54,15 +54,9 @@
       "id": "why-card-item",
       "fields": [
         {
-          "component": "aem-content",
-          "label": "Card Link",
-          "name": "cardLink",
-          "valueType": "string"
-        },
-        {
           "component": "reference",
-          "label": "Card Image",
-          "name": "image",
+          "label": "Card Icon",
+          "name": "icon",
           "valueType": "string"
         },
         {
@@ -75,6 +69,12 @@
           "component": "richtext",
           "label": "Card Description",
           "name": "description",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Card Link",
+          "name": "cardLink",
           "valueType": "string"
         }
       ]

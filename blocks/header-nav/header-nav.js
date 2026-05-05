@@ -1,10 +1,8 @@
 import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
-export default async function decorate(block) {
-  const children = [...block.children];
-
-  const [logoImageRow, logoLinkRow, logoLabelRow, ...navigationRows] = children;
+export default function decorate(block) {
+  const allRows = [...block.children];
 
   const header = document.createElement('header');
   const nav = document.createElement('nav');
@@ -13,50 +11,64 @@ export default async function decorate(block) {
 
   // Logo Section
   const logoWrapper = document.createElement('div');
-  const logoAnchor = document.createElement('a');
-  logoAnchor.classList.add('logo', 'd-flex', 'align-items-center', 'gap-2');
+  const logoLink = document.createElement('a');
+  logoLink.classList.add('logo', 'd-flex', 'align-items-center', 'gap-2');
+  logoLink.href = '#'; // Default href
 
-  const logoLink = logoLinkRow.querySelector('a');
-  if (logoLink) {
-    logoAnchor.href = logoLink.href;
-    moveInstrumentation(logoLinkRow, logoAnchor); // Move instrumentation from logoLinkRow to logoAnchor
-  } else {
-    logoAnchor.href = '/'; // Fallback
+  // The first three rows are for logoImage, logoText, logoLink based on BlockJson model
+  const [logoImageRow, logoTextRow, logoLinkRow, ...navigationItemRows] = allRows;
+
+  if (logoImageRow) {
+    const picture = logoImageRow.querySelector('picture');
+    if (picture) {
+      const img = picture.querySelector('img');
+      if (img) {
+        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+        moveInstrumentation(img, optimizedPic.querySelector('img')); // Move instrumentation from original img to new img
+        logoLink.append(optimizedPic);
+      }
+    }
   }
 
-  const logoPicture = logoImageRow.querySelector('picture');
-  if (logoPicture) {
-    const img = logoPicture.querySelector('img');
-    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-    moveInstrumentation(logoImageRow, optimizedPic.querySelector('img')); // Move instrumentation from logoImageRow to the img inside optimizedPic
-    logoAnchor.append(optimizedPic);
+  if (logoTextRow) {
+    const h4 = document.createElement('h4');
+    h4.textContent = logoTextRow.textContent.trim();
+    logoLink.append(h4);
   }
 
-  const logoLabel = document.createElement('h4');
-  logoLabel.textContent = logoLabelRow.textContent.trim();
-  moveInstrumentation(logoLabelRow, logoLabel); // Move instrumentation from logoLabelRow to logoLabel
-  logoAnchor.append(logoLabel);
-  logoWrapper.append(logoAnchor);
+  if (logoLinkRow) {
+    const anchor = logoLinkRow.querySelector('a');
+    if (anchor) {
+      logoLink.href = anchor.href;
+    }
+  }
+
+  // Move instrumentation from the original logo rows to the new logoLink element
+  // We need to move instrumentation from each original row that contributed to the logoLink
+  if (logoImageRow) moveInstrumentation(logoImageRow, logoLink);
+  if (logoTextRow) moveInstrumentation(logoTextRow, logoLink);
+  if (logoLinkRow) moveInstrumentation(logoLinkRow, logoLink);
+
+  logoWrapper.append(logoLink);
   container.append(logoWrapper);
 
-  // Navigation List
+  // Navigation Menu
   const navList = document.createElement('div');
   navList.classList.add('nav-list');
 
-  navigationRows.forEach((row) => {
-    const [labelCell, linkCell] = [...row.children]; // Correct: Array destructuring for fixed schema
-    const navItem = document.createElement('a');
-    navItem.classList.add('navitems');
+  navigationItemRows.forEach((row) => {
+    const [labelCell, linkCell] = [...row.children]; // Fixed schema for navigation-item
+    const navItemLink = document.createElement('a');
+    navItemLink.classList.add('navitems');
+    navItemLink.textContent = labelCell?.textContent.trim() || '';
 
-    const link = linkCell.querySelector('a');
-    if (link) {
-      navItem.href = link.href;
-    } else {
-      navItem.href = '#'; // Fallback
+    const foundLink = linkCell?.querySelector('a');
+    if (foundLink) {
+      navItemLink.href = foundLink.href;
     }
-    navItem.textContent = labelCell.textContent.trim();
-    moveInstrumentation(row, navItem); // Move instrumentation from the navigation item row to navItem
-    navList.append(navItem);
+
+    moveInstrumentation(row, navItemLink); // Move instrumentation from original row to new navItemLink
+    navList.append(navItemLink);
   });
   container.append(navList);
 
@@ -70,14 +82,15 @@ export default async function decorate(block) {
     </svg>
   `;
 
-  // Simple toggle behavior for demonstration (EDS does not load Bootstrap JS)
   toggler.addEventListener('click', () => {
-    navList.classList.toggle('show'); // Use a class to show/hide the nav-list
+    navList.classList.toggle('show'); // Assuming 'show' class controls visibility
+    toggler.classList.toggle('collapsed'); // Assuming 'collapsed' class changes icon/state
   });
   container.append(toggler);
 
   nav.append(container);
   header.append(nav);
 
+  // Replace block content with the new structure
   block.replaceChildren(header);
 }

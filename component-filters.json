@@ -24,7 +24,8 @@
       "blog-section",
       "faqs",
       "contact-section",
-      "footer"
+      "footer",
+      "footer-section"
     ]
   },
   {
@@ -69,7 +70,13 @@
   {
     "id": "faqs",
     "components": [
-      "faq-item"
+      "faq-accordion-item"
+    ]
+  },
+  {
+    "id": "footer-section",
+    "components": [
+      "footer-menu-column"
     ]
   },
   {

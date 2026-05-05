@@ -1,0 +1,97 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  // Remove the block's own class from the outer div, as AEM already adds it.
+  // The block name is 'header-nav', so we remove 'header-nav' if it was added to an inner wrapper.
+  // In this case, the root element is 'header', and it does not have 'header-nav' added, so no direct fix needed here.
+
+  const children = [...block.children];
+
+  const header = document.createElement('header');
+  const nav = document.createElement('nav');
+  const container = document.createElement('div');
+  // Ensure all class names are from ORIGINAL HTML
+  container.classList.add('container', 'd-flex', 'align-items-center', 'justify-content-between');
+
+  // Logo and Brand Name
+  const logoWrapper = document.createElement('div');
+  const logoLinkEl = document.createElement('a');
+  // Ensure all class names are from ORIGINAL HTML
+  logoLinkEl.classList.add('logo', 'd-flex', 'align-items-center', 'gap-2');
+
+  // Destructure root rows based on BlockJson model
+  const [logoRow, brandNameRow, logoLinkRow, ...navItemRows] = children;
+
+  const logoPicture = logoRow.querySelector('picture');
+  if (logoPicture) {
+    const img = logoPicture.querySelector('img');
+    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+    // moveInstrumentation should be on the picture element, not the img inside it
+    moveInstrumentation(logoPicture, optimizedPic);
+    logoLinkEl.append(optimizedPic);
+  }
+
+  const brandName = document.createElement('h4');
+  moveInstrumentation(brandNameRow, brandName); // Move instrumentation for brandNameRow
+  brandName.textContent = brandNameRow.textContent.trim();
+  logoLinkEl.append(brandName);
+
+  const foundLogoLink = logoLinkRow.querySelector('a');
+  if (foundLogoLink) {
+    logoLinkEl.href = foundLogoLink.href;
+  } else {
+    logoLinkEl.href = '/'; // Default link if not authored
+  }
+
+  // moveInstrumentation for the logoLinkRow should be on the link element itself
+  moveInstrumentation(logoLinkRow, logoLinkEl);
+
+  logoWrapper.append(logoLinkEl);
+  container.append(logoWrapper);
+
+  // Navigation Menu
+  const navList = document.createElement('div');
+  // Ensure all class names are from ORIGINAL HTML
+  navList.classList.add('nav-list');
+
+  navItemRows.forEach((row) => {
+    // For fixed schemas, use destructuring for cells
+    const [labelCell, linkCell] = [...row.children];
+    const navItem = document.createElement('a');
+    // Ensure all class names are from ORIGINAL HTML
+    navItem.classList.add('navitems');
+    navItem.textContent = labelCell.textContent.trim();
+
+    const foundLink = linkCell.querySelector('a');
+    if (foundLink) {
+      navItem.href = foundLink.href;
+    }
+
+    moveInstrumentation(row, navItem); // Move instrumentation for each nav item row
+    navList.append(navItem);
+  });
+  container.append(navList);
+
+  // Navbar Toggler
+  const toggler = document.createElement('button');
+  // Ensure all class names are from ORIGINAL HTML
+  toggler.classList.add('navbar-toggler');
+  toggler.type = 'button';
+  // SVG is hardcoded but is a UI element, not content from AEM, so it's acceptable.
+  toggler.innerHTML = `
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+      <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"></path>
+    </svg>
+  `;
+  container.append(toggler);
+
+  // Add event listener for toggler
+  toggler.addEventListener('click', () => {
+    navList.classList.toggle('show'); // Assuming 'show' class will handle visibility
+  });
+
+  nav.append(container);
+  header.append(nav);
+  block.replaceChildren(header);
+}

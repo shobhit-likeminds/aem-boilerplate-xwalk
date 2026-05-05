@@ -38,14 +38,14 @@
       "fields": [
         {
           "component": "text",
-          "label": "Section Title",
-          "name": "sectionTitle",
+          "label": "Section Heading",
+          "name": "heading",
           "valueType": "string"
         },
         {
           "component": "richtext",
           "label": "About Description",
-          "name": "aboutText",
+          "name": "description",
           "valueType": "string"
         },
         {
@@ -62,8 +62,8 @@
         },
         {
           "component": "text",
-          "label": "Features Title",
-          "name": "featuresTitle",
+          "label": "Features Heading",
+          "name": "featuresHeading",
           "valueType": "string"
         },
         {

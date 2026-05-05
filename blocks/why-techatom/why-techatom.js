@@ -2,7 +2,7 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const children = [...block.children];
+  const [headingRow, ...cardRows] = [...block.children];
 
   const whyTechatomContainer = document.createElement('div');
   whyTechatomContainer.classList.add('why-techatom-container', 'shadow-lg');
@@ -11,80 +11,86 @@ export default function decorate(block) {
   rowDiv.classList.add('row', 'justify-content-around', 'gy-5');
 
   // Section Heading
-  const [sectionHeadingRow, ...whyCardItems] = children; // Destructure root rows
-  const [sectionHeadingCell] = [...sectionHeadingRow.children]; // Destructure cells of heading row
+  const headingElement = document.createElement('h2');
+  moveInstrumentation(headingRow, headingElement);
+  // headingRow is a row, its innerHTML contains the cell wrapper.
+  // The heading content is in the first cell, which is richtext.
+  // Use innerHTML from the cell to preserve potential formatting.
+  headingElement.innerHTML = headingRow.children[0]?.innerHTML || '';
 
-  const h2 = document.createElement('h2');
-  moveInstrumentation(sectionHeadingRow, h2);
-
-  // Extract text and handle curve-underline if present
-  const sectionHeadingContent = sectionHeadingCell.innerHTML;
-  if (sectionHeadingContent.includes('<span class="curve-underline">')) {
-    h2.innerHTML = sectionHeadingContent;
-  } else {
-    h2.textContent = sectionHeadingCell.textContent.trim();
+  // Check if heading contains "Techatom?" and wrap it with <span class="curve-underline">
+  // Use textContent for the check to avoid issues with existing HTML tags,
+  // but apply the span to the innerHTML to preserve other formatting.
+  const headingText = headingElement.textContent.trim();
+  const techatomIndex = headingText.toLowerCase().indexOf('techatom?');
+  if (techatomIndex !== -1) {
+    const originalHtml = headingElement.innerHTML;
+    // Find the actual "Techatom?" string in the HTML to wrap it.
+    // This is a bit fragile if there are other HTML tags within "Techatom?"
+    // but matches the original intent. A more robust solution might parse the HTML.
+    const regex = /Techatom\?/i;
+    headingElement.innerHTML = originalHtml.replace(regex, '<span class="curve-underline">$&</span>');
   }
-  rowDiv.append(h2);
+  rowDiv.append(headingElement);
 
   // Why Cards
-  // whyCardItems are all rows after the heading
-  whyCardItems.forEach((row) => {
-    const [iconCell, titleCell, descriptionCell, cardLinkCell] = [...row.children];
+  cardRows.forEach((row) => {
+    const [cardLinkCell, imageCell, titleCell, descriptionCell] = [...row.children];
 
     const cardLink = document.createElement('a');
     cardLink.classList.add('d-block', 'why-card', 'col-lg-4', 'col-12');
-
     const foundLink = cardLinkCell.querySelector('a');
     if (foundLink) {
       cardLink.href = foundLink.href;
     } else {
-      cardLink.href = '#'; // Fallback link if not found
+      cardLink.href = '#'; // Fallback href
     }
+    moveInstrumentation(row, cardLink);
 
-    // Card Icon
-    const picture = iconCell.querySelector('picture');
+    const picture = imageCell.querySelector('picture');
     if (picture) {
       const img = picture.querySelector('img');
-      // createOptimizedPicture returns a <picture> element, not an <img>
-      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-      const optimizedImg = optimizedPic.querySelector('img'); // Get the <img> from the new <picture>
-
-      // Determine the correct SVG class based on alt text or original HTML
-      let svgClass = 'expert-svg'; // Default or first observed
-      if (img.alt.toLowerCase().includes('badge')) {
-        svgClass = 'badge-svg';
-      } else if (img.alt.toLowerCase().includes('customer')) {
-        svgClass = 'expert-svg'; // Original HTML uses expert-svg for customer
+      if (img) {
+        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+        const optimizedImg = optimizedPic.querySelector('img');
+        moveInstrumentation(img, optimizedImg);
+        // Apply specific SVG classes based on alt text or content
+        const altText = img.alt.toLowerCase();
+        if (altText.includes('expert')) {
+          optimizedImg.classList.add('expert-svg');
+        } else if (altText.includes('badge')) {
+          optimizedImg.classList.add('badge-svg');
+        } else if (altText.includes('customer')) {
+          // As per original HTML, 'customer' uses 'expert-svg'
+          optimizedImg.classList.add('expert-svg');
+        }
+        cardLink.append(optimizedPic);
       }
-      optimizedImg.classList.add(svgClass);
-
-      moveInstrumentation(img, optimizedImg); // Instrument the new img
-      cardLink.append(optimizedPic); // Append the new picture element
     }
 
-    // Card Title
-    const h3 = document.createElement('h3');
-    h3.textContent = titleCell.textContent.trim();
-    cardLink.append(h3);
+    const title = document.createElement('h3');
+    title.textContent = titleCell.textContent.trim();
+    cardLink.append(title);
 
-    // Card Description
-    const p = document.createElement('p');
-    p.innerHTML = descriptionCell.innerHTML; // richtext content
-    cardLink.append(p);
+    const description = document.createElement('p');
+    // descriptionCell is richtext, so use innerHTML to preserve formatting.
+    // Ensure it's not assigning <p> inside <p> if descriptionCell already contains <p>
+    // The model says richtext, so it can contain <p>. Assigning to a <p> would be invalid.
+    // Changed to a div to safely contain richtext.
+    const descriptionDiv = document.createElement('div');
+    descriptionDiv.innerHTML = descriptionCell.innerHTML;
+    // If the original HTML explicitly uses <p> for description, and we need to match that,
+    // we would need to extract the innerHTML of the first <p> if present.
+    // For now, using a div as a safer container for richtext.
+    // Reverting to <p> as per original HTML structure, assuming the innerHTML will be just text or simple tags.
+    // If descriptionCell.innerHTML is "<p>content</p>", assigning it to description.innerHTML will create <p><p>content</p></p>.
+    // To avoid this, we should extract the content of the inner <p> if it exists.
+    description.innerHTML = descriptionCell.querySelector('p')?.innerHTML ?? descriptionCell.textContent.trim() ?? '';
+    cardLink.append(description);
 
-    moveInstrumentation(row, cardLink);
     rowDiv.append(cardLink);
   });
 
   whyTechatomContainer.append(rowDiv);
   block.replaceChildren(whyTechatomContainer);
-
-  // This block of code is redundant and potentially problematic.
-  // createOptimizedPicture should be called once when processing the iconCell.
-  // Removing this global picture optimization loop.
-  // block.querySelectorAll('picture > img').forEach((img) => {
-  //   const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-  //   moveInstrumentation(img, optimizedPic.querySelector('img'));
-  //   img.closest('picture').replaceWith(optimizedPic);
-  // });
 }

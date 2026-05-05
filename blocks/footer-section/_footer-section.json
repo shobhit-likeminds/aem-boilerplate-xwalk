@@ -1,0 +1,132 @@
+{
+  "definitions": [
+    {
+      "title": "Footer Section",
+      "id": "footer-section",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "footer-section",
+              "model": "footer-section",
+              "name": "Footer Section"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Footer Menu Column",
+      "id": "footer-menu-column",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "model": "footer-menu-column",
+              "name": "Footer Menu Column"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "footer-section",
+      "fields": [
+        {
+          "component": "reference",
+          "label": "Logo",
+          "name": "logo",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Logo Link",
+          "name": "logoLink",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Site Title",
+          "name": "siteTitle",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Newsletter Title",
+          "name": "newsletterTitle",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Newsletter Description",
+          "name": "newsletterDescription",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Newsletter Form Action URL",
+          "name": "newsletterFormAction",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Newsletter Input Placeholder",
+          "name": "newsletterInputPlaceholder",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Newsletter Button Label",
+          "name": "newsletterButtonLabel",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Copyright",
+          "name": "copyright",
+          "valueType": "string"
+        },
+        {
+          "component": "container",
+          "item": "footer-menu-column",
+          "label": "Footer Menu Columns",
+          "name": "menuColumns"
+        }
+      ]
+    },
+    {
+      "id": "footer-menu-column",
+      "fields": [
+        {
+          "component": "text",
+          "label": "Column Title",
+          "name": "columnTitle",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "label": "Section Links",
+          "name": "sectionLinks"
+        },
+        {
+          "component": "richtext",
+          "label": "Navigation Hierarchy",
+          "name": "hierarchy-tree",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "footer-section",
+      "components": [
+        "footer-menu-column"
+      ]
+    }
+  ]
+}

@@ -43,22 +43,22 @@
           "valueType": "string"
         },
         {
-          "component": "text",
-          "label": "Logo Text",
-          "name": "logoText",
-          "valueType": "string"
-        },
-        {
           "component": "aem-content",
           "label": "Logo Link",
           "name": "logoLink",
           "valueType": "string"
         },
         {
+          "component": "text",
+          "label": "Logo Label",
+          "name": "logoLabel",
+          "valueType": "string"
+        },
+        {
           "component": "container",
           "item": "navigation-item",
-          "label": "Navigation Menu",
-          "name": "navigationMenu"
+          "label": "Navigation Items",
+          "name": "navigationItems"
         }
       ]
     },
@@ -67,13 +67,13 @@
       "fields": [
         {
           "component": "text",
-          "label": "Menu Label",
+          "label": "Navigation Label",
           "name": "label",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "label": "Menu Link",
+          "label": "Navigation Link",
           "name": "link",
           "valueType": "string"
         }

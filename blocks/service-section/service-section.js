@@ -4,75 +4,86 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
 export default function decorate(block) {
   const children = [...block.children];
 
+  const sectionTitleRow = children[0];
+  const pointerImageRow = children[1];
+  const serviceCardRows = children.slice(2);
+
   const section = document.createElement('section');
   section.classList.add('service-section');
   section.id = 'services';
 
-  const containerOne = document.createElement('div');
-  containerOne.classList.add('container', 'position-relative');
+  // Section Title and Pointer Image
+  const containerTop = document.createElement('div');
+  containerTop.classList.add('container', 'position-relative');
+  moveInstrumentation(sectionTitleRow, containerTop);
+  moveInstrumentation(pointerImageRow, containerTop);
 
-  const headingRow = children[0];
-  const heading = document.createElement('h2');
-  moveInstrumentation(headingRow, heading); // Corrected instrumentation source and target
-  heading.textContent = headingRow.textContent.trim();
-  containerOne.append(heading);
+  const sectionTitle = document.createElement('h2');
+  // FIX: Access the text content from the first child (the cell) of the row
+  sectionTitle.textContent = sectionTitleRow.children[0]?.textContent.trim() || '';
+  containerTop.append(sectionTitle);
 
-  const pointerImageRow = children[1];
-  const pointerImage = pointerImageRow.querySelector('picture');
-  if (pointerImage) {
-    const img = pointerImage.querySelector('img');
-    const optimizedPointerPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-    moveInstrumentation(pointerImageRow, optimizedPointerPic); // Move instrumentation to the picture element
-    optimizedPointerPic.querySelector('img').classList.add('pointer');
-    containerOne.append(optimizedPointerPic);
+  // FIX: Access the picture from the first child (the cell) of the row
+  const pointerImagePicture = pointerImageRow.children[0]?.querySelector('picture');
+  if (pointerImagePicture) {
+    const img = pointerImagePicture.querySelector('img');
+    if (img) {
+      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+      moveInstrumentation(img, optimizedPic.querySelector('img'));
+      optimizedPic.querySelector('img').classList.add('pointer');
+      containerTop.append(optimizedPic);
+    }
   }
+  section.append(containerTop);
 
-  section.append(containerOne);
+  // Service Cards
+  const containerBottom = document.createElement('div');
+  containerBottom.classList.add('container');
 
-  const containerTwo = document.createElement('div');
-  containerTwo.classList.add('container');
-  const row = document.createElement('div');
-  row.classList.add('row', 'justify-content-around');
-  containerTwo.append(row);
-
-  const serviceCardRows = children.slice(2); // All remaining rows are service cards
+  const rowDiv = document.createElement('div');
+  rowDiv.classList.add('row', 'justify-content-around');
 
   serviceCardRows.forEach((cardRow) => {
-    const [cardLinkCell, cardImageCell, cardTitleCell, cardDescriptionCell, buttonLabelCell] = [...cardRow.children];
+    const [cardLinkCell, cardImageCell, cardTitleCell, cardDescriptionCell, cardButtonLabelCell] = [...cardRow.children];
 
-    const cardLink = cardLinkCell.querySelector('a');
-    const anchor = document.createElement('a');
-    anchor.classList.add('d-block', 'col-lg-4', 'col-md-6', 'col-12', 'service-card');
-    if (cardLink) {
-      anchor.href = cardLink.href;
+    const cardLink = document.createElement('a');
+    cardLink.classList.add('d-block', 'col-lg-4', 'col-md-6', 'col-12', 'service-card');
+    const foundLink = cardLinkCell.querySelector('a');
+    if (foundLink) {
+      cardLink.href = foundLink.href;
+    } else {
+      cardLink.href = '#';
     }
-    moveInstrumentation(cardRow, anchor);
 
-    const cardImage = cardImageCell.querySelector('picture');
-    if (cardImage) {
-      const img = cardImage.querySelector('img');
-      const optimizedCardPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-      moveInstrumentation(cardImageCell, optimizedCardPic); // Move instrumentation to the picture element
-      optimizedCardPic.querySelector('img').classList.add('img-fluid', 'service-img');
-      anchor.append(optimizedCardPic);
+    const cardImagePicture = cardImageCell.querySelector('picture');
+    if (cardImagePicture) {
+      const img = cardImagePicture.querySelector('img');
+      if (img) {
+        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+        moveInstrumentation(img, optimizedPic.querySelector('img'));
+        optimizedPic.querySelector('img').classList.add('img-fluid', 'service-img');
+        cardLink.append(optimizedPic);
+      }
     }
 
     const cardTitle = document.createElement('h3');
     cardTitle.textContent = cardTitleCell.textContent.trim();
-    anchor.append(cardTitle);
+    cardLink.append(cardTitle);
 
-    const cardDescription = document.createElement('div'); // Changed to div to avoid <p> inside <p>
+    const cardDescription = document.createElement('p');
     cardDescription.innerHTML = cardDescriptionCell.innerHTML;
-    anchor.append(cardDescription);
+    cardLink.append(cardDescription);
 
-    const button = document.createElement('button');
-    button.textContent = buttonLabelCell.textContent.trim();
-    anchor.append(button);
+    const cardButton = document.createElement('button');
+    cardButton.textContent = cardButtonLabelCell.textContent.trim();
+    cardLink.append(cardButton);
 
-    row.append(anchor);
+    moveInstrumentation(cardRow, cardLink);
+    rowDiv.append(cardLink);
   });
 
-  section.append(containerTwo);
+  containerBottom.append(rowDiv);
+  section.append(containerBottom);
 
   block.replaceChildren(section);
 }

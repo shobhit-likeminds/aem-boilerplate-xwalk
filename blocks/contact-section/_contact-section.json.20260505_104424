@@ -50,8 +50,14 @@
         },
         {
           "component": "text",
-          "label": "Location Text",
-          "name": "location",
+          "label": "Address/Location",
+          "name": "address",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Email Label",
+          "name": "emailLabel",
           "valueType": "string"
         },
         {
@@ -68,8 +74,8 @@
         },
         {
           "component": "aem-content",
-          "label": "Google Map Embed URL",
-          "name": "mapEmbedUrl",
+          "label": "Map Embed (iframe src)",
+          "name": "mapEmbed",
           "valueType": "string"
         },
         {

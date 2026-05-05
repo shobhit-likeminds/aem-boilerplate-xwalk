@@ -38,8 +38,8 @@
       "fields": [
         {
           "component": "text",
-          "label": "Section Title",
-          "name": "sectionTitle",
+          "label": "Section Heading",
+          "name": "heading",
           "valueType": "string"
         },
         {
@@ -85,8 +85,8 @@
         },
         {
           "component": "text",
-          "label": "Card Button Label",
-          "name": "cardButtonLabel",
+          "label": "Button Label",
+          "name": "buttonLabel",
           "valueType": "string"
         }
       ]

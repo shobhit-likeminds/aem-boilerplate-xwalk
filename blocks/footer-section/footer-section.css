@@ -8,9 +8,17 @@
 
 @media (min-width:1400px) { .container{ max-width:1320px } }
 
-@media (prefers-reduced-motion:reduce) { .accordion-button{ transition:none } }
+.row{ --bs-gutter-x:1.5rem;--bs-gutter-y:0;display:flex;flex-wrap:wrap;margin-top:calc(-1 * var(--bs-gutter-y));margin-right:calc(-.5 * var(--bs-gutter-x));margin-left:calc(-.5 * var(--bs-gutter-x)) }
 
-@media (prefers-reduced-motion:reduce) { .accordion-button::after{ transition:none } }
+.row>*{ flex-shrink:0;width:100%;max-width:100%;padding-right:calc(var(--bs-gutter-x) * .5);padding-left:calc(var(--bs-gutter-x) * .5);margin-top:var(--bs-gutter-y) }
+
+.gy-5{ --bs-gutter-y:3rem }
+
+@media (min-width:992px) { .row > .col-lg-3{ flex:0 0 auto;width:25% }
+
+.row > .col-lg-6{ flex:0 0 auto;width:50% } }
+
+@media (prefers-reduced-motion:reduce) { .btn{ transition:none } }
 
 @keyframes progress-bar-stripes{0%{background-position-x:1rem}}
 
@@ -23,16 +31,3 @@
 @keyframes placeholder-wave{100%{-webkit-mask-position:-200% 0%;mask-position:-200% 0%}}
 
 .d-flex{ display:flex!important }
-
-.bi::before{ 
-  display: inline-block;
-  font-family: bootstrap-icons !important;
-  font-style: normal;
-  font-weight: normal !important;
-  font-variant: normal;
-  text-transform: none;
-  line-height: 1;
-  vertical-align: -.125em;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
- }

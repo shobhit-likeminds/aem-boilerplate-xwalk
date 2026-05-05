@@ -38,14 +38,14 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Logo Image",
-          "name": "logoImage",
+          "label": "Logo",
+          "name": "logo",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Logo Text",
-          "name": "logoText",
+          "label": "Brand Name",
+          "name": "brandName",
           "valueType": "string"
         },
         {

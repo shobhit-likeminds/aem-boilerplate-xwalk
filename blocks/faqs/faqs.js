@@ -1,38 +1,18 @@
 import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
-// Function to create the SVG icon, avoiding hardcoded template literals
-function createQuestionCircleSvg() {
-  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-  svg.setAttribute('width', '16');
-  svg.setAttribute('height', '16');
-  svg.setAttribute('fill', 'currentColor');
-  svg.classList.add('bi', 'bi-question-circle');
-  svg.setAttribute('viewBox', '0 0 16 16');
-  svg.innerHTML = `
-    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path>
-    <path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"></path>
-  `;
-  return svg;
-}
-
 export default function decorate(block) {
   const children = [...block.children];
+  const faqSection = document.createElement('section');
+  faqSection.classList.add('faqs');
 
-  // Use array destructuring for fixed schema root rows
-  const [sectionTitleRow, ...faqItemRows] = children;
+  const titleRow = children.shift(); // First row is the title
 
-  const section = document.createElement('section');
-  // The block div already has 'faqs' class from AEM. Do not add it again to the inner wrapper.
-  // section.classList.add('faqs'); // Removed to prevent double padding/CSS
-  moveInstrumentation(block, section);
-
-  // Section Title
-  if (sectionTitleRow) {
+  if (titleRow) {
     const h2 = document.createElement('h2');
-    moveInstrumentation(sectionTitleRow, h2);
-    h2.textContent = sectionTitleRow.children[0]?.textContent.trim() || ''; // Access content from the cell
-    section.append(h2);
+    moveInstrumentation(titleRow, h2);
+    h2.textContent = titleRow.textContent.trim();
+    faqSection.append(h2);
   }
 
   const container = document.createElement('div');
@@ -42,15 +22,14 @@ export default function decorate(block) {
   accordion.classList.add('accordion');
   accordion.id = 'accordionExample';
 
-  faqItemRows.forEach((row, index) => {
-    const [questionCell, answerCell] = [...row.children]; // Correct: named destructuring
+  children.forEach((row, index) => {
+    const [questionCell, answerCell] = [...row.children];
 
     const accordionItem = document.createElement('div');
     accordionItem.classList.add('accordion-item', 'shadow');
 
     const headingId = `heading${index + 1}`;
     const collapseId = `collapse${index + 1}`;
-    const isFirstItem = index === 0;
 
     const h2 = document.createElement('h2');
     h2.classList.add('accordion-header');
@@ -58,41 +37,65 @@ export default function decorate(block) {
 
     const button = document.createElement('button');
     button.classList.add('accordion-button', 'd-flex', 'align-items-center');
-    if (!isFirstItem) {
-      button.classList.add('collapsed');
-    }
     button.type = 'button';
-    button.setAttribute('data-bs-toggle', 'collapse'); // Added from ORIGINAL HTML
-    button.setAttribute('data-bs-target', `#${collapseId}`); // Added from ORIGINAL HTML
-    button.setAttribute('aria-expanded', isFirstItem ? 'true' : 'false');
+    button.setAttribute('aria-expanded', index === 0 ? 'true' : 'false');
     button.setAttribute('aria-controls', collapseId);
+    button.setAttribute('aria-labelledby', headingId); // Added as per original HTML
 
-    // The original HTML uses data-bs-toggle/target for Bootstrap's JS.
-    // Since EDS doesn't ship Bootstrap JS, the event listener is a custom implementation.
-    // The existing event listener correctly toggles classes and aria attributes.
-    // No change needed for the event listener itself, as it's a custom implementation.
+    // Manual toggle behavior for accordion
     button.addEventListener('click', () => {
       const targetCollapse = document.getElementById(collapseId);
-      const isExpanded = button.getAttribute('aria-expanded') === 'true';
-      button.setAttribute('aria-expanded', !isExpanded);
-      button.classList.toggle('collapsed', isExpanded);
-      targetCollapse.classList.toggle('show');
+      const isCurrentlyExpanded = button.getAttribute('aria-expanded') === 'true';
+
+      // Collapse all other open accordions
+      accordion.querySelectorAll('.accordion-collapse.show').forEach((openCollapse) => {
+        if (openCollapse !== targetCollapse) {
+          openCollapse.classList.remove('show');
+          const openButton = openCollapse.closest('.accordion-item').querySelector('.accordion-button');
+          if (openButton) {
+            openButton.classList.add('collapsed');
+            openButton.setAttribute('aria-expanded', 'false');
+          }
+        }
+      });
+
+      // Toggle current accordion
+      if (isCurrentlyExpanded) {
+        targetCollapse.classList.remove('show');
+        button.classList.add('collapsed');
+        button.setAttribute('aria-expanded', 'false');
+      } else {
+        targetCollapse.classList.add('show');
+        button.classList.remove('collapsed');
+        button.setAttribute('aria-expanded', 'true');
+      }
     });
 
-    const svg = createQuestionCircleSvg(); // Use the function to create SVG
+    const svg = `
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-question-circle" viewBox="0 0 16 16">
+        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path>
+        <path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"></path>
+      </svg>
+    `;
+    button.innerHTML = svg;
 
     const p = document.createElement('p');
     p.classList.add('m-0', 'ms-3');
     p.textContent = questionCell.textContent.trim();
+    moveInstrumentation(questionCell, p);
+    button.append(p);
 
-    moveInstrumentation(row, accordionItem); // Move instrumentation from row to accordionItem
-    button.append(svg, p);
+    if (index !== 0) {
+      button.classList.add('collapsed');
+    }
+
     h2.append(button);
+    accordionItem.append(h2);
 
     const collapseDiv = document.createElement('div');
     collapseDiv.id = collapseId;
     collapseDiv.classList.add('accordion-collapse', 'collapse');
-    if (isFirstItem) {
+    if (index === 0) {
       collapseDiv.classList.add('show');
     }
     collapseDiv.setAttribute('aria-labelledby', headingId);
@@ -100,14 +103,15 @@ export default function decorate(block) {
 
     const accordionBody = document.createElement('div');
     accordionBody.classList.add('accordion-body');
-    accordionBody.innerHTML = answerCell.innerHTML; // Correct: richtext cell uses innerHTML
-
+    accordionBody.innerHTML = answerCell.innerHTML;
+    moveInstrumentation(answerCell, accordionBody);
     collapseDiv.append(accordionBody);
-    accordionItem.append(h2, collapseDiv);
+    accordionItem.append(collapseDiv);
+
     accordion.append(accordionItem);
   });
 
   container.append(accordion);
-  section.append(container);
-  block.replaceChildren(section);
+  faqSection.append(container);
+  block.replaceChildren(faqSection);
 }

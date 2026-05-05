@@ -2,147 +2,116 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const children = [...block.children];
+  // Destructure root rows based on BlockJson model
+  const [
+    sectionTitleRow,
+    aboutTextRow,
+    aboutPointerImageRow,
+    aboutMainImageRow,
+    featuresTitleRow,
+    ...featureRows
+  ] = [...block.children];
 
-  const sectionHeadingRow = children[0];
-  const descriptionRow = children[1];
-  const aboutPointerImageRow = children[2];
-  const aboutMainImageRow = children[3];
-  const featuresHeadingRow = children[4];
-  const featureItemRows = children.slice(5);
+  const section = document.createElement('section');
+  section.classList.add('about-section');
+  moveInstrumentation(block, section); // Move instrumentation from block to the new root section
 
-  const rootSection = document.createElement('section');
-  // rootSection.classList.add('about-section'); // Removed: outer block div already has this class
-  moveInstrumentation(block, rootSection);
+  const h2 = document.createElement('h2');
+  h2.textContent = sectionTitleRow.textContent.trim();
+  moveInstrumentation(sectionTitleRow, h2);
+  section.append(h2);
 
-  // Section Heading
-  const heading = document.createElement('h2');
-  moveInstrumentation(sectionHeadingRow, heading);
-  heading.textContent = sectionHeadingRow.textContent.trim();
-  rootSection.append(heading);
-
-  // About Description and Images
   const container = document.createElement('div');
   container.classList.add('container');
 
   const row = document.createElement('div');
   row.classList.add('row', 'align-items-center');
 
-  const descriptionCol = document.createElement('div');
-  descriptionCol.classList.add('col-lg-6', 'col-md-6', 'col-12', 'order-lg-1', 'order-md-1', 'order-2');
-  moveInstrumentation(descriptionRow, descriptionCol);
+  const col1 = document.createElement('div');
+  col1.classList.add('col-lg-6', 'col-md-6', 'col-12', 'order-lg-1', 'order-md-1', 'order-2');
 
-  // The original HTML has the pointer image *inside* the description paragraph.
-  // We need to reconstruct this structure.
-  const descriptionContentDiv = document.createElement('div'); // Use div for richtext content
-  descriptionContentDiv.innerHTML = descriptionRow.children[0]?.innerHTML || ''; // Corrected: read from cell
+  // aboutText is richtext, read innerHTML directly from the cell
+  const p = document.createElement('p');
+  p.innerHTML = aboutTextRow.children[0]?.innerHTML || ''; // Corrected: read from cell, not row
+  moveInstrumentation(aboutTextRow, p); // Move instrumentation from aboutTextRow to p
 
-  const aboutPointerPicture = aboutPointerImageRow.querySelector('picture');
-  if (aboutPointerPicture) {
-    const aboutPointerImg = aboutPointerPicture.querySelector('img');
-    const optimizedPointerPic = createOptimizedPicture(
-      aboutPointerImg.src,
-      aboutPointerImg.alt,
-      false,
-      [{ width: '750' }],
-    );
-    optimizedPointerPic.querySelector('img').classList.add('img-fluid', 'about-pointer');
-    moveInstrumentation(aboutPointerImageRow, optimizedPointerPic.querySelector('img'));
-    // Append the optimized picture to the description content div
-    descriptionContentDiv.append(optimizedPointerPic);
+  const aboutPointerImage = aboutPointerImageRow.children[0]?.querySelector('picture'); // Access cell first
+  if (aboutPointerImage) {
+    const img = aboutPointerImage.querySelector('img');
+    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+    moveInstrumentation(img, optimizedPic.querySelector('img'));
+    optimizedPic.classList.add('img-fluid', 'about-pointer');
+    p.append(optimizedPic);
   }
-  // The original HTML wraps the description and pointer image in a <p>
-  // If the description content is just text, we can wrap it in a <p>
-  // If it's complex HTML, we should use a div. Given it's richtext, a div is safer.
-  // However, the original HTML explicitly shows a <p> wrapping both.
-  // Let's create a <p> and move the children from descriptionContentDiv into it.
-  const descriptionPWrapper = document.createElement('p');
-  while (descriptionContentDiv.firstChild) {
-    descriptionPWrapper.append(descriptionContentDiv.firstChild);
-  }
-  descriptionCol.append(descriptionPWrapper);
-  row.append(descriptionCol);
+  moveInstrumentation(aboutPointerImageRow, p); // Move instrumentation from aboutPointerImageRow to p
+  col1.append(p);
+  row.append(col1);
 
-  const mainImageCol = document.createElement('div');
-  mainImageCol.classList.add('col-lg-6', 'col-md-6', 'col-12', 'order-lg-2', 'order-md-2', 'order-1');
-  moveInstrumentation(aboutMainImageRow, mainImageCol);
+  const col2 = document.createElement('div');
+  col2.classList.add('col-lg-6', 'col-md-6', 'col-12', 'order-lg-2', 'order-md-2', 'order-1');
 
-  const aboutMainPicture = aboutMainImageRow.querySelector('picture');
-  if (aboutMainPicture) {
-    const aboutMainImg = aboutMainPicture.querySelector('img');
-    const optimizedMainPic = createOptimizedPicture(
-      aboutMainImg.src,
-      aboutMainImg.alt,
-      false,
-      [{ width: '750' }],
-    );
-    optimizedMainPic.querySelector('img').classList.add('img-fluid');
-    moveInstrumentation(aboutMainImageRow, optimizedMainPic.querySelector('img'));
-    mainImageCol.append(optimizedMainPic);
+  const aboutMainImage = aboutMainImageRow.children[0]?.querySelector('picture'); // Access cell first
+  if (aboutMainImage) {
+    const img = aboutMainImage.querySelector('img');
+    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+    moveInstrumentation(img, optimizedPic.querySelector('img'));
+    optimizedPic.classList.add('img-fluid');
+    col2.append(optimizedPic);
   }
-  row.append(mainImageCol);
+  moveInstrumentation(aboutMainImageRow, col2); // Move instrumentation from aboutMainImageRow to col2
+  row.append(col2);
   container.append(row);
-  rootSection.append(container);
+  section.append(container);
 
-  // Features Section
   const featuresContainer = document.createElement('div');
   featuresContainer.classList.add('container');
 
   const aboutContainer = document.createElement('div');
   aboutContainer.classList.add('about-container', 'shadow-lg');
 
-  const featuresHeading = document.createElement('h4');
-  moveInstrumentation(featuresHeadingRow, featuresHeading);
-  featuresHeading.textContent = featuresHeadingRow.textContent.trim();
-  aboutContainer.append(featuresHeading);
+  const h4 = document.createElement('h4');
+  h4.textContent = featuresTitleRow.textContent.trim();
+  moveInstrumentation(featuresTitleRow, h4);
+  aboutContainer.append(h4);
 
   const featuresRow = document.createElement('div');
   featuresRow.classList.add('row');
 
-  featureItemRows.forEach((rowEl) => {
+  featureRows.forEach((rowEl) => {
+    // Destructure feature item cells based on 'about-feature-item' model
     const [featureImageCell, featureTitleCell, featureDescriptionCell] = [...rowEl.children];
 
     const featureCol = document.createElement('div');
     featureCol.classList.add('col-lg-4', 'col-md-6', 'col-12');
-    moveInstrumentation(rowEl, featureCol);
 
-    const featurePicture = featureImageCell.querySelector('picture');
-    if (featurePicture) {
-      const featureImg = featurePicture.querySelector('img');
-      const optimizedFeaturePic = createOptimizedPicture(
-        featureImg.src,
-        featureImg.alt,
-        false,
-        [{ width: '750' }],
-      );
-      optimizedFeaturePic.querySelector('img').classList.add('img-fluid');
-      featureCol.append(optimizedFeaturePic);
+    const featureImage = featureImageCell.querySelector('picture');
+    if (featureImage) {
+      const img = featureImage.querySelector('img');
+      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+      moveInstrumentation(img, optimizedPic.querySelector('img'));
+      optimizedPic.classList.add('img-fluid');
+      featureCol.append(optimizedPic);
     }
+    moveInstrumentation(featureImageCell, featureCol); // Move instrumentation from featureImageCell to featureCol
 
-    const featureTitle = document.createElement('h5');
-    featureTitle.textContent = featureTitleCell.textContent.trim();
-    featureCol.append(featureTitle);
+    const h5 = document.createElement('h5');
+    h5.textContent = featureTitleCell.textContent.trim();
+    moveInstrumentation(featureTitleCell, h5); // Move instrumentation from featureTitleCell to h5
+    featureCol.append(h5);
 
+    // featureDescription is richtext, read innerHTML directly from the cell
     const featureDescription = document.createElement('p');
-    // Corrected: read innerHTML directly from the richtext cell
-    featureDescription.innerHTML = featureDescriptionCell?.innerHTML || '';
+    featureDescription.innerHTML = featureDescriptionCell.innerHTML; // Corrected: read innerHTML directly
+    moveInstrumentation(featureDescriptionCell, featureDescription); // Move instrumentation from featureDescriptionCell to featureDescription
     featureCol.append(featureDescription);
 
+    moveInstrumentation(rowEl, featureCol); // Move instrumentation from rowEl to featureCol
     featuresRow.append(featureCol);
   });
 
   aboutContainer.append(featuresRow);
   featuresContainer.append(aboutContainer);
-  rootSection.append(featuresContainer);
+  section.append(featuresContainer);
 
-  block.replaceChildren(rootSection);
-
-  // Optimize all images within the block
-  // This loop is redundant as createOptimizedPicture is already called for each image.
-  // Removing it to avoid double optimization and potential instrumentation issues.
-  // rootSection.querySelectorAll('picture > img').forEach((img) => {
-  //   const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-  //   moveInstrumentation(img, optimizedPic.querySelector('img'));
-  //   img.closest('picture').replaceWith(optimizedPic);
-  // });
+  block.replaceChildren(section);
 }

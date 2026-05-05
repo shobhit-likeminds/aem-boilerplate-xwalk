@@ -146,14 +146,14 @@
     "fields": [
       {
         "component": "text",
-        "label": "Section Heading",
-        "name": "heading",
+        "label": "Section Title",
+        "name": "sectionTitle",
         "valueType": "string"
       },
       {
         "component": "richtext",
         "label": "About Description",
-        "name": "description",
+        "name": "aboutText",
         "valueType": "string"
       },
       {
@@ -170,8 +170,8 @@
       },
       {
         "component": "text",
-        "label": "Features Heading",
-        "name": "featuresHeading",
+        "label": "Features Title",
+        "name": "featuresTitle",
         "valueType": "string"
       },
       {
@@ -226,21 +226,15 @@
     "id": "blog-card-item",
     "fields": [
       {
-        "component": "reference",
-        "label": "Blog Image",
-        "name": "image",
-        "valueType": "string"
-      },
-      {
         "component": "aem-content",
-        "label": "Image Link",
-        "name": "imageLink",
+        "label": "Blog Card Link",
+        "name": "cardLink",
         "valueType": "string"
       },
       {
-        "component": "text",
-        "label": "Category Label",
-        "name": "categoryLabel",
+        "component": "reference",
+        "label": "Blog Card Image",
+        "name": "image",
         "valueType": "string"
       },
       {
@@ -251,38 +245,38 @@
       },
       {
         "component": "text",
-        "label": "Blog Title",
-        "name": "blogTitle",
-        "valueType": "string"
-      },
-      {
-        "component": "richtext",
-        "label": "Blog Description",
-        "name": "blogDescription",
-        "valueType": "string"
-      },
-      {
-        "component": "aem-content",
-        "label": "Blog Link",
-        "name": "blogLink",
+        "label": "Category Label",
+        "name": "categoryLabel",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Publish Date",
+        "label": "Blog Headline",
+        "name": "headline",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Blog Excerpt",
+        "name": "excerpt",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Date",
         "name": "date",
         "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "CTA Link",
-        "name": "ctaLink",
+        "label": "Read More Link",
+        "name": "readMoreLink",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "CTA Label",
-        "name": "ctaLabel",
+        "label": "Read More Label",
+        "name": "readMoreLabel",
         "valueType": "string"
       }
     ]
@@ -342,14 +336,8 @@
       },
       {
         "component": "text",
-        "label": "Address/Location",
-        "name": "address",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Email Label",
-        "name": "emailLabel",
+        "label": "Location Text",
+        "name": "location",
         "valueType": "string"
       },
       {
@@ -366,8 +354,8 @@
       },
       {
         "component": "aem-content",
-        "label": "Map Embed (iframe src)",
-        "name": "mapEmbed",
+        "label": "Google Map Embed URL",
+        "name": "mapEmbedUrl",
         "valueType": "string"
       },
       {
@@ -412,31 +400,118 @@
     "fields": [
       {
         "component": "text",
-        "label": "Section Title",
-        "name": "sectionTitle",
+        "label": "FAQ Section Title",
+        "name": "title",
         "valueType": "string"
       },
       {
         "component": "container",
-        "item": "faq-item",
-        "label": "FAQ Items",
-        "name": "faqItems"
+        "item": "faq-accordion-item",
+        "label": "FAQ Accordion Items",
+        "name": "faqAccordionItems"
       }
     ]
   },
   {
-    "id": "faq-item",
+    "id": "faq-accordion-item",
     "fields": [
       {
         "component": "text",
-        "label": "FAQ Question",
+        "label": "Question",
         "name": "question",
         "valueType": "string"
       },
       {
         "component": "richtext",
-        "label": "FAQ Answer",
+        "label": "Answer",
         "name": "answer",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "footer-section",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Logo",
+        "name": "logo",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Logo Link",
+        "name": "logoLink",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Site Title",
+        "name": "siteTitle",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Newsletter Title",
+        "name": "newsletterTitle",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Newsletter Description",
+        "name": "newsletterDescription",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Newsletter Form Action URL",
+        "name": "newsletterFormAction",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Newsletter Input Placeholder",
+        "name": "newsletterInputPlaceholder",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Newsletter Button Label",
+        "name": "newsletterButtonLabel",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Copyright",
+        "name": "copyright",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "footer-menu-column",
+        "label": "Footer Menu Columns",
+        "name": "menuColumns"
+      }
+    ]
+  },
+  {
+    "id": "footer-menu-column",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Column Title",
+        "name": "columnTitle",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Section Links",
+        "name": "sectionLinks"
+      },
+      {
+        "component": "richtext",
+        "label": "Navigation Hierarchy",
+        "name": "hierarchy-tree",
         "valueType": "string"
       }
     ]
@@ -548,22 +623,22 @@
         "valueType": "string"
       },
       {
+        "component": "text",
+        "label": "Logo Text",
+        "name": "logoText",
+        "valueType": "string"
+      },
+      {
         "component": "aem-content",
         "label": "Logo Link",
         "name": "logoLink",
         "valueType": "string"
       },
       {
-        "component": "text",
-        "label": "Logo Label",
-        "name": "logoLabel",
-        "valueType": "string"
-      },
-      {
         "component": "container",
         "item": "navigation-item",
-        "label": "Navigation Items",
-        "name": "navigationItems"
+        "label": "Navigation Menu",
+        "name": "navigationMenu"
       }
     ]
   },
@@ -572,13 +647,13 @@
     "fields": [
       {
         "component": "text",
-        "label": "Navigation Label",
+        "label": "Menu Label",
         "name": "label",
         "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "Navigation Link",
+        "label": "Menu Link",
         "name": "link",
         "valueType": "string"
       }
@@ -612,15 +687,15 @@
         "valueType": "string"
       },
       {
-        "component": "text",
-        "label": "CTA Label",
-        "name": "ctaLabel",
-        "valueType": "string"
-      },
-      {
         "component": "aem-content",
         "label": "CTA Link",
         "name": "ctaLink",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "CTA Label",
+        "name": "ctaLabel",
         "valueType": "string"
       },
       {
@@ -662,8 +737,8 @@
     "fields": [
       {
         "component": "text",
-        "label": "Section Heading",
-        "name": "heading",
+        "label": "Section Title",
+        "name": "sectionTitle",
         "valueType": "string"
       },
       {
@@ -709,8 +784,8 @@
       },
       {
         "component": "text",
-        "label": "Button Label",
-        "name": "buttonLabel",
+        "label": "Card Button Label",
+        "name": "cardButtonLabel",
         "valueType": "string"
       }
     ]
@@ -721,13 +796,13 @@
       {
         "component": "richtext",
         "label": "Section Heading",
-        "name": "sectionHeading",
+        "name": "heading",
         "valueType": "string"
       },
       {
         "component": "container",
         "item": "why-card-item",
-        "label": "Why Cards",
+        "label": "Why Card Items",
         "name": "cards"
       }
     ]
@@ -736,9 +811,15 @@
     "id": "why-card-item",
     "fields": [
       {
+        "component": "aem-content",
+        "label": "Card Link",
+        "name": "cardLink",
+        "valueType": "string"
+      },
+      {
         "component": "reference",
-        "label": "Card Icon",
-        "name": "icon",
+        "label": "Card Image",
+        "name": "image",
         "valueType": "string"
       },
       {
@@ -751,12 +832,6 @@
         "component": "richtext",
         "label": "Card Description",
         "name": "description",
-        "valueType": "string"
-      },
-      {
-        "component": "aem-content",
-        "label": "Card Link",
-        "name": "cardLink",
         "valueType": "string"
       }
     ]
