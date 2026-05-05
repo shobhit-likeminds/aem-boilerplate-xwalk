@@ -7,88 +7,81 @@ export default function decorate(block) {
     decorStar2Row,
     headlineRow,
     descriptionRow,
-    ctaLinkRow,
     ctaLabelRow,
+    ctaLinkRow,
     heroImageRow,
   ] = [...block.children];
 
+  const section = document.createElement('section');
+  section.classList.add('hero-section');
+  moveInstrumentation(block, section);
+
   const container = document.createElement('div');
   container.classList.add('container');
+  section.append(container);
 
   const row = document.createElement('div');
   row.classList.add('row', 'align-items-center');
+  container.append(row);
 
   const heroDescription = document.createElement('div');
   heroDescription.classList.add('hero-description', 'col-lg-6', 'col-12');
+  row.append(heroDescription);
 
-  // Decorative Star 1
-  const decorStar1Img = decorStar1Row?.querySelector('img');
+  // Decor Star 1
+  const decorStar1Img = decorStar1Row.querySelector('img');
   if (decorStar1Img) {
-    const star1 = document.createElement('img');
-    star1.src = decorStar1Img.src;
-    star1.alt = decorStar1Img.alt;
-    star1.classList.add('star-1');
-    moveInstrumentation(decorStar1Row, star1);
+    const star1 = createOptimizedPicture(decorStar1Img.src, decorStar1Img.alt, false, [{ width: '750' }]);
+    star1.querySelector('img').classList.add('star-1');
+    moveInstrumentation(decorStar1Row, star1.querySelector('img'));
     heroDescription.append(star1);
   }
 
-  // Decorative Star 2
-  const decorStar2Img = decorStar2Row?.querySelector('img');
+  // Decor Star 2
+  const decorStar2Img = decorStar2Row.querySelector('img');
   if (decorStar2Img) {
-    const star2 = document.createElement('img');
-    star2.src = decorStar2Img.src;
-    star2.alt = decorStar2Img.alt;
-    star2.classList.add('star-2');
-    moveInstrumentation(decorStar2Row, star2);
+    const star2 = createOptimizedPicture(decorStar2Img.src, decorStar2Img.alt, false, [{ width: '750' }]);
+    star2.querySelector('img').classList.add('star-2');
+    moveInstrumentation(decorStar2Row, star2.querySelector('img'));
     heroDescription.append(star2);
   }
 
   // Headline
   const headline = document.createElement('h1');
-  // FIX: Use innerHTML directly from the cell for richtext, not children[0]
-  headline.innerHTML = headlineRow?.children[0]?.innerHTML || '';
+  headline.innerHTML = headlineRow.children[0]?.innerHTML || '';
   moveInstrumentation(headlineRow, headline);
   heroDescription.append(headline);
 
   // Description
   const description = document.createElement('p');
-  // FIX: Use innerHTML directly from the cell for richtext, not children[0]
-  description.innerHTML = descriptionRow?.children[0]?.innerHTML || '';
+  description.textContent = descriptionRow.children[0]?.textContent.trim() || '';
   moveInstrumentation(descriptionRow, description);
   heroDescription.append(description);
 
-  // CTA Link and Label
-  const ctaLinkAnchor = ctaLinkRow?.querySelector('a');
-  // FIX: Read ctaLabel from its cell's textContent.trim() as per model
-  const ctaLabelText = ctaLabelRow?.children[0]?.textContent.trim();
-  if (ctaLinkAnchor && ctaLabelText) {
-    const cta = document.createElement('a');
-    cta.href = ctaLinkAnchor.href;
-    cta.textContent = ctaLabelText;
-    cta.classList.add('btn', 'btn-primary', 'shadow');
-    moveInstrumentation(ctaLinkRow, cta);
-    moveInstrumentation(ctaLabelRow, cta);
-    heroDescription.append(cta);
+  // CTA
+  const ctaLink = document.createElement('a');
+  const foundCtaLink = ctaLinkRow.querySelector('a');
+  if (foundCtaLink) {
+    ctaLink.href = foundCtaLink.href;
   }
-
-  row.append(heroDescription);
+  ctaLink.textContent = ctaLabelRow.children[0]?.textContent.trim() || '';
+  ctaLink.classList.add('btn', 'btn-primary', 'shadow');
+  moveInstrumentation(ctaLinkRow, ctaLink);
+  moveInstrumentation(ctaLabelRow, ctaLink); // Move instrumentation for label as well
+  heroDescription.append(ctaLink);
 
   const heroImageDiv = document.createElement('div');
   heroImageDiv.classList.add('hero-image', 'col-lg-6', 'col-12');
+  row.append(heroImageDiv);
 
-  // Hero Image
-  const heroImagePicture = heroImageRow?.querySelector('picture');
-  if (heroImagePicture) {
-    const img = heroImagePicture.querySelector('img');
-    if (img) {
-      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-      optimizedPic.querySelector('img').classList.add('img-fluid');
-      moveInstrumentation(heroImageRow, optimizedPic.querySelector('img'));
-      heroImageDiv.append(optimizedPic);
-    }
+  // Hero Main Image
+  const heroMainImg = heroImageRow.querySelector('img');
+  if (heroMainImg) {
+    const heroPicture = createOptimizedPicture(heroMainImg.src, heroMainImg.alt, true, [{ width: '750' }]);
+    heroPicture.querySelector('img').classList.add('img-fluid');
+    moveInstrumentation(heroImageRow, heroPicture.querySelector('img'));
+    heroImageDiv.append(heroPicture);
   }
 
-  row.append(heroImageDiv);
-  container.append(row);
-  block.replaceChildren(container);
+  block.replaceChildren(section);
 }

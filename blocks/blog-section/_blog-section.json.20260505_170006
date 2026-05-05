@@ -54,21 +54,15 @@
       "id": "blog-card-item",
       "fields": [
         {
-          "component": "reference",
-          "label": "Blog Image",
-          "name": "image",
-          "valueType": "string"
-        },
-        {
           "component": "aem-content",
-          "label": "Card Link",
+          "label": "Blog Card Link",
           "name": "cardLink",
           "valueType": "string"
         },
         {
-          "component": "text",
-          "label": "Category Label",
-          "name": "categoryLabel",
+          "component": "reference",
+          "label": "Blog Card Image",
+          "name": "image",
           "valueType": "string"
         },
         {
@@ -79,14 +73,20 @@
         },
         {
           "component": "text",
-          "label": "Blog Title",
-          "name": "blogTitle",
+          "label": "Category Label",
+          "name": "categoryLabel",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Blog Headline",
+          "name": "headline",
           "valueType": "string"
         },
         {
           "component": "richtext",
-          "label": "Blog Description",
-          "name": "blogDescription",
+          "label": "Blog Excerpt",
+          "name": "excerpt",
           "valueType": "string"
         },
         {

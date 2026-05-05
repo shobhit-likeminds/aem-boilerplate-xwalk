@@ -2,116 +2,141 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  // Destructure root rows based on BlockJson model
+  const children = [...block.children];
+
   const [
-    sectionTitleRow,
-    aboutTextRow,
+    mainTitleRow,
+    descriptionRow,
     aboutPointerImageRow,
     aboutMainImageRow,
     featuresTitleRow,
-    ...featureRows
-  ] = [...block.children];
+    ...featureItemRows
+  ] = children;
 
   const section = document.createElement('section');
   section.classList.add('about-section');
-  moveInstrumentation(block, section); // Move instrumentation from block to the new root section
+  moveInstrumentation(block, section);
 
-  const h2 = document.createElement('h2');
-  h2.textContent = sectionTitleRow.textContent.trim();
-  moveInstrumentation(sectionTitleRow, h2);
-  section.append(h2);
+  // Main Title
+  const mainTitle = document.createElement('h2');
+  mainTitle.textContent = mainTitleRow.textContent.trim();
+  moveInstrumentation(mainTitleRow, mainTitle);
+  section.append(mainTitle);
 
-  const container = document.createElement('div');
-  container.classList.add('container');
+  // About Section - Top part
+  const container1 = document.createElement('div');
+  container1.classList.add('container');
+  moveInstrumentation(descriptionRow, container1); // Instrumentation for the container that holds description and main image
 
-  const row = document.createElement('div');
-  row.classList.add('row', 'align-items-center');
+  const row1 = document.createElement('div');
+  row1.classList.add('row', 'align-items-center');
 
-  const col1 = document.createElement('div');
-  col1.classList.add('col-lg-6', 'col-md-6', 'col-12', 'order-lg-1', 'order-md-1', 'order-2');
+  const colLeft = document.createElement('div');
+  colLeft.classList.add('col-lg-6', 'col-md-6', 'col-12', 'order-lg-1', 'order-md-1', 'order-2');
+  moveInstrumentation(descriptionRow, colLeft);
 
-  // aboutText is richtext, read innerHTML directly from the cell
-  const p = document.createElement('p');
-  p.innerHTML = aboutTextRow.children[0]?.innerHTML || ''; // Corrected: read from cell, not row
-  moveInstrumentation(aboutTextRow, p); // Move instrumentation from aboutTextRow to p
+  const descriptionP = document.createElement('p');
+  // Richtext cell's innerHTML is "<p>content</p>", so extract content or use a div
+  // FIX: descriptionRow is a row, its innerHTML is <div><p>content</p></div>.
+  // We need the content of the cell, which is descriptionRow.children[0].
+  // The original HTML shows <p> directly inside the col-lg-6, so we want to extract the <p> content.
+  // However, the BlockJson says 'richtext' for 'description', meaning the cell itself contains the <p> tags.
+  // So, descriptionRow.children[0] is the cell, and its innerHTML is "<p>About Description...</p>".
+  // Assigning this to descriptionP.innerHTML creates <p><p>...</p></p>, which is invalid.
+  // The correct approach for richtext is to use a <div> as the container, or extract the innerHTML of the <p> if a <p> is strictly required.
+  // Given the original HTML has a <p> directly inside the col, and the cell contains <p>...</p>,
+  // we should extract the innerHTML of the paragraph within the cell.
+  descriptionP.innerHTML = descriptionRow.children[0]?.querySelector('p')?.innerHTML || '';
 
-  const aboutPointerImage = aboutPointerImageRow.children[0]?.querySelector('picture'); // Access cell first
-  if (aboutPointerImage) {
-    const img = aboutPointerImage.querySelector('img');
-    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-    moveInstrumentation(img, optimizedPic.querySelector('img'));
-    optimizedPic.classList.add('img-fluid', 'about-pointer');
-    p.append(optimizedPic);
+  // Append pointer image inside the description paragraph
+  const pointerPicture = aboutPointerImageRow.querySelector('picture');
+  if (pointerPicture) {
+    const pointerImg = pointerPicture.querySelector('img');
+    if (pointerImg) {
+      const optimizedPointerPic = createOptimizedPicture(pointerImg.src, pointerImg.alt, false, [{ width: '750' }]);
+      const newPointerImg = optimizedPointerPic.querySelector('img');
+      newPointerImg.classList.add('img-fluid', 'about-pointer');
+      moveInstrumentation(aboutPointerImageRow, newPointerImg);
+      descriptionP.append(newPointerImg);
+    }
   }
-  moveInstrumentation(aboutPointerImageRow, p); // Move instrumentation from aboutPointerImageRow to p
-  col1.append(p);
-  row.append(col1);
+  colLeft.append(descriptionP);
+  row1.append(colLeft);
 
-  const col2 = document.createElement('div');
-  col2.classList.add('col-lg-6', 'col-md-6', 'col-12', 'order-lg-2', 'order-md-2', 'order-1');
+  const colRight = document.createElement('div');
+  colRight.classList.add('col-lg-6', 'col-md-6', 'col-12', 'order-lg-2', 'order-md-2', 'order-1');
+  moveInstrumentation(aboutMainImageRow, colRight);
 
-  const aboutMainImage = aboutMainImageRow.children[0]?.querySelector('picture'); // Access cell first
-  if (aboutMainImage) {
-    const img = aboutMainImage.querySelector('img');
-    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-    moveInstrumentation(img, optimizedPic.querySelector('img'));
-    optimizedPic.classList.add('img-fluid');
-    col2.append(optimizedPic);
+  const mainPicture = aboutMainImageRow.querySelector('picture');
+  if (mainPicture) {
+    const mainImg = mainPicture.querySelector('img');
+    if (mainImg) {
+      const optimizedMainPic = createOptimizedPicture(mainImg.src, mainImg.alt, false, [{ width: '750' }]);
+      const newMainImg = optimizedMainPic.querySelector('img');
+      newMainImg.alt = 'about us';
+      newMainImg.classList.add('img-fluid');
+      // The original code replaces the picture, but then appends the optimizedPicture.
+      // This is fine, but ensure instrumentation is moved to the new picture.
+      moveInstrumentation(aboutMainImageRow, optimizedMainPic); // Move instrumentation to the new picture element
+      colRight.append(optimizedMainPic);
+    }
   }
-  moveInstrumentation(aboutMainImageRow, col2); // Move instrumentation from aboutMainImageRow to col2
-  row.append(col2);
-  container.append(row);
-  section.append(container);
+  row1.append(colRight);
+  container1.append(row1);
+  section.append(container1);
 
-  const featuresContainer = document.createElement('div');
-  featuresContainer.classList.add('container');
+  // Features Section
+  const container2 = document.createElement('div');
+  container2.classList.add('container');
+  moveInstrumentation(featuresTitleRow, container2); // Instrumentation for the container that holds features
 
   const aboutContainer = document.createElement('div');
   aboutContainer.classList.add('about-container', 'shadow-lg');
 
-  const h4 = document.createElement('h4');
-  h4.textContent = featuresTitleRow.textContent.trim();
-  moveInstrumentation(featuresTitleRow, h4);
-  aboutContainer.append(h4);
+  const featuresTitle = document.createElement('h4');
+  featuresTitle.textContent = featuresTitleRow.textContent.trim();
+  moveInstrumentation(featuresTitleRow, featuresTitle);
+  aboutContainer.append(featuresTitle);
 
   const featuresRow = document.createElement('div');
   featuresRow.classList.add('row');
 
-  featureRows.forEach((rowEl) => {
-    // Destructure feature item cells based on 'about-feature-item' model
-    const [featureImageCell, featureTitleCell, featureDescriptionCell] = [...rowEl.children];
+  featureItemRows.forEach((row) => {
+    const [featureIconCell, featureTitleCell, featureDescriptionCell] = [...row.children];
 
-    const featureCol = document.createElement('div');
-    featureCol.classList.add('col-lg-4', 'col-md-6', 'col-12');
+    const col = document.createElement('div');
+    col.classList.add('col-lg-4', 'col-md-6', 'col-12');
+    moveInstrumentation(row, col);
 
-    const featureImage = featureImageCell.querySelector('picture');
-    if (featureImage) {
-      const img = featureImage.querySelector('img');
-      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-      moveInstrumentation(img, optimizedPic.querySelector('img'));
-      optimizedPic.classList.add('img-fluid');
-      featureCol.append(optimizedPic);
+    const featureIconPicture = featureIconCell.querySelector('picture');
+    if (featureIconPicture) {
+      const featureIconImg = featureIconPicture.querySelector('img');
+      if (featureIconImg) {
+        const optimizedFeaturePic = createOptimizedPicture(featureIconImg.src, featureIconImg.alt, false, [{ width: '750' }]);
+        const newFeatureImg = optimizedFeaturePic.querySelector('img');
+        newFeatureImg.classList.add('img-fluid');
+        moveInstrumentation(featureIconCell, optimizedFeaturePic); // Move instrumentation to the new picture element
+        col.append(optimizedFeaturePic);
+      }
     }
-    moveInstrumentation(featureImageCell, featureCol); // Move instrumentation from featureImageCell to featureCol
 
-    const h5 = document.createElement('h5');
-    h5.textContent = featureTitleCell.textContent.trim();
-    moveInstrumentation(featureTitleCell, h5); // Move instrumentation from featureTitleCell to h5
-    featureCol.append(h5);
+    const featureTitle = document.createElement('h5');
+    featureTitle.textContent = featureTitleCell.textContent.trim();
+    col.append(featureTitle);
 
-    // featureDescription is richtext, read innerHTML directly from the cell
     const featureDescription = document.createElement('p');
-    featureDescription.innerHTML = featureDescriptionCell.innerHTML; // Corrected: read innerHTML directly
-    moveInstrumentation(featureDescriptionCell, featureDescription); // Move instrumentation from featureDescriptionCell to featureDescription
-    featureCol.append(featureDescription);
+    // FIX: featureDescriptionCell is a cell, its innerHTML is "<p>content</p>".
+    // Assigning this to featureDescription.innerHTML creates <p><p>...</p></p>, which is invalid.
+    // Extract the innerHTML of the paragraph within the cell.
+    featureDescription.innerHTML = featureDescriptionCell.querySelector('p')?.innerHTML || '';
+    col.append(featureDescription);
 
-    moveInstrumentation(rowEl, featureCol); // Move instrumentation from rowEl to featureCol
-    featuresRow.append(featureCol);
+    featuresRow.append(col);
   });
 
   aboutContainer.append(featuresRow);
-  featuresContainer.append(aboutContainer);
-  section.append(featuresContainer);
+  container2.append(aboutContainer);
+  section.append(container2);
 
   block.replaceChildren(section);
 }

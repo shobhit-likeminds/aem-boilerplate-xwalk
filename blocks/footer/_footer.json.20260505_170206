@@ -17,15 +17,15 @@
       }
     },
     {
-      "title": "Footer-Link-Section-Item",
-      "id": "footer-link-section-item",
+      "title": "Footer-Links-Section",
+      "id": "footer-links-section",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "footer-link-section-item",
-              "name": "Footer-Link-Section-Item"
+              "model": "footer-links-section",
+              "name": "Footer-Links-Section"
             }
           }
         }
@@ -38,7 +38,7 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Footer Logo",
+          "label": "Logo",
           "name": "logo",
           "valueType": "string"
         },
@@ -50,8 +50,8 @@
         },
         {
           "component": "text",
-          "label": "Brand Name",
-          "name": "brandName",
+          "label": "Brand Title",
+          "name": "brandTitle",
           "valueType": "string"
         },
         {
@@ -69,37 +69,37 @@
         {
           "component": "aem-content",
           "label": "Newsletter Form Action URL",
-          "name": "newsletterFormAction",
+          "name": "formAction",
           "valueType": "string"
         },
         {
           "component": "text",
           "label": "Newsletter Email Placeholder",
-          "name": "newsletterEmailPlaceholder",
+          "name": "emailPlaceholder",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Newsletter Button Label",
-          "name": "newsletterButtonLabel",
+          "label": "Subscribe Button Label",
+          "name": "subscribeButtonLabel",
           "valueType": "string"
+        },
+        {
+          "component": "container",
+          "item": "footer-links-section",
+          "label": "Footer Link Sections",
+          "name": "footerLinkSections"
         },
         {
           "component": "text",
           "label": "Copyright",
           "name": "copyright",
           "valueType": "string"
-        },
-        {
-          "component": "container",
-          "item": "footer-link-section-item",
-          "label": "Footer Link Sections",
-          "name": "linkSections"
         }
       ]
     },
     {
-      "id": "footer-link-section-item",
+      "id": "footer-links-section",
       "fields": [
         {
           "component": "text",
@@ -125,7 +125,7 @@
     {
       "id": "footer",
       "components": [
-        "footer-link-section-item"
+        "footer-links-section"
       ]
     }
   ]

@@ -28,10 +28,6 @@
 
 @keyframes placeholder-wave{100%{-webkit-mask-position:-200% 0%;mask-position:-200% 0%}}
 
-.order-1{ order:1!important }
-
-.order-2{ order:2!important }
-
 @media (min-width:768px) { .order-md-1{ order:1!important }
 
 .order-md-2{ order:2!important } }
@@ -39,64 +35,3 @@
 @media (min-width:992px) { .order-lg-1{ order:1!important }
 
 .order-lg-2{ order:2!important } }
-
-/* About us section */
-.about-section{ 
-    margin-top: 7rem;
- }
-
-.about-section h2{ 
-    font-size: 3.0rem;
-    color: rgba(0, 40, 122, 1);
-    font-weight: 700;
-    line-height: 1.3;
-    text-align: center;
- }
-
-.about-section p{ 
-    font-size: 2rem;
-    line-height: 1.5;
-    color: #000;
-    font-weight: 500;
- }
-
-.about-section span{ 
-    color: #3253FF;
-    font-weight: 700;
- }
-
-.about-pointer{ 
-    width: 9rem;
-    transform: rotate(-19deg);
- }
-
-.about-container{ 
-    max-width: 83rem;
-    margin: 3rem auto 0px;
-    background: #8940FF;
-    text-align: center;
-    padding: 3rem;
-    border-radius: 71px;
-    color: white;
- }
-
-.about-container h4{ 
-    font-size: 3.5rem;
-    margin-bottom: 2rem;
-    font-weight: 700;
- }
-
-.about-container img{ 
-    width: 5rem;
- }
-
-.about-container h5{ 
-    font-size: 3rem;
-    margin-top: 1rem;
-    FONT-WEIGHT: 600;
- }
-
-.about-container p{ 
-    font-size: 1.1rem;
-    color: white;
- }

@@ -60,7 +60,9 @@
         "faqs",
         "contact-section",
         "footer",
-        "footer-section"
+        "footer-section",
+        "header",
+        "toast"
       ]
     }
   ]

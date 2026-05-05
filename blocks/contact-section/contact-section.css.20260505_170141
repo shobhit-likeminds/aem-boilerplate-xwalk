@@ -26,63 +26,17 @@
 
 @keyframes placeholder-wave{100%{-webkit-mask-position:-200% 0%;mask-position:-200% 0%}}
 
-/* contact us ends */
+.d-flex{ display:flex!important }
 
-.hero-section{ 
-    background-color: #F1F5FF;
-    padding: 2rem 0px;
- }
-
-.hero-description{ 
-    position: relative;
- }
-
-.hero-description h1{ 
-    font-size: 4rem;
-    font-weight: 700;
-    line-height: 1.1;
-    margin-bottom: 3rem;
- }
-
-.hero-description h1 span{ 
-    background: linear-gradient(
-    to bottom,
-    #F1F5FF 0%,
-    #F1F5FF 70%,
-    rgba(68, 255, 120, 0.5) 70%,
-    rgba(68, 255, 120, 0.5) 100%
-  );
-  transition: 0.4s;
- }
-
-.hero-description h1 span:hover{ 
-    background: rgba(68, 255, 120, 0.5);
- }
-
-.hero-description p{ 
-    color: #000;
-    font-size: 2rem;
-    margin: 1.5rem 0px 3rem;
- }
-
-.hero-description a{ 
-    font-size: 2rem;
-    border-radius: 6px;
- }
-
-.star-1, .star-2{ 
-    position: absolute;
-    opacity: 0.4;
- }
-
-.star-1{ 
-    top: -38px;
-    max-width: 3rem;
-    left: -12px;
- }
-
-.star-2{ 
-    max-width: 2rem;
-    right: 0px;
-    top: -12px;
+.bi::before{ 
+  display: inline-block;
+  font-family: bootstrap-icons !important;
+  font-style: normal;
+  font-weight: normal !important;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  vertical-align: -.125em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
  }

@@ -17,15 +17,15 @@
       }
     },
     {
-      "title": "About-Section-Feature-Item",
-      "id": "about-section-feature-item",
+      "title": "About-Feature-Item",
+      "id": "about-feature-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "about-section-feature-item",
-              "name": "About-Section-Feature-Item"
+              "model": "about-feature-item",
+              "name": "About-Feature-Item"
             }
           }
         }
@@ -38,49 +38,49 @@
       "fields": [
         {
           "component": "text",
-          "label": "Main Title",
-          "name": "mainTitle",
+          "label": "Section Title",
+          "name": "sectionTitle",
           "valueType": "string"
         },
         {
           "component": "richtext",
-          "label": "About Description (Left Side)",
-          "name": "description",
+          "label": "About Description",
+          "name": "aboutText",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Pointer Image (in paragraph)",
+          "label": "About Pointer Image",
           "name": "aboutPointerImage",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Main Image (Right Side)",
+          "label": "About Main Image",
           "name": "aboutMainImage",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Features Section Title",
+          "label": "Features Title",
           "name": "featuresTitle",
           "valueType": "string"
         },
         {
           "component": "container",
-          "item": "about-section-feature-item",
-          "label": "Feature Items",
+          "item": "about-feature-item",
+          "label": "Features",
           "name": "features"
         }
       ]
     },
     {
-      "id": "about-section-feature-item",
+      "id": "about-feature-item",
       "fields": [
         {
           "component": "reference",
-          "label": "Feature Icon",
-          "name": "featureIcon",
+          "label": "Feature Image",
+          "name": "featureImage",
           "valueType": "string"
         },
         {
@@ -102,7 +102,7 @@
     {
       "id": "about-section",
       "components": [
-        "about-section-feature-item"
+        "about-feature-item"
       ]
     }
   ]
