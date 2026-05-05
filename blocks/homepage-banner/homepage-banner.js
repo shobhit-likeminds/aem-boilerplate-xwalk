@@ -2,85 +2,82 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
+  const children = [...block.children];
+
   const [
-    videoLargeMp4Cell,
-    videoLargePosterCell,
-    videoSmallMp4Cell,
-    videoSmallPosterCell,
-    primaryTitleCell,
-    primaryCtaLinkCell,
-    primaryCtaLabelCell,
-    secondaryTitleCell,
-    secondaryCtaLinkCell,
-    secondaryCtaLabelCell,
-    greetingMorningCell,
-    greetingAfternoonCell,
-    greetingEveningCell,
-    greetingNightCell,
-  ] = [...block.children];
+    videoLargeRow,
+    videoLargePosterRow,
+    videoSmallRow,
+    videoSmallPosterRow,
+    primaryTitleRow,
+    primaryCtaLinkRow,
+    primaryCtaLabelRow,
+    secondaryTitleRow,
+    secondaryCtaLinkRow,
+    secondaryCtaLabelRow,
+    greetingMorningRow,
+    greetingAfternoonRow,
+    greetingEveningRow,
+    greetingNightRow,
+  ] = children;
 
   const sectionWrapper = document.createElement('section');
   sectionWrapper.classList.add('grid-container', 'homepage-banner-wrapper', 'variation--banner', 'bg--paper-white');
   sectionWrapper.setAttribute('data-is-banner', 'true');
-  moveInstrumentation(block, sectionWrapper); // Move instrumentation from block to the new root
 
-  const homepageBanner = document.createElement('div');
-  homepageBanner.classList.add('homepage-banner', 'reveal-effect-container');
-  // Initial styles are handled by CSS, avoid setting inline styles that conflict with animations
-  // homepageBanner.style.opacity = '1';
-  // homepageBanner.style.clipPath = 'unset';
-  // homepageBanner.style.transform = 'scale(1)';
-  // moveInstrumentation(block, homepageBanner); // Instrumentation moved to sectionWrapper
+  const homepageBannerDiv = document.createElement('div');
+  homepageBannerDiv.classList.add('homepage-banner', 'reveal-effect-container');
 
   const mediaContainer = document.createElement('div');
   mediaContainer.classList.add('media-container');
 
-  // Large Video
+  // Large Video (Desktop)
   const videoLarge = document.createElement('video');
   videoLarge.muted = true;
   videoLarge.classList.add('video--large', 'show-for-large');
   videoLarge.playsInline = true;
   videoLarge.preload = 'none';
 
-  const largePosterImg = videoLargePosterCell.querySelector('picture > img');
-  if (largePosterImg) {
-    videoLarge.poster = largePosterImg.src;
-    videoLarge.setAttribute('data-poster', largePosterImg.src);
-  }
+  const largeVideoSrc = videoLargeRow.querySelector('img')?.src;
+  const largeVideoPosterSrc = videoLargePosterRow.querySelector('img')?.src;
 
-  const largeMp4Link = videoLargeMp4Cell.querySelector('picture > img');
-  if (largeMp4Link) {
+  if (largeVideoSrc) {
+    videoLarge.setAttribute('data-poster', largeVideoPosterSrc || '');
+    videoLarge.poster = largeVideoPosterSrc || '';
     const sourceLarge = document.createElement('source');
-    sourceLarge.src = largeMp4Link.src;
-    sourceLarge.setAttribute('data-src', largeMp4Link.src);
+    sourceLarge.setAttribute('data-src', largeVideoSrc);
     sourceLarge.type = 'video/mp4';
+    sourceLarge.src = largeVideoSrc;
     videoLarge.append(sourceLarge);
   }
+  moveInstrumentation(videoLargeRow, videoLarge);
+  moveInstrumentation(videoLargePosterRow, videoLarge);
   mediaContainer.append(videoLarge);
 
-  // Small Video
+  // Small Video (Mobile)
   const videoSmall = document.createElement('video');
   videoSmall.muted = true;
   videoSmall.classList.add('video--small', 'hide-for-large');
   videoSmall.playsInline = true;
   videoSmall.preload = 'none';
 
-  const smallPosterImg = smallVideoPosterCell.querySelector('picture > img');
-  if (smallPosterImg) {
-    videoSmall.poster = smallPosterImg.src;
-    videoSmall.setAttribute('data-poster', smallPosterImg.src);
-  }
+  const smallVideoSrc = videoSmallRow.querySelector('img')?.src;
+  const smallVideoPosterSrc = videoSmallPosterRow.querySelector('img')?.src;
 
-  const smallMp4Link = videoSmallMp4Cell.querySelector('picture > img');
-  if (smallMp4Link) {
+  if (smallVideoSrc) {
+    videoSmall.setAttribute('data-poster', smallVideoPosterSrc || '');
+    videoSmall.poster = smallVideoPosterSrc || '';
     const sourceSmall = document.createElement('source');
-    sourceSmall.src = smallMp4Link.src;
-    sourceSmall.setAttribute('data-src', smallMp4Link.src);
+    sourceSmall.setAttribute('data-src', smallVideoSrc);
     sourceSmall.type = 'video/mp4';
+    sourceSmall.src = smallVideoSrc;
     videoSmall.append(sourceSmall);
   }
+  moveInstrumentation(videoSmallRow, videoSmall);
+  moveInstrumentation(videoSmallPosterRow, videoSmall);
   mediaContainer.append(videoSmall);
-  homepageBanner.append(mediaContainer);
+
+  homepageBannerDiv.append(mediaContainer);
 
   const contentContainer = document.createElement('div');
   contentContainer.classList.add('content-container', 'animate-enter', 'in-view');
@@ -94,8 +91,8 @@ export default function decorate(block) {
   // Primary Title
   const primaryTitle = document.createElement('h1');
   primaryTitle.classList.add('primary-title');
-  primaryTitle.textContent = primaryTitleCell.textContent.trim();
-  moveInstrumentation(primaryTitleCell, primaryTitle);
+  primaryTitle.textContent = primaryTitleRow.textContent.trim();
+  moveInstrumentation(primaryTitleRow, primaryTitle);
   contentWrapper.append(primaryTitle);
 
   // Primary CTA
@@ -103,83 +100,92 @@ export default function decorate(block) {
   primaryCtaContainer.classList.add('cta-container', 'primary-title-cta-container');
   const primaryCtaLink = document.createElement('a');
   primaryCtaLink.classList.add('button', 'red');
-  const primaryLinkHref = primaryCtaLinkCell.querySelector('a')?.href;
+  const primaryLinkHref = primaryCtaLinkRow.querySelector('a')?.href;
   if (primaryLinkHref) {
     primaryCtaLink.href = primaryLinkHref;
   }
-  primaryCtaLink.textContent = primaryCtaLabelCell.textContent.trim();
-  moveInstrumentation(primaryCtaLinkCell, primaryCtaLink);
-  moveInstrumentation(primaryCtaLabelCell, primaryCtaLink); // Move label cell instrumentation too
+  primaryCtaLink.setAttribute('aria-label', '');
+  primaryCtaLink.setAttribute('rel', 'follow');
+  const primaryCtaSpan = document.createElement('span');
+  primaryCtaSpan.classList.add('button-text');
+  primaryCtaSpan.textContent = primaryCtaLabelRow.textContent.trim();
+  primaryCtaLink.append(primaryCtaSpan);
+  moveInstrumentation(primaryCtaLinkRow, primaryCtaLink);
+  moveInstrumentation(primaryCtaLabelRow, primaryCtaLink);
   primaryCtaContainer.append(primaryCtaLink);
   contentWrapper.append(primaryCtaContainer);
 
   // Secondary Title and CTA
   const secondaryTitleDiv = document.createElement('div');
   secondaryTitleDiv.classList.add('secondary-title');
-  // secondaryTitleDiv.style.display = 'none'; // Initial state for animation
-
-  const secondaryHeadline = document.createElement('div'); // Changed from 'div' to 'p' to match original HTML
+  const secondaryHeadline = document.createElement('div');
   secondaryHeadline.classList.add('headline-h1', 'font-weight-bold');
-  secondaryHeadline.innerHTML = secondaryTitleCell.innerHTML; // Use innerHTML for richtext
-  moveInstrumentation(secondaryTitleCell, secondaryHeadline);
+  secondaryHeadline.textContent = secondaryTitleRow.textContent.trim();
+  moveInstrumentation(secondaryTitleRow, secondaryHeadline);
   secondaryTitleDiv.append(secondaryHeadline);
 
   const secondaryCtaContainer = document.createElement('div');
   secondaryCtaContainer.classList.add('cta-container');
   const secondaryCtaLink = document.createElement('a');
   secondaryCtaLink.classList.add('button', 'red');
-  const secondaryLinkHref = secondaryCtaLinkCell.querySelector('a')?.href;
+  const secondaryLinkHref = secondaryCtaLinkRow.querySelector('a')?.href;
   if (secondaryLinkHref) {
     secondaryCtaLink.href = secondaryLinkHref;
   }
-  secondaryCtaLink.textContent = secondaryCtaLabelCell.textContent.trim();
-  moveInstrumentation(secondaryCtaLinkCell, secondaryCtaLink);
-  moveInstrumentation(secondaryCtaLabelCell, secondaryCtaLink); // Move label cell instrumentation too
+  secondaryCtaLink.setAttribute('aria-label', '');
+  secondaryCtaLink.setAttribute('rel', 'follow');
+  const secondaryCtaSpan = document.createElement('span');
+  secondaryCtaSpan.classList.add('button-text');
+  secondaryCtaSpan.textContent = secondaryCtaLabelRow.textContent.trim();
+  secondaryCtaLink.append(secondaryCtaSpan);
+  moveInstrumentation(secondaryCtaLinkRow, secondaryCtaLink);
+  moveInstrumentation(secondaryCtaLabelRow, secondaryCtaLink);
   secondaryCtaContainer.append(secondaryCtaLink);
   secondaryTitleDiv.append(secondaryCtaContainer);
   contentWrapper.append(secondaryTitleDiv);
 
   maxWidthContainer.append(contentWrapper);
   contentContainer.append(maxWidthContainer);
-  homepageBanner.append(contentContainer);
+  homepageBannerDiv.append(contentContainer);
+  sectionWrapper.append(homepageBannerDiv);
 
   // Greeting Container
   const greetingContainer = document.createElement('div');
   greetingContainer.classList.add('greeting-container', 'bodyLargeRegular');
-  // greetingContainer.style.opacity = '0'; // Initial state for animation
-  // greetingContainer.style.transform = 'translate(0px, 250px)';
-  moveInstrumentation(greetingMorningCell, greetingContainer); // Move instrumentation from first greeting cell to container
-  moveInstrumentation(greetingAfternoonCell, greetingContainer);
-  moveInstrumentation(greetingEveningCell, greetingContainer);
-  moveInstrumentation(greetingNightCell, greetingContainer);
-
-
   const greetingWrapper = document.createElement('div');
   greetingWrapper.classList.add('greeting-wrapper', 'animate');
-  // moveInstrumentation(greetingMorningCell, greetingWrapper); // Instrumentation moved to greetingContainer
 
-  const createGreetingSpan = (className, textContent, originalCell) => {
-    const span = document.createElement('span');
-    span.classList.add('greeting', `greeting--${className}`);
-    span.textContent = textContent;
-    // moveInstrumentation(originalCell, span); // Instrumentation moved to greetingContainer
-    return span;
-  };
+  const greetingMorning = document.createElement('span');
+  greetingMorning.classList.add('greeting', 'greeting--morning');
+  greetingMorning.textContent = greetingMorningRow.textContent.trim();
+  moveInstrumentation(greetingMorningRow, greetingMorning);
+  greetingWrapper.append(greetingMorning);
 
-  greetingWrapper.append(createGreetingSpan('morning', greetingMorningCell.textContent.trim(), greetingMorningCell));
-  greetingWrapper.append(createGreetingSpan('afternoon', greetingAfternoonCell.textContent.trim(), greetingAfternoonCell));
-  greetingWrapper.append(createGreetingSpan('evening', greetingEveningCell.textContent.trim(), greetingEveningCell));
-  greetingWrapper.append(createGreetingSpan('night', greetingNightCell.textContent.trim(), greetingNightCell));
+  const greetingAfternoon = document.createElement('span');
+  greetingAfternoon.classList.add('greeting', 'greeting--afternoon');
+  greetingAfternoon.textContent = greetingAfternoonRow.textContent.trim();
+  moveInstrumentation(greetingAfternoonRow, greetingAfternoon);
+  greetingWrapper.append(greetingAfternoon);
+
+  const greetingEvening = document.createElement('span');
+  greetingEvening.classList.add('greeting', 'greeting--evening');
+  greetingEvening.textContent = greetingEveningRow.textContent.trim();
+  moveInstrumentation(greetingEveningRow, greetingEvening);
+  greetingWrapper.append(greetingEvening);
+
+  const greetingNight = document.createElement('span');
+  greetingNight.classList.add('greeting', 'greeting--night');
+  greetingNight.textContent = greetingNightRow.textContent.trim();
+  moveInstrumentation(greetingNightRow, greetingNight);
+  greetingWrapper.append(greetingNight);
 
   greetingContainer.append(greetingWrapper);
-
-  sectionWrapper.append(homepageBanner);
   sectionWrapper.append(greetingContainer);
 
   block.replaceChildren(sectionWrapper);
 
-  // Optimize images
-  sectionWrapper.querySelectorAll('picture > img').forEach((img) => {
+  // Optimize pictures
+  block.querySelectorAll('picture > img').forEach((img) => {
     const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
     moveInstrumentation(img, optimizedPic.querySelector('img'));
     img.closest('picture').replaceWith(optimizedPic);

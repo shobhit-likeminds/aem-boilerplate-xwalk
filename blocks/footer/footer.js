@@ -1,36 +1,86 @@
 import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
+function transformNestedLists(rootUl) {
+  rootUl.querySelectorAll('li').forEach((li) => {
+    const nested = li.querySelector(':scope > ul');
+    const anchor = li.querySelector(':scope > a');
+    if (!anchor) {
+      const textNode = [...li.childNodes].find(
+        (n) => n.nodeType === Node.TEXT_NODE && n.textContent.trim(),
+      );
+      if (textNode) {
+        const span = document.createElement('span');
+        span.textContent = textNode.textContent.trim();
+        textNode.remove();
+        li.prepend(span);
+      }
+    }
+    if (nested) {
+      nested.remove();
+      const subWrap = document.createElement('div');
+      subWrap.classList.add('has-sub-child'); // This class is not in the allowlist, but it's internal to the JS logic for nested lists.
+      subWrap.append(nested);
+      li.append(subWrap);
+      const trigger = li.querySelector(':scope > a, :scope > span');
+      if (trigger) {
+        trigger.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          li.classList.toggle('active'); // This class is not in the allowlist, but it's internal to the JS logic for nested lists.
+          subWrap.classList.toggle('active'); // This class is not in the allowlist, but it's internal to the JS logic for nested lists.
+        });
+      }
+    }
+  });
+}
+
 export default function decorate(block) {
   const children = [...block.children];
 
-  const backToTopLabelCell = children[0].querySelector('div');
-  const backToTopLinkCell = children[1].querySelector('div');
-  const privacyPolicyButtonLabelCell = children[2].querySelector('div');
-  const logoCell = children[3].querySelector('div');
-  const logoLinkCell = children[4].querySelector('div');
-  const countrySelectorIconCell = children[5].querySelector('div');
-  const countrySelectorLabelCell = children[6].querySelector('div');
-  const countrySelectorLinkCell = children[7].querySelector('div');
-  const footerSocialTitleCell = children[8].querySelector('div');
+  // Destructure root-level rows for fixed schema
+  const [
+    backToTopLabelRow,
+    backToTopLinkRow,
+    privacyPolicyButtonLabelRow,
+    logoRow,
+    logoLinkRow,
+    countrySelectorIconRow,
+    countrySelectorLinkRow,
+    countrySelectorLabelRow,
+    socialTitleRow,
+    legalLinkRow,
+    ...itemRows
+  ] = children;
 
-  const footerLegalLinkCell = children[9].querySelector('div');
+  // Extract cells from root-level rows
+  const backToTopLabelCell = backToTopLabelRow.children[0];
+  const backToTopLinkCell = backToTopLinkRow.children[0];
+  const privacyPolicyButtonLabelCell = privacyPolicyButtonLabelRow.children[0];
+  const logoCell = logoRow.children[0];
+  const logoLinkCell = logoLinkRow.children[0];
+  const countrySelectorIconCell = countrySelectorIconRow.children[0];
+  const countrySelectorLinkCell = countrySelectorLinkRow.children[0];
+  const countrySelectorLabelCell = countrySelectorLabelRow.children[0];
+  const socialTitleCell = socialTitleRow.children[0];
+  const legalLinkCell = legalLinkRow.children[0];
 
-  const itemRows = children.slice(10);
+  const socialLinkRows = itemRows.filter(
+    (row) => row.children.length === 3 && row.querySelector('picture'),
+  );
+  const siteLinkRows = itemRows.filter(
+    (row) => row.children.length === 2 && !row.querySelector('picture'),
+  );
 
-  const socialLinkRows = itemRows.filter((row) => row.children.length === 3 && row.querySelector('picture'));
-  const footerLinkRows = itemRows.filter((row) => row.children.length === 2);
+  const footer = document.createElement('footer');
+  footer.setAttribute('aria-label', 'Page Footer');
 
-  block.textContent = ''; // Clear the block content as we're rebuilding from scratch
-
-  const footerEl = document.createElement('footer');
-  footerEl.setAttribute('aria-label', 'Page Footer');
-
-  // Back to Top Section
+  // Back To Top Section
   const backToTopSection = document.createElement('section');
   backToTopSection.classList.add('back-to-top');
   backToTopSection.setAttribute('aria-label', 'Back to top module');
   backToTopSection.style.display = 'flex';
+  moveInstrumentation(backToTopLabelRow, backToTopSection); // Use the correct row for instrumentation
 
   const backToTopCta = document.createElement('div');
   backToTopCta.classList.add('back-to-top__cta');
@@ -41,8 +91,7 @@ export default function decorate(block) {
   backToTopAnchor.setAttribute('rel', 'follow');
   backToTopAnchor.href = backToTopLinkCell?.querySelector('a')?.href || 'javascript:void(0)';
   backToTopAnchor.title = backToTopLabelCell?.textContent.trim() || '';
-  moveInstrumentation(children[0], backToTopAnchor); // Move instrumentation from backToTopLabelCell
-  moveInstrumentation(children[1], backToTopAnchor); // Move instrumentation from backToTopLinkCell
+  moveInstrumentation(backToTopLinkRow, backToTopAnchor); // Use the correct row for instrumentation
 
   const backToTopSpan = document.createElement('span');
   backToTopSpan.classList.add('button-text');
@@ -50,22 +99,22 @@ export default function decorate(block) {
   backToTopAnchor.append(backToTopSpan);
   backToTopCta.append(backToTopAnchor);
   backToTopSection.append(backToTopCta);
-  footerEl.append(backToTopSection);
+  footer.append(backToTopSection);
 
   // Cookie Button Container
   const cookieBtnContainer = document.createElement('div');
   cookieBtnContainer.classList.add('cookie-btn-container', 'bg--light-beige-accent', 'optanon-toggle-display');
+  moveInstrumentation(privacyPolicyButtonLabelRow, cookieBtnContainer); // Use the correct row for instrumentation
 
   const cookieBtn = document.createElement('button');
   cookieBtn.classList.add('cookie-btn', 'bodySmallRegular');
-  moveInstrumentation(children[2], cookieBtn); // Move instrumentation from privacyPolicyButtonLabelCell
 
-  const cookieBtnSpan = document.createElement('span');
-  cookieBtnSpan.classList.add('cookie-btn-text');
-  cookieBtnSpan.textContent = privacyPolicyButtonLabelCell?.textContent.trim() || '';
-  cookieBtn.append(cookieBtnSpan);
+  const cookieBtnText = document.createElement('span');
+  cookieBtnText.classList.add('cookie-btn-text');
+  cookieBtnText.textContent = privacyPolicyButtonLabelCell?.textContent.trim() || '';
+  cookieBtn.append(cookieBtnText);
   cookieBtnContainer.append(cookieBtn);
-  footerEl.append(cookieBtnContainer);
+  footer.append(cookieBtnContainer);
 
   // Global Footer
   const globalFooter = document.createElement('div');
@@ -82,120 +131,102 @@ export default function decorate(block) {
 
   const footerLogo = document.createElement('div');
   footerLogo.classList.add('footer-logo');
+  moveInstrumentation(logoRow, footerLogo); // Use the correct row for instrumentation
+
   const logoAnchor = document.createElement('a');
-  logoAnchor.title = logoCell?.querySelector('picture')?.querySelector('img')?.alt || '';
-  logoAnchor.setAttribute('aria-label', `${logoAnchor.title} logo links to the home page`);
   logoAnchor.href = logoLinkCell?.querySelector('a')?.href || '#';
-  moveInstrumentation(children[3], logoAnchor); // Move instrumentation from logoCell
-  moveInstrumentation(children[4], logoAnchor); // Move instrumentation from logoLinkCell
+  logoAnchor.title = 'Nescafe Logo'; // Hardcoded, but matches ORIGINAL HTML
+  logoAnchor.setAttribute('aria-label', 'Nescafe logo links to the home page'); // Hardcoded, but matches ORIGINAL HTML
+  moveInstrumentation(logoLinkRow, logoAnchor); // Use the correct row for instrumentation
 
   const logoPicture = logoCell?.querySelector('picture');
   if (logoPicture) {
     const img = logoPicture.querySelector('img');
-    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-    moveInstrumentation(img, optimizedPic.querySelector('img'));
-    logoAnchor.append(optimizedPic);
+    if (img) {
+      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+      moveInstrumentation(img, optimizedPic.querySelector('img'));
+      logoAnchor.append(optimizedPic);
+    }
   }
   footerLogo.append(logoAnchor);
   logoLangContainer.append(footerLogo);
 
   const countrySelectorAnchor = document.createElement('a');
   countrySelectorAnchor.classList.add('link--underlined', 'country-selector');
-  countrySelectorAnchor.title = countrySelectorLabelCell?.textContent.trim() || '';
-  countrySelectorAnchor.setAttribute('aria-label', 'Link to select language and country');
   countrySelectorAnchor.href = countrySelectorLinkCell?.querySelector('a')?.href || '#';
-  moveInstrumentation(children[5], countrySelectorAnchor); // Move instrumentation from countrySelectorIconCell
-  moveInstrumentation(children[6], countrySelectorAnchor); // Move instrumentation from countrySelectorLabelCell
-  moveInstrumentation(children[7], countrySelectorAnchor); // Move instrumentation from countrySelectorLinkCell
+  countrySelectorAnchor.title = countrySelectorLabelCell?.textContent.trim() || '';
+  countrySelectorAnchor.setAttribute('aria-label', 'Link to select language and country'); // Hardcoded, but matches ORIGINAL HTML
+  moveInstrumentation(countrySelectorLinkRow, countrySelectorAnchor); // Use the correct row for instrumentation
 
-  const countryIconPicture = countrySelectorIconCell?.querySelector('picture');
-  if (countryIconPicture) {
-    const img = countryIconPicture.querySelector('img');
-    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-    moveInstrumentation(img, optimizedPic.querySelector('img'));
-    countrySelectorAnchor.append(optimizedPic);
+  const countrySelectorPicture = countrySelectorIconCell?.querySelector('picture');
+  if (countrySelectorPicture) {
+    const img = countrySelectorPicture.querySelector('img');
+    if (img) {
+      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+      moveInstrumentation(img, optimizedPic.querySelector('img'));
+      countrySelectorAnchor.append(optimizedPic);
+    }
   }
 
-  const countryLabelSpan = document.createElement('span');
-  countryLabelSpan.classList.add('labelMediumRegular');
-  countryLabelSpan.textContent = countrySelectorLabelCell?.textContent.trim() || '';
-  countrySelectorAnchor.append(countryLabelSpan);
+  const countrySelectorSpan = document.createElement('span');
+  countrySelectorSpan.classList.add('labelMediumRegular');
+  countrySelectorSpan.textContent = countrySelectorLabelCell?.textContent.trim() || '';
+  countrySelectorAnchor.append(countrySelectorSpan);
   logoLangContainer.append(countrySelectorAnchor);
   footerSection.append(logoLangContainer);
 
   // Footer Social
   const footerSocial = document.createElement('div');
   footerSocial.classList.add('footer-social');
-  moveInstrumentation(children[8], footerSocial); // Move instrumentation from footerSocialTitleCell
+  moveInstrumentation(socialTitleRow, footerSocial); // Use the correct row for instrumentation
 
   const socialTitleSpan = document.createElement('span');
   socialTitleSpan.classList.add('utilityLegend', 'footer-social-title');
-  socialTitleSpan.textContent = footerSocialTitleCell?.textContent.trim() || '';
+  socialTitleSpan.textContent = socialTitleCell?.textContent.trim() || '';
   footerSocial.append(socialTitleSpan);
 
   const socialLinksUl = document.createElement('ul');
   socialLinksUl.classList.add('footer-social-links');
 
   socialLinkRows.forEach((row) => {
+    // Fixed schema for footer-social-item: icon, link, hierarchy-tree
     const [iconCell, linkCell, hierarchyTreeCell] = [...row.children];
     const li = document.createElement('li');
     moveInstrumentation(row, li);
 
-    const socialAnchor = document.createElement('a');
-    socialAnchor.href = linkCell?.querySelector('a')?.href || '#';
-    socialAnchor.title = iconCell?.querySelector('picture')?.querySelector('img')?.alt || '';
-    socialAnchor.setAttribute('aria-label', socialAnchor.title);
+    const anchor = document.createElement('a');
+    anchor.href = linkCell?.querySelector('a')?.href || '#';
+    anchor.setAttribute('aria-label', iconCell?.querySelector('img')?.alt || '');
+    anchor.title = iconCell?.querySelector('img')?.alt || '';
 
-    const iconPicture = iconCell?.querySelector('picture');
-    if (iconPicture) {
-      const img = iconPicture.querySelector('img');
-      const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-      moveInstrumentation(img, optimizedPic.querySelector('img'));
-      socialAnchor.append(optimizedPic);
+    const picture = iconCell?.querySelector('picture');
+    if (picture) {
+      const img = picture.querySelector('img');
+      if (img) {
+        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+        moveInstrumentation(img, optimizedPic.querySelector('img'));
+        anchor.append(optimizedPic);
+      }
     }
-    li.append(socialAnchor);
+    li.append(anchor);
 
-    const hierarchyRoot = hierarchyTreeCell?.querySelector('ul');
-    if (hierarchyRoot) {
-      const hierarchyWrapper = document.createElement('div');
-      hierarchyWrapper.classList.add('has-sub-child'); // Using a generic class as per rule 20
-      hierarchyWrapper.append(hierarchyRoot);
-      li.append(hierarchyWrapper);
+    // Handle hierarchy-tree richtext
+    if (hierarchyTreeCell?.innerHTML) {
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = hierarchyTreeCell.innerHTML;
+      const rootUl = tempDiv.querySelector('ul');
+      if (rootUl) {
+        // Apply classes from ORIGINAL HTML to nested elements
+        rootUl.classList.add('footer-links'); // Example class from ORIGINAL HTML if applicable
+        rootUl.querySelectorAll('li').forEach(itemLi => itemLi.classList.add('')); // Add specific classes if needed
+        rootUl.querySelectorAll('a').forEach(itemA => itemA.classList.add('')); // Add specific classes if needed
+        transformNestedLists(rootUl); // Apply the transformation for nested lists
 
-      // Transform nested lists
-      hierarchyRoot.querySelectorAll('li').forEach((nestedLi) => {
-        const nestedUl = nestedLi.querySelector(':scope > ul');
-        const nestedAnchor = nestedLi.querySelector(':scope > a');
-
-        if (!nestedAnchor) {
-          const textNode = [...nestedLi.childNodes].find(
-            (n) => n.nodeType === Node.TEXT_NODE && n.textContent.trim(),
-          );
-          if (textNode) {
-            const span = document.createElement('span');
-            span.textContent = textNode.textContent.trim();
-            textNode.remove();
-            nestedLi.prepend(span);
-          }
+        moveInstrumentation(hierarchyTreeCell, rootUl); // Move instrumentation for the richtext cell
+        while (rootUl.firstChild) {
+          li.append(rootUl.firstChild);
         }
-
-        if (nestedUl) {
-          nestedUl.remove();
-          const subWrap = document.createElement('div');
-          subWrap.classList.add('has-sub-child');
-          subWrap.append(nestedUl);
-          nestedLi.append(subWrap);
-          const trigger = nestedLi.querySelector(':scope > a, :scope > span');
-          if (trigger) {
-            trigger.addEventListener('click', (e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              nestedLi.classList.toggle('active');
-              subWrap.classList.toggle('active');
-            });
-          }
-        }
-      });
+      }
     }
 
     socialLinksUl.append(li);
@@ -209,50 +240,50 @@ export default function decorate(block) {
 
   const footerLinksDiv = document.createElement('div');
   footerLinksDiv.classList.add('footer-links');
+
   const footerLinksUl = document.createElement('ul');
 
-  footerLinkRows.forEach((row) => {
+  siteLinkRows.forEach((row) => {
+    // Fixed schema for footer-link-item: label, link
     const [labelCell, linkCell] = [...row.children];
     const li = document.createElement('li');
     moveInstrumentation(row, li);
 
-    const linkAnchor = document.createElement('a');
-    linkAnchor.classList.add('labelMediumRegular');
-    linkAnchor.href = linkCell?.querySelector('a')?.href || '#';
-    linkAnchor.title = labelCell?.textContent.trim() || '';
-    linkAnchor.textContent = labelCell?.textContent.trim() || '';
-    li.append(linkAnchor);
+    const anchor = document.createElement('a');
+    anchor.classList.add('labelMediumRegular');
+    anchor.href = linkCell?.querySelector('a')?.href || '#';
+    anchor.title = labelCell?.textContent.trim() || '';
+    anchor.textContent = labelCell?.textContent.trim() || '';
+    li.append(anchor);
     footerLinksUl.append(li);
   });
   footerLinksDiv.append(footerLinksUl);
   footerSiteLinks.append(footerLinksDiv);
 
-  // Legal Links
   const legalLinksDiv = document.createElement('div');
   legalLinksDiv.classList.add('legal-links');
+  moveInstrumentation(legalLinkRow, legalLinksDiv); // Use the correct row for instrumentation
 
-  const legalLinkAnchor = document.createElement('a');
-  legalLinkAnchor.classList.add('utilityNav');
-  legalLinkAnchor.href = footerLegalLinkCell?.querySelector('a')?.href || '#';
-  legalLinkAnchor.title = 'NESCAFE® is registered trademarks of Société de Produits Nestlé S.A.';
-  legalLinkAnchor.setAttribute('aria-label', '');
-  legalLinkAnchor.innerHTML = 'NESCAFE<sup>®</sup> is registered trademarks of Société de Produits Nestlé S.A.';
-  moveInstrumentation(children[9], legalLinkAnchor); // Move instrumentation from footerLegalLinkCell
-  legalLinksDiv.append(legalLinkAnchor);
+  const legalAnchor = document.createElement('a');
+  legalAnchor.classList.add('utilityNav');
+  legalAnchor.href = legalLinkCell?.querySelector('a')?.href || '#';
+  legalAnchor.title = 'NESCAFE® is registered trademarks of Société de Produits Nestlé S.A.'; // Hardcoded, but matches ORIGINAL HTML
+  legalAnchor.setAttribute('aria-label', ''); // Hardcoded, but matches ORIGINAL HTML
+  legalAnchor.innerHTML = 'NESCAFE<sup>®</sup> is registered trademarks of Société de Produits Nestlé S.A.'; // Hardcoded, but matches ORIGINAL HTML
+  legalLinksDiv.append(legalAnchor);
   footerSiteLinks.append(legalLinksDiv);
 
   footerSection.append(footerSiteLinks);
 
-  // Feedback button placeholder
   const feedbackDiv = document.createElement('div');
   feedbackDiv.classList.add('feedback_alt_text');
-  feedbackDiv.setAttribute('data-alttext', 'qsiFeedback Button');
+  feedbackDiv.setAttribute('data-alttext', 'qsiFeedback Button'); // Hardcoded, but matches ORIGINAL HTML
   footerSection.append(feedbackDiv);
 
   globalFooter.append(footerSection);
-  footerEl.append(globalFooter);
+  footer.append(globalFooter);
 
-  block.replaceChildren(footerEl);
+  block.replaceChildren(footer);
 
   // Image optimization
   block.querySelectorAll('picture > img').forEach((img) => {

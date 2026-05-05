@@ -3,17 +3,17 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
   const [
-    desktopImageRow,
-    mobileImageRow,
-    headlineRow,
-    descriptionRow,
-    ctaLinkRow,
-    ctaLabelRow,
+    backgroundImageDesktopCell,
+    backgroundImageMobileCell,
+    titleCell,
+    descriptionCell,
+    ctaLinkCell,
+    ctaLabelCell,
   ] = [...block.children];
 
   const section = document.createElement('section');
-  // Removed 'sustainability-hub-recycle-section' as the outer block div already has it.
   section.classList.add(
+    'sustainability-hub-recycle-section',
     'grid-container',
     'bg--paper-white',
     'homepage-recommended-article',
@@ -21,38 +21,35 @@ export default function decorate(block) {
     'animate-enter',
     'in-view',
   );
-  section.style.paddingBottom = '141px'; // From original HTML
+  moveInstrumentation(block, section);
 
   const gridX = document.createElement('div');
   gridX.classList.add('grid-x', 'pos-rel');
 
-  const imageCell = document.createElement('div');
-  imageCell.classList.add('cell', 'bg-container', 'animate-enter-fade', 'animate-delay-3');
+  const bgContainerCell = document.createElement('div');
+  bgContainerCell.classList.add('cell', 'bg-container', 'animate-enter-fade', 'animate-delay-3');
 
-  const desktopPicture = desktopImageRow.querySelector('picture');
-  const mobilePicture = mobileImageRow.querySelector('picture');
+  const desktopPicture = backgroundImageDesktopCell.querySelector('picture');
+  const mobilePicture = backgroundImageMobileCell.querySelector('picture');
 
-  if (desktopPicture) {
-    const desktopImg = desktopPicture.querySelector('img');
-    const optimizedDesktopPic = createOptimizedPicture(
-      desktopImg.src,
-      desktopImg.alt,
+  if (desktopPicture && mobilePicture) {
+    const imgDesktop = desktopPicture.querySelector('img');
+    const imgMobile = mobilePicture.querySelector('img');
+
+    const optimizedPicture = createOptimizedPicture(
+      imgDesktop.src,
+      imgDesktop.alt,
       false,
-      [{ media: '(min-width: 1440px)', width: '2880' }, { media: '(min-width: 1024px)', width: '2880' }, { media: '(min-width: 768px)', width: '2880' }],
+      [
+        { media: '(min-width: 1440px)', width: '1440' },
+        { media: '(min-width: 1024px)', width: '1024' },
+        { media: '(min-width: 768px)', width: '768' },
+        { media: '(min-width: 0px)', width: '750', src: imgMobile.src },
+      ],
     );
-    // Add mobile source if available
-    if (mobilePicture) {
-      const mobileImg = mobilePicture.querySelector('img');
-      const mobileSource = document.createElement('source');
-      mobileSource.setAttribute('media', '(min-width: 0px)');
-      mobileSource.setAttribute('data-srcset', mobileImg.src);
-      mobileSource.setAttribute('srcset', mobileImg.src);
-      optimizedDesktopPic.prepend(mobileSource);
-    }
-    const imgElement = optimizedDesktopPic.querySelector('img');
-    imgElement.classList.add('animate-enter-fade', 'animate-delay-3', 'ls-is-cached', 'lazyloaded');
-    moveInstrumentation(desktopImageRow, optimizedDesktopPic.querySelector('img'));
-    imageCell.append(optimizedDesktopPic);
+    optimizedPicture.querySelector('img').classList.add('animate-enter-fade', 'animate-delay-3', 'ls-is-cached', 'lazyloaded');
+    moveInstrumentation(backgroundImageDesktopCell, optimizedPicture.querySelector('img'));
+    bgContainerCell.append(optimizedPicture);
   }
 
   const contentCell = document.createElement('div');
@@ -64,38 +61,37 @@ export default function decorate(block) {
   const textContainer = document.createElement('div');
   textContainer.classList.add('text-container', 'text-center');
 
-  const headline = document.createElement('h2');
-  headline.classList.add('title', 'headline-h2', 'animate-enter-fade-up-short', 'animate-delay-3');
-  moveInstrumentation(headlineRow, headline);
-  headline.textContent = headlineRow.textContent.trim();
+  const title = document.createElement('h2');
+  title.classList.add('title', 'headline-h2', 'animate-enter-fade-up-short', 'animate-delay-3');
+  title.textContent = titleCell.textContent.trim();
+  moveInstrumentation(titleCell, title);
 
-  const description = document.createElement('div'); // Changed to div for richtext
+  const description = document.createElement('div');
   description.classList.add('description', 'bodyMediumRegular', 'animate-enter-fade-up-short', 'animate-delay-5');
-  moveInstrumentation(descriptionRow, description);
-  // Read innerHTML directly from the cell for richtext
-  description.innerHTML = descriptionRow.children[0]?.innerHTML || '';
+  description.innerHTML = descriptionCell.innerHTML;
+  moveInstrumentation(descriptionCell, description);
 
   const ctaLink = document.createElement('a');
   ctaLink.classList.add('button', 'transparent-black', 'see-all-products', 'animate-enter-fade-up-short', 'animate-delay-7');
-  const foundLink = ctaLinkRow.querySelector('a');
-  if (foundLink) {
-    ctaLink.href = foundLink.href;
-    // Use ctaLabelRow.textContent.trim() for the title attribute as per original HTML
-    ctaLink.setAttribute('title', ctaLabelRow.textContent.trim());
-    ctaLink.setAttribute('aria-label', ''); // From original HTML
-    ctaLink.setAttribute('rel', 'follow'); // From original HTML
+  const foundCtaLink = ctaLinkCell.querySelector('a');
+  if (foundCtaLink) {
+    ctaLink.href = foundCtaLink.href;
   }
+  ctaLink.title = ctaLabelCell.textContent.trim();
+  ctaLink.setAttribute('aria-label', '');
+  ctaLink.setAttribute('rel', 'follow');
 
   const ctaSpan = document.createElement('span');
   ctaSpan.classList.add('button-text');
-  ctaSpan.textContent = ctaLabelRow.textContent.trim();
+  ctaSpan.textContent = ctaLabelCell.textContent.trim();
   ctaLink.append(ctaSpan);
-  moveInstrumentation(ctaLinkRow, ctaLink);
+  moveInstrumentation(ctaLinkCell, ctaLink);
+  moveInstrumentation(ctaLabelCell, ctaLink);
 
-  textContainer.append(headline, description, ctaLink);
+  textContainer.append(title, description, ctaLink);
   whiteBgPatch.append(textContainer);
   contentCell.append(whiteBgPatch);
-  gridX.append(imageCell, contentCell);
+  gridX.append(bgContainerCell, contentCell);
   section.append(gridX);
 
   block.replaceChildren(section);

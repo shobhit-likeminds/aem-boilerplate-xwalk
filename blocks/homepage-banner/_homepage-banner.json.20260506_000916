@@ -23,25 +23,25 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Large Video Source (Desktop)",
-          "name": "videoLarge",
+          "label": "Large Video MP4 Source",
+          "name": "videoLargeMp4",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Large Video Poster (Desktop)",
+          "label": "Large Video Poster Image",
           "name": "videoLargePoster",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Small Video Source (Mobile)",
-          "name": "videoSmall",
+          "label": "Small Video MP4 Source",
+          "name": "videoSmallMp4",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Small Video Poster (Mobile)",
+          "label": "Small Video Poster Image",
           "name": "videoSmallPoster",
           "valueType": "string"
         },
@@ -64,7 +64,7 @@
           "valueType": "string"
         },
         {
-          "component": "text",
+          "component": "richtext",
           "label": "Secondary Title",
           "name": "secondaryTitle",
           "valueType": "string"
@@ -83,25 +83,25 @@
         },
         {
           "component": "text",
-          "label": "Greeting Morning",
+          "label": "Greeting (Morning)",
           "name": "greetingMorning",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Greeting Afternoon",
+          "label": "Greeting (Afternoon)",
           "name": "greetingAfternoon",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Greeting Evening",
+          "label": "Greeting (Evening)",
           "name": "greetingEvening",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Greeting Night",
+          "label": "Greeting (Night)",
           "name": "greetingNight",
           "valueType": "string"
         }

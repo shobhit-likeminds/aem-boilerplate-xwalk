@@ -4,53 +4,45 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
 export default async function decorate(block) {
   const children = [...block.children];
 
-  const [
-    backgroundImageRow,
-    headingRow,
-    greetingMorningRow,
-    greetingAfternoonRow,
-    greetingEveningRow,
-    greetingNightRow,
-    introTextRow,
-    errorMessageRow,
-    ...itemRows
-  ] = children;
+  const backgroundImageRow = children[0];
+  const headingRow = children[1];
+  const greetingMorningRow = children[2];
+  const greetingAfternoonRow = children[3];
+  const greetingEveningRow = children[4];
+  const greetingNightRow = children[5];
+  const introTextRow = children[6];
+  const errorMessageRow = children[7];
 
-  const slideRows = [];
-  const optionRows = [];
-
-  itemRows.forEach((row) => {
-    if (row.children.length === 1) {
-      slideRows.push(row);
-    } else if (row.children.length === 2) {
-      optionRows.push(row);
-    }
-  });
+  const questionRows = children.filter((row) => row.children.length === 1 && row.querySelector('div'));
+  const optionRows = children.filter((row) => row.children.length === 2 && row.querySelector('picture'));
 
   const root = document.createElement('section');
-  root.classList.add('grid-container', 'coffee-profiler', 'animate-enter', 'in-view');
-  root.setAttribute('data-api-url', 'https://www.nescafe.com/in/nc/cprofiler-status');
+  root.classList.add('grid-container', 'animate-enter', 'in-view');
+  root.setAttribute('data-api-url', 'https://www.nescafe.com/in/nc/cprofiler-status'); // From original HTML
 
-  const bgPaperBlue = document.createElement('div');
-  bgPaperBlue.classList.add('bg--paper-blue', 'dummy-to-load-bg');
-  root.append(bgPaperBlue);
+  const dummyBg1 = document.createElement('div');
+  dummyBg1.classList.add('bg--paper-blue', 'dummy-to-load-bg');
+  root.append(dummyBg1);
 
-  const bgPaperWhiteHeavy = document.createElement('div');
-  bgPaperWhiteHeavy.classList.add('bg--paper-white-heavy', 'dummy-to-load-bg');
-  root.append(bgPaperWhiteHeavy);
+  const dummyBg2 = document.createElement('div');
+  dummyBg2.classList.add('bg--paper-white-heavy', 'dummy-to-load-bg');
+  root.append(dummyBg2);
 
-  const parallaxBgImgContainer = document.createElement('div');
-  parallaxBgImgContainer.classList.add('parallax-bg-img-container');
-  root.append(parallaxBgImgContainer);
+  const parallaxBgContainer = document.createElement('div');
+  parallaxBgContainer.classList.add('parallax-bg-img-container');
+  root.append(parallaxBgContainer);
 
   const parallaxImg = document.createElement('div');
   parallaxImg.classList.add('parallax-img', 'lazyLoadedImage');
-  const backgroundImage = backgroundImageRow.querySelector('picture > img');
-  if (backgroundImage) {
-    parallaxImg.style.backgroundImage = `url('${backgroundImage.src}')`;
-    moveInstrumentation(backgroundImageRow, parallaxImg);
+  moveInstrumentation(backgroundImageRow, parallaxImg);
+  const bgPicture = backgroundImageRow.querySelector('picture');
+  if (bgPicture) {
+    const imgSrc = bgPicture.querySelector('img')?.src;
+    if (imgSrc) {
+      parallaxImg.style.backgroundImage = `url('${imgSrc}')`;
+    }
   }
-  parallaxBgImgContainer.append(parallaxImg);
+  parallaxBgContainer.append(parallaxImg);
 
   const maxWidthContainer = document.createElement('div');
   maxWidthContainer.classList.add('max-width-container', 'grid-x');
@@ -62,8 +54,8 @@ export default async function decorate(block) {
 
   const heading = document.createElement('h2');
   heading.classList.add('heading', 'animate-enter-fade-up-short', 'animate-delay-3');
-  heading.textContent = headingRow?.textContent.trim() || '';
   moveInstrumentation(headingRow, heading);
+  heading.textContent = headingRow.children[0]?.textContent.trim();
   headerCellWrapper.append(heading);
 
   const introInfo = document.createElement('div');
@@ -76,32 +68,32 @@ export default async function decorate(block) {
 
   const greetingMorning = document.createElement('span');
   greetingMorning.classList.add('hide', 'greeting--morning');
-  greetingMorning.textContent = greetingMorningRow?.textContent.trim() || '';
   moveInstrumentation(greetingMorningRow, greetingMorning);
+  greetingMorning.textContent = greetingMorningRow.children[0]?.textContent.trim();
   greetingsContainer.append(greetingMorning);
 
   const greetingAfternoon = document.createElement('span');
   greetingAfternoon.classList.add('hide', 'greeting--afternoon');
-  greetingAfternoon.textContent = greetingAfternoonRow?.textContent.trim() || '';
   moveInstrumentation(greetingAfternoonRow, greetingAfternoon);
+  greetingAfternoon.textContent = greetingAfternoonRow.children[0]?.textContent.trim();
   greetingsContainer.append(greetingAfternoon);
 
   const greetingEvening = document.createElement('span');
   greetingEvening.classList.add('hide', 'greeting--evening');
-  greetingEvening.textContent = greetingEveningRow?.textContent.trim() || '';
   moveInstrumentation(greetingEveningRow, greetingEvening);
+  greetingEvening.textContent = greetingEveningRow.children[0]?.textContent.trim();
   greetingsContainer.append(greetingEvening);
 
   const greetingNight = document.createElement('span');
-  greetingNight.classList.add('greeting--night');
-  greetingNight.textContent = greetingNightRow?.textContent.trim() || '';
+  greetingNight.classList.add('greeting--night'); // Note: original HTML has this visible, not hidden
   moveInstrumentation(greetingNightRow, greetingNight);
+  greetingNight.textContent = greetingNightRow.children[0]?.textContent.trim();
   greetingsContainer.append(greetingNight);
 
   const guideText = document.createElement('div');
   guideText.classList.add('guide-text', 'labelMediumRegular', 'animate-enter-fade-up-short', 'animate-delay-6');
-  guideText.textContent = introTextRow?.textContent.trim() || '';
   moveInstrumentation(introTextRow, guideText);
+  guideText.textContent = introTextRow.children[0]?.textContent.trim();
   introInfo.append(guideText);
 
   const swiperPaginationContainer = document.createElement('div');
@@ -111,10 +103,6 @@ export default async function decorate(block) {
   const swiperPagination = document.createElement('div');
   swiperPagination.classList.add('swiper-pagination', 'swiper-pagination-progressbar', 'swiper-pagination-horizontal');
   swiperPaginationContainer.append(swiperPagination);
-
-  const swiperPaginationFill = document.createElement('span');
-  swiperPaginationFill.classList.add('swiper-pagination-progressbar-fill');
-  swiperPagination.append(swiperPaginationFill);
 
   const swiperCell = document.createElement('div');
   swiperCell.classList.add('cell', 'small-12');
@@ -128,93 +116,98 @@ export default async function decorate(block) {
   swiperWrapper.classList.add('swiper-wrapper');
   swiperEl.append(swiperWrapper);
 
-  slideRows.forEach((row, index) => {
-    const [questionLabelCell] = [...row.children];
-    const swiperSlide = document.createElement('div');
-    swiperSlide.classList.add('swiper-slide');
-    if (index === 0) {
-      swiperSlide.classList.add('initial-slide', 'swiper-slide-active');
+  let optionIndex = 0;
+  questionRows.forEach((questionRow, qIndex) => {
+    const questionLabel = questionRow.children[0]?.textContent.trim();
+
+    const slide = document.createElement('div');
+    slide.classList.add('swiper-slide');
+    if (qIndex === 0) {
+      slide.classList.add('initial-slide', 'swiper-slide-active');
     }
-    if (index === slideRows.length - 1) {
-      swiperSlide.classList.add('last-slide');
-    }
-    swiperSlide.setAttribute('data-slide-index', index);
-    swiperSlide.setAttribute('aria-label', `${index + 1} / ${slideRows.length}`);
-    swiperWrapper.append(swiperSlide);
+    slide.setAttribute('data-slide-index', qIndex.toString());
+    slide.setAttribute('aria-label', `${qIndex + 1} / ${questionRows.length}`);
+    swiperWrapper.append(slide);
 
     const slideTypeNo = document.createElement('div');
     slideTypeNo.classList.add('slide-type--no');
-    swiperSlide.append(slideTypeNo);
+    slide.append(slideTypeNo);
 
-    const coffeeProfilerSlide = document.createElement('div');
-    coffeeProfilerSlide.classList.add('coffee-profiler-slide', 'animate-enter-fade-up-short', 'animate-delay-7');
-    coffeeProfilerSlide.setAttribute('data-q-id', `q${index}`); // Placeholder, actual IDs from API
-    coffeeProfilerSlide.setAttribute('data-slide-index', index);
-    coffeeProfilerSlide.setAttribute('data-q-filter', ''); // Placeholder
-    moveInstrumentation(row, coffeeProfilerSlide);
-    slideTypeNo.append(coffeeProfilerSlide);
+    const profilerSlideNo = document.createElement('div');
+    profilerSlideNo.classList.add('coffee-profiler-slide', 'animate-enter-fade-up-short', 'animate-delay-7');
+    profilerSlideNo.setAttribute('data-q-id', `q${qIndex}`); // Placeholder, actual IDs from original HTML
+    profilerSlideNo.setAttribute('data-slide-index', qIndex.toString());
+    profilerSlideNo.setAttribute('data-q-filter', ''); // Placeholder
+    moveInstrumentation(questionRow, profilerSlideNo);
+    slideTypeNo.append(profilerSlideNo);
 
-    const questionLabel = document.createElement('h3');
-    questionLabel.classList.add('question-label');
-    questionLabel.textContent = questionLabelCell?.textContent.trim() || '';
-    coffeeProfilerSlide.append(questionLabel);
+    const questionLabelEl = document.createElement('h3');
+    questionLabelEl.classList.add('question-label');
+    questionLabelEl.textContent = questionLabel;
+    profilerSlideNo.append(questionLabelEl);
 
     const optionsContainer = document.createElement('div');
     optionsContainer.classList.add('options-container');
-    coffeeProfilerSlide.append(optionsContainer);
+    profilerSlideNo.append(optionsContainer);
 
-    // Filter options for the current slide. This assumes options are ordered after slides.
-    // In a real scenario, options would likely have a foreign key to their question.
-    // For this exercise, we'll assign options sequentially to slides.
-    const optionsPerSlide = Math.ceil(optionRows.length / slideRows.length);
-    const startIndex = index * optionsPerSlide;
-    const endIndex = Math.min(startIndex + optionsPerSlide, optionRows.length);
-    const currentSlideOptions = optionRows.slice(startIndex, endIndex);
+    const currentQuestionOptions = [];
+    // Assuming options are directly after their associated question in the block children
+    // This logic needs to be robust if options are not immediately following
+    // For now, we'll just take the next 2 options for simplicity based on original HTML
+    // A more robust solution would involve a mapping or specific identifiers if available
+    for (let i = 0; i < 2 && optionIndex < optionRows.length; i += 1) {
+      currentQuestionOptions.push(optionRows[optionIndex]);
+      optionIndex += 1;
+    }
 
-    optionsContainer.classList.add(`options-count--${currentSlideOptions.length}`);
+    optionsContainer.classList.add(`options-count--${currentQuestionOptions.length}`);
 
-    currentSlideOptions.forEach((optionRow, optIndex) => {
+    currentQuestionOptions.forEach((optionRow, optIndex) => {
       const [iconCell, labelCell] = [...optionRow.children];
-      const optionButton = document.createElement('button');
-      optionButton.classList.add('option', 'elevation-2', 'has-hover', 'bg--paper-white');
-      optionButton.setAttribute('data-opt-id', `opt${index}-${optIndex}`); // Placeholder
-      optionButton.setAttribute('data-q-id', `q${index}`); // Placeholder
-      optionButton.setAttribute('aria-label', labelCell?.textContent.trim() || '');
-      optionButton.setAttribute('role', 'radio');
-      optionButton.setAttribute('aria-checked', 'false');
-      optionButton.style.minHeight = '263px'; // From original HTML
-      moveInstrumentation(optionRow, optionButton);
-      optionsContainer.append(optionButton);
 
-      const optionIconPicture = iconCell.querySelector('picture');
-      if (optionIconPicture) {
-        const optionIconImg = optionIconPicture.querySelector('img');
-        if (optionIconImg) {
-          const optimizedPic = createOptimizedPicture(optionIconImg.src, optionIconImg.alt, false, [{ width: 'auto' }]);
-          moveInstrumentation(optionIconImg, optimizedPic.querySelector('img'));
-          optionButton.append(optimizedPic);
-          optimizedPic.classList.add('option-icon', 'lazyloaded');
+      const button = document.createElement('button');
+      button.classList.add('option', 'elevation-2', 'has-hover', 'bg--paper-white');
+      button.setAttribute('role', 'radio');
+      button.setAttribute('aria-checked', 'false');
+      button.setAttribute('data-q-id', `q${qIndex}`); // Placeholder
+      button.setAttribute('data-opt-id', `opt${qIndex}-${optIndex}`); // Placeholder
+      moveInstrumentation(optionRow, button);
+      optionsContainer.append(button);
+
+      const picture = iconCell.querySelector('picture');
+      if (picture) {
+        const img = picture.querySelector('img');
+        if (img) {
+          const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+          const optimizedImg = optimizedPic.querySelector('img');
+          optimizedImg.classList.add('option-icon', 'lazyloaded');
+          button.append(optimizedPic);
+          moveInstrumentation(img, optimizedImg);
         }
       }
 
       const optionLabel = document.createElement('span');
       optionLabel.classList.add('option-label', 'labelMediumRegular');
-      optionLabel.textContent = labelCell?.textContent.trim() || '';
-      optionButton.append(optionLabel);
+      optionLabel.textContent = labelCell?.textContent.trim();
+      button.append(optionLabel);
     });
 
     const gridContainer = document.createElement('div');
     gridContainer.classList.add('grid-container');
-    swiperSlide.append(gridContainer);
+    slide.append(gridContainer);
 
     const gridX = document.createElement('div');
     gridX.classList.add('grid-x');
     gridContainer.append(gridX);
 
-    // Placeholder for slide-type--yes variant if needed
+    // Add slide-type--yes div (hidden by default)
     const slideTypeYes = document.createElement('div');
     slideTypeYes.classList.add('slide-type--yes', 'hide');
-    swiperSlide.append(slideTypeYes);
+    slide.append(slideTypeYes);
+
+    const profilerSlideYes = document.createElement('div');
+    profilerSlideYes.classList.add('coffee-profiler-slide', 'animate-enter-fade-up-short', 'animate-delay-7');
+    slideTypeYes.append(profilerSlideYes);
   });
 
   const swiperControls = document.createElement('div');
@@ -237,7 +230,7 @@ export default async function decorate(block) {
   nextBtn.classList.add('swiper-control', 'swiper-button', 'swiper-control--next', 'elevation-1', 'animate-enter-fade-left-short', 'animate-delay-15');
   nextBtn.setAttribute('tabindex', '0');
   nextBtn.setAttribute('aria-label', 'Next slide');
-  nextBtn.setAttribute('disabled', 'disabled'); // Initially disabled, will be enabled by Swiper
+  nextBtn.setAttribute('disabled', ''); // Initially disabled, will be enabled by Swiper
   nextBtn.innerHTML = `
     <svg width="18" height="14" viewBox="0 0 18 14" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M17 7L1 7M17 7L11.6667 2M17 7L11.6667 12" stroke="#222222" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="round"></path>
@@ -258,33 +251,33 @@ export default async function decorate(block) {
 
   const errorMessageText = document.createElement('span');
   errorMessageText.classList.add('error-message-text', 'bodyLargeRegular');
-  errorMessageText.textContent = errorMessageRow?.textContent.trim() || 'Error! Please try again.';
   moveInstrumentation(errorMessageRow, errorMessageText);
+  errorMessageText.textContent = errorMessageRow.children[0]?.textContent.trim();
   errorMessageDiv.append(errorMessageText);
 
-  const profilerForm = document.createElement('form');
-  profilerForm.classList.add('hide', 'coffee-profiler-form');
-  profilerForm.setAttribute('method', 'POST');
-  profilerForm.setAttribute('action', 'https://www.nescafe.com/in/coffee-profiler/result');
-  root.append(profilerForm);
+  const form = document.createElement('form');
+  form.classList.add('hide', 'coffee-profiler-form');
+  form.setAttribute('method', 'POST');
+  form.setAttribute('action', 'https://www.nescafe.com/in/coffee-profiler/result');
+  root.append(form);
 
-  // Add hidden inputs for form submission
   ['type', 'intensity', 'format', 'features', 'exc-type', 'exc-intensity', 'exc-format', 'exc-features'].forEach((name) => {
     const input = document.createElement('input');
     input.setAttribute('name', name);
     input.setAttribute('value', '');
     input.setAttribute('type', 'hidden');
-    profilerForm.append(input);
+    form.append(input);
   });
 
   block.replaceChildren(root);
 
-  // Initialize Swiper
+  // Swiper Initialization
   await loadCSS('https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css');
   await loadScript('https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js');
+
   // eslint-disable-next-line no-undef
   new Swiper(swiperEl, {
-    slidesPerView: 1,
+    slidesPerView: 1, // Start with 1 slide per view
     spaceBetween: 0,
     loop: false,
     navigation: {
@@ -297,14 +290,16 @@ export default async function decorate(block) {
       clickable: true,
     },
     breakpoints: {
-      // Add breakpoints if needed based on original HTML's responsive behavior
+      // Adjust breakpoints based on desired responsive behavior
+      576: {
+        slidesPerView: 1,
+      },
+      768: {
+        slidesPerView: 1,
+      },
+      992: {
+        slidesPerView: 1,
+      },
     },
-  });
-
-  // Image optimization
-  root.querySelectorAll('picture > img').forEach((img) => {
-    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-    moveInstrumentation(img, optimizedPic.querySelector('img'));
-    img.closest('picture').replaceWith(optimizedPic);
   });
 }

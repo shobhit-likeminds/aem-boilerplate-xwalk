@@ -152,66 +152,66 @@
       },
       {
         "component": "text",
-        "label": "Section Title",
+        "label": "Carousel Title",
         "name": "title",
         "valueType": "string"
       },
       {
         "component": "richtext",
-        "label": "Section Description",
+        "label": "Carousel Description",
         "name": "description",
         "valueType": "string"
       },
       {
         "component": "container",
-        "item": "quotation-slide",
+        "item": "campaign-quotation-slide-item",
         "label": "Quotation Slides",
         "name": "quotationSlides"
       },
       {
         "component": "container",
-        "item": "recipe-card-slide",
+        "item": "campaign-recipe-card-slide-item",
         "label": "Recipe Card Slides",
         "name": "recipeCardSlides"
       },
       {
         "component": "container",
-        "item": "fact-card-slide",
+        "item": "campaign-fact-card-slide-item",
         "label": "Fact Card Slides",
         "name": "factCardSlides"
       }
     ]
   },
   {
-    "id": "quotation-slide",
+    "id": "campaign-quotation-slide-item",
     "fields": [
       {
         "component": "richtext",
         "label": "Quotation Text",
-        "name": "quote",
+        "name": "quotationText",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Quotation Author",
+        "label": "Author",
         "name": "author",
         "valueType": "string"
       },
       {
         "component": "reference",
-        "label": "Slide Background Image",
+        "label": "Background Image",
         "name": "backgroundImage",
         "valueType": "string"
       }
     ]
   },
   {
-    "id": "recipe-card-slide",
+    "id": "campaign-recipe-card-slide-item",
     "fields": [
       {
         "component": "aem-content",
-        "label": "Recipe Card Link",
-        "name": "cardLink",
+        "label": "Recipe Link",
+        "name": "link",
         "valueType": "string"
       },
       {
@@ -222,18 +222,18 @@
       },
       {
         "component": "text",
-        "label": "Recipe Tag Label",
+        "label": "Tag Label",
         "name": "tagLabel",
         "valueType": "string"
       },
       {
         "component": "text",
         "label": "Recipe Name",
-        "name": "recipeName",
+        "name": "name",
         "valueType": "string"
       },
       {
-        "component": "text",
+        "component": "richtext",
         "label": "Recipe Description",
         "name": "description",
         "valueType": "string"
@@ -265,7 +265,7 @@
     ]
   },
   {
-    "id": "fact-card-slide",
+    "id": "campaign-fact-card-slide-item",
     "fields": [
       {
         "component": "reference",
@@ -276,7 +276,7 @@
       {
         "component": "text",
         "label": "Fact Title",
-        "name": "factTitle",
+        "name": "name",
         "valueType": "string"
       },
       {
@@ -287,13 +287,13 @@
       },
       {
         "component": "aem-content",
-        "label": "Fact CTA Link",
+        "label": "CTA Link",
         "name": "ctaLink",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Fact CTA Label",
+        "label": "CTA Label",
         "name": "ctaLabel",
         "valueType": "string"
       }
@@ -323,7 +323,7 @@
     "fields": [
       {
         "component": "reference",
-        "label": "Background Image",
+        "label": "Parallax Background Image",
         "name": "backgroundImage",
         "valueType": "string"
       },
@@ -335,25 +335,25 @@
       },
       {
         "component": "text",
-        "label": "Greeting (Morning)",
+        "label": "Greeting Morning",
         "name": "greetingMorning",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Greeting (Afternoon)",
+        "label": "Greeting Afternoon",
         "name": "greetingAfternoon",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Greeting (Evening)",
+        "label": "Greeting Evening",
         "name": "greetingEvening",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Greeting (Night)",
+        "label": "Greeting Night",
         "name": "greetingNight",
         "valueType": "string"
       },
@@ -371,14 +371,14 @@
       },
       {
         "component": "container",
-        "item": "profiler-question",
-        "label": "Questions",
-        "name": "questions"
+        "item": "coffee-profiler-slide",
+        "label": "Slides",
+        "name": "slides"
       }
     ]
   },
   {
-    "id": "profiler-question",
+    "id": "coffee-profiler-slide",
     "fields": [
       {
         "component": "text",
@@ -388,14 +388,14 @@
       },
       {
         "component": "container",
-        "item": "profiler-option",
+        "item": "coffee-profiler-option",
         "label": "Options",
         "name": "options"
       }
     ]
   },
   {
-    "id": "profiler-option",
+    "id": "coffee-profiler-option",
     "fields": [
       {
         "component": "reference",
@@ -435,7 +435,7 @@
     "fields": [
       {
         "component": "text",
-        "label": "Back To Top CTA Label",
+        "label": "Back To Top Button Label",
         "name": "backToTopLabel",
         "valueType": "string"
       },
@@ -470,12 +470,6 @@
         "valueType": "string"
       },
       {
-        "component": "text",
-        "label": "Country Selector Label",
-        "name": "countrySelectorLabel",
-        "valueType": "string"
-      },
-      {
         "component": "aem-content",
         "label": "Country Selector Link",
         "name": "countrySelectorLink",
@@ -483,26 +477,32 @@
       },
       {
         "component": "text",
-        "label": "Footer Social Section Title",
-        "name": "footerSocialTitle",
+        "label": "Country Selector Label",
+        "name": "countrySelectorLabel",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Social Section Title",
+        "name": "socialTitle",
         "valueType": "string"
       },
       {
         "component": "container",
         "item": "footer-social-item",
         "label": "Footer Social Links",
-        "name": "footerSocialLinks"
+        "name": "socialLinks"
       },
       {
         "component": "container",
         "item": "footer-link-item",
         "label": "Footer Site Links",
-        "name": "footerLinks"
+        "name": "siteLinks"
       },
       {
         "component": "aem-content",
-        "label": "Footer Legal Link",
-        "name": "footerLegalLink",
+        "label": "Legal Link",
+        "name": "legalLink",
         "valueType": "string"
       }
     ]
@@ -928,25 +928,25 @@
     "fields": [
       {
         "component": "reference",
-        "label": "Large Video MP4 Source",
-        "name": "videoLargeMp4",
+        "label": "Large Video Source (Desktop)",
+        "name": "videoLarge",
         "valueType": "string"
       },
       {
         "component": "reference",
-        "label": "Large Video Poster Image",
+        "label": "Large Video Poster (Desktop)",
         "name": "videoLargePoster",
         "valueType": "string"
       },
       {
         "component": "reference",
-        "label": "Small Video MP4 Source",
-        "name": "videoSmallMp4",
+        "label": "Small Video Source (Mobile)",
+        "name": "videoSmall",
         "valueType": "string"
       },
       {
         "component": "reference",
-        "label": "Small Video Poster Image",
+        "label": "Small Video Poster (Mobile)",
         "name": "videoSmallPoster",
         "valueType": "string"
       },
@@ -969,7 +969,7 @@
         "valueType": "string"
       },
       {
-        "component": "richtext",
+        "component": "text",
         "label": "Secondary Title",
         "name": "secondaryTitle",
         "valueType": "string"
@@ -988,25 +988,25 @@
       },
       {
         "component": "text",
-        "label": "Greeting (Morning)",
+        "label": "Greeting Morning",
         "name": "greetingMorning",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Greeting (Afternoon)",
+        "label": "Greeting Afternoon",
         "name": "greetingAfternoon",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Greeting (Evening)",
+        "label": "Greeting Evening",
         "name": "greetingEvening",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Greeting (Night)",
+        "label": "Greeting Night",
         "name": "greetingNight",
         "valueType": "string"
       }
@@ -1017,7 +1017,7 @@
     "fields": [
       {
         "component": "reference",
-        "label": "Main Image",
+        "label": "Image",
         "name": "image",
         "valueType": "string"
       },
@@ -1049,12 +1049,6 @@
         "component": "text",
         "label": "Register Label",
         "name": "registerLabel",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "CTA Separator",
-        "name": "ctaSeparator",
         "valueType": "string"
       }
     ]
@@ -1256,20 +1250,20 @@
     "fields": [
       {
         "component": "reference",
-        "label": "Desktop Image",
-        "name": "image-desktop",
+        "label": "Background Image (Desktop)",
+        "name": "backgroundImageDesktop",
         "valueType": "string"
       },
       {
         "component": "reference",
-        "label": "Mobile Image",
-        "name": "image-mobile",
+        "label": "Background Image (Mobile)",
+        "name": "backgroundImageMobile",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Headline",
-        "name": "headline",
+        "label": "Title",
+        "name": "title",
         "valueType": "string"
       },
       {
@@ -1281,13 +1275,13 @@
       {
         "component": "aem-content",
         "label": "CTA Link",
-        "name": "cta-link",
+        "name": "ctaLink",
         "valueType": "string"
       },
       {
         "component": "text",
         "label": "CTA Label",
-        "name": "cta-label",
+        "name": "ctaLabel",
         "valueType": "string"
       }
     ]
@@ -1325,27 +1319,26 @@
         "valueType": "string"
       },
       {
+        "component": "container",
+        "item": "cta-item",
+        "label": "CTA Buttons",
+        "name": "ctas"
+      }
+    ]
+  },
+  {
+    "id": "cta-item",
+    "fields": [
+      {
         "component": "aem-content",
-        "label": "Login Link",
-        "name": "loginLink",
+        "label": "CTA Link",
+        "name": "link",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Login Button Label",
-        "name": "loginLabel",
-        "valueType": "string"
-      },
-      {
-        "component": "aem-content",
-        "label": "Register Link",
-        "name": "registerLink",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "label": "Register Button Label",
-        "name": "registerLabel",
+        "label": "CTA Label",
+        "name": "label",
         "valueType": "string"
       }
     ]

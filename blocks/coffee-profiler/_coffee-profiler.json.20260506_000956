@@ -1,7 +1,7 @@
 {
   "definitions": [
     {
-      "title": "Coffee Profiler",
+      "title": "Coffee-Profiler",
       "id": "coffee-profiler",
       "plugins": {
         "xwalk": {
@@ -10,37 +10,37 @@
             "template": {
               "filter": "coffee-profiler",
               "model": "coffee-profiler",
-              "name": "Coffee Profiler"
+              "name": "Coffee-Profiler"
             }
           }
         }
       }
     },
     {
-      "title": "Coffee Profiler Slide",
-      "id": "coffee-profiler-slide",
+      "title": "Profiler-Question",
+      "id": "profiler-question",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "coffee-profiler-slide",
-              "name": "Coffee Profiler Slide"
+              "model": "profiler-question",
+              "name": "Profiler-Question"
             }
           }
         }
       }
     },
     {
-      "title": "Coffee Profiler Option",
-      "id": "coffee-profiler-option",
+      "title": "Profiler-Option",
+      "id": "profiler-option",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "coffee-profiler-option",
-              "name": "Coffee Profiler Option"
+              "model": "profiler-option",
+              "name": "Profiler-Option"
             }
           }
         }
@@ -53,7 +53,7 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Parallax Background Image",
+          "label": "Background Image",
           "name": "backgroundImage",
           "valueType": "string"
         },
@@ -65,25 +65,25 @@
         },
         {
           "component": "text",
-          "label": "Greeting Morning",
+          "label": "Greeting (Morning)",
           "name": "greetingMorning",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Greeting Afternoon",
+          "label": "Greeting (Afternoon)",
           "name": "greetingAfternoon",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Greeting Evening",
+          "label": "Greeting (Evening)",
           "name": "greetingEvening",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Greeting Night",
+          "label": "Greeting (Night)",
           "name": "greetingNight",
           "valueType": "string"
         },
@@ -101,14 +101,14 @@
         },
         {
           "component": "container",
-          "item": "coffee-profiler-slide",
-          "label": "Slides",
-          "name": "slides"
+          "item": "profiler-question",
+          "label": "Questions",
+          "name": "questions"
         }
       ]
     },
     {
-      "id": "coffee-profiler-slide",
+      "id": "profiler-question",
       "fields": [
         {
           "component": "text",
@@ -118,14 +118,14 @@
         },
         {
           "component": "container",
-          "item": "coffee-profiler-option",
+          "item": "profiler-option",
           "label": "Options",
           "name": "options"
         }
       ]
     },
     {
-      "id": "coffee-profiler-option",
+      "id": "profiler-option",
       "fields": [
         {
           "component": "reference",
@@ -146,8 +146,8 @@
     {
       "id": "coffee-profiler",
       "components": [
-        "coffee-profiler-slide",
-        "coffee-profiler-option"
+        "profiler-question",
+        "profiler-option"
       ]
     }
   ]

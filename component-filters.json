@@ -34,9 +34,9 @@
   {
     "id": "campaign-carousel",
     "components": [
-      "quotation-slide",
-      "recipe-card-slide",
-      "fact-card-slide"
+      "campaign-quotation-slide-item",
+      "campaign-recipe-card-slide-item",
+      "campaign-fact-card-slide-item"
     ]
   },
   {
@@ -48,8 +48,8 @@
   {
     "id": "coffee-profiler",
     "components": [
-      "profiler-question",
-      "profiler-option"
+      "coffee-profiler-slide",
+      "coffee-profiler-option"
     ]
   },
   {
@@ -124,6 +124,9 @@
     "id": "toaster"
   },
   {
-    "id": "tooltip-signin-register"
+    "id": "tooltip-signin-register",
+    "components": [
+      "cta-item"
+    ]
   }
 ]

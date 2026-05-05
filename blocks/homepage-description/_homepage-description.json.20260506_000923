@@ -1,7 +1,7 @@
 {
   "definitions": [
     {
-      "title": "Homepage-Description",
+      "title": "Homepage Description",
       "id": "homepage-description",
       "plugins": {
         "xwalk": {
@@ -10,7 +10,7 @@
             "template": {
               "filter": "homepage-description",
               "model": "homepage-description",
-              "name": "Homepage-Description"
+              "name": "Homepage Description"
             }
           }
         }
@@ -23,7 +23,7 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Image",
+          "label": "Main Image",
           "name": "image",
           "valueType": "string"
         },
@@ -55,6 +55,12 @@
           "component": "text",
           "label": "Register Label",
           "name": "registerLabel",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "CTA Separator",
+          "name": "ctaSeparator",
           "valueType": "string"
         }
       ]
