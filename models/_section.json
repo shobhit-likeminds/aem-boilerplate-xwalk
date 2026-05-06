@@ -63,7 +63,9 @@
         "sustainability-article-carousel",
         "campaign-carousel",
         "coffee-profiler",
-        "footer"
+        "footer",
+        "header-search-autocomplete",
+        "toaster-signin"
       ]
     }
   ]

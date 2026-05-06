@@ -83,7 +83,7 @@
       "id": "blocks",
       "components": [
         {
-          "title": "Campaign Carousel",
+          "title": "Campaign-Carousel",
           "id": "campaign-carousel",
           "plugins": {
             "xwalk": {
@@ -92,52 +92,52 @@
                 "template": {
                   "filter": "campaign-carousel",
                   "model": "campaign-carousel",
-                  "name": "Campaign Carousel"
+                  "name": "Campaign-Carousel"
                 }
               }
             }
           }
         },
         {
-          "title": "Quotation Slide Item",
-          "id": "campaign-quotation-slide-item",
+          "title": "Quotation-Slide-Item",
+          "id": "quotation-slide-item",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "campaign-quotation-slide-item",
-                  "name": "Quotation Slide Item"
+                  "model": "quotation-slide-item",
+                  "name": "Quotation-Slide-Item"
                 }
               }
             }
           }
         },
         {
-          "title": "Recipe Card Slide Item",
-          "id": "campaign-recipe-card-slide-item",
+          "title": "Recipe-Card-Item",
+          "id": "recipe-card-item",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "campaign-recipe-card-slide-item",
-                  "name": "Recipe Card Slide Item"
+                  "model": "recipe-card-item",
+                  "name": "Recipe-Card-Item"
                 }
               }
             }
           }
         },
         {
-          "title": "Fact Card Slide Item",
-          "id": "campaign-fact-card-slide-item",
+          "title": "Fact-Card-Item",
+          "id": "fact-card-item",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "campaign-fact-card-slide-item",
-                  "name": "Fact Card Slide Item"
+                  "model": "fact-card-item",
+                  "name": "Fact-Card-Item"
                 }
               }
             }
@@ -463,6 +463,37 @@
           }
         },
         {
+          "title": "Header-Search-Autocomplete",
+          "id": "header-search-autocomplete",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "header-search-autocomplete",
+                  "model": "header-search-autocomplete",
+                  "name": "Header-Search-Autocomplete"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Search-Suggestion-Item",
+          "id": "search-suggestion-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "search-suggestion-item",
+                  "name": "Search-Suggestion-Item"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Hero",
           "id": "hero",
           "plugins": {
@@ -619,6 +650,22 @@
           }
         },
         {
+          "title": "Toaster-Signin",
+          "id": "toaster-signin",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "toaster-signin",
+                  "model": "toaster-signin",
+                  "name": "Toaster-Signin"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Toaster",
           "id": "toaster",
           "plugins": {
@@ -651,15 +698,15 @@
           }
         },
         {
-          "title": "CTA-Item",
-          "id": "cta-item",
+          "title": "Tooltip-Signin-Register-CTA-Item",
+          "id": "tooltip-signin-register-cta-item",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "cta-item",
-                  "name": "CTA-Item"
+                  "model": "tooltip-signin-register-cta-item",
+                  "name": "Tooltip-Signin-Register-CTA-Item"
                 }
               }
             }

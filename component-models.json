@@ -146,7 +146,7 @@
     "fields": [
       {
         "component": "reference",
-        "label": "Background Image",
+        "label": "Parallax Background Image",
         "name": "backgroundImage",
         "valueType": "string"
       },
@@ -164,49 +164,49 @@
       },
       {
         "component": "container",
-        "item": "campaign-quotation-slide-item",
+        "item": "quotation-slide-item",
         "label": "Quotation Slides",
         "name": "quotationSlides"
       },
       {
         "component": "container",
-        "item": "campaign-recipe-card-slide-item",
-        "label": "Recipe Card Slides",
-        "name": "recipeCardSlides"
+        "item": "recipe-card-item",
+        "label": "Recipe Cards",
+        "name": "recipeCards"
       },
       {
         "component": "container",
-        "item": "campaign-fact-card-slide-item",
-        "label": "Fact Card Slides",
-        "name": "factCardSlides"
+        "item": "fact-card-item",
+        "label": "Fact Cards",
+        "name": "factCards"
       }
     ]
   },
   {
-    "id": "campaign-quotation-slide-item",
+    "id": "quotation-slide-item",
     "fields": [
       {
         "component": "richtext",
         "label": "Quotation Text",
-        "name": "quotationText",
+        "name": "quoteText",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Author",
+        "label": "Quotation Author",
         "name": "author",
         "valueType": "string"
       },
       {
         "component": "reference",
-        "label": "Background Image",
+        "label": "Quotation Background Image",
         "name": "backgroundImage",
         "valueType": "string"
       }
     ]
   },
   {
-    "id": "campaign-recipe-card-slide-item",
+    "id": "recipe-card-item",
     "fields": [
       {
         "component": "aem-content",
@@ -222,8 +222,8 @@
       },
       {
         "component": "text",
-        "label": "Tag Label",
-        "name": "tagLabel",
+        "label": "Recipe Tag",
+        "name": "tag",
         "valueType": "string"
       },
       {
@@ -233,7 +233,7 @@
         "valueType": "string"
       },
       {
-        "component": "richtext",
+        "component": "text",
         "label": "Recipe Description",
         "name": "description",
         "valueType": "string"
@@ -265,23 +265,23 @@
     ]
   },
   {
-    "id": "campaign-fact-card-slide-item",
+    "id": "fact-card-item",
     "fields": [
       {
         "component": "reference",
-        "label": "Fact Image",
+        "label": "Fact Card Image",
         "name": "image",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Fact Title",
+        "label": "Fact Card Name",
         "name": "name",
         "valueType": "string"
       },
       {
         "component": "richtext",
-        "label": "Fact Description",
+        "label": "Fact Card Description",
         "name": "description",
         "valueType": "string"
       },
@@ -898,6 +898,64 @@
     ]
   },
   {
+    "id": "header-search-autocomplete",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Close Button Label",
+        "name": "closeLabel",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Search Input Placeholder",
+        "name": "inputPlaceholder",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Clear Search Button Label",
+        "name": "clearLabel",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Submit Button Label",
+        "name": "submitLabel",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Trending Title",
+        "name": "trendingTitle",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "search-suggestion-item",
+        "label": "Search Suggestions",
+        "name": "suggestions"
+      }
+    ]
+  },
+  {
+    "id": "search-suggestion-item",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Suggestion Label",
+        "name": "label",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Suggestion Link",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "hero",
     "fields": [
       {
@@ -1287,6 +1345,29 @@
     ]
   },
   {
+    "id": "toaster-signin",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Sign In Message",
+        "name": "signinMessage",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Sign Out Message",
+        "name": "signoutMessage",
+        "valueType": "string"
+      },
+      {
+        "component": "number",
+        "label": "Toaster Timer (ms)",
+        "name": "timer",
+        "valueType": "number"
+      }
+    ]
+  },
+  {
     "id": "toaster",
     "fields": [
       {
@@ -1320,25 +1401,25 @@
       },
       {
         "component": "container",
-        "item": "cta-item",
+        "item": "tooltip-signin-register-cta-item",
         "label": "CTA Buttons",
         "name": "ctas"
       }
     ]
   },
   {
-    "id": "cta-item",
+    "id": "tooltip-signin-register-cta-item",
     "fields": [
       {
-        "component": "aem-content",
-        "label": "CTA Link",
-        "name": "link",
+        "component": "text",
+        "label": "Button Label",
+        "name": "label",
         "valueType": "string"
       },
       {
-        "component": "text",
-        "label": "CTA Label",
-        "name": "label",
+        "component": "aem-content",
+        "label": "Button Link",
+        "name": "link",
         "valueType": "string"
       }
     ]

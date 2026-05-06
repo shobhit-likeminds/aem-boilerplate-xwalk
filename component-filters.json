@@ -28,15 +28,17 @@
       "sustainability-article-carousel",
       "campaign-carousel",
       "coffee-profiler",
-      "footer"
+      "footer",
+      "header-search-autocomplete",
+      "toaster-signin"
     ]
   },
   {
     "id": "campaign-carousel",
     "components": [
-      "campaign-quotation-slide-item",
-      "campaign-recipe-card-slide-item",
-      "campaign-fact-card-slide-item"
+      "quotation-slide-item",
+      "recipe-card-item",
+      "fact-card-item"
     ]
   },
   {
@@ -94,6 +96,12 @@
     ]
   },
   {
+    "id": "header-search-autocomplete",
+    "components": [
+      "search-suggestion-item"
+    ]
+  },
+  {
     "id": "homepage-banner"
   },
   {
@@ -121,12 +129,15 @@
     "id": "sustainability-recycle-section"
   },
   {
+    "id": "toaster-signin"
+  },
+  {
     "id": "toaster"
   },
   {
     "id": "tooltip-signin-register",
     "components": [
-      "cta-item"
+      "tooltip-signin-register-cta-item"
     ]
   }
 ]
