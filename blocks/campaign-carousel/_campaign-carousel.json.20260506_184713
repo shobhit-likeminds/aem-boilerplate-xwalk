@@ -32,30 +32,30 @@
       }
     },
     {
-      "title": "Recipe-Card-Slide-Item",
-      "id": "recipe-card-slide-item",
+      "title": "Recipe-Card-Item",
+      "id": "recipe-card-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "recipe-card-slide-item",
-              "name": "Recipe-Card-Slide-Item"
+              "model": "recipe-card-item",
+              "name": "Recipe-Card-Item"
             }
           }
         }
       }
     },
     {
-      "title": "Fact-Card-Slide-Item",
-      "id": "fact-card-slide-item",
+      "title": "Fact-Card-Item",
+      "id": "fact-card-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "fact-card-slide-item",
-              "name": "Fact-Card-Slide-Item"
+              "model": "fact-card-item",
+              "name": "Fact-Card-Item"
             }
           }
         }
@@ -68,7 +68,7 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Background Image",
+          "label": "Parallax Background Image",
           "name": "backgroundImage",
           "valueType": "string"
         },
@@ -92,15 +92,15 @@
         },
         {
           "component": "container",
-          "item": "recipe-card-slide-item",
-          "label": "Recipe Card Slides",
-          "name": "recipeSlides"
+          "item": "recipe-card-item",
+          "label": "Recipe Cards",
+          "name": "recipeCards"
         },
         {
           "component": "container",
-          "item": "fact-card-slide-item",
-          "label": "Fact Card Slides",
-          "name": "factSlides"
+          "item": "fact-card-item",
+          "label": "Fact Cards",
+          "name": "factCards"
         }
       ]
     },
@@ -110,25 +110,25 @@
         {
           "component": "richtext",
           "label": "Quotation Text",
-          "name": "quotation",
+          "name": "quoteText",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Author",
+          "label": "Quotation Author",
           "name": "author",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Slide Background Image",
+          "label": "Quotation Background Image",
           "name": "backgroundImage",
           "valueType": "string"
         }
       ]
     },
     {
-      "id": "recipe-card-slide-item",
+      "id": "recipe-card-item",
       "fields": [
         {
           "component": "aem-content",
@@ -144,8 +144,8 @@
         },
         {
           "component": "text",
-          "label": "Recipe Tag Label",
-          "name": "tagLabel",
+          "label": "Recipe Tag",
+          "name": "tag",
           "valueType": "string"
         },
         {
@@ -187,23 +187,23 @@
       ]
     },
     {
-      "id": "fact-card-slide-item",
+      "id": "fact-card-item",
       "fields": [
         {
           "component": "reference",
-          "label": "Fact Image",
+          "label": "Fact Card Image",
           "name": "image",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Fact Name",
+          "label": "Fact Card Name",
           "name": "name",
           "valueType": "string"
         },
         {
           "component": "richtext",
-          "label": "Fact Description",
+          "label": "Fact Card Description",
           "name": "description",
           "valueType": "string"
         },
@@ -227,8 +227,8 @@
       "id": "campaign-carousel",
       "components": [
         "quotation-slide-item",
-        "recipe-card-slide-item",
-        "fact-card-slide-item"
+        "recipe-card-item",
+        "fact-card-item"
       ]
     }
   ]

@@ -52,15 +52,15 @@
           "valueType": "string"
         },
         {
-          "component": "text",
-          "label": "Primary CTA Label",
-          "name": "ctaLabel",
+          "component": "aem-content",
+          "label": "Primary CTA Link",
+          "name": "primaryCtaLink",
           "valueType": "string"
         },
         {
-          "component": "aem-content",
-          "label": "Primary CTA Link",
-          "name": "ctaLink",
+          "component": "text",
+          "label": "Primary CTA Label",
+          "name": "primaryCtaLabel",
           "valueType": "string"
         },
         {
@@ -70,21 +70,15 @@
           "valueType": "string"
         },
         {
-          "component": "text",
-          "label": "Secondary Headline",
-          "name": "secondaryHeadline",
+          "component": "aem-content",
+          "label": "Secondary CTA Link",
+          "name": "secondaryCtaLink",
           "valueType": "string"
         },
         {
           "component": "text",
           "label": "Secondary CTA Label",
           "name": "secondaryCtaLabel",
-          "valueType": "string"
-        },
-        {
-          "component": "aem-content",
-          "label": "Secondary CTA Link",
-          "name": "secondaryCtaLink",
           "valueType": "string"
         },
         {

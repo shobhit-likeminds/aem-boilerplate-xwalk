@@ -83,6 +83,82 @@
       "id": "blocks",
       "components": [
         {
+          "title": "Burger Navigation",
+          "id": "burger-navigation",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "burger-navigation",
+                  "model": "burger-navigation",
+                  "name": "Burger Navigation"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Level 2 Navigation Item",
+          "id": "level2-navigation-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "level2-navigation-item",
+                  "name": "Level 2 Navigation Item"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Multiple Link Item",
+          "id": "multiple-link-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "multiple-link-item",
+                  "name": "Multiple Link Item"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Level 3 Banner Item",
+          "id": "level3-banner-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "level3-banner-item",
+                  "name": "Level 3 Banner Item"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Level 3 Simple Link Item",
+          "id": "level3-simple-link-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "level3-simple-link-item",
+                  "name": "Level 3 Simple Link Item"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Campaign-Carousel",
           "id": "campaign-carousel",
           "plugins": {
@@ -114,30 +190,30 @@
           }
         },
         {
-          "title": "Recipe-Card-Item",
-          "id": "recipe-card-item",
+          "title": "Recipe-Card-Slide-Item",
+          "id": "recipe-card-slide-item",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "recipe-card-item",
-                  "name": "Recipe-Card-Item"
+                  "model": "recipe-card-slide-item",
+                  "name": "Recipe-Card-Slide-Item"
                 }
               }
             }
           }
         },
         {
-          "title": "Fact-Card-Item",
-          "id": "fact-card-item",
+          "title": "Fact-Card-Slide-Item",
+          "id": "fact-card-slide-item",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "fact-card-item",
-                  "name": "Fact-Card-Item"
+                  "model": "fact-card-slide-item",
+                  "name": "Fact-Card-Slide-Item"
                 }
               }
             }
@@ -190,30 +266,30 @@
           }
         },
         {
-          "title": "Coffee Profiler Slide",
-          "id": "coffee-profiler-slide",
+          "title": "Question Slide",
+          "id": "question-slide",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "coffee-profiler-slide",
-                  "name": "Coffee Profiler Slide"
+                  "model": "question-slide",
+                  "name": "Question Slide"
                 }
               }
             }
           }
         },
         {
-          "title": "Coffee Profiler Option",
-          "id": "coffee-profiler-option",
+          "title": "Option",
+          "id": "option-item",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "coffee-profiler-option",
-                  "name": "Coffee Profiler Option"
+                  "model": "option-item",
+                  "name": "Option"
                 }
               }
             }
@@ -251,7 +327,7 @@
           }
         },
         {
-          "title": "Footer-Social-Item",
+          "title": "Footer Social Item",
           "id": "footer-social-item",
           "plugins": {
             "xwalk": {
@@ -259,14 +335,14 @@
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
                   "model": "footer-social-item",
-                  "name": "Footer-Social-Item"
+                  "name": "Footer Social Item"
                 }
               }
             }
           }
         },
         {
-          "title": "Footer-Link-Item",
+          "title": "Footer Link Item",
           "id": "footer-link-item",
           "plugins": {
             "xwalk": {
@@ -274,7 +350,7 @@
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
                   "model": "footer-link-item",
-                  "name": "Footer-Link-Item"
+                  "name": "Footer Link Item"
                 }
               }
             }
@@ -509,6 +585,22 @@
           }
         },
         {
+          "title": "Home-Page-Description",
+          "id": "home-page-description",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "home-page-description",
+                  "model": "home-page-description",
+                  "name": "Home-Page-Description"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Homepage-Banner",
           "id": "homepage-banner",
           "plugins": {
@@ -572,7 +664,38 @@
           }
         },
         {
-          "title": "Search Autocomplete",
+          "title": "Recipe-Home",
+          "id": "recipe-home",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "recipe-home",
+                  "model": "recipe-home",
+                  "name": "Recipe-Home"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Recipe-Card-Item",
+          "id": "recipe-card-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "recipe-card-item",
+                  "name": "Recipe-Card-Item"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Search-Autocomplete",
           "id": "search-autocomplete",
           "plugins": {
             "xwalk": {
@@ -581,22 +704,22 @@
                 "template": {
                   "filter": "search-autocomplete",
                   "model": "search-autocomplete",
-                  "name": "Search Autocomplete"
+                  "name": "Search-Autocomplete"
                 }
               }
             }
           }
         },
         {
-          "title": "Suggestion Item",
-          "id": "suggestion-item",
+          "title": "Trending-Suggestion-Item",
+          "id": "trending-suggestion-item",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "suggestion-item",
-                  "name": "Suggestion Item"
+                  "model": "trending-suggestion-item",
+                  "name": "Trending-Suggestion-Item"
                 }
               }
             }
@@ -619,15 +742,31 @@
           }
         },
         {
-          "title": "Sustainability Article Card",
-          "id": "sustainability-article-card",
+          "title": "Sustainability Article Item",
+          "id": "sustainability-article-item",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "sustainability-article-card",
-                  "name": "Sustainability Article Card"
+                  "model": "sustainability-article-item",
+                  "name": "Sustainability Article Item"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Sustainability-Hub-Recycle-Section",
+          "id": "sustainability-hub-recycle-section",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "sustainability-hub-recycle-section",
+                  "model": "sustainability-hub-recycle-section",
+                  "name": "Sustainability-Hub-Recycle-Section"
                 }
               }
             }
@@ -698,15 +837,15 @@
           }
         },
         {
-          "title": "Tooltip-Signin-Register-CTA-Item",
-          "id": "tooltip-signin-register-cta-item",
+          "title": "CTA-Item",
+          "id": "cta-item",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "model": "tooltip-signin-register-cta-item",
-                  "name": "Tooltip-Signin-Register-CTA-Item"
+                  "model": "cta-item",
+                  "name": "CTA-Item"
                 }
               }
             }

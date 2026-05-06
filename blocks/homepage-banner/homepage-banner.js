@@ -2,97 +2,95 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const children = [...block.children];
-
   const [
-    videoLargeRow,
-    videoLargePosterRow,
-    videoSmallRow,
-    videoSmallPosterRow,
-    primaryTitleRow,
-    primaryCtaLinkRow,
-    primaryCtaLabelRow,
-    secondaryTitleRow,
-    secondaryCtaLinkRow,
-    secondaryCtaLabelRow,
-    greetingMorningRow,
-    greetingAfternoonRow,
-    greetingEveningRow,
-    greetingNightRow,
-  ] = children;
+    videoLargeCell,
+    videoLargePosterCell,
+    videoSmallCell,
+    videoSmallPosterCell,
+    primaryTitleCell,
+    ctaLabelCell,
+    ctaLinkCell,
+    secondaryTitleCell,
+    secondaryHeadlineCell,
+    secondaryCtaLabelCell,
+    secondaryCtaLinkCell,
+    greetingMorningCell,
+    greetingAfternoonCell,
+    greetingEveningCell,
+    greetingNightCell,
+  ] = [...block.children];
 
-  const sectionWrapper = document.createElement('section');
-  sectionWrapper.classList.add('grid-container', 'homepage-banner-wrapper', 'variation--banner', 'bg--paper-white');
-  sectionWrapper.setAttribute('data-is-banner', 'true');
+  const section = document.createElement('section');
+  section.classList.add('grid-container', 'homepage-banner-wrapper', 'variation--banner', 'bg--paper-white');
+  section.setAttribute('data-is-banner', 'true');
 
   const homepageBannerDiv = document.createElement('div');
   homepageBannerDiv.classList.add('homepage-banner', 'reveal-effect-container');
+  section.append(homepageBannerDiv);
 
   const mediaContainer = document.createElement('div');
   mediaContainer.classList.add('media-container');
+  homepageBannerDiv.append(mediaContainer);
 
-  // Large Video (Desktop)
+  // Large Video
   const videoLarge = document.createElement('video');
   videoLarge.muted = true;
   videoLarge.classList.add('video--large', 'show-for-large');
   videoLarge.playsInline = true;
   videoLarge.preload = 'none';
-
-  const largeVideoSrc = videoLargeRow.querySelector('img')?.src;
-  const largeVideoPosterSrc = videoLargePosterRow.querySelector('img')?.src;
-
-  if (largeVideoSrc) {
-    videoLarge.setAttribute('data-poster', largeVideoPosterSrc || '');
-    videoLarge.poster = largeVideoPosterSrc || '';
+  const largeVideoSource = videoLargeCell?.querySelector('picture')?.querySelector('img')?.src;
+  const largeVideoPoster = videoLargePosterCell?.querySelector('picture')?.querySelector('img')?.src;
+  if (largeVideoSource) {
+    videoLarge.poster = largeVideoPoster || '';
+    videoLarge.setAttribute('data-poster', largeVideoPoster || '');
     const sourceLarge = document.createElement('source');
-    sourceLarge.setAttribute('data-src', largeVideoSrc);
+    sourceLarge.src = largeVideoSource;
     sourceLarge.type = 'video/mp4';
-    sourceLarge.src = largeVideoSrc;
+    sourceLarge.setAttribute('data-src', largeVideoSource);
     videoLarge.append(sourceLarge);
   }
-  moveInstrumentation(videoLargeRow, videoLarge);
-  moveInstrumentation(videoLargePosterRow, videoLarge);
+  moveInstrumentation(videoLargeCell, videoLarge);
+  moveInstrumentation(videoLargePosterCell, videoLarge);
   mediaContainer.append(videoLarge);
 
-  // Small Video (Mobile)
+  // Small Video
   const videoSmall = document.createElement('video');
   videoSmall.muted = true;
   videoSmall.classList.add('video--small', 'hide-for-large');
   videoSmall.playsInline = true;
   videoSmall.preload = 'none';
-
-  const smallVideoSrc = videoSmallRow.querySelector('img')?.src;
-  const smallVideoPosterSrc = videoSmallPosterRow.querySelector('img')?.src;
-
-  if (smallVideoSrc) {
-    videoSmall.setAttribute('data-poster', smallVideoPosterSrc || '');
-    videoSmall.poster = smallVideoPosterSrc || '';
+  const smallVideoSource = videoSmallCell?.querySelector('picture')?.querySelector('img')?.src;
+  const smallVideoPoster = videoSmallPosterCell?.querySelector('picture')?.querySelector('img')?.src;
+  if (smallVideoSource) {
+    videoSmall.poster = smallVideoPoster || '';
+    videoSmall.setAttribute('data-poster', smallVideoPoster || '');
     const sourceSmall = document.createElement('source');
-    sourceSmall.setAttribute('data-src', smallVideoSrc);
+    sourceSmall.src = smallVideoSource;
     sourceSmall.type = 'video/mp4';
-    sourceSmall.src = smallVideoSrc;
+    sourceSmall.setAttribute('data-src', smallVideoSource);
     videoSmall.append(sourceSmall);
   }
-  moveInstrumentation(videoSmallRow, videoSmall);
-  moveInstrumentation(videoSmallPosterRow, videoSmall);
+  moveInstrumentation(videoSmallCell, videoSmall);
+  moveInstrumentation(videoSmallPosterCell, videoSmall);
   mediaContainer.append(videoSmall);
-
-  homepageBannerDiv.append(mediaContainer);
 
   const contentContainer = document.createElement('div');
   contentContainer.classList.add('content-container', 'animate-enter', 'in-view');
+  homepageBannerDiv.append(contentContainer);
 
   const maxWidthContainer = document.createElement('div');
   maxWidthContainer.classList.add('max-width-container');
+  contentContainer.append(maxWidthContainer);
 
   const contentWrapper = document.createElement('div');
   contentWrapper.classList.add('content-wrapper');
+  maxWidthContainer.append(contentWrapper);
 
   // Primary Title
   const primaryTitle = document.createElement('h1');
   primaryTitle.classList.add('primary-title');
-  primaryTitle.textContent = primaryTitleRow.textContent.trim();
-  moveInstrumentation(primaryTitleRow, primaryTitle);
+  primaryTitle.textContent = primaryTitleCell?.textContent.trim() || '';
+  moveInstrumentation(primaryTitleCell, primaryTitle);
   contentWrapper.append(primaryTitle);
 
   // Primary CTA
@@ -100,94 +98,75 @@ export default function decorate(block) {
   primaryCtaContainer.classList.add('cta-container', 'primary-title-cta-container');
   const primaryCtaLink = document.createElement('a');
   primaryCtaLink.classList.add('button', 'red');
-  const primaryLinkHref = primaryCtaLinkRow.querySelector('a')?.href;
-  if (primaryLinkHref) {
-    primaryCtaLink.href = primaryLinkHref;
-  }
+  primaryCtaLink.href = ctaLinkCell?.querySelector('a')?.href || '#';
   primaryCtaLink.setAttribute('aria-label', '');
   primaryCtaLink.setAttribute('rel', 'follow');
   const primaryCtaSpan = document.createElement('span');
   primaryCtaSpan.classList.add('button-text');
-  primaryCtaSpan.textContent = primaryCtaLabelRow.textContent.trim();
+  primaryCtaSpan.textContent = ctaLabelCell?.textContent.trim() || '';
   primaryCtaLink.append(primaryCtaSpan);
-  moveInstrumentation(primaryCtaLinkRow, primaryCtaLink);
-  moveInstrumentation(primaryCtaLabelRow, primaryCtaLink);
   primaryCtaContainer.append(primaryCtaLink);
+  moveInstrumentation(ctaLabelCell, primaryCtaLink);
+  moveInstrumentation(ctaLinkCell, primaryCtaLink);
   contentWrapper.append(primaryCtaContainer);
 
-  // Secondary Title and CTA
+  // Secondary Title and Headline
   const secondaryTitleDiv = document.createElement('div');
   secondaryTitleDiv.classList.add('secondary-title');
   const secondaryHeadline = document.createElement('div');
   secondaryHeadline.classList.add('headline-h1', 'font-weight-bold');
-  secondaryHeadline.textContent = secondaryTitleRow.textContent.trim();
-  moveInstrumentation(secondaryTitleRow, secondaryHeadline);
+  secondaryHeadline.textContent = secondaryHeadlineCell?.textContent.trim() || '';
   secondaryTitleDiv.append(secondaryHeadline);
+  moveInstrumentation(secondaryTitleCell, secondaryTitleDiv);
+  moveInstrumentation(secondaryHeadlineCell, secondaryHeadline);
 
+  // Secondary CTA
   const secondaryCtaContainer = document.createElement('div');
   secondaryCtaContainer.classList.add('cta-container');
   const secondaryCtaLink = document.createElement('a');
   secondaryCtaLink.classList.add('button', 'red');
-  const secondaryLinkHref = secondaryCtaLinkRow.querySelector('a')?.href;
-  if (secondaryLinkHref) {
-    secondaryCtaLink.href = secondaryLinkHref;
-  }
+  secondaryCtaLink.href = secondaryCtaLinkCell?.querySelector('a')?.href || '#';
   secondaryCtaLink.setAttribute('aria-label', '');
   secondaryCtaLink.setAttribute('rel', 'follow');
   const secondaryCtaSpan = document.createElement('span');
   secondaryCtaSpan.classList.add('button-text');
-  secondaryCtaSpan.textContent = secondaryCtaLabelRow.textContent.trim();
+  secondaryCtaSpan.textContent = secondaryCtaLabelCell?.textContent.trim() || '';
   secondaryCtaLink.append(secondaryCtaSpan);
-  moveInstrumentation(secondaryCtaLinkRow, secondaryCtaLink);
-  moveInstrumentation(secondaryCtaLabelRow, secondaryCtaLink);
   secondaryCtaContainer.append(secondaryCtaLink);
   secondaryTitleDiv.append(secondaryCtaContainer);
+  moveInstrumentation(secondaryCtaLabelCell, secondaryCtaLink);
+  moveInstrumentation(secondaryCtaLinkCell, secondaryCtaLink);
   contentWrapper.append(secondaryTitleDiv);
-
-  maxWidthContainer.append(contentWrapper);
-  contentContainer.append(maxWidthContainer);
-  homepageBannerDiv.append(contentContainer);
-  sectionWrapper.append(homepageBannerDiv);
 
   // Greeting Container
   const greetingContainer = document.createElement('div');
   greetingContainer.classList.add('greeting-container', 'bodyLargeRegular');
   const greetingWrapper = document.createElement('div');
   greetingWrapper.classList.add('greeting-wrapper', 'animate');
-
-  const greetingMorning = document.createElement('span');
-  greetingMorning.classList.add('greeting', 'greeting--morning');
-  greetingMorning.textContent = greetingMorningRow.textContent.trim();
-  moveInstrumentation(greetingMorningRow, greetingMorning);
-  greetingWrapper.append(greetingMorning);
-
-  const greetingAfternoon = document.createElement('span');
-  greetingAfternoon.classList.add('greeting', 'greeting--afternoon');
-  greetingAfternoon.textContent = greetingAfternoonRow.textContent.trim();
-  moveInstrumentation(greetingAfternoonRow, greetingAfternoon);
-  greetingWrapper.append(greetingAfternoon);
-
-  const greetingEvening = document.createElement('span');
-  greetingEvening.classList.add('greeting', 'greeting--evening');
-  greetingEvening.textContent = greetingEveningRow.textContent.trim();
-  moveInstrumentation(greetingEveningRow, greetingEvening);
-  greetingWrapper.append(greetingEvening);
-
-  const greetingNight = document.createElement('span');
-  greetingNight.classList.add('greeting', 'greeting--night');
-  greetingNight.textContent = greetingNightRow.textContent.trim();
-  moveInstrumentation(greetingNightRow, greetingNight);
-  greetingWrapper.append(greetingNight);
-
   greetingContainer.append(greetingWrapper);
-  sectionWrapper.append(greetingContainer);
 
-  block.replaceChildren(sectionWrapper);
+  const greetings = [
+    { cell: greetingMorningCell, className: 'greeting--morning' },
+    { cell: greetingAfternoonCell, className: 'greeting--afternoon' },
+    { cell: greetingEveningCell, className: 'greeting--evening' },
+    { cell: greetingNightCell, className: 'greeting--night' },
+  ];
 
-  // Optimize pictures
-  block.querySelectorAll('picture > img').forEach((img) => {
+  greetings.forEach(({ cell, className }) => {
+    const span = document.createElement('span');
+    span.classList.add('greeting', className);
+    span.textContent = cell?.textContent.trim() || '';
+    moveInstrumentation(cell, span);
+    greetingWrapper.append(span);
+  });
+  section.append(greetingContainer);
+
+  // Optimize images
+  section.querySelectorAll('picture > img').forEach((img) => {
     const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
     moveInstrumentation(img, optimizedPic.querySelector('img'));
     img.closest('picture').replaceWith(optimizedPic);
   });
+
+  block.replaceChildren(section);
 }

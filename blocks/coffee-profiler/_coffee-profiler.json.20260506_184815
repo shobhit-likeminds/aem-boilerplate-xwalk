@@ -17,30 +17,30 @@
       }
     },
     {
-      "title": "Question Slide",
-      "id": "question-slide",
+      "title": "Coffee Profiler Slide",
+      "id": "coffee-profiler-slide",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "question-slide",
-              "name": "Question Slide"
+              "model": "coffee-profiler-slide",
+              "name": "Coffee Profiler Slide"
             }
           }
         }
       }
     },
     {
-      "title": "Option",
-      "id": "option-item",
+      "title": "Coffee Profiler Option",
+      "id": "coffee-profiler-option",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "option-item",
-              "name": "Option"
+              "model": "coffee-profiler-option",
+              "name": "Coffee Profiler Option"
             }
           }
         }
@@ -53,7 +53,7 @@
       "fields": [
         {
           "component": "reference",
-          "label": "Background Image",
+          "label": "Parallax Background Image",
           "name": "backgroundImage",
           "valueType": "string"
         },
@@ -89,8 +89,8 @@
         },
         {
           "component": "text",
-          "label": "Guide Text",
-          "name": "guideText",
+          "label": "Intro Text",
+          "name": "introText",
           "valueType": "string"
         },
         {
@@ -101,31 +101,31 @@
         },
         {
           "component": "container",
-          "item": "question-slide",
-          "label": "Question Slides",
-          "name": "questionSlides"
+          "item": "coffee-profiler-slide",
+          "label": "Slides",
+          "name": "slides"
         }
       ]
     },
     {
-      "id": "question-slide",
+      "id": "coffee-profiler-slide",
       "fields": [
         {
           "component": "text",
-          "label": "Question Text",
-          "name": "questionText",
+          "label": "Question Label",
+          "name": "questionLabel",
           "valueType": "string"
         },
         {
           "component": "container",
-          "item": "option-item",
+          "item": "coffee-profiler-option",
           "label": "Options",
           "name": "options"
         }
       ]
     },
     {
-      "id": "option-item",
+      "id": "coffee-profiler-option",
       "fields": [
         {
           "component": "reference",
@@ -146,8 +146,8 @@
     {
       "id": "coffee-profiler",
       "components": [
-        "question-slide",
-        "option-item"
+        "coffee-profiler-slide",
+        "coffee-profiler-option"
       ]
     }
   ]

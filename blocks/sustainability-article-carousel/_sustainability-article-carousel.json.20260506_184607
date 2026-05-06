@@ -17,15 +17,15 @@
       }
     },
     {
-      "title": "Sustainability Article Item",
-      "id": "sustainability-article-item",
+      "title": "Sustainability Article Card",
+      "id": "sustainability-article-card",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "sustainability-article-item",
-              "name": "Sustainability Article Item"
+              "model": "sustainability-article-card",
+              "name": "Sustainability Article Card"
             }
           }
         }
@@ -38,60 +38,54 @@
       "fields": [
         {
           "component": "text",
-          "label": "Carousel Title",
-          "name": "title",
+          "label": "Carousel Headline",
+          "name": "headline",
           "valueType": "string"
         },
         {
           "component": "container",
-          "item": "sustainability-article-item",
+          "item": "sustainability-article-card",
           "label": "Articles",
           "name": "articles"
         }
       ]
     },
     {
-      "id": "sustainability-article-item",
+      "id": "sustainability-article-card",
       "fields": [
         {
           "component": "text",
-          "label": "Tag Label",
-          "name": "tagLabel",
+          "label": "Article Tag",
+          "name": "tag",
           "valueType": "string"
         },
         {
           "component": "reference",
-          "label": "Desktop Image",
-          "name": "imageDesktop",
-          "valueType": "string"
-        },
-        {
-          "component": "reference",
-          "label": "Mobile Image",
-          "name": "imageMobile",
+          "label": "Image",
+          "name": "image",
           "valueType": "string"
         },
         {
           "component": "aem-content",
           "label": "Article Link",
-          "name": "articleLink",
+          "name": "link",
           "valueType": "string"
         },
         {
           "component": "text",
           "label": "Article Title",
-          "name": "articleTitle",
+          "name": "title",
           "valueType": "string"
         },
         {
           "component": "richtext",
           "label": "Article Description",
-          "name": "articleDescription",
+          "name": "description",
           "valueType": "string"
         },
         {
           "component": "text",
-          "label": "Reading Duration (Number)",
+          "label": "Reading Duration (minutes)",
           "name": "readingDuration",
           "valueType": "string"
         },
@@ -108,7 +102,7 @@
     {
       "id": "sustainability-article-carousel",
       "components": [
-        "sustainability-article-item"
+        "sustainability-article-card"
       ]
     }
   ]

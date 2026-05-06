@@ -30,15 +30,28 @@
       "coffee-profiler",
       "footer",
       "header-search-autocomplete",
-      "toaster-signin"
+      "toaster-signin",
+      "burger-navigation",
+      "home-page-description",
+      "sustainability-hub-recycle-section",
+      "recipe-home"
+    ]
+  },
+  {
+    "id": "burger-navigation",
+    "components": [
+      "level2-navigation-item",
+      "multiple-link-item",
+      "level3-banner-item",
+      "level3-simple-link-item"
     ]
   },
   {
     "id": "campaign-carousel",
     "components": [
       "quotation-slide-item",
-      "recipe-card-item",
-      "fact-card-item"
+      "recipe-card-slide-item",
+      "fact-card-slide-item"
     ]
   },
   {
@@ -50,8 +63,8 @@
   {
     "id": "coffee-profiler",
     "components": [
-      "coffee-profiler-slide",
-      "coffee-profiler-option"
+      "question-slide",
+      "option-item"
     ]
   },
   {
@@ -102,6 +115,9 @@
     ]
   },
   {
+    "id": "home-page-description"
+  },
+  {
     "id": "homepage-banner"
   },
   {
@@ -114,16 +130,25 @@
     ]
   },
   {
+    "id": "recipe-home",
+    "components": [
+      "recipe-card-item"
+    ]
+  },
+  {
     "id": "search-autocomplete",
     "components": [
-      "suggestion-item"
+      "trending-suggestion-item"
     ]
   },
   {
     "id": "sustainability-article-carousel",
     "components": [
-      "sustainability-article-card"
+      "sustainability-article-item"
     ]
+  },
+  {
+    "id": "sustainability-hub-recycle-section"
   },
   {
     "id": "sustainability-recycle-section"
@@ -137,7 +162,7 @@
   {
     "id": "tooltip-signin-register",
     "components": [
-      "tooltip-signin-register-cta-item"
+      "cta-item"
     ]
   }
 ]

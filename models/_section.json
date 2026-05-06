@@ -65,7 +65,11 @@
         "coffee-profiler",
         "footer",
         "header-search-autocomplete",
-        "toaster-signin"
+        "toaster-signin",
+        "burger-navigation",
+        "home-page-description",
+        "sustainability-hub-recycle-section",
+        "recipe-home"
       ]
     }
   ]

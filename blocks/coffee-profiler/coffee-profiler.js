@@ -11,280 +11,243 @@ export default async function decorate(block) {
     greetingAfternoonRow,
     greetingEveningRow,
     greetingNightRow,
-    introTextRow,
+    guideTextRow,
     errorMessageRow,
     ...itemRows
   ] = children;
 
-  const slideRows = [];
-  const optionRows = [];
+  const questionSlides = [];
+  const optionItems = [];
 
+  let currentQuestionSlide = null;
   itemRows.forEach((row) => {
-    if (row.children.length === 1) {
-      slideRows.push(row);
-    } else if (row.children.length === 2) {
-      optionRows.push(row);
+    if (row.children.length === 1 && row.querySelector('div:first-child:not(:has(picture))')) {
+      // This is a question-slide row
+      currentQuestionSlide = {
+        row,
+        questionText: row.children[0].textContent.trim(),
+        options: [],
+      };
+      questionSlides.push(currentQuestionSlide);
+    } else if (row.children.length === 2 && row.querySelector('picture')) {
+      // This is an option-item row, belonging to the last question slide
+      if (currentQuestionSlide) {
+        currentQuestionSlide.options.push({
+          row,
+          icon: row.children[0].querySelector('picture'),
+          label: row.children[1].textContent.trim(),
+        });
+      }
     }
   });
 
-  const root = document.createElement('section');
-  root.classList.add('grid-container', 'coffee-profiler', 'animate-enter', 'in-view');
-  root.setAttribute('data-api-url', 'https://www.nescafe.com/in/nc/cprofiler-status');
+  const section = document.createElement('section');
+  section.classList.add('grid-container', 'coffee-profiler', 'animate-enter', 'in-view'); // Added data-api-url in original HTML, but not in EDS model
 
-  const bgPaperBlue = document.createElement('div');
-  bgPaperBlue.classList.add('bg--paper-blue', 'dummy-to-load-bg');
-  root.append(bgPaperBlue);
-
-  const bgPaperWhiteHeavy = document.createElement('div');
-  bgPaperWhiteHeavy.classList.add('bg--paper-white-heavy', 'dummy-to-load-bg');
-  root.append(bgPaperWhiteHeavy);
-
+  // Background Image
   const parallaxBgImgContainer = document.createElement('div');
   parallaxBgImgContainer.classList.add('parallax-bg-img-container');
-  root.append(parallaxBgImgContainer);
-
   const parallaxImg = document.createElement('div');
   parallaxImg.classList.add('parallax-img', 'lazyLoadedImage');
-  const backgroundImage = backgroundImageRow.querySelector('picture > img');
-  if (backgroundImage) {
-    parallaxImg.style.backgroundImage = `url('${backgroundImage.src}')`;
+  const bgPicture = backgroundImageRow.children[0].querySelector('picture');
+  if (bgPicture) {
+    const img = bgPicture.querySelector('img');
+    parallaxImg.style.backgroundImage = `url(${img.src})`;
     moveInstrumentation(backgroundImageRow, parallaxImg);
   }
   parallaxBgImgContainer.append(parallaxImg);
+  section.append(parallaxBgImgContainer);
 
   const maxWidthContainer = document.createElement('div');
   maxWidthContainer.classList.add('max-width-container', 'grid-x');
-  root.append(maxWidthContainer);
 
-  const headerCellWrapper = document.createElement('div');
-  headerCellWrapper.classList.add('cell', 'small-12', 'medium-offset-1', 'medium-10', 'xlarge-offset-2', 'xlarge-8', 'padding-x');
-  maxWidthContainer.append(headerCellWrapper);
+  const contentCell = document.createElement('div');
+  contentCell.classList.add('cell', 'small-12', 'medium-offset-1', 'medium-10', 'xlarge-offset-2', 'xlarge-8', 'padding-x');
 
+  // Heading
   const heading = document.createElement('h2');
   heading.classList.add('heading', 'animate-enter-fade-up-short', 'animate-delay-3');
-  heading.textContent = headingRow?.textContent.trim() || '';
+  heading.textContent = headingRow.children[0].textContent.trim();
   moveInstrumentation(headingRow, heading);
-  headerCellWrapper.append(heading);
+  contentCell.append(heading);
 
   const introInfo = document.createElement('div');
   introInfo.classList.add('intro-info', 'animate-enter-fade', 'animate-delay-1', 'no-avatar-image');
-  headerCellWrapper.append(introInfo);
 
+  // Greetings
   const greetingsContainer = document.createElement('div');
-  greetingsContainer.classList.add('greetings-container', 'headline-h4', 'animate-enter-fade-up-short', 'animate-delay-3', 'stagger-1');
-  introInfo.append(greetingsContainer);
+  greetingsContainer.classList.add('greetings-container', 'headline-h4', 'animate-enter-fade-up-short', 'stagger-1');
 
   const greetingMorning = document.createElement('span');
   greetingMorning.classList.add('hide', 'greeting--morning');
-  greetingMorning.textContent = greetingMorningRow?.textContent.trim() || '';
+  greetingMorning.textContent = greetingMorningRow.children[0].textContent.trim();
   moveInstrumentation(greetingMorningRow, greetingMorning);
   greetingsContainer.append(greetingMorning);
 
   const greetingAfternoon = document.createElement('span');
   greetingAfternoon.classList.add('hide', 'greeting--afternoon');
-  greetingAfternoon.textContent = greetingAfternoonRow?.textContent.trim() || '';
+  greetingAfternoon.textContent = greetingAfternoonRow.children[0].textContent.trim();
   moveInstrumentation(greetingAfternoonRow, greetingAfternoon);
   greetingsContainer.append(greetingAfternoon);
 
   const greetingEvening = document.createElement('span');
-  greetingEvening.classList.add('hide', 'greeting--evening');
-  greetingEvening.textContent = greetingEveningRow?.textContent.trim() || '';
+  greetingEvening.classList.add('greeting--evening'); // Not hidden by default in original HTML
+  greetingEvening.textContent = greetingEveningRow.children[0].textContent.trim();
   moveInstrumentation(greetingEveningRow, greetingEvening);
   greetingsContainer.append(greetingEvening);
 
   const greetingNight = document.createElement('span');
-  greetingNight.classList.add('greeting--night');
-  greetingNight.textContent = greetingNightRow?.textContent.trim() || '';
+  greetingNight.classList.add('hide', 'greeting--night');
+  greetingNight.textContent = greetingNightRow.children[0].textContent.trim();
   moveInstrumentation(greetingNightRow, greetingNight);
   greetingsContainer.append(greetingNight);
 
+  introInfo.append(greetingsContainer);
+
+  // Guide Text
   const guideText = document.createElement('div');
   guideText.classList.add('guide-text', 'labelMediumRegular', 'animate-enter-fade-up-short', 'animate-delay-6');
-  guideText.textContent = introTextRow?.textContent.trim() || '';
-  moveInstrumentation(introTextRow, guideText);
+  guideText.textContent = guideTextRow.children[0].textContent.trim();
+  moveInstrumentation(guideTextRow, guideText);
   introInfo.append(guideText);
 
+  contentCell.append(introInfo);
+  maxWidthContainer.append(contentCell);
+
+  // Swiper Pagination Container
   const swiperPaginationContainer = document.createElement('div');
   swiperPaginationContainer.classList.add('cell', 'small-12', 'medium-offset-1', 'medium-10', 'xlarge-offset-2', 'xlarge-8', 'swiper-pagination-container', 'padding-x', 'animate-enter-fade-up-short', 'animate-delay-15');
-  maxWidthContainer.append(swiperPaginationContainer);
-
   const swiperPagination = document.createElement('div');
   swiperPagination.classList.add('swiper-pagination', 'swiper-pagination-progressbar', 'swiper-pagination-horizontal');
   swiperPaginationContainer.append(swiperPagination);
+  maxWidthContainer.append(swiperPaginationContainer);
 
-  const swiperPaginationFill = document.createElement('span');
-  swiperPaginationFill.classList.add('swiper-pagination-progressbar-fill');
-  swiperPagination.append(swiperPaginationFill);
-
+  // Swiper
   const swiperCell = document.createElement('div');
   swiperCell.classList.add('cell', 'small-12');
-  maxWidthContainer.append(swiperCell);
-
   const swiperEl = document.createElement('div');
-  swiperEl.classList.add('swiper', 'coffee-profiler-swiper');
-  swiperCell.append(swiperEl);
+  swiperEl.classList.add('swiper', 'coffee-profiler-swiper'); // swiper-initialized, swiper-horizontal, swiper-backface-hidden added by Swiper.js
+  swiperEl.style.minHeight = '407px'; // From original HTML
 
   const swiperWrapper = document.createElement('div');
   swiperWrapper.classList.add('swiper-wrapper');
-  swiperEl.append(swiperWrapper);
 
-  slideRows.forEach((row, index) => {
-    const [questionLabelCell] = [...row.children];
+  questionSlides.forEach((question, index) => {
     const swiperSlide = document.createElement('div');
     swiperSlide.classList.add('swiper-slide');
     if (index === 0) {
       swiperSlide.classList.add('initial-slide', 'swiper-slide-active');
     }
-    if (index === slideRows.length - 1) {
-      swiperSlide.classList.add('last-slide');
-    }
     swiperSlide.setAttribute('data-slide-index', index);
-    swiperSlide.setAttribute('aria-label', `${index + 1} / ${slideRows.length}`);
-    swiperWrapper.append(swiperSlide);
-
-    const slideTypeNo = document.createElement('div');
-    slideTypeNo.classList.add('slide-type--no');
-    swiperSlide.append(slideTypeNo);
+    swiperSlide.setAttribute('aria-label', `${index + 1} / ${questionSlides.length}`);
+    swiperSlide.style.width = '1440px'; // From original HTML
 
     const coffeeProfilerSlide = document.createElement('div');
     coffeeProfilerSlide.classList.add('coffee-profiler-slide', 'animate-enter-fade-up-short', 'animate-delay-7');
-    coffeeProfilerSlide.setAttribute('data-q-id', `q${index}`); // Placeholder, actual IDs from API
-    coffeeProfilerSlide.setAttribute('data-slide-index', index);
-    coffeeProfilerSlide.setAttribute('data-q-filter', ''); // Placeholder
-    moveInstrumentation(row, coffeeProfilerSlide);
-    slideTypeNo.append(coffeeProfilerSlide);
+    // data-q-id, data-slide-index, data-q-filter not in EDS model, so not added
 
     const questionLabel = document.createElement('h3');
     questionLabel.classList.add('question-label');
-    questionLabel.textContent = questionLabelCell?.textContent.trim() || '';
+    questionLabel.textContent = question.questionText;
+    moveInstrumentation(question.row, questionLabel); // Move instrumentation from question row to its label
     coffeeProfilerSlide.append(questionLabel);
 
     const optionsContainer = document.createElement('div');
-    optionsContainer.classList.add('options-container');
-    coffeeProfilerSlide.append(optionsContainer);
+    optionsContainer.classList.add('options-container', `options-count--${question.options.length}`);
 
-    // Filter options for the current slide. This assumes options are ordered after slides.
-    // In a real scenario, options would likely have a foreign key to their question.
-    // For this exercise, we'll assign options sequentially to slides.
-    const optionsPerSlide = Math.ceil(optionRows.length / slideRows.length);
-    const startIndex = index * optionsPerSlide;
-    const endIndex = Math.min(startIndex + optionsPerSlide, optionRows.length);
-    const currentSlideOptions = optionRows.slice(startIndex, endIndex);
-
-    optionsContainer.classList.add(`options-count--${currentSlideOptions.length}`);
-
-    currentSlideOptions.forEach((optionRow, optIndex) => {
-      const [iconCell, labelCell] = [...optionRow.children];
+    question.options.forEach((option) => {
       const optionButton = document.createElement('button');
       optionButton.classList.add('option', 'elevation-2', 'has-hover', 'bg--paper-white');
-      optionButton.setAttribute('data-opt-id', `opt${index}-${optIndex}`); // Placeholder
-      optionButton.setAttribute('data-q-id', `q${index}`); // Placeholder
-      optionButton.setAttribute('aria-label', labelCell?.textContent.trim() || '');
       optionButton.setAttribute('role', 'radio');
       optionButton.setAttribute('aria-checked', 'false');
-      optionButton.style.minHeight = '263px'; // From original HTML
-      moveInstrumentation(optionRow, optionButton);
-      optionsContainer.append(optionButton);
+      optionButton.style.minHeight = '159px'; // From original HTML
+      // data-is-yes, data-opt-id, data-q-id, data-opt-filter-vals, data-opt-filter, data-opt-exc-filter not in EDS model
 
-      const optionIconPicture = iconCell.querySelector('picture');
-      if (optionIconPicture) {
-        const optionIconImg = optionIconPicture.querySelector('img');
-        if (optionIconImg) {
-          const optimizedPic = createOptimizedPicture(optionIconImg.src, optionIconImg.alt, false, [{ width: 'auto' }]);
-          moveInstrumentation(optionIconImg, optimizedPic.querySelector('img'));
-          optionButton.append(optimizedPic);
-          optimizedPic.classList.add('option-icon', 'lazyloaded');
-        }
+      const optionIcon = document.createElement('img');
+      optionIcon.classList.add('option-icon', 'lazyloaded');
+      if (option.icon) {
+        const optimizedPic = createOptimizedPicture(option.icon.querySelector('img').src, option.icon.querySelector('img').alt, false, [{ width: '750' }]);
+        moveInstrumentation(option.row, optimizedPic.querySelector('img')); // Move instrumentation from option row to its icon
+        optionIcon.src = optimizedPic.querySelector('img').src;
+        optionIcon.alt = optimizedPic.querySelector('img').alt;
       }
+      optionButton.append(optionIcon);
 
       const optionLabel = document.createElement('span');
       optionLabel.classList.add('option-label', 'labelMediumRegular');
-      optionLabel.textContent = labelCell?.textContent.trim() || '';
+      optionLabel.textContent = option.label;
       optionButton.append(optionLabel);
+
+      optionsContainer.append(optionButton);
     });
 
-    const gridContainer = document.createElement('div');
-    gridContainer.classList.add('grid-container');
-    swiperSlide.append(gridContainer);
-
-    const gridX = document.createElement('div');
-    gridX.classList.add('grid-x');
-    gridContainer.append(gridX);
-
-    // Placeholder for slide-type--yes variant if needed
-    const slideTypeYes = document.createElement('div');
-    slideTypeYes.classList.add('slide-type--yes', 'hide');
-    swiperSlide.append(slideTypeYes);
+    coffeeProfilerSlide.append(optionsContainer);
+    swiperSlide.append(coffeeProfilerSlide);
+    swiperWrapper.append(swiperSlide);
   });
+
+  swiperEl.append(swiperWrapper);
 
   const swiperControls = document.createElement('div');
   swiperControls.classList.add('swiper-controls', 'animate-enter-fade', 'animate-delay-15');
-  swiperEl.append(swiperControls);
 
   const prevBtn = document.createElement('button');
   prevBtn.classList.add('swiper-control', 'swiper-button', 'swiper-control--prev', 'elevation-1', 'animate-enter-fade-right-short', 'animate-delay-15', 'swiper-button-disabled');
   prevBtn.setAttribute('disabled', '');
   prevBtn.setAttribute('tabindex', '-1');
   prevBtn.setAttribute('aria-label', 'Previous slide');
-  prevBtn.innerHTML = `
-    <svg width="18" height="14" viewBox="0 0 18 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M1 7L17 7M1 7L6.33333 2M1 7L6.33333 12" stroke="#222222" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="round"></path>
-    </svg>
-  `;
+  prevBtn.innerHTML = '<svg width="18" height="14" viewBox="0 0 18 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 7L17 7M1 7L6.33333 2M1 7L6.33333 12" stroke="#222222" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="round"></path></svg>';
   swiperControls.append(prevBtn);
 
   const nextBtn = document.createElement('button');
   nextBtn.classList.add('swiper-control', 'swiper-button', 'swiper-control--next', 'elevation-1', 'animate-enter-fade-left-short', 'animate-delay-15');
   nextBtn.setAttribute('tabindex', '0');
   nextBtn.setAttribute('aria-label', 'Next slide');
-  nextBtn.setAttribute('disabled', 'disabled'); // Initially disabled, will be enabled by Swiper
-  nextBtn.innerHTML = `
-    <svg width="18" height="14" viewBox="0 0 18 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M17 7L1 7M17 7L11.6667 2M17 7L11.6667 12" stroke="#222222" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="round"></path>
-    </svg>
-  `;
+  nextBtn.innerHTML = '<svg width="18" height="14" viewBox="0 0 18 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M17 7L1 7M17 7L11.6667 2M17 7L11.6667 12" stroke="#222222" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="round"></path></svg>';
   swiperControls.append(nextBtn);
 
-  const swiperNotification = document.createElement('span');
-  swiperNotification.classList.add('swiper-notification');
-  swiperNotification.setAttribute('aria-live', 'assertive');
-  swiperNotification.setAttribute('aria-atomic', 'true');
-  swiperEl.append(swiperNotification);
+  swiperEl.append(swiperControls);
+  swiperCell.append(swiperEl);
+  maxWidthContainer.append(swiperCell);
 
+  section.append(maxWidthContainer);
+
+  // Error Message
   const errorMessageDiv = document.createElement('div');
   errorMessageDiv.classList.add('error-message');
   errorMessageDiv.setAttribute('data-default-message', 'Error! Please try again.');
-  root.append(errorMessageDiv);
-
   const errorMessageText = document.createElement('span');
   errorMessageText.classList.add('error-message-text', 'bodyLargeRegular');
-  errorMessageText.textContent = errorMessageRow?.textContent.trim() || 'Error! Please try again.';
+  errorMessageText.textContent = errorMessageRow.children[0].textContent.trim();
   moveInstrumentation(errorMessageRow, errorMessageText);
   errorMessageDiv.append(errorMessageText);
+  section.append(errorMessageDiv);
 
-  const profilerForm = document.createElement('form');
-  profilerForm.classList.add('hide', 'coffee-profiler-form');
-  profilerForm.setAttribute('method', 'POST');
-  profilerForm.setAttribute('action', 'https://www.nescafe.com/in/coffee-profiler/result');
-  root.append(profilerForm);
+  // Form (hidden)
+  const form = document.createElement('form');
+  form.classList.add('hide', 'coffee-profiler-form');
+  form.setAttribute('method', 'POST');
+  form.setAttribute('action', 'https://www.nescafe.com/in/coffee-profiler/result');
+  form.innerHTML = `
+    <input name="type" value="" type="hidden"/>
+    <input name="intensity" value="" type="hidden"/>
+    <input name="format" value="" type="hidden"/>
+    <input name="features" value="" type="hidden"/>
+    <input name="exc-type" value="" type="hidden"/>
+    <input name="exc-intensity" value="" type="hidden"/>
+    <input name="exc-format" value="" type="hidden"/>
+    <input name="exc-features" value="" type="hidden"/>
+  `;
+  section.append(form);
 
-  // Add hidden inputs for form submission
-  ['type', 'intensity', 'format', 'features', 'exc-type', 'exc-intensity', 'exc-format', 'exc-features'].forEach((name) => {
-    const input = document.createElement('input');
-    input.setAttribute('name', name);
-    input.setAttribute('value', '');
-    input.setAttribute('type', 'hidden');
-    profilerForm.append(input);
-  });
-
-  block.replaceChildren(root);
+  block.replaceChildren(section);
 
   // Initialize Swiper
   await loadCSS('https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css');
   await loadScript('https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js');
   // eslint-disable-next-line no-undef
   new Swiper(swiperEl, {
-    slidesPerView: 1,
+    slidesPerView: 1, // Start with 1 slide per view
     spaceBetween: 0,
     loop: false,
     navigation: {
@@ -293,18 +256,23 @@ export default async function decorate(block) {
     },
     pagination: {
       el: swiperPagination,
-      type: 'progressbar',
       clickable: true,
+      type: 'progressbar',
     },
     breakpoints: {
-      // Add breakpoints if needed based on original HTML's responsive behavior
+      // Adjust breakpoints as needed based on original HTML behavior
+      768: {
+        slidesPerView: 1,
+      },
+      992: {
+        slidesPerView: 1,
+      },
     },
   });
 
-  // Image optimization
-  root.querySelectorAll('picture > img').forEach((img) => {
+  // Optimize images
+  section.querySelectorAll('picture > img').forEach((img) => {
     const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-    moveInstrumentation(img, optimizedPic.querySelector('img'));
     img.closest('picture').replaceWith(optimizedPic);
   });
 }

@@ -23,20 +23,20 @@
       "fields": [
         {
           "component": "text",
-          "label": "Display Duration (ms)",
+          "label": "Auto Close Timer (ms)",
           "name": "timer",
           "valueType": "string"
         },
         {
           "component": "text",
           "label": "Sign In Message",
-          "name": "signinMsg",
+          "name": "signinMessage",
           "valueType": "string"
         },
         {
           "component": "text",
           "label": "Sign Out Message",
-          "name": "signoutMsg",
+          "name": "signoutMessage",
           "valueType": "string"
         }
       ]

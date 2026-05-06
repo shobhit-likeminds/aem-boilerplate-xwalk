@@ -142,11 +142,144 @@
     ]
   },
   {
+    "id": "burger-navigation",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Level 2 Banner Image",
+        "name": "level2BannerImage",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Level 2 Banner Headline",
+        "name": "level2BannerHeadline",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "level2-navigation-item",
+        "label": "Navigation Items",
+        "name": "navItems"
+      }
+    ]
+  },
+  {
+    "id": "level2-navigation-item",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Level 2 Label",
+        "name": "label",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Level 2 Link",
+        "name": "link",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "multiple-link-item",
+        "label": "Multiple Links",
+        "name": "multipleLinks"
+      },
+      {
+        "component": "container",
+        "item": "level3-banner-item",
+        "label": "Level 3 Banner",
+        "name": "level3Banner"
+      },
+      {
+        "component": "container",
+        "item": "level3-simple-link-item",
+        "label": "Level 3 Simple Links",
+        "name": "level3SimpleLinks"
+      },
+      {
+        "component": "richtext",
+        "label": "Navigation Hierarchy",
+        "name": "hierarchy-tree",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "multiple-link-item",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Link Label",
+        "name": "label",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Link URL",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "level3-banner-item",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Banner Image",
+        "name": "bannerImage",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Banner Title",
+        "name": "bannerTitle",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Banner Description",
+        "name": "bannerDescription",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Banner CTA Link",
+        "name": "bannerCtaLink",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Banner CTA Label",
+        "name": "bannerCtaLabel",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "level3-simple-link-item",
+    "fields": [
+      {
+        "component": "text",
+        "label": "Level 3 Link Label",
+        "name": "label",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Level 3 Link URL",
+        "name": "link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "campaign-carousel",
     "fields": [
       {
         "component": "reference",
-        "label": "Parallax Background Image",
+        "label": "Background Image",
         "name": "backgroundImage",
         "valueType": "string"
       },
@@ -170,15 +303,15 @@
       },
       {
         "component": "container",
-        "item": "recipe-card-item",
-        "label": "Recipe Cards",
-        "name": "recipeCards"
+        "item": "recipe-card-slide-item",
+        "label": "Recipe Card Slides",
+        "name": "recipeSlides"
       },
       {
         "component": "container",
-        "item": "fact-card-item",
-        "label": "Fact Cards",
-        "name": "factCards"
+        "item": "fact-card-slide-item",
+        "label": "Fact Card Slides",
+        "name": "factSlides"
       }
     ]
   },
@@ -188,25 +321,25 @@
       {
         "component": "richtext",
         "label": "Quotation Text",
-        "name": "quoteText",
+        "name": "quotation",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Quotation Author",
+        "label": "Author",
         "name": "author",
         "valueType": "string"
       },
       {
         "component": "reference",
-        "label": "Quotation Background Image",
+        "label": "Slide Background Image",
         "name": "backgroundImage",
         "valueType": "string"
       }
     ]
   },
   {
-    "id": "recipe-card-item",
+    "id": "recipe-card-slide-item",
     "fields": [
       {
         "component": "aem-content",
@@ -222,8 +355,8 @@
       },
       {
         "component": "text",
-        "label": "Recipe Tag",
-        "name": "tag",
+        "label": "Recipe Tag Label",
+        "name": "tagLabel",
         "valueType": "string"
       },
       {
@@ -265,23 +398,23 @@
     ]
   },
   {
-    "id": "fact-card-item",
+    "id": "fact-card-slide-item",
     "fields": [
       {
         "component": "reference",
-        "label": "Fact Card Image",
+        "label": "Fact Image",
         "name": "image",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Fact Card Name",
+        "label": "Fact Name",
         "name": "name",
         "valueType": "string"
       },
       {
         "component": "richtext",
-        "label": "Fact Card Description",
+        "label": "Fact Description",
         "name": "description",
         "valueType": "string"
       },
@@ -323,7 +456,7 @@
     "fields": [
       {
         "component": "reference",
-        "label": "Parallax Background Image",
+        "label": "Background Image",
         "name": "backgroundImage",
         "valueType": "string"
       },
@@ -359,8 +492,8 @@
       },
       {
         "component": "text",
-        "label": "Intro Text",
-        "name": "introText",
+        "label": "Guide Text",
+        "name": "guideText",
         "valueType": "string"
       },
       {
@@ -371,31 +504,31 @@
       },
       {
         "component": "container",
-        "item": "coffee-profiler-slide",
-        "label": "Slides",
-        "name": "slides"
+        "item": "question-slide",
+        "label": "Question Slides",
+        "name": "questionSlides"
       }
     ]
   },
   {
-    "id": "coffee-profiler-slide",
+    "id": "question-slide",
     "fields": [
       {
         "component": "text",
-        "label": "Question Label",
-        "name": "questionLabel",
+        "label": "Question Text",
+        "name": "questionText",
         "valueType": "string"
       },
       {
         "component": "container",
-        "item": "coffee-profiler-option",
+        "item": "option-item",
         "label": "Options",
         "name": "options"
       }
     ]
   },
   {
-    "id": "coffee-profiler-option",
+    "id": "option-item",
     "fields": [
       {
         "component": "reference",
@@ -435,7 +568,7 @@
     "fields": [
       {
         "component": "text",
-        "label": "Back To Top Button Label",
+        "label": "Back To Top Label",
         "name": "backToTopLabel",
         "valueType": "string"
       },
@@ -447,8 +580,8 @@
       },
       {
         "component": "text",
-        "label": "Privacy Policy Button Label",
-        "name": "privacyPolicyButtonLabel",
+        "label": "Cookie Button Label",
+        "name": "cookieButtonLabel",
         "valueType": "string"
       },
       {
@@ -483,26 +616,32 @@
       },
       {
         "component": "text",
-        "label": "Social Section Title",
-        "name": "socialTitle",
+        "label": "Footer Social Title",
+        "name": "footerSocialTitle",
         "valueType": "string"
       },
       {
         "component": "container",
         "item": "footer-social-item",
         "label": "Footer Social Links",
-        "name": "socialLinks"
+        "name": "footerSocialLinks"
       },
       {
         "component": "container",
         "item": "footer-link-item",
         "label": "Footer Site Links",
-        "name": "siteLinks"
+        "name": "footerLinks"
+      },
+      {
+        "component": "text",
+        "label": "Copyright Text",
+        "name": "copyrightText",
+        "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "Legal Link",
-        "name": "legalLink",
+        "label": "Copyright Link",
+        "name": "copyrightLink",
         "valueType": "string"
       }
     ]
@@ -982,6 +1121,47 @@
     ]
   },
   {
+    "id": "home-page-description",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Main Image",
+        "name": "image",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Description",
+        "name": "description",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Sign In Link",
+        "name": "signInLink",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Sign In Label",
+        "name": "signInLabel",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Register Link",
+        "name": "registerLink",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Register Label",
+        "name": "registerLabel",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "homepage-banner",
     "fields": [
       {
@@ -1015,15 +1195,15 @@
         "valueType": "string"
       },
       {
-        "component": "aem-content",
-        "label": "Primary CTA Link",
-        "name": "primaryCtaLink",
+        "component": "text",
+        "label": "Primary CTA Label",
+        "name": "ctaLabel",
         "valueType": "string"
       },
       {
-        "component": "text",
-        "label": "Primary CTA Label",
-        "name": "primaryCtaLabel",
+        "component": "aem-content",
+        "label": "Primary CTA Link",
+        "name": "ctaLink",
         "valueType": "string"
       },
       {
@@ -1033,15 +1213,21 @@
         "valueType": "string"
       },
       {
-        "component": "aem-content",
-        "label": "Secondary CTA Link",
-        "name": "secondaryCtaLink",
+        "component": "text",
+        "label": "Secondary Headline",
+        "name": "secondaryHeadline",
         "valueType": "string"
       },
       {
         "component": "text",
         "label": "Secondary CTA Label",
         "name": "secondaryCtaLabel",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Secondary CTA Link",
+        "name": "secondaryCtaLink",
         "valueType": "string"
       },
       {
@@ -1206,24 +1392,154 @@
     ]
   },
   {
+    "id": "recipe-home",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Icon Image",
+        "name": "iconImage",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Headline",
+        "name": "headline",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Description",
+        "name": "description",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "See All Recipes Link",
+        "name": "ctaLink",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "See All Recipes Label",
+        "name": "ctaLabel",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "item": "recipe-card-item",
+        "label": "Recipe Cards",
+        "name": "recipeCards"
+      }
+    ]
+  },
+  {
+    "id": "recipe-card-item",
+    "fields": [
+      {
+        "component": "aem-content",
+        "label": "Recipe Card Link",
+        "name": "cardLink",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Recipe Image (Desktop)",
+        "name": "imageDesktop",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Recipe Image (Mobile)",
+        "name": "imageMobile",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Tag Label",
+        "name": "tagLabel",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Recipe Title",
+        "name": "recipeTitle",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Recipe Description",
+        "name": "recipeDescription",
+        "valueType": "string"
+      },
+      {
+        "component": "number",
+        "label": "Steps Count",
+        "name": "stepsCount",
+        "valueType": "number"
+      },
+      {
+        "component": "text",
+        "label": "Steps Label",
+        "name": "stepsLabel",
+        "valueType": "string"
+      },
+      {
+        "component": "number",
+        "label": "Ingredients Count",
+        "name": "ingredientsCount",
+        "valueType": "number"
+      },
+      {
+        "component": "text",
+        "label": "Ingredients Label",
+        "name": "ingredientsLabel",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "search-autocomplete",
     "fields": [
       {
         "component": "text",
-        "label": "Trending Title",
+        "label": "Close Button Label",
+        "name": "closeLabel",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "Search Form Action URL",
+        "name": "formAction",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Search Input Placeholder",
+        "name": "inputPlaceholder",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Apply Button Label",
+        "name": "applyLabel",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Trending Section Title",
         "name": "trendingTitle",
         "valueType": "string"
       },
       {
         "component": "container",
-        "item": "suggestion-item",
-        "label": "Suggestion Items",
-        "name": "suggestionItems"
+        "item": "trending-suggestion-item",
+        "label": "Trending Suggestions",
+        "name": "trendingSuggestions"
       }
     ]
   },
   {
-    "id": "suggestion-item",
+    "id": "trending-suggestion-item",
     "fields": [
       {
         "component": "text",
@@ -1244,54 +1560,60 @@
     "fields": [
       {
         "component": "text",
-        "label": "Carousel Headline",
-        "name": "headline",
+        "label": "Carousel Title",
+        "name": "title",
         "valueType": "string"
       },
       {
         "component": "container",
-        "item": "sustainability-article-card",
+        "item": "sustainability-article-item",
         "label": "Articles",
         "name": "articles"
       }
     ]
   },
   {
-    "id": "sustainability-article-card",
+    "id": "sustainability-article-item",
     "fields": [
       {
         "component": "text",
-        "label": "Article Tag",
-        "name": "tag",
+        "label": "Tag Label",
+        "name": "tagLabel",
         "valueType": "string"
       },
       {
         "component": "reference",
-        "label": "Image",
-        "name": "image",
+        "label": "Desktop Image",
+        "name": "imageDesktop",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Mobile Image",
+        "name": "imageMobile",
         "valueType": "string"
       },
       {
         "component": "aem-content",
         "label": "Article Link",
-        "name": "link",
+        "name": "articleLink",
         "valueType": "string"
       },
       {
         "component": "text",
         "label": "Article Title",
-        "name": "title",
+        "name": "articleTitle",
         "valueType": "string"
       },
       {
         "component": "richtext",
         "label": "Article Description",
-        "name": "description",
+        "name": "articleDescription",
         "valueType": "string"
       },
       {
         "component": "text",
-        "label": "Reading Duration (minutes)",
+        "label": "Reading Duration (Number)",
         "name": "readingDuration",
         "valueType": "string"
       },
@@ -1299,6 +1621,47 @@
         "component": "text",
         "label": "Reading Duration Suffix",
         "name": "readingDurationSuffix",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "sustainability-hub-recycle-section",
+    "fields": [
+      {
+        "component": "reference",
+        "label": "Background Image (Desktop)",
+        "name": "backgroundDesktop",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "label": "Background Image (Mobile)",
+        "name": "backgroundMobile",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "Title",
+        "name": "title",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Description",
+        "name": "description",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "label": "CTA Link",
+        "name": "ctaLink",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "label": "CTA Label",
+        "name": "ctaLabel",
         "valueType": "string"
       }
     ]
@@ -1372,20 +1735,20 @@
     "fields": [
       {
         "component": "text",
-        "label": "Auto Close Timer (ms)",
+        "label": "Display Duration (ms)",
         "name": "timer",
         "valueType": "string"
       },
       {
         "component": "text",
         "label": "Sign In Message",
-        "name": "signinMessage",
+        "name": "signinMsg",
         "valueType": "string"
       },
       {
         "component": "text",
         "label": "Sign Out Message",
-        "name": "signoutMessage",
+        "name": "signoutMsg",
         "valueType": "string"
       }
     ]
@@ -1401,24 +1764,24 @@
       },
       {
         "component": "container",
-        "item": "tooltip-signin-register-cta-item",
+        "item": "cta-item",
         "label": "CTA Buttons",
         "name": "ctas"
       }
     ]
   },
   {
-    "id": "tooltip-signin-register-cta-item",
+    "id": "cta-item",
     "fields": [
       {
         "component": "text",
-        "label": "Button Label",
+        "label": "CTA Label",
         "name": "label",
         "valueType": "string"
       },
       {
         "component": "aem-content",
-        "label": "Button Link",
+        "label": "CTA Link",
         "name": "link",
         "valueType": "string"
       }

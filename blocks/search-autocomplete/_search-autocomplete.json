@@ -1,7 +1,7 @@
 {
   "definitions": [
     {
-      "title": "Search Autocomplete",
+      "title": "Search-Autocomplete",
       "id": "search-autocomplete",
       "plugins": {
         "xwalk": {
@@ -10,22 +10,22 @@
             "template": {
               "filter": "search-autocomplete",
               "model": "search-autocomplete",
-              "name": "Search Autocomplete"
+              "name": "Search-Autocomplete"
             }
           }
         }
       }
     },
     {
-      "title": "Suggestion Item",
-      "id": "suggestion-item",
+      "title": "Trending-Suggestion-Item",
+      "id": "trending-suggestion-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "model": "suggestion-item",
-              "name": "Suggestion Item"
+              "model": "trending-suggestion-item",
+              "name": "Trending-Suggestion-Item"
             }
           }
         }
@@ -38,20 +38,44 @@
       "fields": [
         {
           "component": "text",
-          "label": "Trending Title",
+          "label": "Close Button Label",
+          "name": "closeLabel",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "label": "Search Form Action URL",
+          "name": "formAction",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Search Input Placeholder",
+          "name": "inputPlaceholder",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Apply Button Label",
+          "name": "applyLabel",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "label": "Trending Section Title",
           "name": "trendingTitle",
           "valueType": "string"
         },
         {
           "component": "container",
-          "item": "suggestion-item",
-          "label": "Suggestion Items",
-          "name": "suggestionItems"
+          "item": "trending-suggestion-item",
+          "label": "Trending Suggestions",
+          "name": "trendingSuggestions"
         }
       ]
     },
     {
-      "id": "suggestion-item",
+      "id": "trending-suggestion-item",
       "fields": [
         {
           "component": "text",
@@ -72,7 +96,7 @@
     {
       "id": "search-autocomplete",
       "components": [
-        "suggestion-item"
+        "trending-suggestion-item"
       ]
     }
   ]
