@@ -1,166 +1,279 @@
-import { getMetadata } from '../../scripts/aem.js';
-import { loadFragment } from '../fragment/fragment.js';
+import { createOptimizedPicture, loadScript, loadCSS } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
 
-// media query match that indicates mobile/tablet width
-const isDesktop = window.matchMedia('(min-width: 900px)');
-
-function closeOnEscape(e) {
-  if (e.code === 'Escape') {
-    const nav = document.getElementById('nav');
-    const navSections = nav.querySelector('.nav-sections');
-    const navSectionExpanded = navSections.querySelector('[aria-expanded="true"]');
-    if (navSectionExpanded && isDesktop.matches) {
-      // eslint-disable-next-line no-use-before-define
-      toggleAllNavSections(navSections);
-      navSectionExpanded.focus();
-    } else if (!isDesktop.matches) {
-      // eslint-disable-next-line no-use-before-define
-      toggleMenu(nav, navSections);
-      nav.querySelector('button').focus();
-    }
-  }
-}
-
-function closeOnFocusLost(e) {
-  const nav = e.currentTarget;
-  if (!nav.contains(e.relatedTarget)) {
-    const navSections = nav.querySelector('.nav-sections');
-    const navSectionExpanded = navSections.querySelector('[aria-expanded="true"]');
-    if (navSectionExpanded && isDesktop.matches) {
-      // eslint-disable-next-line no-use-before-define
-      toggleAllNavSections(navSections, false);
-    } else if (!isDesktop.matches) {
-      // eslint-disable-next-line no-use-before-define
-      toggleMenu(nav, navSections, false);
-    }
-  }
-}
-
-function openOnKeydown(e) {
-  const focused = document.activeElement;
-  const isNavDrop = focused.className === 'nav-drop';
-  if (isNavDrop && (e.code === 'Enter' || e.code === 'Space')) {
-    const dropExpanded = focused.getAttribute('aria-expanded') === 'true';
-    // eslint-disable-next-line no-use-before-define
-    toggleAllNavSections(focused.closest('.nav-sections'));
-    focused.setAttribute('aria-expanded', dropExpanded ? 'false' : 'true');
-  }
-}
-
-function focusNavSection() {
-  document.activeElement.addEventListener('keydown', openOnKeydown);
-}
-
-/**
- * Toggles all nav sections
- * @param {Element} sections The container element
- * @param {Boolean} expanded Whether the element should be expanded or collapsed
- */
-function toggleAllNavSections(sections, expanded = false) {
-  sections.querySelectorAll('.nav-sections .default-content-wrapper > ul > li').forEach((section) => {
-    section.setAttribute('aria-expanded', expanded);
-  });
-}
-
-/**
- * Toggles the entire nav
- * @param {Element} nav The container element
- * @param {Element} navSections The nav sections within the container element
- * @param {*} forceExpanded Optional param to force nav expand behavior when not null
- */
-function toggleMenu(nav, navSections, forceExpanded = null) {
-  const expanded = forceExpanded !== null ? !forceExpanded : nav.getAttribute('aria-expanded') === 'true';
-  const button = nav.querySelector('.nav-hamburger button');
-  document.body.style.overflowY = (expanded || isDesktop.matches) ? '' : 'hidden';
-  nav.setAttribute('aria-expanded', expanded ? 'false' : 'true');
-  toggleAllNavSections(navSections, expanded || isDesktop.matches ? 'false' : 'true');
-  button.setAttribute('aria-label', expanded ? 'Open navigation' : 'Close navigation');
-  // enable nav dropdown keyboard accessibility
-  const navDrops = navSections.querySelectorAll('.nav-drop');
-  if (isDesktop.matches) {
-    navDrops.forEach((drop) => {
-      if (!drop.hasAttribute('tabindex')) {
-        drop.setAttribute('tabindex', 0);
-        drop.addEventListener('focus', focusNavSection);
+function transformNestedLists(rootUl) {
+  rootUl.querySelectorAll('li').forEach((li) => {
+    const nested = li.querySelector(':scope > ul');
+    const anchor = li.querySelector(':scope > a');
+    if (!anchor) {
+      const textNode = [...li.childNodes].find(
+        (n) => n.nodeType === Node.TEXT_NODE && n.textContent.trim(),
+      );
+      if (textNode) {
+        const span = document.createElement('span');
+        span.textContent = textNode.textContent.trim();
+        textNode.remove();
+        li.prepend(span);
       }
-    });
-  } else {
-    navDrops.forEach((drop) => {
-      drop.removeAttribute('tabindex');
-      drop.removeEventListener('focus', focusNavSection);
-    });
-  }
-
-  // enable menu collapse on escape keypress
-  if (!expanded || isDesktop.matches) {
-    // collapse menu on escape press
-    window.addEventListener('keydown', closeOnEscape);
-    // collapse menu on focus lost
-    nav.addEventListener('focusout', closeOnFocusLost);
-  } else {
-    window.removeEventListener('keydown', closeOnEscape);
-    nav.removeEventListener('focusout', closeOnFocusLost);
-  }
+    }
+    if (nested) {
+      nested.remove();
+      const subWrap = document.createElement('div');
+      subWrap.classList.add('elementor-nav-menu--dropdown');
+      subWrap.append(nested);
+      li.append(subWrap);
+      const trigger = li.querySelector(':scope > a, :scope > span');
+      if (trigger) {
+        trigger.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          li.classList.toggle('active');
+          subWrap.classList.toggle('active');
+        });
+      }
+    }
+  });
 }
 
-/**
- * loads and decorates the header, mainly the nav
- * @param {Element} block The header block element
- */
 export default async function decorate(block) {
-  // load nav as fragment
-  const navMeta = getMetadata('nav');
-  const navPath = navMeta ? new URL(navMeta, window.location).pathname : '/nav';
-  const fragment = await loadFragment(navPath);
+  const children = [...block.children];
 
-  // decorate nav DOM
-  block.textContent = '';
+  const logoRow = children[0];
+  const logoLinkRow = children[1];
+
+  const navigationItemRows = children.filter(
+    (row) => row.children.length === 3 && row.querySelector('ul'),
+  );
+  const iconListItemRows = children.filter(
+    (row) => row.children.length === 2 && !row.querySelector('ul'),
+  );
+
+  const headerWrapper = document.createElement('div');
+  headerWrapper.classList.add(
+    'elementor-element',
+    'elementor-element-7910b0b',
+    'e-con-full',
+    'e-flex',
+    'e-con',
+    'e-parent',
+    'e-lazyloaded',
+    'elementor-sticky',
+    'elementor-sticky--active',
+    'elementor-section--handles-inside',
+    'elementor-sticky--effects',
+  );
+
+  const headerInner = document.createElement('div');
+  headerInner.classList.add(
+    'elementor-element',
+    'elementor-element-2dcde62',
+    'e-flex',
+    'e-con-boxed',
+    'e-con',
+    'e-child',
+  );
+  headerWrapper.append(headerInner);
+
+  const headerConInner = document.createElement('div');
+  headerConInner.classList.add('e-con-inner');
+  headerInner.append(headerConInner);
+
+  // Logo
+  const logoWrapper = document.createElement('div');
+  logoWrapper.classList.add(
+    'elementor-element',
+    'elementor-element-5fef5c1',
+    'elementor-widget__width-initial',
+    'elementor-widget',
+    'elementor-widget-theme-site-logo',
+    'elementor-widget-image',
+  );
+  const logoWidgetContainer = document.createElement('div');
+  logoWidgetContainer.classList.add('elementor-widget-container');
+  logoWrapper.append(logoWidgetContainer);
+
+  const logoLink = document.createElement('a');
+  const foundLogoLink = logoLinkRow.querySelector('a');
+  if (foundLogoLink) {
+    logoLink.href = foundLogoLink.href;
+  }
+  moveInstrumentation(logoLinkRow, logoLink);
+
+  const picture = logoRow.querySelector('picture');
+  if (picture) {
+    const img = picture.querySelector('img');
+    const optimizedPic = createOptimizedPicture(
+      img.src,
+      img.alt,
+      false,
+      [{ width: '503' }],
+    );
+    moveInstrumentation(logoRow, optimizedPic.querySelector('img'));
+    logoLink.append(optimizedPic);
+  }
+  logoWidgetContainer.append(logoLink);
+  headerConInner.append(logoWrapper);
+
+  // Navigation Menu
+  const navMenuWrapper = document.createElement('div');
+  navMenuWrapper.classList.add(
+    'elementor-element',
+    'elementor-element-f6dc590',
+    'elementor-widget__width-initial',
+    'elementor-nav-menu--stretch',
+    'elementor-nav-menu__text-align-center',
+    'elementor-nav-menu__align-end',
+    'elementor-nav-menu--dropdown-tablet',
+    'elementor-nav-menu--toggle',
+    'elementor-nav-menu--burger',
+    'elementor-widget',
+    'elementor-widget-nav-menu',
+  );
+  const navMenuWidgetContainer = document.createElement('div');
+  navMenuWidgetContainer.classList.add('elementor-widget-container');
+  navMenuWrapper.append(navMenuWidgetContainer);
+
   const nav = document.createElement('nav');
-  nav.id = 'nav';
-  while (fragment.firstElementChild) nav.append(fragment.firstElementChild);
+  nav.setAttribute('aria-label', 'Menu');
+  nav.classList.add(
+    'elementor-nav-menu--main',
+    'elementor-nav-menu__container',
+    'elementor-nav-menu--layout-horizontal',
+    'e--pointer-underline',
+    'e--animation-fade',
+  );
+  navMenuWidgetContainer.append(nav);
 
-  const classes = ['brand', 'sections', 'tools'];
-  classes.forEach((c, i) => {
-    const section = nav.children[i];
-    if (section) section.classList.add(`nav-${c}`);
+  const ul = document.createElement('ul');
+  ul.classList.add('elementor-nav-menu');
+  nav.append(ul);
+
+  navigationItemRows.forEach((row) => {
+    const [labelCell, linkCell, hierarchyCell] = [...row.children];
+    const li = document.createElement('li');
+    li.classList.add('menu-item', 'menu-item-type-custom', 'menu-item-object-custom', 'menu-item-has-children');
+
+    const foundLink = linkCell.querySelector('a');
+    let rootEl;
+    if (foundLink) {
+      rootEl = document.createElement('a');
+      rootEl.href = foundLink.href;
+      rootEl.classList.add('elementor-item');
+    } else {
+      rootEl = document.createElement('span');
+    }
+    rootEl.textContent = labelCell.textContent.trim();
+    moveInstrumentation(row, rootEl); // Move instrumentation from the row to the root element
+    li.appendChild(rootEl);
+
+    const hierarchyContentDiv = document.createElement('div');
+    moveInstrumentation(hierarchyCell, hierarchyContentDiv); // Move instrumentation from hierarchyCell
+    hierarchyContentDiv.innerHTML = hierarchyCell.innerHTML;
+    const hierarchyRoot = hierarchyContentDiv.querySelector('ul');
+
+    if (hierarchyRoot) {
+      rootEl.classList.add('elementor-item-anchor', 'has-submenu');
+      const subArrow = document.createElement('span');
+      subArrow.classList.add('sub-arrow');
+      subArrow.innerHTML = '<svg class="e-font-icon-svg e-fas-caret-down" viewBox="0 0 320 512" xmlns="http://www.w3.org/2000/svg"><path d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"></path></svg>';
+      rootEl.append(subArrow);
+
+      const wrapper = document.createElement('ul');
+      wrapper.classList.add('sub-menu', 'elementor-nav-menu--dropdown');
+      // Append children from hierarchyRoot directly to wrapper
+      while (hierarchyRoot.firstChild) {
+        wrapper.append(hierarchyRoot.firstChild);
+      }
+
+      rootEl.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        wrapper.classList.toggle('elementor-nav-menu--dropdown-open');
+        li.classList.toggle('current-menu-ancestor');
+        li.classList.toggle('current-menu-parent');
+      });
+      li.appendChild(wrapper);
+      transformNestedLists(wrapper); // Pass the new wrapper to transform
+    }
+    ul.append(li);
+  });
+  headerConInner.append(navMenuWrapper);
+
+  // Mobile Toggle
+  const mobileToggle = document.createElement('div');
+  mobileToggle.classList.add('elementor-menu-toggle', 'elementor-button');
+  mobileToggle.setAttribute('role', 'button');
+  mobileToggle.setAttribute('tabindex', '0');
+  mobileToggle.setAttribute('aria-expanded', 'false');
+  mobileToggle.innerHTML = '<i class="eicon-menu-bar" aria-hidden="true"></i><span class="elementor-screen-only">Menu</span>';
+  navMenuWidgetContainer.prepend(mobileToggle);
+
+  const mobileNavContainer = document.createElement('div');
+  mobileNavContainer.classList.add('elementor-menu-overlay');
+  const clonedNav = nav.cloneNode(true); // Clone the nav for mobile
+  mobileNavContainer.append(clonedNav);
+  navMenuWidgetContainer.append(mobileNavContainer);
+
+  mobileToggle.addEventListener('click', () => {
+    mobileNavContainer.classList.toggle('elementor-menu-open');
+    mobileToggle.classList.toggle('elementor-active');
+    // Toggle body scroll lock for mobile menu
+    document.body.classList.toggle('elementor-nav-menu--open');
   });
 
-  const navBrand = nav.querySelector('.nav-brand');
-  const brandLink = navBrand.querySelector('.button');
-  if (brandLink) {
-    brandLink.className = '';
-    brandLink.closest('.button-container').className = '';
-  }
+  // Icon List
+  const iconListContainer = document.createElement('div');
+  iconListContainer.classList.add(
+    'elementor-element',
+    'elementor-element-ff0ccea',
+    'elementor-hidden-mobile',
+    'e-flex',
+    'e-con-boxed',
+    'e-con',
+    'e-child',
+  );
+  const iconListInner = document.createElement('div');
+  iconListInner.classList.add('e-con-inner');
+  iconListContainer.append(iconListInner);
 
-  const navSections = nav.querySelector('.nav-sections');
-  if (navSections) {
-    navSections.querySelectorAll(':scope .default-content-wrapper > ul > li').forEach((navSection) => {
-      if (navSection.querySelector('ul')) navSection.classList.add('nav-drop');
-      navSection.addEventListener('click', () => {
-        if (isDesktop.matches) {
-          const expanded = navSection.getAttribute('aria-expanded') === 'true';
-          toggleAllNavSections(navSections);
-          navSection.setAttribute('aria-expanded', expanded ? 'false' : 'true');
-        }
-      });
-    });
-  }
+  const iconListWrapper = document.createElement('div');
+  iconListWrapper.classList.add(
+    'elementor-element',
+    'elementor-element-8b8d930',
+    'elementor-icon-list--layout-inline',
+    'elementor-align-center',
+    'elementor-list-item-link-full_width',
+    'elementor-widget',
+    'elementor-widget-icon-list',
+  );
+  const iconListWidgetContainer = document.createElement('div');
+  iconListWidgetContainer.classList.add('elementor-widget-container');
+  iconListWrapper.append(iconListWidgetContainer);
 
-  // hamburger for mobile
-  const hamburger = document.createElement('div');
-  hamburger.classList.add('nav-hamburger');
-  hamburger.innerHTML = `<button type="button" aria-controls="nav" aria-label="Open navigation">
-      <span class="nav-hamburger-icon"></span>
-    </button>`;
-  hamburger.addEventListener('click', () => toggleMenu(nav, navSections));
-  nav.prepend(hamburger);
-  nav.setAttribute('aria-expanded', 'false');
-  // prevent mobile nav behavior on window resize
-  toggleMenu(nav, navSections, isDesktop.matches);
-  isDesktop.addEventListener('change', () => toggleMenu(nav, navSections, isDesktop.matches));
+  const iconListUl = document.createElement('ul');
+  iconListUl.classList.add('elementor-icon-list-items', 'elementor-inline-items');
+  iconListWidgetContainer.append(iconListUl);
 
-  const navWrapper = document.createElement('div');
-  navWrapper.className = 'nav-wrapper';
-  navWrapper.append(nav);
-  block.append(navWrapper);
+  iconListItemRows.forEach((row) => {
+    const [labelCell, linkCell] = [...row.children];
+    const li = document.createElement('li');
+    li.classList.add('elementor-icon-list-item', 'elementor-inline-item');
+
+    const anchor = document.createElement('a');
+    const foundLink = linkCell.querySelector('a');
+    if (foundLink) {
+      anchor.href = foundLink.href;
+    }
+    const span = document.createElement('span');
+    span.classList.add('elementor-icon-list-text');
+    span.textContent = labelCell.textContent.trim();
+    anchor.append(span);
+    moveInstrumentation(row, anchor);
+    li.append(anchor);
+    iconListUl.append(li);
+  });
+  iconListInner.append(iconListWrapper);
+  headerWrapper.append(iconListContainer);
+
+  block.replaceChildren(headerWrapper);
 }
